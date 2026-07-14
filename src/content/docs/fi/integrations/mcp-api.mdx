@@ -1,0 +1,91 @@
+---
+title: 'Integraatiot: MCP ja REST API'
+description: 'Tehtäväkohtaiset ohjeet: Integraatiot: MCP ja REST API: `streamable-http` · `/mcp` · `Authorization` · `6090`.'
+pageId: 'integrations-mcp-api'
+products: ['server']
+platforms: ['web', 'docker']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="verkko · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Tavoite ja tulos
+
+Suorita sivukohtainen työnkulku: **Integraatiot: MCP ja REST API**. Tässä menettelyssä käytetään `streamable-http` · `/mcp` · `Authorization` · `6090`.
+
+## Koskee
+
+Tämä sivu koskee vain kohdetta **Integraatiot: MCP ja REST API** (verkko · Docker). Kanava- ja tietorajat ovat: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/mcp` `6090` · REST API; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/mcp` `6090` · REST API. Sivukohtaiset tarkistuspisteet: `streamable-http` · `/mcp` · `Authorization` · `6090`.
+
+### DiscVault v26 – vakaa
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `/mcp` `6090` · REST API
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `/mcp` `6090` · REST API
+
+## Edellytykset
+
+- API
+- HTTPS DiscVault
+- MCP HTTP
+
+## Toimenpiteet
+
+1. **Luo:** API
+2. **Määritä:** `streamable-http` · `https://discvault.example.com/mcp`
+3. **Testaa:** `Authorization`
+4. **Peruuta:** `6090`
+
+### Komennot ja asetukset
+
+#### Molemmat kanavat
+
+```json
+{
+  "mcpServers": {
+    "discvault": {
+      "transport": "streamable-http",
+      "url": "https://discvault.example.com/mcp",
+      "headers": { "Authorization": "******" }
+    }
+  }
+}
+```
+
+```bash
+curl --fail https://discvault.example.com/api/next/health
+```
+
+## Odotettu tulos
+
+Hyväksy tulos kohteelle **Integraatiot: MCP ja REST API** vain kun kaikki seuraavat tulokset toteutuvat: DiscVault · `streamable-http` · `/mcp`; salaisuutena tallennettu palveluntarjoajan tunnus · `Authorization`. Sivukohtaiset tarkistuspisteet: `streamable-http` · `/mcp` · `Authorization` · `6090`.
+
+- DiscVault · `streamable-http` · `/mcp`
+- salaisuutena tallennettu palveluntarjoajan tunnus · `Authorization`
+
+## Turvallisuus ja palautus
+
+:::caution
+Turvallinen palautusraja kohteelle **Integraatiot: MCP ja REST API** edellyttää näitä toimia ennen käynnistystä tai jatkamista: poista integraatio käytöstä, peru testi- tai paljastuneet tunnukset, luo tarvittaessa uusi äläkä käytä vanhaa uudelleen. Sivukohtaiset tarkistuspisteet: `streamable-http` · `/mcp` · `Authorization` · `6090`.
+
+- poista integraatio käytöstä, peru testi- tai paljastuneet tunnukset, luo tarvittaessa uusi äläkä käytä vanhaa uudelleen
+:::
+
+## Seuraava vaihe
+
+[Integraatiot: Plex ja Jellyfin](/fi/integrations/plex-jellyfin/)
+
+## Lähde ja tila
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Lähde ja tila: `2026-07-14`
+- DiscVault Docs: `0.1.0`

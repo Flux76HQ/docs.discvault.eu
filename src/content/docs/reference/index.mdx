@@ -1,0 +1,74 @@
+---
+title: 'Reference'
+description: 'Look up image channels, ports, endpoints, persistent data locations, and channel-specific environment keys.'
+pageId: 'reference-index'
+products: ['server', 'pwa', 'ios', 'android']
+platforms: ['all']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="all platforms" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Goal and result
+
+Look up image channels, ports, endpoints, persistent data locations, and channel-specific environment keys.
+
+## Applies to
+
+`ghcr.io/helmerznl/discvault:latest` is DiscVault v26 stable and `ghcr.io/helmerznl/discvault:beta` is DiscVault v26 beta. They share one PostgreSQL-backed architecture; only the image tag differs. `:dev` is engineering-only.
+
+### DiscVault v26 stable
+
+- DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
+- PostgreSQL + `/data`
+- API `6080:5000` + MCP `6090:6090`
+
+### DiscVault v26 beta
+
+- DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
+- PostgreSQL + `/data`
+- API `6080:5000` + MCP `6090:6090`
+
+## Prerequisites
+
+- selected release channel
+
+## Procedure
+
+1. **Inspect:** running image digest · `:latest` / `:beta`
+2. **Record:** `:dev` is engineering-only and not a release channel; DiscVault v26 stable uses `:latest` and DiscVault v26 beta uses `:beta` · `:dev`
+3. **Record:** ports + `/api/next/health` + passkey keys
+4. **Record:** PostgreSQL + `/data` · matched backup method
+
+
+
+## Expected result
+
+An operator can identify the running channel and all data that must be backed up before a change.
+
+- selected release channel · `@sha256:`
+- `:latest` · `:beta` · `:dev`
+
+## Safety and rollback
+
+:::caution
+Reference information makes no changes. Return to the focused procedure for commands and checks.
+
+- the reference is read-only; use the focused procedure before running commands or changing data
+- `:dev` is engineering-only and not a release channel; DiscVault v26 stable uses `:latest` and DiscVault v26 beta uses `:beta` · `:dev`
+:::
+
+## Next step
+
+[Start: Overview](/start/)
+
+## Source and status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Verified: `2026-07-14`
+- DiscVault Docs: `0.1.0`

@@ -1,0 +1,76 @@
+---
+title: 'Konfiguration: Oversigt'
+description: 'Opgavespecifik vejledning til Konfiguration: Oversigt: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.'
+pageId: 'configure-index'
+products: ['server']
+platforms: ['docker', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Mål og resultat
+
+Gennemfør den sidespecifikke arbejdsgang for **Konfiguration: Oversigt**. Denne fremgangsmåde arbejder med `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+
+## Gælder for
+
+Denne side gælder kun for **Konfiguration: Oversigt** (Docker · web). Kanal- og datagrænserne er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. Sidespecifikke kontrolpunkter: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- RBAC
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- RBAC
+
+## Forudsætninger
+
+- ejeraadgang
+- `/configure/auth-rbac/`
+
+## Fremgangsmåde
+
+1. **Vælg:** [Konfiguration: Miljøvariabler](/da/configure/environment/)
+2. **Vælg:** [Konfiguration: Godkendelse og RBAC](/da/configure/auth-rbac/) · RBAC
+3. **Vælg:** [Konfiguration: Plugins og metadata](/da/configure/plugins-metadata/)
+4. **Registrér:** `/configure/environment/`
+
+### Opgaveruter
+
+- [Konfiguration: Miljøvariabler](/da/configure/environment/) — `/configure/environment/`
+- [Konfiguration: Godkendelse og RBAC](/da/configure/auth-rbac/) — DiscVault 26 RBAC
+- [Konfiguration: Plugins og metadata](/da/configure/plugins-metadata/) — DiscVault 26
+
+## Forventet resultat
+
+Godkend resultatet for **Konfiguration: Oversigt** kun når alle resultater nedenfor er opfyldt: valgt udgivelseskanal; `/configure/auth-rbac/`. Sidespecifikke kontrolpunkter: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+
+- valgt udgivelseskanal
+- `/configure/auth-rbac/`
+
+## Sikkerhed og tilbagerulning
+
+:::caution
+Den sikre gendannelsesgrænse for **Konfiguration: Oversigt** kræver disse handlinger, før noget startes eller fortsættes: ændr ét delsystem ad gangen, behold tidligere værdi og backup, og rul tilbage før næste ændring. Sidespecifikke kontrolpunkter: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+
+- ændr ét delsystem ad gangen, behold tidligere værdi og backup, og rul tilbage før næste ændring
+:::
+
+## Næste trin
+
+[Konfiguration: Miljøvariabler](/da/configure/environment/)
+
+## Kilde og status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Kilde og status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

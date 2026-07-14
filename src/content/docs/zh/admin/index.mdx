@@ -1,0 +1,81 @@
+---
+title: '管理: 日志、任务和安全'
+description: '任务专用说明： 管理: 日志、任务和安全: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.'
+pageId: 'admin-index'
+products: ['server']
+platforms: ['docker', 'unraid', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid · 网页" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## 目标和结果
+
+完成此页面专用的流程： **管理: 日志、任务和安全**. 此流程使用 `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+## 适用范围
+
+本页面仅适用于 **管理: 日志、任务和安全** (Docker · Unraid · 网页). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; API MCP PostgreSQL; DiscVault · `ghcr.io/helmerznl/discvault:beta`; API MCP PostgreSQL. 本页面专用检查点： `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+### DiscVault v26 稳定版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- API MCP PostgreSQL
+
+### DiscVault v26 测试版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- API MCP PostgreSQL
+
+## 前提条件
+
+- 所有者权限
+- 匹配的备份集
+- 已隐藏隐私数据且带时间戳的日志
+
+## 操作步骤
+
+1. **检查:** `/api/next/health`
+2. **检查:** 已隐藏隐私数据且带时间戳的日志
+3. **验证:** `next-worker`
+4. **保留:** `--tail=200`
+
+### 命令和设置
+
+#### 两个通道
+
+```bash
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml logs --tail=200 next-api next-worker next-mcp postgres
+curl --fail http://localhost:6080/api/next/jobs
+curl --fail http://localhost:6080/api/next/health
+```
+
+## 预期结果
+
+仅在以下条件下接受结果： **管理: 日志、任务和安全** 必须确认以下所有结果： 已隔离出单个故障层，并记录时间戳、状态、镜像摘要和脱敏错误; 匹配的备份集. 本页面专用检查点： `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+- 已隔离出单个故障层，并记录时间戳、状态、镜像摘要和脱敏错误
+- 匹配的备份集
+
+## 安全与回滚
+
+:::caution
+安全恢复边界： **管理: 日志、任务和安全** 在启动或继续任何操作前必须执行： 不要先删除卷、`/data`、浏览器凭据或原生应用存储；保留脱敏日志且只恢复匹配备份. 本页面专用检查点： `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+- 不要先删除卷、`/data`、浏览器凭据或原生应用存储；保留脱敏日志且只恢复匹配备份
+:::
+
+## 下一步
+
+[故障排除](/zh/troubleshooting/)
+
+## 来源和状态
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- 来源和状态: `2026-07-14`
+- DiscVault Docs: `0.1.0`

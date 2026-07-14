@@ -1,0 +1,83 @@
+---
+title: 'Instalación: Proxy inverso y claves de acceso'
+description: 'Instrucciones específicas para Instalación: Proxy inverso y claves de acceso: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.'
+pageId: 'install-reverse-proxy-passkeys'
+products: ['server']
+platforms: ['docker', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Objetivo y resultado
+
+Completa el flujo específico de la página para **Instalación: Proxy inverso y claves de acceso**. Este procedimiento utiliza `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+
+## Aplicable a
+
+Esta página se aplica solo a **Instalación: Proxy inverso y claves de acceso** (Docker · web). Sus límites de canal y datos son: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`. Puntos de control de esta página: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+
+### DiscVault v26 estable
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `RP_ID` `RP_ORIGINS`
+- `6080` API `5000`
+
+### DiscVault v26 beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `RP_ID` `RP_ORIGINS`
+- `6080` API `5000`
+
+## Requisitos previos
+
+- DNS
+- TLS
+- `6080`
+
+## Procedimiento
+
+1. **Configura:** `RP_ID`
+2. **Configura:** `RP_ORIGINS` · HTTPS
+3. **Configura:** `http://127.0.0.1:6080`
+4. **Prueba:** `GET /api/next/health`
+
+### Comandos y ajustes
+
+#### Ambos canales
+
+```text
+RP_ID=discvault.example.com
+RP_ORIGINS=https://discvault.example.com
+curl --fail https://discvault.example.com/api/next/health
+```
+
+## Resultado esperado
+
+Acepta el resultado de **Instalación: Proxy inverso y claves de acceso** solo cuando se cumplan todos estos resultados: HTTPS · HTTP `2xx`; `RP_ID`. Puntos de control de esta página: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+
+- HTTPS · HTTP `2xx`
+- `RP_ID`
+
+## Seguridad y reversión
+
+:::caution
+El límite de recuperación segura de **Instalación: Proxy inverso y claves de acceso** exige estas acciones antes de iniciar o continuar: restaura juntos el proxy y los valores RP y conserva un método de recuperación del propietario. Puntos de control de esta página: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+
+- restaura juntos el proxy y los valores RP y conserva un método de recuperación del propietario
+:::
+
+## Siguiente paso
+
+[Instalación: Primer inicio y comprobación de estado](/es/install/first-start-health/)
+
+## Fuente y estado
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Fuente y estado: `2026-07-14`
+- DiscVault Docs: `0.1.0`

@@ -1,0 +1,91 @@
+---
+title: '集成: MCP 和 REST API'
+description: '任务专用说明： 集成: MCP 和 REST API: `streamable-http` · `/mcp` · `Authorization` · `6090`.'
+pageId: 'integrations-mcp-api'
+products: ['server']
+platforms: ['web', 'docker']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="网页 · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## 目标和结果
+
+完成此页面专用的流程： **集成: MCP 和 REST API**. 此流程使用 `streamable-http` · `/mcp` · `Authorization` · `6090`.
+
+## 适用范围
+
+本页面仅适用于 **集成: MCP 和 REST API** (网页 · Docker). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/mcp` `6090` · REST API; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/mcp` `6090` · REST API. 本页面专用检查点： `streamable-http` · `/mcp` · `Authorization` · `6090`.
+
+### DiscVault v26 稳定版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `/mcp` `6090` · REST API
+
+### DiscVault v26 测试版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `/mcp` `6090` · REST API
+
+## 前提条件
+
+- API
+- HTTPS DiscVault
+- MCP HTTP
+
+## 操作步骤
+
+1. **创建:** API
+2. **配置:** `streamable-http` · `https://discvault.example.com/mcp`
+3. **测试:** `Authorization`
+4. **撤销:** `6090`
+
+### 命令和设置
+
+#### 两个通道
+
+```json
+{
+  "mcpServers": {
+    "discvault": {
+      "transport": "streamable-http",
+      "url": "https://discvault.example.com/mcp",
+      "headers": { "Authorization": "******" }
+    }
+  }
+}
+```
+
+```bash
+curl --fail https://discvault.example.com/api/next/health
+```
+
+## 预期结果
+
+仅在以下条件下接受结果： **集成: MCP 和 REST API** 必须确认以下所有结果： DiscVault · `streamable-http` · `/mcp`; 以机密方式保存的提供商凭据 · `Authorization`. 本页面专用检查点： `streamable-http` · `/mcp` · `Authorization` · `6090`.
+
+- DiscVault · `streamable-http` · `/mcp`
+- 以机密方式保存的提供商凭据 · `Authorization`
+
+## 安全与回滚
+
+:::caution
+安全恢复边界： **集成: MCP 和 REST API** 在启动或继续任何操作前必须执行： 禁用集成并撤销测试或已泄露凭据；需要时新建凭据，绝不能重复使用旧凭据. 本页面专用检查点： `streamable-http` · `/mcp` · `Authorization` · `6090`.
+
+- 禁用集成并撤销测试或已泄露凭据；需要时新建凭据，绝不能重复使用旧凭据
+:::
+
+## 下一步
+
+[集成: Plex 和 Jellyfin](/zh/integrations/plex-jellyfin/)
+
+## 来源和状态
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- 来源和状态: `2026-07-14`
+- DiscVault Docs: `0.1.0`

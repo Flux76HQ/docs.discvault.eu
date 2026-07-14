@@ -1,0 +1,83 @@
+---
+title: 'Install: Reverse proxy and passkeys'
+description: 'Terminate HTTPS at a reverse proxy and keep passkey relying-party values aligned with the public origin.'
+pageId: 'install-reverse-proxy-passkeys'
+products: ['server']
+platforms: ['docker', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Goal and result
+
+Terminate HTTPS at a reverse proxy and keep passkey relying-party values aligned with the public origin.
+
+## Applies to
+
+DiscVault v26 stable and beta both use `RP_ID`, `RP_ORIGINS`, and `/api/next/health`. The proxy connects to host port 6080, which maps to API container port 5000. `RP_ID` is the hostname only.
+
+### DiscVault v26 stable
+
+- DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
+- same `RP_ID` + `RP_ORIGINS` configuration
+- proxy host port `6080`; API listens on container port `5000`
+
+### DiscVault v26 beta
+
+- DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
+- same `RP_ID` + `RP_ORIGINS` configuration
+- proxy host port `6080`; API listens on container port `5000`
+
+## Prerequisites
+
+- public DNS
+- TLS certificate
+- reverse proxy
+
+## Procedure
+
+1. **Configure:** `RP_ID` · hostname only
+2. **Configure:** `RP_ORIGINS` · exact public HTTPS origin
+3. **Configure:** proxy upstream · `http://127.0.0.1:6080`
+4. **Test:** `GET /api/next/health` · passkey registration · same origin
+
+### Commands and settings
+
+#### Both channels
+
+```text
+RP_ID=discvault.example.com
+RP_ORIGINS=https://discvault.example.com
+curl --fail https://discvault.example.com/api/next/health
+```
+
+## Expected result
+
+The applicable public health URL succeeds and a passkey can be registered and used from the same HTTPS hostname.
+
+- HTTPS health · HTTP `2xx`
+- passkey · `RP_ID` + public origin
+
+## Safety and rollback
+
+:::caution
+Restore the prior proxy configuration and RP values together. A hostname change can make existing passkeys unusable, so keep an owner recovery path.
+
+- restore proxy and RP values together and keep an owner recovery method
+:::
+
+## Next step
+
+[Install: First start and health check](/install/first-start-health/)
+
+## Source and status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Verified: `2026-07-14`
+- DiscVault Docs: `0.1.0`

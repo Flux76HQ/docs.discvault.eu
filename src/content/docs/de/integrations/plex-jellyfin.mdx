@@ -1,0 +1,82 @@
+---
+title: 'Integrationen: Plex und Jellyfin'
+description: 'Aufgabenspezifische Anleitung für Integrationen: Plex und Jellyfin: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.'
+pageId: 'integrations-plex-jellyfin'
+products: ['server']
+platforms: ['web', 'docker']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Web · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Ziel und Ergebnis
+
+Führe den seitenspezifischen Ablauf aus für **Integrationen: Plex und Jellyfin**. Dieses Verfahren arbeitet mit Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+## Gültig für
+
+Diese Seite gilt ausschließlich für **Integrationen: Plex und Jellyfin** (Web · Docker). Kanal- und Datengrenzen sind: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26. Seitenspezifische Kontrollpunkte: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault 26
+
+### DiscVault v26 – Beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault 26
+
+## Voraussetzungen
+
+- als Secret gespeicherte Anbieter-Zugangsdaten
+- Jellyfin
+- Owner- oder Administratorsitzung
+
+## Vorgehen
+
+1. **Konfigurieren:** Administration → Plugins → Anbieter → Konfigurieren · Plex Jellyfin
+2. **Testen:** Administration → Plugins → Zustandsprüfung
+3. **Ausführen:** Administration → Plugins → Erkennen ohne Speichern · `dryRun=true`
+4. **Vergleichen:** `/api/next/digital-items?limit=200`
+
+### Befehle und Einstellungen
+
+#### Beide Kanäle
+
+```bash
+curl --fail http://localhost:6080/api/next/digital-sources
+curl --fail 'http://localhost:6080/api/next/digital-items?limit=200'
+```
+
+## Erwartetes Ergebnis
+
+Akzeptiere das Ergebnis für **Integrationen: Plex und Jellyfin** nur wenn alle folgenden Ergebnisse erfüllt sind: Administration → Plugins → Zustandsprüfung; Administration → Plugins → Erkennen ohne Speichern · `dryRun=true`; Plex · Jellyfin · `/api/next/digital-items`. Seitenspezifische Kontrollpunkte: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+- Administration → Plugins → Zustandsprüfung
+- Administration → Plugins → Erkennen ohne Speichern · `dryRun=true`
+- Plex · Jellyfin · `/api/next/digital-items`
+
+## Sicherheit und Rollback
+
+:::caution
+Die sichere Wiederherstellungsgrenze für **Integrationen: Plex und Jellyfin** verlangt vor jedem Start oder Fortsetzen diese Maßnahmen: Anbieter vor dem Entfernen deaktivieren, `/data/plugins` sichern und offengelegte Zugangsdaten widerrufen; Integration deaktivieren, Test- oder offengelegte Zugangsdaten widerrufen, bei Bedarf neue erstellen und alte niemals wiederverwenden. Seitenspezifische Kontrollpunkte: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+- Anbieter vor dem Entfernen deaktivieren, `/data/plugins` sichern und offengelegte Zugangsdaten widerrufen
+- Integration deaktivieren, Test- oder offengelegte Zugangsdaten widerrufen, bei Bedarf neue erstellen und alte niemals wiederverwenden
+:::
+
+## Nächster Schritt
+
+[Fehlerbehebung](/de/troubleshooting/)
+
+## Quelle und Status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Quelle und Status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

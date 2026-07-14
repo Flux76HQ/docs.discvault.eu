@@ -1,0 +1,68 @@
+---
+title: 'iOS/iPadOS: Daily use and sync limits'
+description: 'Use the local library, lists, scanning, notifications, app lock, and optional server connection without assuming unsupported synchronization.'
+pageId: 'ios-use-sync-limits'
+products: ['ios']
+platforms: ['ios']
+channels: ['beta']
+minVersion: 'iOS/iPadOS 17+'
+sourceRepos: ['helmerzNL/DiscVaultApp', 'helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../components/PageMeta.astro';
+
+<PageMeta channels="beta" platform="iOS" version="iOS/iPadOS 17+" source="helmerzNL/DiscVaultApp · helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Goal and result
+
+Use the local library, lists, scanning, notifications, app lock, and optional server connection without assuming unsupported synchronization.
+
+## Applies to
+
+Beta. Local/offline use is verified. The native source previously contained placeholder `/api/v1` sync routes; only the server connection behavior confirmed by the installed build should be trusted.
+
+### Beta channel
+
+- SwiftData · the test title remains after app restart and an offline launch
+- `/api/v1` · source-verified beta build; no public store availability claim
+
+## Prerequisites
+
+- completed onboarding
+- small disposable test library
+
+## Procedure
+
+1. **Test:** Library → Search · Library → Add → Scan barcode / Enter manually · airplane mode
+2. **Create:** local offline-first library · the test title remains after app restart and an offline launch
+3. **Configure:** Settings → App Lock · Settings → Server connection
+4. **Compare:** optional server connection tested with one item · one test item matches locally and on the server, or synchronization stays disabled
+
+
+
+## Expected result
+
+Local edits persist offline. Any sync test clearly reports success and produces matching records on both sides before broader use.
+
+- the test title remains after app restart and an offline launch
+- one test item matches locally and on the server, or synchronization stays disabled
+
+## Safety and rollback
+
+:::caution
+Disable the server connection after sync errors and keep the local library authoritative until compatibility is confirmed. Do not repeatedly retry duplicate-producing sync.
+
+- one test item matches locally and on the server, or synchronization stays disabled · local offline-first library · `/api/v1`
+:::
+
+## Next step
+
+[Android: Setup](/android/)
+
+## Source and status
+
+- [`helmerzNL/DiscVaultApp@9d15ab2a339c`](https://github.com/helmerzNL/DiscVaultApp/commit/9d15ab2a339cefdb164ec0ab29ad69ddabc511c1)
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Verified: `2026-07-14`
+- DiscVault Docs: `0.1.0`

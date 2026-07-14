@@ -1,0 +1,85 @@
+---
+title: 'インストール: 永続データと PostgreSQL'
+description: 'タスク別の手順: インストール: 永続データと PostgreSQL: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.'
+pageId: 'install-storage-postgresql'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## 目的と結果
+
+このページ専用の手順を実行します: **インストール: 永続データと PostgreSQL**. この手順で扱う項目: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
+
+## 対象
+
+このページの対象は **インストール: 永続データと PostgreSQL** (Docker · Unraid). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL; `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL; `/data`. このページ固有の確認点: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
+
+### DiscVault v26 安定版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PostgreSQL
+- `/data`
+
+### DiscVault v26 ベータ版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PostgreSQL
+- `/data`
+
+## 前提条件
+
+- `DISCVAULT_POSTGRES_DATA`
+- 稼働データ外のバックアップ先
+- PostgreSQL `17`
+
+## 手順
+
+1. **確認:** `DISCVAULT_POSTGRES_DATA` · `/var/lib/postgresql/data`
+2. **確認:** `DISCVAULT_DATA_DIR` · `/data`
+3. **検証:** `postgres` · `healthy` · `next-api`
+4. **記録:** 同じ書き込み停止時間帯の PostgreSQL ダンプとファイルアーカイブ
+
+### コマンドと設定
+
+#### 両方のチャンネル
+
+```bash
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml ps
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml exec -T postgres sh -c 'pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"'
+docker inspect discvault-next-api-1 --format '{{range .Mounts}}{{.Source}} -> {{.Destination}}{{println}}{{end}}'
+```
+
+## 期待される結果
+
+次の結果を受け入れる条件: **インストール: 永続データと PostgreSQL** 以下の結果をすべて確認した場合のみ: PostgreSQL · `healthy`; `/data`; 一致するバックアップ一式. このページ固有の確認点: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
+
+- PostgreSQL · `healthy`
+- `/data`
+- 一致するバックアップ一式
+
+## 安全性とロールバック
+
+:::caution
+安全な復旧境界: **インストール: 永続データと PostgreSQL** 起動または続行の前に、次の操作が必要です: PostgreSQL と `/data` は別々の保存先で、一致するバックアップ一式が必要です; 稼働データ外のバックアップ先. このページ固有の確認点: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
+
+- PostgreSQL と `/data` は別々の保存先で、一致するバックアップ一式が必要です
+- 稼働データ外のバックアップ先
+:::
+
+## 次の手順
+
+[インストール: リバースプロキシとパスキー](/ja/install/reverse-proxy-passkeys/)
+
+## 情報源と状態
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- 情報源と状態: `2026-07-14`
+- DiscVault Docs: `0.1.0`

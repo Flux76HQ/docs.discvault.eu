@@ -1,0 +1,78 @@
+---
+title: 'Ενημέρωση και μετεγκατάσταση: Επισκόπηση'
+description: 'Οδηγίες ειδικά για την εργασία: Ενημέρωση και μετεγκατάσταση: Επισκόπηση: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.'
+pageId: 'update-index'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Στόχος και αποτέλεσμα
+
+Ολοκληρώστε τη ροή εργασίας της σελίδας για **Ενημέρωση και μετεγκατάσταση: Επισκόπηση**. Η διαδικασία χρησιμοποιεί `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+## Ισχύει για
+
+Αυτή η σελίδα ισχύει μόνο για **Ενημέρωση και μετεγκατάσταση: Επισκόπηση** (Docker · Unraid). Τα όρια καναλιού και δεδομένων είναι: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/update/restore/`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/update/restore/`. Σημεία ελέγχου της σελίδας: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+### DiscVault v26 – σταθερό
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `/update/restore/`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `/update/restore/`
+
+## Προϋποθέσεις
+
+- αντίστοιχο σύνολο αντιγράφων
+- σημειώσεις έκδοσης και καταγεγραμμένο αμετάβλητο digest
+
+## Διαδικασία
+
+1. **Δημιουργήστε αντίγραφο:** [Ενημέρωση και μετεγκατάσταση: Αντίγραφο ασφαλείας](/el/update/backup/) · αντίστοιχο σύνολο αντιγράφων
+2. **Δοκιμάστε:** [Ενημέρωση και μετεγκατάσταση: Επαναφορά](/el/update/restore/)
+3. **Εκτελέστε:** [Ενημέρωση και μετεγκατάσταση: Ενημέρωση περιέκτη](/el/update/update/) · `DISCVAULT_IMAGE`
+4. **Διατηρήστε:** [Ενημέρωση και μετεγκατάσταση: Επαναφορά εικόνας](/el/update/rollback/)
+
+### Διαδρομές εργασιών
+
+- [Ενημέρωση και μετεγκατάσταση: Αντίγραφο ασφαλείας](/el/update/backup/) — 1 PostgreSQL
+- [Ενημέρωση και μετεγκατάσταση: Επαναφορά](/el/update/restore/) — 2
+- [Ενημέρωση και μετεγκατάσταση: Ενημέρωση περιέκτη](/el/update/update/) — 3
+- [Ενημέρωση και μετεγκατάσταση: Επαναφορά εικόνας](/el/update/rollback/) — 4
+
+## Αναμενόμενο αποτέλεσμα
+
+Αποδεχθείτε το αποτέλεσμα για **Ενημέρωση και μετεγκατάσταση: Επισκόπηση** μόνο όταν ισχύουν όλα τα παρακάτω αποτελέσματα: το αρχείο και το dump δεν είναι κενά, διαβάζονται σε δοκιμή επαναφοράς και συνδέονται με αμετάβλητο digest εικόνας; εκτελείται το σωστό digest εικόνας, ο έλεγχος υγείας πετυχαίνει και περνούν σύνδεση κατόχου, πλήθος βιβλιοθήκης και δείγμα πολυμέσων. Σημεία ελέγχου της σελίδας: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+- το αρχείο και το dump δεν είναι κενά, διαβάζονται σε δοκιμή επαναφοράς και συνδέονται με αμετάβλητο digest εικόνας
+- εκτελείται το σωστό digest εικόνας, ο έλεγχος υγείας πετυχαίνει και περνούν σύνδεση κατόχου, πλήθος βιβλιοθήκης και δείγμα πολυμέσων
+
+## Ασφάλεια και επαναφορά
+
+:::caution
+Το ασφαλές όριο ανάκτησης για **Ενημέρωση και μετεγκατάσταση: Επισκόπηση** απαιτεί αυτές τις ενέργειες πριν από κάθε εκκίνηση ή συνέχεια: αντίστοιχο σύνολο αντιγράφων; `PREVIOUS_IMAGE` · `@sha256:`. Σημεία ελέγχου της σελίδας: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+- αντίστοιχο σύνολο αντιγράφων
+- `PREVIOUS_IMAGE` · `@sha256:`
+:::
+
+## Επόμενο βήμα
+
+[Ενημέρωση και μετεγκατάσταση: Αντίγραφο ασφαλείας](/el/update/backup/)
+
+## Πηγή και κατάσταση
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Πηγή και κατάσταση: `2026-07-14`
+- DiscVault Docs: `0.1.0`

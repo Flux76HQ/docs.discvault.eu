@@ -1,0 +1,72 @@
+---
+title: 'PWA: Λειτουργία εκτός σύνδεσης'
+description: 'Οδηγίες ειδικά για την εργασία: PWA: Λειτουργία εκτός σύνδεσης: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.'
+pageId: 'pwa-offline'
+products: ['pwa']
+platforms: ['web', 'ios', 'android']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="ιστός · iOS · Android" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Στόχος και αποτέλεσμα
+
+Ολοκληρώστε τη ροή εργασίας της σελίδας για **PWA: Λειτουργία εκτός σύνδεσης**. Η διαδικασία χρησιμοποιεί `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+## Ισχύει για
+
+Αυτή η σελίδα ισχύει μόνο για **PWA: Λειτουργία εκτός σύνδεσης** (ιστός · iOS · Android). Τα όρια καναλιού και δεδομένων είναι: DiscVault · `ghcr.io/helmerznl/discvault:latest`; οι αποθηκευμένες οθόνες μπορεί να ανοίγουν, αλλά νέα δεδομένα και εγγραφές απαιτούν δίκτυο · `Service Worker` · `CacheStorage`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; οι αποθηκευμένες οθόνες μπορεί να ανοίγουν, αλλά νέα δεδομένα και εγγραφές απαιτούν δίκτυο · `Service Worker` · `CacheStorage`. Σημεία ελέγχου της σελίδας: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+### DiscVault v26 – σταθερό
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- οι αποθηκευμένες οθόνες μπορεί να ανοίγουν, αλλά νέα δεδομένα και εγγραφές απαιτούν δίκτυο · `Service Worker` · `CacheStorage`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- οι αποθηκευμένες οθόνες μπορεί να ανοίγουν, αλλά νέα δεδομένα και εγγραφές απαιτούν δίκτυο · `Service Worker` · `CacheStorage`
+
+## Προϋποθέσεις
+
+- PWA
+- `CacheStorage`
+
+## Διαδικασία
+
+1. **Ανοίξτε:** Βιβλιοθήκη → Αναζήτηση
+2. **Δοκιμάστε:** λειτουργία πτήσης · `Service Worker`
+3. **Καταγράψτε:** `navigator.onLine`
+4. **Επανασυνδέστε:** HTTPS
+
+
+
+## Αναμενόμενο αποτέλεσμα
+
+Αποδεχθείτε το αποτέλεσμα για **PWA: Λειτουργία εκτός σύνδεσης** μόνο όταν ισχύουν όλα τα παρακάτω αποτελέσματα: οι αποθηκευμένες οθόνες μπορεί να ανοίγουν, αλλά νέα δεδομένα και εγγραφές απαιτούν δίκτυο; `Service Worker` · `navigator.onLine`. Σημεία ελέγχου της σελίδας: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+- οι αποθηκευμένες οθόνες μπορεί να ανοίγουν, αλλά νέα δεδομένα και εγγραφές απαιτούν δίκτυο
+- `Service Worker` · `navigator.onLine`
+
+## Ασφάλεια και επαναφορά
+
+:::caution
+Το ασφαλές όριο ανάκτησης για **PWA: Λειτουργία εκτός σύνδεσης** απαιτεί αυτές τις ενέργειες πριν από κάθε εκκίνηση ή συνέχεια: οι αποθηκευμένες οθόνες μπορεί να ανοίγουν, αλλά νέα δεδομένα και εγγραφές απαιτούν δίκτυο · DiscVault. Σημεία ελέγχου της σελίδας: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+- οι αποθηκευμένες οθόνες μπορεί να ανοίγουν, αλλά νέα δεδομένα και εγγραφές απαιτούν δίκτυο · DiscVault
+:::
+
+## Επόμενο βήμα
+
+[Αντιμετώπιση προβλημάτων](/el/troubleshooting/)
+
+## Πηγή και κατάσταση
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Πηγή και κατάσταση: `2026-07-14`
+- DiscVault Docs: `0.1.0`

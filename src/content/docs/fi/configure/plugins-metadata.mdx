@@ -1,0 +1,78 @@
+---
+title: 'Määritys: Liitännäiset ja metatiedot'
+description: 'Tehtäväkohtaiset ohjeet: Määritys: Liitännäiset ja metatiedot: `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.'
+pageId: 'configure-plugins-metadata'
+products: ['server']
+platforms: ['web', 'docker']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="verkko · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Tavoite ja tulos
+
+Suorita sivukohtainen työnkulku: **Määritys: Liitännäiset ja metatiedot**. Tässä menettelyssä käytetään `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.
+
+## Koskee
+
+Tämä sivu koskee vain kohdetta **Määritys: Liitännäiset ja metatiedot** (verkko · Docker). Kanava- ja tietorajat ovat: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26 · `/data/plugins`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26 · `/data/plugins`. Sivukohtaiset tarkistuspisteet: `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.
+
+### DiscVault v26 – vakaa
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault 26 · `/data/plugins`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault 26 · `/data/plugins`
+
+## Edellytykset
+
+- omistajan tai ylläpitäjän istunto
+- salaisuutena tallennettu palveluntarjoajan tunnus
+
+## Toimenpiteet
+
+1. **Tarkista:** `GET /api/next/plugins/registry`
+2. **Määritä:** Ylläpito → Liitännäiset → Tarjoaja → Määritä · salaisuutena tallennettu palveluntarjoajan tunnus
+3. **Testaa:** Ylläpito → Liitännäiset → Kuntotarkistus · Ylläpito → Liitännäiset → Etsi tallentamatta · `dryRun`
+4. **Kirjaa:** `secret app_settings`
+
+### Komennot ja asetukset
+
+#### Molemmat kanavat
+
+```bash
+curl --fail http://localhost:6080/api/next/plugins/registry
+curl --fail http://localhost:6080/api/next/metadata/plugins
+```
+
+## Odotettu tulos
+
+Hyväksy tulos kohteelle **Määritys: Liitännäiset ja metatiedot** vain kun kaikki seuraavat tulokset toteutuvat: rekisteri näyttää palveluntarjoajan, health-tarkistus onnistuu ja kuivajo palauttaa odotetun metatietonäytteen. Sivukohtaiset tarkistuspisteet: `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.
+
+- rekisteri näyttää palveluntarjoajan, health-tarkistus onnistuu ja kuivajo palauttaa odotetun metatietonäytteen
+
+## Turvallisuus ja palautus
+
+:::caution
+Turvallinen palautusraja kohteelle **Määritys: Liitännäiset ja metatiedot** edellyttää näitä toimia ennen käynnistystä tai jatkamista: poista palveluntarjoaja käytöstä ennen poistamista, varmuuskopioi `/data/plugins` ja peru paljastunut tunnus. Sivukohtaiset tarkistuspisteet: `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.
+
+- poista palveluntarjoaja käytöstä ennen poistamista, varmuuskopioi `/data/plugins` ja peru paljastunut tunnus
+:::
+
+## Seuraava vaihe
+
+[Integraatiot: Plex ja Jellyfin](/fi/integrations/plex-jellyfin/)
+
+## Lähde ja tila
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Lähde ja tila: `2026-07-14`
+- DiscVault Docs: `0.1.0`

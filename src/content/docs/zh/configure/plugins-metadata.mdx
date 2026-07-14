@@ -1,0 +1,78 @@
+---
+title: '配置: 插件和元数据'
+description: '任务专用说明： 配置: 插件和元数据: `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.'
+pageId: 'configure-plugins-metadata'
+products: ['server']
+platforms: ['web', 'docker']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="网页 · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## 目标和结果
+
+完成此页面专用的流程： **配置: 插件和元数据**. 此流程使用 `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.
+
+## 适用范围
+
+本页面仅适用于 **配置: 插件和元数据** (网页 · Docker). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26 · `/data/plugins`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26 · `/data/plugins`. 本页面专用检查点： `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.
+
+### DiscVault v26 稳定版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault 26 · `/data/plugins`
+
+### DiscVault v26 测试版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault 26 · `/data/plugins`
+
+## 前提条件
+
+- 所有者或管理员会话
+- 以机密方式保存的提供商凭据
+
+## 操作步骤
+
+1. **检查:** `GET /api/next/plugins/registry`
+2. **配置:** 管理 → 插件 → 提供商 → 配置 · 以机密方式保存的提供商凭据
+3. **测试:** 管理 → 插件 → 健康检查 · 管理 → 插件 → 发现但不保存 · `dryRun`
+4. **记录:** `secret app_settings`
+
+### 命令和设置
+
+#### 两个通道
+
+```bash
+curl --fail http://localhost:6080/api/next/plugins/registry
+curl --fail http://localhost:6080/api/next/metadata/plugins
+```
+
+## 预期结果
+
+仅在以下条件下接受结果： **配置: 插件和元数据** 必须确认以下所有结果： 注册表列出提供商，健康检查通过，且试运行返回预期的元数据样本. 本页面专用检查点： `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.
+
+- 注册表列出提供商，健康检查通过，且试运行返回预期的元数据样本
+
+## 安全与回滚
+
+:::caution
+安全恢复边界： **配置: 插件和元数据** 在启动或继续任何操作前必须执行： 移除提供商前先将其禁用，备份 `/data/plugins`，并撤销任何已泄露凭据. 本页面专用检查点： `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.
+
+- 移除提供商前先将其禁用，备份 `/data/plugins`，并撤销任何已泄露凭据
+:::
+
+## 下一步
+
+[集成: Plex 和 Jellyfin](/zh/integrations/plex-jellyfin/)
+
+## 来源和状态
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- 来源和状态: `2026-07-14`
+- DiscVault Docs: `0.1.0`

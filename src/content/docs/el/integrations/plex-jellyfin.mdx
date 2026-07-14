@@ -1,0 +1,82 @@
+---
+title: 'Ενσωματώσεις: Plex και Jellyfin'
+description: 'Οδηγίες ειδικά για την εργασία: Ενσωματώσεις: Plex και Jellyfin: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.'
+pageId: 'integrations-plex-jellyfin'
+products: ['server']
+platforms: ['web', 'docker']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="ιστός · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Στόχος και αποτέλεσμα
+
+Ολοκληρώστε τη ροή εργασίας της σελίδας για **Ενσωματώσεις: Plex και Jellyfin**. Η διαδικασία χρησιμοποιεί Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+## Ισχύει για
+
+Αυτή η σελίδα ισχύει μόνο για **Ενσωματώσεις: Plex και Jellyfin** (ιστός · Docker). Τα όρια καναλιού και δεδομένων είναι: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26. Σημεία ελέγχου της σελίδας: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+### DiscVault v26 – σταθερό
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault 26
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault 26
+
+## Προϋποθέσεις
+
+- διαπιστευτήριο παρόχου αποθηκευμένο ως μυστικό
+- Jellyfin
+- συνεδρία κατόχου ή διαχειριστή
+
+## Διαδικασία
+
+1. **Ρυθμίστε:** Διαχείριση → Πρόσθετα → Πάροχος → Ρύθμιση · Plex Jellyfin
+2. **Δοκιμάστε:** Διαχείριση → Πρόσθετα → Έλεγχος λειτουργίας
+3. **Εκτελέστε:** Διαχείριση → Πρόσθετα → Εντοπισμός χωρίς αποθήκευση · `dryRun=true`
+4. **Συγκρίνετε:** `/api/next/digital-items?limit=200`
+
+### Εντολές και ρυθμίσεις
+
+#### Και τα δύο κανάλια
+
+```bash
+curl --fail http://localhost:6080/api/next/digital-sources
+curl --fail 'http://localhost:6080/api/next/digital-items?limit=200'
+```
+
+## Αναμενόμενο αποτέλεσμα
+
+Αποδεχθείτε το αποτέλεσμα για **Ενσωματώσεις: Plex και Jellyfin** μόνο όταν ισχύουν όλα τα παρακάτω αποτελέσματα: Διαχείριση → Πρόσθετα → Έλεγχος λειτουργίας; Διαχείριση → Πρόσθετα → Εντοπισμός χωρίς αποθήκευση · `dryRun=true`; Plex · Jellyfin · `/api/next/digital-items`. Σημεία ελέγχου της σελίδας: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+- Διαχείριση → Πρόσθετα → Έλεγχος λειτουργίας
+- Διαχείριση → Πρόσθετα → Εντοπισμός χωρίς αποθήκευση · `dryRun=true`
+- Plex · Jellyfin · `/api/next/digital-items`
+
+## Ασφάλεια και επαναφορά
+
+:::caution
+Το ασφαλές όριο ανάκτησης για **Ενσωματώσεις: Plex και Jellyfin** απαιτεί αυτές τις ενέργειες πριν από κάθε εκκίνηση ή συνέχεια: απενεργοποιήστε τον πάροχο πριν την αφαίρεση, αντιγράψτε το `/data/plugins` και ανακαλέστε εκτεθειμένα διαπιστευτήρια; απενεργοποιήστε την ενσωμάτωση, ανακαλέστε δοκιμαστικά ή εκτεθειμένα διαπιστευτήρια, δημιουργήστε νέα αν χρειάζεται και μην επαναχρησιμοποιείτε τα παλιά. Σημεία ελέγχου της σελίδας: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+- απενεργοποιήστε τον πάροχο πριν την αφαίρεση, αντιγράψτε το `/data/plugins` και ανακαλέστε εκτεθειμένα διαπιστευτήρια
+- απενεργοποιήστε την ενσωμάτωση, ανακαλέστε δοκιμαστικά ή εκτεθειμένα διαπιστευτήρια, δημιουργήστε νέα αν χρειάζεται και μην επαναχρησιμοποιείτε τα παλιά
+:::
+
+## Επόμενο βήμα
+
+[Αντιμετώπιση προβλημάτων](/el/troubleshooting/)
+
+## Πηγή και κατάσταση
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Πηγή και κατάσταση: `2026-07-14`
+- DiscVault Docs: `0.1.0`

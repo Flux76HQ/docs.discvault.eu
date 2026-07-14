@@ -1,0 +1,85 @@
+---
+title: 'Telepítés: Tartós adatok és PostgreSQL'
+description: 'Feladatspecifikus útmutató: Telepítés: Tartós adatok és PostgreSQL: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.'
+pageId: 'install-storage-postgresql'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Cél és eredmény
+
+Hajtsa végre az oldalhoz tartozó munkafolyamatot: **Telepítés: Tartós adatok és PostgreSQL**. Ez az eljárás ezeket használja: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
+
+## Érvényesség
+
+Ez az oldal kizárólag erre vonatkozik: **Telepítés: Tartós adatok és PostgreSQL** (Docker · Unraid). A csatorna- és adathatárok: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL; `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL; `/data`. Oldalspecifikus ellenőrzési pontok: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PostgreSQL
+- `/data`
+
+### DiscVault v26 – béta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PostgreSQL
+- `/data`
+
+## Előfeltételek
+
+- `DISCVAULT_POSTGRES_DATA`
+- mentési cél az élő adatútvonalon kívül
+- PostgreSQL `17`
+
+## Eljárás
+
+1. **Ellenőrizze:** `DISCVAULT_POSTGRES_DATA` · `/var/lib/postgresql/data`
+2. **Ellenőrizze:** `DISCVAULT_DATA_DIR` · `/data`
+3. **Ellenőrizze:** `postgres` · `healthy` · `next-api`
+4. **Jegyezze fel:** PostgreSQL dump és fájlarchívum ugyanabból a leállított írási ablakból
+
+### Parancsok és beállítások
+
+#### Mindkét csatorna
+
+```bash
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml ps
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml exec -T postgres sh -c 'pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"'
+docker inspect discvault-next-api-1 --format '{{range .Mounts}}{{.Source}} -> {{.Destination}}{{println}}{{end}}'
+```
+
+## Várt eredmény
+
+Az eredmény csak ennél fogadható el: **Telepítés: Tartós adatok és PostgreSQL** csak akkor, ha minden alábbi eredmény teljesül: PostgreSQL · `healthy`; `/data`; illeszkedő mentéskészlet. Oldalspecifikus ellenőrzési pontok: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
+
+- PostgreSQL · `healthy`
+- `/data`
+- illeszkedő mentéskészlet
+
+## Biztonság és visszaállítás
+
+:::caution
+A biztonságos helyreállítás határa ennél: **Telepítés: Tartós adatok és PostgreSQL** ezeket a műveleteket igényli indítás vagy folytatás előtt: a PostgreSQL és a `/data` külön tároló, ezért egy illeszkedő mentéskészlet szükséges; mentési cél az élő adatútvonalon kívül. Oldalspecifikus ellenőrzési pontok: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
+
+- a PostgreSQL és a `/data` külön tároló, ezért egy illeszkedő mentéskészlet szükséges
+- mentési cél az élő adatútvonalon kívül
+:::
+
+## Következő lépés
+
+[Telepítés: Fordított proxy és hozzáférési kulcsok](/hu/install/reverse-proxy-passkeys/)
+
+## Forrás és állapot
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Forrás és állapot: `2026-07-14`
+- DiscVault Docs: `0.1.0`

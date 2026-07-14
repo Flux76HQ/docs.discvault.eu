@@ -1,0 +1,114 @@
+---
+title: 'Päivitys ja siirto: Säilön päivitys'
+description: 'Tehtäväkohtaiset ohjeet: Päivitys ja siirto: Säilön päivitys: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.'
+pageId: 'update-update'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Tavoite ja tulos
+
+Suorita sivukohtainen työnkulku: **Päivitys ja siirto: Säilön päivitys**. Tässä menettelyssä käytetään `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+
+## Koskee
+
+Tämä sivu koskee vain kohdetta **Päivitys ja siirto: Säilön päivitys** (Docker · Unraid). Kanava- ja tietorajat ovat: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · julkaisutiedot ja kirjattu muuttumaton image-tiiviste · vastaava varmuuskopiosarja; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · julkaisutiedot ja kirjattu muuttumaton image-tiiviste · vastaava varmuuskopiosarja. Sivukohtaiset tarkistuspisteet: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+
+### DiscVault v26 – vakaa
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `DISCVAULT_IMAGE`
+- PostgreSQL `/data` · julkaisutiedot ja kirjattu muuttumaton image-tiiviste · vastaava varmuuskopiosarja
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `DISCVAULT_IMAGE`
+- PostgreSQL `/data` · julkaisutiedot ja kirjattu muuttumaton image-tiiviste · vastaava varmuuskopiosarja
+
+## Edellytykset
+
+- vastaava varmuuskopiosarja
+- julkaisutiedot ja kirjattu muuttumaton image-tiiviste
+
+## Toimenpiteet
+
+1. **Vahvista:** `PREVIOUS_IMAGE=@sha256:…`
+2. **Valitse:** `DISCVAULT_IMAGE` · `:latest` `:beta`
+3. **Suorita:** `--force-recreate`
+4. **Vertaa:** tarkoitettu image-tiiviste on käytössä, health onnistuu ja omistajan kirjautuminen, kirjastomäärä sekä mediatesti läpäisevät
+
+### Komennot ja asetukset
+
+#### DiscVault v26 – vakaa
+
+```bash
+export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
+```
+
+#### DiscVault v26 – beta
+
+```bash
+export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
+```
+
+#### Molemmat kanavat
+
+```bash
+set -euo pipefail
+test -n "$DISCVAULT_IMAGE"
+case "$DISCVAULT_IMAGE" in
+  ghcr.io/helmerznl/discvault:latest|ghcr.io/helmerznl/discvault:beta) ;;
+  *) printf '%s\n' "$DISCVAULT_IMAGE" >&2; exit 64 ;;
+esac
+cd /opt/discvault
+ENV_FILE=/opt/discvault/.env
+ENV_TMP="$(mktemp "$ENV_FILE.update.XXXXXX")"
+trap 'rm -f "$ENV_TMP"' EXIT
+awk -v image="$DISCVAULT_IMAGE" '
+  /^DISCVAULT_IMAGE=/ { print "DISCVAULT_IMAGE=" image; found=1; next }
+  { print }
+  END { if (!found) exit 42 }
+' "$ENV_FILE" > "$ENV_TMP"
+chmod 0600 "$ENV_TMP"
+docker compose --env-file "$ENV_TMP" -p discvault -f compose.yaml config --quiet
+docker compose --env-file "$ENV_TMP" -p discvault -f compose.yaml pull next-api next-worker next-mcp
+docker compose --env-file "$ENV_TMP" -p discvault -f compose.yaml up -d --force-recreate
+docker compose --env-file "$ENV_TMP" -p discvault -f compose.yaml ps
+curl --fail http://localhost:6080/api/next/health
+mv "$ENV_TMP" "$ENV_FILE"
+trap - EXIT
+```
+
+## Odotettu tulos
+
+Hyväksy tulos kohteelle **Päivitys ja siirto: Säilön päivitys** vain kun kaikki seuraavat tulokset toteutuvat: tarkoitettu image-tiiviste on käytössä, health onnistuu ja omistajan kirjautuminen, kirjastomäärä sekä mediatesti läpäisevät. Sivukohtaiset tarkistuspisteet: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+
+- tarkoitettu image-tiiviste on käytössä, health onnistuu ja omistajan kirjautuminen, kirjastomäärä sekä mediatesti läpäisevät
+
+## Turvallisuus ja palautus
+
+:::caution
+Turvallinen palautusraja kohteelle **Päivitys ja siirto: Säilön päivitys** edellyttää näitä toimia ennen käynnistystä tai jatkamista: [Päivitys ja siirto: Levykuvan palautus](/fi/update/rollback/) · vastaava varmuuskopiosarja; julkaisutiedot ja kirjattu muuttumaton image-tiiviste. Sivukohtaiset tarkistuspisteet: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+
+- [Päivitys ja siirto: Levykuvan palautus](/fi/update/rollback/) · vastaava varmuuskopiosarja
+- julkaisutiedot ja kirjattu muuttumaton image-tiiviste
+:::
+
+## Seuraava vaihe
+
+[Päivitys ja siirto: Levykuvan palautus](/fi/update/rollback/)
+
+## Lähde ja tila
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Lähde ja tila: `2026-07-14`
+- DiscVault Docs: `0.1.0`

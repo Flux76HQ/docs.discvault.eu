@@ -1,0 +1,138 @@
+---
+title: 'Yapılandırma: Ortam değişkenleri'
+description: 'Göreve özel yönergeler: Yapılandırma: Ortam değişkenleri: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.'
+pageId: 'configure-environment'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Amaç ve sonuç
+
+Sayfaya özel iş akışını tamamlayın: **Yapılandırma: Ortam değişkenleri**. Bu prosedür şunları kullanır: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+
+## Geçerli olduğu alan
+
+Bu sayfa yalnızca şunlar için geçerlidir: **Yapılandırma: Ortam değişkenleri** (Docker · Unraid). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `.env`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `.env`. Sayfaya özel denetim noktaları: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+
+### DiscVault v26 kararlı
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `.env`
+
+### DiscVault v26 beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `.env`
+
+## Ön koşullar
+
+- özel DiscVault çalışma zamanı dosyası
+- OpenSSL
+- planlanan yeniden başlatma aralığı
+
+## Prosedür
+
+1. **Oluşturun:** `/opt/discvault/.env` · yalnızca sahip dosya izinleri (0600)
+2. **Yapılandırın:** `DISCVAULT_IMAGE` · `RP_ORIGINS`
+3. **Doğrulayın:** `chmod 0600` · `docker compose config --quiet`
+4. **Başlatın:** normal yapılandırma değişikliklerinde JWT ve PostgreSQL gizlerini değiştirmeyin
+
+### Komutlar ve ayarlar
+
+#### DiscVault v26 kararlı
+
+```bash
+export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
+```
+
+#### DiscVault v26 beta
+
+```bash
+export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
+```
+
+#### Her iki kanal
+
+```bash
+set -euo pipefail
+test -n "$DISCVAULT_IMAGE"
+case "$DISCVAULT_IMAGE" in
+  ghcr.io/helmerznl/discvault:latest|ghcr.io/helmerznl/discvault:beta) ;;
+  *) printf '%s\n' "$DISCVAULT_IMAGE" >&2; exit 64 ;;
+esac
+install -d -m 0700 /opt/discvault
+install -d -m 0750 /srv/discvault
+install -d -o 70 -g 70 -m 0700 /srv/discvault-postgres
+cd /opt/discvault
+test -f compose.yaml
+umask 077
+ENV_FILE=/opt/discvault/.env
+test ! -e "$ENV_FILE"
+ENV_TMP="$(mktemp "$ENV_FILE.tmp.XXXXXX")"
+trap 'rm -f "$ENV_TMP"' EXIT
+POSTGRES_PASSWORD="$(openssl rand -hex 32)"
+JWT_SECRET="$(openssl rand -hex 32)"
+printf '%s\n' \
+  "DISCVAULT_IMAGE=$DISCVAULT_IMAGE" \
+  'DISCVAULT_DATA_DIR=/srv/discvault' \
+  'DISCVAULT_POSTGRES_DATA=/srv/discvault-postgres' \
+  'DISCVAULT_API_PORT=6080' \
+  'DISCVAULT_MCP_PORT=6090' \
+  'DISCVAULT_NETWORK_NAME=discvault' \
+  'DISCVAULT_API_WORKERS=2' \
+  'DISCVAULT_API_TIMEOUT=180' \
+  'DISCVAULT_WORKER_ID=worker-1' \
+  'DISCVAULT_WORKER_POLL_INTERVAL=2' \
+  'POSTGRES_DB=discvault' \
+  'POSTGRES_USER=discvault' \
+  "POSTGRES_PASSWORD=$POSTGRES_PASSWORD" \
+  "JWT_SECRET=$JWT_SECRET" \
+  'TZ=Europe/Amsterdam' \
+  'RP_ID=localhost' \
+  'RP_NAME=DiscVault' \
+  'RP_ORIGINS=http://localhost:6080' > "$ENV_TMP"
+chmod 0600 "$ENV_TMP"
+ln "$ENV_TMP" "$ENV_FILE"
+rm -f "$ENV_TMP"
+trap - EXIT
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml config --quiet
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml pull
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml up -d
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml ps
+curl --fail http://localhost:6080/api/next/health
+```
+
+## Beklenen sonuç
+
+Şunun sonucunu kabul edin: **Yapılandırma: Ortam değişkenleri** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: yalnızca sahip dosya izinleri (0600); özel dosyanın modu 600 olur, Compose doğrulaması başarılıdır ve seçilen kanal sağlıklı hale gelir. Sayfaya özel denetim noktaları: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+
+- yalnızca sahip dosya izinleri (0600)
+- özel dosyanın modu 600 olur, Compose doğrulaması başarılıdır ve seçilen kanal sağlıklı hale gelir
+
+## Güvenlik ve geri alma
+
+:::caution
+Şunun güvenli kurtarma sınırı: **Yapılandırma: Ortam değişkenleri** başlatmadan veya devam etmeden önce şu işlemleri gerektirir: belge deposunun ortam dosyası hiçbir zaman DiscVault çalışma zamanı dosyası değildir · `.env.example`; normal yapılandırma değişikliklerinde JWT ve PostgreSQL gizlerini değiştirmeyin · `JWT_SECRET` · `POSTGRES_PASSWORD`; hata durumunda hizmetleri durdurulmuş tutun, önceki özel ortam dosyasını geri yükleyip doğrulayın ve gizleri döndürmeden aynı imajı yeniden oluşturun. Sayfaya özel denetim noktaları: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+
+- belge deposunun ortam dosyası hiçbir zaman DiscVault çalışma zamanı dosyası değildir · `.env.example`
+- normal yapılandırma değişikliklerinde JWT ve PostgreSQL gizlerini değiştirmeyin · `JWT_SECRET` · `POSTGRES_PASSWORD`
+- hata durumunda hizmetleri durdurulmuş tutun, önceki özel ortam dosyasını geri yükleyip doğrulayın ve gizleri döndürmeden aynı imajı yeniden oluşturun
+:::
+
+## Sonraki adım
+
+[Yapılandırma: Kimlik doğrulama ve RBAC](/tr/configure/auth-rbac/)
+
+## Kaynak ve durum
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Kaynak ve durum: `2026-07-14`
+- DiscVault Docs: `0.1.0`

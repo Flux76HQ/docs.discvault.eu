@@ -1,0 +1,76 @@
+---
+title: 'PWA: Oversigt'
+description: 'Opgavespecifik vejledning til PWA: Oversigt: PWA · HTTPS · `Service Worker` · `/pwa/offline/`.'
+pageId: 'pwa-index'
+products: ['pwa']
+platforms: ['web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Mål og resultat
+
+Gennemfør den sidespecifikke arbejdsgang for **PWA: Oversigt**. Denne fremgangsmåde arbejder med PWA · HTTPS · `Service Worker` · `/pwa/offline/`.
+
+## Gælder for
+
+Denne side gælder kun for **PWA: Oversigt** (web). Kanal- og datagrænserne er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PWA; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PWA. Sidespecifikke kontrolpunkter: PWA · HTTPS · `Service Worker` · `/pwa/offline/`.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PWA
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PWA
+
+## Forudsætninger
+
+- PWA
+- HTTPS DiscVault 26
+
+## Fremgangsmåde
+
+1. **Installér:** [PWA: Installer PWA](/da/pwa/install/) · HTTPS
+2. **Åbn:** [PWA: Bibliotek og søgning](/da/pwa/library-search/)
+3. **Test:** [PWA: Offlineadfærd](/da/pwa/offline/) · `Service Worker`
+4. **Bekræft:** `/pwa/offline/`
+
+### Opgaveruter
+
+- [PWA: Installer PWA](/da/pwa/install/) — iOS/iPadOS Android
+- [PWA: Bibliotek og søgning](/da/pwa/library-search/) — HTTPS
+- [PWA: Offlineadfærd](/da/pwa/offline/) — Service Worker
+
+## Forventet resultat
+
+Godkend resultatet for **PWA: Oversigt** kun når alle resultater nedenfor er opfyldt: Adresselinje → Installér DiscVault · Del → Føj til hjemmeskærm · Browsermenu → Installér app; cachede skærme kan åbne, men friske data og skrivninger kræver netværk. Sidespecifikke kontrolpunkter: PWA · HTTPS · `Service Worker` · `/pwa/offline/`.
+
+- Adresselinje → Installér DiscVault · Del → Føj til hjemmeskærm · Browsermenu → Installér app
+- cachede skærme kan åbne, men friske data og skrivninger kræver netværk
+
+## Sikkerhed og tilbagerulning
+
+:::caution
+Den sikre gendannelsesgrænse for **PWA: Oversigt** kræver disse handlinger, før noget startes eller fortsættes: fjern kun den installerede PWA-skal; serverbibliotek og kontodata forbliver urørte. Sidespecifikke kontrolpunkter: PWA · HTTPS · `Service Worker` · `/pwa/offline/`.
+
+- fjern kun den installerede PWA-skal; serverbibliotek og kontodata forbliver urørte
+:::
+
+## Næste trin
+
+[PWA: Installer PWA](/da/pwa/install/)
+
+## Kilde og status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Kilde og status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

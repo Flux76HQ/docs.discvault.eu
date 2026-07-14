@@ -1,0 +1,85 @@
+---
+title: 'Install: Persistent data and PostgreSQL'
+description: 'Operate the two persistent stores used by every DiscVault v26 release channel.'
+pageId: 'install-storage-postgresql'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Goal and result
+
+Operate the two persistent stores used by every DiscVault v26 release channel.
+
+## Applies to
+
+For both `:latest` and `:beta`, application records live in PostgreSQL at `DISCVAULT_POSTGRES_DATA`; media, profiles, plugins, and file assets live at `DISCVAULT_DATA_DIR`, mounted as `/data`. Back up both in one stopped-writer window.
+
+### DiscVault v26 stable
+
+- DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
+- PostgreSQL stores application records
+- `/data` stores media, profiles, plugins, and file assets
+
+### DiscVault v26 beta
+
+- DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
+- PostgreSQL stores application records
+- `/data` stores media, profiles, plugins, and file assets
+
+## Prerequisites
+
+- running v26 Compose stack
+- backup destination outside the live data path
+- PostgreSQL `17`
+
+## Procedure
+
+1. **Inspect:** `DISCVAULT_POSTGRES_DATA` · `/var/lib/postgresql/data`
+2. **Inspect:** `DISCVAULT_DATA_DIR` · `/data`
+3. **Verify:** `postgres` · `healthy` · `next-api`
+4. **Record:** PostgreSQL dump and filesystem archive from the same stopped-writer window · restore rehearsal
+
+### Commands and settings
+
+#### Both channels
+
+```bash
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml ps
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml exec -T postgres sh -c 'pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"'
+docker inspect discvault-next-api-1 --format '{{range .Mounts}}{{.Source}} -> {{.Destination}}{{println}}{{end}}'
+```
+
+## Expected result
+
+PostgreSQL is healthy, all v26 services run, and both persistent host paths are verified.
+
+- PostgreSQL · `healthy`
+- persistent `/data`
+- matching backup set
+
+## Safety and rollback
+
+:::caution
+Restore the PostgreSQL dump and `/data` archive from the same backup set before starting the matching image digest.
+
+- PostgreSQL and `/data` are separate stores and require one matching backup set
+- backup destination outside the live data path
+:::
+
+## Next step
+
+[Install: Reverse proxy and passkeys](/install/reverse-proxy-passkeys/)
+
+## Source and status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Verified: `2026-07-14`
+- DiscVault Docs: `0.1.0`

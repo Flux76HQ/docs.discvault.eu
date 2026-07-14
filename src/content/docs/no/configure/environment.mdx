@@ -1,0 +1,138 @@
+---
+title: 'Konfigurasjon: Miljøvariabler'
+description: 'Oppgavespesifikk veiledning for Konfigurasjon: Miljøvariabler: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.'
+pageId: 'configure-environment'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Mål og resultat
+
+Fullfør den sidespesifikke arbeidsflyten for **Konfigurasjon: Miljøvariabler**. Denne fremgangsmåten bruker `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+
+## Gjelder for
+
+Denne siden gjelder bare **Konfigurasjon: Miljøvariabler** (Docker · Unraid). Kanal- og datagrensene er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `.env`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `.env`. Sidespesifikke kontrollpunkter: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `.env`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `.env`
+
+## Forutsetninger
+
+- privat DiscVault-kjøretidsfil
+- OpenSSL
+- planlagt omstartsvindu
+
+## Fremgangsmåte
+
+1. **Opprett:** `/opt/discvault/.env` · filrettigheter bare for eier (0600)
+2. **Konfigurer:** `DISCVAULT_IMAGE` · `RP_ORIGINS`
+3. **Bekreft:** `chmod 0600` · `docker compose config --quiet`
+4. **Start:** behold JWT- og PostgreSQL-hemmeligheter ved vanlige endringer
+
+### Kommandoer og innstillinger
+
+#### DiscVault v26 – stabil
+
+```bash
+export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
+```
+
+#### DiscVault v26 – beta
+
+```bash
+export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
+```
+
+#### Begge kanaler
+
+```bash
+set -euo pipefail
+test -n "$DISCVAULT_IMAGE"
+case "$DISCVAULT_IMAGE" in
+  ghcr.io/helmerznl/discvault:latest|ghcr.io/helmerznl/discvault:beta) ;;
+  *) printf '%s\n' "$DISCVAULT_IMAGE" >&2; exit 64 ;;
+esac
+install -d -m 0700 /opt/discvault
+install -d -m 0750 /srv/discvault
+install -d -o 70 -g 70 -m 0700 /srv/discvault-postgres
+cd /opt/discvault
+test -f compose.yaml
+umask 077
+ENV_FILE=/opt/discvault/.env
+test ! -e "$ENV_FILE"
+ENV_TMP="$(mktemp "$ENV_FILE.tmp.XXXXXX")"
+trap 'rm -f "$ENV_TMP"' EXIT
+POSTGRES_PASSWORD="$(openssl rand -hex 32)"
+JWT_SECRET="$(openssl rand -hex 32)"
+printf '%s\n' \
+  "DISCVAULT_IMAGE=$DISCVAULT_IMAGE" \
+  'DISCVAULT_DATA_DIR=/srv/discvault' \
+  'DISCVAULT_POSTGRES_DATA=/srv/discvault-postgres' \
+  'DISCVAULT_API_PORT=6080' \
+  'DISCVAULT_MCP_PORT=6090' \
+  'DISCVAULT_NETWORK_NAME=discvault' \
+  'DISCVAULT_API_WORKERS=2' \
+  'DISCVAULT_API_TIMEOUT=180' \
+  'DISCVAULT_WORKER_ID=worker-1' \
+  'DISCVAULT_WORKER_POLL_INTERVAL=2' \
+  'POSTGRES_DB=discvault' \
+  'POSTGRES_USER=discvault' \
+  "POSTGRES_PASSWORD=$POSTGRES_PASSWORD" \
+  "JWT_SECRET=$JWT_SECRET" \
+  'TZ=Europe/Amsterdam' \
+  'RP_ID=localhost' \
+  'RP_NAME=DiscVault' \
+  'RP_ORIGINS=http://localhost:6080' > "$ENV_TMP"
+chmod 0600 "$ENV_TMP"
+ln "$ENV_TMP" "$ENV_FILE"
+rm -f "$ENV_TMP"
+trap - EXIT
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml config --quiet
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml pull
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml up -d
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml ps
+curl --fail http://localhost:6080/api/next/health
+```
+
+## Forventet resultat
+
+Godta resultatet for **Konfigurasjon: Miljøvariabler** bare når alle resultatene nedenfor er oppfylt: filrettigheter bare for eier (0600); den private filen har modus 600, Compose-valideringen lykkes og valgt kanal blir frisk. Sidespesifikke kontrollpunkter: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+
+- filrettigheter bare for eier (0600)
+- den private filen har modus 600, Compose-valideringen lykkes og valgt kanal blir frisk
+
+## Sikkerhet og tilbakerulling
+
+:::caution
+Den sikre gjenopprettingsgrensen for **Konfigurasjon: Miljøvariabler** krever disse handlingene før noe startes eller fortsetter: miljøfilen i dokumentasjonslageret er aldri en DiscVault-kjøretidsfil · `.env.example`; behold JWT- og PostgreSQL-hemmeligheter ved vanlige endringer · `JWT_SECRET` · `POSTGRES_PASSWORD`; ved feil skal tjenestene forbli stoppet; gjenopprett og valider forrige private miljøfil, og opprett deretter samme image uten å rotere hemmeligheter. Sidespesifikke kontrollpunkter: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+
+- miljøfilen i dokumentasjonslageret er aldri en DiscVault-kjøretidsfil · `.env.example`
+- behold JWT- og PostgreSQL-hemmeligheter ved vanlige endringer · `JWT_SECRET` · `POSTGRES_PASSWORD`
+- ved feil skal tjenestene forbli stoppet; gjenopprett og valider forrige private miljøfil, og opprett deretter samme image uten å rotere hemmeligheter
+:::
+
+## Neste trinn
+
+[Konfigurasjon: Autentisering og RBAC](/no/configure/auth-rbac/)
+
+## Kilde og status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Kilde og status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

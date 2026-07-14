@@ -1,0 +1,80 @@
+---
+title: 'Встановлення: Способи встановлення'
+description: 'Спеціальні інструкції для завдання: Встановлення: Способи встановлення: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.'
+pageId: 'install-index'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Мета й результат
+
+Виконайте спеціальну процедуру сторінки для **Встановлення: Способи встановлення**. У цій процедурі використовуються `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+
+## Застосовується до
+
+Ця сторінка стосується лише **Встановлення: Способи встановлення** (Docker · Unraid). Межі каналу й даних: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; PostgreSQL `17` `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26; PostgreSQL `17` `/data`. Контрольні точки цієї сторінки: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+
+### DiscVault v26 – стабільний
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault 26
+- PostgreSQL `17` `/data`
+
+### DiscVault v26 – бета
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault 26
+- PostgreSQL `17` `/data`
+
+## Передумови
+
+- Docker Engine `24+`
+- Docker Compose `v2`
+
+## Процедура
+
+1. **Виберіть:** [Встановлення: Docker Compose](/uk/install/docker-compose/)
+2. **Виберіть:** [Встановлення: Docker run](/uk/install/docker-run/)
+3. **Виберіть:** [Встановлення: Unraid](/uk/install/unraid/) · Unraid
+4. **Запишіть:** `DISCVAULT_IMAGE` · відповідний комплект резервних копій
+
+### Маршрути завдань
+
+- [Встановлення: Docker Compose](/uk/install/docker-compose/) — DiscVault 26 Docker Compose PostgreSQL `/data` `DISCVAULT_IMAGE`
+- [Встановлення: Docker run](/uk/install/docker-run/) — DiscVault 26 Docker run PostgreSQL `/data` `DATABASE_URL`
+- [Встановлення: Постійні дані та PostgreSQL](/uk/install/storage-postgresql/) — DiscVault 26 PostgreSQL `/data`
+- [Встановлення: Unraid](/uk/install/unraid/) — DiscVault 26 Unraid PostgreSQL `/data`
+
+## Очікуваний результат
+
+Приймайте результат для **Встановлення: Способи встановлення** лише коли підтверджено всі наведені нижче результати: вибраний канал випуску; PostgreSQL `/data`. Контрольні точки цієї сторінки: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+
+- вибраний канал випуску
+- PostgreSQL `/data`
+
+## Безпека й відкочування
+
+:::caution
+Безпечна межа відновлення для **Встановлення: Способи встановлення** вимагає цих дій до будь-якого запуску чи продовження: відповідний комплект резервних копій; примітки до випуску й записаний незмінний digest образу. Контрольні точки цієї сторінки: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+
+- відповідний комплект резервних копій
+- примітки до випуску й записаний незмінний digest образу
+:::
+
+## Наступний крок
+
+[Встановлення: Docker Compose](/uk/install/docker-compose/)
+
+## Джерело й стан
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Джерело й стан: `2026-07-14`
+- DiscVault Docs: `0.1.0`

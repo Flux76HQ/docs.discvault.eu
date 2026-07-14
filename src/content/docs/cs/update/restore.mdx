@@ -1,0 +1,115 @@
+---
+title: 'Aktualizace a migrace: Obnovení'
+description: 'Pokyny pro konkrétní úlohu: Aktualizace a migrace: Obnovení: `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.'
+pageId: 'update-restore'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Cíl a výsledek
+
+Dokončete postup určený pro **Aktualizace a migrace: Obnovení**. Tento postup pracuje s `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.
+
+## Platí pro
+
+Tato stránka platí pouze pro **Aktualizace a migrace: Obnovení** (Docker · Unraid). Hranice kanálu a dat jsou: DiscVault · `ghcr.io/helmerznl/discvault:latest`; dump PostgreSQL a archiv souborů ze stejného okna se zastavenými zápisy; obnovte odpovídající data před spuštěním předchozího obrazu; DiscVault · `ghcr.io/helmerznl/discvault:beta`; dump PostgreSQL a archiv souborů ze stejného okna se zastavenými zápisy; obnovte odpovídající data před spuštěním předchozího obrazu. Kontrolní body této stránky: `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.
+
+### DiscVault v26 – stabilní
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- dump PostgreSQL a archiv souborů ze stejného okna se zastavenými zápisy
+- obnovte odpovídající data před spuštěním předchozího obrazu
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- dump PostgreSQL a archiv souborů ze stejného okna se zastavenými zápisy
+- obnovte odpovídající data před spuštěním předchozího obrazu
+
+## Požadavky
+
+- odpovídající sada záloh
+- servisní okno
+- `PREVIOUS_IMAGE` · soukromý runtime soubor DiscVault
+
+## Postup
+
+1. **Zastavte:** `next-api` `next-worker` `next-mcp`
+2. **Obnovte:** `/data`
+3. **Obnovte:** PostgreSQL · `pg_restore --exit-on-error`
+4. **Spusťte:** `next-api` → `GET /api/next/health` → `next-worker` `next-mcp`
+
+### Příkazy a nastavení
+
+#### Oba kanály
+
+```bash
+set -euo pipefail
+BACKUP_ID=20260714T180000Z
+cd /opt/discvault
+. "/srv/backups/discvault-$BACKUP_ID.env"
+test -n "$PREVIOUS_IMAGE"
+export DISCVAULT_IMAGE="$PREVIOUS_IMAGE"
+docker pull "$DISCVAULT_IMAGE"
+ENV_FILE=/opt/discvault/.env
+ENV_TMP="$(mktemp "$ENV_FILE.restore.XXXXXX")"
+trap 'rm -f "$ENV_TMP"' EXIT
+awk -v image="$DISCVAULT_IMAGE" '
+  /^DISCVAULT_IMAGE=/ { print "DISCVAULT_IMAGE=" image; found=1; next }
+  { print }
+  END { if (!found) exit 42 }
+' "$ENV_FILE" > "$ENV_TMP"
+chmod 0600 "$ENV_TMP"
+docker compose --env-file .env -p discvault -f compose.yaml stop next-worker next-mcp next-api
+mv /srv/discvault "/srv/discvault.failed-$(date -u +%Y%m%dT%H%M%SZ)"
+tar --acls --xattrs -C /srv -xzf \
+  "/srv/backups/discvault-data-$BACKUP_ID.tgz"
+docker compose --env-file .env -p discvault -f compose.yaml up -d postgres
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'dropdb --if-exists --force -U "$POSTGRES_USER" "$POSTGRES_DB"'
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'createdb -U "$POSTGRES_USER" "$POSTGRES_DB"'
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'pg_restore --exit-on-error --no-owner -U "$POSTGRES_USER" -d "$POSTGRES_DB"' \
+  < "/srv/backups/discvault-$BACKUP_ID.dump"
+docker compose --env-file .env -p discvault -f compose.yaml up -d --force-recreate next-api
+curl --fail http://localhost:6080/api/next/health
+docker compose --env-file .env -p discvault -f compose.yaml \
+  up -d --force-recreate next-worker next-mcp
+docker compose --env-file .env -p discvault -f compose.yaml ps
+mv "$ENV_TMP" "$ENV_FILE"
+trap - EXIT
+```
+
+## Očekávaný výsledek
+
+Výsledek přijměte pro **Aktualizace a migrace: Obnovení** pouze pokud platí všechny následující výsledky: počty knihovny a vzorek médií odpovídají vybrané záloze; `:latest` `:beta`. Kontrolní body této stránky: `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.
+
+- počty knihovny a vzorek médií odpovídají vybrané záloze
+- `:latest` `:beta`
+
+## Bezpečnost a návrat
+
+:::caution
+Bezpečná hranice obnovy pro **Aktualizace a migrace: Obnovení** vyžaduje před spuštěním nebo pokračováním tyto kroky: pokud selže rozbalení souborů nebo pg_restore, ponechte kontejner, API, workery a MCP zastavené a opakujte obnovu z nedotčených kopií záloh. Kontrolní body této stránky: `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.
+
+- pokud selže rozbalení souborů nebo pg_restore, ponechte kontejner, API, workery a MCP zastavené a opakujte obnovu z nedotčených kopií záloh
+:::
+
+## Další krok
+
+[Aktualizace a migrace: Aktualizace kontejneru](/cs/update/update/)
+
+## Zdroj a stav
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Zdroj a stav: `2026-07-14`
+- DiscVault Docs: `0.1.0`

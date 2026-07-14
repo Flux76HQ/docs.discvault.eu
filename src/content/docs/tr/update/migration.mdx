@@ -1,0 +1,84 @@
+---
+title: 'Güncelleme ve geçiş: DiscVault 26 geçişi'
+description: 'Göreve özel yönergeler: Güncelleme ve geçiş: DiscVault 26 geçişi: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.'
+pageId: 'update-migration'
+products: ['server']
+platforms: ['docker', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Amaç ve sonuç
+
+Sayfaya özel iş akışını tamamlayın: **Güncelleme ve geçiş: DiscVault 26 geçişi**. Bu prosedür şunları kullanır: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+
+## Geçerli olduğu alan
+
+Bu sayfa yalnızca şunlar için geçerlidir: **Güncelleme ve geçiş: DiscVault 26 geçişi** (Docker · web). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; salt okunur mevcut veri kaynağı; hiçbir zaman geçerli çalışma zamanı veritabanı değildir · SQLite → PostgreSQL; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26; salt okunur mevcut veri kaynağı; hiçbir zaman geçerli çalışma zamanı veritabanı değildir · SQLite → PostgreSQL. Sayfaya özel denetim noktaları: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+
+### DiscVault v26 kararlı
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault 26
+- salt okunur mevcut veri kaynağı; hiçbir zaman geçerli çalışma zamanı veritabanı değildir · SQLite → PostgreSQL
+
+### DiscVault v26 beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault 26
+- salt okunur mevcut veri kaynağı; hiçbir zaman geçerli çalışma zamanı veritabanı değildir · SQLite → PostgreSQL
+
+## Ön koşullar
+
+- salt okunur mevcut veri kaynağı; hiçbir zaman geçerli çalışma zamanı veritabanı değildir · `/data/discvault.db`
+- aynı yazıcıların durdurulduğu aralıktan PostgreSQL dökümü ve dosya arşivi
+- sahip erişimi
+
+## Prosedür
+
+1. **Yedekleyin:** salt okunur mevcut veri kaynağı; hiçbir zaman geçerli çalışma zamanı veritabanı değildir · aynı yazıcıların durdurulduğu aralıktan PostgreSQL dökümü ve dosya arşivi
+2. **İnceleyin:** `/api/next/migration/readiness` · `ready_for_confirmation`
+3. **Çalıştırın:** `POST /api/next/migration/start`
+4. **Karşılaştırın:** hazırlık doğrulanır, geçişte sıfır başarısız kayıt vardır ve sayılar ile medya örneği eşleşir
+
+### Komutlar ve ayarlar
+
+#### Her iki kanal
+
+```bash
+curl --fail http://localhost:6080/api/next/migration/readiness
+curl --fail http://localhost:6080/api/next/migration/status
+curl --fail -X POST http://localhost:6080/api/next/migration/start \
+  -H 'Content-Type: application/json' -d '{}'
+curl --fail http://localhost:6080/api/next/migration/status
+```
+
+## Beklenen sonuç
+
+Şunun sonucunu kabul edin: **Güncelleme ve geçiş: DiscVault 26 geçişi** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: hazırlık doğrulanır, geçişte sıfır başarısız kayıt vardır ve sayılar ile medya örneği eşleşir. Sayfaya özel denetim noktaları: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+
+- hazırlık doğrulanır, geçişte sıfır başarısız kayıt vardır ve sayılar ile medya örneği eşleşir
+
+## Güvenlik ve geri alma
+
+:::caution
+Şunun güvenli kurtarma sınırı: **Güncelleme ve geçiş: DiscVault 26 geçişi** başlatmadan veya devam etmeden önce şu işlemleri gerektirir: DiscVault yazıcılarını durdurun, eşleşen PostgreSQL ve `/data` yedeklerini geri yükleyin ve kısmen dolu veritabanına aktarımı tekrarlamayın. Sayfaya özel denetim noktaları: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+
+- DiscVault yazıcılarını durdurun, eşleşen PostgreSQL ve `/data` yedeklerini geri yükleyin ve kısmen dolu veritabanına aktarımı tekrarlamayın
+:::
+
+## Sonraki adım
+
+[Yapılandırma: Ortam değişkenleri](/tr/configure/environment/)
+
+## Kaynak ve durum
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Kaynak ve durum: `2026-07-14`
+- DiscVault Docs: `0.1.0`

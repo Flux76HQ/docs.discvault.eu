@@ -1,0 +1,76 @@
+---
+title: 'PWA: Overzicht'
+description: 'Taakspecifieke instructies voor PWA: Overzicht: PWA · HTTPS · `Service Worker` · `/pwa/offline/`.'
+pageId: 'pwa-index'
+products: ['pwa']
+platforms: ['web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Doel en resultaat
+
+Voer de paginaspecifieke werkwijze uit voor **PWA: Overzicht**. Deze werkwijze gebruikt PWA · HTTPS · `Service Worker` · `/pwa/offline/`.
+
+## Van toepassing op
+
+Deze pagina is uitsluitend van toepassing op **PWA: Overzicht** (web). De kanaal- en gegevensgrenzen zijn: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PWA; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PWA. Paginaspecifieke controlepunten: PWA · HTTPS · `Service Worker` · `/pwa/offline/`.
+
+### DiscVault v26 stabiel
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PWA
+
+### DiscVault v26 bèta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PWA
+
+## Vereisten
+
+- PWA
+- HTTPS DiscVault 26
+
+## Procedure
+
+1. **Installeren:** [PWA: De PWA installeren](/nl/pwa/install/) · HTTPS
+2. **Openen:** [PWA: Bibliotheek en zoeken](/nl/pwa/library-search/)
+3. **Testen:** [PWA: Offlinegedrag](/nl/pwa/offline/) · `Service Worker`
+4. **Verifiëren:** `/pwa/offline/`
+
+### Taakroutes
+
+- [PWA: De PWA installeren](/nl/pwa/install/) — iOS/iPadOS Android
+- [PWA: Bibliotheek en zoeken](/nl/pwa/library-search/) — HTTPS
+- [PWA: Offlinegedrag](/nl/pwa/offline/) — Service Worker
+
+## Verwacht resultaat
+
+Accepteer het resultaat voor **PWA: Overzicht** alleen wanneer alle onderstaande resultaten kloppen: Adresbalk → DiscVault installeren · Deel → Zet op beginscherm · Browsermenu → App installeren; schermen uit de cache kunnen openen, maar nieuwe gegevens en schrijfacties vereisen netwerk. Paginaspecifieke controlepunten: PWA · HTTPS · `Service Worker` · `/pwa/offline/`.
+
+- Adresbalk → DiscVault installeren · Deel → Zet op beginscherm · Browsermenu → App installeren
+- schermen uit de cache kunnen openen, maar nieuwe gegevens en schrijfacties vereisen netwerk
+
+## Veiligheid en terugdraaien
+
+:::caution
+De veilige herstelgrens voor **PWA: Overzicht** vereist deze acties voordat iets start of doorgaat: verwijder alleen de geïnstalleerde PWA-shell; serverbibliotheek en accountgegevens blijven onaangeroerd. Paginaspecifieke controlepunten: PWA · HTTPS · `Service Worker` · `/pwa/offline/`.
+
+- verwijder alleen de geïnstalleerde PWA-shell; serverbibliotheek en accountgegevens blijven onaangeroerd
+:::
+
+## Volgende stap
+
+[PWA: De PWA installeren](/nl/pwa/install/)
+
+## Bron en status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Bron en status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

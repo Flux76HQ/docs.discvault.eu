@@ -1,0 +1,72 @@
+---
+title: 'PWA: Offline behavior'
+description: 'Understand cached shell behavior, deep links, and the limits of offline data.'
+pageId: 'pwa-offline'
+products: ['pwa']
+platforms: ['web', 'ios', 'android']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="web · iOS · Android" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Goal and result
+
+Understand cached shell behavior, deep links, and the limits of offline data.
+
+## Applies to
+
+DiscVault v26 has limited offline PWA behavior in both channels. Cached screens may open, but server-backed writes, fresh searches, authentication, and synchronization require connectivity.
+
+### DiscVault v26 stable
+
+- DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
+- cached screens may open, but fresh data and writes require a network connection · `Service Worker` · `CacheStorage`
+
+### DiscVault v26 beta
+
+- DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
+- cached screens may open, but fresh data and writes require a network connection · `Service Worker` · `CacheStorage`
+
+## Prerequisites
+
+- installed PWA
+- one successful online load
+
+## Procedure
+
+1. **Open:** Library → Search · while online
+2. **Test:** airplane mode · `Service Worker`
+3. **Record:** available cached screen · blocked server-backed action
+4. **Reconnect:** network · reload · current server data
+
+
+
+## Expected result
+
+Previously loaded shell content may open offline; after reconnection a reload shows current server data.
+
+- cached screens may open, but fresh data and writes require a network connection
+- `Service Worker` · `navigator.onLine`
+
+## Safety and rollback
+
+:::caution
+If the cache is stale, reconnect, close all DiscVault windows, clear site data for only the DiscVault origin, and sign in again.
+
+- cached screens may open, but fresh data and writes require a network connection · DiscVault origin
+:::
+
+## Next step
+
+[Troubleshooting](/troubleshooting/)
+
+## Source and status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Verified: `2026-07-14`
+- DiscVault Docs: `0.1.0`

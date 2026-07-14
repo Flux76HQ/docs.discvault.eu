@@ -1,0 +1,78 @@
+---
+title: '更新和迁移: 概览'
+description: '任务专用说明： 更新和迁移: 概览: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.'
+pageId: 'update-index'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## 目标和结果
+
+完成此页面专用的流程： **更新和迁移: 概览**. 此流程使用 `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+## 适用范围
+
+本页面仅适用于 **更新和迁移: 概览** (Docker · Unraid). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/update/restore/`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/update/restore/`. 本页面专用检查点： `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+### DiscVault v26 稳定版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `/update/restore/`
+
+### DiscVault v26 测试版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `/update/restore/`
+
+## 前提条件
+
+- 匹配的备份集
+- 发行说明及已记录的不可变镜像摘要
+
+## 操作步骤
+
+1. **备份:** [更新和迁移: 备份](/zh/update/backup/) · 匹配的备份集
+2. **测试:** [更新和迁移: 恢复](/zh/update/restore/)
+3. **运行:** [更新和迁移: 容器更新](/zh/update/update/) · `DISCVAULT_IMAGE`
+4. **保留:** [更新和迁移: 镜像回滚](/zh/update/rollback/)
+
+### 任务路径
+
+- [更新和迁移: 备份](/zh/update/backup/) — 1 PostgreSQL
+- [更新和迁移: 恢复](/zh/update/restore/) — 2
+- [更新和迁移: 容器更新](/zh/update/update/) — 3
+- [更新和迁移: 镜像回滚](/zh/update/rollback/) — 4
+
+## 预期结果
+
+仅在以下条件下接受结果： **更新和迁移: 概览** 必须确认以下所有结果： 归档和转储均非空、可在恢复演练中读取，并关联不可变镜像摘要; 目标镜像摘要正在运行，健康检查成功，且所有者登录、媒体库数量和一个媒体样本均通过. 本页面专用检查点： `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+- 归档和转储均非空、可在恢复演练中读取，并关联不可变镜像摘要
+- 目标镜像摘要正在运行，健康检查成功，且所有者登录、媒体库数量和一个媒体样本均通过
+
+## 安全与回滚
+
+:::caution
+安全恢复边界： **更新和迁移: 概览** 在启动或继续任何操作前必须执行： 匹配的备份集; `PREVIOUS_IMAGE` · `@sha256:`. 本页面专用检查点： `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+- 匹配的备份集
+- `PREVIOUS_IMAGE` · `@sha256:`
+:::
+
+## 下一步
+
+[更新和迁移: 备份](/zh/update/backup/)
+
+## 来源和状态
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- 来源和状态: `2026-07-14`
+- DiscVault Docs: `0.1.0`

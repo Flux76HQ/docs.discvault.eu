@@ -1,0 +1,81 @@
+---
+title: 'Správa: Protokoly, úlohy a zabezpečení'
+description: 'Pokyny pro konkrétní úlohu: Správa: Protokoly, úlohy a zabezpečení: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.'
+pageId: 'admin-index'
+products: ['server']
+platforms: ['docker', 'unraid', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Cíl a výsledek
+
+Dokončete postup určený pro **Správa: Protokoly, úlohy a zabezpečení**. Tento postup pracuje s `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+## Platí pro
+
+Tato stránka platí pouze pro **Správa: Protokoly, úlohy a zabezpečení** (Docker · Unraid · web). Hranice kanálu a dat jsou: DiscVault · `ghcr.io/helmerznl/discvault:latest`; API MCP PostgreSQL; DiscVault · `ghcr.io/helmerznl/discvault:beta`; API MCP PostgreSQL. Kontrolní body této stránky: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+### DiscVault v26 – stabilní
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- API MCP PostgreSQL
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- API MCP PostgreSQL
+
+## Požadavky
+
+- přístup vlastníka
+- odpovídající sada záloh
+- protokoly s časem a skrytými soukromými údaji
+
+## Postup
+
+1. **Zkontrolujte:** `/api/next/health`
+2. **Zkontrolujte:** protokoly s časem a skrytými soukromými údaji
+3. **Ověřte:** `next-worker`
+4. **Zachovejte:** `--tail=200`
+
+### Příkazy a nastavení
+
+#### Oba kanály
+
+```bash
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml logs --tail=200 next-api next-worker next-mcp postgres
+curl --fail http://localhost:6080/api/next/jobs
+curl --fail http://localhost:6080/api/next/health
+```
+
+## Očekávaný výsledek
+
+Výsledek přijměte pro **Správa: Protokoly, úlohy a zabezpečení** pouze pokud platí všechny následující výsledky: jedna chybující vrstva je izolována s časem, stavem, digestem obrazu a anonymizovanou chybou; odpovídající sada záloh. Kontrolní body této stránky: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+- jedna chybující vrstva je izolována s časem, stavem, digestem obrazu a anonymizovanou chybou
+- odpovídající sada záloh
+
+## Bezpečnost a návrat
+
+:::caution
+Bezpečná hranice obnovy pro **Správa: Protokoly, úlohy a zabezpečení** vyžaduje před spuštěním nebo pokračováním tyto kroky: nejprve nemažte svazky, `/data`, přihlašovací údaje prohlížeče ani úložiště aplikace; zachovejte anonymizované protokoly a obnovujte jen odpovídající zálohu. Kontrolní body této stránky: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+- nejprve nemažte svazky, `/data`, přihlašovací údaje prohlížeče ani úložiště aplikace; zachovejte anonymizované protokoly a obnovujte jen odpovídající zálohu
+:::
+
+## Další krok
+
+[Řešení potíží](/cs/troubleshooting/)
+
+## Zdroj a stav
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Zdroj a stav: `2026-07-14`
+- DiscVault Docs: `0.1.0`

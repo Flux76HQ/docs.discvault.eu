@@ -1,0 +1,74 @@
+---
+title: 'Reference'
+description: 'Opgavespecifik vejledning til Reference: `:latest` · `:beta` · `:dev` · `6080:5000`.'
+pageId: 'reference-index'
+products: ['server', 'pwa', 'ios', 'android']
+platforms: ['all']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="alle platforme" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Mål og resultat
+
+Gennemfør den sidespecifikke arbejdsgang for **Reference**. Denne fremgangsmåde arbejder med `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+## Gælder for
+
+Denne side gælder kun for **Reference** (alle platforme). Kanal- og datagrænserne er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`. Sidespecifikke kontrolpunkter: `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PostgreSQL `/data`
+- API `6080:5000` MCP `6090:6090`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PostgreSQL `/data`
+- API `6080:5000` MCP `6090:6090`
+
+## Forudsætninger
+
+- valgt udgivelseskanal
+
+## Fremgangsmåde
+
+1. **Kontrollér:** `:latest` `:beta`
+2. **Registrér:** `:dev` er kun til udviklingsarbejde og er ikke en udgivelseskanal; stabil DiscVault v26 bruger `:latest`, og beta bruger `:beta` · `:dev`
+3. **Registrér:** `/api/next/health`
+4. **Registrér:** PostgreSQL `/data`
+
+
+
+## Forventet resultat
+
+Godkend resultatet for **Reference** kun når alle resultater nedenfor er opfyldt: valgt udgivelseskanal · `@sha256:`; `:latest` · `:beta` · `:dev`. Sidespecifikke kontrolpunkter: `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+- valgt udgivelseskanal · `@sha256:`
+- `:latest` · `:beta` · `:dev`
+
+## Sikkerhed og tilbagerulning
+
+:::caution
+Den sikre gendannelsesgrænse for **Reference** kræver disse handlinger, før noget startes eller fortsættes: referencen er skrivebeskyttet; brug den fokuserede procedure før kommandoer eller dataændringer; `:dev` er kun til udviklingsarbejde og er ikke en udgivelseskanal; stabil DiscVault v26 bruger `:latest`, og beta bruger `:beta` · `:dev`. Sidespecifikke kontrolpunkter: `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+- referencen er skrivebeskyttet; brug den fokuserede procedure før kommandoer eller dataændringer
+- `:dev` er kun til udviklingsarbejde og er ikke en udgivelseskanal; stabil DiscVault v26 bruger `:latest`, og beta bruger `:beta` · `:dev`
+:::
+
+## Næste trin
+
+[Start: Oversigt](/da/start/)
+
+## Kilde og status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Kilde og status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

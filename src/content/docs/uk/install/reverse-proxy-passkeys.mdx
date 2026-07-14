@@ -1,0 +1,83 @@
+---
+title: 'Встановлення: Зворотний проксі та ключі доступу'
+description: 'Спеціальні інструкції для завдання: Встановлення: Зворотний проксі та ключі доступу: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.'
+pageId: 'install-reverse-proxy-passkeys'
+products: ['server']
+platforms: ['docker', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · веб" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Мета й результат
+
+Виконайте спеціальну процедуру сторінки для **Встановлення: Зворотний проксі та ключі доступу**. У цій процедурі використовуються `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+
+## Застосовується до
+
+Ця сторінка стосується лише **Встановлення: Зворотний проксі та ключі доступу** (Docker · веб). Межі каналу й даних: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`. Контрольні точки цієї сторінки: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+
+### DiscVault v26 – стабільний
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `RP_ID` `RP_ORIGINS`
+- `6080` API `5000`
+
+### DiscVault v26 – бета
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `RP_ID` `RP_ORIGINS`
+- `6080` API `5000`
+
+## Передумови
+
+- DNS
+- TLS
+- `6080`
+
+## Процедура
+
+1. **Налаштуйте:** `RP_ID`
+2. **Налаштуйте:** `RP_ORIGINS` · HTTPS
+3. **Налаштуйте:** `http://127.0.0.1:6080`
+4. **Перевірте:** `GET /api/next/health`
+
+### Команди й налаштування
+
+#### Обидва канали
+
+```text
+RP_ID=discvault.example.com
+RP_ORIGINS=https://discvault.example.com
+curl --fail https://discvault.example.com/api/next/health
+```
+
+## Очікуваний результат
+
+Приймайте результат для **Встановлення: Зворотний проксі та ключі доступу** лише коли підтверджено всі наведені нижче результати: HTTPS · HTTP `2xx`; `RP_ID`. Контрольні точки цієї сторінки: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+
+- HTTPS · HTTP `2xx`
+- `RP_ID`
+
+## Безпека й відкочування
+
+:::caution
+Безпечна межа відновлення для **Встановлення: Зворотний проксі та ключі доступу** вимагає цих дій до будь-якого запуску чи продовження: відновіть разом proxy та значення RP і збережіть спосіб відновлення власника. Контрольні точки цієї сторінки: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+
+- відновіть разом proxy та значення RP і збережіть спосіб відновлення власника
+:::
+
+## Наступний крок
+
+[Встановлення: Перший запуск і перевірка стану](/uk/install/first-start-health/)
+
+## Джерело й стан
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Джерело й стан: `2026-07-14`
+- DiscVault Docs: `0.1.0`

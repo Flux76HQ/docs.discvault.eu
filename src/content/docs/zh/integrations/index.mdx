@@ -1,0 +1,75 @@
+---
+title: '集成: 集成概览'
+description: '任务专用说明： 集成: 集成概览: MCP · REST · Plex · Jellyfin.'
+pageId: 'integrations-index'
+products: ['server']
+platforms: ['web', 'docker']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="网页 · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## 目标和结果
+
+完成此页面专用的流程： **集成: 集成概览**. 此流程使用 MCP · REST · Plex · Jellyfin.
+
+## 适用范围
+
+本页面仅适用于 **集成: 集成概览** (网页 · Docker). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; MCP REST Plex Jellyfin; DiscVault · `ghcr.io/helmerznl/discvault:beta`; MCP REST Plex Jellyfin. 本页面专用检查点： MCP · REST · Plex · Jellyfin.
+
+### DiscVault v26 稳定版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- MCP REST Plex Jellyfin
+
+### DiscVault v26 测试版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- MCP REST Plex Jellyfin
+
+## 前提条件
+
+- HTTPS
+- API
+
+## 操作步骤
+
+1. **选择:** [集成: MCP 和 REST API](/zh/integrations/mcp-api/)
+2. **选择:** [集成: Plex 和 Jellyfin](/zh/integrations/plex-jellyfin/)
+3. **配置:** HTTPS
+4. **撤销:** Jellyfin
+
+### 任务路径
+
+- [集成: MCP 和 REST API](/zh/integrations/mcp-api/) — DiscVault 26 MCP REST
+- [集成: Plex 和 Jellyfin](/zh/integrations/plex-jellyfin/) — DiscVault 26
+
+## 预期结果
+
+仅在以下条件下接受结果： **集成: 集成概览** 必须确认以下所有结果： 以机密方式保存的提供商凭据; HTTPS · MCP · REST · Plex · Jellyfin. 本页面专用检查点： MCP · REST · Plex · Jellyfin.
+
+- 以机密方式保存的提供商凭据
+- HTTPS · MCP · REST · Plex · Jellyfin
+
+## 安全与回滚
+
+:::caution
+安全恢复边界： **集成: 集成概览** 在启动或继续任何操作前必须执行： 禁用集成并撤销测试或已泄露凭据；需要时新建凭据，绝不能重复使用旧凭据. 本页面专用检查点： MCP · REST · Plex · Jellyfin.
+
+- 禁用集成并撤销测试或已泄露凭据；需要时新建凭据，绝不能重复使用旧凭据
+:::
+
+## 下一步
+
+[集成: MCP 和 REST API](/zh/integrations/mcp-api/)
+
+## 来源和状态
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- 来源和状态: `2026-07-14`
+- DiscVault Docs: `0.1.0`

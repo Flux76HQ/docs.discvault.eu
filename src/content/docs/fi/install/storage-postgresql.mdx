@@ -1,0 +1,85 @@
+---
+title: 'Asennus: Pysyvät tiedot ja PostgreSQL'
+description: 'Tehtäväkohtaiset ohjeet: Asennus: Pysyvät tiedot ja PostgreSQL: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.'
+pageId: 'install-storage-postgresql'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Tavoite ja tulos
+
+Suorita sivukohtainen työnkulku: **Asennus: Pysyvät tiedot ja PostgreSQL**. Tässä menettelyssä käytetään `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
+
+## Koskee
+
+Tämä sivu koskee vain kohdetta **Asennus: Pysyvät tiedot ja PostgreSQL** (Docker · Unraid). Kanava- ja tietorajat ovat: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL; `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL; `/data`. Sivukohtaiset tarkistuspisteet: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
+
+### DiscVault v26 – vakaa
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PostgreSQL
+- `/data`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PostgreSQL
+- `/data`
+
+## Edellytykset
+
+- `DISCVAULT_POSTGRES_DATA`
+- varmuuskopio elävän datan ulkopuolelle
+- PostgreSQL `17`
+
+## Toimenpiteet
+
+1. **Tarkista:** `DISCVAULT_POSTGRES_DATA` · `/var/lib/postgresql/data`
+2. **Tarkista:** `DISCVAULT_DATA_DIR` · `/data`
+3. **Vahvista:** `postgres` · `healthy` · `next-api`
+4. **Kirjaa:** PostgreSQL-vedos ja tiedostoarkisto samasta kirjoittajat pysäyttävästä ikkunasta
+
+### Komennot ja asetukset
+
+#### Molemmat kanavat
+
+```bash
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml ps
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml exec -T postgres sh -c 'pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"'
+docker inspect discvault-next-api-1 --format '{{range .Mounts}}{{.Source}} -> {{.Destination}}{{println}}{{end}}'
+```
+
+## Odotettu tulos
+
+Hyväksy tulos kohteelle **Asennus: Pysyvät tiedot ja PostgreSQL** vain kun kaikki seuraavat tulokset toteutuvat: PostgreSQL · `healthy`; `/data`; vastaava varmuuskopiosarja. Sivukohtaiset tarkistuspisteet: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
+
+- PostgreSQL · `healthy`
+- `/data`
+- vastaava varmuuskopiosarja
+
+## Turvallisuus ja palautus
+
+:::caution
+Turvallinen palautusraja kohteelle **Asennus: Pysyvät tiedot ja PostgreSQL** edellyttää näitä toimia ennen käynnistystä tai jatkamista: PostgreSQL ja `/data` ovat erillisiä tallennuksia ja tarvitsevat yhden vastaavan varmuuskopiosarjan; varmuuskopio elävän datan ulkopuolelle. Sivukohtaiset tarkistuspisteet: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
+
+- PostgreSQL ja `/data` ovat erillisiä tallennuksia ja tarvitsevat yhden vastaavan varmuuskopiosarjan
+- varmuuskopio elävän datan ulkopuolelle
+:::
+
+## Seuraava vaihe
+
+[Asennus: Käänteinen välityspalvelin ja pääsyavaimet](/fi/install/reverse-proxy-passkeys/)
+
+## Lähde ja tila
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Lähde ja tila: `2026-07-14`
+- DiscVault Docs: `0.1.0`

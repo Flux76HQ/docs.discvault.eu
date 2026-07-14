@@ -1,0 +1,84 @@
+---
+title: '更新和迁移: 迁移到 DiscVault 26'
+description: '任务专用说明： 更新和迁移: 迁移到 DiscVault 26: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.'
+pageId: 'update-migration'
+products: ['server']
+platforms: ['docker', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · 网页" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## 目标和结果
+
+完成此页面专用的流程： **更新和迁移: 迁移到 DiscVault 26**. 此流程使用 `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+
+## 适用范围
+
+本页面仅适用于 **更新和迁移: 迁移到 DiscVault 26** (Docker · 网页). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; 只读的现有数据源；绝不是当前运行时数据库 · SQLite → PostgreSQL; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26; 只读的现有数据源；绝不是当前运行时数据库 · SQLite → PostgreSQL. 本页面专用检查点： `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+
+### DiscVault v26 稳定版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault 26
+- 只读的现有数据源；绝不是当前运行时数据库 · SQLite → PostgreSQL
+
+### DiscVault v26 测试版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault 26
+- 只读的现有数据源；绝不是当前运行时数据库 · SQLite → PostgreSQL
+
+## 前提条件
+
+- 只读的现有数据源；绝不是当前运行时数据库 · `/data/discvault.db`
+- 来自同一停止写入时段的 PostgreSQL 转储与文件归档
+- 所有者权限
+
+## 操作步骤
+
+1. **备份:** 只读的现有数据源；绝不是当前运行时数据库 · 来自同一停止写入时段的 PostgreSQL 转储与文件归档
+2. **检查:** `/api/next/migration/readiness` · `ready_for_confirmation`
+3. **运行:** `POST /api/next/migration/start`
+4. **比较:** 已确认就绪，迁移失败记录为零，且数量与抽样媒体一致
+
+### 命令和设置
+
+#### 两个通道
+
+```bash
+curl --fail http://localhost:6080/api/next/migration/readiness
+curl --fail http://localhost:6080/api/next/migration/status
+curl --fail -X POST http://localhost:6080/api/next/migration/start \
+  -H 'Content-Type: application/json' -d '{}'
+curl --fail http://localhost:6080/api/next/migration/status
+```
+
+## 预期结果
+
+仅在以下条件下接受结果： **更新和迁移: 迁移到 DiscVault 26** 必须确认以下所有结果： 已确认就绪，迁移失败记录为零，且数量与抽样媒体一致. 本页面专用检查点： `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+
+- 已确认就绪，迁移失败记录为零，且数量与抽样媒体一致
+
+## 安全与回滚
+
+:::caution
+安全恢复边界： **更新和迁移: 迁移到 DiscVault 26** 在启动或继续任何操作前必须执行： 停止 DiscVault 写入服务，恢复匹配的 PostgreSQL 与 `/data` 备份，绝不能向已有部分数据的数据库重复导入. 本页面专用检查点： `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+
+- 停止 DiscVault 写入服务，恢复匹配的 PostgreSQL 与 `/data` 备份，绝不能向已有部分数据的数据库重复导入
+:::
+
+## 下一步
+
+[配置: 环境变量](/zh/configure/environment/)
+
+## 来源和状态
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- 来源和状态: `2026-07-14`
+- DiscVault Docs: `0.1.0`

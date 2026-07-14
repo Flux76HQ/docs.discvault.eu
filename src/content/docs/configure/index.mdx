@@ -1,0 +1,76 @@
+---
+title: 'Configure: Overview'
+description: 'Configure runtime values, authentication, roles, and providers without exposing secrets.'
+pageId: 'configure-index'
+products: ['server']
+platforms: ['docker', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Goal and result
+
+Configure runtime values, authentication, roles, and providers without exposing secrets.
+
+## Applies to
+
+The same v26 configuration model applies to stable and beta; only `DISCVAULT_IMAGE` selects the release channel.
+
+### DiscVault v26 stable
+
+- DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
+- same v26 environment, RBAC, and plugin interfaces
+
+### DiscVault v26 beta
+
+- DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
+- same v26 environment, RBAC, and plugin interfaces
+
+## Prerequisites
+
+- owner access
+- configuration backup
+
+## Procedure
+
+1. **Choose:** [Configure: Environment variables](/configure/environment/) · runtime assignments
+2. **Choose:** [Configure: Authentication and RBAC](/configure/auth-rbac/) · passkeys + RBAC
+3. **Choose:** [Configure: Plugins and metadata](/configure/plugins-metadata/) · provider registry
+4. **Record:** one subsystem change · previous value · acceptance result
+
+### Task routes
+
+- [Configure: Environment variables](/configure/environment/) — v26 Compose variables · secrets
+- [Configure: Authentication and RBAC](/configure/auth-rbac/) — DiscVault 26 · passkeys · invites · RBAC
+- [Configure: Plugins and metadata](/configure/plugins-metadata/) — DiscVault 26 · plugins · metadata
+
+## Expected result
+
+You reach the focused configuration procedure for your channel.
+
+- focused procedure · selected release channel
+- one subsystem per change
+
+## Safety and rollback
+
+:::caution
+Change one subsystem at a time and retain the previous value.
+
+- change one subsystem at a time, retain its previous value and backup, and roll it back before the next change
+:::
+
+## Next step
+
+[Configure: Environment variables](/configure/environment/)
+
+## Source and status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Verified: `2026-07-14`
+- DiscVault Docs: `0.1.0`

@@ -1,0 +1,79 @@
+---
+title: 'Configure: Authentication and RBAC'
+description: 'Enable passkeys, invites, users, groups, and role-based access without locking out the owner.'
+pageId: 'configure-auth-rbac'
+products: ['server']
+platforms: ['web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Goal and result
+
+Enable passkeys, invites, users, groups, and role-based access without locking out the owner.
+
+## Applies to
+
+DiscVault v26 provides the same WebAuthn and RBAC functions in stable and beta. Basic roles are owner, administrator, media editor, media fan, and media viewer.
+
+### DiscVault v26 stable
+
+- DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
+- WebAuthn · owner / administrator / editor / fan / viewer
+
+### DiscVault v26 beta
+
+- DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
+- WebAuthn · owner / administrator / editor / fan / viewer
+
+## Prerequisites
+
+- owner access
+- HTTPS + passkey
+- second recovery method
+
+## Procedure
+
+1. **Open:** Admin → Security → Enable authentication
+2. **Create:** Admin → Users → Create 48-hour invite
+3. **Configure:** Admin → Roles → Basic / Advanced
+4. **Test:** second user · assigned permission only · owner session remains open
+
+### Commands and settings
+
+#### Both channels
+
+```bash
+curl --fail http://localhost:6080/api/next/auth/status
+curl --fail http://localhost:6080/api/next/auth/rbac
+```
+
+## Expected result
+
+Owner login works, invite-only registration behaves as selected, and a test user receives only assigned permissions.
+
+- owner passkey login works, invite-only registration matches the setting, and the test user has only assigned permissions
+
+## Safety and rollback
+
+:::caution
+Keep the owner session open while testing. Revert role assignments before disabling a user; never delete the only owner or last usable passkey.
+
+- keep the owner session and a second recovery method; never remove the last owner passkey
+:::
+
+## Next step
+
+[Configure: Plugins and metadata](/configure/plugins-metadata/)
+
+## Source and status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Verified: `2026-07-14`
+- DiscVault Docs: `0.1.0`

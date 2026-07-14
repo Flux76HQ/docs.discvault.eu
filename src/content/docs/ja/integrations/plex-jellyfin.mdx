@@ -1,0 +1,82 @@
+---
+title: '連携: Plex と Jellyfin'
+description: 'タスク別の手順: 連携: Plex と Jellyfin: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.'
+pageId: 'integrations-plex-jellyfin'
+products: ['server']
+platforms: ['web', 'docker']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Web · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## 目的と結果
+
+このページ専用の手順を実行します: **連携: Plex と Jellyfin**. この手順で扱う項目: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+## 対象
+
+このページの対象は **連携: Plex と Jellyfin** (Web · Docker). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26. このページ固有の確認点: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+### DiscVault v26 安定版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault 26
+
+### DiscVault v26 ベータ版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault 26
+
+## 前提条件
+
+- シークレットとして保存するプロバイダー資格情報
+- Jellyfin
+- 所有者または管理者セッション
+
+## 手順
+
+1. **設定:** 管理 → プラグイン → プロバイダー → 設定 · Plex Jellyfin
+2. **テスト:** 管理 → プラグイン → 状態確認
+3. **実行:** 管理 → プラグイン → 保存せずに検出 · `dryRun=true`
+4. **比較:** `/api/next/digital-items?limit=200`
+
+### コマンドと設定
+
+#### 両方のチャンネル
+
+```bash
+curl --fail http://localhost:6080/api/next/digital-sources
+curl --fail 'http://localhost:6080/api/next/digital-items?limit=200'
+```
+
+## 期待される結果
+
+次の結果を受け入れる条件: **連携: Plex と Jellyfin** 以下の結果をすべて確認した場合のみ: 管理 → プラグイン → 状態確認; 管理 → プラグイン → 保存せずに検出 · `dryRun=true`; Plex · Jellyfin · `/api/next/digital-items`. このページ固有の確認点: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+- 管理 → プラグイン → 状態確認
+- 管理 → プラグイン → 保存せずに検出 · `dryRun=true`
+- Plex · Jellyfin · `/api/next/digital-items`
+
+## 安全性とロールバック
+
+:::caution
+安全な復旧境界: **連携: Plex と Jellyfin** 起動または続行の前に、次の操作が必要です: 削除前にプロバイダーを無効化し、`/data/plugins` をバックアップして、漏えいした資格情報を失効します; 連携を無効化し、テスト用または漏えいした資格情報を失効し、必要なら新規作成して古いものは再利用しません. このページ固有の確認点: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+- 削除前にプロバイダーを無効化し、`/data/plugins` をバックアップして、漏えいした資格情報を失効します
+- 連携を無効化し、テスト用または漏えいした資格情報を失効し、必要なら新規作成して古いものは再利用しません
+:::
+
+## 次の手順
+
+[トラブルシューティング](/ja/troubleshooting/)
+
+## 情報源と状態
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- 情報源と状態: `2026-07-14`
+- DiscVault Docs: `0.1.0`

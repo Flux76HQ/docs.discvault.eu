@@ -1,0 +1,76 @@
+---
+title: 'PWA: Oversikt'
+description: 'Oppgavespesifikk veiledning for PWA: Oversikt: PWA · HTTPS · `Service Worker` · `/pwa/offline/`.'
+pageId: 'pwa-index'
+products: ['pwa']
+platforms: ['web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="nett" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Mål og resultat
+
+Fullfør den sidespesifikke arbeidsflyten for **PWA: Oversikt**. Denne fremgangsmåten bruker PWA · HTTPS · `Service Worker` · `/pwa/offline/`.
+
+## Gjelder for
+
+Denne siden gjelder bare **PWA: Oversikt** (nett). Kanal- og datagrensene er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PWA; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PWA. Sidespesifikke kontrollpunkter: PWA · HTTPS · `Service Worker` · `/pwa/offline/`.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PWA
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PWA
+
+## Forutsetninger
+
+- PWA
+- HTTPS DiscVault 26
+
+## Fremgangsmåte
+
+1. **Installer:** [PWA: Installer PWA](/no/pwa/install/) · HTTPS
+2. **Åpne:** [PWA: Bibliotek og søk](/no/pwa/library-search/)
+3. **Test:** [PWA: Frakoblet virkemåte](/no/pwa/offline/) · `Service Worker`
+4. **Bekreft:** `/pwa/offline/`
+
+### Oppgaveruter
+
+- [PWA: Installer PWA](/no/pwa/install/) — iOS/iPadOS Android
+- [PWA: Bibliotek og søk](/no/pwa/library-search/) — HTTPS
+- [PWA: Frakoblet virkemåte](/no/pwa/offline/) — Service Worker
+
+## Forventet resultat
+
+Godta resultatet for **PWA: Oversikt** bare når alle resultatene nedenfor er oppfylt: Adresselinje → Installer DiscVault · Del → Legg til på Hjem-skjermen · Nettlesermeny → Installer app; bufrede skjermer kan åpnes, men nye data og skriving krever nettverk. Sidespesifikke kontrollpunkter: PWA · HTTPS · `Service Worker` · `/pwa/offline/`.
+
+- Adresselinje → Installer DiscVault · Del → Legg til på Hjem-skjermen · Nettlesermeny → Installer app
+- bufrede skjermer kan åpnes, men nye data og skriving krever nettverk
+
+## Sikkerhet og tilbakerulling
+
+:::caution
+Den sikre gjenopprettingsgrensen for **PWA: Oversikt** krever disse handlingene før noe startes eller fortsetter: fjern bare det installerte PWA-skallet; serverbibliotek og kontodata forblir urørt. Sidespesifikke kontrollpunkter: PWA · HTTPS · `Service Worker` · `/pwa/offline/`.
+
+- fjern bare det installerte PWA-skallet; serverbibliotek og kontodata forblir urørt
+:::
+
+## Neste trinn
+
+[PWA: Installer PWA](/no/pwa/install/)
+
+## Kilde og status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Kilde og status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

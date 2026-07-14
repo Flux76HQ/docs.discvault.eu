@@ -1,0 +1,114 @@
+---
+title: 'Frissítés és migrálás: Konténerfrissítés'
+description: 'Feladatspecifikus útmutató: Frissítés és migrálás: Konténerfrissítés: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.'
+pageId: 'update-update'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Cél és eredmény
+
+Hajtsa végre az oldalhoz tartozó munkafolyamatot: **Frissítés és migrálás: Konténerfrissítés**. Ez az eljárás ezeket használja: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+
+## Érvényesség
+
+Ez az oldal kizárólag erre vonatkozik: **Frissítés és migrálás: Konténerfrissítés** (Docker · Unraid). A csatorna- és adathatárok: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · kiadási megjegyzések és rögzített változtathatatlan digest · illeszkedő mentéskészlet; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · kiadási megjegyzések és rögzített változtathatatlan digest · illeszkedő mentéskészlet. Oldalspecifikus ellenőrzési pontok: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `DISCVAULT_IMAGE`
+- PostgreSQL `/data` · kiadási megjegyzések és rögzített változtathatatlan digest · illeszkedő mentéskészlet
+
+### DiscVault v26 – béta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `DISCVAULT_IMAGE`
+- PostgreSQL `/data` · kiadási megjegyzések és rögzített változtathatatlan digest · illeszkedő mentéskészlet
+
+## Előfeltételek
+
+- illeszkedő mentéskészlet
+- kiadási megjegyzések és rögzített változtathatatlan digest
+
+## Eljárás
+
+1. **Ellenőrizze:** `PREVIOUS_IMAGE=@sha256:…`
+2. **Válassza ki:** `DISCVAULT_IMAGE` · `:latest` `:beta`
+3. **Futtassa:** `--force-recreate`
+4. **Hasonlítsa össze:** a kívánt image-digest fut, az állapot egészséges, és a tulajdonosi bejelentkezés, darabszám és médiaminta sikeres
+
+### Parancsok és beállítások
+
+#### DiscVault v26 – stabil
+
+```bash
+export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
+```
+
+#### DiscVault v26 – béta
+
+```bash
+export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
+```
+
+#### Mindkét csatorna
+
+```bash
+set -euo pipefail
+test -n "$DISCVAULT_IMAGE"
+case "$DISCVAULT_IMAGE" in
+  ghcr.io/helmerznl/discvault:latest|ghcr.io/helmerznl/discvault:beta) ;;
+  *) printf '%s\n' "$DISCVAULT_IMAGE" >&2; exit 64 ;;
+esac
+cd /opt/discvault
+ENV_FILE=/opt/discvault/.env
+ENV_TMP="$(mktemp "$ENV_FILE.update.XXXXXX")"
+trap 'rm -f "$ENV_TMP"' EXIT
+awk -v image="$DISCVAULT_IMAGE" '
+  /^DISCVAULT_IMAGE=/ { print "DISCVAULT_IMAGE=" image; found=1; next }
+  { print }
+  END { if (!found) exit 42 }
+' "$ENV_FILE" > "$ENV_TMP"
+chmod 0600 "$ENV_TMP"
+docker compose --env-file "$ENV_TMP" -p discvault -f compose.yaml config --quiet
+docker compose --env-file "$ENV_TMP" -p discvault -f compose.yaml pull next-api next-worker next-mcp
+docker compose --env-file "$ENV_TMP" -p discvault -f compose.yaml up -d --force-recreate
+docker compose --env-file "$ENV_TMP" -p discvault -f compose.yaml ps
+curl --fail http://localhost:6080/api/next/health
+mv "$ENV_TMP" "$ENV_FILE"
+trap - EXIT
+```
+
+## Várt eredmény
+
+Az eredmény csak ennél fogadható el: **Frissítés és migrálás: Konténerfrissítés** csak akkor, ha minden alábbi eredmény teljesül: a kívánt image-digest fut, az állapot egészséges, és a tulajdonosi bejelentkezés, darabszám és médiaminta sikeres. Oldalspecifikus ellenőrzési pontok: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+
+- a kívánt image-digest fut, az állapot egészséges, és a tulajdonosi bejelentkezés, darabszám és médiaminta sikeres
+
+## Biztonság és visszaállítás
+
+:::caution
+A biztonságos helyreállítás határa ennél: **Frissítés és migrálás: Konténerfrissítés** ezeket a műveleteket igényli indítás vagy folytatás előtt: [Frissítés és migrálás: Lemezkép visszaállítása](/hu/update/rollback/) · illeszkedő mentéskészlet; kiadási megjegyzések és rögzített változtathatatlan digest. Oldalspecifikus ellenőrzési pontok: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+
+- [Frissítés és migrálás: Lemezkép visszaállítása](/hu/update/rollback/) · illeszkedő mentéskészlet
+- kiadási megjegyzések és rögzített változtathatatlan digest
+:::
+
+## Következő lépés
+
+[Frissítés és migrálás: Lemezkép visszaállítása](/hu/update/rollback/)
+
+## Forrás és állapot
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Forrás és állapot: `2026-07-14`
+- DiscVault Docs: `0.1.0`

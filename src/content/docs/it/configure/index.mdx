@@ -1,0 +1,76 @@
+---
+title: 'Configurazione: Panoramica'
+description: 'Istruzioni specifiche per Configurazione: Panoramica: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.'
+pageId: 'configure-index'
+products: ['server']
+platforms: ['docker', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Obiettivo e risultato
+
+Completa la procedura specifica della pagina per **Configurazione: Panoramica**. Questa procedura utilizza `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+
+## Si applica a
+
+Questa pagina si applica solo a **Configurazione: Panoramica** (Docker · web). I limiti di canale e dati sono: DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. Punti di controllo della pagina: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+
+### DiscVault v26 stabile
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- RBAC
+
+### DiscVault v26 beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- RBAC
+
+## Prerequisiti
+
+- accesso proprietario
+- `/configure/auth-rbac/`
+
+## Procedura
+
+1. **Scegli:** [Configurazione: Variabili di ambiente](/it/configure/environment/)
+2. **Scegli:** [Configurazione: Autenticazione e RBAC](/it/configure/auth-rbac/) · RBAC
+3. **Scegli:** [Configurazione: Plugin e metadati](/it/configure/plugins-metadata/)
+4. **Registra:** `/configure/environment/`
+
+### Percorsi delle attività
+
+- [Configurazione: Variabili di ambiente](/it/configure/environment/) — `/configure/environment/`
+- [Configurazione: Autenticazione e RBAC](/it/configure/auth-rbac/) — DiscVault 26 RBAC
+- [Configurazione: Plugin e metadati](/it/configure/plugins-metadata/) — DiscVault 26
+
+## Risultato previsto
+
+Accetta il risultato per **Configurazione: Panoramica** solo quando tutti i risultati seguenti sono veri: canale di rilascio scelto; `/configure/auth-rbac/`. Punti di controllo della pagina: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+
+- canale di rilascio scelto
+- `/configure/auth-rbac/`
+
+## Sicurezza e ripristino
+
+:::caution
+Il limite di ripristino sicuro per **Configurazione: Panoramica** richiede queste azioni prima di avviare o continuare: modifica un sottosistema alla volta, conserva valore e backup precedenti e ripristina prima della modifica successiva. Punti di controllo della pagina: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+
+- modifica un sottosistema alla volta, conserva valore e backup precedenti e ripristina prima della modifica successiva
+:::
+
+## Passaggio successivo
+
+[Configurazione: Variabili di ambiente](/it/configure/environment/)
+
+## Fonte e stato
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Fonte e stato: `2026-07-14`
+- DiscVault Docs: `0.1.0`

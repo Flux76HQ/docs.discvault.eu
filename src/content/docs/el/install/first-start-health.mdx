@@ -1,0 +1,83 @@
+---
+title: 'Εγκατάσταση: Πρώτη εκκίνηση και έλεγχος υγείας'
+description: 'Οδηγίες ειδικά για την εργασία: Εγκατάσταση: Πρώτη εκκίνηση και έλεγχος υγείας: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.'
+pageId: 'install-first-start-health'
+products: ['server']
+platforms: ['docker', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · ιστός" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Στόχος και αποτέλεσμα
+
+Ολοκληρώστε τη ροή εργασίας της σελίδας για **Εγκατάσταση: Πρώτη εκκίνηση και έλεγχος υγείας**. Η διαδικασία χρησιμοποιεί `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.
+
+## Ισχύει για
+
+Αυτή η σελίδα ισχύει μόνο για **Εγκατάσταση: Πρώτη εκκίνηση και έλεγχος υγείας** (Docker · ιστός). Τα όρια καναλιού και δεδομένων είναι: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/api/next/auth/status`; `6080` → API `5000`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/api/next/auth/status`; `6080` → API `5000`. Σημεία ελέγχου της σελίδας: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.
+
+### DiscVault v26 – σταθερό
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `/api/next/auth/status`
+- `6080` → API `5000`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `/api/next/auth/status`
+- `6080` → API `5000`
+
+## Προϋποθέσεις
+
+- `/api/next/health`
+- `/api/next/auth/status`
+
+## Διαδικασία
+
+1. **Ελέγξτε:** `postgres`
+2. **Επαληθεύστε:** `GET /api/next/health` · HTTP `2xx`
+3. **Ανοίξτε:** `6080:5000`
+4. **Επαληθεύστε:** `GET /api/next/auth/status` · WebAuthn
+
+### Εντολές και ρυθμίσεις
+
+#### Και τα δύο κανάλια
+
+```bash
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml ps
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml logs --tail=100 next-api next-worker next-mcp postgres
+curl --fail http://localhost:6080/api/next/health
+curl --fail http://localhost:6080/api/next/auth/status
+```
+
+## Αναμενόμενο αποτέλεσμα
+
+Αποδεχθείτε το αποτέλεσμα για **Εγκατάσταση: Πρώτη εκκίνηση και έλεγχος υγείας** μόνο όταν ισχύουν όλα τα παρακάτω αποτελέσματα: ο έλεγχος υγείας πετυχαίνει, ανοίγει το ρυθμισμένο origin και ο πρώτος λογαριασμός είναι κάτοχος. Σημεία ελέγχου της σελίδας: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.
+
+- ο έλεγχος υγείας πετυχαίνει, ανοίγει το ρυθμισμένο origin και ο πρώτος λογαριασμός είναι κάτοχος
+
+## Ασφάλεια και επαναφορά
+
+:::caution
+Το ασφαλές όριο ανάκτησης για **Εγκατάσταση: Πρώτη εκκίνηση και έλεγχος υγείας** απαιτεί αυτές τις ενέργειες πριν από κάθε εκκίνηση ή συνέχεια: αρχεία καταγραφής με χρόνο και απόκρυψη ιδιωτικών δεδομένων; αντίστοιχο σύνολο αντιγράφων. Σημεία ελέγχου της σελίδας: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.
+
+- αρχεία καταγραφής με χρόνο και απόκρυψη ιδιωτικών δεδομένων
+- αντίστοιχο σύνολο αντιγράφων
+:::
+
+## Επόμενο βήμα
+
+[Ενημέρωση και μετεγκατάσταση: Αντίγραφο ασφαλείας](/el/update/backup/)
+
+## Πηγή και κατάσταση
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Πηγή και κατάσταση: `2026-07-14`
+- DiscVault Docs: `0.1.0`

@@ -1,0 +1,72 @@
+---
+title: 'PWA: オフライン動作'
+description: 'タスク別の手順: PWA: オフライン動作: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.'
+pageId: 'pwa-offline'
+products: ['pwa']
+platforms: ['web', 'ios', 'android']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Web · iOS · Android" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## 目的と結果
+
+このページ専用の手順を実行します: **PWA: オフライン動作**. この手順で扱う項目: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+## 対象
+
+このページの対象は **PWA: オフライン動作** (Web · iOS · Android). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; キャッシュ済み画面は開く場合がありますが、新しいデータと書き込みには通信が必要です · `Service Worker` · `CacheStorage`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; キャッシュ済み画面は開く場合がありますが、新しいデータと書き込みには通信が必要です · `Service Worker` · `CacheStorage`. このページ固有の確認点: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+### DiscVault v26 安定版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- キャッシュ済み画面は開く場合がありますが、新しいデータと書き込みには通信が必要です · `Service Worker` · `CacheStorage`
+
+### DiscVault v26 ベータ版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- キャッシュ済み画面は開く場合がありますが、新しいデータと書き込みには通信が必要です · `Service Worker` · `CacheStorage`
+
+## 前提条件
+
+- PWA
+- `CacheStorage`
+
+## 手順
+
+1. **開く:** ライブラリ → 検索
+2. **テスト:** 機内モード · `Service Worker`
+3. **記録:** `navigator.onLine`
+4. **再接続:** HTTPS
+
+
+
+## 期待される結果
+
+次の結果を受け入れる条件: **PWA: オフライン動作** 以下の結果をすべて確認した場合のみ: キャッシュ済み画面は開く場合がありますが、新しいデータと書き込みには通信が必要です; `Service Worker` · `navigator.onLine`. このページ固有の確認点: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+- キャッシュ済み画面は開く場合がありますが、新しいデータと書き込みには通信が必要です
+- `Service Worker` · `navigator.onLine`
+
+## 安全性とロールバック
+
+:::caution
+安全な復旧境界: **PWA: オフライン動作** 起動または続行の前に、次の操作が必要です: キャッシュ済み画面は開く場合がありますが、新しいデータと書き込みには通信が必要です · DiscVault. このページ固有の確認点: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+- キャッシュ済み画面は開く場合がありますが、新しいデータと書き込みには通信が必要です · DiscVault
+:::
+
+## 次の手順
+
+[トラブルシューティング](/ja/troubleshooting/)
+
+## 情報源と状態
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- 情報源と状態: `2026-07-14`
+- DiscVault Docs: `0.1.0`

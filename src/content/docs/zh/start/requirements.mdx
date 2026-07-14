@@ -1,0 +1,82 @@
+---
+title: '开始: 概览'
+description: '任务专用说明： 开始: 概览: Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.'
+pageId: 'start-requirements'
+products: ['server', 'pwa', 'ios', 'android']
+platforms: ['all']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="所有平台" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## 目标和结果
+
+完成此页面专用的流程： **开始: 概览**. 此流程使用 Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.
+
+## 适用范围
+
+本页面仅适用于 **开始: 概览** (所有平台). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; Docker Compose `v2` · PostgreSQL `17` · `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; Docker Compose `v2` · PostgreSQL `17` · `/data`. 本页面专用检查点： Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.
+
+### DiscVault v26 稳定版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- Docker Compose `v2` · PostgreSQL `17` · `/data`
+
+### DiscVault v26 测试版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- Docker Compose `v2` · PostgreSQL `17` · `/data`
+
+## 前提条件
+
+- Docker Engine `24+`
+- 可写持久存储及充足备份空间
+- DNS TLS
+
+## 操作步骤
+
+1. **检查:** Docker Engine `≥24` · Docker Compose `v2`
+2. **检查:** `≥2 GB` · 可写持久存储及充足备份空间
+3. **配置:** DNS · TLS · HTTPS · `RP_ID` · `RP_ORIGINS`
+4. **记录:** 所选发布通道
+
+### 命令和设置
+
+#### 两个通道
+
+```bash
+docker version --format '{{.Server.Version}}'
+docker compose version
+curl --version
+```
+
+## 预期结果
+
+仅在以下条件下接受结果： **开始: 概览** 必须确认以下所有结果： Docker Engine `≥24`; Docker Compose `v2`; HTTPS DNS. 本页面专用检查点： Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.
+
+- Docker Engine `≥24`
+- Docker Compose `v2`
+- HTTPS DNS
+
+## 安全与回滚
+
+:::caution
+安全恢复边界： **开始: 概览** 在启动或继续任何操作前必须执行： 只读检查不会更改数据；继续前先补齐缺少的前提条件. 本页面专用检查点： Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.
+
+- 只读检查不会更改数据；继续前先补齐缺少的前提条件
+:::
+
+## 下一步
+
+[安装: 安装方式](/zh/install/)
+
+## 来源和状态
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- 来源和状态: `2026-07-14`
+- DiscVault Docs: `0.1.0`

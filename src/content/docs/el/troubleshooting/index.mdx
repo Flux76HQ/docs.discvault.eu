@@ -1,0 +1,82 @@
+---
+title: 'Αντιμετώπιση προβλημάτων'
+description: 'Οδηγίες ειδικά για την εργασία: Αντιμετώπιση προβλημάτων: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.'
+pageId: 'troubleshooting-index'
+products: ['server', 'pwa', 'ios', 'android']
+platforms: ['all']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVaultApp', 'Flux76HQ/DiscVault-AndroidApp']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="όλες οι πλατφόρμες" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVaultApp · Flux76HQ/DiscVault-AndroidApp" verified="2026-07-14" />
+
+## Στόχος και αποτέλεσμα
+
+Ολοκληρώστε τη ροή εργασίας της σελίδας για **Αντιμετώπιση προβλημάτων**. Η διαδικασία χρησιμοποιεί `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+
+## Ισχύει για
+
+Αυτή η σελίδα ισχύει μόνο για **Αντιμετώπιση προβλημάτων** (όλες οι πλατφόρμες). Τα όρια καναλιού και δεδομένων είναι: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/api/next/health`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/api/next/health`. Σημεία ελέγχου της σελίδας: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+
+### DiscVault v26 – σταθερό
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `/api/next/health`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `/api/next/health`
+
+## Προϋποθέσεις
+
+- επιλεγμένο κανάλι έκδοσης
+- αρχεία καταγραφής με χρόνο και απόκρυψη ιδιωτικών δεδομένων
+- `postgres`
+
+## Διαδικασία
+
+1. **Καταγράψτε:** `docker compose`
+2. **Απομονώστε:** περιέκτης → αντίστροφος διακομιστής μεσολάβησης → πρόγραμμα περιήγησης/εφαρμογή → πάροχος → δεδομένα
+3. **Ελέγξτε:** αρχεία καταγραφής με χρόνο και απόκρυψη ιδιωτικών δεδομένων
+4. **Διατηρήστε:** PostgreSQL `/data`
+
+### Εντολές και ρυθμίσεις
+
+#### Και τα δύο κανάλια
+
+```bash
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml ps
+curl --fail http://localhost:6080/api/next/health
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml logs --tail=200 next-api next-worker next-mcp postgres
+```
+
+## Αναμενόμενο αποτέλεσμα
+
+Αποδεχθείτε το αποτέλεσμα για **Αντιμετώπιση προβλημάτων** μόνο όταν ισχύουν όλα τα παρακάτω αποτελέσματα: ένα προβληματικό επίπεδο απομονώνεται με χρόνο, κατάσταση, digest εικόνας και αποκρυμμένο σφάλμα. Σημεία ελέγχου της σελίδας: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+
+- ένα προβληματικό επίπεδο απομονώνεται με χρόνο, κατάσταση, digest εικόνας και αποκρυμμένο σφάλμα
+
+## Ασφάλεια και επαναφορά
+
+:::caution
+Το ασφαλές όριο ανάκτησης για **Αντιμετώπιση προβλημάτων** απαιτεί αυτές τις ενέργειες πριν από κάθε εκκίνηση ή συνέχεια: μη διαγράψετε πρώτα volumes, `/data`, διαπιστευτήρια browser ή αποθήκευση εφαρμογής· κρατήστε αποκρυμμένα logs και επαναφέρετε μόνο αντίστοιχο αντίγραφο. Σημεία ελέγχου της σελίδας: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+
+- μη διαγράψετε πρώτα volumes, `/data`, διαπιστευτήρια browser ή αποθήκευση εφαρμογής· κρατήστε αποκρυμμένα logs και επαναφέρετε μόνο αντίστοιχο αντίγραφο
+:::
+
+## Επόμενο βήμα
+
+[Αναφορά](/el/reference/)
+
+## Πηγή και κατάσταση
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- [`helmerzNL/DiscVaultApp@9d15ab2a339c`](https://github.com/helmerzNL/DiscVaultApp/commit/9d15ab2a339cefdb164ec0ab29ad69ddabc511c1)
+- [`Flux76HQ/DiscVault-AndroidApp@a13ef4bdbb23`](https://github.com/Flux76HQ/DiscVault-AndroidApp/commit/a13ef4bdbb23b6a7e52e01cdf532fa222c1b67de)
+- Πηγή και κατάσταση: `2026-07-14`
+- DiscVault Docs: `0.1.0`

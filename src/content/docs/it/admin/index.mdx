@@ -1,0 +1,81 @@
+---
+title: 'Amministrazione: Registri, processi e sicurezza'
+description: 'Istruzioni specifiche per Amministrazione: Registri, processi e sicurezza: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.'
+pageId: 'admin-index'
+products: ['server']
+platforms: ['docker', 'unraid', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Obiettivo e risultato
+
+Completa la procedura specifica della pagina per **Amministrazione: Registri, processi e sicurezza**. Questa procedura utilizza `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+## Si applica a
+
+Questa pagina si applica solo a **Amministrazione: Registri, processi e sicurezza** (Docker · Unraid · web). I limiti di canale e dati sono: DiscVault · `ghcr.io/helmerznl/discvault:latest`; API MCP PostgreSQL; DiscVault · `ghcr.io/helmerznl/discvault:beta`; API MCP PostgreSQL. Punti di controllo della pagina: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+### DiscVault v26 stabile
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- API MCP PostgreSQL
+
+### DiscVault v26 beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- API MCP PostgreSQL
+
+## Prerequisiti
+
+- accesso proprietario
+- set di backup corrispondente
+- log con data e dati privati oscurati
+
+## Procedura
+
+1. **Controlla:** `/api/next/health`
+2. **Controlla:** log con data e dati privati oscurati
+3. **Verifica:** `next-worker`
+4. **Conserva:** `--tail=200`
+
+### Comandi e impostazioni
+
+#### Entrambi i canali
+
+```bash
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml logs --tail=200 next-api next-worker next-mcp postgres
+curl --fail http://localhost:6080/api/next/jobs
+curl --fail http://localhost:6080/api/next/health
+```
+
+## Risultato previsto
+
+Accetta il risultato per **Amministrazione: Registri, processi e sicurezza** solo quando tutti i risultati seguenti sono veri: un livello guasto è isolato con data, stato, digest immagine ed errore oscurato; set di backup corrispondente. Punti di controllo della pagina: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+- un livello guasto è isolato con data, stato, digest immagine ed errore oscurato
+- set di backup corrispondente
+
+## Sicurezza e ripristino
+
+:::caution
+Il limite di ripristino sicuro per **Amministrazione: Registri, processi e sicurezza** richiede queste azioni prima di avviare o continuare: non eliminare prima volumi, `/data`, credenziali browser o archivio nativo; conserva log oscurati e ripristina solo un backup corrispondente. Punti di controllo della pagina: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+- non eliminare prima volumi, `/data`, credenziali browser o archivio nativo; conserva log oscurati e ripristina solo un backup corrispondente
+:::
+
+## Passaggio successivo
+
+[Risoluzione dei problemi](/it/troubleshooting/)
+
+## Fonte e stato
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Fonte e stato: `2026-07-14`
+- DiscVault Docs: `0.1.0`

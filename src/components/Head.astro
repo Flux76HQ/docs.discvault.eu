@@ -1,0 +1,33 @@
+---
+import DefaultHead from '@astrojs/starlight/components/Head.astro';
+
+const locales = [
+  'cs',
+  'da',
+  'de',
+  'el',
+  'es',
+  'fi',
+  'fr',
+  'hu',
+  'it',
+  'ja',
+  'ko',
+  'nl',
+  'no',
+  'pl',
+  'pt',
+  'sv',
+  'tr',
+  'uk',
+  'zh',
+];
+const segments = Astro.url.pathname.split('/').filter(Boolean);
+if (locales.includes(segments[0] ?? '')) segments.shift();
+const canonicalPath = `/${segments.join('/')}${segments.length ? '/' : ''}`;
+---
+
+<DefaultHead {...Astro.props} />
+<link rel="alternate" hreflang="x-default" href={new URL(canonicalPath, Astro.site)} />
+<meta name="theme-color" content="#090F1A" media="(prefers-color-scheme: dark)" />
+<meta name="theme-color" content="#F4F7FB" media="(prefers-color-scheme: light)" />

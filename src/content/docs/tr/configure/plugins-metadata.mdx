@@ -1,0 +1,78 @@
+---
+title: 'Yapılandırma: Eklentiler ve meta veriler'
+description: 'Göreve özel yönergeler: Yapılandırma: Eklentiler ve meta veriler: `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.'
+pageId: 'configure-plugins-metadata'
+products: ['server']
+platforms: ['web', 'docker']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="web · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Amaç ve sonuç
+
+Sayfaya özel iş akışını tamamlayın: **Yapılandırma: Eklentiler ve meta veriler**. Bu prosedür şunları kullanır: `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.
+
+## Geçerli olduğu alan
+
+Bu sayfa yalnızca şunlar için geçerlidir: **Yapılandırma: Eklentiler ve meta veriler** (web · Docker). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26 · `/data/plugins`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26 · `/data/plugins`. Sayfaya özel denetim noktaları: `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.
+
+### DiscVault v26 kararlı
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault 26 · `/data/plugins`
+
+### DiscVault v26 beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault 26 · `/data/plugins`
+
+## Ön koşullar
+
+- sahip veya yönetici oturumu
+- gizli olarak saklanan sağlayıcı kimlik bilgisi
+
+## Prosedür
+
+1. **İnceleyin:** `GET /api/next/plugins/registry`
+2. **Yapılandırın:** Yönetim → Eklentiler → Sağlayıcı → Yapılandır · gizli olarak saklanan sağlayıcı kimlik bilgisi
+3. **Test edin:** Yönetim → Eklentiler → Durum denetimi · Yönetim → Eklentiler → Kaydetmeden keşfet · `dryRun`
+4. **Kaydedin:** `secret app_settings`
+
+### Komutlar ve ayarlar
+
+#### Her iki kanal
+
+```bash
+curl --fail http://localhost:6080/api/next/plugins/registry
+curl --fail http://localhost:6080/api/next/metadata/plugins
+```
+
+## Beklenen sonuç
+
+Şunun sonucunu kabul edin: **Yapılandırma: Eklentiler ve meta veriler** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: kayıt sağlayıcıyı listeler, sağlık denetimi geçer ve deneme beklenen meta veri örneğini döndürür. Sayfaya özel denetim noktaları: `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.
+
+- kayıt sağlayıcıyı listeler, sağlık denetimi geçer ve deneme beklenen meta veri örneğini döndürür
+
+## Güvenlik ve geri alma
+
+:::caution
+Şunun güvenli kurtarma sınırı: **Yapılandırma: Eklentiler ve meta veriler** başlatmadan veya devam etmeden önce şu işlemleri gerektirir: kaldırmadan önce sağlayıcıyı devre dışı bırakın, `/data/plugins` yedeğini alın ve açığa çıkan kimlik bilgisini iptal edin. Sayfaya özel denetim noktaları: `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.
+
+- kaldırmadan önce sağlayıcıyı devre dışı bırakın, `/data/plugins` yedeğini alın ve açığa çıkan kimlik bilgisini iptal edin
+:::
+
+## Sonraki adım
+
+[Entegrasyonlar: Plex ve Jellyfin](/tr/integrations/plex-jellyfin/)
+
+## Kaynak ve durum
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Kaynak ve durum: `2026-07-14`
+- DiscVault Docs: `0.1.0`

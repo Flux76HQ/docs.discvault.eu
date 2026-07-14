@@ -1,0 +1,81 @@
+---
+title: 'Yönetim: Günlükler, işler ve güvenlik'
+description: 'Göreve özel yönergeler: Yönetim: Günlükler, işler ve güvenlik: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.'
+pageId: 'admin-index'
+products: ['server']
+platforms: ['docker', 'unraid', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Amaç ve sonuç
+
+Sayfaya özel iş akışını tamamlayın: **Yönetim: Günlükler, işler ve güvenlik**. Bu prosedür şunları kullanır: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+## Geçerli olduğu alan
+
+Bu sayfa yalnızca şunlar için geçerlidir: **Yönetim: Günlükler, işler ve güvenlik** (Docker · Unraid · web). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault:latest`; API MCP PostgreSQL; DiscVault · `ghcr.io/helmerznl/discvault:beta`; API MCP PostgreSQL. Sayfaya özel denetim noktaları: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+### DiscVault v26 kararlı
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- API MCP PostgreSQL
+
+### DiscVault v26 beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- API MCP PostgreSQL
+
+## Ön koşullar
+
+- sahip erişimi
+- eşleşen yedek kümesi
+- özel verileri gizlenmiş zaman damgalı günlükler
+
+## Prosedür
+
+1. **İnceleyin:** `/api/next/health`
+2. **İnceleyin:** özel verileri gizlenmiş zaman damgalı günlükler
+3. **Doğrulayın:** `next-worker`
+4. **Koruyun:** `--tail=200`
+
+### Komutlar ve ayarlar
+
+#### Her iki kanal
+
+```bash
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml logs --tail=200 next-api next-worker next-mcp postgres
+curl --fail http://localhost:6080/api/next/jobs
+curl --fail http://localhost:6080/api/next/health
+```
+
+## Beklenen sonuç
+
+Şunun sonucunu kabul edin: **Yönetim: Günlükler, işler ve güvenlik** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: tek bir hatalı katman zaman damgası, durum, imaj özeti ve gizlenmiş hatayla yalıtılır; eşleşen yedek kümesi. Sayfaya özel denetim noktaları: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+- tek bir hatalı katman zaman damgası, durum, imaj özeti ve gizlenmiş hatayla yalıtılır
+- eşleşen yedek kümesi
+
+## Güvenlik ve geri alma
+
+:::caution
+Şunun güvenli kurtarma sınırı: **Yönetim: Günlükler, işler ve güvenlik** başlatmadan veya devam etmeden önce şu işlemleri gerektirir: önce birimleri, `/data`, tarayıcı kimlik bilgilerini veya yerel uygulama depolamasını silmeyin; gizlenmiş günlükleri koruyun ve yalnız eşleşen yedeği geri yükleyin. Sayfaya özel denetim noktaları: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+- önce birimleri, `/data`, tarayıcı kimlik bilgilerini veya yerel uygulama depolamasını silmeyin; gizlenmiş günlükleri koruyun ve yalnız eşleşen yedeği geri yükleyin
+:::
+
+## Sonraki adım
+
+[Sorun giderme](/tr/troubleshooting/)
+
+## Kaynak ve durum
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Kaynak ve durum: `2026-07-14`
+- DiscVault Docs: `0.1.0`

@@ -1,0 +1,83 @@
+---
+title: 'Install: First start and health check'
+description: 'Verify startup and create the first owner only after the correct channel reports healthy.'
+pageId: 'install-first-start-health'
+products: ['server']
+platforms: ['docker', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Goal and result
+
+Verify startup and create the first owner only after the correct channel reports healthy.
+
+## Applies to
+
+Both release channels expose the v26 API with the `6080:5000` host-to-container mapping and use the same health and authentication endpoints.
+
+### DiscVault v26 stable
+
+- DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
+- same health and authentication endpoints
+- host `6080` → internal API `5000`
+
+### DiscVault v26 beta
+
+- DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
+- same health and authentication endpoints
+- host `6080` → internal API `5000`
+
+## Prerequisites
+
+- running v26 deployment
+- browser · configured origin
+
+## Procedure
+
+1. **Inspect:** Compose status · `postgres` health · startup logs
+2. **Verify:** `GET /api/next/health` · HTTP `2xx`
+3. **Open:** configured origin · first account
+4. **Verify:** owner · `GET /api/next/auth/status` · WebAuthn
+
+### Commands and settings
+
+#### Both channels
+
+```bash
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml ps
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml logs --tail=100 next-api next-worker next-mcp postgres
+curl --fail http://localhost:6080/api/next/health
+curl --fail http://localhost:6080/api/next/auth/status
+```
+
+## Expected result
+
+Health returns success, the configured origin opens, and the first account becomes owner. Subsequent registration follows invite/auth settings.
+
+- health succeeds, the configured origin opens, and the first account is the owner
+
+## Safety and rollback
+
+:::caution
+If owner creation fails, do not reset data blindly. Save logs and restore the pre-start data backup with the same image.
+
+- timestamped logs with private data redacted
+- matching backup set
+:::
+
+## Next step
+
+[Update and migrate: Backup](/update/backup/)
+
+## Source and status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Verified: `2026-07-14`
+- DiscVault Docs: `0.1.0`

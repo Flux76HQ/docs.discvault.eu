@@ -1,0 +1,138 @@
+---
+title: 'Configuration: Variables d’environnement'
+description: 'Instructions propres à la tâche : Configuration: Variables d’environnement: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.'
+pageId: 'configure-environment'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Objectif et résultat
+
+Suivez le déroulement propre à cette page pour **Configuration: Variables d’environnement**. Cette procédure utilise `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+
+## S’applique à
+
+Cette page s’applique uniquement à **Configuration: Variables d’environnement** (Docker · Unraid). Les limites de canal et de données sont : DiscVault · `ghcr.io/helmerznl/discvault:latest`; `.env`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `.env`. Points de contrôle propres à la page : `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+
+### DiscVault v26 stable
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `.env`
+
+### DiscVault v26 bêta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `.env`
+
+## Prérequis
+
+- fichier privé d’exécution DiscVault
+- OpenSSL
+- créneau de redémarrage planifié
+
+## Procédure
+
+1. **Créer:** `/opt/discvault/.env` · droits de fichier réservés au propriétaire (0600)
+2. **Configurer:** `DISCVAULT_IMAGE` · `RP_ORIGINS`
+3. **Vérifier:** `chmod 0600` · `docker compose config --quiet`
+4. **Démarrer:** conserver les secrets JWT et PostgreSQL lors des modifications ordinaires
+
+### Commandes et réglages
+
+#### DiscVault v26 stable
+
+```bash
+export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
+```
+
+#### DiscVault v26 bêta
+
+```bash
+export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
+```
+
+#### Les deux canaux
+
+```bash
+set -euo pipefail
+test -n "$DISCVAULT_IMAGE"
+case "$DISCVAULT_IMAGE" in
+  ghcr.io/helmerznl/discvault:latest|ghcr.io/helmerznl/discvault:beta) ;;
+  *) printf '%s\n' "$DISCVAULT_IMAGE" >&2; exit 64 ;;
+esac
+install -d -m 0700 /opt/discvault
+install -d -m 0750 /srv/discvault
+install -d -o 70 -g 70 -m 0700 /srv/discvault-postgres
+cd /opt/discvault
+test -f compose.yaml
+umask 077
+ENV_FILE=/opt/discvault/.env
+test ! -e "$ENV_FILE"
+ENV_TMP="$(mktemp "$ENV_FILE.tmp.XXXXXX")"
+trap 'rm -f "$ENV_TMP"' EXIT
+POSTGRES_PASSWORD="$(openssl rand -hex 32)"
+JWT_SECRET="$(openssl rand -hex 32)"
+printf '%s\n' \
+  "DISCVAULT_IMAGE=$DISCVAULT_IMAGE" \
+  'DISCVAULT_DATA_DIR=/srv/discvault' \
+  'DISCVAULT_POSTGRES_DATA=/srv/discvault-postgres' \
+  'DISCVAULT_API_PORT=6080' \
+  'DISCVAULT_MCP_PORT=6090' \
+  'DISCVAULT_NETWORK_NAME=discvault' \
+  'DISCVAULT_API_WORKERS=2' \
+  'DISCVAULT_API_TIMEOUT=180' \
+  'DISCVAULT_WORKER_ID=worker-1' \
+  'DISCVAULT_WORKER_POLL_INTERVAL=2' \
+  'POSTGRES_DB=discvault' \
+  'POSTGRES_USER=discvault' \
+  "POSTGRES_PASSWORD=$POSTGRES_PASSWORD" \
+  "JWT_SECRET=$JWT_SECRET" \
+  'TZ=Europe/Amsterdam' \
+  'RP_ID=localhost' \
+  'RP_NAME=DiscVault' \
+  'RP_ORIGINS=http://localhost:6080' > "$ENV_TMP"
+chmod 0600 "$ENV_TMP"
+ln "$ENV_TMP" "$ENV_FILE"
+rm -f "$ENV_TMP"
+trap - EXIT
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml config --quiet
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml pull
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml up -d
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml ps
+curl --fail http://localhost:6080/api/next/health
+```
+
+## Résultat attendu
+
+Validez le résultat de **Configuration: Variables d’environnement** uniquement lorsque tous les résultats suivants sont confirmés : droits de fichier réservés au propriétaire (0600); le fichier privé est en mode 600, la validation Compose réussit et le canal choisi devient sain. Points de contrôle propres à la page : `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+
+- droits de fichier réservés au propriétaire (0600)
+- le fichier privé est en mode 600, la validation Compose réussit et le canal choisi devient sain
+
+## Sécurité et retour arrière
+
+:::caution
+La limite de récupération sûre pour **Configuration: Variables d’environnement** impose ces actions avant tout démarrage ou toute poursuite : le fichier d’environnement du dépôt de documentation n’est jamais un fichier d’exécution DiscVault · `.env.example`; conserver les secrets JWT et PostgreSQL lors des modifications ordinaires · `JWT_SECRET` · `POSTGRES_PASSWORD`; en cas d’échec, laissez les services arrêtés, restaurez et validez l’ancien fichier d’environnement privé, puis recréez la même image sans renouveler les secrets. Points de contrôle propres à la page : `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+
+- le fichier d’environnement du dépôt de documentation n’est jamais un fichier d’exécution DiscVault · `.env.example`
+- conserver les secrets JWT et PostgreSQL lors des modifications ordinaires · `JWT_SECRET` · `POSTGRES_PASSWORD`
+- en cas d’échec, laissez les services arrêtés, restaurez et validez l’ancien fichier d’environnement privé, puis recréez la même image sans renouveler les secrets
+:::
+
+## Étape suivante
+
+[Configuration: Authentification et RBAC](/fr/configure/auth-rbac/)
+
+## Source et état
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Source et état: `2026-07-14`
+- DiscVault Docs: `0.1.0`

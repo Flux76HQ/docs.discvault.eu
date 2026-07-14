@@ -1,0 +1,81 @@
+---
+title: 'Διαχείριση: Αρχεία καταγραφής, εργασίες και ασφάλεια'
+description: 'Οδηγίες ειδικά για την εργασία: Διαχείριση: Αρχεία καταγραφής, εργασίες και ασφάλεια: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.'
+pageId: 'admin-index'
+products: ['server']
+platforms: ['docker', 'unraid', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid · ιστός" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Στόχος και αποτέλεσμα
+
+Ολοκληρώστε τη ροή εργασίας της σελίδας για **Διαχείριση: Αρχεία καταγραφής, εργασίες και ασφάλεια**. Η διαδικασία χρησιμοποιεί `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+## Ισχύει για
+
+Αυτή η σελίδα ισχύει μόνο για **Διαχείριση: Αρχεία καταγραφής, εργασίες και ασφάλεια** (Docker · Unraid · ιστός). Τα όρια καναλιού και δεδομένων είναι: DiscVault · `ghcr.io/helmerznl/discvault:latest`; API MCP PostgreSQL; DiscVault · `ghcr.io/helmerznl/discvault:beta`; API MCP PostgreSQL. Σημεία ελέγχου της σελίδας: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+### DiscVault v26 – σταθερό
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- API MCP PostgreSQL
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- API MCP PostgreSQL
+
+## Προϋποθέσεις
+
+- πρόσβαση κατόχου
+- αντίστοιχο σύνολο αντιγράφων
+- αρχεία καταγραφής με χρόνο και απόκρυψη ιδιωτικών δεδομένων
+
+## Διαδικασία
+
+1. **Ελέγξτε:** `/api/next/health`
+2. **Ελέγξτε:** αρχεία καταγραφής με χρόνο και απόκρυψη ιδιωτικών δεδομένων
+3. **Επαληθεύστε:** `next-worker`
+4. **Διατηρήστε:** `--tail=200`
+
+### Εντολές και ρυθμίσεις
+
+#### Και τα δύο κανάλια
+
+```bash
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml logs --tail=200 next-api next-worker next-mcp postgres
+curl --fail http://localhost:6080/api/next/jobs
+curl --fail http://localhost:6080/api/next/health
+```
+
+## Αναμενόμενο αποτέλεσμα
+
+Αποδεχθείτε το αποτέλεσμα για **Διαχείριση: Αρχεία καταγραφής, εργασίες και ασφάλεια** μόνο όταν ισχύουν όλα τα παρακάτω αποτελέσματα: ένα προβληματικό επίπεδο απομονώνεται με χρόνο, κατάσταση, digest εικόνας και αποκρυμμένο σφάλμα; αντίστοιχο σύνολο αντιγράφων. Σημεία ελέγχου της σελίδας: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+- ένα προβληματικό επίπεδο απομονώνεται με χρόνο, κατάσταση, digest εικόνας και αποκρυμμένο σφάλμα
+- αντίστοιχο σύνολο αντιγράφων
+
+## Ασφάλεια και επαναφορά
+
+:::caution
+Το ασφαλές όριο ανάκτησης για **Διαχείριση: Αρχεία καταγραφής, εργασίες και ασφάλεια** απαιτεί αυτές τις ενέργειες πριν από κάθε εκκίνηση ή συνέχεια: μη διαγράψετε πρώτα volumes, `/data`, διαπιστευτήρια browser ή αποθήκευση εφαρμογής· κρατήστε αποκρυμμένα logs και επαναφέρετε μόνο αντίστοιχο αντίγραφο. Σημεία ελέγχου της σελίδας: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+- μη διαγράψετε πρώτα volumes, `/data`, διαπιστευτήρια browser ή αποθήκευση εφαρμογής· κρατήστε αποκρυμμένα logs και επαναφέρετε μόνο αντίστοιχο αντίγραφο
+:::
+
+## Επόμενο βήμα
+
+[Αντιμετώπιση προβλημάτων](/el/troubleshooting/)
+
+## Πηγή και κατάσταση
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Πηγή και κατάσταση: `2026-07-14`
+- DiscVault Docs: `0.1.0`

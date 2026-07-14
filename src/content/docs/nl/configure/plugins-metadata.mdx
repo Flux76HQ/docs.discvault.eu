@@ -1,0 +1,78 @@
+---
+title: 'Configureren: Plug-ins en metadata'
+description: 'Taakspecifieke instructies voor Configureren: Plug-ins en metadata: `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.'
+pageId: 'configure-plugins-metadata'
+products: ['server']
+platforms: ['web', 'docker']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="web · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Doel en resultaat
+
+Voer de paginaspecifieke werkwijze uit voor **Configureren: Plug-ins en metadata**. Deze werkwijze gebruikt `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.
+
+## Van toepassing op
+
+Deze pagina is uitsluitend van toepassing op **Configureren: Plug-ins en metadata** (web · Docker). De kanaal- en gegevensgrenzen zijn: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26 · `/data/plugins`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26 · `/data/plugins`. Paginaspecifieke controlepunten: `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.
+
+### DiscVault v26 stabiel
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault 26 · `/data/plugins`
+
+### DiscVault v26 bèta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault 26 · `/data/plugins`
+
+## Vereisten
+
+- eigenaar- of beheerderssessie
+- providerreferentie die als geheim wordt opgeslagen
+
+## Procedure
+
+1. **Controleren:** `GET /api/next/plugins/registry`
+2. **Configureren:** Beheer → Plug-ins → Provider → Configureren · providerreferentie die als geheim wordt opgeslagen
+3. **Testen:** Beheer → Plug-ins → Statuscontrole · Beheer → Plug-ins → Ontdekken zonder opslaan · `dryRun`
+4. **Vastleggen:** `secret app_settings`
+
+### Opdrachten en instellingen
+
+#### Beide kanalen
+
+```bash
+curl --fail http://localhost:6080/api/next/plugins/registry
+curl --fail http://localhost:6080/api/next/metadata/plugins
+```
+
+## Verwacht resultaat
+
+Accepteer het resultaat voor **Configureren: Plug-ins en metadata** alleen wanneer alle onderstaande resultaten kloppen: het register toont de provider, de statuscontrole slaagt en een dry-run geeft het verwachte metadatavoorbeeld. Paginaspecifieke controlepunten: `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.
+
+- het register toont de provider, de statuscontrole slaagt en een dry-run geeft het verwachte metadatavoorbeeld
+
+## Veiligheid en terugdraaien
+
+:::caution
+De veilige herstelgrens voor **Configureren: Plug-ins en metadata** vereist deze acties voordat iets start of doorgaat: schakel de provider vóór verwijdering uit, maak een back-up van `/data/plugins` en trek blootgestelde referenties in. Paginaspecifieke controlepunten: `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.
+
+- schakel de provider vóór verwijdering uit, maak een back-up van `/data/plugins` en trek blootgestelde referenties in
+:::
+
+## Volgende stap
+
+[Integraties: Plex en Jellyfin](/nl/integrations/plex-jellyfin/)
+
+## Bron en status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Bron en status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

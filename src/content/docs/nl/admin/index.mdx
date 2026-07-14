@@ -1,0 +1,81 @@
+---
+title: 'Beheer: Logs, taken en beveiliging'
+description: 'Taakspecifieke instructies voor Beheer: Logs, taken en beveiliging: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.'
+pageId: 'admin-index'
+products: ['server']
+platforms: ['docker', 'unraid', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Doel en resultaat
+
+Voer de paginaspecifieke werkwijze uit voor **Beheer: Logs, taken en beveiliging**. Deze werkwijze gebruikt `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+## Van toepassing op
+
+Deze pagina is uitsluitend van toepassing op **Beheer: Logs, taken en beveiliging** (Docker · Unraid · web). De kanaal- en gegevensgrenzen zijn: DiscVault · `ghcr.io/helmerznl/discvault:latest`; API MCP PostgreSQL; DiscVault · `ghcr.io/helmerznl/discvault:beta`; API MCP PostgreSQL. Paginaspecifieke controlepunten: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+### DiscVault v26 stabiel
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- API MCP PostgreSQL
+
+### DiscVault v26 bèta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- API MCP PostgreSQL
+
+## Vereisten
+
+- eigenaarstoegang
+- bijpassende back-upset
+- logboeken met tijdstip en afgeschermde privégegevens
+
+## Procedure
+
+1. **Controleren:** `/api/next/health`
+2. **Controleren:** logboeken met tijdstip en afgeschermde privégegevens
+3. **Verifiëren:** `next-worker`
+4. **Bewaren:** `--tail=200`
+
+### Opdrachten en instellingen
+
+#### Beide kanalen
+
+```bash
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml logs --tail=200 next-api next-worker next-mcp postgres
+curl --fail http://localhost:6080/api/next/jobs
+curl --fail http://localhost:6080/api/next/health
+```
+
+## Verwacht resultaat
+
+Accepteer het resultaat voor **Beheer: Logs, taken en beveiliging** alleen wanneer alle onderstaande resultaten kloppen: één falende laag is geïsoleerd met tijdstip, status, image-digest en geredigeerde fout; bijpassende back-upset. Paginaspecifieke controlepunten: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+- één falende laag is geïsoleerd met tijdstip, status, image-digest en geredigeerde fout
+- bijpassende back-upset
+
+## Veiligheid en terugdraaien
+
+:::caution
+De veilige herstelgrens voor **Beheer: Logs, taken en beveiliging** vereist deze acties voordat iets start of doorgaat: verwijder niet eerst volumes, `/data`, browserreferenties of native appopslag; bewaar geredigeerde logs en herstel alleen een bijpassende back-up. Paginaspecifieke controlepunten: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+- verwijder niet eerst volumes, `/data`, browserreferenties of native appopslag; bewaar geredigeerde logs en herstel alleen een bijpassende back-up
+:::
+
+## Volgende stap
+
+[Problemen oplossen](/nl/troubleshooting/)
+
+## Bron en status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Bron en status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

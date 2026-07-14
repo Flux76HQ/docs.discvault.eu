@@ -1,0 +1,83 @@
+---
+title: 'Installation: Första start och hälsokontroll'
+description: 'Uppgiftsspecifik vägledning för Installation: Första start och hälsokontroll: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.'
+pageId: 'install-first-start-health'
+products: ['server']
+platforms: ['docker', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · webb" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Mål och resultat
+
+Följ det sidspecifika arbetsflödet för **Installation: Första start och hälsokontroll**. Den här proceduren använder `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.
+
+## Gäller för
+
+Den här sidan gäller endast **Installation: Första start och hälsokontroll** (Docker · webb). Kanal- och datagränserna är: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/api/next/auth/status`; `6080` → API `5000`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/api/next/auth/status`; `6080` → API `5000`. Sidspecifika kontrollpunkter: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `/api/next/auth/status`
+- `6080` → API `5000`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `/api/next/auth/status`
+- `6080` → API `5000`
+
+## Förutsättningar
+
+- `/api/next/health`
+- `/api/next/auth/status`
+
+## Procedur
+
+1. **Kontrollera:** `postgres`
+2. **Verifiera:** `GET /api/next/health` · HTTP `2xx`
+3. **Öppna:** `6080:5000`
+4. **Verifiera:** `GET /api/next/auth/status` · WebAuthn
+
+### Kommandon och inställningar
+
+#### Båda kanalerna
+
+```bash
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml ps
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml logs --tail=100 next-api next-worker next-mcp postgres
+curl --fail http://localhost:6080/api/next/health
+curl --fail http://localhost:6080/api/next/auth/status
+```
+
+## Förväntat resultat
+
+Godkänn resultatet för **Installation: Första start och hälsokontroll** endast när alla resultat nedan stämmer: hälsokontrollen lyckas, konfigurerad origin öppnas och det första kontot är ägare. Sidspecifika kontrollpunkter: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.
+
+- hälsokontrollen lyckas, konfigurerad origin öppnas och det första kontot är ägare
+
+## Säkerhet och återställning
+
+:::caution
+Den säkra återställningsgränsen för **Installation: Första start och hälsokontroll** kräver dessa åtgärder innan något startas eller fortsätter: tidsstämplade loggar med privata data maskerade; matchande säkerhetskopieuppsättning. Sidspecifika kontrollpunkter: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.
+
+- tidsstämplade loggar med privata data maskerade
+- matchande säkerhetskopieuppsättning
+:::
+
+## Nästa steg
+
+[Uppdatering och migrering: Säkerhetskopia](/sv/update/backup/)
+
+## Källa och status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Källa och status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

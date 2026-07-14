@@ -1,0 +1,76 @@
+---
+title: 'PWA: Yleiskatsaus'
+description: 'Tehtäväkohtaiset ohjeet: PWA: Yleiskatsaus: PWA · HTTPS · `Service Worker` · `/pwa/offline/`.'
+pageId: 'pwa-index'
+products: ['pwa']
+platforms: ['web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="verkko" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Tavoite ja tulos
+
+Suorita sivukohtainen työnkulku: **PWA: Yleiskatsaus**. Tässä menettelyssä käytetään PWA · HTTPS · `Service Worker` · `/pwa/offline/`.
+
+## Koskee
+
+Tämä sivu koskee vain kohdetta **PWA: Yleiskatsaus** (verkko). Kanava- ja tietorajat ovat: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PWA; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PWA. Sivukohtaiset tarkistuspisteet: PWA · HTTPS · `Service Worker` · `/pwa/offline/`.
+
+### DiscVault v26 – vakaa
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PWA
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PWA
+
+## Edellytykset
+
+- PWA
+- HTTPS DiscVault 26
+
+## Toimenpiteet
+
+1. **Asenna:** [PWA: PWA:n asennus](/fi/pwa/install/) · HTTPS
+2. **Avaa:** [PWA: Kirjasto ja haku](/fi/pwa/library-search/)
+3. **Testaa:** [PWA: Toiminta ilman verkkoa](/fi/pwa/offline/) · `Service Worker`
+4. **Vahvista:** `/pwa/offline/`
+
+### Tehtäväpolut
+
+- [PWA: PWA:n asennus](/fi/pwa/install/) — iOS/iPadOS Android
+- [PWA: Kirjasto ja haku](/fi/pwa/library-search/) — HTTPS
+- [PWA: Toiminta ilman verkkoa](/fi/pwa/offline/) — Service Worker
+
+## Odotettu tulos
+
+Hyväksy tulos kohteelle **PWA: Yleiskatsaus** vain kun kaikki seuraavat tulokset toteutuvat: Osoiterivi → Asenna DiscVault · Jaa → Lisää Koti-valikkoon · Selaimen valikko → Asenna sovellus; välimuistinäkymät voivat avautua, mutta uudet tiedot ja kirjoitukset tarvitsevat verkon. Sivukohtaiset tarkistuspisteet: PWA · HTTPS · `Service Worker` · `/pwa/offline/`.
+
+- Osoiterivi → Asenna DiscVault · Jaa → Lisää Koti-valikkoon · Selaimen valikko → Asenna sovellus
+- välimuistinäkymät voivat avautua, mutta uudet tiedot ja kirjoitukset tarvitsevat verkon
+
+## Turvallisuus ja palautus
+
+:::caution
+Turvallinen palautusraja kohteelle **PWA: Yleiskatsaus** edellyttää näitä toimia ennen käynnistystä tai jatkamista: poista vain asennettu PWA-kuori; palvelinkirjasto ja tilitiedot säilyvät muuttumattomina. Sivukohtaiset tarkistuspisteet: PWA · HTTPS · `Service Worker` · `/pwa/offline/`.
+
+- poista vain asennettu PWA-kuori; palvelinkirjasto ja tilitiedot säilyvät muuttumattomina
+:::
+
+## Seuraava vaihe
+
+[PWA: PWA:n asennus](/fi/pwa/install/)
+
+## Lähde ja tila
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Lähde ja tila: `2026-07-14`
+- DiscVault Docs: `0.1.0`

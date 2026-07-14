@@ -1,0 +1,82 @@
+---
+title: 'Integraatiot: Plex ja Jellyfin'
+description: 'Tehtäväkohtaiset ohjeet: Integraatiot: Plex ja Jellyfin: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.'
+pageId: 'integrations-plex-jellyfin'
+products: ['server']
+platforms: ['web', 'docker']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="verkko · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Tavoite ja tulos
+
+Suorita sivukohtainen työnkulku: **Integraatiot: Plex ja Jellyfin**. Tässä menettelyssä käytetään Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+## Koskee
+
+Tämä sivu koskee vain kohdetta **Integraatiot: Plex ja Jellyfin** (verkko · Docker). Kanava- ja tietorajat ovat: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26. Sivukohtaiset tarkistuspisteet: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+### DiscVault v26 – vakaa
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault 26
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault 26
+
+## Edellytykset
+
+- salaisuutena tallennettu palveluntarjoajan tunnus
+- Jellyfin
+- omistajan tai ylläpitäjän istunto
+
+## Toimenpiteet
+
+1. **Määritä:** Ylläpito → Liitännäiset → Tarjoaja → Määritä · Plex Jellyfin
+2. **Testaa:** Ylläpito → Liitännäiset → Kuntotarkistus
+3. **Suorita:** Ylläpito → Liitännäiset → Etsi tallentamatta · `dryRun=true`
+4. **Vertaa:** `/api/next/digital-items?limit=200`
+
+### Komennot ja asetukset
+
+#### Molemmat kanavat
+
+```bash
+curl --fail http://localhost:6080/api/next/digital-sources
+curl --fail 'http://localhost:6080/api/next/digital-items?limit=200'
+```
+
+## Odotettu tulos
+
+Hyväksy tulos kohteelle **Integraatiot: Plex ja Jellyfin** vain kun kaikki seuraavat tulokset toteutuvat: Ylläpito → Liitännäiset → Kuntotarkistus; Ylläpito → Liitännäiset → Etsi tallentamatta · `dryRun=true`; Plex · Jellyfin · `/api/next/digital-items`. Sivukohtaiset tarkistuspisteet: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+- Ylläpito → Liitännäiset → Kuntotarkistus
+- Ylläpito → Liitännäiset → Etsi tallentamatta · `dryRun=true`
+- Plex · Jellyfin · `/api/next/digital-items`
+
+## Turvallisuus ja palautus
+
+:::caution
+Turvallinen palautusraja kohteelle **Integraatiot: Plex ja Jellyfin** edellyttää näitä toimia ennen käynnistystä tai jatkamista: poista palveluntarjoaja käytöstä ennen poistamista, varmuuskopioi `/data/plugins` ja peru paljastunut tunnus; poista integraatio käytöstä, peru testi- tai paljastuneet tunnukset, luo tarvittaessa uusi äläkä käytä vanhaa uudelleen. Sivukohtaiset tarkistuspisteet: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+- poista palveluntarjoaja käytöstä ennen poistamista, varmuuskopioi `/data/plugins` ja peru paljastunut tunnus
+- poista integraatio käytöstä, peru testi- tai paljastuneet tunnukset, luo tarvittaessa uusi äläkä käytä vanhaa uudelleen
+:::
+
+## Seuraava vaihe
+
+[Vianmääritys](/fi/troubleshooting/)
+
+## Lähde ja tila
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Lähde ja tila: `2026-07-14`
+- DiscVault Docs: `0.1.0`

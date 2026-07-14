@@ -1,0 +1,97 @@
+---
+title: 'インストール: Unraid'
+description: 'タスク別の手順: インストール: Unraid: `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.'
+pageId: 'install-unraid'
+products: ['server']
+platforms: ['unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## 目的と結果
+
+このページ専用の手順を実行します: **インストール: Unraid**. この手順で扱う項目: `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+
+## 対象
+
+このページの対象は **インストール: Unraid** (Unraid). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL API MCP; `:latest` `:beta`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL API MCP; `:latest` `:beta`. このページ固有の確認点: `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+
+### DiscVault v26 安定版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PostgreSQL API MCP
+- `:latest` `:beta`
+
+### DiscVault v26 ベータ版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PostgreSQL API MCP
+- `:latest` `:beta`
+
+## 前提条件
+
+- Unraid `6.12+`
+- `/mnt/user/appdata/discvault/data`
+- OpenSSL
+
+## 手順
+
+1. **インストール:** Unraid · [インストール: Docker Compose](/ja/install/docker-compose/)
+2. **設定:** `DISCVAULT_IMAGE` · `:latest` `:beta`
+3. **設定:** `DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data` · `DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres`
+4. **検証:** `postgres` · `next-api` · `next-worker` · `next-mcp` · `6080:5000`
+
+### コマンドと設定
+
+#### DiscVault v26 安定版
+
+```text
+DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
+DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data
+DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres
+DISCVAULT_API_PORT=6080
+DISCVAULT_MCP_PORT=6090
+```
+
+#### DiscVault v26 ベータ版
+
+```text
+DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
+DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data
+DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres
+DISCVAULT_API_PORT=6080
+DISCVAULT_MCP_PORT=6090
+```
+
+## 期待される結果
+
+次の結果を受け入れる条件: **インストール: Unraid** 以下の結果をすべて確認した場合のみ: PostgreSQL; `/data`; HTTP `2xx`. このページ固有の確認点: `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+
+- PostgreSQL
+- `/data`
+- HTTP `2xx`
+
+## 安全性とロールバック
+
+:::caution
+安全な復旧境界: **インストール: Unraid** 起動または続行の前に、次の操作が必要です: 一致するバックアップ一式; `/mnt/user/appdata/discvault/data`. このページ固有の確認点: `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+
+- 一致するバックアップ一式
+- `/mnt/user/appdata/discvault/data`
+:::
+
+## 次の手順
+
+[インストール: 初回起動とヘルスチェック](/ja/install/first-start-health/)
+
+## 情報源と状態
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- 情報源と状態: `2026-07-14`
+- DiscVault Docs: `0.1.0`

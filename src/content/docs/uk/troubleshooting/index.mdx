@@ -1,0 +1,82 @@
+---
+title: 'Усунення проблем'
+description: 'Спеціальні інструкції для завдання: Усунення проблем: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.'
+pageId: 'troubleshooting-index'
+products: ['server', 'pwa', 'ios', 'android']
+platforms: ['all']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVaultApp', 'Flux76HQ/DiscVault-AndroidApp']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="усі платформи" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVaultApp · Flux76HQ/DiscVault-AndroidApp" verified="2026-07-14" />
+
+## Мета й результат
+
+Виконайте спеціальну процедуру сторінки для **Усунення проблем**. У цій процедурі використовуються `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+
+## Застосовується до
+
+Ця сторінка стосується лише **Усунення проблем** (усі платформи). Межі каналу й даних: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/api/next/health`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/api/next/health`. Контрольні точки цієї сторінки: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+
+### DiscVault v26 – стабільний
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `/api/next/health`
+
+### DiscVault v26 – бета
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `/api/next/health`
+
+## Передумови
+
+- вибраний канал випуску
+- журнали з часом і прихованими приватними даними
+- `postgres`
+
+## Процедура
+
+1. **Запишіть:** `docker compose`
+2. **Ізолюйте:** контейнер → зворотний проксі → браузер/застосунок → постачальник → дані
+3. **Перевірте:** журнали з часом і прихованими приватними даними
+4. **Збережіть:** PostgreSQL `/data`
+
+### Команди й налаштування
+
+#### Обидва канали
+
+```bash
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml ps
+curl --fail http://localhost:6080/api/next/health
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml logs --tail=200 next-api next-worker next-mcp postgres
+```
+
+## Очікуваний результат
+
+Приймайте результат для **Усунення проблем** лише коли підтверджено всі наведені нижче результати: один несправний рівень ізольовано з часом, станом, digest образу й прихованою помилкою. Контрольні точки цієї сторінки: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+
+- один несправний рівень ізольовано з часом, станом, digest образу й прихованою помилкою
+
+## Безпека й відкочування
+
+:::caution
+Безпечна межа відновлення для **Усунення проблем** вимагає цих дій до будь-якого запуску чи продовження: не видаляйте спершу volumes, `/data`, дані браузера чи сховище застосунку; збережіть приховані журнали й відновлюйте лише відповідну копію. Контрольні точки цієї сторінки: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+
+- не видаляйте спершу volumes, `/data`, дані браузера чи сховище застосунку; збережіть приховані журнали й відновлюйте лише відповідну копію
+:::
+
+## Наступний крок
+
+[Довідник](/uk/reference/)
+
+## Джерело й стан
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- [`helmerzNL/DiscVaultApp@9d15ab2a339c`](https://github.com/helmerzNL/DiscVaultApp/commit/9d15ab2a339cefdb164ec0ab29ad69ddabc511c1)
+- [`Flux76HQ/DiscVault-AndroidApp@a13ef4bdbb23`](https://github.com/Flux76HQ/DiscVault-AndroidApp/commit/a13ef4bdbb23b6a7e52e01cdf532fa222c1b67de)
+- Джерело й стан: `2026-07-14`
+- DiscVault Docs: `0.1.0`

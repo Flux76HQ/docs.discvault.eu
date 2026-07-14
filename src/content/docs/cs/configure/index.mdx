@@ -1,0 +1,76 @@
+---
+title: 'Konfigurace: Přehled'
+description: 'Pokyny pro konkrétní úlohu: Konfigurace: Přehled: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.'
+pageId: 'configure-index'
+products: ['server']
+platforms: ['docker', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Cíl a výsledek
+
+Dokončete postup určený pro **Konfigurace: Přehled**. Tento postup pracuje s `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+
+## Platí pro
+
+Tato stránka platí pouze pro **Konfigurace: Přehled** (Docker · web). Hranice kanálu a dat jsou: DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. Kontrolní body této stránky: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+
+### DiscVault v26 – stabilní
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- RBAC
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- RBAC
+
+## Požadavky
+
+- přístup vlastníka
+- `/configure/auth-rbac/`
+
+## Postup
+
+1. **Vyberte:** [Konfigurace: Proměnné prostředí](/cs/configure/environment/)
+2. **Vyberte:** [Konfigurace: Ověřování a RBAC](/cs/configure/auth-rbac/) · RBAC
+3. **Vyberte:** [Konfigurace: Pluginy a metadata](/cs/configure/plugins-metadata/)
+4. **Zaznamenejte:** `/configure/environment/`
+
+### Cesty k úlohám
+
+- [Konfigurace: Proměnné prostředí](/cs/configure/environment/) — `/configure/environment/`
+- [Konfigurace: Ověřování a RBAC](/cs/configure/auth-rbac/) — DiscVault 26 RBAC
+- [Konfigurace: Pluginy a metadata](/cs/configure/plugins-metadata/) — DiscVault 26
+
+## Očekávaný výsledek
+
+Výsledek přijměte pro **Konfigurace: Přehled** pouze pokud platí všechny následující výsledky: vybraný kanál vydání; `/configure/auth-rbac/`. Kontrolní body této stránky: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+
+- vybraný kanál vydání
+- `/configure/auth-rbac/`
+
+## Bezpečnost a návrat
+
+:::caution
+Bezpečná hranice obnovy pro **Konfigurace: Přehled** vyžaduje před spuštěním nebo pokračováním tyto kroky: měňte vždy jen jeden subsystém, zachovejte jeho předchozí hodnotu a zálohu a před další změnou jej vraťte. Kontrolní body této stránky: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+
+- měňte vždy jen jeden subsystém, zachovejte jeho předchozí hodnotu a zálohu a před další změnou jej vraťte
+:::
+
+## Další krok
+
+[Konfigurace: Proměnné prostředí](/cs/configure/environment/)
+
+## Zdroj a stav
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Zdroj a stav: `2026-07-14`
+- DiscVault Docs: `0.1.0`

@@ -1,0 +1,138 @@
+---
+title: 'Konfigurálás: Környezeti változók'
+description: 'Feladatspecifikus útmutató: Konfigurálás: Környezeti változók: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.'
+pageId: 'configure-environment'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Cél és eredmény
+
+Hajtsa végre az oldalhoz tartozó munkafolyamatot: **Konfigurálás: Környezeti változók**. Ez az eljárás ezeket használja: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+
+## Érvényesség
+
+Ez az oldal kizárólag erre vonatkozik: **Konfigurálás: Környezeti változók** (Docker · Unraid). A csatorna- és adathatárok: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `.env`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `.env`. Oldalspecifikus ellenőrzési pontok: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `.env`
+
+### DiscVault v26 – béta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `.env`
+
+## Előfeltételek
+
+- privát DiscVault futásidejű fájl
+- OpenSSL
+- tervezett újraindítási időablak
+
+## Eljárás
+
+1. **Hozza létre:** `/opt/discvault/.env` · csak tulajdonosi fájljogosultság (0600)
+2. **Állítsa be:** `DISCVAULT_IMAGE` · `RP_ORIGINS`
+3. **Ellenőrizze:** `chmod 0600` · `docker compose config --quiet`
+4. **Indítsa el:** a JWT- és PostgreSQL-titkokat ne módosítsa szokásos beállításkor
+
+### Parancsok és beállítások
+
+#### DiscVault v26 – stabil
+
+```bash
+export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
+```
+
+#### DiscVault v26 – béta
+
+```bash
+export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
+```
+
+#### Mindkét csatorna
+
+```bash
+set -euo pipefail
+test -n "$DISCVAULT_IMAGE"
+case "$DISCVAULT_IMAGE" in
+  ghcr.io/helmerznl/discvault:latest|ghcr.io/helmerznl/discvault:beta) ;;
+  *) printf '%s\n' "$DISCVAULT_IMAGE" >&2; exit 64 ;;
+esac
+install -d -m 0700 /opt/discvault
+install -d -m 0750 /srv/discvault
+install -d -o 70 -g 70 -m 0700 /srv/discvault-postgres
+cd /opt/discvault
+test -f compose.yaml
+umask 077
+ENV_FILE=/opt/discvault/.env
+test ! -e "$ENV_FILE"
+ENV_TMP="$(mktemp "$ENV_FILE.tmp.XXXXXX")"
+trap 'rm -f "$ENV_TMP"' EXIT
+POSTGRES_PASSWORD="$(openssl rand -hex 32)"
+JWT_SECRET="$(openssl rand -hex 32)"
+printf '%s\n' \
+  "DISCVAULT_IMAGE=$DISCVAULT_IMAGE" \
+  'DISCVAULT_DATA_DIR=/srv/discvault' \
+  'DISCVAULT_POSTGRES_DATA=/srv/discvault-postgres' \
+  'DISCVAULT_API_PORT=6080' \
+  'DISCVAULT_MCP_PORT=6090' \
+  'DISCVAULT_NETWORK_NAME=discvault' \
+  'DISCVAULT_API_WORKERS=2' \
+  'DISCVAULT_API_TIMEOUT=180' \
+  'DISCVAULT_WORKER_ID=worker-1' \
+  'DISCVAULT_WORKER_POLL_INTERVAL=2' \
+  'POSTGRES_DB=discvault' \
+  'POSTGRES_USER=discvault' \
+  "POSTGRES_PASSWORD=$POSTGRES_PASSWORD" \
+  "JWT_SECRET=$JWT_SECRET" \
+  'TZ=Europe/Amsterdam' \
+  'RP_ID=localhost' \
+  'RP_NAME=DiscVault' \
+  'RP_ORIGINS=http://localhost:6080' > "$ENV_TMP"
+chmod 0600 "$ENV_TMP"
+ln "$ENV_TMP" "$ENV_FILE"
+rm -f "$ENV_TMP"
+trap - EXIT
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml config --quiet
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml pull
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml up -d
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml ps
+curl --fail http://localhost:6080/api/next/health
+```
+
+## Várt eredmény
+
+Az eredmény csak ennél fogadható el: **Konfigurálás: Környezeti változók** csak akkor, ha minden alábbi eredmény teljesül: csak tulajdonosi fájljogosultság (0600); a privát fájl módja 600, a Compose-ellenőrzés sikeres, és a kiválasztott csatorna egészséges. Oldalspecifikus ellenőrzési pontok: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+
+- csak tulajdonosi fájljogosultság (0600)
+- a privát fájl módja 600, a Compose-ellenőrzés sikeres, és a kiválasztott csatorna egészséges
+
+## Biztonság és visszaállítás
+
+:::caution
+A biztonságos helyreállítás határa ennél: **Konfigurálás: Környezeti változók** ezeket a műveleteket igényli indítás vagy folytatás előtt: a dokumentációs tároló környezeti fájlja soha nem DiscVault futásidejű fájl · `.env.example`; a JWT- és PostgreSQL-titkokat ne módosítsa szokásos beállításkor · `JWT_SECRET` · `POSTGRES_PASSWORD`; hiba esetén tartsa leállítva a szolgáltatásokat, állítsa vissza és ellenőrizze az előző privát környezeti fájlt, majd ugyanazt az image-et hozza létre a titkok cseréje nélkül. Oldalspecifikus ellenőrzési pontok: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+
+- a dokumentációs tároló környezeti fájlja soha nem DiscVault futásidejű fájl · `.env.example`
+- a JWT- és PostgreSQL-titkokat ne módosítsa szokásos beállításkor · `JWT_SECRET` · `POSTGRES_PASSWORD`
+- hiba esetén tartsa leállítva a szolgáltatásokat, állítsa vissza és ellenőrizze az előző privát környezeti fájlt, majd ugyanazt az image-et hozza létre a titkok cseréje nélkül
+:::
+
+## Következő lépés
+
+[Konfigurálás: Hitelesítés és RBAC](/hu/configure/auth-rbac/)
+
+## Forrás és állapot
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Forrás és állapot: `2026-07-14`
+- DiscVault Docs: `0.1.0`

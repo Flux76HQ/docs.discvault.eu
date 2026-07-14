@@ -1,0 +1,78 @@
+---
+title: 'Konfiguration: Insticksprogram och metadata'
+description: 'Uppgiftsspecifik vägledning för Konfiguration: Insticksprogram och metadata: `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.'
+pageId: 'configure-plugins-metadata'
+products: ['server']
+platforms: ['web', 'docker']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="webb · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Mål och resultat
+
+Följ det sidspecifika arbetsflödet för **Konfiguration: Insticksprogram och metadata**. Den här proceduren använder `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.
+
+## Gäller för
+
+Den här sidan gäller endast **Konfiguration: Insticksprogram och metadata** (webb · Docker). Kanal- och datagränserna är: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26 · `/data/plugins`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26 · `/data/plugins`. Sidspecifika kontrollpunkter: `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault 26 · `/data/plugins`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault 26 · `/data/plugins`
+
+## Förutsättningar
+
+- ägar- eller administratörssession
+- leverantörsuppgift lagrad som hemlighet
+
+## Procedur
+
+1. **Kontrollera:** `GET /api/next/plugins/registry`
+2. **Konfigurera:** Administration → Insticksprogram → Leverantör → Konfigurera · leverantörsuppgift lagrad som hemlighet
+3. **Testa:** Administration → Insticksprogram → Hälsokontroll · Administration → Insticksprogram → Upptäck utan att spara · `dryRun`
+4. **Anteckna:** `secret app_settings`
+
+### Kommandon och inställningar
+
+#### Båda kanalerna
+
+```bash
+curl --fail http://localhost:6080/api/next/plugins/registry
+curl --fail http://localhost:6080/api/next/metadata/plugins
+```
+
+## Förväntat resultat
+
+Godkänn resultatet för **Konfiguration: Insticksprogram och metadata** endast när alla resultat nedan stämmer: registret listar leverantören, hälsokontrollen godkänns och en provkörning ger väntat metadataexempel. Sidspecifika kontrollpunkter: `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.
+
+- registret listar leverantören, hälsokontrollen godkänns och en provkörning ger väntat metadataexempel
+
+## Säkerhet och återställning
+
+:::caution
+Den säkra återställningsgränsen för **Konfiguration: Insticksprogram och metadata** kräver dessa åtgärder innan något startas eller fortsätter: inaktivera leverantören före borttagning, säkerhetskopiera `/data/plugins` och återkalla exponerade uppgifter. Sidspecifika kontrollpunkter: `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.
+
+- inaktivera leverantören före borttagning, säkerhetskopiera `/data/plugins` och återkalla exponerade uppgifter
+:::
+
+## Nästa steg
+
+[Integrationer: Plex och Jellyfin](/sv/integrations/plex-jellyfin/)
+
+## Källa och status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Källa och status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

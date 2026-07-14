@@ -1,0 +1,72 @@
+---
+title: 'PWA: Offlineadfærd'
+description: 'Opgavespecifik vejledning til PWA: Offlineadfærd: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.'
+pageId: 'pwa-offline'
+products: ['pwa']
+platforms: ['web', 'ios', 'android']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="web · iOS · Android" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Mål og resultat
+
+Gennemfør den sidespecifikke arbejdsgang for **PWA: Offlineadfærd**. Denne fremgangsmåde arbejder med `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+## Gælder for
+
+Denne side gælder kun for **PWA: Offlineadfærd** (web · iOS · Android). Kanal- og datagrænserne er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; cachede skærme kan åbne, men friske data og skrivninger kræver netværk · `Service Worker` · `CacheStorage`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; cachede skærme kan åbne, men friske data og skrivninger kræver netværk · `Service Worker` · `CacheStorage`. Sidespecifikke kontrolpunkter: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- cachede skærme kan åbne, men friske data og skrivninger kræver netværk · `Service Worker` · `CacheStorage`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- cachede skærme kan åbne, men friske data og skrivninger kræver netværk · `Service Worker` · `CacheStorage`
+
+## Forudsætninger
+
+- PWA
+- `CacheStorage`
+
+## Fremgangsmåde
+
+1. **Åbn:** Bibliotek → Søg
+2. **Test:** flytilstand · `Service Worker`
+3. **Registrér:** `navigator.onLine`
+4. **Forbind igen:** HTTPS
+
+
+
+## Forventet resultat
+
+Godkend resultatet for **PWA: Offlineadfærd** kun når alle resultater nedenfor er opfyldt: cachede skærme kan åbne, men friske data og skrivninger kræver netværk; `Service Worker` · `navigator.onLine`. Sidespecifikke kontrolpunkter: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+- cachede skærme kan åbne, men friske data og skrivninger kræver netværk
+- `Service Worker` · `navigator.onLine`
+
+## Sikkerhed og tilbagerulning
+
+:::caution
+Den sikre gendannelsesgrænse for **PWA: Offlineadfærd** kræver disse handlinger, før noget startes eller fortsættes: cachede skærme kan åbne, men friske data og skrivninger kræver netværk · DiscVault. Sidespecifikke kontrolpunkter: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+- cachede skærme kan åbne, men friske data og skrivninger kræver netværk · DiscVault
+:::
+
+## Næste trin
+
+[Fejlfinding](/da/troubleshooting/)
+
+## Kilde og status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Kilde og status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

@@ -1,0 +1,248 @@
+---
+title: 'Installasjon: Docker Compose'
+description: 'Oppgavespesifikk veiledning for Installasjon: Docker Compose: `DISCVAULT_IMAGE` · `postgres:17-alpine` · `6080:5000` · `/api/next/health`.'
+pageId: 'install-docker-compose'
+products: ['server']
+platforms: ['docker']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Mål og resultat
+
+Fullfør den sidespesifikke arbeidsflyten for **Installasjon: Docker Compose**. Denne fremgangsmåten bruker `DISCVAULT_IMAGE` · `postgres:17-alpine` · `6080:5000` · `/api/next/health`.
+
+## Gjelder for
+
+Denne siden gjelder bare **Installasjon: Docker Compose** (Docker). Kanal- og datagrensene er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `postgres:17-alpine`; `DISCVAULT_IMAGE`; `app/deploy/next/docker-compose.yml` · API `5000`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `postgres:17-alpine`; `DISCVAULT_IMAGE`; `app/deploy/next/docker-compose.yml` · API `5000`. Sidespesifikke kontrollpunkter: `DISCVAULT_IMAGE` · `postgres:17-alpine` · `6080:5000` · `/api/next/health`.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `postgres:17-alpine`
+- `DISCVAULT_IMAGE`
+- `app/deploy/next/docker-compose.yml` · API `5000`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `postgres:17-alpine`
+- `DISCVAULT_IMAGE`
+- `app/deploy/next/docker-compose.yml` · API `5000`
+
+## Forutsetninger
+
+- Docker Compose `v2`
+- OpenSSL
+- skrivbar vedvarende lagring og ledig sikkerhetskopiplass
+
+## Fremgangsmåte
+
+1. **Opprett:** `/opt/discvault/compose.yaml`
+2. **Velg:** `DISCVAULT_IMAGE` · `:latest` `:beta`
+3. **Opprett:** `/opt/discvault/.env` · filrettigheter bare for eier (0600)
+4. **Kjør:** `docker compose config --quiet` · `GET /api/next/health`
+
+### Kommandoer og innstillinger
+
+#### DiscVault v26 – stabil
+
+```bash
+export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
+```
+
+#### DiscVault v26 – beta
+
+```bash
+export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
+```
+
+#### Begge kanaler
+
+```yaml
+services:
+  postgres:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: "${POSTGRES_DB:?set POSTGRES_DB}"
+      POSTGRES_USER: "${POSTGRES_USER:?set POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}"
+      TZ: "${TZ:-Europe/Amsterdam}"
+    volumes:
+      - "${DISCVAULT_POSTGRES_DATA:?set DISCVAULT_POSTGRES_DATA}:/var/lib/postgresql/data"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  next-api:
+    image: "${DISCVAULT_IMAGE:?set DISCVAULT_IMAGE}"
+    restart: unless-stopped
+    working_dir: /opt/discvault/backend
+    command:
+      - sh
+      - -c
+      - >-
+        python next_database.py migrate &&
+        exec gunicorn --bind 0.0.0.0:5000
+        --workers ${DISCVAULT_API_WORKERS:-2}
+        --timeout ${DISCVAULT_API_TIMEOUT:-180}
+        next_app:app
+    environment:
+      DATABASE_URL: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}"
+      TZ: "${TZ:-Europe/Amsterdam}"
+      DISCVAULT_DATA_DIR: /data
+      JWT_SECRET: "${JWT_SECRET:?set JWT_SECRET}"
+      RP_ID: "${RP_ID:?set RP_ID}"
+      RP_NAME: "${RP_NAME:-DiscVault}"
+      RP_ORIGINS: "${RP_ORIGINS:?set RP_ORIGINS}"
+      DISCVAULT_PLUGIN_INSTALL_DIR: /data/plugins
+    volumes:
+      - "${DISCVAULT_DATA_DIR:?set DISCVAULT_DATA_DIR}:/data"
+    ports:
+      - "${DISCVAULT_API_PORT:-6080}:5000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://localhost:5000/api/next/health')"
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  next-worker:
+    image: "${DISCVAULT_IMAGE:?set DISCVAULT_IMAGE}"
+    restart: unless-stopped
+    working_dir: /opt/discvault/backend
+    command: ["python", "next_worker.py", "work"]
+    environment:
+      DATABASE_URL: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}"
+      TZ: "${TZ:-Europe/Amsterdam}"
+      DISCVAULT_DATA_DIR: /data
+      DISCVAULT_WORKER_ID: "${DISCVAULT_WORKER_ID:-worker-1}"
+      DISCVAULT_WORKER_POLL_INTERVAL: "${DISCVAULT_WORKER_POLL_INTERVAL:-2}"
+      DISCVAULT_PLUGIN_INSTALL_DIR: /data/plugins
+    volumes:
+      - "${DISCVAULT_DATA_DIR:?set DISCVAULT_DATA_DIR}:/data"
+    depends_on:
+      next-api:
+        condition: service_healthy
+
+  next-mcp:
+    image: "${DISCVAULT_IMAGE:?set DISCVAULT_IMAGE}"
+    restart: unless-stopped
+    working_dir: /opt/discvault/mcp-server
+    command: ["python", "server.py", "--http", "--host", "0.0.0.0", "--port", "6090"]
+    environment:
+      DISCVAULT_API: http://next-api:5000
+      TZ: "${TZ:-Europe/Amsterdam}"
+    ports:
+      - "${DISCVAULT_MCP_PORT:-6090}:6090"
+    depends_on:
+      next-api:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://localhost:6090/health')"
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+networks:
+  default:
+    name: "${DISCVAULT_NETWORK_NAME:-discvault}"
+```
+
+```bash
+set -euo pipefail
+test -n "$DISCVAULT_IMAGE"
+case "$DISCVAULT_IMAGE" in
+  ghcr.io/helmerznl/discvault:latest|ghcr.io/helmerznl/discvault:beta) ;;
+  *) printf '%s\n' "$DISCVAULT_IMAGE" >&2; exit 64 ;;
+esac
+install -d -m 0700 /opt/discvault
+install -d -m 0750 /srv/discvault
+install -d -o 70 -g 70 -m 0700 /srv/discvault-postgres
+cd /opt/discvault
+test -f compose.yaml
+umask 077
+ENV_FILE=/opt/discvault/.env
+test ! -e "$ENV_FILE"
+ENV_TMP="$(mktemp "$ENV_FILE.tmp.XXXXXX")"
+trap 'rm -f "$ENV_TMP"' EXIT
+POSTGRES_PASSWORD="$(openssl rand -hex 32)"
+JWT_SECRET="$(openssl rand -hex 32)"
+printf '%s\n' \
+  "DISCVAULT_IMAGE=$DISCVAULT_IMAGE" \
+  'DISCVAULT_DATA_DIR=/srv/discvault' \
+  'DISCVAULT_POSTGRES_DATA=/srv/discvault-postgres' \
+  'DISCVAULT_API_PORT=6080' \
+  'DISCVAULT_MCP_PORT=6090' \
+  'DISCVAULT_NETWORK_NAME=discvault' \
+  'DISCVAULT_API_WORKERS=2' \
+  'DISCVAULT_API_TIMEOUT=180' \
+  'DISCVAULT_WORKER_ID=worker-1' \
+  'DISCVAULT_WORKER_POLL_INTERVAL=2' \
+  'POSTGRES_DB=discvault' \
+  'POSTGRES_USER=discvault' \
+  "POSTGRES_PASSWORD=$POSTGRES_PASSWORD" \
+  "JWT_SECRET=$JWT_SECRET" \
+  'TZ=Europe/Amsterdam' \
+  'RP_ID=localhost' \
+  'RP_NAME=DiscVault' \
+  'RP_ORIGINS=http://localhost:6080' > "$ENV_TMP"
+chmod 0600 "$ENV_TMP"
+ln "$ENV_TMP" "$ENV_FILE"
+rm -f "$ENV_TMP"
+trap - EXIT
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml config --quiet
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml pull
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml up -d
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml ps
+curl --fail http://localhost:6080/api/next/health
+```
+
+## Forventet resultat
+
+Godta resultatet for **Installasjon: Docker Compose** bare når alle resultatene nedenfor er oppfylt: `postgres` · `next-api` · `next-worker` · `next-mcp`; `6080` → API `5000`; HTTP `2xx` · `/api/next/health`. Sidespesifikke kontrollpunkter: `DISCVAULT_IMAGE` · `postgres:17-alpine` · `6080:5000` · `/api/next/health`.
+
+- `postgres` · `next-api` · `next-worker` · `next-mcp`
+- `6080` → API `5000`
+- HTTP `2xx` · `/api/next/health`
+
+## Sikkerhet og tilbakerulling
+
+:::caution
+Den sikre gjenopprettingsgrensen for **Installasjon: Docker Compose** krever disse handlingene før noe startes eller fortsetter: tilhørende sikkerhetskopisett; versjonsnotater og registrert uforanderlig image-digest; PostgreSQL og `/data` er separate lagre og krever ett tilhørende sikkerhetskopisett. Sidespesifikke kontrollpunkter: `DISCVAULT_IMAGE` · `postgres:17-alpine` · `6080:5000` · `/api/next/health`.
+
+- tilhørende sikkerhetskopisett
+- versjonsnotater og registrert uforanderlig image-digest
+- PostgreSQL og `/data` er separate lagre og krever ett tilhørende sikkerhetskopisett
+:::
+
+## Neste trinn
+
+[Installasjon: Første oppstart og tilstandskontroll](/no/install/first-start-health/)
+
+## Kilde og status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Kilde og status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

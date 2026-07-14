@@ -1,0 +1,82 @@
+---
+title: 'トラブルシューティング'
+description: 'タスク別の手順: トラブルシューティング: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.'
+pageId: 'troubleshooting-index'
+products: ['server', 'pwa', 'ios', 'android']
+platforms: ['all']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVaultApp', 'Flux76HQ/DiscVault-AndroidApp']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="すべてのプラットフォーム" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVaultApp · Flux76HQ/DiscVault-AndroidApp" verified="2026-07-14" />
+
+## 目的と結果
+
+このページ専用の手順を実行します: **トラブルシューティング**. この手順で扱う項目: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+
+## 対象
+
+このページの対象は **トラブルシューティング** (すべてのプラットフォーム). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/api/next/health`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/api/next/health`. このページ固有の確認点: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+
+### DiscVault v26 安定版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `/api/next/health`
+
+### DiscVault v26 ベータ版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `/api/next/health`
+
+## 前提条件
+
+- 選択したリリースチャンネル
+- 個人情報を伏せたタイムスタンプ付きログ
+- `postgres`
+
+## 手順
+
+1. **記録:** `docker compose`
+2. **隔離:** コンテナ → リバースプロキシ → ブラウザー/アプリ → プロバイダー → データ
+3. **確認:** 個人情報を伏せたタイムスタンプ付きログ
+4. **保持:** PostgreSQL `/data`
+
+### コマンドと設定
+
+#### 両方のチャンネル
+
+```bash
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml ps
+curl --fail http://localhost:6080/api/next/health
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml logs --tail=200 next-api next-worker next-mcp postgres
+```
+
+## 期待される結果
+
+次の結果を受け入れる条件: **トラブルシューティング** 以下の結果をすべて確認した場合のみ: 障害レイヤーを 1 つに切り分け、時刻、状態、イメージダイジェスト、秘匿済みエラーを記録します. このページ固有の確認点: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+
+- 障害レイヤーを 1 つに切り分け、時刻、状態、イメージダイジェスト、秘匿済みエラーを記録します
+
+## 安全性とロールバック
+
+:::caution
+安全な復旧境界: **トラブルシューティング** 起動または続行の前に、次の操作が必要です: 最初にボリューム、`/data`、ブラウザー資格情報、ネイティブアプリ領域を削除せず、秘匿済みログを保存し、一致するバックアップだけを復元します. このページ固有の確認点: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+
+- 最初にボリューム、`/data`、ブラウザー資格情報、ネイティブアプリ領域を削除せず、秘匿済みログを保存し、一致するバックアップだけを復元します
+:::
+
+## 次の手順
+
+[リファレンス](/ja/reference/)
+
+## 情報源と状態
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- [`helmerzNL/DiscVaultApp@9d15ab2a339c`](https://github.com/helmerzNL/DiscVaultApp/commit/9d15ab2a339cefdb164ec0ab29ad69ddabc511c1)
+- [`Flux76HQ/DiscVault-AndroidApp@a13ef4bdbb23`](https://github.com/Flux76HQ/DiscVault-AndroidApp/commit/a13ef4bdbb23b6a7e52e01cdf532fa222c1b67de)
+- 情報源と状態: `2026-07-14`
+- DiscVault Docs: `0.1.0`

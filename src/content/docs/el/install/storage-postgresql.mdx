@@ -1,0 +1,85 @@
+---
+title: 'Εγκατάσταση: Μόνιμα δεδομένα και PostgreSQL'
+description: 'Οδηγίες ειδικά για την εργασία: Εγκατάσταση: Μόνιμα δεδομένα και PostgreSQL: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.'
+pageId: 'install-storage-postgresql'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Στόχος και αποτέλεσμα
+
+Ολοκληρώστε τη ροή εργασίας της σελίδας για **Εγκατάσταση: Μόνιμα δεδομένα και PostgreSQL**. Η διαδικασία χρησιμοποιεί `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
+
+## Ισχύει για
+
+Αυτή η σελίδα ισχύει μόνο για **Εγκατάσταση: Μόνιμα δεδομένα και PostgreSQL** (Docker · Unraid). Τα όρια καναλιού και δεδομένων είναι: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL; `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL; `/data`. Σημεία ελέγχου της σελίδας: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
+
+### DiscVault v26 – σταθερό
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PostgreSQL
+- `/data`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PostgreSQL
+- `/data`
+
+## Προϋποθέσεις
+
+- `DISCVAULT_POSTGRES_DATA`
+- προορισμός αντιγράφων εκτός των ενεργών δεδομένων
+- PostgreSQL `17`
+
+## Διαδικασία
+
+1. **Ελέγξτε:** `DISCVAULT_POSTGRES_DATA` · `/var/lib/postgresql/data`
+2. **Ελέγξτε:** `DISCVAULT_DATA_DIR` · `/data`
+3. **Επαληθεύστε:** `postgres` · `healthy` · `next-api`
+4. **Καταγράψτε:** dump PostgreSQL και αρχείο συστήματος από το ίδιο παράθυρο χωρίς εγγραφές
+
+### Εντολές και ρυθμίσεις
+
+#### Και τα δύο κανάλια
+
+```bash
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml ps
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml exec -T postgres sh -c 'pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"'
+docker inspect discvault-next-api-1 --format '{{range .Mounts}}{{.Source}} -> {{.Destination}}{{println}}{{end}}'
+```
+
+## Αναμενόμενο αποτέλεσμα
+
+Αποδεχθείτε το αποτέλεσμα για **Εγκατάσταση: Μόνιμα δεδομένα και PostgreSQL** μόνο όταν ισχύουν όλα τα παρακάτω αποτελέσματα: PostgreSQL · `healthy`; `/data`; αντίστοιχο σύνολο αντιγράφων. Σημεία ελέγχου της σελίδας: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
+
+- PostgreSQL · `healthy`
+- `/data`
+- αντίστοιχο σύνολο αντιγράφων
+
+## Ασφάλεια και επαναφορά
+
+:::caution
+Το ασφαλές όριο ανάκτησης για **Εγκατάσταση: Μόνιμα δεδομένα και PostgreSQL** απαιτεί αυτές τις ενέργειες πριν από κάθε εκκίνηση ή συνέχεια: το PostgreSQL και το `/data` είναι χωριστά αποθετήρια και απαιτούν ένα αντίστοιχο σύνολο αντιγράφων; προορισμός αντιγράφων εκτός των ενεργών δεδομένων. Σημεία ελέγχου της σελίδας: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
+
+- το PostgreSQL και το `/data` είναι χωριστά αποθετήρια και απαιτούν ένα αντίστοιχο σύνολο αντιγράφων
+- προορισμός αντιγράφων εκτός των ενεργών δεδομένων
+:::
+
+## Επόμενο βήμα
+
+[Εγκατάσταση: Αντίστροφος διακομιστής μεσολάβησης και κλειδιά πρόσβασης](/el/install/reverse-proxy-passkeys/)
+
+## Πηγή και κατάσταση
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Πηγή και κατάσταση: `2026-07-14`
+- DiscVault Docs: `0.1.0`

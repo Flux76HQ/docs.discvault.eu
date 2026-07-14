@@ -1,0 +1,84 @@
+---
+title: 'Mise à jour et migration: Migration vers DiscVault 26'
+description: 'Instructions propres à la tâche : Mise à jour et migration: Migration vers DiscVault 26: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.'
+pageId: 'update-migration'
+products: ['server']
+platforms: ['docker', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Objectif et résultat
+
+Suivez le déroulement propre à cette page pour **Mise à jour et migration: Migration vers DiscVault 26**. Cette procédure utilise `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+
+## S’applique à
+
+Cette page s’applique uniquement à **Mise à jour et migration: Migration vers DiscVault 26** (Docker · web). Les limites de canal et de données sont : DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; source de données existantes en lecture seule ; jamais la base d’exécution actuelle · SQLite → PostgreSQL; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26; source de données existantes en lecture seule ; jamais la base d’exécution actuelle · SQLite → PostgreSQL. Points de contrôle propres à la page : `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+
+### DiscVault v26 stable
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault 26
+- source de données existantes en lecture seule ; jamais la base d’exécution actuelle · SQLite → PostgreSQL
+
+### DiscVault v26 bêta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault 26
+- source de données existantes en lecture seule ; jamais la base d’exécution actuelle · SQLite → PostgreSQL
+
+## Prérequis
+
+- source de données existantes en lecture seule ; jamais la base d’exécution actuelle · `/data/discvault.db`
+- dump PostgreSQL et archive des fichiers de la même fenêtre sans écriture
+- accès propriétaire
+
+## Procédure
+
+1. **Sauvegarder:** source de données existantes en lecture seule ; jamais la base d’exécution actuelle · dump PostgreSQL et archive des fichiers de la même fenêtre sans écriture
+2. **Inspecter:** `/api/next/migration/readiness` · `ready_for_confirmation`
+3. **Exécuter:** `POST /api/next/migration/start`
+4. **Comparer:** la préparation est confirmée, la migration ne compte aucun échec et les totaux et médias test correspondent
+
+### Commandes et réglages
+
+#### Les deux canaux
+
+```bash
+curl --fail http://localhost:6080/api/next/migration/readiness
+curl --fail http://localhost:6080/api/next/migration/status
+curl --fail -X POST http://localhost:6080/api/next/migration/start \
+  -H 'Content-Type: application/json' -d '{}'
+curl --fail http://localhost:6080/api/next/migration/status
+```
+
+## Résultat attendu
+
+Validez le résultat de **Mise à jour et migration: Migration vers DiscVault 26** uniquement lorsque tous les résultats suivants sont confirmés : la préparation est confirmée, la migration ne compte aucun échec et les totaux et médias test correspondent. Points de contrôle propres à la page : `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+
+- la préparation est confirmée, la migration ne compte aucun échec et les totaux et médias test correspondent
+
+## Sécurité et retour arrière
+
+:::caution
+La limite de récupération sûre pour **Mise à jour et migration: Migration vers DiscVault 26** impose ces actions avant tout démarrage ou toute poursuite : arrêtez les écritures DiscVault, restaurez les sauvegardes PostgreSQL et `/data` correspondantes et ne répétez jamais l’import dans une base partiellement remplie. Points de contrôle propres à la page : `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+
+- arrêtez les écritures DiscVault, restaurez les sauvegardes PostgreSQL et `/data` correspondantes et ne répétez jamais l’import dans une base partiellement remplie
+:::
+
+## Étape suivante
+
+[Configuration: Variables d’environnement](/fr/configure/environment/)
+
+## Source et état
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Source et état: `2026-07-14`
+- DiscVault Docs: `0.1.0`

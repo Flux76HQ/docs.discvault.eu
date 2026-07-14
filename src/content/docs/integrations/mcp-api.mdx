@@ -1,0 +1,91 @@
+---
+title: 'Integrations: MCP and REST API'
+description: 'Connect an MCP client or REST consumer with a personal, user-scoped API key.'
+pageId: 'integrations-mcp-api'
+products: ['server']
+platforms: ['web', 'docker']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="web · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Goal and result
+
+Connect an MCP client or REST consumer with a personal, user-scoped API key.
+
+## Applies to
+
+DiscVault v26 stable and beta expose MCP on the web origin or direct port 6090 and use the same API service. Never place a real key in documentation, logs, or source control.
+
+### DiscVault v26 stable
+
+- DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
+- `/mcp` on web origin or direct port `6090` · REST API
+
+### DiscVault v26 beta
+
+- DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
+- `/mcp` on web origin or direct port `6090` · REST API
+
+## Prerequisites
+
+- personal API key
+- HTTPS DiscVault origin
+- MCP streamable HTTP client
+
+## Procedure
+
+1. **Create:** personal user-scoped API key
+2. **Configure:** `streamable-http` · `https://discvault.example.com/mcp`
+3. **Test:** tool listing · owner-scoped collection
+4. **Revoke:** test key · remove client secret
+
+### Commands and settings
+
+#### Both channels
+
+```json
+{
+  "mcpServers": {
+    "discvault": {
+      "transport": "streamable-http",
+      "url": "https://discvault.example.com/mcp",
+      "headers": { "Authorization": "******" }
+    }
+  }
+}
+```
+
+```bash
+curl --fail https://discvault.example.com/api/next/health
+```
+
+## Expected result
+
+The client lists DiscVault tools and returns only the key owner’s collection, groups, watchlist, and history.
+
+- DiscVault · `streamable-http` · `/mcp`
+- provider credential stored as a secret · `Authorization`
+
+## Safety and rollback
+
+:::caution
+Revoke the personal key in profile settings and remove it from the client. Create a new key rather than reusing an exposed one.
+
+- disable the integration, revoke test or exposed credentials, create a new credential if needed, and never reuse the old one
+:::
+
+## Next step
+
+[Integrations: Plex and Jellyfin](/integrations/plex-jellyfin/)
+
+## Source and status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Verified: `2026-07-14`
+- DiscVault Docs: `0.1.0`

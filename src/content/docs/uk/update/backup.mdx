@@ -1,0 +1,101 @@
+---
+title: 'Оновлення й міграція: Резервне копіювання'
+description: 'Спеціальні інструкції для завдання: Оновлення й міграція: Резервне копіювання: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.'
+pageId: 'update-backup'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Мета й результат
+
+Виконайте спеціальну процедуру сторінки для **Оновлення й міграція: Резервне копіювання**. У цій процедурі використовуються `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
+
+## Застосовується до
+
+Ця сторінка стосується лише **Оновлення й міграція: Резервне копіювання** (Docker · Unraid). Межі каналу й даних: DiscVault · `ghcr.io/helmerznl/discvault:latest`; дамп PostgreSQL і файловий архів з одного вікна без запису; PostgreSQL `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; дамп PostgreSQL і файловий архів з одного вікна без запису; PostgreSQL `/data`. Контрольні точки цієї сторінки: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
+
+### DiscVault v26 – стабільний
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- дамп PostgreSQL і файловий архів з одного вікна без запису
+- PostgreSQL `/data`
+
+### DiscVault v26 – бета
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- дамп PostgreSQL і файловий архів з одного вікна без запису
+- PostgreSQL `/data`
+
+## Передумови
+
+- місце резервної копії поза активними даними
+- доступне для запису постійне сховище й вільне місце
+
+## Процедура
+
+1. **Запишіть:** `PREVIOUS_IMAGE` · `sha256`
+2. **Зупиніть:** `next-api` `next-worker` `next-mcp`
+3. **Створіть резервну копію:** `pg_dump -Fc`
+4. **Запустіть:** `next-api` → → MCP
+
+### Команди й налаштування
+
+#### Обидва канали
+
+```bash
+set -euo pipefail
+cd /opt/discvault
+install -d -m 0700 /srv/backups
+BACKUP_ID="$(date -u +%Y%m%dT%H%M%SZ)"
+API_ID="$(docker compose --env-file .env -p discvault -f compose.yaml ps -q next-api)"
+IMAGE_ID="$(docker inspect "$API_ID" --format '{{.Image}}')"
+PREVIOUS_IMAGE="$(docker image inspect "$IMAGE_ID" --format '{{index .RepoDigests 0}}')"
+test -n "$PREVIOUS_IMAGE"
+printf 'BACKUP_ID=%s\nPREVIOUS_IMAGE=%s\n' "$BACKUP_ID" "$PREVIOUS_IMAGE" \
+  > "/srv/backups/discvault-$BACKUP_ID.env"
+chmod 0600 "/srv/backups/discvault-$BACKUP_ID.env"
+docker compose --env-file .env -p discvault -f compose.yaml stop next-worker next-mcp next-api
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'pg_dump -Fc -U "$POSTGRES_USER" "$POSTGRES_DB"' \
+  > "/srv/backups/discvault-$BACKUP_ID.dump"
+tar --acls --xattrs -C /srv -czf \
+  "/srv/backups/discvault-data-$BACKUP_ID.tgz" discvault
+docker compose --env-file .env -p discvault -f compose.yaml start next-api
+curl --fail http://localhost:6080/api/next/health
+docker compose --env-file .env -p discvault -f compose.yaml start next-worker next-mcp
+test -s "/srv/backups/discvault-$BACKUP_ID.dump"
+gzip -t "/srv/backups/discvault-data-$BACKUP_ID.tgz"
+```
+
+## Очікуваний результат
+
+Приймайте результат для **Оновлення й міграція: Резервне копіювання** лише коли підтверджено всі наведені нижче результати: архів і dump не порожні, читаються під час репетиції та пов’язані з незмінним digest образу. Контрольні точки цієї сторінки: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
+
+- архів і dump не порожні, читаються під час репетиції та пов’язані з незмінним digest образу
+
+## Безпека й відкочування
+
+:::caution
+Безпечна межа відновлення для **Оновлення й міграція: Резервне копіювання** вимагає цих дій до будь-якого запуску чи продовження: якщо команда резервування не вдалася, запустіть лише незмінені служби й скасуйте оновлення; дамп PostgreSQL і файловий архів з одного вікна без запису. Контрольні точки цієї сторінки: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
+
+- якщо команда резервування не вдалася, запустіть лише незмінені служби й скасуйте оновлення
+- дамп PostgreSQL і файловий архів з одного вікна без запису
+:::
+
+## Наступний крок
+
+[Оновлення й міграція: Відновлення](/uk/update/restore/)
+
+## Джерело й стан
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Джерело й стан: `2026-07-14`
+- DiscVault Docs: `0.1.0`

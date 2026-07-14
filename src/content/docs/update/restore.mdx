@@ -1,0 +1,115 @@
+---
+title: 'Update and migrate: Restore'
+description: 'Restore the complete data set for the selected channel rather than copying only one database file.'
+pageId: 'update-restore'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Goal and result
+
+Restore the complete data set for the selected channel rather than copying only one database file.
+
+## Applies to
+
+For both release channels, restore the matching `/data` archive and PostgreSQL dump before starting the recorded image digest.
+
+### DiscVault v26 stable
+
+- DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
+- PostgreSQL dump and filesystem archive from the same stopped-writer window
+- restore the matching data before starting the previous image
+
+### DiscVault v26 beta
+
+- DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
+- PostgreSQL dump and filesystem archive from the same stopped-writer window
+- restore the matching data before starting the previous image
+
+## Prerequisites
+
+- matching backup set
+- maintenance window
+- `PREVIOUS_IMAGE` · private DiscVault runtime environment file
+
+## Procedure
+
+1. **Stop:** `next-api` + `next-worker` + `next-mcp`
+2. **Restore:** `/data` archive · before image startup
+3. **Restore:** PostgreSQL · `pg_restore --exit-on-error`
+4. **Start:** `next-api` → `GET /api/next/health` → `next-worker` + `next-mcp`
+
+### Commands and settings
+
+#### Both channels
+
+```bash
+set -euo pipefail
+BACKUP_ID=20260714T180000Z
+cd /opt/discvault
+. "/srv/backups/discvault-$BACKUP_ID.env"
+test -n "$PREVIOUS_IMAGE"
+export DISCVAULT_IMAGE="$PREVIOUS_IMAGE"
+docker pull "$DISCVAULT_IMAGE"
+ENV_FILE=/opt/discvault/.env
+ENV_TMP="$(mktemp "$ENV_FILE.restore.XXXXXX")"
+trap 'rm -f "$ENV_TMP"' EXIT
+awk -v image="$DISCVAULT_IMAGE" '
+  /^DISCVAULT_IMAGE=/ { print "DISCVAULT_IMAGE=" image; found=1; next }
+  { print }
+  END { if (!found) exit 42 }
+' "$ENV_FILE" > "$ENV_TMP"
+chmod 0600 "$ENV_TMP"
+docker compose --env-file .env -p discvault -f compose.yaml stop next-worker next-mcp next-api
+mv /srv/discvault "/srv/discvault.failed-$(date -u +%Y%m%dT%H%M%SZ)"
+tar --acls --xattrs -C /srv -xzf \
+  "/srv/backups/discvault-data-$BACKUP_ID.tgz"
+docker compose --env-file .env -p discvault -f compose.yaml up -d postgres
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'dropdb --if-exists --force -U "$POSTGRES_USER" "$POSTGRES_DB"'
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'createdb -U "$POSTGRES_USER" "$POSTGRES_DB"'
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'pg_restore --exit-on-error --no-owner -U "$POSTGRES_USER" -d "$POSTGRES_DB"' \
+  < "/srv/backups/discvault-$BACKUP_ID.dump"
+docker compose --env-file .env -p discvault -f compose.yaml up -d --force-recreate next-api
+curl --fail http://localhost:6080/api/next/health
+docker compose --env-file .env -p discvault -f compose.yaml \
+  up -d --force-recreate next-worker next-mcp
+docker compose --env-file .env -p discvault -f compose.yaml ps
+mv "$ENV_TMP" "$ENV_FILE"
+trap - EXIT
+```
+
+## Expected result
+
+The original image starts healthy and library counts and media files match the backup.
+
+- library counts and sampled media match the selected backup
+- same procedure · `:latest` / `:beta`
+
+## Safety and rollback
+
+:::caution
+Keep the failed directory and untouched backup copies until verification. If filesystem extraction or `pg_restore --exit-on-error` fails, the container, API, workers, and MCP must remain stopped while you retry.
+
+- if filesystem extraction or pg_restore fails, keep the container, API, workers, and MCP stopped; retry from untouched backup copies
+:::
+
+## Next step
+
+[Update and migrate: Container update](/update/update/)
+
+## Source and status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Verified: `2026-07-14`
+- DiscVault Docs: `0.1.0`

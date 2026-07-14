@@ -1,0 +1,80 @@
+---
+title: 'Start: Overview'
+description: 'Choose the server, PWA, iOS/iPadOS, or Android route without mixing their availability claims.'
+pageId: 'start-index'
+products: ['server', 'pwa', 'ios', 'android']
+platforms: ['all']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVaultApp', 'Flux76HQ/DiscVault-AndroidApp']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="all platforms" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVaultApp · Flux76HQ/DiscVault-AndroidApp" verified="2026-07-14" />
+
+## Goal and result
+
+Choose the server, PWA, iOS/iPadOS, or Android route without mixing their availability claims.
+
+## Applies to
+
+The DiscVault v26 server and PWA are available through stable `:latest` and beta `:beta`; native app pages carry their own release status.
+
+### DiscVault v26 stable
+
+- DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
+- PostgreSQL + `/data` · same v26 topology
+
+### DiscVault v26 beta
+
+- DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
+- PostgreSQL + `/data` · same v26 topology
+
+## Prerequisites
+
+- Docker Engine `24+`
+- iOS/iPadOS `17+`
+- Android API `26+`
+
+## Procedure
+
+1. **Choose:** [Install: Installation routes](/install/) · Docker Compose · DiscVault 26
+2. **Choose:** [PWA: Overview](/pwa/) · HTTPS · PWA
+3. **Choose:** [iOS/iPadOS: Setup](/ios/) · iOS/iPadOS `17+` · SwiftData
+4. **Choose:** [Android: Setup](/android/) · Android API `26+` · Room
+
+### Task routes
+
+- [Install: Installation routes](/install/) — DiscVault 26 · PostgreSQL · HTTPS
+- [PWA: Overview](/pwa/) — PWA · browser
+- [iOS/iPadOS: Setup](/ios/) — iOS/iPadOS 17+ · SwiftData
+- [Android: Setup](/android/) — Android API 26+ · Room
+
+## Expected result
+
+You reach a platform-specific procedure and know its release channel before changing data.
+
+- selected release channel
+- server / PWA / iOS / Android
+
+## Safety and rollback
+
+:::caution
+No system change is made on this route page.
+
+- data remains untouched · route selection
+:::
+
+## Next step
+
+[Install: Installation routes](/install/)
+
+## Source and status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- [`helmerzNL/DiscVaultApp@9d15ab2a339c`](https://github.com/helmerzNL/DiscVaultApp/commit/9d15ab2a339cefdb164ec0ab29ad69ddabc511c1)
+- [`Flux76HQ/DiscVault-AndroidApp@a13ef4bdbb23`](https://github.com/Flux76HQ/DiscVault-AndroidApp/commit/a13ef4bdbb23b6a7e52e01cdf532fa222c1b67de)
+- Verified: `2026-07-14`
+- DiscVault Docs: `0.1.0`

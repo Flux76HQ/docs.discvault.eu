@@ -1,0 +1,79 @@
+---
+title: 'Konfigurasjon: Autentisering og RBAC'
+description: 'Oppgavespesifikk veiledning for Konfigurasjon: Autentisering og RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.'
+pageId: 'configure-auth-rbac'
+products: ['server']
+platforms: ['web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="nett" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Mål og resultat
+
+Fullfør den sidespesifikke arbeidsflyten for **Konfigurasjon: Autentisering og RBAC**. Denne fremgangsmåten bruker `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+
+## Gjelder for
+
+Denne siden gjelder bare **Konfigurasjon: Autentisering og RBAC** (nett). Kanal- og datagrensene er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn. Sidespesifikke kontrollpunkter: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- WebAuthn
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- WebAuthn
+
+## Forutsetninger
+
+- eiertilgang
+- HTTPS
+- annen gjenopprettingsmetode
+
+## Fremgangsmåte
+
+1. **Åpne:** Administrasjon → Sikkerhet → Aktiver autentisering
+2. **Opprett:** Administrasjon → Brukere → Opprett 48-timers invitasjon
+3. **Konfigurer:** Administrasjon → Roller → Grunnleggende / Avansert
+4. **Test:** `48 h`
+
+### Kommandoer og innstillinger
+
+#### Begge kanaler
+
+```bash
+curl --fail http://localhost:6080/api/next/auth/status
+curl --fail http://localhost:6080/api/next/auth/rbac
+```
+
+## Forventet resultat
+
+Godta resultatet for **Konfigurasjon: Autentisering og RBAC** bare når alle resultatene nedenfor er oppfylt: eierens passkey-innlogging virker, invitasjonsregistrering følger innstillingen og testbrukeren har bare tildelte rettigheter. Sidespesifikke kontrollpunkter: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+
+- eierens passkey-innlogging virker, invitasjonsregistrering følger innstillingen og testbrukeren har bare tildelte rettigheter
+
+## Sikkerhet og tilbakerulling
+
+:::caution
+Den sikre gjenopprettingsgrensen for **Konfigurasjon: Autentisering og RBAC** krever disse handlingene før noe startes eller fortsetter: behold eierøkten og en annen gjenopprettingsmetode; fjern aldri eierens siste passkey. Sidespesifikke kontrollpunkter: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+
+- behold eierøkten og en annen gjenopprettingsmetode; fjern aldri eierens siste passkey
+:::
+
+## Neste trinn
+
+[Konfigurasjon: Programtillegg og metadata](/no/configure/plugins-metadata/)
+
+## Kilde og status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Kilde og status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

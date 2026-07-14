@@ -1,0 +1,74 @@
+---
+title: 'Довідник'
+description: 'Спеціальні інструкції для завдання: Довідник: `:latest` · `:beta` · `:dev` · `6080:5000`.'
+pageId: 'reference-index'
+products: ['server', 'pwa', 'ios', 'android']
+platforms: ['all']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="усі платформи" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Мета й результат
+
+Виконайте спеціальну процедуру сторінки для **Довідник**. У цій процедурі використовуються `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+## Застосовується до
+
+Ця сторінка стосується лише **Довідник** (усі платформи). Межі каналу й даних: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`. Контрольні точки цієї сторінки: `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+### DiscVault v26 – стабільний
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PostgreSQL `/data`
+- API `6080:5000` MCP `6090:6090`
+
+### DiscVault v26 – бета
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PostgreSQL `/data`
+- API `6080:5000` MCP `6090:6090`
+
+## Передумови
+
+- вибраний канал випуску
+
+## Процедура
+
+1. **Перевірте:** `:latest` `:beta`
+2. **Запишіть:** `:dev` призначено лише для інженерних робіт і це не канал випуску; стабільний DiscVault v26 використовує `:latest`, а бета використовує `:beta` · `:dev`
+3. **Запишіть:** `/api/next/health`
+4. **Запишіть:** PostgreSQL `/data`
+
+
+
+## Очікуваний результат
+
+Приймайте результат для **Довідник** лише коли підтверджено всі наведені нижче результати: вибраний канал випуску · `@sha256:`; `:latest` · `:beta` · `:dev`. Контрольні точки цієї сторінки: `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+- вибраний канал випуску · `@sha256:`
+- `:latest` · `:beta` · `:dev`
+
+## Безпека й відкочування
+
+:::caution
+Безпечна межа відновлення для **Довідник** вимагає цих дій до будь-якого запуску чи продовження: довідник лише для читання; перед командами чи зміною даних використовуйте цільову процедуру; `:dev` призначено лише для інженерних робіт і це не канал випуску; стабільний DiscVault v26 використовує `:latest`, а бета використовує `:beta` · `:dev`. Контрольні точки цієї сторінки: `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+- довідник лише для читання; перед командами чи зміною даних використовуйте цільову процедуру
+- `:dev` призначено лише для інженерних робіт і це не канал випуску; стабільний DiscVault v26 використовує `:latest`, а бета використовує `:beta` · `:dev`
+:::
+
+## Наступний крок
+
+[Початок: Огляд](/uk/start/)
+
+## Джерело й стан
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Джерело й стан: `2026-07-14`
+- DiscVault Docs: `0.1.0`

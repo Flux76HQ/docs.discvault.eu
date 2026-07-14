@@ -1,0 +1,81 @@
+---
+title: 'Administration: Journaux, tâches et sécurité'
+description: 'Instructions propres à la tâche : Administration: Journaux, tâches et sécurité: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.'
+pageId: 'admin-index'
+products: ['server']
+platforms: ['docker', 'unraid', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Objectif et résultat
+
+Suivez le déroulement propre à cette page pour **Administration: Journaux, tâches et sécurité**. Cette procédure utilise `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+## S’applique à
+
+Cette page s’applique uniquement à **Administration: Journaux, tâches et sécurité** (Docker · Unraid · web). Les limites de canal et de données sont : DiscVault · `ghcr.io/helmerznl/discvault:latest`; API MCP PostgreSQL; DiscVault · `ghcr.io/helmerznl/discvault:beta`; API MCP PostgreSQL. Points de contrôle propres à la page : `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+### DiscVault v26 stable
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- API MCP PostgreSQL
+
+### DiscVault v26 bêta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- API MCP PostgreSQL
+
+## Prérequis
+
+- accès propriétaire
+- jeu de sauvegardes correspondant
+- journaux horodatés avec données privées masquées
+
+## Procédure
+
+1. **Inspecter:** `/api/next/health`
+2. **Inspecter:** journaux horodatés avec données privées masquées
+3. **Vérifier:** `next-worker`
+4. **Conserver:** `--tail=200`
+
+### Commandes et réglages
+
+#### Les deux canaux
+
+```bash
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml logs --tail=200 next-api next-worker next-mcp postgres
+curl --fail http://localhost:6080/api/next/jobs
+curl --fail http://localhost:6080/api/next/health
+```
+
+## Résultat attendu
+
+Validez le résultat de **Administration: Journaux, tâches et sécurité** uniquement lorsque tous les résultats suivants sont confirmés : une couche défaillante est isolée avec horodatage, état, digest d’image et erreur masquée; jeu de sauvegardes correspondant. Points de contrôle propres à la page : `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+- une couche défaillante est isolée avec horodatage, état, digest d’image et erreur masquée
+- jeu de sauvegardes correspondant
+
+## Sécurité et retour arrière
+
+:::caution
+La limite de récupération sûre pour **Administration: Journaux, tâches et sécurité** impose ces actions avant tout démarrage ou toute poursuite : ne supprimez pas d’abord volumes, `/data`, identifiants du navigateur ou stockage natif ; conservez les journaux masqués et restaurez uniquement une sauvegarde correspondante. Points de contrôle propres à la page : `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+- ne supprimez pas d’abord volumes, `/data`, identifiants du navigateur ou stockage natif ; conservez les journaux masqués et restaurez uniquement une sauvegarde correspondante
+:::
+
+## Étape suivante
+
+[Dépannage](/fr/troubleshooting/)
+
+## Source et état
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Source et état: `2026-07-14`
+- DiscVault Docs: `0.1.0`

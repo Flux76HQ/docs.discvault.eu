@@ -1,0 +1,114 @@
+---
+title: 'Update and migrate: Container update'
+description: 'Pull and recreate one channel only, then verify health and representative data.'
+pageId: 'update-update'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Goal and result
+
+Pull and recreate one channel only, then verify health and representative data.
+
+## Applies to
+
+`ghcr.io/helmerznl/discvault:latest` is DiscVault v26 stable and `ghcr.io/helmerznl/discvault:beta` is DiscVault v26 beta. Both use the same service graph and data schema path. Record the resolved digest because release tags can move.
+
+### DiscVault v26 stable
+
+- DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
+- change only `DISCVAULT_IMAGE` in the same Compose deployment
+- same PostgreSQL + `/data` topology · release notes and recorded immutable image digest · matching backup set
+
+### DiscVault v26 beta
+
+- DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
+- change only `DISCVAULT_IMAGE` in the same Compose deployment
+- same PostgreSQL + `/data` topology · release notes and recorded immutable image digest · matching backup set
+
+## Prerequisites
+
+- matching backup set
+- release notes and recorded immutable image digest
+
+## Procedure
+
+1. **Verify:** backup manifest · `PREVIOUS_IMAGE=@sha256:…`
+2. **Choose:** `DISCVAULT_IMAGE` · `:latest` / `:beta`
+3. **Run:** Compose pull + `--force-recreate` · without deleting data
+4. **Compare:** the intended image digest is running, health is successful, and owner login, library count, and one media sample all pass
+
+### Commands and settings
+
+#### DiscVault v26 stable
+
+```bash
+export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
+```
+
+#### DiscVault v26 beta
+
+```bash
+export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
+```
+
+#### Both channels
+
+```bash
+set -euo pipefail
+test -n "$DISCVAULT_IMAGE"
+case "$DISCVAULT_IMAGE" in
+  ghcr.io/helmerznl/discvault:latest|ghcr.io/helmerznl/discvault:beta) ;;
+  *) printf '%s\n' "$DISCVAULT_IMAGE" >&2; exit 64 ;;
+esac
+cd /opt/discvault
+ENV_FILE=/opt/discvault/.env
+ENV_TMP="$(mktemp "$ENV_FILE.update.XXXXXX")"
+trap 'rm -f "$ENV_TMP"' EXIT
+awk -v image="$DISCVAULT_IMAGE" '
+  /^DISCVAULT_IMAGE=/ { print "DISCVAULT_IMAGE=" image; found=1; next }
+  { print }
+  END { if (!found) exit 42 }
+' "$ENV_FILE" > "$ENV_TMP"
+chmod 0600 "$ENV_TMP"
+docker compose --env-file "$ENV_TMP" -p discvault -f compose.yaml config --quiet
+docker compose --env-file "$ENV_TMP" -p discvault -f compose.yaml pull next-api next-worker next-mcp
+docker compose --env-file "$ENV_TMP" -p discvault -f compose.yaml up -d --force-recreate
+docker compose --env-file "$ENV_TMP" -p discvault -f compose.yaml ps
+curl --fail http://localhost:6080/api/next/health
+mv "$ENV_TMP" "$ENV_FILE"
+trap - EXIT
+```
+
+## Expected result
+
+The intended image digest is running, health succeeds, and owner login, library count, and one media asset work.
+
+- the intended image digest is running, health is successful, and owner login, library count, and one media sample all pass
+
+## Safety and rollback
+
+:::caution
+On any failed acceptance check, execute the image rollback with the pre-update data backup available.
+
+- [Update and migrate: Image rollback](/update/rollback/) · matching backup set
+- release notes and recorded immutable image digest
+:::
+
+## Next step
+
+[Update and migrate: Image rollback](/update/rollback/)
+
+## Source and status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Verified: `2026-07-14`
+- DiscVault Docs: `0.1.0`

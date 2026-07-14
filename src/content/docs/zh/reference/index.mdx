@@ -1,0 +1,74 @@
+---
+title: '参考'
+description: '任务专用说明： 参考: `:latest` · `:beta` · `:dev` · `6080:5000`.'
+pageId: 'reference-index'
+products: ['server', 'pwa', 'ios', 'android']
+platforms: ['all']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="所有平台" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## 目标和结果
+
+完成此页面专用的流程： **参考**. 此流程使用 `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+## 适用范围
+
+本页面仅适用于 **参考** (所有平台). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`. 本页面专用检查点： `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+### DiscVault v26 稳定版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PostgreSQL `/data`
+- API `6080:5000` MCP `6090:6090`
+
+### DiscVault v26 测试版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PostgreSQL `/data`
+- API `6080:5000` MCP `6090:6090`
+
+## 前提条件
+
+- 所选发布通道
+
+## 操作步骤
+
+1. **检查:** `:latest` `:beta`
+2. **记录:** `:dev` 仅用于工程工作，并非发布通道；DiscVault v26 稳定版使用 `:latest`，测试版使用 `:beta` · `:dev`
+3. **记录:** `/api/next/health`
+4. **记录:** PostgreSQL `/data`
+
+
+
+## 预期结果
+
+仅在以下条件下接受结果： **参考** 必须确认以下所有结果： 所选发布通道 · `@sha256:`; `:latest` · `:beta` · `:dev`. 本页面专用检查点： `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+- 所选发布通道 · `@sha256:`
+- `:latest` · `:beta` · `:dev`
+
+## 安全与回滚
+
+:::caution
+安全恢复边界： **参考** 在启动或继续任何操作前必须执行： 参考页为只读；运行命令或更改数据前必须使用对应的专项流程; `:dev` 仅用于工程工作，并非发布通道；DiscVault v26 稳定版使用 `:latest`，测试版使用 `:beta` · `:dev`. 本页面专用检查点： `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+- 参考页为只读；运行命令或更改数据前必须使用对应的专项流程
+- `:dev` 仅用于工程工作，并非发布通道；DiscVault v26 稳定版使用 `:latest`，测试版使用 `:beta` · `:dev`
+:::
+
+## 下一步
+
+[开始: 概览](/zh/start/)
+
+## 来源和状态
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- 来源和状态: `2026-07-14`
+- DiscVault Docs: `0.1.0`

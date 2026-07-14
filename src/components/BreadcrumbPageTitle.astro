@@ -1,0 +1,56 @@
+---
+import { currentLocale, labels } from '../data/localized-ui';
+
+const locale = currentLocale(Astro.url.pathname);
+const ui = labels[locale];
+const route = Astro.locals.starlightRoute;
+const segments = Astro.url.pathname.split('/').filter(Boolean);
+if (locale !== 'en') segments.shift();
+const category = segments[0];
+const localePrefix = locale === 'en' ? '' : `/${locale}`;
+---
+
+<nav class="breadcrumbs" aria-label={ui.breadcrumbs}>
+  <ol>
+    <li><a href={`${localePrefix}/`}>DiscVault</a></li>
+    {
+      segments.length > 1 && category && (
+        <li>
+          <a href={`${localePrefix}/${category}/`}>{ui.docs}</a>
+        </li>
+      )
+    }
+    <li aria-current="page">{route.entry.data.title}</li>
+  </ol>
+</nav>
+<h1 id="_top">{route.entry.data.title}</h1>
+
+<style>
+  .breadcrumbs ol {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .breadcrumbs li {
+    color: var(--sl-color-gray-3);
+    font-size: var(--sl-text-sm);
+  }
+  .breadcrumbs li + li::before {
+    content: '/';
+    margin-inline-end: 0.35rem;
+  }
+  .breadcrumbs a {
+    color: var(--sl-color-text-accent);
+  }
+  h1 {
+    color: var(--sl-color-white);
+    font-size: var(--sl-text-h1);
+    font-weight: 600;
+    line-height: var(--sl-line-height-headings);
+    margin-top: 1rem;
+  }
+</style>

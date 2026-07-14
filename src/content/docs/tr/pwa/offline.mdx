@@ -1,0 +1,72 @@
+---
+title: 'PWA: Çevrimdışı davranış'
+description: 'Göreve özel yönergeler: PWA: Çevrimdışı davranış: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.'
+pageId: 'pwa-offline'
+products: ['pwa']
+platforms: ['web', 'ios', 'android']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="web · iOS · Android" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Amaç ve sonuç
+
+Sayfaya özel iş akışını tamamlayın: **PWA: Çevrimdışı davranış**. Bu prosedür şunları kullanır: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+## Geçerli olduğu alan
+
+Bu sayfa yalnızca şunlar için geçerlidir: **PWA: Çevrimdışı davranış** (web · iOS · Android). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault:latest`; önbellekte ekranlar açılabilir ancak yeni veri ve yazma işlemleri ağ gerektirir · `Service Worker` · `CacheStorage`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; önbellekte ekranlar açılabilir ancak yeni veri ve yazma işlemleri ağ gerektirir · `Service Worker` · `CacheStorage`. Sayfaya özel denetim noktaları: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+### DiscVault v26 kararlı
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- önbellekte ekranlar açılabilir ancak yeni veri ve yazma işlemleri ağ gerektirir · `Service Worker` · `CacheStorage`
+
+### DiscVault v26 beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- önbellekte ekranlar açılabilir ancak yeni veri ve yazma işlemleri ağ gerektirir · `Service Worker` · `CacheStorage`
+
+## Ön koşullar
+
+- PWA
+- `CacheStorage`
+
+## Prosedür
+
+1. **Açın:** Kitaplık → Ara
+2. **Test edin:** uçak modu · `Service Worker`
+3. **Kaydedin:** `navigator.onLine`
+4. **Yeniden bağlanın:** HTTPS
+
+
+
+## Beklenen sonuç
+
+Şunun sonucunu kabul edin: **PWA: Çevrimdışı davranış** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: önbellekte ekranlar açılabilir ancak yeni veri ve yazma işlemleri ağ gerektirir; `Service Worker` · `navigator.onLine`. Sayfaya özel denetim noktaları: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+- önbellekte ekranlar açılabilir ancak yeni veri ve yazma işlemleri ağ gerektirir
+- `Service Worker` · `navigator.onLine`
+
+## Güvenlik ve geri alma
+
+:::caution
+Şunun güvenli kurtarma sınırı: **PWA: Çevrimdışı davranış** başlatmadan veya devam etmeden önce şu işlemleri gerektirir: önbellekte ekranlar açılabilir ancak yeni veri ve yazma işlemleri ağ gerektirir · DiscVault. Sayfaya özel denetim noktaları: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+- önbellekte ekranlar açılabilir ancak yeni veri ve yazma işlemleri ağ gerektirir · DiscVault
+:::
+
+## Sonraki adım
+
+[Sorun giderme](/tr/troubleshooting/)
+
+## Kaynak ve durum
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Kaynak ve durum: `2026-07-14`
+- DiscVault Docs: `0.1.0`

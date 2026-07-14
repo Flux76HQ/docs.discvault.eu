@@ -1,0 +1,79 @@
+---
+title: 'Konfigurace: Ověřování a RBAC'
+description: 'Pokyny pro konkrétní úlohu: Konfigurace: Ověřování a RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.'
+pageId: 'configure-auth-rbac'
+products: ['server']
+platforms: ['web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Cíl a výsledek
+
+Dokončete postup určený pro **Konfigurace: Ověřování a RBAC**. Tento postup pracuje s `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+
+## Platí pro
+
+Tato stránka platí pouze pro **Konfigurace: Ověřování a RBAC** (web). Hranice kanálu a dat jsou: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn. Kontrolní body této stránky: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+
+### DiscVault v26 – stabilní
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- WebAuthn
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- WebAuthn
+
+## Požadavky
+
+- přístup vlastníka
+- HTTPS
+- druhá metoda obnovení
+
+## Postup
+
+1. **Otevřete:** Správa → Zabezpečení → Zapnout ověřování
+2. **Vytvořte:** Správa → Uživatelé → Vytvořit pozvánku na 48 hodin
+3. **Nastavte:** Správa → Role → Základní / Pokročilé
+4. **Otestujte:** `48 h`
+
+### Příkazy a nastavení
+
+#### Oba kanály
+
+```bash
+curl --fail http://localhost:6080/api/next/auth/status
+curl --fail http://localhost:6080/api/next/auth/rbac
+```
+
+## Očekávaný výsledek
+
+Výsledek přijměte pro **Konfigurace: Ověřování a RBAC** pouze pokud platí všechny následující výsledky: přihlášení vlastníka passkey funguje, registrace na pozvánku odpovídá nastavení a testovací uživatel má jen přidělená oprávnění. Kontrolní body této stránky: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+
+- přihlášení vlastníka passkey funguje, registrace na pozvánku odpovídá nastavení a testovací uživatel má jen přidělená oprávnění
+
+## Bezpečnost a návrat
+
+:::caution
+Bezpečná hranice obnovy pro **Konfigurace: Ověřování a RBAC** vyžaduje před spuštěním nebo pokračováním tyto kroky: zachovejte relaci vlastníka a druhou metodu obnovení; nikdy neodstraňujte poslední přístupový klíč vlastníka. Kontrolní body této stránky: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+
+- zachovejte relaci vlastníka a druhou metodu obnovení; nikdy neodstraňujte poslední přístupový klíč vlastníka
+:::
+
+## Další krok
+
+[Konfigurace: Pluginy a metadata](/cs/configure/plugins-metadata/)
+
+## Zdroj a stav
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Zdroj a stav: `2026-07-14`
+- DiscVault Docs: `0.1.0`

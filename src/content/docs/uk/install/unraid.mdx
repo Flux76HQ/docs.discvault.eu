@@ -1,0 +1,97 @@
+---
+title: 'Встановлення: Unraid'
+description: 'Спеціальні інструкції для завдання: Встановлення: Unraid: `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.'
+pageId: 'install-unraid'
+products: ['server']
+platforms: ['unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Мета й результат
+
+Виконайте спеціальну процедуру сторінки для **Встановлення: Unraid**. У цій процедурі використовуються `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+
+## Застосовується до
+
+Ця сторінка стосується лише **Встановлення: Unraid** (Unraid). Межі каналу й даних: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL API MCP; `:latest` `:beta`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL API MCP; `:latest` `:beta`. Контрольні точки цієї сторінки: `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+
+### DiscVault v26 – стабільний
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PostgreSQL API MCP
+- `:latest` `:beta`
+
+### DiscVault v26 – бета
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PostgreSQL API MCP
+- `:latest` `:beta`
+
+## Передумови
+
+- Unraid `6.12+`
+- `/mnt/user/appdata/discvault/data`
+- OpenSSL
+
+## Процедура
+
+1. **Установіть:** Unraid · [Встановлення: Docker Compose](/uk/install/docker-compose/)
+2. **Налаштуйте:** `DISCVAULT_IMAGE` · `:latest` `:beta`
+3. **Налаштуйте:** `DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data` · `DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres`
+4. **Перевірте:** `postgres` · `next-api` · `next-worker` · `next-mcp` · `6080:5000`
+
+### Команди й налаштування
+
+#### DiscVault v26 – стабільний
+
+```text
+DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
+DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data
+DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres
+DISCVAULT_API_PORT=6080
+DISCVAULT_MCP_PORT=6090
+```
+
+#### DiscVault v26 – бета
+
+```text
+DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
+DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data
+DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres
+DISCVAULT_API_PORT=6080
+DISCVAULT_MCP_PORT=6090
+```
+
+## Очікуваний результат
+
+Приймайте результат для **Встановлення: Unraid** лише коли підтверджено всі наведені нижче результати: PostgreSQL; `/data`; HTTP `2xx`. Контрольні точки цієї сторінки: `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+
+- PostgreSQL
+- `/data`
+- HTTP `2xx`
+
+## Безпека й відкочування
+
+:::caution
+Безпечна межа відновлення для **Встановлення: Unraid** вимагає цих дій до будь-якого запуску чи продовження: відповідний комплект резервних копій; `/mnt/user/appdata/discvault/data`. Контрольні точки цієї сторінки: `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+
+- відповідний комплект резервних копій
+- `/mnt/user/appdata/discvault/data`
+:::
+
+## Наступний крок
+
+[Встановлення: Перший запуск і перевірка стану](/uk/install/first-start-health/)
+
+## Джерело й стан
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Джерело й стан: `2026-07-14`
+- DiscVault Docs: `0.1.0`

@@ -1,0 +1,97 @@
+---
+title: 'Instalação: Unraid'
+description: 'Instruções específicas para Instalação: Unraid: `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.'
+pageId: 'install-unraid'
+products: ['server']
+platforms: ['unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Objetivo e resultado
+
+Conclua o procedimento específico da página para **Instalação: Unraid**. Este procedimento utiliza `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+
+## Aplicável a
+
+Esta página aplica-se apenas a **Instalação: Unraid** (Unraid). Os limites de canal e dados são: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL API MCP; `:latest` `:beta`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL API MCP; `:latest` `:beta`. Pontos de controlo desta página: `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+
+### DiscVault v26 estável
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PostgreSQL API MCP
+- `:latest` `:beta`
+
+### DiscVault v26 beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PostgreSQL API MCP
+- `:latest` `:beta`
+
+## Pré-requisitos
+
+- Unraid `6.12+`
+- `/mnt/user/appdata/discvault/data`
+- OpenSSL
+
+## Procedimento
+
+1. **Instalar:** Unraid · [Instalação: Docker Compose](/pt/install/docker-compose/)
+2. **Configurar:** `DISCVAULT_IMAGE` · `:latest` `:beta`
+3. **Configurar:** `DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data` · `DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres`
+4. **Verificar:** `postgres` · `next-api` · `next-worker` · `next-mcp` · `6080:5000`
+
+### Comandos e definições
+
+#### DiscVault v26 estável
+
+```text
+DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
+DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data
+DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres
+DISCVAULT_API_PORT=6080
+DISCVAULT_MCP_PORT=6090
+```
+
+#### DiscVault v26 beta
+
+```text
+DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
+DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data
+DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres
+DISCVAULT_API_PORT=6080
+DISCVAULT_MCP_PORT=6090
+```
+
+## Resultado esperado
+
+Aceite o resultado de **Instalação: Unraid** apenas quando todos os resultados abaixo forem confirmados: PostgreSQL; `/data`; HTTP `2xx`. Pontos de controlo desta página: `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+
+- PostgreSQL
+- `/data`
+- HTTP `2xx`
+
+## Segurança e reversão
+
+:::caution
+O limite de recuperação segura de **Instalação: Unraid** exige estas ações antes de iniciar ou continuar: conjunto de cópias correspondente; `/mnt/user/appdata/discvault/data`. Pontos de controlo desta página: `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+
+- conjunto de cópias correspondente
+- `/mnt/user/appdata/discvault/data`
+:::
+
+## Próximo passo
+
+[Instalação: Primeiro arranque e verificação de estado](/pt/install/first-start-health/)
+
+## Fonte e estado
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Fonte e estado: `2026-07-14`
+- DiscVault Docs: `0.1.0`

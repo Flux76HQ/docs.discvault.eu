@@ -1,0 +1,82 @@
+---
+title: 'Felsökning'
+description: 'Uppgiftsspecifik vägledning för Felsökning: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.'
+pageId: 'troubleshooting-index'
+products: ['server', 'pwa', 'ios', 'android']
+platforms: ['all']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVaultApp', 'Flux76HQ/DiscVault-AndroidApp']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="alla plattformar" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVaultApp · Flux76HQ/DiscVault-AndroidApp" verified="2026-07-14" />
+
+## Mål och resultat
+
+Följ det sidspecifika arbetsflödet för **Felsökning**. Den här proceduren använder `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+
+## Gäller för
+
+Den här sidan gäller endast **Felsökning** (alla plattformar). Kanal- och datagränserna är: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/api/next/health`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/api/next/health`. Sidspecifika kontrollpunkter: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `/api/next/health`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `/api/next/health`
+
+## Förutsättningar
+
+- vald utgivningskanal
+- tidsstämplade loggar med privata data maskerade
+- `postgres`
+
+## Procedur
+
+1. **Anteckna:** `docker compose`
+2. **Isolera:** container → omvänd proxy → webbläsare/app → leverantör → data
+3. **Kontrollera:** tidsstämplade loggar med privata data maskerade
+4. **Bevara:** PostgreSQL `/data`
+
+### Kommandon och inställningar
+
+#### Båda kanalerna
+
+```bash
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml ps
+curl --fail http://localhost:6080/api/next/health
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml logs --tail=200 next-api next-worker next-mcp postgres
+```
+
+## Förväntat resultat
+
+Godkänn resultatet för **Felsökning** endast när alla resultat nedan stämmer: ett felande lager är isolerat med tid, status, image-digest och maskerat fel. Sidspecifika kontrollpunkter: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+
+- ett felande lager är isolerat med tid, status, image-digest och maskerat fel
+
+## Säkerhet och återställning
+
+:::caution
+Den säkra återställningsgränsen för **Felsökning** kräver dessa åtgärder innan något startas eller fortsätter: ta inte först bort volymer, `/data`, webbläsaruppgifter eller app-lagring; bevara maskerade loggar och återställ endast en matchande kopia. Sidspecifika kontrollpunkter: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+
+- ta inte först bort volymer, `/data`, webbläsaruppgifter eller app-lagring; bevara maskerade loggar och återställ endast en matchande kopia
+:::
+
+## Nästa steg
+
+[Referens](/sv/reference/)
+
+## Källa och status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- [`helmerzNL/DiscVaultApp@9d15ab2a339c`](https://github.com/helmerzNL/DiscVaultApp/commit/9d15ab2a339cefdb164ec0ab29ad69ddabc511c1)
+- [`Flux76HQ/DiscVault-AndroidApp@a13ef4bdbb23`](https://github.com/Flux76HQ/DiscVault-AndroidApp/commit/a13ef4bdbb23b6a7e52e01cdf532fa222c1b67de)
+- Källa och status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

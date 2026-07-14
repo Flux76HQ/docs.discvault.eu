@@ -1,0 +1,101 @@
+---
+title: '更新和迁移: 备份'
+description: '任务专用说明： 更新和迁移: 备份: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.'
+pageId: 'update-backup'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## 目标和结果
+
+完成此页面专用的流程： **更新和迁移: 备份**. 此流程使用 `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
+
+## 适用范围
+
+本页面仅适用于 **更新和迁移: 备份** (Docker · Unraid). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; 来自同一停止写入时段的 PostgreSQL 转储与文件归档; PostgreSQL `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; 来自同一停止写入时段的 PostgreSQL 转储与文件归档; PostgreSQL `/data`. 本页面专用检查点： `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
+
+### DiscVault v26 稳定版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- 来自同一停止写入时段的 PostgreSQL 转储与文件归档
+- PostgreSQL `/data`
+
+### DiscVault v26 测试版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- 来自同一停止写入时段的 PostgreSQL 转储与文件归档
+- PostgreSQL `/data`
+
+## 前提条件
+
+- 实时数据路径之外的备份位置
+- 可写持久存储及充足备份空间
+
+## 操作步骤
+
+1. **记录:** `PREVIOUS_IMAGE` · `sha256`
+2. **停止:** `next-api` `next-worker` `next-mcp`
+3. **备份:** `pg_dump -Fc`
+4. **启动:** `next-api` → → MCP
+
+### 命令和设置
+
+#### 两个通道
+
+```bash
+set -euo pipefail
+cd /opt/discvault
+install -d -m 0700 /srv/backups
+BACKUP_ID="$(date -u +%Y%m%dT%H%M%SZ)"
+API_ID="$(docker compose --env-file .env -p discvault -f compose.yaml ps -q next-api)"
+IMAGE_ID="$(docker inspect "$API_ID" --format '{{.Image}}')"
+PREVIOUS_IMAGE="$(docker image inspect "$IMAGE_ID" --format '{{index .RepoDigests 0}}')"
+test -n "$PREVIOUS_IMAGE"
+printf 'BACKUP_ID=%s\nPREVIOUS_IMAGE=%s\n' "$BACKUP_ID" "$PREVIOUS_IMAGE" \
+  > "/srv/backups/discvault-$BACKUP_ID.env"
+chmod 0600 "/srv/backups/discvault-$BACKUP_ID.env"
+docker compose --env-file .env -p discvault -f compose.yaml stop next-worker next-mcp next-api
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'pg_dump -Fc -U "$POSTGRES_USER" "$POSTGRES_DB"' \
+  > "/srv/backups/discvault-$BACKUP_ID.dump"
+tar --acls --xattrs -C /srv -czf \
+  "/srv/backups/discvault-data-$BACKUP_ID.tgz" discvault
+docker compose --env-file .env -p discvault -f compose.yaml start next-api
+curl --fail http://localhost:6080/api/next/health
+docker compose --env-file .env -p discvault -f compose.yaml start next-worker next-mcp
+test -s "/srv/backups/discvault-$BACKUP_ID.dump"
+gzip -t "/srv/backups/discvault-data-$BACKUP_ID.tgz"
+```
+
+## 预期结果
+
+仅在以下条件下接受结果： **更新和迁移: 备份** 必须确认以下所有结果： 归档和转储均非空、可在恢复演练中读取，并关联不可变镜像摘要. 本页面专用检查点： `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
+
+- 归档和转储均非空、可在恢复演练中读取，并关联不可变镜像摘要
+
+## 安全与回滚
+
+:::caution
+安全恢复边界： **更新和迁移: 备份** 在启动或继续任何操作前必须执行： 任何备份命令失败时，仅重启未更改的服务并取消更新; 来自同一停止写入时段的 PostgreSQL 转储与文件归档. 本页面专用检查点： `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
+
+- 任何备份命令失败时，仅重启未更改的服务并取消更新
+- 来自同一停止写入时段的 PostgreSQL 转储与文件归档
+:::
+
+## 下一步
+
+[更新和迁移: 恢复](/zh/update/restore/)
+
+## 来源和状态
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- 来源和状态: `2026-07-14`
+- DiscVault Docs: `0.1.0`

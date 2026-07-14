@@ -1,0 +1,82 @@
+---
+title: 'Έναρξη: Επισκόπηση'
+description: 'Οδηγίες ειδικά για την εργασία: Έναρξη: Επισκόπηση: Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.'
+pageId: 'start-requirements'
+products: ['server', 'pwa', 'ios', 'android']
+platforms: ['all']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="όλες οι πλατφόρμες" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Στόχος και αποτέλεσμα
+
+Ολοκληρώστε τη ροή εργασίας της σελίδας για **Έναρξη: Επισκόπηση**. Η διαδικασία χρησιμοποιεί Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.
+
+## Ισχύει για
+
+Αυτή η σελίδα ισχύει μόνο για **Έναρξη: Επισκόπηση** (όλες οι πλατφόρμες). Τα όρια καναλιού και δεδομένων είναι: DiscVault · `ghcr.io/helmerznl/discvault:latest`; Docker Compose `v2` · PostgreSQL `17` · `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; Docker Compose `v2` · PostgreSQL `17` · `/data`. Σημεία ελέγχου της σελίδας: Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.
+
+### DiscVault v26 – σταθερό
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- Docker Compose `v2` · PostgreSQL `17` · `/data`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- Docker Compose `v2` · PostgreSQL `17` · `/data`
+
+## Προϋποθέσεις
+
+- Docker Engine `24+`
+- εγγράψιμη μόνιμη αποθήκευση και ελεύθερος χώρος αντιγράφων
+- DNS TLS
+
+## Διαδικασία
+
+1. **Ελέγξτε:** Docker Engine `≥24` · Docker Compose `v2`
+2. **Ελέγξτε:** `≥2 GB` · εγγράψιμη μόνιμη αποθήκευση και ελεύθερος χώρος αντιγράφων
+3. **Ρυθμίστε:** DNS · TLS · HTTPS · `RP_ID` · `RP_ORIGINS`
+4. **Καταγράψτε:** επιλεγμένο κανάλι έκδοσης
+
+### Εντολές και ρυθμίσεις
+
+#### Και τα δύο κανάλια
+
+```bash
+docker version --format '{{.Server.Version}}'
+docker compose version
+curl --version
+```
+
+## Αναμενόμενο αποτέλεσμα
+
+Αποδεχθείτε το αποτέλεσμα για **Έναρξη: Επισκόπηση** μόνο όταν ισχύουν όλα τα παρακάτω αποτελέσματα: Docker Engine `≥24`; Docker Compose `v2`; HTTPS DNS. Σημεία ελέγχου της σελίδας: Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.
+
+- Docker Engine `≥24`
+- Docker Compose `v2`
+- HTTPS DNS
+
+## Ασφάλεια και επαναφορά
+
+:::caution
+Το ασφαλές όριο ανάκτησης για **Έναρξη: Επισκόπηση** απαιτεί αυτές τις ενέργειες πριν από κάθε εκκίνηση ή συνέχεια: οι έλεγχοι μόνο για ανάγνωση δεν αλλάζουν δεδομένα· διορθώστε τις ελλείψεις πριν συνεχίσετε. Σημεία ελέγχου της σελίδας: Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.
+
+- οι έλεγχοι μόνο για ανάγνωση δεν αλλάζουν δεδομένα· διορθώστε τις ελλείψεις πριν συνεχίσετε
+:::
+
+## Επόμενο βήμα
+
+[Εγκατάσταση: Διαδρομές εγκατάστασης](/el/install/)
+
+## Πηγή και κατάσταση
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Πηγή και κατάσταση: `2026-07-14`
+- DiscVault Docs: `0.1.0`

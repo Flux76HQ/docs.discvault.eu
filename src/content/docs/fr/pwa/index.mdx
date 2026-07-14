@@ -1,0 +1,76 @@
+---
+title: 'PWA: Vue d’ensemble'
+description: 'Instructions propres à la tâche : PWA: Vue d’ensemble: PWA · HTTPS · `Service Worker` · `/pwa/offline/`.'
+pageId: 'pwa-index'
+products: ['pwa']
+platforms: ['web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Objectif et résultat
+
+Suivez le déroulement propre à cette page pour **PWA: Vue d’ensemble**. Cette procédure utilise PWA · HTTPS · `Service Worker` · `/pwa/offline/`.
+
+## S’applique à
+
+Cette page s’applique uniquement à **PWA: Vue d’ensemble** (web). Les limites de canal et de données sont : DiscVault · `ghcr.io/helmerznl/discvault:latest`; PWA; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PWA. Points de contrôle propres à la page : PWA · HTTPS · `Service Worker` · `/pwa/offline/`.
+
+### DiscVault v26 stable
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PWA
+
+### DiscVault v26 bêta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PWA
+
+## Prérequis
+
+- PWA
+- HTTPS DiscVault 26
+
+## Procédure
+
+1. **Installer:** [PWA: Installer la PWA](/fr/pwa/install/) · HTTPS
+2. **Ouvrir:** [PWA: Bibliothèque et recherche](/fr/pwa/library-search/)
+3. **Tester:** [PWA: Comportement hors ligne](/fr/pwa/offline/) · `Service Worker`
+4. **Vérifier:** `/pwa/offline/`
+
+### Parcours par tâche
+
+- [PWA: Installer la PWA](/fr/pwa/install/) — iOS/iPadOS Android
+- [PWA: Bibliothèque et recherche](/fr/pwa/library-search/) — HTTPS
+- [PWA: Comportement hors ligne](/fr/pwa/offline/) — Service Worker
+
+## Résultat attendu
+
+Validez le résultat de **PWA: Vue d’ensemble** uniquement lorsque tous les résultats suivants sont confirmés : Barre d’adresse → Installer DiscVault · Partager → Sur l’écran d’accueil · Menu du navigateur → Installer l’application; les écrans en cache peuvent s’ouvrir, mais les données récentes et les écritures exigent le réseau. Points de contrôle propres à la page : PWA · HTTPS · `Service Worker` · `/pwa/offline/`.
+
+- Barre d’adresse → Installer DiscVault · Partager → Sur l’écran d’accueil · Menu du navigateur → Installer l’application
+- les écrans en cache peuvent s’ouvrir, mais les données récentes et les écritures exigent le réseau
+
+## Sécurité et retour arrière
+
+:::caution
+La limite de récupération sûre pour **PWA: Vue d’ensemble** impose ces actions avant tout démarrage ou toute poursuite : supprimez uniquement l’enveloppe PWA installée ; la bibliothèque serveur et les comptes restent intacts. Points de contrôle propres à la page : PWA · HTTPS · `Service Worker` · `/pwa/offline/`.
+
+- supprimez uniquement l’enveloppe PWA installée ; la bibliothèque serveur et les comptes restent intacts
+:::
+
+## Étape suivante
+
+[PWA: Installer la PWA](/fr/pwa/install/)
+
+## Source et état
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Source et état: `2026-07-14`
+- DiscVault Docs: `0.1.0`

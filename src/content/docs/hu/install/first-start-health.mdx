@@ -1,0 +1,83 @@
+---
+title: 'Telepítés: Első indítás és állapotellenőrzés'
+description: 'Feladatspecifikus útmutató: Telepítés: Első indítás és állapotellenőrzés: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.'
+pageId: 'install-first-start-health'
+products: ['server']
+platforms: ['docker', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Cél és eredmény
+
+Hajtsa végre az oldalhoz tartozó munkafolyamatot: **Telepítés: Első indítás és állapotellenőrzés**. Ez az eljárás ezeket használja: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.
+
+## Érvényesség
+
+Ez az oldal kizárólag erre vonatkozik: **Telepítés: Első indítás és állapotellenőrzés** (Docker · web). A csatorna- és adathatárok: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/api/next/auth/status`; `6080` → API `5000`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/api/next/auth/status`; `6080` → API `5000`. Oldalspecifikus ellenőrzési pontok: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `/api/next/auth/status`
+- `6080` → API `5000`
+
+### DiscVault v26 – béta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `/api/next/auth/status`
+- `6080` → API `5000`
+
+## Előfeltételek
+
+- `/api/next/health`
+- `/api/next/auth/status`
+
+## Eljárás
+
+1. **Ellenőrizze:** `postgres`
+2. **Ellenőrizze:** `GET /api/next/health` · HTTP `2xx`
+3. **Nyissa meg:** `6080:5000`
+4. **Ellenőrizze:** `GET /api/next/auth/status` · WebAuthn
+
+### Parancsok és beállítások
+
+#### Mindkét csatorna
+
+```bash
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml ps
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml logs --tail=100 next-api next-worker next-mcp postgres
+curl --fail http://localhost:6080/api/next/health
+curl --fail http://localhost:6080/api/next/auth/status
+```
+
+## Várt eredmény
+
+Az eredmény csak ennél fogadható el: **Telepítés: Első indítás és állapotellenőrzés** csak akkor, ha minden alábbi eredmény teljesül: az állapotellenőrzés sikeres, a beállított origin megnyílik, és az első fiók tulajdonos. Oldalspecifikus ellenőrzési pontok: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.
+
+- az állapotellenőrzés sikeres, a beállított origin megnyílik, és az első fiók tulajdonos
+
+## Biztonság és visszaállítás
+
+:::caution
+A biztonságos helyreállítás határa ennél: **Telepítés: Első indítás és állapotellenőrzés** ezeket a műveleteket igényli indítás vagy folytatás előtt: időbélyeges, kitakart naplók; illeszkedő mentéskészlet. Oldalspecifikus ellenőrzési pontok: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.
+
+- időbélyeges, kitakart naplók
+- illeszkedő mentéskészlet
+:::
+
+## Következő lépés
+
+[Frissítés és migrálás: Biztonsági mentés](/hu/update/backup/)
+
+## Forrás és állapot
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Forrás és állapot: `2026-07-14`
+- DiscVault Docs: `0.1.0`

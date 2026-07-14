@@ -1,0 +1,95 @@
+{
+  "$schema": "./schema.json",
+  "lastVerified": "2026-07-14",
+  "sourceCommits": {
+    "server": "6d27c689ac2166651d2c7c74833c1ee225b37ec3",
+    "ios": "9d15ab2a339cefdb164ec0ab29ad69ddabc511c1",
+    "android": "a13ef4bdbb23b6a7e52e01cdf532fa222c1b67de"
+  },
+  "imageChannels": {
+    "stable": {
+      "image": "ghcr.io/helmerznl/discvault:latest",
+      "releaseChannel": true,
+      "productVersion": "DiscVault 26",
+      "architecture": "PostgreSQL 17 + persistent /data; postgres, API, worker, and MCP services"
+    },
+    "beta": {
+      "image": "ghcr.io/helmerznl/discvault:beta",
+      "releaseChannel": true,
+      "productVersion": "DiscVault 26",
+      "architecture": "PostgreSQL 17 + persistent /data; postgres, API, worker, and MCP services"
+    },
+    "engineering": {
+      "image": "ghcr.io/helmerznl/discvault:dev",
+      "releaseChannel": false,
+      "productVersion": "DiscVault 26",
+      "architecture": "PostgreSQL 17 + persistent /data; postgres, API, worker, and MCP services",
+      "usage": "Manual, disposable engineering escape hatch only"
+    }
+  },
+  "features": [
+    {
+      "id": "local-library",
+      "label": "Local library",
+      "pwa": "stable",
+      "ios": "stable",
+      "android": "beta"
+    },
+    {
+      "id": "barcode-scan",
+      "label": "Barcode scanning",
+      "pwa": "stable",
+      "ios": "stable",
+      "android": "beta"
+    },
+    {
+      "id": "offline",
+      "label": "Offline use",
+      "pwa": "limited",
+      "ios": "stable",
+      "android": "beta"
+    },
+    {
+      "id": "server-sync",
+      "label": "DiscVault server sync",
+      "pwa": "stable",
+      "ios": "unavailable",
+      "android": "beta"
+    },
+    {
+      "id": "admin",
+      "label": "Administration",
+      "pwa": "stable",
+      "ios": "unavailable",
+      "android": "unavailable"
+    },
+    {
+      "id": "rbac",
+      "label": "Role-based access control",
+      "pwa": "stable",
+      "ios": "unavailable",
+      "android": "unavailable"
+    },
+    {
+      "id": "plugins",
+      "label": "Plugin administration",
+      "pwa": "stable",
+      "ios": "unavailable",
+      "android": "unavailable"
+    },
+    {
+      "id": "mcp",
+      "label": "MCP integration",
+      "pwa": "stable",
+      "ios": "unavailable",
+      "android": "unavailable"
+    },
+    {
+      "id": "push",
+      "label": "Native push notifications",
+      "pwa": "limited",
+      "ios": "beta",
+      "android": "roadmap"
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+---
+title: 'Bijwerken en migreren: Migratie naar DiscVault 26'
+description: 'Taakspecifieke instructies voor Bijwerken en migreren: Migratie naar DiscVault 26: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.'
+pageId: 'update-migration'
+products: ['server']
+platforms: ['docker', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Doel en resultaat
+
+Voer de paginaspecifieke werkwijze uit voor **Bijwerken en migreren: Migratie naar DiscVault 26**. Deze werkwijze gebruikt `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+
+## Van toepassing op
+
+Deze pagina is uitsluitend van toepassing op **Bijwerken en migreren: Migratie naar DiscVault 26** (Docker · web). De kanaal- en gegevensgrenzen zijn: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; alleen-lezenbron voor bestaande gegevens; nooit de huidige runtimedatabase · SQLite → PostgreSQL; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26; alleen-lezenbron voor bestaande gegevens; nooit de huidige runtimedatabase · SQLite → PostgreSQL. Paginaspecifieke controlepunten: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+
+### DiscVault v26 stabiel
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault 26
+- alleen-lezenbron voor bestaande gegevens; nooit de huidige runtimedatabase · SQLite → PostgreSQL
+
+### DiscVault v26 bèta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault 26
+- alleen-lezenbron voor bestaande gegevens; nooit de huidige runtimedatabase · SQLite → PostgreSQL
+
+## Vereisten
+
+- alleen-lezenbron voor bestaande gegevens; nooit de huidige runtimedatabase · `/data/discvault.db`
+- PostgreSQL-dump en bestandsarchief uit hetzelfde schrijversstopvenster
+- eigenaarstoegang
+
+## Procedure
+
+1. **Back-up maken:** alleen-lezenbron voor bestaande gegevens; nooit de huidige runtimedatabase · PostgreSQL-dump en bestandsarchief uit hetzelfde schrijversstopvenster
+2. **Controleren:** `/api/next/migration/readiness` · `ready_for_confirmation`
+3. **Uitvoeren:** `POST /api/next/migration/start`
+4. **Vergelijken:** gereedheid is bevestigd, de migratie heeft nul mislukte records en aantallen en mediavoorbeeld komen overeen
+
+### Opdrachten en instellingen
+
+#### Beide kanalen
+
+```bash
+curl --fail http://localhost:6080/api/next/migration/readiness
+curl --fail http://localhost:6080/api/next/migration/status
+curl --fail -X POST http://localhost:6080/api/next/migration/start \
+  -H 'Content-Type: application/json' -d '{}'
+curl --fail http://localhost:6080/api/next/migration/status
+```
+
+## Verwacht resultaat
+
+Accepteer het resultaat voor **Bijwerken en migreren: Migratie naar DiscVault 26** alleen wanneer alle onderstaande resultaten kloppen: gereedheid is bevestigd, de migratie heeft nul mislukte records en aantallen en mediavoorbeeld komen overeen. Paginaspecifieke controlepunten: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+
+- gereedheid is bevestigd, de migratie heeft nul mislukte records en aantallen en mediavoorbeeld komen overeen
+
+## Veiligheid en terugdraaien
+
+:::caution
+De veilige herstelgrens voor **Bijwerken en migreren: Migratie naar DiscVault 26** vereist deze acties voordat iets start of doorgaat: stop DiscVault-writers, herstel bijpassende PostgreSQL- en `/data`-back-ups en herhaal de import nooit in een gedeeltelijk gevulde database. Paginaspecifieke controlepunten: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+
+- stop DiscVault-writers, herstel bijpassende PostgreSQL- en `/data`-back-ups en herhaal de import nooit in een gedeeltelijk gevulde database
+:::
+
+## Volgende stap
+
+[Configureren: Omgevingsvariabelen](/nl/configure/environment/)
+
+## Bron en status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Bron en status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

@@ -1,0 +1,138 @@
+---
+title: 'Configure: Environment variables'
+description: 'Set runtime environment variables in the deployment environment, not in this documentation repository.'
+pageId: 'configure-environment'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Goal and result
+
+Set runtime environment variables in the deployment environment, not in this documentation repository.
+
+## Applies to
+
+DiscVault v26 stable and beta use the same `.env` keys, PostgreSQL variables, `RP_ORIGINS`, ports, and persistent paths. Only `DISCVAULT_IMAGE` differs. Generate passwords and JWT secrets into a mode-600 file.
+
+### DiscVault v26 stable
+
+- DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
+- one `.env` schema consumed by the same Compose file
+
+### DiscVault v26 beta
+
+- DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
+- one `.env` schema consumed by the same Compose file
+
+## Prerequisites
+
+- private DiscVault runtime environment file
+- OpenSSL
+- planned restart window
+
+## Procedure
+
+1. **Create:** `/opt/discvault/.env` · owner-only file permissions (0600)
+2. **Configure:** `DISCVAULT_IMAGE` · random secrets · `RP_ORIGINS`
+3. **Verify:** `chmod 0600` · `docker compose config --quiet`
+4. **Start:** keep JWT and PostgreSQL secrets unchanged during ordinary configuration edits · all v26 services
+
+### Commands and settings
+
+#### DiscVault v26 stable
+
+```bash
+export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
+```
+
+#### DiscVault v26 beta
+
+```bash
+export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
+```
+
+#### Both channels
+
+```bash
+set -euo pipefail
+test -n "$DISCVAULT_IMAGE"
+case "$DISCVAULT_IMAGE" in
+  ghcr.io/helmerznl/discvault:latest|ghcr.io/helmerznl/discvault:beta) ;;
+  *) printf '%s\n' "$DISCVAULT_IMAGE" >&2; exit 64 ;;
+esac
+install -d -m 0700 /opt/discvault
+install -d -m 0750 /srv/discvault
+install -d -o 70 -g 70 -m 0700 /srv/discvault-postgres
+cd /opt/discvault
+test -f compose.yaml
+umask 077
+ENV_FILE=/opt/discvault/.env
+test ! -e "$ENV_FILE"
+ENV_TMP="$(mktemp "$ENV_FILE.tmp.XXXXXX")"
+trap 'rm -f "$ENV_TMP"' EXIT
+POSTGRES_PASSWORD="$(openssl rand -hex 32)"
+JWT_SECRET="$(openssl rand -hex 32)"
+printf '%s\n' \
+  "DISCVAULT_IMAGE=$DISCVAULT_IMAGE" \
+  'DISCVAULT_DATA_DIR=/srv/discvault' \
+  'DISCVAULT_POSTGRES_DATA=/srv/discvault-postgres' \
+  'DISCVAULT_API_PORT=6080' \
+  'DISCVAULT_MCP_PORT=6090' \
+  'DISCVAULT_NETWORK_NAME=discvault' \
+  'DISCVAULT_API_WORKERS=2' \
+  'DISCVAULT_API_TIMEOUT=180' \
+  'DISCVAULT_WORKER_ID=worker-1' \
+  'DISCVAULT_WORKER_POLL_INTERVAL=2' \
+  'POSTGRES_DB=discvault' \
+  'POSTGRES_USER=discvault' \
+  "POSTGRES_PASSWORD=$POSTGRES_PASSWORD" \
+  "JWT_SECRET=$JWT_SECRET" \
+  'TZ=Europe/Amsterdam' \
+  'RP_ID=localhost' \
+  'RP_NAME=DiscVault' \
+  'RP_ORIGINS=http://localhost:6080' > "$ENV_TMP"
+chmod 0600 "$ENV_TMP"
+ln "$ENV_TMP" "$ENV_FILE"
+rm -f "$ENV_TMP"
+trap - EXIT
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml config --quiet
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml pull
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml up -d
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml ps
+curl --fail http://localhost:6080/api/next/health
+```
+
+## Expected result
+
+`docker compose config` resolves required non-secret values and the selected channel starts healthy.
+
+- owner-only file permissions (0600)
+- the private file is mode 600, Compose validation succeeds, and the selected channel becomes healthy
+
+## Safety and rollback
+
+:::caution
+On failure, keep services stopped, restore the prior private environment file, validate it with `docker compose config --quiet`, and recreate the same image. Do not rotate `JWT_SECRET` or `POSTGRES_PASSWORD` during ordinary rollback.
+
+- the documentation repository environment file is never a DiscVault runtime file · `.env.example`
+- keep JWT and PostgreSQL secrets unchanged during ordinary configuration edits · `JWT_SECRET` · `POSTGRES_PASSWORD`
+- on failure, keep services stopped, restore and validate the previous private environment file, then recreate the same image without rotating secrets
+:::
+
+## Next step
+
+[Configure: Authentication and RBAC](/configure/auth-rbac/)
+
+## Source and status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Verified: `2026-07-14`
+- DiscVault Docs: `0.1.0`

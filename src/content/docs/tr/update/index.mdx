@@ -1,0 +1,78 @@
+---
+title: 'Güncelleme ve geçiş: Genel bakış'
+description: 'Göreve özel yönergeler: Güncelleme ve geçiş: Genel bakış: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.'
+pageId: 'update-index'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Amaç ve sonuç
+
+Sayfaya özel iş akışını tamamlayın: **Güncelleme ve geçiş: Genel bakış**. Bu prosedür şunları kullanır: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+## Geçerli olduğu alan
+
+Bu sayfa yalnızca şunlar için geçerlidir: **Güncelleme ve geçiş: Genel bakış** (Docker · Unraid). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/update/restore/`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/update/restore/`. Sayfaya özel denetim noktaları: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+### DiscVault v26 kararlı
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `/update/restore/`
+
+### DiscVault v26 beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `/update/restore/`
+
+## Ön koşullar
+
+- eşleşen yedek kümesi
+- sürüm notları ve kaydedilmiş değişmez imaj özeti
+
+## Prosedür
+
+1. **Yedekleyin:** [Güncelleme ve geçiş: Yedekleme](/tr/update/backup/) · eşleşen yedek kümesi
+2. **Test edin:** [Güncelleme ve geçiş: Geri yükleme](/tr/update/restore/)
+3. **Çalıştırın:** [Güncelleme ve geçiş: Kapsayıcı güncellemesi](/tr/update/update/) · `DISCVAULT_IMAGE`
+4. **Koruyun:** [Güncelleme ve geçiş: İmajı geri alma](/tr/update/rollback/)
+
+### Görev yolları
+
+- [Güncelleme ve geçiş: Yedekleme](/tr/update/backup/) — 1 PostgreSQL
+- [Güncelleme ve geçiş: Geri yükleme](/tr/update/restore/) — 2
+- [Güncelleme ve geçiş: Kapsayıcı güncellemesi](/tr/update/update/) — 3
+- [Güncelleme ve geçiş: İmajı geri alma](/tr/update/rollback/) — 4
+
+## Beklenen sonuç
+
+Şunun sonucunu kabul edin: **Güncelleme ve geçiş: Genel bakış** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: arşiv ve döküm boş değildir, geri yükleme provasında okunur ve değişmez bir imaj özetine bağlıdır; amaçlanan imaj özeti çalışır, sağlık başarılıdır ve sahip girişi, kitaplık sayısı ile bir medya örneği geçer. Sayfaya özel denetim noktaları: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+- arşiv ve döküm boş değildir, geri yükleme provasında okunur ve değişmez bir imaj özetine bağlıdır
+- amaçlanan imaj özeti çalışır, sağlık başarılıdır ve sahip girişi, kitaplık sayısı ile bir medya örneği geçer
+
+## Güvenlik ve geri alma
+
+:::caution
+Şunun güvenli kurtarma sınırı: **Güncelleme ve geçiş: Genel bakış** başlatmadan veya devam etmeden önce şu işlemleri gerektirir: eşleşen yedek kümesi; `PREVIOUS_IMAGE` · `@sha256:`. Sayfaya özel denetim noktaları: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+- eşleşen yedek kümesi
+- `PREVIOUS_IMAGE` · `@sha256:`
+:::
+
+## Sonraki adım
+
+[Güncelleme ve geçiş: Yedekleme](/tr/update/backup/)
+
+## Kaynak ve durum
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Kaynak ve durum: `2026-07-14`
+- DiscVault Docs: `0.1.0`

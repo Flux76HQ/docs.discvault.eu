@@ -1,0 +1,76 @@
+---
+title: 'PWA: Übersicht'
+description: 'Aufgabenspezifische Anleitung für PWA: Übersicht: PWA · HTTPS · `Service Worker` · `/pwa/offline/`.'
+pageId: 'pwa-index'
+products: ['pwa']
+platforms: ['web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Ziel und Ergebnis
+
+Führe den seitenspezifischen Ablauf aus für **PWA: Übersicht**. Dieses Verfahren arbeitet mit PWA · HTTPS · `Service Worker` · `/pwa/offline/`.
+
+## Gültig für
+
+Diese Seite gilt ausschließlich für **PWA: Übersicht** (Web). Kanal- und Datengrenzen sind: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PWA; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PWA. Seitenspezifische Kontrollpunkte: PWA · HTTPS · `Service Worker` · `/pwa/offline/`.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PWA
+
+### DiscVault v26 – Beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PWA
+
+## Voraussetzungen
+
+- PWA
+- HTTPS DiscVault 26
+
+## Vorgehen
+
+1. **Installieren:** [PWA: PWA installieren](/de/pwa/install/) · HTTPS
+2. **Öffnen:** [PWA: Bibliothek und Suche](/de/pwa/library-search/)
+3. **Testen:** [PWA: Offlineverhalten](/de/pwa/offline/) · `Service Worker`
+4. **Verifizieren:** `/pwa/offline/`
+
+### Aufgabenwege
+
+- [PWA: PWA installieren](/de/pwa/install/) — iOS/iPadOS Android
+- [PWA: Bibliothek und Suche](/de/pwa/library-search/) — HTTPS
+- [PWA: Offlineverhalten](/de/pwa/offline/) — Service Worker
+
+## Erwartetes Ergebnis
+
+Akzeptiere das Ergebnis für **PWA: Übersicht** nur wenn alle folgenden Ergebnisse erfüllt sind: Adressleiste → DiscVault installieren · Teilen → Zum Home-Bildschirm · Browsermenü → App installieren; zwischengespeicherte Ansichten können öffnen; neue Daten und Schreibvorgänge brauchen Netzwerk. Seitenspezifische Kontrollpunkte: PWA · HTTPS · `Service Worker` · `/pwa/offline/`.
+
+- Adressleiste → DiscVault installieren · Teilen → Zum Home-Bildschirm · Browsermenü → App installieren
+- zwischengespeicherte Ansichten können öffnen; neue Daten und Schreibvorgänge brauchen Netzwerk
+
+## Sicherheit und Rollback
+
+:::caution
+Die sichere Wiederherstellungsgrenze für **PWA: Übersicht** verlangt vor jedem Start oder Fortsetzen diese Maßnahmen: nur die installierte PWA-Hülle entfernen; Serverbibliothek und Kontodaten bleiben unverändert. Seitenspezifische Kontrollpunkte: PWA · HTTPS · `Service Worker` · `/pwa/offline/`.
+
+- nur die installierte PWA-Hülle entfernen; Serverbibliothek und Kontodaten bleiben unverändert
+:::
+
+## Nächster Schritt
+
+[PWA: PWA installieren](/de/pwa/install/)
+
+## Quelle und Status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Quelle und Status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

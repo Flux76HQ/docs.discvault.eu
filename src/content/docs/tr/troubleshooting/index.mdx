@@ -1,0 +1,82 @@
+---
+title: 'Sorun giderme'
+description: 'Göreve özel yönergeler: Sorun giderme: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.'
+pageId: 'troubleshooting-index'
+products: ['server', 'pwa', 'ios', 'android']
+platforms: ['all']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVaultApp', 'Flux76HQ/DiscVault-AndroidApp']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="tüm platformlar" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVaultApp · Flux76HQ/DiscVault-AndroidApp" verified="2026-07-14" />
+
+## Amaç ve sonuç
+
+Sayfaya özel iş akışını tamamlayın: **Sorun giderme**. Bu prosedür şunları kullanır: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+
+## Geçerli olduğu alan
+
+Bu sayfa yalnızca şunlar için geçerlidir: **Sorun giderme** (tüm platformlar). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/api/next/health`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/api/next/health`. Sayfaya özel denetim noktaları: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+
+### DiscVault v26 kararlı
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `/api/next/health`
+
+### DiscVault v26 beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `/api/next/health`
+
+## Ön koşullar
+
+- seçilen yayın kanalı
+- özel verileri gizlenmiş zaman damgalı günlükler
+- `postgres`
+
+## Prosedür
+
+1. **Kaydedin:** `docker compose`
+2. **Yalıtın:** kapsayıcı → ters proxy → tarayıcı/uygulama → sağlayıcı → veri
+3. **İnceleyin:** özel verileri gizlenmiş zaman damgalı günlükler
+4. **Koruyun:** PostgreSQL `/data`
+
+### Komutlar ve ayarlar
+
+#### Her iki kanal
+
+```bash
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml ps
+curl --fail http://localhost:6080/api/next/health
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml logs --tail=200 next-api next-worker next-mcp postgres
+```
+
+## Beklenen sonuç
+
+Şunun sonucunu kabul edin: **Sorun giderme** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: tek bir hatalı katman zaman damgası, durum, imaj özeti ve gizlenmiş hatayla yalıtılır. Sayfaya özel denetim noktaları: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+
+- tek bir hatalı katman zaman damgası, durum, imaj özeti ve gizlenmiş hatayla yalıtılır
+
+## Güvenlik ve geri alma
+
+:::caution
+Şunun güvenli kurtarma sınırı: **Sorun giderme** başlatmadan veya devam etmeden önce şu işlemleri gerektirir: önce birimleri, `/data`, tarayıcı kimlik bilgilerini veya yerel uygulama depolamasını silmeyin; gizlenmiş günlükleri koruyun ve yalnız eşleşen yedeği geri yükleyin. Sayfaya özel denetim noktaları: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+
+- önce birimleri, `/data`, tarayıcı kimlik bilgilerini veya yerel uygulama depolamasını silmeyin; gizlenmiş günlükleri koruyun ve yalnız eşleşen yedeği geri yükleyin
+:::
+
+## Sonraki adım
+
+[Referans](/tr/reference/)
+
+## Kaynak ve durum
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- [`helmerzNL/DiscVaultApp@9d15ab2a339c`](https://github.com/helmerzNL/DiscVaultApp/commit/9d15ab2a339cefdb164ec0ab29ad69ddabc511c1)
+- [`Flux76HQ/DiscVault-AndroidApp@a13ef4bdbb23`](https://github.com/Flux76HQ/DiscVault-AndroidApp/commit/a13ef4bdbb23b6a7e52e01cdf532fa222c1b67de)
+- Kaynak ve durum: `2026-07-14`
+- DiscVault Docs: `0.1.0`

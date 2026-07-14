@@ -1,0 +1,80 @@
+---
+title: 'Instalação: Métodos de instalação'
+description: 'Instruções específicas para Instalação: Métodos de instalação: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.'
+pageId: 'install-index'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Objetivo e resultado
+
+Conclua o procedimento específico da página para **Instalação: Métodos de instalação**. Este procedimento utiliza `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+
+## Aplicável a
+
+Esta página aplica-se apenas a **Instalação: Métodos de instalação** (Docker · Unraid). Os limites de canal e dados são: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; PostgreSQL `17` `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26; PostgreSQL `17` `/data`. Pontos de controlo desta página: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+
+### DiscVault v26 estável
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault 26
+- PostgreSQL `17` `/data`
+
+### DiscVault v26 beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault 26
+- PostgreSQL `17` `/data`
+
+## Pré-requisitos
+
+- Docker Engine `24+`
+- Docker Compose `v2`
+
+## Procedimento
+
+1. **Escolher:** [Instalação: Docker Compose](/pt/install/docker-compose/)
+2. **Escolher:** [Instalação: Docker run](/pt/install/docker-run/)
+3. **Escolher:** [Instalação: Unraid](/pt/install/unraid/) · Unraid
+4. **Registar:** `DISCVAULT_IMAGE` · conjunto de cópias correspondente
+
+### Percursos de tarefas
+
+- [Instalação: Docker Compose](/pt/install/docker-compose/) — DiscVault 26 Docker Compose PostgreSQL `/data` `DISCVAULT_IMAGE`
+- [Instalação: Docker run](/pt/install/docker-run/) — DiscVault 26 Docker run PostgreSQL `/data` `DATABASE_URL`
+- [Instalação: Dados persistentes e PostgreSQL](/pt/install/storage-postgresql/) — DiscVault 26 PostgreSQL `/data`
+- [Instalação: Unraid](/pt/install/unraid/) — DiscVault 26 Unraid PostgreSQL `/data`
+
+## Resultado esperado
+
+Aceite o resultado de **Instalação: Métodos de instalação** apenas quando todos os resultados abaixo forem confirmados: canal de lançamento selecionado; PostgreSQL `/data`. Pontos de controlo desta página: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+
+- canal de lançamento selecionado
+- PostgreSQL `/data`
+
+## Segurança e reversão
+
+:::caution
+O limite de recuperação segura de **Instalação: Métodos de instalação** exige estas ações antes de iniciar ou continuar: conjunto de cópias correspondente; notas de versão e digest imutável registado. Pontos de controlo desta página: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+
+- conjunto de cópias correspondente
+- notas de versão e digest imutável registado
+:::
+
+## Próximo passo
+
+[Instalação: Docker Compose](/pt/install/docker-compose/)
+
+## Fonte e estado
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Fonte e estado: `2026-07-14`
+- DiscVault Docs: `0.1.0`

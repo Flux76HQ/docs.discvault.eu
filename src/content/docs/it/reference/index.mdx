@@ -1,0 +1,74 @@
+---
+title: 'Riferimenti'
+description: 'Istruzioni specifiche per Riferimenti: `:latest` · `:beta` · `:dev` · `6080:5000`.'
+pageId: 'reference-index'
+products: ['server', 'pwa', 'ios', 'android']
+platforms: ['all']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="tutte le piattaforme" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Obiettivo e risultato
+
+Completa la procedura specifica della pagina per **Riferimenti**. Questa procedura utilizza `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+## Si applica a
+
+Questa pagina si applica solo a **Riferimenti** (tutte le piattaforme). I limiti di canale e dati sono: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`. Punti di controllo della pagina: `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+### DiscVault v26 stabile
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PostgreSQL `/data`
+- API `6080:5000` MCP `6090:6090`
+
+### DiscVault v26 beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PostgreSQL `/data`
+- API `6080:5000` MCP `6090:6090`
+
+## Prerequisiti
+
+- canale di rilascio scelto
+
+## Procedura
+
+1. **Controlla:** `:latest` `:beta`
+2. **Registra:** `:dev` è riservato all’ingegneria e non è un canale di rilascio; DiscVault v26 stabile usa `:latest` e beta usa `:beta` · `:dev`
+3. **Registra:** `/api/next/health`
+4. **Registra:** PostgreSQL `/data`
+
+
+
+## Risultato previsto
+
+Accetta il risultato per **Riferimenti** solo quando tutti i risultati seguenti sono veri: canale di rilascio scelto · `@sha256:`; `:latest` · `:beta` · `:dev`. Punti di controllo della pagina: `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+- canale di rilascio scelto · `@sha256:`
+- `:latest` · `:beta` · `:dev`
+
+## Sicurezza e ripristino
+
+:::caution
+Il limite di ripristino sicuro per **Riferimenti** richiede queste azioni prima di avviare o continuare: il riferimento è di sola lettura; usa la procedura mirata prima di comandi o modifiche ai dati; `:dev` è riservato all’ingegneria e non è un canale di rilascio; DiscVault v26 stabile usa `:latest` e beta usa `:beta` · `:dev`. Punti di controllo della pagina: `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+- il riferimento è di sola lettura; usa la procedura mirata prima di comandi o modifiche ai dati
+- `:dev` è riservato all’ingegneria e non è un canale di rilascio; DiscVault v26 stabile usa `:latest` e beta usa `:beta` · `:dev`
+:::
+
+## Passaggio successivo
+
+[Inizio: Panoramica](/it/start/)
+
+## Fonte e stato
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Fonte e stato: `2026-07-14`
+- DiscVault Docs: `0.1.0`

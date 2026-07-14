@@ -1,0 +1,79 @@
+---
+title: 'Ρύθμιση: Ταυτοποίηση και RBAC'
+description: 'Οδηγίες ειδικά για την εργασία: Ρύθμιση: Ταυτοποίηση και RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.'
+pageId: 'configure-auth-rbac'
+products: ['server']
+platforms: ['web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="ιστός" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Στόχος και αποτέλεσμα
+
+Ολοκληρώστε τη ροή εργασίας της σελίδας για **Ρύθμιση: Ταυτοποίηση και RBAC**. Η διαδικασία χρησιμοποιεί `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+
+## Ισχύει για
+
+Αυτή η σελίδα ισχύει μόνο για **Ρύθμιση: Ταυτοποίηση και RBAC** (ιστός). Τα όρια καναλιού και δεδομένων είναι: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn. Σημεία ελέγχου της σελίδας: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+
+### DiscVault v26 – σταθερό
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- WebAuthn
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- WebAuthn
+
+## Προϋποθέσεις
+
+- πρόσβαση κατόχου
+- HTTPS
+- δεύτερη μέθοδος ανάκτησης
+
+## Διαδικασία
+
+1. **Ανοίξτε:** Διαχείριση → Ασφάλεια → Ενεργοποίηση ταυτοποίησης
+2. **Δημιουργήστε:** Διαχείριση → Χρήστες → Δημιουργία πρόσκλησης 48 ωρών
+3. **Ρυθμίστε:** Διαχείριση → Ρόλοι → Βασικό / Προχωρημένο
+4. **Δοκιμάστε:** `48 h`
+
+### Εντολές και ρυθμίσεις
+
+#### Και τα δύο κανάλια
+
+```bash
+curl --fail http://localhost:6080/api/next/auth/status
+curl --fail http://localhost:6080/api/next/auth/rbac
+```
+
+## Αναμενόμενο αποτέλεσμα
+
+Αποδεχθείτε το αποτέλεσμα για **Ρύθμιση: Ταυτοποίηση και RBAC** μόνο όταν ισχύουν όλα τα παρακάτω αποτελέσματα: η σύνδεση κατόχου με passkey λειτουργεί, η εγγραφή με πρόσκληση ακολουθεί τη ρύθμιση και ο δοκιμαστικός χρήστης έχει μόνο τα εκχωρημένα δικαιώματα. Σημεία ελέγχου της σελίδας: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+
+- η σύνδεση κατόχου με passkey λειτουργεί, η εγγραφή με πρόσκληση ακολουθεί τη ρύθμιση και ο δοκιμαστικός χρήστης έχει μόνο τα εκχωρημένα δικαιώματα
+
+## Ασφάλεια και επαναφορά
+
+:::caution
+Το ασφαλές όριο ανάκτησης για **Ρύθμιση: Ταυτοποίηση και RBAC** απαιτεί αυτές τις ενέργειες πριν από κάθε εκκίνηση ή συνέχεια: κρατήστε τη συνεδρία κατόχου και δεύτερη μέθοδο ανάκτησης· μην αφαιρείτε ποτέ το τελευταίο passkey κατόχου. Σημεία ελέγχου της σελίδας: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+
+- κρατήστε τη συνεδρία κατόχου και δεύτερη μέθοδο ανάκτησης· μην αφαιρείτε ποτέ το τελευταίο passkey κατόχου
+:::
+
+## Επόμενο βήμα
+
+[Ρύθμιση: Πρόσθετα και μεταδεδομένα](/el/configure/plugins-metadata/)
+
+## Πηγή και κατάσταση
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Πηγή και κατάσταση: `2026-07-14`
+- DiscVault Docs: `0.1.0`

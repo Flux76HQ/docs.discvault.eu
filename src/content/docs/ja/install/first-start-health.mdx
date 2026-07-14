@@ -1,0 +1,83 @@
+---
+title: 'インストール: 初回起動とヘルスチェック'
+description: 'タスク別の手順: インストール: 初回起動とヘルスチェック: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.'
+pageId: 'install-first-start-health'
+products: ['server']
+platforms: ['docker', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## 目的と結果
+
+このページ専用の手順を実行します: **インストール: 初回起動とヘルスチェック**. この手順で扱う項目: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.
+
+## 対象
+
+このページの対象は **インストール: 初回起動とヘルスチェック** (Docker · Web). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/api/next/auth/status`; `6080` → API `5000`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/api/next/auth/status`; `6080` → API `5000`. このページ固有の確認点: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.
+
+### DiscVault v26 安定版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `/api/next/auth/status`
+- `6080` → API `5000`
+
+### DiscVault v26 ベータ版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `/api/next/auth/status`
+- `6080` → API `5000`
+
+## 前提条件
+
+- `/api/next/health`
+- `/api/next/auth/status`
+
+## 手順
+
+1. **確認:** `postgres`
+2. **検証:** `GET /api/next/health` · HTTP `2xx`
+3. **開く:** `6080:5000`
+4. **検証:** `GET /api/next/auth/status` · WebAuthn
+
+### コマンドと設定
+
+#### 両方のチャンネル
+
+```bash
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml ps
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml logs --tail=100 next-api next-worker next-mcp postgres
+curl --fail http://localhost:6080/api/next/health
+curl --fail http://localhost:6080/api/next/auth/status
+```
+
+## 期待される結果
+
+次の結果を受け入れる条件: **インストール: 初回起動とヘルスチェック** 以下の結果をすべて確認した場合のみ: ヘルス確認に成功し、設定したオリジンが開き、最初のアカウントが所有者になります. このページ固有の確認点: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.
+
+- ヘルス確認に成功し、設定したオリジンが開き、最初のアカウントが所有者になります
+
+## 安全性とロールバック
+
+:::caution
+安全な復旧境界: **インストール: 初回起動とヘルスチェック** 起動または続行の前に、次の操作が必要です: 個人情報を伏せたタイムスタンプ付きログ; 一致するバックアップ一式. このページ固有の確認点: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.
+
+- 個人情報を伏せたタイムスタンプ付きログ
+- 一致するバックアップ一式
+:::
+
+## 次の手順
+
+[更新と移行: バックアップ](/ja/update/backup/)
+
+## 情報源と状態
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- 情報源と状態: `2026-07-14`
+- DiscVault Docs: `0.1.0`

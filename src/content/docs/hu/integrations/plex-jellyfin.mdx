@@ -1,0 +1,82 @@
+---
+title: 'Integrációk: Plex és Jellyfin'
+description: 'Feladatspecifikus útmutató: Integrációk: Plex és Jellyfin: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.'
+pageId: 'integrations-plex-jellyfin'
+products: ['server']
+platforms: ['web', 'docker']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="web · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Cél és eredmény
+
+Hajtsa végre az oldalhoz tartozó munkafolyamatot: **Integrációk: Plex és Jellyfin**. Ez az eljárás ezeket használja: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+## Érvényesség
+
+Ez az oldal kizárólag erre vonatkozik: **Integrációk: Plex és Jellyfin** (web · Docker). A csatorna- és adathatárok: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26. Oldalspecifikus ellenőrzési pontok: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault 26
+
+### DiscVault v26 – béta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault 26
+
+## Előfeltételek
+
+- titokként tárolt szolgáltatói hitelesítő adat
+- Jellyfin
+- tulajdonosi vagy rendszergazdai munkamenet
+
+## Eljárás
+
+1. **Állítsa be:** Adminisztráció → Bővítmények → Szolgáltató → Beállítás · Plex Jellyfin
+2. **Tesztelje:** Adminisztráció → Bővítmények → Állapotellenőrzés
+3. **Futtassa:** Adminisztráció → Bővítmények → Felderítés mentés nélkül · `dryRun=true`
+4. **Hasonlítsa össze:** `/api/next/digital-items?limit=200`
+
+### Parancsok és beállítások
+
+#### Mindkét csatorna
+
+```bash
+curl --fail http://localhost:6080/api/next/digital-sources
+curl --fail 'http://localhost:6080/api/next/digital-items?limit=200'
+```
+
+## Várt eredmény
+
+Az eredmény csak ennél fogadható el: **Integrációk: Plex és Jellyfin** csak akkor, ha minden alábbi eredmény teljesül: Adminisztráció → Bővítmények → Állapotellenőrzés; Adminisztráció → Bővítmények → Felderítés mentés nélkül · `dryRun=true`; Plex · Jellyfin · `/api/next/digital-items`. Oldalspecifikus ellenőrzési pontok: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+- Adminisztráció → Bővítmények → Állapotellenőrzés
+- Adminisztráció → Bővítmények → Felderítés mentés nélkül · `dryRun=true`
+- Plex · Jellyfin · `/api/next/digital-items`
+
+## Biztonság és visszaállítás
+
+:::caution
+A biztonságos helyreállítás határa ennél: **Integrációk: Plex és Jellyfin** ezeket a műveleteket igényli indítás vagy folytatás előtt: eltávolítás előtt tiltsa le a szolgáltatót, mentse a `/data/plugins` mappát, és vonja vissza a kiszivárgott hitelesítő adatot; tiltsa le az integrációt, vonja vissza a teszt- vagy kiszivárgott hitelesítő adatot, szükség esetén hozzon létre újat, a régit pedig ne használja újra. Oldalspecifikus ellenőrzési pontok: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+- eltávolítás előtt tiltsa le a szolgáltatót, mentse a `/data/plugins` mappát, és vonja vissza a kiszivárgott hitelesítő adatot
+- tiltsa le az integrációt, vonja vissza a teszt- vagy kiszivárgott hitelesítő adatot, szükség esetén hozzon létre újat, a régit pedig ne használja újra
+:::
+
+## Következő lépés
+
+[Hibaelhárítás](/hu/troubleshooting/)
+
+## Forrás és állapot
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Forrás és állapot: `2026-07-14`
+- DiscVault Docs: `0.1.0`

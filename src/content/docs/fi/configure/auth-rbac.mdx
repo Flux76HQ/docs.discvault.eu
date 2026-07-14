@@ -1,0 +1,79 @@
+---
+title: 'Määritys: Todennus ja RBAC'
+description: 'Tehtäväkohtaiset ohjeet: Määritys: Todennus ja RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.'
+pageId: 'configure-auth-rbac'
+products: ['server']
+platforms: ['web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="verkko" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Tavoite ja tulos
+
+Suorita sivukohtainen työnkulku: **Määritys: Todennus ja RBAC**. Tässä menettelyssä käytetään `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+
+## Koskee
+
+Tämä sivu koskee vain kohdetta **Määritys: Todennus ja RBAC** (verkko). Kanava- ja tietorajat ovat: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn. Sivukohtaiset tarkistuspisteet: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+
+### DiscVault v26 – vakaa
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- WebAuthn
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- WebAuthn
+
+## Edellytykset
+
+- omistajan käyttöoikeus
+- HTTPS
+- toinen palautustapa
+
+## Toimenpiteet
+
+1. **Avaa:** Ylläpito → Suojaus → Ota tunnistautuminen käyttöön
+2. **Luo:** Ylläpito → Käyttäjät → Luo 48 tunnin kutsu
+3. **Määritä:** Ylläpito → Roolit → Perus / Edistynyt
+4. **Testaa:** `48 h`
+
+### Komennot ja asetukset
+
+#### Molemmat kanavat
+
+```bash
+curl --fail http://localhost:6080/api/next/auth/status
+curl --fail http://localhost:6080/api/next/auth/rbac
+```
+
+## Odotettu tulos
+
+Hyväksy tulos kohteelle **Määritys: Todennus ja RBAC** vain kun kaikki seuraavat tulokset toteutuvat: omistajan passkey-kirjautuminen toimii, kutsurekisteröinti vastaa asetusta ja testikäyttäjällä on vain määritetyt oikeudet. Sivukohtaiset tarkistuspisteet: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+
+- omistajan passkey-kirjautuminen toimii, kutsurekisteröinti vastaa asetusta ja testikäyttäjällä on vain määritetyt oikeudet
+
+## Turvallisuus ja palautus
+
+:::caution
+Turvallinen palautusraja kohteelle **Määritys: Todennus ja RBAC** edellyttää näitä toimia ennen käynnistystä tai jatkamista: säilytä omistajan istunto ja toinen palautustapa; älä koskaan poista omistajan viimeistä passkey-avainta. Sivukohtaiset tarkistuspisteet: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+
+- säilytä omistajan istunto ja toinen palautustapa; älä koskaan poista omistajan viimeistä passkey-avainta
+:::
+
+## Seuraava vaihe
+
+[Määritys: Liitännäiset ja metatiedot](/fi/configure/plugins-metadata/)
+
+## Lähde ja tila
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Lähde ja tila: `2026-07-14`
+- DiscVault Docs: `0.1.0`

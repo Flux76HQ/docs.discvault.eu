@@ -1,0 +1,82 @@
+---
+title: 'Start: Overview'
+description: 'Confirm host, browser, storage, and native-platform requirements before installation.'
+pageId: 'start-requirements'
+products: ['server', 'pwa', 'ios', 'android']
+platforms: ['all']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="all platforms" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Goal and result
+
+Confirm host, browser, storage, and native-platform requirements before installation.
+
+## Applies to
+
+DiscVault v26 stable and beta use the same PostgreSQL-backed service topology and host requirements.
+
+### DiscVault v26 stable
+
+- DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
+- Docker Compose `v2` · PostgreSQL `17` · persistent `/data`
+
+### DiscVault v26 beta
+
+- DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
+- Docker Compose `v2` · PostgreSQL `17` · persistent `/data`
+
+## Prerequisites
+
+- host shell
+- writable persistent storage and free backup space
+- DNS + TLS
+
+## Procedure
+
+1. **Inspect:** Docker Engine `≥24` · Docker Compose `v2`
+2. **Inspect:** RAM `≥2 GB` · writable persistent storage and free backup space
+3. **Configure:** DNS · TLS · HTTPS · `RP_ID` · `RP_ORIGINS`
+4. **Record:** host · browser · selected release channel
+
+### Commands and settings
+
+#### Both channels
+
+```bash
+docker version --format '{{.Server.Version}}'
+docker compose version
+curl --version
+```
+
+## Expected result
+
+Docker and Compose return versions, the host has a writable backup destination, and HTTPS DNS is planned.
+
+- Docker Engine `≥24`
+- Docker Compose `v2`
+- HTTPS DNS
+
+## Safety and rollback
+
+:::caution
+This is a read-only check; correct missing prerequisites before continuing.
+
+- read-only checks change no data; fix missing prerequisites before continuing
+:::
+
+## Next step
+
+[Install: Installation routes](/install/)
+
+## Source and status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Verified: `2026-07-14`
+- DiscVault Docs: `0.1.0`

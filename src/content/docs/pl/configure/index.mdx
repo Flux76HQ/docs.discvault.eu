@@ -1,0 +1,76 @@
+---
+title: 'Konfiguracja: Przegląd'
+description: 'Instrukcja właściwa dla zadania: Konfiguracja: Przegląd: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.'
+pageId: 'configure-index'
+products: ['server']
+platforms: ['docker', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Cel i rezultat
+
+Wykonaj procedurę właściwą dla strony: **Konfiguracja: Przegląd**. Ta procedura korzysta z `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+
+## Dotyczy
+
+Ta strona dotyczy wyłącznie **Konfiguracja: Przegląd** (Docker · web). Granice kanału i danych: DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. Punkty kontrolne tej strony: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+
+### DiscVault v26 – stabilny
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- RBAC
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- RBAC
+
+## Wymagania wstępne
+
+- dostęp właściciela
+- `/configure/auth-rbac/`
+
+## Procedura
+
+1. **Wybierz:** [Konfiguracja: Zmienne środowiskowe](/pl/configure/environment/)
+2. **Wybierz:** [Konfiguracja: Uwierzytelnianie i RBAC](/pl/configure/auth-rbac/) · RBAC
+3. **Wybierz:** [Konfiguracja: Wtyczki i metadane](/pl/configure/plugins-metadata/)
+4. **Zapisz:** `/configure/environment/`
+
+### Ścieżki zadań
+
+- [Konfiguracja: Zmienne środowiskowe](/pl/configure/environment/) — `/configure/environment/`
+- [Konfiguracja: Uwierzytelnianie i RBAC](/pl/configure/auth-rbac/) — DiscVault 26 RBAC
+- [Konfiguracja: Wtyczki i metadane](/pl/configure/plugins-metadata/) — DiscVault 26
+
+## Oczekiwany rezultat
+
+Zaakceptuj wynik dla **Konfiguracja: Przegląd** tylko gdy wszystkie poniższe wyniki są prawdziwe: wybrany kanał wydań; `/configure/auth-rbac/`. Punkty kontrolne tej strony: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+
+- wybrany kanał wydań
+- `/configure/auth-rbac/`
+
+## Bezpieczeństwo i wycofanie
+
+:::caution
+Bezpieczna granica odzyskiwania dla **Konfiguracja: Przegląd** wymaga tych działań przed uruchomieniem lub kontynuacją: zmieniaj jeden podsystem naraz, zachowaj poprzednią wartość i kopię oraz wycofaj przed kolejną zmianą. Punkty kontrolne tej strony: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+
+- zmieniaj jeden podsystem naraz, zachowaj poprzednią wartość i kopię oraz wycofaj przed kolejną zmianą
+:::
+
+## Następny krok
+
+[Konfiguracja: Zmienne środowiskowe](/pl/configure/environment/)
+
+## Źródło i stan
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Źródło i stan: `2026-07-14`
+- DiscVault Docs: `0.1.0`

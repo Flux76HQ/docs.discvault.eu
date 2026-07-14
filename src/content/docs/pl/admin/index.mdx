@@ -1,0 +1,81 @@
+---
+title: 'Administracja: Dzienniki, zadania i bezpieczeństwo'
+description: 'Instrukcja właściwa dla zadania: Administracja: Dzienniki, zadania i bezpieczeństwo: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.'
+pageId: 'admin-index'
+products: ['server']
+platforms: ['docker', 'unraid', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Cel i rezultat
+
+Wykonaj procedurę właściwą dla strony: **Administracja: Dzienniki, zadania i bezpieczeństwo**. Ta procedura korzysta z `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+## Dotyczy
+
+Ta strona dotyczy wyłącznie **Administracja: Dzienniki, zadania i bezpieczeństwo** (Docker · Unraid · web). Granice kanału i danych: DiscVault · `ghcr.io/helmerznl/discvault:latest`; API MCP PostgreSQL; DiscVault · `ghcr.io/helmerznl/discvault:beta`; API MCP PostgreSQL. Punkty kontrolne tej strony: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+### DiscVault v26 – stabilny
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- API MCP PostgreSQL
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- API MCP PostgreSQL
+
+## Wymagania wstępne
+
+- dostęp właściciela
+- pasujący zestaw kopii
+- dzienniki ze znacznikiem czasu i ukrytymi danymi
+
+## Procedura
+
+1. **Sprawdź:** `/api/next/health`
+2. **Sprawdź:** dzienniki ze znacznikiem czasu i ukrytymi danymi
+3. **Zweryfikuj:** `next-worker`
+4. **Zachowaj:** `--tail=200`
+
+### Polecenia i ustawienia
+
+#### Oba kanały
+
+```bash
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml logs --tail=200 next-api next-worker next-mcp postgres
+curl --fail http://localhost:6080/api/next/jobs
+curl --fail http://localhost:6080/api/next/health
+```
+
+## Oczekiwany rezultat
+
+Zaakceptuj wynik dla **Administracja: Dzienniki, zadania i bezpieczeństwo** tylko gdy wszystkie poniższe wyniki są prawdziwe: jedna wadliwa warstwa jest odizolowana wraz z czasem, stanem, digestem obrazu i zanonimizowanym błędem; pasujący zestaw kopii. Punkty kontrolne tej strony: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+- jedna wadliwa warstwa jest odizolowana wraz z czasem, stanem, digestem obrazu i zanonimizowanym błędem
+- pasujący zestaw kopii
+
+## Bezpieczeństwo i wycofanie
+
+:::caution
+Bezpieczna granica odzyskiwania dla **Administracja: Dzienniki, zadania i bezpieczeństwo** wymaga tych działań przed uruchomieniem lub kontynuacją: nie usuwaj najpierw woluminów, `/data`, danych przeglądarki ani pamięci aplikacji; zachowaj zanonimizowane logi i przywracaj tylko pasującą kopię. Punkty kontrolne tej strony: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+- nie usuwaj najpierw woluminów, `/data`, danych przeglądarki ani pamięci aplikacji; zachowaj zanonimizowane logi i przywracaj tylko pasującą kopię
+:::
+
+## Następny krok
+
+[Rozwiązywanie problemów](/pl/troubleshooting/)
+
+## Źródło i stan
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Źródło i stan: `2026-07-14`
+- DiscVault Docs: `0.1.0`

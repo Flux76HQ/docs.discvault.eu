@@ -1,0 +1,97 @@
+---
+title: 'Install: Unraid'
+description: 'Deploy the same DiscVault v26 Compose topology through Unraid Compose Manager with explicit PostgreSQL and filesystem persistence.'
+pageId: 'install-unraid'
+products: ['server']
+platforms: ['unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Goal and result
+
+Deploy the same DiscVault v26 Compose topology through Unraid Compose Manager with explicit PostgreSQL and filesystem persistence.
+
+## Applies to
+
+Use `:latest` for DiscVault v26 stable by default or `:beta` for DiscVault v26 beta. Both channels run PostgreSQL, API, worker, and MCP with the same mounts and internal ports.
+
+### DiscVault v26 stable
+
+- DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
+- same PostgreSQL + API + worker + MCP Compose stack
+- stable default `:latest`; optional beta `:beta`
+
+### DiscVault v26 beta
+
+- DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
+- same PostgreSQL + API + worker + MCP Compose stack
+- stable default `:latest`; optional beta `:beta`
+
+## Prerequisites
+
+- Unraid `6.12+`
+- Compose Manager
+- OpenSSL
+
+## Procedure
+
+1. **Install:** Unraid Compose Manager · [Install: Docker Compose](/install/docker-compose/)
+2. **Configure:** `DISCVAULT_IMAGE` · `:latest` default / `:beta` optional
+3. **Configure:** `DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data` · `DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres`
+4. **Verify:** `postgres` · `next-api` · `next-worker` · `next-mcp` · `6080:5000`
+
+### Commands and settings
+
+#### DiscVault v26 stable
+
+```text
+DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
+DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data
+DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres
+DISCVAULT_API_PORT=6080
+DISCVAULT_MCP_PORT=6090
+```
+
+#### DiscVault v26 beta
+
+```text
+DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
+DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data
+DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres
+DISCVAULT_API_PORT=6080
+DISCVAULT_MCP_PORT=6090
+```
+
+## Expected result
+
+PostgreSQL, API, worker, and MCP start, and both appdata paths remain intact after container recreation.
+
+- PostgreSQL persistence
+- persistent `/data`
+- HTTP `2xx`
+
+## Safety and rollback
+
+:::caution
+Stop the stack, preserve both appdata paths, restore their matched backup, and recreate the previous image digest.
+
+- matching backup set
+- never remove appdata during container recreation
+:::
+
+## Next step
+
+[Install: First start and health check](/install/first-start-health/)
+
+## Source and status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Verified: `2026-07-14`
+- DiscVault Docs: `0.1.0`

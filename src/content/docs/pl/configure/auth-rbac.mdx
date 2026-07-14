@@ -1,0 +1,79 @@
+---
+title: 'Konfiguracja: Uwierzytelnianie i RBAC'
+description: 'Instrukcja właściwa dla zadania: Konfiguracja: Uwierzytelnianie i RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.'
+pageId: 'configure-auth-rbac'
+products: ['server']
+platforms: ['web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Cel i rezultat
+
+Wykonaj procedurę właściwą dla strony: **Konfiguracja: Uwierzytelnianie i RBAC**. Ta procedura korzysta z `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+
+## Dotyczy
+
+Ta strona dotyczy wyłącznie **Konfiguracja: Uwierzytelnianie i RBAC** (web). Granice kanału i danych: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn. Punkty kontrolne tej strony: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+
+### DiscVault v26 – stabilny
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- WebAuthn
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- WebAuthn
+
+## Wymagania wstępne
+
+- dostęp właściciela
+- HTTPS
+- druga metoda odzyskiwania
+
+## Procedura
+
+1. **Otwórz:** Administracja → Bezpieczeństwo → Włącz uwierzytelnianie
+2. **Utwórz:** Administracja → Użytkownicy → Utwórz zaproszenie na 48 godzin
+3. **Skonfiguruj:** Administracja → Role → Podstawowe / Zaawansowane
+4. **Przetestuj:** `48 h`
+
+### Polecenia i ustawienia
+
+#### Oba kanały
+
+```bash
+curl --fail http://localhost:6080/api/next/auth/status
+curl --fail http://localhost:6080/api/next/auth/rbac
+```
+
+## Oczekiwany rezultat
+
+Zaakceptuj wynik dla **Konfiguracja: Uwierzytelnianie i RBAC** tylko gdy wszystkie poniższe wyniki są prawdziwe: logowanie właściciela passkey działa, rejestracja na zaproszenie odpowiada ustawieniu, a użytkownik testowy ma tylko przypisane uprawnienia. Punkty kontrolne tej strony: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+
+- logowanie właściciela passkey działa, rejestracja na zaproszenie odpowiada ustawieniu, a użytkownik testowy ma tylko przypisane uprawnienia
+
+## Bezpieczeństwo i wycofanie
+
+:::caution
+Bezpieczna granica odzyskiwania dla **Konfiguracja: Uwierzytelnianie i RBAC** wymaga tych działań przed uruchomieniem lub kontynuacją: zachowaj sesję właściciela i drugą metodę odzyskiwania; nigdy nie usuwaj ostatniego klucza właściciela. Punkty kontrolne tej strony: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+
+- zachowaj sesję właściciela i drugą metodę odzyskiwania; nigdy nie usuwaj ostatniego klucza właściciela
+:::
+
+## Następny krok
+
+[Konfiguracja: Wtyczki i metadane](/pl/configure/plugins-metadata/)
+
+## Źródło i stan
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Źródło i stan: `2026-07-14`
+- DiscVault Docs: `0.1.0`

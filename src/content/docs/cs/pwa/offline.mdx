@@ -1,0 +1,72 @@
+---
+title: 'PWA: Chování offline'
+description: 'Pokyny pro konkrétní úlohu: PWA: Chování offline: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.'
+pageId: 'pwa-offline'
+products: ['pwa']
+platforms: ['web', 'ios', 'android']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="web · iOS · Android" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Cíl a výsledek
+
+Dokončete postup určený pro **PWA: Chování offline**. Tento postup pracuje s `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+## Platí pro
+
+Tato stránka platí pouze pro **PWA: Chování offline** (web · iOS · Android). Hranice kanálu a dat jsou: DiscVault · `ghcr.io/helmerznl/discvault:latest`; uložené obrazovky se mohou otevřít, ale nová data a zápisy vyžadují síť · `Service Worker` · `CacheStorage`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; uložené obrazovky se mohou otevřít, ale nová data a zápisy vyžadují síť · `Service Worker` · `CacheStorage`. Kontrolní body této stránky: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+### DiscVault v26 – stabilní
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- uložené obrazovky se mohou otevřít, ale nová data a zápisy vyžadují síť · `Service Worker` · `CacheStorage`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- uložené obrazovky se mohou otevřít, ale nová data a zápisy vyžadují síť · `Service Worker` · `CacheStorage`
+
+## Požadavky
+
+- PWA
+- `CacheStorage`
+
+## Postup
+
+1. **Otevřete:** Knihovna → Hledat
+2. **Otestujte:** režim Letadlo · `Service Worker`
+3. **Zaznamenejte:** `navigator.onLine`
+4. **Znovu připojte:** HTTPS
+
+
+
+## Očekávaný výsledek
+
+Výsledek přijměte pro **PWA: Chování offline** pouze pokud platí všechny následující výsledky: uložené obrazovky se mohou otevřít, ale nová data a zápisy vyžadují síť; `Service Worker` · `navigator.onLine`. Kontrolní body této stránky: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+- uložené obrazovky se mohou otevřít, ale nová data a zápisy vyžadují síť
+- `Service Worker` · `navigator.onLine`
+
+## Bezpečnost a návrat
+
+:::caution
+Bezpečná hranice obnovy pro **PWA: Chování offline** vyžaduje před spuštěním nebo pokračováním tyto kroky: uložené obrazovky se mohou otevřít, ale nová data a zápisy vyžadují síť · DiscVault. Kontrolní body této stránky: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+- uložené obrazovky se mohou otevřít, ale nová data a zápisy vyžadují síť · DiscVault
+:::
+
+## Další krok
+
+[Řešení potíží](/cs/troubleshooting/)
+
+## Zdroj a stav
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Zdroj a stav: `2026-07-14`
+- DiscVault Docs: `0.1.0`

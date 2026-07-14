@@ -1,0 +1,80 @@
+---
+title: 'Εγκατάσταση: Διαδρομές εγκατάστασης'
+description: 'Οδηγίες ειδικά για την εργασία: Εγκατάσταση: Διαδρομές εγκατάστασης: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.'
+pageId: 'install-index'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Στόχος και αποτέλεσμα
+
+Ολοκληρώστε τη ροή εργασίας της σελίδας για **Εγκατάσταση: Διαδρομές εγκατάστασης**. Η διαδικασία χρησιμοποιεί `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+
+## Ισχύει για
+
+Αυτή η σελίδα ισχύει μόνο για **Εγκατάσταση: Διαδρομές εγκατάστασης** (Docker · Unraid). Τα όρια καναλιού και δεδομένων είναι: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; PostgreSQL `17` `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26; PostgreSQL `17` `/data`. Σημεία ελέγχου της σελίδας: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+
+### DiscVault v26 – σταθερό
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault 26
+- PostgreSQL `17` `/data`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault 26
+- PostgreSQL `17` `/data`
+
+## Προϋποθέσεις
+
+- Docker Engine `24+`
+- Docker Compose `v2`
+
+## Διαδικασία
+
+1. **Επιλέξτε:** [Εγκατάσταση: Docker Compose](/el/install/docker-compose/)
+2. **Επιλέξτε:** [Εγκατάσταση: Docker run](/el/install/docker-run/)
+3. **Επιλέξτε:** [Εγκατάσταση: Unraid](/el/install/unraid/) · Unraid
+4. **Καταγράψτε:** `DISCVAULT_IMAGE` · αντίστοιχο σύνολο αντιγράφων
+
+### Διαδρομές εργασιών
+
+- [Εγκατάσταση: Docker Compose](/el/install/docker-compose/) — DiscVault 26 Docker Compose PostgreSQL `/data` `DISCVAULT_IMAGE`
+- [Εγκατάσταση: Docker run](/el/install/docker-run/) — DiscVault 26 Docker run PostgreSQL `/data` `DATABASE_URL`
+- [Εγκατάσταση: Μόνιμα δεδομένα και PostgreSQL](/el/install/storage-postgresql/) — DiscVault 26 PostgreSQL `/data`
+- [Εγκατάσταση: Unraid](/el/install/unraid/) — DiscVault 26 Unraid PostgreSQL `/data`
+
+## Αναμενόμενο αποτέλεσμα
+
+Αποδεχθείτε το αποτέλεσμα για **Εγκατάσταση: Διαδρομές εγκατάστασης** μόνο όταν ισχύουν όλα τα παρακάτω αποτελέσματα: επιλεγμένο κανάλι έκδοσης; PostgreSQL `/data`. Σημεία ελέγχου της σελίδας: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+
+- επιλεγμένο κανάλι έκδοσης
+- PostgreSQL `/data`
+
+## Ασφάλεια και επαναφορά
+
+:::caution
+Το ασφαλές όριο ανάκτησης για **Εγκατάσταση: Διαδρομές εγκατάστασης** απαιτεί αυτές τις ενέργειες πριν από κάθε εκκίνηση ή συνέχεια: αντίστοιχο σύνολο αντιγράφων; σημειώσεις έκδοσης και καταγεγραμμένο αμετάβλητο digest. Σημεία ελέγχου της σελίδας: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+
+- αντίστοιχο σύνολο αντιγράφων
+- σημειώσεις έκδοσης και καταγεγραμμένο αμετάβλητο digest
+:::
+
+## Επόμενο βήμα
+
+[Εγκατάσταση: Docker Compose](/el/install/docker-compose/)
+
+## Πηγή και κατάσταση
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Πηγή και κατάσταση: `2026-07-14`
+- DiscVault Docs: `0.1.0`

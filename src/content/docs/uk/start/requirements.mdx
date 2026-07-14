@@ -1,0 +1,82 @@
+---
+title: 'Початок: Огляд'
+description: 'Спеціальні інструкції для завдання: Початок: Огляд: Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.'
+pageId: 'start-requirements'
+products: ['server', 'pwa', 'ios', 'android']
+platforms: ['all']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="усі платформи" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Мета й результат
+
+Виконайте спеціальну процедуру сторінки для **Початок: Огляд**. У цій процедурі використовуються Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.
+
+## Застосовується до
+
+Ця сторінка стосується лише **Початок: Огляд** (усі платформи). Межі каналу й даних: DiscVault · `ghcr.io/helmerznl/discvault:latest`; Docker Compose `v2` · PostgreSQL `17` · `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; Docker Compose `v2` · PostgreSQL `17` · `/data`. Контрольні точки цієї сторінки: Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.
+
+### DiscVault v26 – стабільний
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- Docker Compose `v2` · PostgreSQL `17` · `/data`
+
+### DiscVault v26 – бета
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- Docker Compose `v2` · PostgreSQL `17` · `/data`
+
+## Передумови
+
+- Docker Engine `24+`
+- доступне для запису постійне сховище й вільне місце
+- DNS TLS
+
+## Процедура
+
+1. **Перевірте:** Docker Engine `≥24` · Docker Compose `v2`
+2. **Перевірте:** `≥2 GB` · доступне для запису постійне сховище й вільне місце
+3. **Налаштуйте:** DNS · TLS · HTTPS · `RP_ID` · `RP_ORIGINS`
+4. **Запишіть:** вибраний канал випуску
+
+### Команди й налаштування
+
+#### Обидва канали
+
+```bash
+docker version --format '{{.Server.Version}}'
+docker compose version
+curl --version
+```
+
+## Очікуваний результат
+
+Приймайте результат для **Початок: Огляд** лише коли підтверджено всі наведені нижче результати: Docker Engine `≥24`; Docker Compose `v2`; HTTPS DNS. Контрольні точки цієї сторінки: Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.
+
+- Docker Engine `≥24`
+- Docker Compose `v2`
+- HTTPS DNS
+
+## Безпека й відкочування
+
+:::caution
+Безпечна межа відновлення для **Початок: Огляд** вимагає цих дій до будь-якого запуску чи продовження: перевірки лише для читання не змінюють дані; виправте передумови до продовження. Контрольні точки цієї сторінки: Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.
+
+- перевірки лише для читання не змінюють дані; виправте передумови до продовження
+:::
+
+## Наступний крок
+
+[Встановлення: Способи встановлення](/uk/install/)
+
+## Джерело й стан
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Джерело й стан: `2026-07-14`
+- DiscVault Docs: `0.1.0`

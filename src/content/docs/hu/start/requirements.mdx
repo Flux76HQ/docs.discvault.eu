@@ -1,0 +1,82 @@
+---
+title: 'Kezdés: Áttekintés'
+description: 'Feladatspecifikus útmutató: Kezdés: Áttekintés: Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.'
+pageId: 'start-requirements'
+products: ['server', 'pwa', 'ios', 'android']
+platforms: ['all']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="minden platform" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Cél és eredmény
+
+Hajtsa végre az oldalhoz tartozó munkafolyamatot: **Kezdés: Áttekintés**. Ez az eljárás ezeket használja: Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.
+
+## Érvényesség
+
+Ez az oldal kizárólag erre vonatkozik: **Kezdés: Áttekintés** (minden platform). A csatorna- és adathatárok: DiscVault · `ghcr.io/helmerznl/discvault:latest`; Docker Compose `v2` · PostgreSQL `17` · `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; Docker Compose `v2` · PostgreSQL `17` · `/data`. Oldalspecifikus ellenőrzési pontok: Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- Docker Compose `v2` · PostgreSQL `17` · `/data`
+
+### DiscVault v26 – béta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- Docker Compose `v2` · PostgreSQL `17` · `/data`
+
+## Előfeltételek
+
+- Docker Engine `24+`
+- írható tartós tárhely és szabad mentési hely
+- DNS TLS
+
+## Eljárás
+
+1. **Ellenőrizze:** Docker Engine `≥24` · Docker Compose `v2`
+2. **Ellenőrizze:** `≥2 GB` · írható tartós tárhely és szabad mentési hely
+3. **Állítsa be:** DNS · TLS · HTTPS · `RP_ID` · `RP_ORIGINS`
+4. **Jegyezze fel:** kiválasztott kiadási csatorna
+
+### Parancsok és beállítások
+
+#### Mindkét csatorna
+
+```bash
+docker version --format '{{.Server.Version}}'
+docker compose version
+curl --version
+```
+
+## Várt eredmény
+
+Az eredmény csak ennél fogadható el: **Kezdés: Áttekintés** csak akkor, ha minden alábbi eredmény teljesül: Docker Engine `≥24`; Docker Compose `v2`; HTTPS DNS. Oldalspecifikus ellenőrzési pontok: Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.
+
+- Docker Engine `≥24`
+- Docker Compose `v2`
+- HTTPS DNS
+
+## Biztonság és visszaállítás
+
+:::caution
+A biztonságos helyreállítás határa ennél: **Kezdés: Áttekintés** ezeket a műveleteket igényli indítás vagy folytatás előtt: a csak olvasási ellenőrzések nem módosítanak adatot; folytatás előtt pótolja a feltételeket. Oldalspecifikus ellenőrzési pontok: Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.
+
+- a csak olvasási ellenőrzések nem módosítanak adatot; folytatás előtt pótolja a feltételeket
+:::
+
+## Következő lépés
+
+[Telepítés: Telepítési lehetőségek](/hu/install/)
+
+## Forrás és állapot
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Forrás és állapot: `2026-07-14`
+- DiscVault Docs: `0.1.0`

@@ -1,0 +1,74 @@
+---
+title: 'Referanse'
+description: 'Oppgavespesifikk veiledning for Referanse: `:latest` · `:beta` · `:dev` · `6080:5000`.'
+pageId: 'reference-index'
+products: ['server', 'pwa', 'ios', 'android']
+platforms: ['all']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="alle plattformer" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Mål og resultat
+
+Fullfør den sidespesifikke arbeidsflyten for **Referanse**. Denne fremgangsmåten bruker `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+## Gjelder for
+
+Denne siden gjelder bare **Referanse** (alle plattformer). Kanal- og datagrensene er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`. Sidespesifikke kontrollpunkter: `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PostgreSQL `/data`
+- API `6080:5000` MCP `6090:6090`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PostgreSQL `/data`
+- API `6080:5000` MCP `6090:6090`
+
+## Forutsetninger
+
+- valgt utgivelseskanal
+
+## Fremgangsmåte
+
+1. **Kontroller:** `:latest` `:beta`
+2. **Registrer:** `:dev` er bare for utviklingsarbeid og er ikke en utgivelseskanal; stabil DiscVault v26 bruker `:latest`, og beta bruker `:beta` · `:dev`
+3. **Registrer:** `/api/next/health`
+4. **Registrer:** PostgreSQL `/data`
+
+
+
+## Forventet resultat
+
+Godta resultatet for **Referanse** bare når alle resultatene nedenfor er oppfylt: valgt utgivelseskanal · `@sha256:`; `:latest` · `:beta` · `:dev`. Sidespesifikke kontrollpunkter: `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+- valgt utgivelseskanal · `@sha256:`
+- `:latest` · `:beta` · `:dev`
+
+## Sikkerhet og tilbakerulling
+
+:::caution
+Den sikre gjenopprettingsgrensen for **Referanse** krever disse handlingene før noe startes eller fortsetter: referansen er skrivebeskyttet; bruk den fokuserte prosedyren før kommandoer eller dataendringer; `:dev` er bare for utviklingsarbeid og er ikke en utgivelseskanal; stabil DiscVault v26 bruker `:latest`, og beta bruker `:beta` · `:dev`. Sidespesifikke kontrollpunkter: `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+- referansen er skrivebeskyttet; bruk den fokuserte prosedyren før kommandoer eller dataendringer
+- `:dev` er bare for utviklingsarbeid og er ikke en utgivelseskanal; stabil DiscVault v26 bruker `:latest`, og beta bruker `:beta` · `:dev`
+:::
+
+## Neste trinn
+
+[Start: Oversikt](/no/start/)
+
+## Kilde og status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Kilde og status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

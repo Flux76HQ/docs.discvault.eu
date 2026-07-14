@@ -1,0 +1,80 @@
+---
+title: 'Instalace: Možnosti instalace'
+description: 'Pokyny pro konkrétní úlohu: Instalace: Možnosti instalace: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.'
+pageId: 'install-index'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Cíl a výsledek
+
+Dokončete postup určený pro **Instalace: Možnosti instalace**. Tento postup pracuje s `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+
+## Platí pro
+
+Tato stránka platí pouze pro **Instalace: Možnosti instalace** (Docker · Unraid). Hranice kanálu a dat jsou: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; PostgreSQL `17` `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26; PostgreSQL `17` `/data`. Kontrolní body této stránky: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+
+### DiscVault v26 – stabilní
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault 26
+- PostgreSQL `17` `/data`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault 26
+- PostgreSQL `17` `/data`
+
+## Požadavky
+
+- Docker Engine `24+`
+- Docker Compose `v2`
+
+## Postup
+
+1. **Vyberte:** [Instalace: Docker Compose](/cs/install/docker-compose/)
+2. **Vyberte:** [Instalace: Docker run](/cs/install/docker-run/)
+3. **Vyberte:** [Instalace: Unraid](/cs/install/unraid/) · Unraid
+4. **Zaznamenejte:** `DISCVAULT_IMAGE` · odpovídající sada záloh
+
+### Cesty k úlohám
+
+- [Instalace: Docker Compose](/cs/install/docker-compose/) — DiscVault 26 Docker Compose PostgreSQL `/data` `DISCVAULT_IMAGE`
+- [Instalace: Docker run](/cs/install/docker-run/) — DiscVault 26 Docker run PostgreSQL `/data` `DATABASE_URL`
+- [Instalace: Trvalá data a PostgreSQL](/cs/install/storage-postgresql/) — DiscVault 26 PostgreSQL `/data`
+- [Instalace: Unraid](/cs/install/unraid/) — DiscVault 26 Unraid PostgreSQL `/data`
+
+## Očekávaný výsledek
+
+Výsledek přijměte pro **Instalace: Možnosti instalace** pouze pokud platí všechny následující výsledky: vybraný kanál vydání; PostgreSQL `/data`. Kontrolní body této stránky: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+
+- vybraný kanál vydání
+- PostgreSQL `/data`
+
+## Bezpečnost a návrat
+
+:::caution
+Bezpečná hranice obnovy pro **Instalace: Možnosti instalace** vyžaduje před spuštěním nebo pokračováním tyto kroky: odpovídající sada záloh; poznámky k vydání a zaznamenaný neměnný digest. Kontrolní body této stránky: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+
+- odpovídající sada záloh
+- poznámky k vydání a zaznamenaný neměnný digest
+:::
+
+## Další krok
+
+[Instalace: Docker Compose](/cs/install/docker-compose/)
+
+## Zdroj a stav
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Zdroj a stav: `2026-07-14`
+- DiscVault Docs: `0.1.0`

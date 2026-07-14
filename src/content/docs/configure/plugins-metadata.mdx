@@ -1,0 +1,78 @@
+---
+title: 'Configure: Plugins and metadata'
+description: 'Discover, configure, order, and health-check metadata and digital-source plugins.'
+pageId: 'configure-plugins-metadata'
+products: ['server']
+platforms: ['web', 'docker']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="web · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Goal and result
+
+Discover, configure, order, and health-check metadata and digital-source plugins.
+
+## Applies to
+
+DiscVault v26 stable and beta include the same plugin runtime. Bundled plugins are read-only; installed plugins persist under `/data/plugins`.
+
+### DiscVault v26 stable
+
+- DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault 26 plugin registry · `/data/plugins` persistent
+
+### DiscVault v26 beta
+
+- DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault 26 plugin registry · `/data/plugins` persistent
+
+## Prerequisites
+
+- owner or administrator session
+- provider credential stored as a secret
+
+## Procedure
+
+1. **Inspect:** `GET /api/next/plugins/registry` · manifest
+2. **Configure:** Admin → Plugins → Provider → Configure · provider credential stored as a secret
+3. **Test:** Admin → Plugins → Health check · Admin → Plugins → Discover without saving · `dryRun`
+4. **Record:** provider order · health result · dry-run sample
+
+### Commands and settings
+
+#### Both channels
+
+```bash
+curl --fail http://localhost:6080/api/next/plugins/registry
+curl --fail http://localhost:6080/api/next/metadata/plugins
+```
+
+## Expected result
+
+The registry lists the provider, its health check succeeds, and a dry-run lookup returns expected metadata.
+
+- the registry lists the provider, its health check passes, and a dry-run returns the expected metadata sample
+
+## Safety and rollback
+
+:::caution
+Disable the provider before removing it. Back up `/data/plugins` and configuration; do not edit files inside the image.
+
+- disable the provider before removal, back up `/data/plugins`, and revoke any exposed credential
+:::
+
+## Next step
+
+[Integrations: Plex and Jellyfin](/integrations/plex-jellyfin/)
+
+## Source and status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Verified: `2026-07-14`
+- DiscVault Docs: `0.1.0`

@@ -1,0 +1,80 @@
+---
+title: 'Telepítés: Telepítési lehetőségek'
+description: 'Feladatspecifikus útmutató: Telepítés: Telepítési lehetőségek: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.'
+pageId: 'install-index'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Cél és eredmény
+
+Hajtsa végre az oldalhoz tartozó munkafolyamatot: **Telepítés: Telepítési lehetőségek**. Ez az eljárás ezeket használja: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+
+## Érvényesség
+
+Ez az oldal kizárólag erre vonatkozik: **Telepítés: Telepítési lehetőségek** (Docker · Unraid). A csatorna- és adathatárok: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; PostgreSQL `17` `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26; PostgreSQL `17` `/data`. Oldalspecifikus ellenőrzési pontok: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault 26
+- PostgreSQL `17` `/data`
+
+### DiscVault v26 – béta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault 26
+- PostgreSQL `17` `/data`
+
+## Előfeltételek
+
+- Docker Engine `24+`
+- Docker Compose `v2`
+
+## Eljárás
+
+1. **Válassza ki:** [Telepítés: Docker Compose](/hu/install/docker-compose/)
+2. **Válassza ki:** [Telepítés: Docker run](/hu/install/docker-run/)
+3. **Válassza ki:** [Telepítés: Unraid](/hu/install/unraid/) · Unraid
+4. **Jegyezze fel:** `DISCVAULT_IMAGE` · illeszkedő mentéskészlet
+
+### Feladatútvonalak
+
+- [Telepítés: Docker Compose](/hu/install/docker-compose/) — DiscVault 26 Docker Compose PostgreSQL `/data` `DISCVAULT_IMAGE`
+- [Telepítés: Docker run](/hu/install/docker-run/) — DiscVault 26 Docker run PostgreSQL `/data` `DATABASE_URL`
+- [Telepítés: Tartós adatok és PostgreSQL](/hu/install/storage-postgresql/) — DiscVault 26 PostgreSQL `/data`
+- [Telepítés: Unraid](/hu/install/unraid/) — DiscVault 26 Unraid PostgreSQL `/data`
+
+## Várt eredmény
+
+Az eredmény csak ennél fogadható el: **Telepítés: Telepítési lehetőségek** csak akkor, ha minden alábbi eredmény teljesül: kiválasztott kiadási csatorna; PostgreSQL `/data`. Oldalspecifikus ellenőrzési pontok: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+
+- kiválasztott kiadási csatorna
+- PostgreSQL `/data`
+
+## Biztonság és visszaállítás
+
+:::caution
+A biztonságos helyreállítás határa ennél: **Telepítés: Telepítési lehetőségek** ezeket a műveleteket igényli indítás vagy folytatás előtt: illeszkedő mentéskészlet; kiadási megjegyzések és rögzített változtathatatlan digest. Oldalspecifikus ellenőrzési pontok: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+
+- illeszkedő mentéskészlet
+- kiadási megjegyzések és rögzített változtathatatlan digest
+:::
+
+## Következő lépés
+
+[Telepítés: Docker Compose](/hu/install/docker-compose/)
+
+## Forrás és állapot
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Forrás és állapot: `2026-07-14`
+- DiscVault Docs: `0.1.0`

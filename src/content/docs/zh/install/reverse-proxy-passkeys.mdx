@@ -1,0 +1,83 @@
+---
+title: '安装: 反向代理和通行密钥'
+description: '任务专用说明： 安装: 反向代理和通行密钥: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.'
+pageId: 'install-reverse-proxy-passkeys'
+products: ['server']
+platforms: ['docker', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · 网页" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## 目标和结果
+
+完成此页面专用的流程： **安装: 反向代理和通行密钥**. 此流程使用 `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+
+## 适用范围
+
+本页面仅适用于 **安装: 反向代理和通行密钥** (Docker · 网页). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`. 本页面专用检查点： `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+
+### DiscVault v26 稳定版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `RP_ID` `RP_ORIGINS`
+- `6080` API `5000`
+
+### DiscVault v26 测试版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `RP_ID` `RP_ORIGINS`
+- `6080` API `5000`
+
+## 前提条件
+
+- DNS
+- TLS
+- `6080`
+
+## 操作步骤
+
+1. **配置:** `RP_ID`
+2. **配置:** `RP_ORIGINS` · HTTPS
+3. **配置:** `http://127.0.0.1:6080`
+4. **测试:** `GET /api/next/health`
+
+### 命令和设置
+
+#### 两个通道
+
+```text
+RP_ID=discvault.example.com
+RP_ORIGINS=https://discvault.example.com
+curl --fail https://discvault.example.com/api/next/health
+```
+
+## 预期结果
+
+仅在以下条件下接受结果： **安装: 反向代理和通行密钥** 必须确认以下所有结果： HTTPS · HTTP `2xx`; `RP_ID`. 本页面专用检查点： `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+
+- HTTPS · HTTP `2xx`
+- `RP_ID`
+
+## 安全与回滚
+
+:::caution
+安全恢复边界： **安装: 反向代理和通行密钥** 在启动或继续任何操作前必须执行： 必须同时恢复代理与 RP 值，并保留所有者恢复方式. 本页面专用检查点： `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+
+- 必须同时恢复代理与 RP 值，并保留所有者恢复方式
+:::
+
+## 下一步
+
+[安装: 首次启动和健康检查](/zh/install/first-start-health/)
+
+## 来源和状态
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- 来源和状态: `2026-07-14`
+- DiscVault Docs: `0.1.0`

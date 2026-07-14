@@ -1,0 +1,68 @@
+---
+title: 'iOS/iPadOS: Mindennapi használat és szinkronizálási korlátok'
+description: 'Feladatspecifikus útmutató: iOS/iPadOS: Mindennapi használat és szinkronizálási korlátok: SwiftData · App Lock · `/api/v1` · DiscVault.'
+pageId: 'ios-use-sync-limits'
+products: ['ios']
+platforms: ['ios']
+channels: ['beta']
+minVersion: 'iOS/iPadOS 17+'
+sourceRepos: ['helmerzNL/DiscVaultApp', 'helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="beta" platform="iOS" version="iOS/iPadOS 17+" source="helmerzNL/DiscVaultApp · helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Cél és eredmény
+
+Hajtsa végre az oldalhoz tartozó munkafolyamatot: **iOS/iPadOS: Mindennapi használat és szinkronizálási korlátok**. Ez az eljárás ezeket használja: SwiftData · App Lock · `/api/v1` · DiscVault.
+
+## Érvényesség
+
+Ez az oldal kizárólag erre vonatkozik: **iOS/iPadOS: Mindennapi használat és szinkronizálási korlátok** (iOS). A csatorna- és adathatárok: SwiftData · a tesztcím megmarad újraindítás és offline indítás után; `/api/v1` · forrásban ellenőrzött béta build; nyilvános áruházi állítás nélkül. Oldalspecifikus ellenőrzési pontok: SwiftData · App Lock · `/api/v1` · DiscVault.
+
+### Bétacsatorna
+
+- SwiftData · a tesztcím megmarad újraindítás és offline indítás után
+- `/api/v1` · forrásban ellenőrzött béta build; nyilvános áruházi állítás nélkül
+
+## Előfeltételek
+
+- SwiftData
+- kis eldobható tesztkönyvtár
+
+## Eljárás
+
+1. **Tesztelje:** Könyvtár → Keresés · Könyvtár → Hozzáadás → Vonalkód beolvasása / Kézi bevitel · repülőgép mód
+2. **Hozza létre:** helyi offline-first könyvtár · a tesztcím megmarad újraindítás és offline indítás után
+3. **Állítsa be:** Beállítások → Alkalmazászár · Beállítások → Kiszolgálókapcsolat
+4. **Hasonlítsa össze:** opcionális kiszolgálókapcsolat egy elemmel tesztelve · egy tesztelem egyezik helyben és a kiszolgálón, különben a szinkronizálás kikapcsolva marad
+
+
+
+## Várt eredmény
+
+Az eredmény csak ennél fogadható el: **iOS/iPadOS: Mindennapi használat és szinkronizálási korlátok** csak akkor, ha minden alábbi eredmény teljesül: a tesztcím megmarad újraindítás és offline indítás után; egy tesztelem egyezik helyben és a kiszolgálón, különben a szinkronizálás kikapcsolva marad. Oldalspecifikus ellenőrzési pontok: SwiftData · App Lock · `/api/v1` · DiscVault.
+
+- a tesztcím megmarad újraindítás és offline indítás után
+- egy tesztelem egyezik helyben és a kiszolgálón, különben a szinkronizálás kikapcsolva marad
+
+## Biztonság és visszaállítás
+
+:::caution
+A biztonságos helyreállítás határa ennél: **iOS/iPadOS: Mindennapi használat és szinkronizálási korlátok** ezeket a műveleteket igényli indítás vagy folytatás előtt: egy tesztelem egyezik helyben és a kiszolgálón, különben a szinkronizálás kikapcsolva marad · helyi offline-first könyvtár · `/api/v1`. Oldalspecifikus ellenőrzési pontok: SwiftData · App Lock · `/api/v1` · DiscVault.
+
+- egy tesztelem egyezik helyben és a kiszolgálón, különben a szinkronizálás kikapcsolva marad · helyi offline-first könyvtár · `/api/v1`
+:::
+
+## Következő lépés
+
+[Android: Beállítás](/hu/android/)
+
+## Forrás és állapot
+
+- [`helmerzNL/DiscVaultApp@9d15ab2a339c`](https://github.com/helmerzNL/DiscVaultApp/commit/9d15ab2a339cefdb164ec0ab29ad69ddabc511c1)
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Forrás és állapot: `2026-07-14`
+- DiscVault Docs: `0.1.0`

@@ -1,0 +1,78 @@
+---
+title: '구성: 플러그인 및 메타데이터'
+description: '작업별 안내: 구성: 플러그인 및 메타데이터: `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.'
+pageId: 'configure-plugins-metadata'
+products: ['server']
+platforms: ['web', 'docker']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="웹 · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## 목표 및 결과
+
+이 페이지 전용 절차를 수행합니다: **구성: 플러그인 및 메타데이터**. 이 절차에서 다루는 항목: `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.
+
+## 적용 대상
+
+이 페이지의 적용 범위: **구성: 플러그인 및 메타데이터** (웹 · Docker). 채널 및 데이터 경계: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26 · `/data/plugins`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26 · `/data/plugins`. 이 페이지의 전용 확인 지점: `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.
+
+### DiscVault v26 안정판
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault 26 · `/data/plugins`
+
+### DiscVault v26 베타
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault 26 · `/data/plugins`
+
+## 사전 요구 사항
+
+- 소유자 또는 관리자 세션
+- 비밀로 저장되는 공급자 자격 증명
+
+## 절차
+
+1. **검사:** `GET /api/next/plugins/registry`
+2. **구성:** 관리 → 플러그인 → 공급자 → 구성 · 비밀로 저장되는 공급자 자격 증명
+3. **테스트:** 관리 → 플러그인 → 상태 확인 · 관리 → 플러그인 → 저장 없이 검색 · `dryRun`
+4. **기록:** `secret app_settings`
+
+### 명령 및 설정
+
+#### 두 채널
+
+```bash
+curl --fail http://localhost:6080/api/next/plugins/registry
+curl --fail http://localhost:6080/api/next/metadata/plugins
+```
+
+## 예상 결과
+
+다음 결과의 승인 조건: **구성: 플러그인 및 메타데이터** 아래 결과가 모두 충족된 경우에만: 레지스트리에 공급자가 표시되고 상태 검사가 통과하며 드라이런이 예상 메타데이터 샘플을 반환함. 이 페이지의 전용 확인 지점: `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.
+
+- 레지스트리에 공급자가 표시되고 상태 검사가 통과하며 드라이런이 예상 메타데이터 샘플을 반환함
+
+## 안전 및 롤백
+
+:::caution
+안전한 복구 경계: **구성: 플러그인 및 메타데이터** 시작하거나 계속하기 전에 다음 작업이 필요합니다: 제거 전에 공급자를 비활성화하고 `/data/plugins`를 백업하며 노출된 자격 증명을 폐기함. 이 페이지의 전용 확인 지점: `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.
+
+- 제거 전에 공급자를 비활성화하고 `/data/plugins`를 백업하며 노출된 자격 증명을 폐기함
+:::
+
+## 다음 단계
+
+[통합: Plex 및 Jellyfin](/ko/integrations/plex-jellyfin/)
+
+## 출처 및 상태
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- 출처 및 상태: `2026-07-14`
+- DiscVault Docs: `0.1.0`

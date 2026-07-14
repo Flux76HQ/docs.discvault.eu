@@ -1,0 +1,91 @@
+---
+title: '連携: MCP と REST API'
+description: 'タスク別の手順: 連携: MCP と REST API: `streamable-http` · `/mcp` · `Authorization` · `6090`.'
+pageId: 'integrations-mcp-api'
+products: ['server']
+platforms: ['web', 'docker']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Web · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## 目的と結果
+
+このページ専用の手順を実行します: **連携: MCP と REST API**. この手順で扱う項目: `streamable-http` · `/mcp` · `Authorization` · `6090`.
+
+## 対象
+
+このページの対象は **連携: MCP と REST API** (Web · Docker). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/mcp` `6090` · REST API; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/mcp` `6090` · REST API. このページ固有の確認点: `streamable-http` · `/mcp` · `Authorization` · `6090`.
+
+### DiscVault v26 安定版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `/mcp` `6090` · REST API
+
+### DiscVault v26 ベータ版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `/mcp` `6090` · REST API
+
+## 前提条件
+
+- API
+- HTTPS DiscVault
+- MCP HTTP
+
+## 手順
+
+1. **作成:** API
+2. **設定:** `streamable-http` · `https://discvault.example.com/mcp`
+3. **テスト:** `Authorization`
+4. **失効:** `6090`
+
+### コマンドと設定
+
+#### 両方のチャンネル
+
+```json
+{
+  "mcpServers": {
+    "discvault": {
+      "transport": "streamable-http",
+      "url": "https://discvault.example.com/mcp",
+      "headers": { "Authorization": "******" }
+    }
+  }
+}
+```
+
+```bash
+curl --fail https://discvault.example.com/api/next/health
+```
+
+## 期待される結果
+
+次の結果を受け入れる条件: **連携: MCP と REST API** 以下の結果をすべて確認した場合のみ: DiscVault · `streamable-http` · `/mcp`; シークレットとして保存するプロバイダー資格情報 · `Authorization`. このページ固有の確認点: `streamable-http` · `/mcp` · `Authorization` · `6090`.
+
+- DiscVault · `streamable-http` · `/mcp`
+- シークレットとして保存するプロバイダー資格情報 · `Authorization`
+
+## 安全性とロールバック
+
+:::caution
+安全な復旧境界: **連携: MCP と REST API** 起動または続行の前に、次の操作が必要です: 連携を無効化し、テスト用または漏えいした資格情報を失効し、必要なら新規作成して古いものは再利用しません. このページ固有の確認点: `streamable-http` · `/mcp` · `Authorization` · `6090`.
+
+- 連携を無効化し、テスト用または漏えいした資格情報を失効し、必要なら新規作成して古いものは再利用しません
+:::
+
+## 次の手順
+
+[連携: Plex と Jellyfin](/ja/integrations/plex-jellyfin/)
+
+## 情報源と状態
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- 情報源と状態: `2026-07-14`
+- DiscVault Docs: `0.1.0`

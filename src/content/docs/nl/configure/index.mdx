@@ -1,0 +1,76 @@
+---
+title: 'Configureren: Overzicht'
+description: 'Taakspecifieke instructies voor Configureren: Overzicht: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.'
+pageId: 'configure-index'
+products: ['server']
+platforms: ['docker', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Doel en resultaat
+
+Voer de paginaspecifieke werkwijze uit voor **Configureren: Overzicht**. Deze werkwijze gebruikt `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+
+## Van toepassing op
+
+Deze pagina is uitsluitend van toepassing op **Configureren: Overzicht** (Docker · web). De kanaal- en gegevensgrenzen zijn: DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. Paginaspecifieke controlepunten: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+
+### DiscVault v26 stabiel
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- RBAC
+
+### DiscVault v26 bèta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- RBAC
+
+## Vereisten
+
+- eigenaarstoegang
+- `/configure/auth-rbac/`
+
+## Procedure
+
+1. **Kiezen:** [Configureren: Omgevingsvariabelen](/nl/configure/environment/)
+2. **Kiezen:** [Configureren: Authenticatie en RBAC](/nl/configure/auth-rbac/) · RBAC
+3. **Kiezen:** [Configureren: Plug-ins en metadata](/nl/configure/plugins-metadata/)
+4. **Vastleggen:** `/configure/environment/`
+
+### Taakroutes
+
+- [Configureren: Omgevingsvariabelen](/nl/configure/environment/) — `/configure/environment/`
+- [Configureren: Authenticatie en RBAC](/nl/configure/auth-rbac/) — DiscVault 26 RBAC
+- [Configureren: Plug-ins en metadata](/nl/configure/plugins-metadata/) — DiscVault 26
+
+## Verwacht resultaat
+
+Accepteer het resultaat voor **Configureren: Overzicht** alleen wanneer alle onderstaande resultaten kloppen: gekozen releasekanaal; `/configure/auth-rbac/`. Paginaspecifieke controlepunten: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+
+- gekozen releasekanaal
+- `/configure/auth-rbac/`
+
+## Veiligheid en terugdraaien
+
+:::caution
+De veilige herstelgrens voor **Configureren: Overzicht** vereist deze acties voordat iets start of doorgaat: wijzig één subsysteem tegelijk, bewaar de vorige waarde en back-up en draai terug vóór de volgende wijziging. Paginaspecifieke controlepunten: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+
+- wijzig één subsysteem tegelijk, bewaar de vorige waarde en back-up en draai terug vóór de volgende wijziging
+:::
+
+## Volgende stap
+
+[Configureren: Omgevingsvariabelen](/nl/configure/environment/)
+
+## Bron en status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Bron en status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

@@ -1,0 +1,82 @@
+---
+title: 'Integracje: Plex i Jellyfin'
+description: 'Instrukcja właściwa dla zadania: Integracje: Plex i Jellyfin: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.'
+pageId: 'integrations-plex-jellyfin'
+products: ['server']
+platforms: ['web', 'docker']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="web · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Cel i rezultat
+
+Wykonaj procedurę właściwą dla strony: **Integracje: Plex i Jellyfin**. Ta procedura korzysta z Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+## Dotyczy
+
+Ta strona dotyczy wyłącznie **Integracje: Plex i Jellyfin** (web · Docker). Granice kanału i danych: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26. Punkty kontrolne tej strony: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+### DiscVault v26 – stabilny
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault 26
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault 26
+
+## Wymagania wstępne
+
+- poświadczenie dostawcy zapisane jako sekret
+- Jellyfin
+- sesja właściciela lub administratora
+
+## Procedura
+
+1. **Skonfiguruj:** Administracja → Wtyczki → Dostawca → Konfiguruj · Plex Jellyfin
+2. **Przetestuj:** Administracja → Wtyczki → Kontrola stanu
+3. **Uruchom:** Administracja → Wtyczki → Wykryj bez zapisywania · `dryRun=true`
+4. **Porównaj:** `/api/next/digital-items?limit=200`
+
+### Polecenia i ustawienia
+
+#### Oba kanały
+
+```bash
+curl --fail http://localhost:6080/api/next/digital-sources
+curl --fail 'http://localhost:6080/api/next/digital-items?limit=200'
+```
+
+## Oczekiwany rezultat
+
+Zaakceptuj wynik dla **Integracje: Plex i Jellyfin** tylko gdy wszystkie poniższe wyniki są prawdziwe: Administracja → Wtyczki → Kontrola stanu; Administracja → Wtyczki → Wykryj bez zapisywania · `dryRun=true`; Plex · Jellyfin · `/api/next/digital-items`. Punkty kontrolne tej strony: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+- Administracja → Wtyczki → Kontrola stanu
+- Administracja → Wtyczki → Wykryj bez zapisywania · `dryRun=true`
+- Plex · Jellyfin · `/api/next/digital-items`
+
+## Bezpieczeństwo i wycofanie
+
+:::caution
+Bezpieczna granica odzyskiwania dla **Integracje: Plex i Jellyfin** wymaga tych działań przed uruchomieniem lub kontynuacją: wyłącz dostawcę przed usunięciem, wykonaj kopię `/data/plugins` i unieważnij ujawnione poświadczenia; wyłącz integrację, unieważnij testowe lub ujawnione poświadczenia, w razie potrzeby utwórz nowe i nigdy nie używaj starego ponownie. Punkty kontrolne tej strony: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+- wyłącz dostawcę przed usunięciem, wykonaj kopię `/data/plugins` i unieważnij ujawnione poświadczenia
+- wyłącz integrację, unieważnij testowe lub ujawnione poświadczenia, w razie potrzeby utwórz nowe i nigdy nie używaj starego ponownie
+:::
+
+## Następny krok
+
+[Rozwiązywanie problemów](/pl/troubleshooting/)
+
+## Źródło i stan
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Źródło i stan: `2026-07-14`
+- DiscVault Docs: `0.1.0`

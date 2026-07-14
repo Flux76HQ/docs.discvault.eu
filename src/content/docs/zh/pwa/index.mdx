@@ -1,0 +1,76 @@
+---
+title: 'PWA: 概览'
+description: '任务专用说明： PWA: 概览: PWA · HTTPS · `Service Worker` · `/pwa/offline/`.'
+pageId: 'pwa-index'
+products: ['pwa']
+platforms: ['web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="网页" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## 目标和结果
+
+完成此页面专用的流程： **PWA: 概览**. 此流程使用 PWA · HTTPS · `Service Worker` · `/pwa/offline/`.
+
+## 适用范围
+
+本页面仅适用于 **PWA: 概览** (网页). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; PWA; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PWA. 本页面专用检查点： PWA · HTTPS · `Service Worker` · `/pwa/offline/`.
+
+### DiscVault v26 稳定版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PWA
+
+### DiscVault v26 测试版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PWA
+
+## 前提条件
+
+- PWA
+- HTTPS DiscVault 26
+
+## 操作步骤
+
+1. **安装:** [PWA: 安装 PWA](/zh/pwa/install/) · HTTPS
+2. **打开:** [PWA: 媒体库和搜索](/zh/pwa/library-search/)
+3. **测试:** [PWA: 离线行为](/zh/pwa/offline/) · `Service Worker`
+4. **验证:** `/pwa/offline/`
+
+### 任务路径
+
+- [PWA: 安装 PWA](/zh/pwa/install/) — iOS/iPadOS Android
+- [PWA: 媒体库和搜索](/zh/pwa/library-search/) — HTTPS
+- [PWA: 离线行为](/zh/pwa/offline/) — Service Worker
+
+## 预期结果
+
+仅在以下条件下接受结果： **PWA: 概览** 必须确认以下所有结果： 地址栏 → 安装 DiscVault · 共享 → 添加到主屏幕 · 浏览器菜单 → 安装应用; 缓存页面可能可以打开，但新数据及写入操作需要网络. 本页面专用检查点： PWA · HTTPS · `Service Worker` · `/pwa/offline/`.
+
+- 地址栏 → 安装 DiscVault · 共享 → 添加到主屏幕 · 浏览器菜单 → 安装应用
+- 缓存页面可能可以打开，但新数据及写入操作需要网络
+
+## 安全与回滚
+
+:::caution
+安全恢复边界： **PWA: 概览** 在启动或继续任何操作前必须执行： 仅移除已安装的 PWA 外壳；服务器媒体库与账户数据保持不变. 本页面专用检查点： PWA · HTTPS · `Service Worker` · `/pwa/offline/`.
+
+- 仅移除已安装的 PWA 外壳；服务器媒体库与账户数据保持不变
+:::
+
+## 下一步
+
+[PWA: 安装 PWA](/zh/pwa/install/)
+
+## 来源和状态
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- 来源和状态: `2026-07-14`
+- DiscVault Docs: `0.1.0`

@@ -1,0 +1,85 @@
+---
+title: 'Installeren: Blijvende gegevens en PostgreSQL'
+description: 'Taakspecifieke instructies voor Installeren: Blijvende gegevens en PostgreSQL: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.'
+pageId: 'install-storage-postgresql'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Doel en resultaat
+
+Voer de paginaspecifieke werkwijze uit voor **Installeren: Blijvende gegevens en PostgreSQL**. Deze werkwijze gebruikt `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
+
+## Van toepassing op
+
+Deze pagina is uitsluitend van toepassing op **Installeren: Blijvende gegevens en PostgreSQL** (Docker · Unraid). De kanaal- en gegevensgrenzen zijn: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL; `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL; `/data`. Paginaspecifieke controlepunten: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
+
+### DiscVault v26 stabiel
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PostgreSQL
+- `/data`
+
+### DiscVault v26 bèta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PostgreSQL
+- `/data`
+
+## Vereisten
+
+- `DISCVAULT_POSTGRES_DATA`
+- back-updoel buiten het actieve gegevenspad
+- PostgreSQL `17`
+
+## Procedure
+
+1. **Controleren:** `DISCVAULT_POSTGRES_DATA` · `/var/lib/postgresql/data`
+2. **Controleren:** `DISCVAULT_DATA_DIR` · `/data`
+3. **Verifiëren:** `postgres` · `healthy` · `next-api`
+4. **Vastleggen:** PostgreSQL-dump en bestandsarchief uit hetzelfde schrijversstopvenster
+
+### Opdrachten en instellingen
+
+#### Beide kanalen
+
+```bash
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml ps
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml exec -T postgres sh -c 'pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"'
+docker inspect discvault-next-api-1 --format '{{range .Mounts}}{{.Source}} -> {{.Destination}}{{println}}{{end}}'
+```
+
+## Verwacht resultaat
+
+Accepteer het resultaat voor **Installeren: Blijvende gegevens en PostgreSQL** alleen wanneer alle onderstaande resultaten kloppen: PostgreSQL · `healthy`; `/data`; bijpassende back-upset. Paginaspecifieke controlepunten: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
+
+- PostgreSQL · `healthy`
+- `/data`
+- bijpassende back-upset
+
+## Veiligheid en terugdraaien
+
+:::caution
+De veilige herstelgrens voor **Installeren: Blijvende gegevens en PostgreSQL** vereist deze acties voordat iets start of doorgaat: PostgreSQL en `/data` zijn afzonderlijke opslaglocaties en vereisen één bijpassende back-upset; back-updoel buiten het actieve gegevenspad. Paginaspecifieke controlepunten: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
+
+- PostgreSQL en `/data` zijn afzonderlijke opslaglocaties en vereisen één bijpassende back-upset
+- back-updoel buiten het actieve gegevenspad
+:::
+
+## Volgende stap
+
+[Installeren: Reverse proxy en passkeys](/nl/install/reverse-proxy-passkeys/)
+
+## Bron en status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Bron en status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

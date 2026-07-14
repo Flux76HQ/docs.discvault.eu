@@ -1,0 +1,78 @@
+---
+title: 'Frissítés és migrálás: Áttekintés'
+description: 'Feladatspecifikus útmutató: Frissítés és migrálás: Áttekintés: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.'
+pageId: 'update-index'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Cél és eredmény
+
+Hajtsa végre az oldalhoz tartozó munkafolyamatot: **Frissítés és migrálás: Áttekintés**. Ez az eljárás ezeket használja: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+## Érvényesség
+
+Ez az oldal kizárólag erre vonatkozik: **Frissítés és migrálás: Áttekintés** (Docker · Unraid). A csatorna- és adathatárok: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/update/restore/`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/update/restore/`. Oldalspecifikus ellenőrzési pontok: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `/update/restore/`
+
+### DiscVault v26 – béta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `/update/restore/`
+
+## Előfeltételek
+
+- illeszkedő mentéskészlet
+- kiadási megjegyzések és rögzített változtathatatlan digest
+
+## Eljárás
+
+1. **Készítsen mentést:** [Frissítés és migrálás: Biztonsági mentés](/hu/update/backup/) · illeszkedő mentéskészlet
+2. **Tesztelje:** [Frissítés és migrálás: Visszaállítás](/hu/update/restore/)
+3. **Futtassa:** [Frissítés és migrálás: Konténerfrissítés](/hu/update/update/) · `DISCVAULT_IMAGE`
+4. **Őrizze meg:** [Frissítés és migrálás: Lemezkép visszaállítása](/hu/update/rollback/)
+
+### Feladatútvonalak
+
+- [Frissítés és migrálás: Biztonsági mentés](/hu/update/backup/) — 1 PostgreSQL
+- [Frissítés és migrálás: Visszaállítás](/hu/update/restore/) — 2
+- [Frissítés és migrálás: Konténerfrissítés](/hu/update/update/) — 3
+- [Frissítés és migrálás: Lemezkép visszaállítása](/hu/update/rollback/) — 4
+
+## Várt eredmény
+
+Az eredmény csak ennél fogadható el: **Frissítés és migrálás: Áttekintés** csak akkor, ha minden alábbi eredmény teljesül: az archívum és dump nem üres, próba-visszaállításkor olvasható, és változtathatatlan image-digesthez kötött; a kívánt image-digest fut, az állapot egészséges, és a tulajdonosi bejelentkezés, darabszám és médiaminta sikeres. Oldalspecifikus ellenőrzési pontok: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+- az archívum és dump nem üres, próba-visszaállításkor olvasható, és változtathatatlan image-digesthez kötött
+- a kívánt image-digest fut, az állapot egészséges, és a tulajdonosi bejelentkezés, darabszám és médiaminta sikeres
+
+## Biztonság és visszaállítás
+
+:::caution
+A biztonságos helyreállítás határa ennél: **Frissítés és migrálás: Áttekintés** ezeket a műveleteket igényli indítás vagy folytatás előtt: illeszkedő mentéskészlet; `PREVIOUS_IMAGE` · `@sha256:`. Oldalspecifikus ellenőrzési pontok: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+- illeszkedő mentéskészlet
+- `PREVIOUS_IMAGE` · `@sha256:`
+:::
+
+## Következő lépés
+
+[Frissítés és migrálás: Biztonsági mentés](/hu/update/backup/)
+
+## Forrás és állapot
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Forrás és állapot: `2026-07-14`
+- DiscVault Docs: `0.1.0`

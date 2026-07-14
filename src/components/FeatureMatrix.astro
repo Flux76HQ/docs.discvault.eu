@@ -1,0 +1,34 @@
+---
+import featureData from '../data/feature-status/features.json';
+import StatusBadge from './StatusBadge.astro';
+
+type Status = 'stable' | 'beta' | 'limited' | 'roadmap' | 'unavailable';
+const status = (value: string) => value as Status;
+---
+
+<div class="feature-table">
+  <table>
+    <thead><tr><th>ID</th><th>PWA</th><th>iOS</th><th>Android</th></tr></thead>
+    <tbody>
+      {
+        featureData.features.map((feature) => (
+          <tr>
+            <th scope="row">
+              <code>{feature.id}</code>
+            </th>
+            <td>
+              <StatusBadge status={status(feature.pwa)} />
+            </td>
+            <td>
+              <StatusBadge status={status(feature.ios)} />
+            </td>
+            <td>
+              <StatusBadge status={status(feature.android)} />
+            </td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>
+<small><code>src/data/feature-status/features.json</code></small>

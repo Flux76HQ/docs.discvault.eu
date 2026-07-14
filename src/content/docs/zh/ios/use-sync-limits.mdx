@@ -1,0 +1,68 @@
+---
+title: 'iOS/iPadOS: 日常使用和同步限制'
+description: '任务专用说明： iOS/iPadOS: 日常使用和同步限制: SwiftData · App Lock · `/api/v1` · DiscVault.'
+pageId: 'ios-use-sync-limits'
+products: ['ios']
+platforms: ['ios']
+channels: ['beta']
+minVersion: 'iOS/iPadOS 17+'
+sourceRepos: ['helmerzNL/DiscVaultApp', 'helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="beta" platform="iOS" version="iOS/iPadOS 17+" source="helmerzNL/DiscVaultApp · helmerzNL/DiscVault" verified="2026-07-14" />
+
+## 目标和结果
+
+完成此页面专用的流程： **iOS/iPadOS: 日常使用和同步限制**. 此流程使用 SwiftData · App Lock · `/api/v1` · DiscVault.
+
+## 适用范围
+
+本页面仅适用于 **iOS/iPadOS: 日常使用和同步限制** (iOS). 通道与数据边界为： SwiftData · 测试条目在应用重启及离线启动后仍然存在; `/api/v1` · 经源码验证的测试版构建；不宣称已在公共商店发布. 本页面专用检查点： SwiftData · App Lock · `/api/v1` · DiscVault.
+
+### 测试版通道
+
+- SwiftData · 测试条目在应用重启及离线启动后仍然存在
+- `/api/v1` · 经源码验证的测试版构建；不宣称已在公共商店发布
+
+## 前提条件
+
+- SwiftData
+- 可随时删除的小型测试媒体库
+
+## 操作步骤
+
+1. **测试:** 媒体库 → 搜索 · 媒体库 → 添加 → 扫描条码 / 手动输入 · 飞行模式
+2. **创建:** 离线优先的本地媒体库 · 测试条目在应用重启及离线启动后仍然存在
+3. **配置:** 设置 → 应用锁 · 设置 → 服务器连接
+4. **比较:** 仅用一个条目测试的可选服务器连接 · 一个测试条目在本地与服务器端一致，否则保持同步禁用
+
+
+
+## 预期结果
+
+仅在以下条件下接受结果： **iOS/iPadOS: 日常使用和同步限制** 必须确认以下所有结果： 测试条目在应用重启及离线启动后仍然存在; 一个测试条目在本地与服务器端一致，否则保持同步禁用. 本页面专用检查点： SwiftData · App Lock · `/api/v1` · DiscVault.
+
+- 测试条目在应用重启及离线启动后仍然存在
+- 一个测试条目在本地与服务器端一致，否则保持同步禁用
+
+## 安全与回滚
+
+:::caution
+安全恢复边界： **iOS/iPadOS: 日常使用和同步限制** 在启动或继续任何操作前必须执行： 一个测试条目在本地与服务器端一致，否则保持同步禁用 · 离线优先的本地媒体库 · `/api/v1`. 本页面专用检查点： SwiftData · App Lock · `/api/v1` · DiscVault.
+
+- 一个测试条目在本地与服务器端一致，否则保持同步禁用 · 离线优先的本地媒体库 · `/api/v1`
+:::
+
+## 下一步
+
+[Android: 设置](/zh/android/)
+
+## 来源和状态
+
+- [`helmerzNL/DiscVaultApp@9d15ab2a339c`](https://github.com/helmerzNL/DiscVaultApp/commit/9d15ab2a339cefdb164ec0ab29ad69ddabc511c1)
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- 来源和状态: `2026-07-14`
+- DiscVault Docs: `0.1.0`

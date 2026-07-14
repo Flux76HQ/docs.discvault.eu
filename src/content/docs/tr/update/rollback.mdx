@@ -1,0 +1,115 @@
+---
+title: 'Güncelleme ve geçiş: İmajı geri alma'
+description: 'Göreve özel yönergeler: Güncelleme ve geçiş: İmajı geri alma: `PREVIOUS_IMAGE` · `pg_restore --exit-on-error` · `discvault.failed-` · `DISCVAULT_IMAGE`.'
+pageId: 'update-rollback'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Amaç ve sonuç
+
+Sayfaya özel iş akışını tamamlayın: **Güncelleme ve geçiş: İmajı geri alma**. Bu prosedür şunları kullanır: `PREVIOUS_IMAGE` · `pg_restore --exit-on-error` · `discvault.failed-` · `DISCVAULT_IMAGE`.
+
+## Geçerli olduğu alan
+
+Bu sayfa yalnızca şunlar için geçerlidir: **Güncelleme ve geçiş: İmajı geri alma** (Docker · Unraid). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault:latest`; önceki imajı başlatmadan önce eşleşen verileri geri yükleyin; PostgreSQL `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; önceki imajı başlatmadan önce eşleşen verileri geri yükleyin; PostgreSQL `/data`. Sayfaya özel denetim noktaları: `PREVIOUS_IMAGE` · `pg_restore --exit-on-error` · `discvault.failed-` · `DISCVAULT_IMAGE`.
+
+### DiscVault v26 kararlı
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- önceki imajı başlatmadan önce eşleşen verileri geri yükleyin
+- PostgreSQL `/data`
+
+### DiscVault v26 beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- önceki imajı başlatmadan önce eşleşen verileri geri yükleyin
+- PostgreSQL `/data`
+
+## Ön koşullar
+
+- eşleşen yedek kümesi
+- `PREVIOUS_IMAGE`
+
+## Prosedür
+
+1. **Durdurun:** `next-api` `next-worker` `next-mcp`
+2. **Geri yükleyin:** `/data`
+3. **Geri yükleyin:** PostgreSQL · `pg_restore --exit-on-error`
+4. **Başlatın:** `PREVIOUS_IMAGE` → API → MCP
+
+### Komutlar ve ayarlar
+
+#### Her iki kanal
+
+```bash
+set -euo pipefail
+BACKUP_ID=20260714T180000Z
+cd /opt/discvault
+. "/srv/backups/discvault-$BACKUP_ID.env"
+test -n "$PREVIOUS_IMAGE"
+export DISCVAULT_IMAGE="$PREVIOUS_IMAGE"
+docker pull "$DISCVAULT_IMAGE"
+ENV_FILE=/opt/discvault/.env
+ENV_TMP="$(mktemp "$ENV_FILE.restore.XXXXXX")"
+trap 'rm -f "$ENV_TMP"' EXIT
+awk -v image="$DISCVAULT_IMAGE" '
+  /^DISCVAULT_IMAGE=/ { print "DISCVAULT_IMAGE=" image; found=1; next }
+  { print }
+  END { if (!found) exit 42 }
+' "$ENV_FILE" > "$ENV_TMP"
+chmod 0600 "$ENV_TMP"
+docker compose --env-file .env -p discvault -f compose.yaml stop next-worker next-mcp next-api
+mv /srv/discvault "/srv/discvault.failed-$(date -u +%Y%m%dT%H%M%SZ)"
+tar --acls --xattrs -C /srv -xzf \
+  "/srv/backups/discvault-data-$BACKUP_ID.tgz"
+docker compose --env-file .env -p discvault -f compose.yaml up -d postgres
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'dropdb --if-exists --force -U "$POSTGRES_USER" "$POSTGRES_DB"'
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'createdb -U "$POSTGRES_USER" "$POSTGRES_DB"'
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'pg_restore --exit-on-error --no-owner -U "$POSTGRES_USER" -d "$POSTGRES_DB"' \
+  < "/srv/backups/discvault-$BACKUP_ID.dump"
+docker compose --env-file .env -p discvault -f compose.yaml up -d --force-recreate next-api
+curl --fail http://localhost:6080/api/next/health
+docker compose --env-file .env -p discvault -f compose.yaml \
+  up -d --force-recreate next-worker next-mcp
+docker compose --env-file .env -p discvault -f compose.yaml ps
+mv "$ENV_TMP" "$ENV_FILE"
+trap - EXIT
+```
+
+## Beklenen sonuç
+
+Şunun sonucunu kabul edin: **Güncelleme ve geçiş: İmajı geri alma** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: `PREVIOUS_IMAGE` · `@sha256:`; önceki imajı başlatmadan önce eşleşen verileri geri yükleyin; kitaplık sayıları ve medya örneği seçilen yedekle eşleşir. Sayfaya özel denetim noktaları: `PREVIOUS_IMAGE` · `pg_restore --exit-on-error` · `discvault.failed-` · `DISCVAULT_IMAGE`.
+
+- `PREVIOUS_IMAGE` · `@sha256:`
+- önceki imajı başlatmadan önce eşleşen verileri geri yükleyin
+- kitaplık sayıları ve medya örneği seçilen yedekle eşleşir
+
+## Güvenlik ve geri alma
+
+:::caution
+Şunun güvenli kurtarma sınırı: **Güncelleme ve geçiş: İmajı geri alma** başlatmadan veya devam etmeden önce şu işlemleri gerektirir: dosya çıkarma veya pg_restore başarısız olursa kapsayıcıyı, API’yi, worker’ları ve MCP’yi durdurulmuş tutun; dokunulmamış yedek kopyalardan yeniden deneyin. Sayfaya özel denetim noktaları: `PREVIOUS_IMAGE` · `pg_restore --exit-on-error` · `discvault.failed-` · `DISCVAULT_IMAGE`.
+
+- dosya çıkarma veya pg_restore başarısız olursa kapsayıcıyı, API’yi, worker’ları ve MCP’yi durdurulmuş tutun; dokunulmamış yedek kopyalardan yeniden deneyin
+:::
+
+## Sonraki adım
+
+[Güncelleme ve geçiş: DiscVault 26 geçişi](/tr/update/migration/)
+
+## Kaynak ve durum
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Kaynak ve durum: `2026-07-14`
+- DiscVault Docs: `0.1.0`

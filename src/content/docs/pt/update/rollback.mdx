@@ -1,0 +1,115 @@
+---
+title: 'Atualização e migração: Reversão da imagem'
+description: 'Instruções específicas para Atualização e migração: Reversão da imagem: `PREVIOUS_IMAGE` · `pg_restore --exit-on-error` · `discvault.failed-` · `DISCVAULT_IMAGE`.'
+pageId: 'update-rollback'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Objetivo e resultado
+
+Conclua o procedimento específico da página para **Atualização e migração: Reversão da imagem**. Este procedimento utiliza `PREVIOUS_IMAGE` · `pg_restore --exit-on-error` · `discvault.failed-` · `DISCVAULT_IMAGE`.
+
+## Aplicável a
+
+Esta página aplica-se apenas a **Atualização e migração: Reversão da imagem** (Docker · Unraid). Os limites de canal e dados são: DiscVault · `ghcr.io/helmerznl/discvault:latest`; restaure os dados correspondentes antes de iniciar a imagem anterior; PostgreSQL `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; restaure os dados correspondentes antes de iniciar a imagem anterior; PostgreSQL `/data`. Pontos de controlo desta página: `PREVIOUS_IMAGE` · `pg_restore --exit-on-error` · `discvault.failed-` · `DISCVAULT_IMAGE`.
+
+### DiscVault v26 estável
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- restaure os dados correspondentes antes de iniciar a imagem anterior
+- PostgreSQL `/data`
+
+### DiscVault v26 beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- restaure os dados correspondentes antes de iniciar a imagem anterior
+- PostgreSQL `/data`
+
+## Pré-requisitos
+
+- conjunto de cópias correspondente
+- `PREVIOUS_IMAGE`
+
+## Procedimento
+
+1. **Parar:** `next-api` `next-worker` `next-mcp`
+2. **Restaurar:** `/data`
+3. **Restaurar:** PostgreSQL · `pg_restore --exit-on-error`
+4. **Iniciar:** `PREVIOUS_IMAGE` → API → MCP
+
+### Comandos e definições
+
+#### Ambos os canais
+
+```bash
+set -euo pipefail
+BACKUP_ID=20260714T180000Z
+cd /opt/discvault
+. "/srv/backups/discvault-$BACKUP_ID.env"
+test -n "$PREVIOUS_IMAGE"
+export DISCVAULT_IMAGE="$PREVIOUS_IMAGE"
+docker pull "$DISCVAULT_IMAGE"
+ENV_FILE=/opt/discvault/.env
+ENV_TMP="$(mktemp "$ENV_FILE.restore.XXXXXX")"
+trap 'rm -f "$ENV_TMP"' EXIT
+awk -v image="$DISCVAULT_IMAGE" '
+  /^DISCVAULT_IMAGE=/ { print "DISCVAULT_IMAGE=" image; found=1; next }
+  { print }
+  END { if (!found) exit 42 }
+' "$ENV_FILE" > "$ENV_TMP"
+chmod 0600 "$ENV_TMP"
+docker compose --env-file .env -p discvault -f compose.yaml stop next-worker next-mcp next-api
+mv /srv/discvault "/srv/discvault.failed-$(date -u +%Y%m%dT%H%M%SZ)"
+tar --acls --xattrs -C /srv -xzf \
+  "/srv/backups/discvault-data-$BACKUP_ID.tgz"
+docker compose --env-file .env -p discvault -f compose.yaml up -d postgres
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'dropdb --if-exists --force -U "$POSTGRES_USER" "$POSTGRES_DB"'
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'createdb -U "$POSTGRES_USER" "$POSTGRES_DB"'
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'pg_restore --exit-on-error --no-owner -U "$POSTGRES_USER" -d "$POSTGRES_DB"' \
+  < "/srv/backups/discvault-$BACKUP_ID.dump"
+docker compose --env-file .env -p discvault -f compose.yaml up -d --force-recreate next-api
+curl --fail http://localhost:6080/api/next/health
+docker compose --env-file .env -p discvault -f compose.yaml \
+  up -d --force-recreate next-worker next-mcp
+docker compose --env-file .env -p discvault -f compose.yaml ps
+mv "$ENV_TMP" "$ENV_FILE"
+trap - EXIT
+```
+
+## Resultado esperado
+
+Aceite o resultado de **Atualização e migração: Reversão da imagem** apenas quando todos os resultados abaixo forem confirmados: `PREVIOUS_IMAGE` · `@sha256:`; restaure os dados correspondentes antes de iniciar a imagem anterior; as contagens e a amostra multimédia correspondem à cópia selecionada. Pontos de controlo desta página: `PREVIOUS_IMAGE` · `pg_restore --exit-on-error` · `discvault.failed-` · `DISCVAULT_IMAGE`.
+
+- `PREVIOUS_IMAGE` · `@sha256:`
+- restaure os dados correspondentes antes de iniciar a imagem anterior
+- as contagens e a amostra multimédia correspondem à cópia selecionada
+
+## Segurança e reversão
+
+:::caution
+O limite de recuperação segura de **Atualização e migração: Reversão da imagem** exige estas ações antes de iniciar ou continuar: se a extração dos ficheiros ou pg_restore falhar, mantenha o contentor, a API, os workers e o MCP parados; repita a partir de cópias intactas. Pontos de controlo desta página: `PREVIOUS_IMAGE` · `pg_restore --exit-on-error` · `discvault.failed-` · `DISCVAULT_IMAGE`.
+
+- se a extração dos ficheiros ou pg_restore falhar, mantenha o contentor, a API, os workers e o MCP parados; repita a partir de cópias intactas
+:::
+
+## Próximo passo
+
+[Atualização e migração: Migração para DiscVault 26](/pt/update/migration/)
+
+## Fonte e estado
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Fonte e estado: `2026-07-14`
+- DiscVault Docs: `0.1.0`

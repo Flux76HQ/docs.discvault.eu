@@ -1,0 +1,140 @@
+---
+import StatusBadge from './StatusBadge.astro';
+import { currentLocale, labels } from '../data/localized-ui';
+
+const translatedLocales = [
+  'cs',
+  'da',
+  'de',
+  'el',
+  'es',
+  'fi',
+  'fr',
+  'hu',
+  'it',
+  'ja',
+  'ko',
+  'nl',
+  'no',
+  'pl',
+  'pt',
+  'sv',
+  'tr',
+  'uk',
+  'zh',
+];
+const locale = Astro.url.pathname.split('/').filter(Boolean)[0];
+const prefix = translatedLocales.includes(locale) ? `/${locale}` : '';
+const ui = labels[currentLocale(Astro.url.pathname)];
+const searchText =
+  {
+    cs: 'Hledat v dokumentaci DiscVault',
+    da: 'Søg i DiscVault-dokumentationen',
+    de: 'DiscVault-Dokumentation durchsuchen',
+    el: 'Αναζήτηση στην τεκμηρίωση DiscVault',
+    es: 'Buscar en la documentación de DiscVault',
+    fi: 'Hae DiscVault-ohjeista',
+    fr: 'Rechercher dans la documentation DiscVault',
+    hu: 'Keresés a DiscVault dokumentációban',
+    it: 'Cerca nella documentazione DiscVault',
+    ja: 'DiscVault ドキュメントを検索',
+    ko: 'DiscVault 문서 검색',
+    nl: 'DiscVault-documentatie doorzoeken',
+    no: 'Søk i DiscVault-dokumentasjonen',
+    pl: 'Przeszukaj dokumentację DiscVault',
+    pt: 'Pesquisar na documentação do DiscVault',
+    sv: 'Sök i DiscVault-dokumentationen',
+    tr: 'DiscVault belgelerinde ara',
+    uk: 'Пошук у документації DiscVault',
+    zh: '搜索 DiscVault 文档',
+  }[locale] ?? 'Search DiscVault documentation';
+const serverText =
+  {
+    cs: 'Server',
+    da: 'Server',
+    de: 'Server',
+    el: 'Διακομιστής',
+    es: 'Servidor',
+    fi: 'Palvelin',
+    fr: 'Serveur',
+    hu: 'Kiszolgáló',
+    it: 'Server',
+    ja: 'サーバー',
+    ko: '서버',
+    nl: 'Server',
+    no: 'Server',
+    pl: 'Serwer',
+    pt: 'Servidor',
+    sv: 'Server',
+    tr: 'Sunucu',
+    uk: 'Сервер',
+    zh: '服务器',
+  }[locale] ?? 'Server';
+const routes = [
+  {
+    icon: '◉',
+    title: serverText,
+    description: 'Docker · PostgreSQL · HTTPS',
+    href: '/install/',
+    statuses: [
+      { status: 'stable', label: ui.v26Stable },
+      { status: 'beta', label: ui.v26Beta },
+    ],
+  },
+  {
+    icon: '◇',
+    title: 'PWA',
+    description: 'PWA',
+    href: '/pwa/',
+    statuses: [
+      { status: 'stable', label: ui.v26Stable },
+      { status: 'beta', label: ui.v26Beta },
+    ],
+  },
+  {
+    icon: '◫',
+    title: 'iOS',
+    description: 'iOS/iPadOS 17+',
+    href: '/ios/',
+    statuses: [{ status: 'beta', label: ui.beta }],
+  },
+  {
+    icon: '△',
+    title: 'Android',
+    description: 'Android API 26+',
+    href: '/android/',
+    statuses: [{ status: 'beta', label: ui.beta }],
+  },
+] as const;
+---
+
+<div class="search-launch">
+  <button type="button" id="home-search"
+    ><span aria-hidden="true">⌕</span>
+    <span>{searchText}</span><kbd aria-hidden="true">/</kbd></button
+  >
+</div>
+<div class="route-grid">
+  {
+    routes.map((route) => (
+      <a href={`${prefix}${route.href}`}>
+        <span class="route-icon" aria-hidden="true">
+          {route.icon}
+        </span>
+        <strong>{route.title}</strong>
+        <span class="route-description">{route.description}</span>
+        <span class="route-status">
+          {route.statuses.map(({ status, label }) => (
+            <StatusBadge status={status} label={label} />
+          ))}
+        </span>
+      </a>
+    ))
+  }
+</div>
+<script>
+  document.querySelector('#home-search')?.addEventListener('click', () => {
+    const search = document.querySelector('button[data-open-modal]');
+    if (search instanceof HTMLButtonElement) search.click();
+  });
+</script>

@@ -1,0 +1,74 @@
+---
+title: 'Viite'
+description: 'Tehtäväkohtaiset ohjeet: Viite: `:latest` · `:beta` · `:dev` · `6080:5000`.'
+pageId: 'reference-index'
+products: ['server', 'pwa', 'ios', 'android']
+platforms: ['all']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="kaikki alustat" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Tavoite ja tulos
+
+Suorita sivukohtainen työnkulku: **Viite**. Tässä menettelyssä käytetään `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+## Koskee
+
+Tämä sivu koskee vain kohdetta **Viite** (kaikki alustat). Kanava- ja tietorajat ovat: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`. Sivukohtaiset tarkistuspisteet: `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+### DiscVault v26 – vakaa
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PostgreSQL `/data`
+- API `6080:5000` MCP `6090:6090`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PostgreSQL `/data`
+- API `6080:5000` MCP `6090:6090`
+
+## Edellytykset
+
+- valittu julkaisukanava
+
+## Toimenpiteet
+
+1. **Tarkista:** `:latest` `:beta`
+2. **Kirjaa:** `:dev` on vain kehitystyöhön eikä ole julkaisukanava; vakaa DiscVault v26 käyttää `:latest`-tagia ja beta `:beta`-tagia · `:dev`
+3. **Kirjaa:** `/api/next/health`
+4. **Kirjaa:** PostgreSQL `/data`
+
+
+
+## Odotettu tulos
+
+Hyväksy tulos kohteelle **Viite** vain kun kaikki seuraavat tulokset toteutuvat: valittu julkaisukanava · `@sha256:`; `:latest` · `:beta` · `:dev`. Sivukohtaiset tarkistuspisteet: `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+- valittu julkaisukanava · `@sha256:`
+- `:latest` · `:beta` · `:dev`
+
+## Turvallisuus ja palautus
+
+:::caution
+Turvallinen palautusraja kohteelle **Viite** edellyttää näitä toimia ennen käynnistystä tai jatkamista: viite on vain luku -muotoinen; käytä kohdistettua menettelyä ennen komentoja tai tietomuutoksia; `:dev` on vain kehitystyöhön eikä ole julkaisukanava; vakaa DiscVault v26 käyttää `:latest`-tagia ja beta `:beta`-tagia · `:dev`. Sivukohtaiset tarkistuspisteet: `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+- viite on vain luku -muotoinen; käytä kohdistettua menettelyä ennen komentoja tai tietomuutoksia
+- `:dev` on vain kehitystyöhön eikä ole julkaisukanava; vakaa DiscVault v26 käyttää `:latest`-tagia ja beta `:beta`-tagia · `:dev`
+:::
+
+## Seuraava vaihe
+
+[Aloitus: Yleiskatsaus](/fi/start/)
+
+## Lähde ja tila
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Lähde ja tila: `2026-07-14`
+- DiscVault Docs: `0.1.0`

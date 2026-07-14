@@ -1,0 +1,83 @@
+---
+title: 'Εγκατάσταση: Αντίστροφος διακομιστής μεσολάβησης και κλειδιά πρόσβασης'
+description: 'Οδηγίες ειδικά για την εργασία: Εγκατάσταση: Αντίστροφος διακομιστής μεσολάβησης και κλειδιά πρόσβασης: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.'
+pageId: 'install-reverse-proxy-passkeys'
+products: ['server']
+platforms: ['docker', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · ιστός" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Στόχος και αποτέλεσμα
+
+Ολοκληρώστε τη ροή εργασίας της σελίδας για **Εγκατάσταση: Αντίστροφος διακομιστής μεσολάβησης και κλειδιά πρόσβασης**. Η διαδικασία χρησιμοποιεί `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+
+## Ισχύει για
+
+Αυτή η σελίδα ισχύει μόνο για **Εγκατάσταση: Αντίστροφος διακομιστής μεσολάβησης και κλειδιά πρόσβασης** (Docker · ιστός). Τα όρια καναλιού και δεδομένων είναι: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`. Σημεία ελέγχου της σελίδας: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+
+### DiscVault v26 – σταθερό
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `RP_ID` `RP_ORIGINS`
+- `6080` API `5000`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `RP_ID` `RP_ORIGINS`
+- `6080` API `5000`
+
+## Προϋποθέσεις
+
+- DNS
+- TLS
+- `6080`
+
+## Διαδικασία
+
+1. **Ρυθμίστε:** `RP_ID`
+2. **Ρυθμίστε:** `RP_ORIGINS` · HTTPS
+3. **Ρυθμίστε:** `http://127.0.0.1:6080`
+4. **Δοκιμάστε:** `GET /api/next/health`
+
+### Εντολές και ρυθμίσεις
+
+#### Και τα δύο κανάλια
+
+```text
+RP_ID=discvault.example.com
+RP_ORIGINS=https://discvault.example.com
+curl --fail https://discvault.example.com/api/next/health
+```
+
+## Αναμενόμενο αποτέλεσμα
+
+Αποδεχθείτε το αποτέλεσμα για **Εγκατάσταση: Αντίστροφος διακομιστής μεσολάβησης και κλειδιά πρόσβασης** μόνο όταν ισχύουν όλα τα παρακάτω αποτελέσματα: HTTPS · HTTP `2xx`; `RP_ID`. Σημεία ελέγχου της σελίδας: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+
+- HTTPS · HTTP `2xx`
+- `RP_ID`
+
+## Ασφάλεια και επαναφορά
+
+:::caution
+Το ασφαλές όριο ανάκτησης για **Εγκατάσταση: Αντίστροφος διακομιστής μεσολάβησης και κλειδιά πρόσβασης** απαιτεί αυτές τις ενέργειες πριν από κάθε εκκίνηση ή συνέχεια: επαναφέρετε μαζί τις τιμές proxy και RP και διατηρήστε μέθοδο ανάκτησης κατόχου. Σημεία ελέγχου της σελίδας: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+
+- επαναφέρετε μαζί τις τιμές proxy και RP και διατηρήστε μέθοδο ανάκτησης κατόχου
+:::
+
+## Επόμενο βήμα
+
+[Εγκατάσταση: Πρώτη εκκίνηση και έλεγχος υγείας](/el/install/first-start-health/)
+
+## Πηγή και κατάσταση
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Πηγή και κατάσταση: `2026-07-14`
+- DiscVault Docs: `0.1.0`

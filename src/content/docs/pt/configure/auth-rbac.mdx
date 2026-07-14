@@ -1,0 +1,79 @@
+---
+title: 'Configuração: Autenticação e RBAC'
+description: 'Instruções específicas para Configuração: Autenticação e RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.'
+pageId: 'configure-auth-rbac'
+products: ['server']
+platforms: ['web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Objetivo e resultado
+
+Conclua o procedimento específico da página para **Configuração: Autenticação e RBAC**. Este procedimento utiliza `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+
+## Aplicável a
+
+Esta página aplica-se apenas a **Configuração: Autenticação e RBAC** (web). Os limites de canal e dados são: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn. Pontos de controlo desta página: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+
+### DiscVault v26 estável
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- WebAuthn
+
+### DiscVault v26 beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- WebAuthn
+
+## Pré-requisitos
+
+- acesso de proprietário
+- HTTPS
+- segundo método de recuperação
+
+## Procedimento
+
+1. **Abrir:** Administração → Segurança → Ativar autenticação
+2. **Criar:** Administração → Utilizadores → Criar convite de 48 horas
+3. **Configurar:** Administração → Funções → Básico / Avançado
+4. **Testar:** `48 h`
+
+### Comandos e definições
+
+#### Ambos os canais
+
+```bash
+curl --fail http://localhost:6080/api/next/auth/status
+curl --fail http://localhost:6080/api/next/auth/rbac
+```
+
+## Resultado esperado
+
+Aceite o resultado de **Configuração: Autenticação e RBAC** apenas quando todos os resultados abaixo forem confirmados: o login do proprietário com passkey funciona, o registo por convite segue a definição e o utilizador de teste tem apenas as permissões atribuídas. Pontos de controlo desta página: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+
+- o login do proprietário com passkey funciona, o registo por convite segue a definição e o utilizador de teste tem apenas as permissões atribuídas
+
+## Segurança e reversão
+
+:::caution
+O limite de recuperação segura de **Configuração: Autenticação e RBAC** exige estas ações antes de iniciar ou continuar: mantenha a sessão do proprietário e um segundo método; nunca remova a última passkey do proprietário. Pontos de controlo desta página: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+
+- mantenha a sessão do proprietário e um segundo método; nunca remova a última passkey do proprietário
+:::
+
+## Próximo passo
+
+[Configuração: Extensões e metadados](/pt/configure/plugins-metadata/)
+
+## Fonte e estado
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Fonte e estado: `2026-07-14`
+- DiscVault Docs: `0.1.0`

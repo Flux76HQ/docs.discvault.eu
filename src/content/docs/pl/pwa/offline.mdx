@@ -1,0 +1,72 @@
+---
+title: 'PWA: Działanie offline'
+description: 'Instrukcja właściwa dla zadania: PWA: Działanie offline: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.'
+pageId: 'pwa-offline'
+products: ['pwa']
+platforms: ['web', 'ios', 'android']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="web · iOS · Android" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Cel i rezultat
+
+Wykonaj procedurę właściwą dla strony: **PWA: Działanie offline**. Ta procedura korzysta z `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+## Dotyczy
+
+Ta strona dotyczy wyłącznie **PWA: Działanie offline** (web · iOS · Android). Granice kanału i danych: DiscVault · `ghcr.io/helmerznl/discvault:latest`; widoki z pamięci mogą się otworzyć, lecz nowe dane i zapis wymagają sieci · `Service Worker` · `CacheStorage`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; widoki z pamięci mogą się otworzyć, lecz nowe dane i zapis wymagają sieci · `Service Worker` · `CacheStorage`. Punkty kontrolne tej strony: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+### DiscVault v26 – stabilny
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- widoki z pamięci mogą się otworzyć, lecz nowe dane i zapis wymagają sieci · `Service Worker` · `CacheStorage`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- widoki z pamięci mogą się otworzyć, lecz nowe dane i zapis wymagają sieci · `Service Worker` · `CacheStorage`
+
+## Wymagania wstępne
+
+- PWA
+- `CacheStorage`
+
+## Procedura
+
+1. **Otwórz:** Biblioteka → Szukaj
+2. **Przetestuj:** tryb samolotowy · `Service Worker`
+3. **Zapisz:** `navigator.onLine`
+4. **Połącz ponownie:** HTTPS
+
+
+
+## Oczekiwany rezultat
+
+Zaakceptuj wynik dla **PWA: Działanie offline** tylko gdy wszystkie poniższe wyniki są prawdziwe: widoki z pamięci mogą się otworzyć, lecz nowe dane i zapis wymagają sieci; `Service Worker` · `navigator.onLine`. Punkty kontrolne tej strony: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+- widoki z pamięci mogą się otworzyć, lecz nowe dane i zapis wymagają sieci
+- `Service Worker` · `navigator.onLine`
+
+## Bezpieczeństwo i wycofanie
+
+:::caution
+Bezpieczna granica odzyskiwania dla **PWA: Działanie offline** wymaga tych działań przed uruchomieniem lub kontynuacją: widoki z pamięci mogą się otworzyć, lecz nowe dane i zapis wymagają sieci · DiscVault. Punkty kontrolne tej strony: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+- widoki z pamięci mogą się otworzyć, lecz nowe dane i zapis wymagają sieci · DiscVault
+:::
+
+## Następny krok
+
+[Rozwiązywanie problemów](/pl/troubleshooting/)
+
+## Źródło i stan
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Źródło i stan: `2026-07-14`
+- DiscVault Docs: `0.1.0`

@@ -1,0 +1,84 @@
+---
+title: 'Aktualizacja i migracja: Migracja do DiscVault 26'
+description: 'Instrukcja właściwa dla zadania: Aktualizacja i migracja: Migracja do DiscVault 26: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.'
+pageId: 'update-migration'
+products: ['server']
+platforms: ['docker', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Cel i rezultat
+
+Wykonaj procedurę właściwą dla strony: **Aktualizacja i migracja: Migracja do DiscVault 26**. Ta procedura korzysta z `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+
+## Dotyczy
+
+Ta strona dotyczy wyłącznie **Aktualizacja i migracja: Migracja do DiscVault 26** (Docker · web). Granice kanału i danych: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; źródło istniejących danych tylko do odczytu; nigdy bieżąca baza czasu wykonywania · SQLite → PostgreSQL; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26; źródło istniejących danych tylko do odczytu; nigdy bieżąca baza czasu wykonywania · SQLite → PostgreSQL. Punkty kontrolne tej strony: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+
+### DiscVault v26 – stabilny
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault 26
+- źródło istniejących danych tylko do odczytu; nigdy bieżąca baza czasu wykonywania · SQLite → PostgreSQL
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault 26
+- źródło istniejących danych tylko do odczytu; nigdy bieżąca baza czasu wykonywania · SQLite → PostgreSQL
+
+## Wymagania wstępne
+
+- źródło istniejących danych tylko do odczytu; nigdy bieżąca baza czasu wykonywania · `/data/discvault.db`
+- zrzut PostgreSQL i archiwum plików z tego samego okna bez zapisów
+- dostęp właściciela
+
+## Procedura
+
+1. **Utwórz kopię:** źródło istniejących danych tylko do odczytu; nigdy bieżąca baza czasu wykonywania · zrzut PostgreSQL i archiwum plików z tego samego okna bez zapisów
+2. **Sprawdź:** `/api/next/migration/readiness` · `ready_for_confirmation`
+3. **Uruchom:** `POST /api/next/migration/start`
+4. **Porównaj:** gotowość jest potwierdzona, migracja ma zero błędnych rekordów, a liczby i próbka multimediów się zgadzają
+
+### Polecenia i ustawienia
+
+#### Oba kanały
+
+```bash
+curl --fail http://localhost:6080/api/next/migration/readiness
+curl --fail http://localhost:6080/api/next/migration/status
+curl --fail -X POST http://localhost:6080/api/next/migration/start \
+  -H 'Content-Type: application/json' -d '{}'
+curl --fail http://localhost:6080/api/next/migration/status
+```
+
+## Oczekiwany rezultat
+
+Zaakceptuj wynik dla **Aktualizacja i migracja: Migracja do DiscVault 26** tylko gdy wszystkie poniższe wyniki są prawdziwe: gotowość jest potwierdzona, migracja ma zero błędnych rekordów, a liczby i próbka multimediów się zgadzają. Punkty kontrolne tej strony: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+
+- gotowość jest potwierdzona, migracja ma zero błędnych rekordów, a liczby i próbka multimediów się zgadzają
+
+## Bezpieczeństwo i wycofanie
+
+:::caution
+Bezpieczna granica odzyskiwania dla **Aktualizacja i migracja: Migracja do DiscVault 26** wymaga tych działań przed uruchomieniem lub kontynuacją: zatrzymaj procesy zapisu DiscVault, przywróć pasujące kopie PostgreSQL i `/data` i nigdy nie powtarzaj importu do częściowo zapełnionej bazy. Punkty kontrolne tej strony: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+
+- zatrzymaj procesy zapisu DiscVault, przywróć pasujące kopie PostgreSQL i `/data` i nigdy nie powtarzaj importu do częściowo zapełnionej bazy
+:::
+
+## Następny krok
+
+[Konfiguracja: Zmienne środowiskowe](/pl/configure/environment/)
+
+## Źródło i stan
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Źródło i stan: `2026-07-14`
+- DiscVault Docs: `0.1.0`

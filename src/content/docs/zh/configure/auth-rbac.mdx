@@ -1,0 +1,79 @@
+---
+title: '配置: 身份验证和 RBAC'
+description: '任务专用说明： 配置: 身份验证和 RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.'
+pageId: 'configure-auth-rbac'
+products: ['server']
+platforms: ['web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="网页" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## 目标和结果
+
+完成此页面专用的流程： **配置: 身份验证和 RBAC**. 此流程使用 `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+
+## 适用范围
+
+本页面仅适用于 **配置: 身份验证和 RBAC** (网页). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn. 本页面专用检查点： `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+
+### DiscVault v26 稳定版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- WebAuthn
+
+### DiscVault v26 测试版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- WebAuthn
+
+## 前提条件
+
+- 所有者权限
+- HTTPS
+- 第二种恢复方式
+
+## 操作步骤
+
+1. **打开:** 管理 → 安全 → 启用身份验证
+2. **创建:** 管理 → 用户 → 创建 48 小时邀请
+3. **配置:** 管理 → 角色 → 基础 / 高级
+4. **测试:** `48 h`
+
+### 命令和设置
+
+#### 两个通道
+
+```bash
+curl --fail http://localhost:6080/api/next/auth/status
+curl --fail http://localhost:6080/api/next/auth/rbac
+```
+
+## 预期结果
+
+仅在以下条件下接受结果： **配置: 身份验证和 RBAC** 必须确认以下所有结果： 所有者通行密钥登录有效，邀请注册符合设置，且测试用户仅拥有分配的权限. 本页面专用检查点： `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+
+- 所有者通行密钥登录有效，邀请注册符合设置，且测试用户仅拥有分配的权限
+
+## 安全与回滚
+
+:::caution
+安全恢复边界： **配置: 身份验证和 RBAC** 在启动或继续任何操作前必须执行： 保留所有者会话和第二种恢复方式；绝不能删除最后一个所有者通行密钥. 本页面专用检查点： `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+
+- 保留所有者会话和第二种恢复方式；绝不能删除最后一个所有者通行密钥
+:::
+
+## 下一步
+
+[配置: 插件和元数据](/zh/configure/plugins-metadata/)
+
+## 来源和状态
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- 来源和状态: `2026-07-14`
+- DiscVault Docs: `0.1.0`

@@ -1,0 +1,82 @@
+---
+title: 'Integraties: Plex en Jellyfin'
+description: 'Taakspecifieke instructies voor Integraties: Plex en Jellyfin: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.'
+pageId: 'integrations-plex-jellyfin'
+products: ['server']
+platforms: ['web', 'docker']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="web · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Doel en resultaat
+
+Voer de paginaspecifieke werkwijze uit voor **Integraties: Plex en Jellyfin**. Deze werkwijze gebruikt Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+## Van toepassing op
+
+Deze pagina is uitsluitend van toepassing op **Integraties: Plex en Jellyfin** (web · Docker). De kanaal- en gegevensgrenzen zijn: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26. Paginaspecifieke controlepunten: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+### DiscVault v26 stabiel
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault 26
+
+### DiscVault v26 bèta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault 26
+
+## Vereisten
+
+- providerreferentie die als geheim wordt opgeslagen
+- Jellyfin
+- eigenaar- of beheerderssessie
+
+## Procedure
+
+1. **Configureren:** Beheer → Plug-ins → Provider → Configureren · Plex Jellyfin
+2. **Testen:** Beheer → Plug-ins → Statuscontrole
+3. **Uitvoeren:** Beheer → Plug-ins → Ontdekken zonder opslaan · `dryRun=true`
+4. **Vergelijken:** `/api/next/digital-items?limit=200`
+
+### Opdrachten en instellingen
+
+#### Beide kanalen
+
+```bash
+curl --fail http://localhost:6080/api/next/digital-sources
+curl --fail 'http://localhost:6080/api/next/digital-items?limit=200'
+```
+
+## Verwacht resultaat
+
+Accepteer het resultaat voor **Integraties: Plex en Jellyfin** alleen wanneer alle onderstaande resultaten kloppen: Beheer → Plug-ins → Statuscontrole; Beheer → Plug-ins → Ontdekken zonder opslaan · `dryRun=true`; Plex · Jellyfin · `/api/next/digital-items`. Paginaspecifieke controlepunten: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+- Beheer → Plug-ins → Statuscontrole
+- Beheer → Plug-ins → Ontdekken zonder opslaan · `dryRun=true`
+- Plex · Jellyfin · `/api/next/digital-items`
+
+## Veiligheid en terugdraaien
+
+:::caution
+De veilige herstelgrens voor **Integraties: Plex en Jellyfin** vereist deze acties voordat iets start of doorgaat: schakel de provider vóór verwijdering uit, maak een back-up van `/data/plugins` en trek blootgestelde referenties in; schakel de integratie uit, trek test- of blootgestelde referenties in, maak zo nodig een nieuwe en hergebruik de oude nooit. Paginaspecifieke controlepunten: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+- schakel de provider vóór verwijdering uit, maak een back-up van `/data/plugins` en trek blootgestelde referenties in
+- schakel de integratie uit, trek test- of blootgestelde referenties in, maak zo nodig een nieuwe en hergebruik de oude nooit
+:::
+
+## Volgende stap
+
+[Problemen oplossen](/nl/troubleshooting/)
+
+## Bron en status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Bron en status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

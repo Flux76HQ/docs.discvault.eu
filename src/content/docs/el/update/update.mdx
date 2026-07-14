@@ -1,0 +1,114 @@
+---
+title: 'Ενημέρωση και μετεγκατάσταση: Ενημέρωση περιέκτη'
+description: 'Οδηγίες ειδικά για την εργασία: Ενημέρωση και μετεγκατάσταση: Ενημέρωση περιέκτη: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.'
+pageId: 'update-update'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Στόχος και αποτέλεσμα
+
+Ολοκληρώστε τη ροή εργασίας της σελίδας για **Ενημέρωση και μετεγκατάσταση: Ενημέρωση περιέκτη**. Η διαδικασία χρησιμοποιεί `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+
+## Ισχύει για
+
+Αυτή η σελίδα ισχύει μόνο για **Ενημέρωση και μετεγκατάσταση: Ενημέρωση περιέκτη** (Docker · Unraid). Τα όρια καναλιού και δεδομένων είναι: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · σημειώσεις έκδοσης και καταγεγραμμένο αμετάβλητο digest · αντίστοιχο σύνολο αντιγράφων; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · σημειώσεις έκδοσης και καταγεγραμμένο αμετάβλητο digest · αντίστοιχο σύνολο αντιγράφων. Σημεία ελέγχου της σελίδας: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+
+### DiscVault v26 – σταθερό
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `DISCVAULT_IMAGE`
+- PostgreSQL `/data` · σημειώσεις έκδοσης και καταγεγραμμένο αμετάβλητο digest · αντίστοιχο σύνολο αντιγράφων
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `DISCVAULT_IMAGE`
+- PostgreSQL `/data` · σημειώσεις έκδοσης και καταγεγραμμένο αμετάβλητο digest · αντίστοιχο σύνολο αντιγράφων
+
+## Προϋποθέσεις
+
+- αντίστοιχο σύνολο αντιγράφων
+- σημειώσεις έκδοσης και καταγεγραμμένο αμετάβλητο digest
+
+## Διαδικασία
+
+1. **Επαληθεύστε:** `PREVIOUS_IMAGE=@sha256:…`
+2. **Επιλέξτε:** `DISCVAULT_IMAGE` · `:latest` `:beta`
+3. **Εκτελέστε:** `--force-recreate`
+4. **Συγκρίνετε:** εκτελείται το σωστό digest εικόνας, ο έλεγχος υγείας πετυχαίνει και περνούν σύνδεση κατόχου, πλήθος βιβλιοθήκης και δείγμα πολυμέσων
+
+### Εντολές και ρυθμίσεις
+
+#### DiscVault v26 – σταθερό
+
+```bash
+export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
+```
+
+#### DiscVault v26 – beta
+
+```bash
+export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
+```
+
+#### Και τα δύο κανάλια
+
+```bash
+set -euo pipefail
+test -n "$DISCVAULT_IMAGE"
+case "$DISCVAULT_IMAGE" in
+  ghcr.io/helmerznl/discvault:latest|ghcr.io/helmerznl/discvault:beta) ;;
+  *) printf '%s\n' "$DISCVAULT_IMAGE" >&2; exit 64 ;;
+esac
+cd /opt/discvault
+ENV_FILE=/opt/discvault/.env
+ENV_TMP="$(mktemp "$ENV_FILE.update.XXXXXX")"
+trap 'rm -f "$ENV_TMP"' EXIT
+awk -v image="$DISCVAULT_IMAGE" '
+  /^DISCVAULT_IMAGE=/ { print "DISCVAULT_IMAGE=" image; found=1; next }
+  { print }
+  END { if (!found) exit 42 }
+' "$ENV_FILE" > "$ENV_TMP"
+chmod 0600 "$ENV_TMP"
+docker compose --env-file "$ENV_TMP" -p discvault -f compose.yaml config --quiet
+docker compose --env-file "$ENV_TMP" -p discvault -f compose.yaml pull next-api next-worker next-mcp
+docker compose --env-file "$ENV_TMP" -p discvault -f compose.yaml up -d --force-recreate
+docker compose --env-file "$ENV_TMP" -p discvault -f compose.yaml ps
+curl --fail http://localhost:6080/api/next/health
+mv "$ENV_TMP" "$ENV_FILE"
+trap - EXIT
+```
+
+## Αναμενόμενο αποτέλεσμα
+
+Αποδεχθείτε το αποτέλεσμα για **Ενημέρωση και μετεγκατάσταση: Ενημέρωση περιέκτη** μόνο όταν ισχύουν όλα τα παρακάτω αποτελέσματα: εκτελείται το σωστό digest εικόνας, ο έλεγχος υγείας πετυχαίνει και περνούν σύνδεση κατόχου, πλήθος βιβλιοθήκης και δείγμα πολυμέσων. Σημεία ελέγχου της σελίδας: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+
+- εκτελείται το σωστό digest εικόνας, ο έλεγχος υγείας πετυχαίνει και περνούν σύνδεση κατόχου, πλήθος βιβλιοθήκης και δείγμα πολυμέσων
+
+## Ασφάλεια και επαναφορά
+
+:::caution
+Το ασφαλές όριο ανάκτησης για **Ενημέρωση και μετεγκατάσταση: Ενημέρωση περιέκτη** απαιτεί αυτές τις ενέργειες πριν από κάθε εκκίνηση ή συνέχεια: [Ενημέρωση και μετεγκατάσταση: Επαναφορά εικόνας](/el/update/rollback/) · αντίστοιχο σύνολο αντιγράφων; σημειώσεις έκδοσης και καταγεγραμμένο αμετάβλητο digest. Σημεία ελέγχου της σελίδας: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+
+- [Ενημέρωση και μετεγκατάσταση: Επαναφορά εικόνας](/el/update/rollback/) · αντίστοιχο σύνολο αντιγράφων
+- σημειώσεις έκδοσης και καταγεγραμμένο αμετάβλητο digest
+:::
+
+## Επόμενο βήμα
+
+[Ενημέρωση και μετεγκατάσταση: Επαναφορά εικόνας](/el/update/rollback/)
+
+## Πηγή και κατάσταση
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Πηγή και κατάσταση: `2026-07-14`
+- DiscVault Docs: `0.1.0`

@@ -1,0 +1,74 @@
+---
+title: 'Referenz'
+description: 'Aufgabenspezifische Anleitung für Referenz: `:latest` · `:beta` · `:dev` · `6080:5000`.'
+pageId: 'reference-index'
+products: ['server', 'pwa', 'ios', 'android']
+platforms: ['all']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="alle Plattformen" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Ziel und Ergebnis
+
+Führe den seitenspezifischen Ablauf aus für **Referenz**. Dieses Verfahren arbeitet mit `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+## Gültig für
+
+Diese Seite gilt ausschließlich für **Referenz** (alle Plattformen). Kanal- und Datengrenzen sind: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`. Seitenspezifische Kontrollpunkte: `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PostgreSQL `/data`
+- API `6080:5000` MCP `6090:6090`
+
+### DiscVault v26 – Beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PostgreSQL `/data`
+- API `6080:5000` MCP `6090:6090`
+
+## Voraussetzungen
+
+- gewählter Release-Kanal
+
+## Vorgehen
+
+1. **Prüfen:** `:latest` `:beta`
+2. **Festhalten:** `:dev` ist nur für Entwicklungsarbeit und kein Release-Kanal; DiscVault v26 Stable verwendet `:latest`, Beta verwendet `:beta` · `:dev`
+3. **Festhalten:** `/api/next/health`
+4. **Festhalten:** PostgreSQL `/data`
+
+
+
+## Erwartetes Ergebnis
+
+Akzeptiere das Ergebnis für **Referenz** nur wenn alle folgenden Ergebnisse erfüllt sind: gewählter Release-Kanal · `@sha256:`; `:latest` · `:beta` · `:dev`. Seitenspezifische Kontrollpunkte: `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+- gewählter Release-Kanal · `@sha256:`
+- `:latest` · `:beta` · `:dev`
+
+## Sicherheit und Rollback
+
+:::caution
+Die sichere Wiederherstellungsgrenze für **Referenz** verlangt vor jedem Start oder Fortsetzen diese Maßnahmen: die Referenz ist schreibgeschützt; vor Befehlen oder Datenänderungen das passende Verfahren verwenden; `:dev` ist nur für Entwicklungsarbeit und kein Release-Kanal; DiscVault v26 Stable verwendet `:latest`, Beta verwendet `:beta` · `:dev`. Seitenspezifische Kontrollpunkte: `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+- die Referenz ist schreibgeschützt; vor Befehlen oder Datenänderungen das passende Verfahren verwenden
+- `:dev` ist nur für Entwicklungsarbeit und kein Release-Kanal; DiscVault v26 Stable verwendet `:latest`, Beta verwendet `:beta` · `:dev`
+:::
+
+## Nächster Schritt
+
+[Start: Übersicht](/de/start/)
+
+## Quelle und Status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Quelle und Status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

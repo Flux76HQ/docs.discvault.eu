@@ -1,0 +1,84 @@
+---
+title: 'Update and migrate: DiscVault 26 migration'
+description: 'Import an existing SQLite collection into DiscVault 26 through the guarded migration assistant.'
+pageId: 'update-migration'
+products: ['server']
+platforms: ['docker', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Goal and result
+
+Import an existing SQLite collection into DiscVault 26 through the guarded migration assistant.
+
+## Applies to
+
+This page is only for importing existing legacy data. In both DiscVault v26 channels, `/data/discvault.db` is a read-only migration source, never the current runtime database; imported records are written to PostgreSQL.
+
+### DiscVault v26 stable
+
+- DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault 26 migration assistant
+- read-only existing-data source; never the current runtime database · SQLite → PostgreSQL
+
+### DiscVault v26 beta
+
+- DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault 26 migration assistant
+- read-only existing-data source; never the current runtime database · SQLite → PostgreSQL
+
+## Prerequisites
+
+- read-only existing-data source; never the current runtime database · `/data/discvault.db` · source backup
+- PostgreSQL dump and filesystem archive from the same stopped-writer window
+- owner access
+
+## Procedure
+
+1. **Back up:** read-only existing-data source; never the current runtime database · PostgreSQL dump and filesystem archive from the same stopped-writer window · before import
+2. **Inspect:** `/api/next/migration/readiness` · `ready_for_confirmation`
+3. **Run:** one migration job · `POST /api/next/migration/start`
+4. **Compare:** readiness is confirmed, migration has zero failed records, and counts and sampled media match
+
+### Commands and settings
+
+#### Both channels
+
+```bash
+curl --fail http://localhost:6080/api/next/migration/readiness
+curl --fail http://localhost:6080/api/next/migration/status
+curl --fail -X POST http://localhost:6080/api/next/migration/start \
+  -H 'Content-Type: application/json' -d '{}'
+curl --fail http://localhost:6080/api/next/migration/status
+```
+
+## Expected result
+
+Readiness is confirmed, migration finishes without failed records, and collection counts and sampled media match.
+
+- readiness is confirmed, migration has zero failed records, and counts and sampled media match
+
+## Safety and rollback
+
+:::caution
+Stop v26 writers, preserve logs, restore the matching PostgreSQL and `/data` backup, and restart the recorded image digest. Never repeat an import into a partially populated database.
+
+- stop DiscVault writers, restore matching PostgreSQL and `/data` backups, and never repeat the import into a partially populated database
+:::
+
+## Next step
+
+[Configure: Environment variables](/configure/environment/)
+
+## Source and status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Verified: `2026-07-14`
+- DiscVault Docs: `0.1.0`
