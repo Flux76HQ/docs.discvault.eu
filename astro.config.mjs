@@ -264,7 +264,7 @@ export default defineConfig({
       title: 'DiscVault Docs',
       description: 'Install, use, and operate DiscVault.',
       logo: { src: './src/assets/discvault-logo.svg', alt: 'DiscVault' },
-      favicon: '/brand/discvault-icon-512.png',
+      favicon: '/brand/discvault-icon.svg',
       social: [
         {
           icon: 'github',
