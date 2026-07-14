@@ -1,0 +1,91 @@
+---
+title: 'Integrace: MCP a REST API'
+description: 'Pokyny pro konkrétní úlohu: Integrace: MCP a REST API: `streamable-http` · `/mcp` · `Authorization` · `6090`.'
+pageId: 'integrations-mcp-api'
+products: ['server']
+platforms: ['web', 'docker']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="web · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Cíl a výsledek
+
+Dokončete postup určený pro **Integrace: MCP a REST API**. Tento postup pracuje s `streamable-http` · `/mcp` · `Authorization` · `6090`.
+
+## Platí pro
+
+Tato stránka platí pouze pro **Integrace: MCP a REST API** (web · Docker). Hranice kanálu a dat jsou: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/mcp` `6090` · REST API; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/mcp` `6090` · REST API. Kontrolní body této stránky: `streamable-http` · `/mcp` · `Authorization` · `6090`.
+
+### DiscVault v26 – stabilní
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `/mcp` `6090` · REST API
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `/mcp` `6090` · REST API
+
+## Požadavky
+
+- API
+- HTTPS DiscVault
+- MCP HTTP
+
+## Postup
+
+1. **Vytvořte:** API
+2. **Nastavte:** `streamable-http` · `https://discvault.example.com/mcp`
+3. **Otestujte:** `Authorization`
+4. **Odvolejte:** `6090`
+
+### Příkazy a nastavení
+
+#### Oba kanály
+
+```json
+{
+  "mcpServers": {
+    "discvault": {
+      "transport": "streamable-http",
+      "url": "https://discvault.example.com/mcp",
+      "headers": { "Authorization": "******" }
+    }
+  }
+}
+```
+
+```bash
+curl --fail https://discvault.example.com/api/next/health
+```
+
+## Očekávaný výsledek
+
+Výsledek přijměte pro **Integrace: MCP a REST API** pouze pokud platí všechny následující výsledky: DiscVault · `streamable-http` · `/mcp`; přihlašovací údaj poskytovatele uložený jako tajný · `Authorization`. Kontrolní body této stránky: `streamable-http` · `/mcp` · `Authorization` · `6090`.
+
+- DiscVault · `streamable-http` · `/mcp`
+- přihlašovací údaj poskytovatele uložený jako tajný · `Authorization`
+
+## Bezpečnost a návrat
+
+:::caution
+Bezpečná hranice obnovy pro **Integrace: MCP a REST API** vyžaduje před spuštěním nebo pokračováním tyto kroky: integraci vypněte, odvolejte testovací či odhalené údaje, podle potřeby vytvořte nové a staré nikdy znovu nepoužívejte. Kontrolní body této stránky: `streamable-http` · `/mcp` · `Authorization` · `6090`.
+
+- integraci vypněte, odvolejte testovací či odhalené údaje, podle potřeby vytvořte nové a staré nikdy znovu nepoužívejte
+:::
+
+## Další krok
+
+[Integrace: Plex a Jellyfin](/cs/integrations/plex-jellyfin/)
+
+## Zdroj a stav
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Zdroj a stav: `2026-07-14`
+- DiscVault Docs: `0.1.0`

@@ -1,0 +1,78 @@
+---
+title: 'Оновлення й міграція: Огляд'
+description: 'Спеціальні інструкції для завдання: Оновлення й міграція: Огляд: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.'
+pageId: 'update-index'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Мета й результат
+
+Виконайте спеціальну процедуру сторінки для **Оновлення й міграція: Огляд**. У цій процедурі використовуються `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+## Застосовується до
+
+Ця сторінка стосується лише **Оновлення й міграція: Огляд** (Docker · Unraid). Межі каналу й даних: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/update/restore/`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/update/restore/`. Контрольні точки цієї сторінки: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+### DiscVault v26 – стабільний
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `/update/restore/`
+
+### DiscVault v26 – бета
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `/update/restore/`
+
+## Передумови
+
+- відповідний комплект резервних копій
+- примітки до випуску й записаний незмінний digest образу
+
+## Процедура
+
+1. **Створіть резервну копію:** [Оновлення й міграція: Резервне копіювання](/uk/update/backup/) · відповідний комплект резервних копій
+2. **Перевірте:** [Оновлення й міграція: Відновлення](/uk/update/restore/)
+3. **Виконайте:** [Оновлення й міграція: Оновлення контейнера](/uk/update/update/) · `DISCVAULT_IMAGE`
+4. **Збережіть:** [Оновлення й міграція: Відкочування образу](/uk/update/rollback/)
+
+### Маршрути завдань
+
+- [Оновлення й міграція: Резервне копіювання](/uk/update/backup/) — 1 PostgreSQL
+- [Оновлення й міграція: Відновлення](/uk/update/restore/) — 2
+- [Оновлення й міграція: Оновлення контейнера](/uk/update/update/) — 3
+- [Оновлення й міграція: Відкочування образу](/uk/update/rollback/) — 4
+
+## Очікуваний результат
+
+Приймайте результат для **Оновлення й міграція: Огляд** лише коли підтверджено всі наведені нижче результати: архів і dump не порожні, читаються під час репетиції та пов’язані з незмінним digest образу; працює потрібний digest образу, health успішний, а вхід власника, кількість записів і зразок медіа проходять перевірку. Контрольні точки цієї сторінки: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+- архів і dump не порожні, читаються під час репетиції та пов’язані з незмінним digest образу
+- працює потрібний digest образу, health успішний, а вхід власника, кількість записів і зразок медіа проходять перевірку
+
+## Безпека й відкочування
+
+:::caution
+Безпечна межа відновлення для **Оновлення й міграція: Огляд** вимагає цих дій до будь-якого запуску чи продовження: відповідний комплект резервних копій; `PREVIOUS_IMAGE` · `@sha256:`. Контрольні точки цієї сторінки: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+- відповідний комплект резервних копій
+- `PREVIOUS_IMAGE` · `@sha256:`
+:::
+
+## Наступний крок
+
+[Оновлення й міграція: Резервне копіювання](/uk/update/backup/)
+
+## Джерело й стан
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Джерело й стан: `2026-07-14`
+- DiscVault Docs: `0.1.0`

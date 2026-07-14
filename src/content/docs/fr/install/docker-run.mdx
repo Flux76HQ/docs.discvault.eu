@@ -1,0 +1,150 @@
+---
+title: 'Installation: Docker run'
+description: 'Instructions propres à la tâche : Installation: Docker run: `DATABASE_URL` · `discvault-postgres` · `6080:5000` · `/api/next/health`.'
+pageId: 'install-docker-run'
+products: ['server']
+platforms: ['docker']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Objectif et résultat
+
+Suivez le déroulement propre à cette page pour **Installation: Docker run**. Cette procédure utilise `DATABASE_URL` · `discvault-postgres` · `6080:5000` · `/api/next/health`.
+
+## S’applique à
+
+Cette page s’applique uniquement à **Installation: Docker run** (Docker). Les limites de canal et de données sont : DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL API MCP; `6080` → API `5000`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL API MCP; `6080` → API `5000`. Points de contrôle propres à la page : `DATABASE_URL` · `discvault-postgres` · `6080:5000` · `/api/next/health`.
+
+### DiscVault v26 stable
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PostgreSQL API MCP
+- `6080` → API `5000`
+
+### DiscVault v26 bêta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PostgreSQL API MCP
+- `6080` → API `5000`
+
+## Prérequis
+
+- Docker Engine `24+`
+- OpenSSL
+- `6080:5000`
+
+## Procédure
+
+1. **Consigner:** `DISCVAULT_IMAGE` · `:latest` `:beta`
+2. **Créer:** `--env-file` · `DATABASE_URL` · droits de fichier réservés au propriétaire (0600)
+3. **Démarrer:** `discvault-postgres` → `discvault-api` → MCP
+4. **Vérifier:** `6080:5000` · `GET /api/next/health`
+
+### Commandes et réglages
+
+#### DiscVault v26 stable
+
+```bash
+export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
+```
+
+#### DiscVault v26 bêta
+
+```bash
+export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
+```
+
+#### Les deux canaux
+
+```bash
+set -euo pipefail
+test -n "$DISCVAULT_IMAGE"
+case "$DISCVAULT_IMAGE" in
+  ghcr.io/helmerznl/discvault:latest|ghcr.io/helmerznl/discvault:beta) ;;
+  *) printf '%s\n' "$DISCVAULT_IMAGE" >&2; exit 64 ;;
+esac
+install -d -m 0700 /opt/discvault
+install -d -m 0750 /srv/discvault
+install -d -o 70 -g 70 -m 0700 /srv/discvault-postgres
+umask 077
+ENV_FILE=/opt/discvault/docker-run.env
+test ! -e "$ENV_FILE"
+ENV_TMP="$(mktemp "$ENV_FILE.tmp.XXXXXX")"
+trap 'rm -f "$ENV_TMP"' EXIT
+POSTGRES_PASSWORD="$(openssl rand -hex 32)"
+JWT_SECRET="$(openssl rand -hex 32)"
+printf '%s\n' \
+  'POSTGRES_DB=discvault' \
+  'POSTGRES_USER=discvault' \
+  "POSTGRES_PASSWORD=$POSTGRES_PASSWORD" \
+  "DATABASE_URL=postgresql://discvault:$POSTGRES_PASSWORD@discvault-postgres:5432/discvault" \
+  "JWT_SECRET=$JWT_SECRET" \
+  'TZ=Europe/Amsterdam' \
+  'RP_ID=localhost' \
+  'RP_NAME=DiscVault' \
+  'RP_ORIGINS=http://localhost:6080' \
+  'DISCVAULT_DATA_DIR=/data' \
+  'DISCVAULT_PLUGIN_INSTALL_DIR=/data/plugins' \
+  'DISCVAULT_WORKER_ID=worker-1' \
+  'DISCVAULT_WORKER_POLL_INTERVAL=2' \
+  'DISCVAULT_API=http://discvault-api:5000' > "$ENV_TMP"
+chmod 0600 "$ENV_TMP"
+ln "$ENV_TMP" "$ENV_FILE"
+rm -f "$ENV_TMP"
+trap - EXIT
+docker network inspect discvault >/dev/null 2>&1 || docker network create discvault
+docker run -d --name discvault-postgres --restart unless-stopped \
+  --network discvault --env-file "$ENV_FILE" \
+  --health-cmd 'pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"' \
+  --health-interval 10s --health-timeout 5s --health-retries 10 \
+  -v /srv/discvault-postgres:/var/lib/postgresql/data postgres:17-alpine
+until [ "$(docker inspect discvault-postgres --format '{{.State.Health.Status}}')" = healthy ]; do
+  sleep 2
+done
+docker run -d --name discvault-api --restart unless-stopped \
+  --network discvault --env-file "$ENV_FILE" -w /opt/discvault/backend \
+  -p 6080:5000 -v /srv/discvault:/data "$DISCVAULT_IMAGE" \
+  sh -c 'python next_database.py migrate && exec gunicorn --bind 0.0.0.0:5000 --workers 2 --timeout 180 next_app:app'
+until curl --fail http://localhost:6080/api/next/health; do sleep 2; done
+docker run -d --name discvault-worker --restart unless-stopped \
+  --network discvault --env-file "$ENV_FILE" -w /opt/discvault/backend \
+  -v /srv/discvault:/data "$DISCVAULT_IMAGE" python next_worker.py work
+docker run -d --name discvault-mcp --restart unless-stopped \
+  --network discvault --env-file "$ENV_FILE" -w /opt/discvault/mcp-server \
+  -p 6090:6090 "$DISCVAULT_IMAGE" \
+  python server.py --http --host 0.0.0.0 --port 6090
+docker ps --filter 'name=discvault-'
+```
+
+## Résultat attendu
+
+Validez le résultat de **Installation: Docker run** uniquement lorsque tous les résultats suivants sont confirmés : HTTP `2xx` · `/api/next/health`; `discvault-postgres`. Points de contrôle propres à la page : `DATABASE_URL` · `discvault-postgres` · `6080:5000` · `/api/next/health`.
+
+- HTTP `2xx` · `/api/next/health`
+- `discvault-postgres`
+
+## Sécurité et retour arrière
+
+:::caution
+La limite de récupération sûre pour **Installation: Docker run** impose ces actions avant tout démarrage ou toute poursuite : Docker Compose; jeu de sauvegardes correspondant · PostgreSQL `/data`. Points de contrôle propres à la page : `DATABASE_URL` · `discvault-postgres` · `6080:5000` · `/api/next/health`.
+
+- Docker Compose
+- jeu de sauvegardes correspondant · PostgreSQL `/data`
+:::
+
+## Étape suivante
+
+[Installation: Premier démarrage et contrôle d’état](/fr/install/first-start-health/)
+
+## Source et état
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Source et état: `2026-07-14`
+- DiscVault Docs: `0.1.0`

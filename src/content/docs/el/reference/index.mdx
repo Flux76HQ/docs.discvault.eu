@@ -1,0 +1,74 @@
+---
+title: 'Αναφορά'
+description: 'Οδηγίες ειδικά για την εργασία: Αναφορά: `:latest` · `:beta` · `:dev` · `6080:5000`.'
+pageId: 'reference-index'
+products: ['server', 'pwa', 'ios', 'android']
+platforms: ['all']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="όλες οι πλατφόρμες" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Στόχος και αποτέλεσμα
+
+Ολοκληρώστε τη ροή εργασίας της σελίδας για **Αναφορά**. Η διαδικασία χρησιμοποιεί `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+## Ισχύει για
+
+Αυτή η σελίδα ισχύει μόνο για **Αναφορά** (όλες οι πλατφόρμες). Τα όρια καναλιού και δεδομένων είναι: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`. Σημεία ελέγχου της σελίδας: `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+### DiscVault v26 – σταθερό
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PostgreSQL `/data`
+- API `6080:5000` MCP `6090:6090`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PostgreSQL `/data`
+- API `6080:5000` MCP `6090:6090`
+
+## Προϋποθέσεις
+
+- επιλεγμένο κανάλι έκδοσης
+
+## Διαδικασία
+
+1. **Ελέγξτε:** `:latest` `:beta`
+2. **Καταγράψτε:** το `:dev` είναι μόνο για μηχανική εργασία και δεν είναι κανάλι έκδοσης· το σταθερό DiscVault v26 χρησιμοποιεί `:latest` και το beta `:beta` · `:dev`
+3. **Καταγράψτε:** `/api/next/health`
+4. **Καταγράψτε:** PostgreSQL `/data`
+
+
+
+## Αναμενόμενο αποτέλεσμα
+
+Αποδεχθείτε το αποτέλεσμα για **Αναφορά** μόνο όταν ισχύουν όλα τα παρακάτω αποτελέσματα: επιλεγμένο κανάλι έκδοσης · `@sha256:`; `:latest` · `:beta` · `:dev`. Σημεία ελέγχου της σελίδας: `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+- επιλεγμένο κανάλι έκδοσης · `@sha256:`
+- `:latest` · `:beta` · `:dev`
+
+## Ασφάλεια και επαναφορά
+
+:::caution
+Το ασφαλές όριο ανάκτησης για **Αναφορά** απαιτεί αυτές τις ενέργειες πριν από κάθε εκκίνηση ή συνέχεια: η αναφορά είναι μόνο για ανάγνωση· χρησιμοποιήστε τη στοχευμένη διαδικασία πριν από εντολές ή αλλαγές δεδομένων; το `:dev` είναι μόνο για μηχανική εργασία και δεν είναι κανάλι έκδοσης· το σταθερό DiscVault v26 χρησιμοποιεί `:latest` και το beta `:beta` · `:dev`. Σημεία ελέγχου της σελίδας: `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+- η αναφορά είναι μόνο για ανάγνωση· χρησιμοποιήστε τη στοχευμένη διαδικασία πριν από εντολές ή αλλαγές δεδομένων
+- το `:dev` είναι μόνο για μηχανική εργασία και δεν είναι κανάλι έκδοσης· το σταθερό DiscVault v26 χρησιμοποιεί `:latest` και το beta `:beta` · `:dev`
+:::
+
+## Επόμενο βήμα
+
+[Έναρξη: Επισκόπηση](/el/start/)
+
+## Πηγή και κατάσταση
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Πηγή και κατάσταση: `2026-07-14`
+- DiscVault Docs: `0.1.0`

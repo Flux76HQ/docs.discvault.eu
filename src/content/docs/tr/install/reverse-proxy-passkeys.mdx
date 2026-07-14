@@ -1,0 +1,83 @@
+---
+title: 'Kurulum: Ters vekil ve geçiş anahtarları'
+description: 'Göreve özel yönergeler: Kurulum: Ters vekil ve geçiş anahtarları: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.'
+pageId: 'install-reverse-proxy-passkeys'
+products: ['server']
+platforms: ['docker', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Amaç ve sonuç
+
+Sayfaya özel iş akışını tamamlayın: **Kurulum: Ters vekil ve geçiş anahtarları**. Bu prosedür şunları kullanır: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+
+## Geçerli olduğu alan
+
+Bu sayfa yalnızca şunlar için geçerlidir: **Kurulum: Ters vekil ve geçiş anahtarları** (Docker · web). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`. Sayfaya özel denetim noktaları: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+
+### DiscVault v26 kararlı
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `RP_ID` `RP_ORIGINS`
+- `6080` API `5000`
+
+### DiscVault v26 beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `RP_ID` `RP_ORIGINS`
+- `6080` API `5000`
+
+## Ön koşullar
+
+- DNS
+- TLS
+- `6080`
+
+## Prosedür
+
+1. **Yapılandırın:** `RP_ID`
+2. **Yapılandırın:** `RP_ORIGINS` · HTTPS
+3. **Yapılandırın:** `http://127.0.0.1:6080`
+4. **Test edin:** `GET /api/next/health`
+
+### Komutlar ve ayarlar
+
+#### Her iki kanal
+
+```text
+RP_ID=discvault.example.com
+RP_ORIGINS=https://discvault.example.com
+curl --fail https://discvault.example.com/api/next/health
+```
+
+## Beklenen sonuç
+
+Şunun sonucunu kabul edin: **Kurulum: Ters vekil ve geçiş anahtarları** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: HTTPS · HTTP `2xx`; `RP_ID`. Sayfaya özel denetim noktaları: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+
+- HTTPS · HTTP `2xx`
+- `RP_ID`
+
+## Güvenlik ve geri alma
+
+:::caution
+Şunun güvenli kurtarma sınırı: **Kurulum: Ters vekil ve geçiş anahtarları** başlatmadan veya devam etmeden önce şu işlemleri gerektirir: proxy ve RP değerlerini birlikte geri yükleyin ve bir sahip kurtarma yöntemi bulundurun. Sayfaya özel denetim noktaları: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+
+- proxy ve RP değerlerini birlikte geri yükleyin ve bir sahip kurtarma yöntemi bulundurun
+:::
+
+## Sonraki adım
+
+[Kurulum: İlk başlatma ve sağlık kontrolü](/tr/install/first-start-health/)
+
+## Kaynak ve durum
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Kaynak ve durum: `2026-07-14`
+- DiscVault Docs: `0.1.0`

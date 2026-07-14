@@ -1,0 +1,76 @@
+---
+title: 'Konfiguration: Übersicht'
+description: 'Aufgabenspezifische Anleitung für Konfiguration: Übersicht: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.'
+pageId: 'configure-index'
+products: ['server']
+platforms: ['docker', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Ziel und Ergebnis
+
+Führe den seitenspezifischen Ablauf aus für **Konfiguration: Übersicht**. Dieses Verfahren arbeitet mit `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+
+## Gültig für
+
+Diese Seite gilt ausschließlich für **Konfiguration: Übersicht** (Docker · Web). Kanal- und Datengrenzen sind: DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. Seitenspezifische Kontrollpunkte: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- RBAC
+
+### DiscVault v26 – Beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- RBAC
+
+## Voraussetzungen
+
+- Owner-Zugriff
+- `/configure/auth-rbac/`
+
+## Vorgehen
+
+1. **Auswählen:** [Konfiguration: Umgebungsvariablen](/de/configure/environment/)
+2. **Auswählen:** [Konfiguration: Authentifizierung und RBAC](/de/configure/auth-rbac/) · RBAC
+3. **Auswählen:** [Konfiguration: Plugins und Metadaten](/de/configure/plugins-metadata/)
+4. **Festhalten:** `/configure/environment/`
+
+### Aufgabenwege
+
+- [Konfiguration: Umgebungsvariablen](/de/configure/environment/) — `/configure/environment/`
+- [Konfiguration: Authentifizierung und RBAC](/de/configure/auth-rbac/) — DiscVault 26 RBAC
+- [Konfiguration: Plugins und Metadaten](/de/configure/plugins-metadata/) — DiscVault 26
+
+## Erwartetes Ergebnis
+
+Akzeptiere das Ergebnis für **Konfiguration: Übersicht** nur wenn alle folgenden Ergebnisse erfüllt sind: gewählter Release-Kanal; `/configure/auth-rbac/`. Seitenspezifische Kontrollpunkte: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+
+- gewählter Release-Kanal
+- `/configure/auth-rbac/`
+
+## Sicherheit und Rollback
+
+:::caution
+Die sichere Wiederherstellungsgrenze für **Konfiguration: Übersicht** verlangt vor jedem Start oder Fortsetzen diese Maßnahmen: jeweils nur ein Subsystem ändern, vorherigen Wert und Sicherung behalten und vor der nächsten Änderung zurückrollen. Seitenspezifische Kontrollpunkte: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+
+- jeweils nur ein Subsystem ändern, vorherigen Wert und Sicherung behalten und vor der nächsten Änderung zurückrollen
+:::
+
+## Nächster Schritt
+
+[Konfiguration: Umgebungsvariablen](/de/configure/environment/)
+
+## Quelle und Status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Quelle und Status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

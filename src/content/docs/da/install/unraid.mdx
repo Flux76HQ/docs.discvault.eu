@@ -1,0 +1,97 @@
+---
+title: 'Installation: Unraid'
+description: 'Opgavespecifik vejledning til Installation: Unraid: `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.'
+pageId: 'install-unraid'
+products: ['server']
+platforms: ['unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Mål og resultat
+
+Gennemfør den sidespecifikke arbejdsgang for **Installation: Unraid**. Denne fremgangsmåde arbejder med `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+
+## Gælder for
+
+Denne side gælder kun for **Installation: Unraid** (Unraid). Kanal- og datagrænserne er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL API MCP; `:latest` `:beta`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL API MCP; `:latest` `:beta`. Sidespecifikke kontrolpunkter: `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PostgreSQL API MCP
+- `:latest` `:beta`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PostgreSQL API MCP
+- `:latest` `:beta`
+
+## Forudsætninger
+
+- Unraid `6.12+`
+- `/mnt/user/appdata/discvault/data`
+- OpenSSL
+
+## Fremgangsmåde
+
+1. **Installér:** Unraid · [Installation: Docker Compose](/da/install/docker-compose/)
+2. **Konfigurér:** `DISCVAULT_IMAGE` · `:latest` `:beta`
+3. **Konfigurér:** `DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data` · `DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres`
+4. **Bekræft:** `postgres` · `next-api` · `next-worker` · `next-mcp` · `6080:5000`
+
+### Kommandoer og indstillinger
+
+#### DiscVault v26 – stabil
+
+```text
+DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
+DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data
+DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres
+DISCVAULT_API_PORT=6080
+DISCVAULT_MCP_PORT=6090
+```
+
+#### DiscVault v26 – beta
+
+```text
+DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
+DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data
+DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres
+DISCVAULT_API_PORT=6080
+DISCVAULT_MCP_PORT=6090
+```
+
+## Forventet resultat
+
+Godkend resultatet for **Installation: Unraid** kun når alle resultater nedenfor er opfyldt: PostgreSQL; `/data`; HTTP `2xx`. Sidespecifikke kontrolpunkter: `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+
+- PostgreSQL
+- `/data`
+- HTTP `2xx`
+
+## Sikkerhed og tilbagerulning
+
+:::caution
+Den sikre gendannelsesgrænse for **Installation: Unraid** kræver disse handlinger, før noget startes eller fortsættes: tilsvarende backupsæt; `/mnt/user/appdata/discvault/data`. Sidespecifikke kontrolpunkter: `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+
+- tilsvarende backupsæt
+- `/mnt/user/appdata/discvault/data`
+:::
+
+## Næste trin
+
+[Installation: Første start og sundhedskontrol](/da/install/first-start-health/)
+
+## Kilde og status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Kilde og status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

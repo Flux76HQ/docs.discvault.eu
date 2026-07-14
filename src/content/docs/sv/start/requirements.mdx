@@ -1,0 +1,82 @@
+---
+title: 'Start: Översikt'
+description: 'Uppgiftsspecifik vägledning för Start: Översikt: Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.'
+pageId: 'start-requirements'
+products: ['server', 'pwa', 'ios', 'android']
+platforms: ['all']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="alla plattformar" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Mål och resultat
+
+Följ det sidspecifika arbetsflödet för **Start: Översikt**. Den här proceduren använder Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.
+
+## Gäller för
+
+Den här sidan gäller endast **Start: Översikt** (alla plattformar). Kanal- och datagränserna är: DiscVault · `ghcr.io/helmerznl/discvault:latest`; Docker Compose `v2` · PostgreSQL `17` · `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; Docker Compose `v2` · PostgreSQL `17` · `/data`. Sidspecifika kontrollpunkter: Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- Docker Compose `v2` · PostgreSQL `17` · `/data`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- Docker Compose `v2` · PostgreSQL `17` · `/data`
+
+## Förutsättningar
+
+- Docker Engine `24+`
+- skrivbar beständig lagring och ledigt säkerhetskopieutrymme
+- DNS TLS
+
+## Procedur
+
+1. **Kontrollera:** Docker Engine `≥24` · Docker Compose `v2`
+2. **Kontrollera:** `≥2 GB` · skrivbar beständig lagring och ledigt säkerhetskopieutrymme
+3. **Konfigurera:** DNS · TLS · HTTPS · `RP_ID` · `RP_ORIGINS`
+4. **Anteckna:** vald utgivningskanal
+
+### Kommandon och inställningar
+
+#### Båda kanalerna
+
+```bash
+docker version --format '{{.Server.Version}}'
+docker compose version
+curl --version
+```
+
+## Förväntat resultat
+
+Godkänn resultatet för **Start: Översikt** endast när alla resultat nedan stämmer: Docker Engine `≥24`; Docker Compose `v2`; HTTPS DNS. Sidspecifika kontrollpunkter: Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.
+
+- Docker Engine `≥24`
+- Docker Compose `v2`
+- HTTPS DNS
+
+## Säkerhet och återställning
+
+:::caution
+Den säkra återställningsgränsen för **Start: Översikt** kräver dessa åtgärder innan något startas eller fortsätter: skrivskyddade kontroller ändrar inga data; åtgärda saknade krav innan du fortsätter. Sidspecifika kontrollpunkter: Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.
+
+- skrivskyddade kontroller ändrar inga data; åtgärda saknade krav innan du fortsätter
+:::
+
+## Nästa steg
+
+[Installation: Installationsvägar](/sv/install/)
+
+## Källa och status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Källa och status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

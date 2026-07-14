@@ -1,0 +1,78 @@
+---
+title: 'Konfiguracja: Wtyczki i metadane'
+description: 'Instrukcja właściwa dla zadania: Konfiguracja: Wtyczki i metadane: `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.'
+pageId: 'configure-plugins-metadata'
+products: ['server']
+platforms: ['web', 'docker']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="web · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Cel i rezultat
+
+Wykonaj procedurę właściwą dla strony: **Konfiguracja: Wtyczki i metadane**. Ta procedura korzysta z `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.
+
+## Dotyczy
+
+Ta strona dotyczy wyłącznie **Konfiguracja: Wtyczki i metadane** (web · Docker). Granice kanału i danych: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26 · `/data/plugins`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26 · `/data/plugins`. Punkty kontrolne tej strony: `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.
+
+### DiscVault v26 – stabilny
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault 26 · `/data/plugins`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault 26 · `/data/plugins`
+
+## Wymagania wstępne
+
+- sesja właściciela lub administratora
+- poświadczenie dostawcy zapisane jako sekret
+
+## Procedura
+
+1. **Sprawdź:** `GET /api/next/plugins/registry`
+2. **Skonfiguruj:** Administracja → Wtyczki → Dostawca → Konfiguruj · poświadczenie dostawcy zapisane jako sekret
+3. **Przetestuj:** Administracja → Wtyczki → Kontrola stanu · Administracja → Wtyczki → Wykryj bez zapisywania · `dryRun`
+4. **Zapisz:** `secret app_settings`
+
+### Polecenia i ustawienia
+
+#### Oba kanały
+
+```bash
+curl --fail http://localhost:6080/api/next/plugins/registry
+curl --fail http://localhost:6080/api/next/metadata/plugins
+```
+
+## Oczekiwany rezultat
+
+Zaakceptuj wynik dla **Konfiguracja: Wtyczki i metadane** tylko gdy wszystkie poniższe wyniki są prawdziwe: rejestr zawiera dostawcę, kontrola stanu przechodzi, a próba zwraca oczekiwaną próbkę metadanych. Punkty kontrolne tej strony: `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.
+
+- rejestr zawiera dostawcę, kontrola stanu przechodzi, a próba zwraca oczekiwaną próbkę metadanych
+
+## Bezpieczeństwo i wycofanie
+
+:::caution
+Bezpieczna granica odzyskiwania dla **Konfiguracja: Wtyczki i metadane** wymaga tych działań przed uruchomieniem lub kontynuacją: wyłącz dostawcę przed usunięciem, wykonaj kopię `/data/plugins` i unieważnij ujawnione poświadczenia. Punkty kontrolne tej strony: `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.
+
+- wyłącz dostawcę przed usunięciem, wykonaj kopię `/data/plugins` i unieważnij ujawnione poświadczenia
+:::
+
+## Następny krok
+
+[Integracje: Plex i Jellyfin](/pl/integrations/plex-jellyfin/)
+
+## Źródło i stan
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Źródło i stan: `2026-07-14`
+- DiscVault Docs: `0.1.0`

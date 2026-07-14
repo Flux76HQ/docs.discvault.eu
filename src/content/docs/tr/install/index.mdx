@@ -1,0 +1,80 @@
+---
+title: 'Kurulum: Kurulum yolları'
+description: 'Göreve özel yönergeler: Kurulum: Kurulum yolları: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.'
+pageId: 'install-index'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Amaç ve sonuç
+
+Sayfaya özel iş akışını tamamlayın: **Kurulum: Kurulum yolları**. Bu prosedür şunları kullanır: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+
+## Geçerli olduğu alan
+
+Bu sayfa yalnızca şunlar için geçerlidir: **Kurulum: Kurulum yolları** (Docker · Unraid). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; PostgreSQL `17` `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26; PostgreSQL `17` `/data`. Sayfaya özel denetim noktaları: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+
+### DiscVault v26 kararlı
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault 26
+- PostgreSQL `17` `/data`
+
+### DiscVault v26 beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault 26
+- PostgreSQL `17` `/data`
+
+## Ön koşullar
+
+- Docker Engine `24+`
+- Docker Compose `v2`
+
+## Prosedür
+
+1. **Seçin:** [Kurulum: Docker Compose](/tr/install/docker-compose/)
+2. **Seçin:** [Kurulum: Docker run](/tr/install/docker-run/)
+3. **Seçin:** [Kurulum: Unraid](/tr/install/unraid/) · Unraid
+4. **Kaydedin:** `DISCVAULT_IMAGE` · eşleşen yedek kümesi
+
+### Görev yolları
+
+- [Kurulum: Docker Compose](/tr/install/docker-compose/) — DiscVault 26 Docker Compose PostgreSQL `/data` `DISCVAULT_IMAGE`
+- [Kurulum: Docker run](/tr/install/docker-run/) — DiscVault 26 Docker run PostgreSQL `/data` `DATABASE_URL`
+- [Kurulum: Kalıcı veriler ve PostgreSQL](/tr/install/storage-postgresql/) — DiscVault 26 PostgreSQL `/data`
+- [Kurulum: Unraid](/tr/install/unraid/) — DiscVault 26 Unraid PostgreSQL `/data`
+
+## Beklenen sonuç
+
+Şunun sonucunu kabul edin: **Kurulum: Kurulum yolları** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: seçilen yayın kanalı; PostgreSQL `/data`. Sayfaya özel denetim noktaları: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+
+- seçilen yayın kanalı
+- PostgreSQL `/data`
+
+## Güvenlik ve geri alma
+
+:::caution
+Şunun güvenli kurtarma sınırı: **Kurulum: Kurulum yolları** başlatmadan veya devam etmeden önce şu işlemleri gerektirir: eşleşen yedek kümesi; sürüm notları ve kaydedilmiş değişmez imaj özeti. Sayfaya özel denetim noktaları: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+
+- eşleşen yedek kümesi
+- sürüm notları ve kaydedilmiş değişmez imaj özeti
+:::
+
+## Sonraki adım
+
+[Kurulum: Docker Compose](/tr/install/docker-compose/)
+
+## Kaynak ve durum
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Kaynak ve durum: `2026-07-14`
+- DiscVault Docs: `0.1.0`

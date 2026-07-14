@@ -1,0 +1,138 @@
+---
+title: 'Konfiguracja: Zmienne środowiskowe'
+description: 'Instrukcja właściwa dla zadania: Konfiguracja: Zmienne środowiskowe: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.'
+pageId: 'configure-environment'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Cel i rezultat
+
+Wykonaj procedurę właściwą dla strony: **Konfiguracja: Zmienne środowiskowe**. Ta procedura korzysta z `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+
+## Dotyczy
+
+Ta strona dotyczy wyłącznie **Konfiguracja: Zmienne środowiskowe** (Docker · Unraid). Granice kanału i danych: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `.env`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `.env`. Punkty kontrolne tej strony: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+
+### DiscVault v26 – stabilny
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `.env`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `.env`
+
+## Wymagania wstępne
+
+- prywatny plik środowiska DiscVault
+- OpenSSL
+- zaplanowane okno restartu
+
+## Procedura
+
+1. **Utwórz:** `/opt/discvault/.env` · uprawnienia pliku tylko dla właściciela (0600)
+2. **Skonfiguruj:** `DISCVAULT_IMAGE` · `RP_ORIGINS`
+3. **Zweryfikuj:** `chmod 0600` · `docker compose config --quiet`
+4. **Uruchom:** nie zmieniaj sekretów JWT i PostgreSQL podczas zwykłej konfiguracji
+
+### Polecenia i ustawienia
+
+#### DiscVault v26 – stabilny
+
+```bash
+export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
+```
+
+#### DiscVault v26 – beta
+
+```bash
+export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
+```
+
+#### Oba kanały
+
+```bash
+set -euo pipefail
+test -n "$DISCVAULT_IMAGE"
+case "$DISCVAULT_IMAGE" in
+  ghcr.io/helmerznl/discvault:latest|ghcr.io/helmerznl/discvault:beta) ;;
+  *) printf '%s\n' "$DISCVAULT_IMAGE" >&2; exit 64 ;;
+esac
+install -d -m 0700 /opt/discvault
+install -d -m 0750 /srv/discvault
+install -d -o 70 -g 70 -m 0700 /srv/discvault-postgres
+cd /opt/discvault
+test -f compose.yaml
+umask 077
+ENV_FILE=/opt/discvault/.env
+test ! -e "$ENV_FILE"
+ENV_TMP="$(mktemp "$ENV_FILE.tmp.XXXXXX")"
+trap 'rm -f "$ENV_TMP"' EXIT
+POSTGRES_PASSWORD="$(openssl rand -hex 32)"
+JWT_SECRET="$(openssl rand -hex 32)"
+printf '%s\n' \
+  "DISCVAULT_IMAGE=$DISCVAULT_IMAGE" \
+  'DISCVAULT_DATA_DIR=/srv/discvault' \
+  'DISCVAULT_POSTGRES_DATA=/srv/discvault-postgres' \
+  'DISCVAULT_API_PORT=6080' \
+  'DISCVAULT_MCP_PORT=6090' \
+  'DISCVAULT_NETWORK_NAME=discvault' \
+  'DISCVAULT_API_WORKERS=2' \
+  'DISCVAULT_API_TIMEOUT=180' \
+  'DISCVAULT_WORKER_ID=worker-1' \
+  'DISCVAULT_WORKER_POLL_INTERVAL=2' \
+  'POSTGRES_DB=discvault' \
+  'POSTGRES_USER=discvault' \
+  "POSTGRES_PASSWORD=$POSTGRES_PASSWORD" \
+  "JWT_SECRET=$JWT_SECRET" \
+  'TZ=Europe/Amsterdam' \
+  'RP_ID=localhost' \
+  'RP_NAME=DiscVault' \
+  'RP_ORIGINS=http://localhost:6080' > "$ENV_TMP"
+chmod 0600 "$ENV_TMP"
+ln "$ENV_TMP" "$ENV_FILE"
+rm -f "$ENV_TMP"
+trap - EXIT
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml config --quiet
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml pull
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml up -d
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml ps
+curl --fail http://localhost:6080/api/next/health
+```
+
+## Oczekiwany rezultat
+
+Zaakceptuj wynik dla **Konfiguracja: Zmienne środowiskowe** tylko gdy wszystkie poniższe wyniki są prawdziwe: uprawnienia pliku tylko dla właściciela (0600); prywatny plik ma tryb 600, walidacja Compose kończy się powodzeniem, a wybrany kanał działa prawidłowo. Punkty kontrolne tej strony: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+
+- uprawnienia pliku tylko dla właściciela (0600)
+- prywatny plik ma tryb 600, walidacja Compose kończy się powodzeniem, a wybrany kanał działa prawidłowo
+
+## Bezpieczeństwo i wycofanie
+
+:::caution
+Bezpieczna granica odzyskiwania dla **Konfiguracja: Zmienne środowiskowe** wymaga tych działań przed uruchomieniem lub kontynuacją: plik środowiska repozytorium dokumentacji nigdy nie jest plikiem środowiska DiscVault · `.env.example`; nie zmieniaj sekretów JWT i PostgreSQL podczas zwykłej konfiguracji · `JWT_SECRET` · `POSTGRES_PASSWORD`; po błędzie pozostaw usługi zatrzymane, przywróć i zweryfikuj poprzedni prywatny plik środowiska, a następnie odtwórz ten sam obraz bez zmiany sekretów. Punkty kontrolne tej strony: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+
+- plik środowiska repozytorium dokumentacji nigdy nie jest plikiem środowiska DiscVault · `.env.example`
+- nie zmieniaj sekretów JWT i PostgreSQL podczas zwykłej konfiguracji · `JWT_SECRET` · `POSTGRES_PASSWORD`
+- po błędzie pozostaw usługi zatrzymane, przywróć i zweryfikuj poprzedni prywatny plik środowiska, a następnie odtwórz ten sam obraz bez zmiany sekretów
+:::
+
+## Następny krok
+
+[Konfiguracja: Uwierzytelnianie i RBAC](/pl/configure/auth-rbac/)
+
+## Źródło i stan
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Źródło i stan: `2026-07-14`
+- DiscVault Docs: `0.1.0`

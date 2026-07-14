@@ -1,0 +1,101 @@
+---
+title: 'Update und Migration: Sicherung'
+description: 'Aufgabenspezifische Anleitung für Update und Migration: Sicherung: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.'
+pageId: 'update-backup'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Ziel und Ergebnis
+
+Führe den seitenspezifischen Ablauf aus für **Update und Migration: Sicherung**. Dieses Verfahren arbeitet mit `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
+
+## Gültig für
+
+Diese Seite gilt ausschließlich für **Update und Migration: Sicherung** (Docker · Unraid). Kanal- und Datengrenzen sind: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL-Dump und Dateisystemarchiv aus demselben schreibfreien Fenster; PostgreSQL `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL-Dump und Dateisystemarchiv aus demselben schreibfreien Fenster; PostgreSQL `/data`. Seitenspezifische Kontrollpunkte: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PostgreSQL-Dump und Dateisystemarchiv aus demselben schreibfreien Fenster
+- PostgreSQL `/data`
+
+### DiscVault v26 – Beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PostgreSQL-Dump und Dateisystemarchiv aus demselben schreibfreien Fenster
+- PostgreSQL `/data`
+
+## Voraussetzungen
+
+- Sicherungsziel außerhalb des Live-Datenpfads
+- beschreibbarer persistenter Speicher und freier Sicherungsplatz
+
+## Vorgehen
+
+1. **Festhalten:** `PREVIOUS_IMAGE` · `sha256`
+2. **Stoppen:** `next-api` `next-worker` `next-mcp`
+3. **Sichern:** `pg_dump -Fc`
+4. **Starten:** `next-api` → → MCP
+
+### Befehle und Einstellungen
+
+#### Beide Kanäle
+
+```bash
+set -euo pipefail
+cd /opt/discvault
+install -d -m 0700 /srv/backups
+BACKUP_ID="$(date -u +%Y%m%dT%H%M%SZ)"
+API_ID="$(docker compose --env-file .env -p discvault -f compose.yaml ps -q next-api)"
+IMAGE_ID="$(docker inspect "$API_ID" --format '{{.Image}}')"
+PREVIOUS_IMAGE="$(docker image inspect "$IMAGE_ID" --format '{{index .RepoDigests 0}}')"
+test -n "$PREVIOUS_IMAGE"
+printf 'BACKUP_ID=%s\nPREVIOUS_IMAGE=%s\n' "$BACKUP_ID" "$PREVIOUS_IMAGE" \
+  > "/srv/backups/discvault-$BACKUP_ID.env"
+chmod 0600 "/srv/backups/discvault-$BACKUP_ID.env"
+docker compose --env-file .env -p discvault -f compose.yaml stop next-worker next-mcp next-api
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'pg_dump -Fc -U "$POSTGRES_USER" "$POSTGRES_DB"' \
+  > "/srv/backups/discvault-$BACKUP_ID.dump"
+tar --acls --xattrs -C /srv -czf \
+  "/srv/backups/discvault-data-$BACKUP_ID.tgz" discvault
+docker compose --env-file .env -p discvault -f compose.yaml start next-api
+curl --fail http://localhost:6080/api/next/health
+docker compose --env-file .env -p discvault -f compose.yaml start next-worker next-mcp
+test -s "/srv/backups/discvault-$BACKUP_ID.dump"
+gzip -t "/srv/backups/discvault-data-$BACKUP_ID.tgz"
+```
+
+## Erwartetes Ergebnis
+
+Akzeptiere das Ergebnis für **Update und Migration: Sicherung** nur wenn alle folgenden Ergebnisse erfüllt sind: Archiv und Dump sind nicht leer, in einer Wiederherstellungsprobe lesbar und an einen unveränderlichen Image-Digest gebunden. Seitenspezifische Kontrollpunkte: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
+
+- Archiv und Dump sind nicht leer, in einer Wiederherstellungsprobe lesbar und an einen unveränderlichen Image-Digest gebunden
+
+## Sicherheit und Rollback
+
+:::caution
+Die sichere Wiederherstellungsgrenze für **Update und Migration: Sicherung** verlangt vor jedem Start oder Fortsetzen diese Maßnahmen: wenn ein Sicherungsbefehl fehlschlägt, nur unveränderte Dienste neu starten und das Update abbrechen; PostgreSQL-Dump und Dateisystemarchiv aus demselben schreibfreien Fenster. Seitenspezifische Kontrollpunkte: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
+
+- wenn ein Sicherungsbefehl fehlschlägt, nur unveränderte Dienste neu starten und das Update abbrechen
+- PostgreSQL-Dump und Dateisystemarchiv aus demselben schreibfreien Fenster
+:::
+
+## Nächster Schritt
+
+[Update und Migration: Wiederherstellung](/de/update/restore/)
+
+## Quelle und Status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Quelle und Status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

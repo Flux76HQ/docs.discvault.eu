@@ -1,0 +1,82 @@
+---
+title: 'Başlangıç: Genel bakış'
+description: 'Göreve özel yönergeler: Başlangıç: Genel bakış: Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.'
+pageId: 'start-requirements'
+products: ['server', 'pwa', 'ios', 'android']
+platforms: ['all']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="tüm platformlar" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Amaç ve sonuç
+
+Sayfaya özel iş akışını tamamlayın: **Başlangıç: Genel bakış**. Bu prosedür şunları kullanır: Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.
+
+## Geçerli olduğu alan
+
+Bu sayfa yalnızca şunlar için geçerlidir: **Başlangıç: Genel bakış** (tüm platformlar). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault:latest`; Docker Compose `v2` · PostgreSQL `17` · `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; Docker Compose `v2` · PostgreSQL `17` · `/data`. Sayfaya özel denetim noktaları: Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.
+
+### DiscVault v26 kararlı
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- Docker Compose `v2` · PostgreSQL `17` · `/data`
+
+### DiscVault v26 beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- Docker Compose `v2` · PostgreSQL `17` · `/data`
+
+## Ön koşullar
+
+- Docker Engine `24+`
+- yazılabilir kalıcı depolama ve boş yedek alanı
+- DNS TLS
+
+## Prosedür
+
+1. **İnceleyin:** Docker Engine `≥24` · Docker Compose `v2`
+2. **İnceleyin:** `≥2 GB` · yazılabilir kalıcı depolama ve boş yedek alanı
+3. **Yapılandırın:** DNS · TLS · HTTPS · `RP_ID` · `RP_ORIGINS`
+4. **Kaydedin:** seçilen yayın kanalı
+
+### Komutlar ve ayarlar
+
+#### Her iki kanal
+
+```bash
+docker version --format '{{.Server.Version}}'
+docker compose version
+curl --version
+```
+
+## Beklenen sonuç
+
+Şunun sonucunu kabul edin: **Başlangıç: Genel bakış** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: Docker Engine `≥24`; Docker Compose `v2`; HTTPS DNS. Sayfaya özel denetim noktaları: Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.
+
+- Docker Engine `≥24`
+- Docker Compose `v2`
+- HTTPS DNS
+
+## Güvenlik ve geri alma
+
+:::caution
+Şunun güvenli kurtarma sınırı: **Başlangıç: Genel bakış** başlatmadan veya devam etmeden önce şu işlemleri gerektirir: salt okunur denetimler veriyi değiştirmez; devam etmeden eksik gereksinimleri düzeltin. Sayfaya özel denetim noktaları: Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.
+
+- salt okunur denetimler veriyi değiştirmez; devam etmeden eksik gereksinimleri düzeltin
+:::
+
+## Sonraki adım
+
+[Kurulum: Kurulum yolları](/tr/install/)
+
+## Kaynak ve durum
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Kaynak ve durum: `2026-07-14`
+- DiscVault Docs: `0.1.0`

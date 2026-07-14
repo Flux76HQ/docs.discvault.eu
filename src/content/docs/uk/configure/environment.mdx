@@ -1,0 +1,138 @@
+---
+title: 'Налаштування: Змінні середовища'
+description: 'Спеціальні інструкції для завдання: Налаштування: Змінні середовища: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.'
+pageId: 'configure-environment'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Мета й результат
+
+Виконайте спеціальну процедуру сторінки для **Налаштування: Змінні середовища**. У цій процедурі використовуються `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+
+## Застосовується до
+
+Ця сторінка стосується лише **Налаштування: Змінні середовища** (Docker · Unraid). Межі каналу й даних: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `.env`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `.env`. Контрольні точки цієї сторінки: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+
+### DiscVault v26 – стабільний
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `.env`
+
+### DiscVault v26 – бета
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `.env`
+
+## Передумови
+
+- приватний файл середовища DiscVault
+- OpenSSL
+- заплановане вікно перезапуску
+
+## Процедура
+
+1. **Створіть:** `/opt/discvault/.env` · права на файл лише для власника (0600)
+2. **Налаштуйте:** `DISCVAULT_IMAGE` · `RP_ORIGINS`
+3. **Перевірте:** `chmod 0600` · `docker compose config --quiet`
+4. **Запустіть:** не змінюйте секрети JWT і PostgreSQL під час звичайного налаштування
+
+### Команди й налаштування
+
+#### DiscVault v26 – стабільний
+
+```bash
+export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
+```
+
+#### DiscVault v26 – бета
+
+```bash
+export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
+```
+
+#### Обидва канали
+
+```bash
+set -euo pipefail
+test -n "$DISCVAULT_IMAGE"
+case "$DISCVAULT_IMAGE" in
+  ghcr.io/helmerznl/discvault:latest|ghcr.io/helmerznl/discvault:beta) ;;
+  *) printf '%s\n' "$DISCVAULT_IMAGE" >&2; exit 64 ;;
+esac
+install -d -m 0700 /opt/discvault
+install -d -m 0750 /srv/discvault
+install -d -o 70 -g 70 -m 0700 /srv/discvault-postgres
+cd /opt/discvault
+test -f compose.yaml
+umask 077
+ENV_FILE=/opt/discvault/.env
+test ! -e "$ENV_FILE"
+ENV_TMP="$(mktemp "$ENV_FILE.tmp.XXXXXX")"
+trap 'rm -f "$ENV_TMP"' EXIT
+POSTGRES_PASSWORD="$(openssl rand -hex 32)"
+JWT_SECRET="$(openssl rand -hex 32)"
+printf '%s\n' \
+  "DISCVAULT_IMAGE=$DISCVAULT_IMAGE" \
+  'DISCVAULT_DATA_DIR=/srv/discvault' \
+  'DISCVAULT_POSTGRES_DATA=/srv/discvault-postgres' \
+  'DISCVAULT_API_PORT=6080' \
+  'DISCVAULT_MCP_PORT=6090' \
+  'DISCVAULT_NETWORK_NAME=discvault' \
+  'DISCVAULT_API_WORKERS=2' \
+  'DISCVAULT_API_TIMEOUT=180' \
+  'DISCVAULT_WORKER_ID=worker-1' \
+  'DISCVAULT_WORKER_POLL_INTERVAL=2' \
+  'POSTGRES_DB=discvault' \
+  'POSTGRES_USER=discvault' \
+  "POSTGRES_PASSWORD=$POSTGRES_PASSWORD" \
+  "JWT_SECRET=$JWT_SECRET" \
+  'TZ=Europe/Amsterdam' \
+  'RP_ID=localhost' \
+  'RP_NAME=DiscVault' \
+  'RP_ORIGINS=http://localhost:6080' > "$ENV_TMP"
+chmod 0600 "$ENV_TMP"
+ln "$ENV_TMP" "$ENV_FILE"
+rm -f "$ENV_TMP"
+trap - EXIT
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml config --quiet
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml pull
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml up -d
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml ps
+curl --fail http://localhost:6080/api/next/health
+```
+
+## Очікуваний результат
+
+Приймайте результат для **Налаштування: Змінні середовища** лише коли підтверджено всі наведені нижче результати: права на файл лише для власника (0600); приватний файл має режим 600, перевірка Compose успішна, а вибраний канал переходить у справний стан. Контрольні точки цієї сторінки: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+
+- права на файл лише для власника (0600)
+- приватний файл має режим 600, перевірка Compose успішна, а вибраний канал переходить у справний стан
+
+## Безпека й відкочування
+
+:::caution
+Безпечна межа відновлення для **Налаштування: Змінні середовища** вимагає цих дій до будь-якого запуску чи продовження: файл середовища репозиторію документації ніколи не є runtime-файлом DiscVault · `.env.example`; не змінюйте секрети JWT і PostgreSQL під час звичайного налаштування · `JWT_SECRET` · `POSTGRES_PASSWORD`; у разі помилки залиште служби зупиненими, відновіть і перевірте попередній приватний файл середовища, а потім повторно створіть той самий образ без ротації секретів. Контрольні точки цієї сторінки: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+
+- файл середовища репозиторію документації ніколи не є runtime-файлом DiscVault · `.env.example`
+- не змінюйте секрети JWT і PostgreSQL під час звичайного налаштування · `JWT_SECRET` · `POSTGRES_PASSWORD`
+- у разі помилки залиште служби зупиненими, відновіть і перевірте попередній приватний файл середовища, а потім повторно створіть той самий образ без ротації секретів
+:::
+
+## Наступний крок
+
+[Налаштування: Автентифікація та RBAC](/uk/configure/auth-rbac/)
+
+## Джерело й стан
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Джерело й стан: `2026-07-14`
+- DiscVault Docs: `0.1.0`

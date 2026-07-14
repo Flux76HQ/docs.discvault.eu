@@ -1,0 +1,115 @@
+---
+title: 'Update and migrate: Image rollback'
+description: 'Return to the exact previous image and restore matching data whenever a schema or migration ran.'
+pageId: 'update-rollback'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Goal and result
+
+Return to the exact previous image and restore matching data whenever a schema or migration ran.
+
+## Applies to
+
+Use the recorded previous digest with its matching PostgreSQL dump and `/data` archive. A channel switch is allowed only after release-note review and a matched backup.
+
+### DiscVault v26 stable
+
+- DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
+- restore the matching data before starting the previous image
+- PostgreSQL + `/data`
+
+### DiscVault v26 beta
+
+- DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
+- restore the matching data before starting the previous image
+- PostgreSQL + `/data`
+
+## Prerequisites
+
+- matching backup set
+- recorded immutable `PREVIOUS_IMAGE`
+
+## Procedure
+
+1. **Stop:** `next-api` + `next-worker` + `next-mcp`
+2. **Restore:** matching `/data` archive
+3. **Restore:** matching PostgreSQL dump · `pg_restore --exit-on-error`
+4. **Start:** `PREVIOUS_IMAGE` → API health → worker + MCP
+
+### Commands and settings
+
+#### Both channels
+
+```bash
+set -euo pipefail
+BACKUP_ID=20260714T180000Z
+cd /opt/discvault
+. "/srv/backups/discvault-$BACKUP_ID.env"
+test -n "$PREVIOUS_IMAGE"
+export DISCVAULT_IMAGE="$PREVIOUS_IMAGE"
+docker pull "$DISCVAULT_IMAGE"
+ENV_FILE=/opt/discvault/.env
+ENV_TMP="$(mktemp "$ENV_FILE.restore.XXXXXX")"
+trap 'rm -f "$ENV_TMP"' EXIT
+awk -v image="$DISCVAULT_IMAGE" '
+  /^DISCVAULT_IMAGE=/ { print "DISCVAULT_IMAGE=" image; found=1; next }
+  { print }
+  END { if (!found) exit 42 }
+' "$ENV_FILE" > "$ENV_TMP"
+chmod 0600 "$ENV_TMP"
+docker compose --env-file .env -p discvault -f compose.yaml stop next-worker next-mcp next-api
+mv /srv/discvault "/srv/discvault.failed-$(date -u +%Y%m%dT%H%M%SZ)"
+tar --acls --xattrs -C /srv -xzf \
+  "/srv/backups/discvault-data-$BACKUP_ID.tgz"
+docker compose --env-file .env -p discvault -f compose.yaml up -d postgres
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'dropdb --if-exists --force -U "$POSTGRES_USER" "$POSTGRES_DB"'
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'createdb -U "$POSTGRES_USER" "$POSTGRES_DB"'
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'pg_restore --exit-on-error --no-owner -U "$POSTGRES_USER" -d "$POSTGRES_DB"' \
+  < "/srv/backups/discvault-$BACKUP_ID.dump"
+docker compose --env-file .env -p discvault -f compose.yaml up -d --force-recreate next-api
+curl --fail http://localhost:6080/api/next/health
+docker compose --env-file .env -p discvault -f compose.yaml \
+  up -d --force-recreate next-worker next-mcp
+docker compose --env-file .env -p discvault -f compose.yaml ps
+mv "$ENV_TMP" "$ENV_FILE"
+trap - EXIT
+```
+
+## Expected result
+
+The recorded previous image is running and the restored library passes health and data checks.
+
+- `PREVIOUS_IMAGE` · `@sha256:`
+- restore the matching data before starting the previous image
+- library counts and sampled media match the selected backup
+
+## Safety and rollback
+
+:::caution
+Restore matching data before the previous image starts. If filesystem extraction or `pg_restore --exit-on-error` fails, keep the container, API, workers, and MCP stopped and retry from untouched backup copies.
+
+- if filesystem extraction or pg_restore fails, keep the container, API, workers, and MCP stopped; retry from untouched backup copies
+:::
+
+## Next step
+
+[Update and migrate: DiscVault 26 migration](/update/migration/)
+
+## Source and status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Verified: `2026-07-14`
+- DiscVault Docs: `0.1.0`

@@ -1,0 +1,82 @@
+---
+title: '故障排除'
+description: '任务专用说明： 故障排除: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.'
+pageId: 'troubleshooting-index'
+products: ['server', 'pwa', 'ios', 'android']
+platforms: ['all']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVaultApp', 'Flux76HQ/DiscVault-AndroidApp']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="所有平台" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVaultApp · Flux76HQ/DiscVault-AndroidApp" verified="2026-07-14" />
+
+## 目标和结果
+
+完成此页面专用的流程： **故障排除**. 此流程使用 `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+
+## 适用范围
+
+本页面仅适用于 **故障排除** (所有平台). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/api/next/health`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/api/next/health`. 本页面专用检查点： `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+
+### DiscVault v26 稳定版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `/api/next/health`
+
+### DiscVault v26 测试版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `/api/next/health`
+
+## 前提条件
+
+- 所选发布通道
+- 已隐藏隐私数据且带时间戳的日志
+- `postgres`
+
+## 操作步骤
+
+1. **记录:** `docker compose`
+2. **隔离:** 容器 → 反向代理 → 浏览器/应用 → 提供商 → 数据
+3. **检查:** 已隐藏隐私数据且带时间戳的日志
+4. **保留:** PostgreSQL `/data`
+
+### 命令和设置
+
+#### 两个通道
+
+```bash
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml ps
+curl --fail http://localhost:6080/api/next/health
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml logs --tail=200 next-api next-worker next-mcp postgres
+```
+
+## 预期结果
+
+仅在以下条件下接受结果： **故障排除** 必须确认以下所有结果： 已隔离出单个故障层，并记录时间戳、状态、镜像摘要和脱敏错误. 本页面专用检查点： `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+
+- 已隔离出单个故障层，并记录时间戳、状态、镜像摘要和脱敏错误
+
+## 安全与回滚
+
+:::caution
+安全恢复边界： **故障排除** 在启动或继续任何操作前必须执行： 不要先删除卷、`/data`、浏览器凭据或原生应用存储；保留脱敏日志且只恢复匹配备份. 本页面专用检查点： `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+
+- 不要先删除卷、`/data`、浏览器凭据或原生应用存储；保留脱敏日志且只恢复匹配备份
+:::
+
+## 下一步
+
+[参考](/zh/reference/)
+
+## 来源和状态
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- [`helmerzNL/DiscVaultApp@9d15ab2a339c`](https://github.com/helmerzNL/DiscVaultApp/commit/9d15ab2a339cefdb164ec0ab29ad69ddabc511c1)
+- [`Flux76HQ/DiscVault-AndroidApp@a13ef4bdbb23`](https://github.com/Flux76HQ/DiscVault-AndroidApp/commit/a13ef4bdbb23b6a7e52e01cdf532fa222c1b67de)
+- 来源和状态: `2026-07-14`
+- DiscVault Docs: `0.1.0`

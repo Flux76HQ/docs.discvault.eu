@@ -1,0 +1,81 @@
+---
+title: '管理: ログ、ジョブ、セキュリティ'
+description: 'タスク別の手順: 管理: ログ、ジョブ、セキュリティ: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.'
+pageId: 'admin-index'
+products: ['server']
+platforms: ['docker', 'unraid', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid · Web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## 目的と結果
+
+このページ専用の手順を実行します: **管理: ログ、ジョブ、セキュリティ**. この手順で扱う項目: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+## 対象
+
+このページの対象は **管理: ログ、ジョブ、セキュリティ** (Docker · Unraid · Web). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; API MCP PostgreSQL; DiscVault · `ghcr.io/helmerznl/discvault:beta`; API MCP PostgreSQL. このページ固有の確認点: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+### DiscVault v26 安定版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- API MCP PostgreSQL
+
+### DiscVault v26 ベータ版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- API MCP PostgreSQL
+
+## 前提条件
+
+- 所有者アクセス
+- 一致するバックアップ一式
+- 個人情報を伏せたタイムスタンプ付きログ
+
+## 手順
+
+1. **確認:** `/api/next/health`
+2. **確認:** 個人情報を伏せたタイムスタンプ付きログ
+3. **検証:** `next-worker`
+4. **保持:** `--tail=200`
+
+### コマンドと設定
+
+#### 両方のチャンネル
+
+```bash
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml logs --tail=200 next-api next-worker next-mcp postgres
+curl --fail http://localhost:6080/api/next/jobs
+curl --fail http://localhost:6080/api/next/health
+```
+
+## 期待される結果
+
+次の結果を受け入れる条件: **管理: ログ、ジョブ、セキュリティ** 以下の結果をすべて確認した場合のみ: 障害レイヤーを 1 つに切り分け、時刻、状態、イメージダイジェスト、秘匿済みエラーを記録します; 一致するバックアップ一式. このページ固有の確認点: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+- 障害レイヤーを 1 つに切り分け、時刻、状態、イメージダイジェスト、秘匿済みエラーを記録します
+- 一致するバックアップ一式
+
+## 安全性とロールバック
+
+:::caution
+安全な復旧境界: **管理: ログ、ジョブ、セキュリティ** 起動または続行の前に、次の操作が必要です: 最初にボリューム、`/data`、ブラウザー資格情報、ネイティブアプリ領域を削除せず、秘匿済みログを保存し、一致するバックアップだけを復元します. このページ固有の確認点: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+- 最初にボリューム、`/data`、ブラウザー資格情報、ネイティブアプリ領域を削除せず、秘匿済みログを保存し、一致するバックアップだけを復元します
+:::
+
+## 次の手順
+
+[トラブルシューティング](/ja/troubleshooting/)
+
+## 情報源と状態
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- 情報源と状態: `2026-07-14`
+- DiscVault Docs: `0.1.0`

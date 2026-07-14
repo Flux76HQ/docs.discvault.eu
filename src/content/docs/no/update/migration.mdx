@@ -1,0 +1,84 @@
+---
+title: 'Oppdatering og migrering: Migrering til DiscVault 26'
+description: 'Oppgavespesifikk veiledning for Oppdatering og migrering: Migrering til DiscVault 26: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.'
+pageId: 'update-migration'
+products: ['server']
+platforms: ['docker', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · nett" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Mål og resultat
+
+Fullfør den sidespesifikke arbeidsflyten for **Oppdatering og migrering: Migrering til DiscVault 26**. Denne fremgangsmåten bruker `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+
+## Gjelder for
+
+Denne siden gjelder bare **Oppdatering og migrering: Migrering til DiscVault 26** (Docker · nett). Kanal- og datagrensene er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; skrivebeskyttet kilde for eksisterende data; aldri gjeldende kjøretidsdatabase · SQLite → PostgreSQL; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26; skrivebeskyttet kilde for eksisterende data; aldri gjeldende kjøretidsdatabase · SQLite → PostgreSQL. Sidespesifikke kontrollpunkter: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault 26
+- skrivebeskyttet kilde for eksisterende data; aldri gjeldende kjøretidsdatabase · SQLite → PostgreSQL
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault 26
+- skrivebeskyttet kilde for eksisterende data; aldri gjeldende kjøretidsdatabase · SQLite → PostgreSQL
+
+## Forutsetninger
+
+- skrivebeskyttet kilde for eksisterende data; aldri gjeldende kjøretidsdatabase · `/data/discvault.db`
+- PostgreSQL-dump og filarkiv fra samme skrivelåste tidsrom
+- eiertilgang
+
+## Fremgangsmåte
+
+1. **Sikkerhetskopier:** skrivebeskyttet kilde for eksisterende data; aldri gjeldende kjøretidsdatabase · PostgreSQL-dump og filarkiv fra samme skrivelåste tidsrom
+2. **Kontroller:** `/api/next/migration/readiness` · `ready_for_confirmation`
+3. **Kjør:** `POST /api/next/migration/start`
+4. **Sammenlign:** beredskap er bekreftet, migreringen har null mislykkede poster og antall og medieutvalg samsvarer
+
+### Kommandoer og innstillinger
+
+#### Begge kanaler
+
+```bash
+curl --fail http://localhost:6080/api/next/migration/readiness
+curl --fail http://localhost:6080/api/next/migration/status
+curl --fail -X POST http://localhost:6080/api/next/migration/start \
+  -H 'Content-Type: application/json' -d '{}'
+curl --fail http://localhost:6080/api/next/migration/status
+```
+
+## Forventet resultat
+
+Godta resultatet for **Oppdatering og migrering: Migrering til DiscVault 26** bare når alle resultatene nedenfor er oppfylt: beredskap er bekreftet, migreringen har null mislykkede poster og antall og medieutvalg samsvarer. Sidespesifikke kontrollpunkter: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+
+- beredskap er bekreftet, migreringen har null mislykkede poster og antall og medieutvalg samsvarer
+
+## Sikkerhet og tilbakerulling
+
+:::caution
+Den sikre gjenopprettingsgrensen for **Oppdatering og migrering: Migrering til DiscVault 26** krever disse handlingene før noe startes eller fortsetter: stopp DiscVault-skrivere, gjenopprett tilhørende PostgreSQL- og `/data`-kopier, og gjenta aldri importen i en delvis fylt database. Sidespesifikke kontrollpunkter: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+
+- stopp DiscVault-skrivere, gjenopprett tilhørende PostgreSQL- og `/data`-kopier, og gjenta aldri importen i en delvis fylt database
+:::
+
+## Neste trinn
+
+[Konfigurasjon: Miljøvariabler](/no/configure/environment/)
+
+## Kilde og status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Kilde og status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

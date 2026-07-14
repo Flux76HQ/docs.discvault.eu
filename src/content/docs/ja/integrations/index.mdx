@@ -1,0 +1,75 @@
+---
+title: '連携: 連携の概要'
+description: 'タスク別の手順: 連携: 連携の概要: MCP · REST · Plex · Jellyfin.'
+pageId: 'integrations-index'
+products: ['server']
+platforms: ['web', 'docker']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Web · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## 目的と結果
+
+このページ専用の手順を実行します: **連携: 連携の概要**. この手順で扱う項目: MCP · REST · Plex · Jellyfin.
+
+## 対象
+
+このページの対象は **連携: 連携の概要** (Web · Docker). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; MCP REST Plex Jellyfin; DiscVault · `ghcr.io/helmerznl/discvault:beta`; MCP REST Plex Jellyfin. このページ固有の確認点: MCP · REST · Plex · Jellyfin.
+
+### DiscVault v26 安定版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- MCP REST Plex Jellyfin
+
+### DiscVault v26 ベータ版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- MCP REST Plex Jellyfin
+
+## 前提条件
+
+- HTTPS
+- API
+
+## 手順
+
+1. **選択:** [連携: MCP と REST API](/ja/integrations/mcp-api/)
+2. **選択:** [連携: Plex と Jellyfin](/ja/integrations/plex-jellyfin/)
+3. **設定:** HTTPS
+4. **失効:** Jellyfin
+
+### タスク別ルート
+
+- [連携: MCP と REST API](/ja/integrations/mcp-api/) — DiscVault 26 MCP REST
+- [連携: Plex と Jellyfin](/ja/integrations/plex-jellyfin/) — DiscVault 26
+
+## 期待される結果
+
+次の結果を受け入れる条件: **連携: 連携の概要** 以下の結果をすべて確認した場合のみ: シークレットとして保存するプロバイダー資格情報; HTTPS · MCP · REST · Plex · Jellyfin. このページ固有の確認点: MCP · REST · Plex · Jellyfin.
+
+- シークレットとして保存するプロバイダー資格情報
+- HTTPS · MCP · REST · Plex · Jellyfin
+
+## 安全性とロールバック
+
+:::caution
+安全な復旧境界: **連携: 連携の概要** 起動または続行の前に、次の操作が必要です: 連携を無効化し、テスト用または漏えいした資格情報を失効し、必要なら新規作成して古いものは再利用しません. このページ固有の確認点: MCP · REST · Plex · Jellyfin.
+
+- 連携を無効化し、テスト用または漏えいした資格情報を失効し、必要なら新規作成して古いものは再利用しません
+:::
+
+## 次の手順
+
+[連携: MCP と REST API](/ja/integrations/mcp-api/)
+
+## 情報源と状態
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- 情報源と状態: `2026-07-14`
+- DiscVault Docs: `0.1.0`

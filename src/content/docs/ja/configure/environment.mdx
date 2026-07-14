@@ -1,0 +1,138 @@
+---
+title: '設定: 環境変数'
+description: 'タスク別の手順: 設定: 環境変数: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.'
+pageId: 'configure-environment'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## 目的と結果
+
+このページ専用の手順を実行します: **設定: 環境変数**. この手順で扱う項目: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+
+## 対象
+
+このページの対象は **設定: 環境変数** (Docker · Unraid). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `.env`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `.env`. このページ固有の確認点: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+
+### DiscVault v26 安定版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `.env`
+
+### DiscVault v26 ベータ版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `.env`
+
+## 前提条件
+
+- DiscVault ランタイム専用の非公開ファイル
+- OpenSSL
+- 計画済みの再起動時間帯
+
+## 手順
+
+1. **作成:** `/opt/discvault/.env` · 所有者のみのファイル権限 (0600)
+2. **設定:** `DISCVAULT_IMAGE` · `RP_ORIGINS`
+3. **検証:** `chmod 0600` · `docker compose config --quiet`
+4. **開始:** 通常の設定変更では JWT と PostgreSQL のシークレットを変更しない
+
+### コマンドと設定
+
+#### DiscVault v26 安定版
+
+```bash
+export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
+```
+
+#### DiscVault v26 ベータ版
+
+```bash
+export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
+```
+
+#### 両方のチャンネル
+
+```bash
+set -euo pipefail
+test -n "$DISCVAULT_IMAGE"
+case "$DISCVAULT_IMAGE" in
+  ghcr.io/helmerznl/discvault:latest|ghcr.io/helmerznl/discvault:beta) ;;
+  *) printf '%s\n' "$DISCVAULT_IMAGE" >&2; exit 64 ;;
+esac
+install -d -m 0700 /opt/discvault
+install -d -m 0750 /srv/discvault
+install -d -o 70 -g 70 -m 0700 /srv/discvault-postgres
+cd /opt/discvault
+test -f compose.yaml
+umask 077
+ENV_FILE=/opt/discvault/.env
+test ! -e "$ENV_FILE"
+ENV_TMP="$(mktemp "$ENV_FILE.tmp.XXXXXX")"
+trap 'rm -f "$ENV_TMP"' EXIT
+POSTGRES_PASSWORD="$(openssl rand -hex 32)"
+JWT_SECRET="$(openssl rand -hex 32)"
+printf '%s\n' \
+  "DISCVAULT_IMAGE=$DISCVAULT_IMAGE" \
+  'DISCVAULT_DATA_DIR=/srv/discvault' \
+  'DISCVAULT_POSTGRES_DATA=/srv/discvault-postgres' \
+  'DISCVAULT_API_PORT=6080' \
+  'DISCVAULT_MCP_PORT=6090' \
+  'DISCVAULT_NETWORK_NAME=discvault' \
+  'DISCVAULT_API_WORKERS=2' \
+  'DISCVAULT_API_TIMEOUT=180' \
+  'DISCVAULT_WORKER_ID=worker-1' \
+  'DISCVAULT_WORKER_POLL_INTERVAL=2' \
+  'POSTGRES_DB=discvault' \
+  'POSTGRES_USER=discvault' \
+  "POSTGRES_PASSWORD=$POSTGRES_PASSWORD" \
+  "JWT_SECRET=$JWT_SECRET" \
+  'TZ=Europe/Amsterdam' \
+  'RP_ID=localhost' \
+  'RP_NAME=DiscVault' \
+  'RP_ORIGINS=http://localhost:6080' > "$ENV_TMP"
+chmod 0600 "$ENV_TMP"
+ln "$ENV_TMP" "$ENV_FILE"
+rm -f "$ENV_TMP"
+trap - EXIT
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml config --quiet
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml pull
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml up -d
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml ps
+curl --fail http://localhost:6080/api/next/health
+```
+
+## 期待される結果
+
+次の結果を受け入れる条件: **設定: 環境変数** 以下の結果をすべて確認した場合のみ: 所有者のみのファイル権限 (0600); 非公開ファイルがモード 600 で、Compose 検証に成功し、選択したチャンネルが正常になる. このページ固有の確認点: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+
+- 所有者のみのファイル権限 (0600)
+- 非公開ファイルがモード 600 で、Compose 検証に成功し、選択したチャンネルが正常になる
+
+## 安全性とロールバック
+
+:::caution
+安全な復旧境界: **設定: 環境変数** 起動または続行の前に、次の操作が必要です: ドキュメントリポジトリの環境ファイルを DiscVault ランタイム設定として使用しない · `.env.example`; 通常の設定変更では JWT と PostgreSQL のシークレットを変更しない · `JWT_SECRET` · `POSTGRES_PASSWORD`; 失敗時はサービスを停止したまま、以前の非公開環境ファイルを復元して検証し、シークレットを変更せず同じイメージを再作成する. このページ固有の確認点: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+
+- ドキュメントリポジトリの環境ファイルを DiscVault ランタイム設定として使用しない · `.env.example`
+- 通常の設定変更では JWT と PostgreSQL のシークレットを変更しない · `JWT_SECRET` · `POSTGRES_PASSWORD`
+- 失敗時はサービスを停止したまま、以前の非公開環境ファイルを復元して検証し、シークレットを変更せず同じイメージを再作成する
+:::
+
+## 次の手順
+
+[設定: 認証と RBAC](/ja/configure/auth-rbac/)
+
+## 情報源と状態
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- 情報源と状態: `2026-07-14`
+- DiscVault Docs: `0.1.0`

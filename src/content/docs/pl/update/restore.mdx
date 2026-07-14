@@ -1,0 +1,115 @@
+---
+title: 'Aktualizacja i migracja: Przywracanie'
+description: 'Instrukcja właściwa dla zadania: Aktualizacja i migracja: Przywracanie: `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.'
+pageId: 'update-restore'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Cel i rezultat
+
+Wykonaj procedurę właściwą dla strony: **Aktualizacja i migracja: Przywracanie**. Ta procedura korzysta z `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.
+
+## Dotyczy
+
+Ta strona dotyczy wyłącznie **Aktualizacja i migracja: Przywracanie** (Docker · Unraid). Granice kanału i danych: DiscVault · `ghcr.io/helmerznl/discvault:latest`; zrzut PostgreSQL i archiwum plików z tego samego okna bez zapisów; przywróć pasujące dane przed uruchomieniem poprzedniego obrazu; DiscVault · `ghcr.io/helmerznl/discvault:beta`; zrzut PostgreSQL i archiwum plików z tego samego okna bez zapisów; przywróć pasujące dane przed uruchomieniem poprzedniego obrazu. Punkty kontrolne tej strony: `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.
+
+### DiscVault v26 – stabilny
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- zrzut PostgreSQL i archiwum plików z tego samego okna bez zapisów
+- przywróć pasujące dane przed uruchomieniem poprzedniego obrazu
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- zrzut PostgreSQL i archiwum plików z tego samego okna bez zapisów
+- przywróć pasujące dane przed uruchomieniem poprzedniego obrazu
+
+## Wymagania wstępne
+
+- pasujący zestaw kopii
+- okno serwisowe
+- `PREVIOUS_IMAGE` · prywatny plik środowiska DiscVault
+
+## Procedura
+
+1. **Zatrzymaj:** `next-api` `next-worker` `next-mcp`
+2. **Przywróć:** `/data`
+3. **Przywróć:** PostgreSQL · `pg_restore --exit-on-error`
+4. **Uruchom:** `next-api` → `GET /api/next/health` → `next-worker` `next-mcp`
+
+### Polecenia i ustawienia
+
+#### Oba kanały
+
+```bash
+set -euo pipefail
+BACKUP_ID=20260714T180000Z
+cd /opt/discvault
+. "/srv/backups/discvault-$BACKUP_ID.env"
+test -n "$PREVIOUS_IMAGE"
+export DISCVAULT_IMAGE="$PREVIOUS_IMAGE"
+docker pull "$DISCVAULT_IMAGE"
+ENV_FILE=/opt/discvault/.env
+ENV_TMP="$(mktemp "$ENV_FILE.restore.XXXXXX")"
+trap 'rm -f "$ENV_TMP"' EXIT
+awk -v image="$DISCVAULT_IMAGE" '
+  /^DISCVAULT_IMAGE=/ { print "DISCVAULT_IMAGE=" image; found=1; next }
+  { print }
+  END { if (!found) exit 42 }
+' "$ENV_FILE" > "$ENV_TMP"
+chmod 0600 "$ENV_TMP"
+docker compose --env-file .env -p discvault -f compose.yaml stop next-worker next-mcp next-api
+mv /srv/discvault "/srv/discvault.failed-$(date -u +%Y%m%dT%H%M%SZ)"
+tar --acls --xattrs -C /srv -xzf \
+  "/srv/backups/discvault-data-$BACKUP_ID.tgz"
+docker compose --env-file .env -p discvault -f compose.yaml up -d postgres
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'dropdb --if-exists --force -U "$POSTGRES_USER" "$POSTGRES_DB"'
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'createdb -U "$POSTGRES_USER" "$POSTGRES_DB"'
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'pg_restore --exit-on-error --no-owner -U "$POSTGRES_USER" -d "$POSTGRES_DB"' \
+  < "/srv/backups/discvault-$BACKUP_ID.dump"
+docker compose --env-file .env -p discvault -f compose.yaml up -d --force-recreate next-api
+curl --fail http://localhost:6080/api/next/health
+docker compose --env-file .env -p discvault -f compose.yaml \
+  up -d --force-recreate next-worker next-mcp
+docker compose --env-file .env -p discvault -f compose.yaml ps
+mv "$ENV_TMP" "$ENV_FILE"
+trap - EXIT
+```
+
+## Oczekiwany rezultat
+
+Zaakceptuj wynik dla **Aktualizacja i migracja: Przywracanie** tylko gdy wszystkie poniższe wyniki są prawdziwe: liczby w bibliotece i próbka multimediów zgadzają się z wybraną kopią; `:latest` `:beta`. Punkty kontrolne tej strony: `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.
+
+- liczby w bibliotece i próbka multimediów zgadzają się z wybraną kopią
+- `:latest` `:beta`
+
+## Bezpieczeństwo i wycofanie
+
+:::caution
+Bezpieczna granica odzyskiwania dla **Aktualizacja i migracja: Przywracanie** wymaga tych działań przed uruchomieniem lub kontynuacją: jeśli rozpakowanie plików lub pg_restore nie powiedzie się, pozostaw kontener, API, procesy robocze i MCP zatrzymane; ponów próbę z nietkniętych kopii. Punkty kontrolne tej strony: `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.
+
+- jeśli rozpakowanie plików lub pg_restore nie powiedzie się, pozostaw kontener, API, procesy robocze i MCP zatrzymane; ponów próbę z nietkniętych kopii
+:::
+
+## Następny krok
+
+[Aktualizacja i migracja: Aktualizacja kontenera](/pl/update/update/)
+
+## Źródło i stan
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Źródło i stan: `2026-07-14`
+- DiscVault Docs: `0.1.0`

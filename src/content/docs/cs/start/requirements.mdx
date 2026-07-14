@@ -1,0 +1,82 @@
+---
+title: 'Začít: Přehled'
+description: 'Pokyny pro konkrétní úlohu: Začít: Přehled: Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.'
+pageId: 'start-requirements'
+products: ['server', 'pwa', 'ios', 'android']
+platforms: ['all']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="všechny platformy" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Cíl a výsledek
+
+Dokončete postup určený pro **Začít: Přehled**. Tento postup pracuje s Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.
+
+## Platí pro
+
+Tato stránka platí pouze pro **Začít: Přehled** (všechny platformy). Hranice kanálu a dat jsou: DiscVault · `ghcr.io/helmerznl/discvault:latest`; Docker Compose `v2` · PostgreSQL `17` · `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; Docker Compose `v2` · PostgreSQL `17` · `/data`. Kontrolní body této stránky: Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.
+
+### DiscVault v26 – stabilní
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- Docker Compose `v2` · PostgreSQL `17` · `/data`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- Docker Compose `v2` · PostgreSQL `17` · `/data`
+
+## Požadavky
+
+- Docker Engine `24+`
+- zapisovatelná trvalá data a volné místo pro zálohu
+- DNS TLS
+
+## Postup
+
+1. **Zkontrolujte:** Docker Engine `≥24` · Docker Compose `v2`
+2. **Zkontrolujte:** `≥2 GB` · zapisovatelná trvalá data a volné místo pro zálohu
+3. **Nastavte:** DNS · TLS · HTTPS · `RP_ID` · `RP_ORIGINS`
+4. **Zaznamenejte:** vybraný kanál vydání
+
+### Příkazy a nastavení
+
+#### Oba kanály
+
+```bash
+docker version --format '{{.Server.Version}}'
+docker compose version
+curl --version
+```
+
+## Očekávaný výsledek
+
+Výsledek přijměte pro **Začít: Přehled** pouze pokud platí všechny následující výsledky: Docker Engine `≥24`; Docker Compose `v2`; HTTPS DNS. Kontrolní body této stránky: Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.
+
+- Docker Engine `≥24`
+- Docker Compose `v2`
+- HTTPS DNS
+
+## Bezpečnost a návrat
+
+:::caution
+Bezpečná hranice obnovy pro **Začít: Přehled** vyžaduje před spuštěním nebo pokračováním tyto kroky: kontroly pouze pro čtení nemění data; před pokračováním doplňte chybějící požadavky. Kontrolní body této stránky: Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.
+
+- kontroly pouze pro čtení nemění data; před pokračováním doplňte chybějící požadavky
+:::
+
+## Další krok
+
+[Instalace: Možnosti instalace](/cs/install/)
+
+## Zdroj a stav
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Zdroj a stav: `2026-07-14`
+- DiscVault Docs: `0.1.0`

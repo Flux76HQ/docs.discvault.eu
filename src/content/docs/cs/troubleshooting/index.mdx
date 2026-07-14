@@ -1,0 +1,82 @@
+---
+title: 'Řešení potíží'
+description: 'Pokyny pro konkrétní úlohu: Řešení potíží: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.'
+pageId: 'troubleshooting-index'
+products: ['server', 'pwa', 'ios', 'android']
+platforms: ['all']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVaultApp', 'Flux76HQ/DiscVault-AndroidApp']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="všechny platformy" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVaultApp · Flux76HQ/DiscVault-AndroidApp" verified="2026-07-14" />
+
+## Cíl a výsledek
+
+Dokončete postup určený pro **Řešení potíží**. Tento postup pracuje s `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+
+## Platí pro
+
+Tato stránka platí pouze pro **Řešení potíží** (všechny platformy). Hranice kanálu a dat jsou: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/api/next/health`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/api/next/health`. Kontrolní body této stránky: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+
+### DiscVault v26 – stabilní
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `/api/next/health`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `/api/next/health`
+
+## Požadavky
+
+- vybraný kanál vydání
+- protokoly s časem a skrytými soukromými údaji
+- `postgres`
+
+## Postup
+
+1. **Zaznamenejte:** `docker compose`
+2. **Oddělte:** kontejner → reverzní proxy → prohlížeč/aplikace → poskytovatel → data
+3. **Zkontrolujte:** protokoly s časem a skrytými soukromými údaji
+4. **Zachovejte:** PostgreSQL `/data`
+
+### Příkazy a nastavení
+
+#### Oba kanály
+
+```bash
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml ps
+curl --fail http://localhost:6080/api/next/health
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml logs --tail=200 next-api next-worker next-mcp postgres
+```
+
+## Očekávaný výsledek
+
+Výsledek přijměte pro **Řešení potíží** pouze pokud platí všechny následující výsledky: jedna chybující vrstva je izolována s časem, stavem, digestem obrazu a anonymizovanou chybou. Kontrolní body této stránky: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+
+- jedna chybující vrstva je izolována s časem, stavem, digestem obrazu a anonymizovanou chybou
+
+## Bezpečnost a návrat
+
+:::caution
+Bezpečná hranice obnovy pro **Řešení potíží** vyžaduje před spuštěním nebo pokračováním tyto kroky: nejprve nemažte svazky, `/data`, přihlašovací údaje prohlížeče ani úložiště aplikace; zachovejte anonymizované protokoly a obnovujte jen odpovídající zálohu. Kontrolní body této stránky: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+
+- nejprve nemažte svazky, `/data`, přihlašovací údaje prohlížeče ani úložiště aplikace; zachovejte anonymizované protokoly a obnovujte jen odpovídající zálohu
+:::
+
+## Další krok
+
+[Reference](/cs/reference/)
+
+## Zdroj a stav
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- [`helmerzNL/DiscVaultApp@9d15ab2a339c`](https://github.com/helmerzNL/DiscVaultApp/commit/9d15ab2a339cefdb164ec0ab29ad69ddabc511c1)
+- [`Flux76HQ/DiscVault-AndroidApp@a13ef4bdbb23`](https://github.com/Flux76HQ/DiscVault-AndroidApp/commit/a13ef4bdbb23b6a7e52e01cdf532fa222c1b67de)
+- Zdroj a stav: `2026-07-14`
+- DiscVault Docs: `0.1.0`

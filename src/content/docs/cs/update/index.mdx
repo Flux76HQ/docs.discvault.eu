@@ -1,0 +1,78 @@
+---
+title: 'Aktualizace a migrace: Přehled'
+description: 'Pokyny pro konkrétní úlohu: Aktualizace a migrace: Přehled: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.'
+pageId: 'update-index'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Cíl a výsledek
+
+Dokončete postup určený pro **Aktualizace a migrace: Přehled**. Tento postup pracuje s `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+## Platí pro
+
+Tato stránka platí pouze pro **Aktualizace a migrace: Přehled** (Docker · Unraid). Hranice kanálu a dat jsou: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/update/restore/`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/update/restore/`. Kontrolní body této stránky: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+### DiscVault v26 – stabilní
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `/update/restore/`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `/update/restore/`
+
+## Požadavky
+
+- odpovídající sada záloh
+- poznámky k vydání a zaznamenaný neměnný digest
+
+## Postup
+
+1. **Zálohujte:** [Aktualizace a migrace: Záloha](/cs/update/backup/) · odpovídající sada záloh
+2. **Otestujte:** [Aktualizace a migrace: Obnovení](/cs/update/restore/)
+3. **Spusťte:** [Aktualizace a migrace: Aktualizace kontejneru](/cs/update/update/) · `DISCVAULT_IMAGE`
+4. **Zachovejte:** [Aktualizace a migrace: Návrat obrazu](/cs/update/rollback/)
+
+### Cesty k úlohám
+
+- [Aktualizace a migrace: Záloha](/cs/update/backup/) — 1 PostgreSQL
+- [Aktualizace a migrace: Obnovení](/cs/update/restore/) — 2
+- [Aktualizace a migrace: Aktualizace kontejneru](/cs/update/update/) — 3
+- [Aktualizace a migrace: Návrat obrazu](/cs/update/rollback/) — 4
+
+## Očekávaný výsledek
+
+Výsledek přijměte pro **Aktualizace a migrace: Přehled** pouze pokud platí všechny následující výsledky: archiv a dump nejsou prázdné, lze je přečíst při zkušební obnově a jsou svázány s neměnným digestem obrazu; běží zamýšlený digest obrazu, stav je v pořádku a přihlášení vlastníka, počet knihovny i vzorek média projdou. Kontrolní body této stránky: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+- archiv a dump nejsou prázdné, lze je přečíst při zkušební obnově a jsou svázány s neměnným digestem obrazu
+- běží zamýšlený digest obrazu, stav je v pořádku a přihlášení vlastníka, počet knihovny i vzorek média projdou
+
+## Bezpečnost a návrat
+
+:::caution
+Bezpečná hranice obnovy pro **Aktualizace a migrace: Přehled** vyžaduje před spuštěním nebo pokračováním tyto kroky: odpovídající sada záloh; `PREVIOUS_IMAGE` · `@sha256:`. Kontrolní body této stránky: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+- odpovídající sada záloh
+- `PREVIOUS_IMAGE` · `@sha256:`
+:::
+
+## Další krok
+
+[Aktualizace a migrace: Záloha](/cs/update/backup/)
+
+## Zdroj a stav
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Zdroj a stav: `2026-07-14`
+- DiscVault Docs: `0.1.0`

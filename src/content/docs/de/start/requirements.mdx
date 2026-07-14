@@ -1,0 +1,82 @@
+---
+title: 'Start: Übersicht'
+description: 'Aufgabenspezifische Anleitung für Start: Übersicht: Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.'
+pageId: 'start-requirements'
+products: ['server', 'pwa', 'ios', 'android']
+platforms: ['all']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="alle Plattformen" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Ziel und Ergebnis
+
+Führe den seitenspezifischen Ablauf aus für **Start: Übersicht**. Dieses Verfahren arbeitet mit Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.
+
+## Gültig für
+
+Diese Seite gilt ausschließlich für **Start: Übersicht** (alle Plattformen). Kanal- und Datengrenzen sind: DiscVault · `ghcr.io/helmerznl/discvault:latest`; Docker Compose `v2` · PostgreSQL `17` · `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; Docker Compose `v2` · PostgreSQL `17` · `/data`. Seitenspezifische Kontrollpunkte: Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- Docker Compose `v2` · PostgreSQL `17` · `/data`
+
+### DiscVault v26 – Beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- Docker Compose `v2` · PostgreSQL `17` · `/data`
+
+## Voraussetzungen
+
+- Docker Engine `24+`
+- beschreibbarer persistenter Speicher und freier Sicherungsplatz
+- DNS TLS
+
+## Vorgehen
+
+1. **Prüfen:** Docker Engine `≥24` · Docker Compose `v2`
+2. **Prüfen:** `≥2 GB` · beschreibbarer persistenter Speicher und freier Sicherungsplatz
+3. **Konfigurieren:** DNS · TLS · HTTPS · `RP_ID` · `RP_ORIGINS`
+4. **Festhalten:** gewählter Release-Kanal
+
+### Befehle und Einstellungen
+
+#### Beide Kanäle
+
+```bash
+docker version --format '{{.Server.Version}}'
+docker compose version
+curl --version
+```
+
+## Erwartetes Ergebnis
+
+Akzeptiere das Ergebnis für **Start: Übersicht** nur wenn alle folgenden Ergebnisse erfüllt sind: Docker Engine `≥24`; Docker Compose `v2`; HTTPS DNS. Seitenspezifische Kontrollpunkte: Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.
+
+- Docker Engine `≥24`
+- Docker Compose `v2`
+- HTTPS DNS
+
+## Sicherheit und Rollback
+
+:::caution
+Die sichere Wiederherstellungsgrenze für **Start: Übersicht** verlangt vor jedem Start oder Fortsetzen diese Maßnahmen: reine Leseprüfungen ändern keine Daten; fehlende Voraussetzungen vor dem Fortfahren beheben. Seitenspezifische Kontrollpunkte: Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.
+
+- reine Leseprüfungen ändern keine Daten; fehlende Voraussetzungen vor dem Fortfahren beheben
+:::
+
+## Nächster Schritt
+
+[Installation: Installationswege](/de/install/)
+
+## Quelle und Status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Quelle und Status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

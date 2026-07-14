@@ -1,0 +1,85 @@
+---
+title: 'Kurulum: Kalıcı veriler ve PostgreSQL'
+description: 'Göreve özel yönergeler: Kurulum: Kalıcı veriler ve PostgreSQL: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.'
+pageId: 'install-storage-postgresql'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Amaç ve sonuç
+
+Sayfaya özel iş akışını tamamlayın: **Kurulum: Kalıcı veriler ve PostgreSQL**. Bu prosedür şunları kullanır: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
+
+## Geçerli olduğu alan
+
+Bu sayfa yalnızca şunlar için geçerlidir: **Kurulum: Kalıcı veriler ve PostgreSQL** (Docker · Unraid). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL; `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL; `/data`. Sayfaya özel denetim noktaları: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
+
+### DiscVault v26 kararlı
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PostgreSQL
+- `/data`
+
+### DiscVault v26 beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PostgreSQL
+- `/data`
+
+## Ön koşullar
+
+- `DISCVAULT_POSTGRES_DATA`
+- canlı veri yolunun dışında yedek hedefi
+- PostgreSQL `17`
+
+## Prosedür
+
+1. **İnceleyin:** `DISCVAULT_POSTGRES_DATA` · `/var/lib/postgresql/data`
+2. **İnceleyin:** `DISCVAULT_DATA_DIR` · `/data`
+3. **Doğrulayın:** `postgres` · `healthy` · `next-api`
+4. **Kaydedin:** aynı yazıcıların durdurulduğu aralıktan PostgreSQL dökümü ve dosya arşivi
+
+### Komutlar ve ayarlar
+
+#### Her iki kanal
+
+```bash
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml ps
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml exec -T postgres sh -c 'pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"'
+docker inspect discvault-next-api-1 --format '{{range .Mounts}}{{.Source}} -> {{.Destination}}{{println}}{{end}}'
+```
+
+## Beklenen sonuç
+
+Şunun sonucunu kabul edin: **Kurulum: Kalıcı veriler ve PostgreSQL** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: PostgreSQL · `healthy`; `/data`; eşleşen yedek kümesi. Sayfaya özel denetim noktaları: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
+
+- PostgreSQL · `healthy`
+- `/data`
+- eşleşen yedek kümesi
+
+## Güvenlik ve geri alma
+
+:::caution
+Şunun güvenli kurtarma sınırı: **Kurulum: Kalıcı veriler ve PostgreSQL** başlatmadan veya devam etmeden önce şu işlemleri gerektirir: PostgreSQL ve `/data` ayrı depolardır ve tek bir eşleşen yedek kümesi gerektirir; canlı veri yolunun dışında yedek hedefi. Sayfaya özel denetim noktaları: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
+
+- PostgreSQL ve `/data` ayrı depolardır ve tek bir eşleşen yedek kümesi gerektirir
+- canlı veri yolunun dışında yedek hedefi
+:::
+
+## Sonraki adım
+
+[Kurulum: Ters vekil ve geçiş anahtarları](/tr/install/reverse-proxy-passkeys/)
+
+## Kaynak ve durum
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Kaynak ve durum: `2026-07-14`
+- DiscVault Docs: `0.1.0`

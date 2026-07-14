@@ -1,0 +1,115 @@
+---
+title: 'Bijwerken en migreren: Herstellen'
+description: 'Taakspecifieke instructies voor Bijwerken en migreren: Herstellen: `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.'
+pageId: 'update-restore'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Doel en resultaat
+
+Voer de paginaspecifieke werkwijze uit voor **Bijwerken en migreren: Herstellen**. Deze werkwijze gebruikt `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.
+
+## Van toepassing op
+
+Deze pagina is uitsluitend van toepassing op **Bijwerken en migreren: Herstellen** (Docker · Unraid). De kanaal- en gegevensgrenzen zijn: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL-dump en bestandsarchief uit hetzelfde schrijversstopvenster; herstel de bijpassende gegevens voordat de vorige image wordt gestart; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL-dump en bestandsarchief uit hetzelfde schrijversstopvenster; herstel de bijpassende gegevens voordat de vorige image wordt gestart. Paginaspecifieke controlepunten: `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.
+
+### DiscVault v26 stabiel
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PostgreSQL-dump en bestandsarchief uit hetzelfde schrijversstopvenster
+- herstel de bijpassende gegevens voordat de vorige image wordt gestart
+
+### DiscVault v26 bèta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PostgreSQL-dump en bestandsarchief uit hetzelfde schrijversstopvenster
+- herstel de bijpassende gegevens voordat de vorige image wordt gestart
+
+## Vereisten
+
+- bijpassende back-upset
+- onderhoudsvenster
+- `PREVIOUS_IMAGE` · privé DiscVault-runtimebestand
+
+## Procedure
+
+1. **Stoppen:** `next-api` `next-worker` `next-mcp`
+2. **Herstellen:** `/data`
+3. **Herstellen:** PostgreSQL · `pg_restore --exit-on-error`
+4. **Starten:** `next-api` → `GET /api/next/health` → `next-worker` `next-mcp`
+
+### Opdrachten en instellingen
+
+#### Beide kanalen
+
+```bash
+set -euo pipefail
+BACKUP_ID=20260714T180000Z
+cd /opt/discvault
+. "/srv/backups/discvault-$BACKUP_ID.env"
+test -n "$PREVIOUS_IMAGE"
+export DISCVAULT_IMAGE="$PREVIOUS_IMAGE"
+docker pull "$DISCVAULT_IMAGE"
+ENV_FILE=/opt/discvault/.env
+ENV_TMP="$(mktemp "$ENV_FILE.restore.XXXXXX")"
+trap 'rm -f "$ENV_TMP"' EXIT
+awk -v image="$DISCVAULT_IMAGE" '
+  /^DISCVAULT_IMAGE=/ { print "DISCVAULT_IMAGE=" image; found=1; next }
+  { print }
+  END { if (!found) exit 42 }
+' "$ENV_FILE" > "$ENV_TMP"
+chmod 0600 "$ENV_TMP"
+docker compose --env-file .env -p discvault -f compose.yaml stop next-worker next-mcp next-api
+mv /srv/discvault "/srv/discvault.failed-$(date -u +%Y%m%dT%H%M%SZ)"
+tar --acls --xattrs -C /srv -xzf \
+  "/srv/backups/discvault-data-$BACKUP_ID.tgz"
+docker compose --env-file .env -p discvault -f compose.yaml up -d postgres
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'dropdb --if-exists --force -U "$POSTGRES_USER" "$POSTGRES_DB"'
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'createdb -U "$POSTGRES_USER" "$POSTGRES_DB"'
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'pg_restore --exit-on-error --no-owner -U "$POSTGRES_USER" -d "$POSTGRES_DB"' \
+  < "/srv/backups/discvault-$BACKUP_ID.dump"
+docker compose --env-file .env -p discvault -f compose.yaml up -d --force-recreate next-api
+curl --fail http://localhost:6080/api/next/health
+docker compose --env-file .env -p discvault -f compose.yaml \
+  up -d --force-recreate next-worker next-mcp
+docker compose --env-file .env -p discvault -f compose.yaml ps
+mv "$ENV_TMP" "$ENV_FILE"
+trap - EXIT
+```
+
+## Verwacht resultaat
+
+Accepteer het resultaat voor **Bijwerken en migreren: Herstellen** alleen wanneer alle onderstaande resultaten kloppen: bibliotheekaantallen en mediavoorbeeld komen overeen met de gekozen back-up; `:latest` `:beta`. Paginaspecifieke controlepunten: `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.
+
+- bibliotheekaantallen en mediavoorbeeld komen overeen met de gekozen back-up
+- `:latest` `:beta`
+
+## Veiligheid en terugdraaien
+
+:::caution
+De veilige herstelgrens voor **Bijwerken en migreren: Herstellen** vereist deze acties voordat iets start of doorgaat: houd bij een mislukte bestandsextractie of pg_restore de container, API, workers en MCP gestopt; probeer opnieuw vanaf onaangeroerde back-upkopieën. Paginaspecifieke controlepunten: `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.
+
+- houd bij een mislukte bestandsextractie of pg_restore de container, API, workers en MCP gestopt; probeer opnieuw vanaf onaangeroerde back-upkopieën
+:::
+
+## Volgende stap
+
+[Bijwerken en migreren: Container bijwerken](/nl/update/update/)
+
+## Bron en status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Bron en status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

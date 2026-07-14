@@ -1,0 +1,91 @@
+---
+title: 'Entegrasyonlar: MCP ve REST API'
+description: 'Göreve özel yönergeler: Entegrasyonlar: MCP ve REST API: `streamable-http` · `/mcp` · `Authorization` · `6090`.'
+pageId: 'integrations-mcp-api'
+products: ['server']
+platforms: ['web', 'docker']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="web · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Amaç ve sonuç
+
+Sayfaya özel iş akışını tamamlayın: **Entegrasyonlar: MCP ve REST API**. Bu prosedür şunları kullanır: `streamable-http` · `/mcp` · `Authorization` · `6090`.
+
+## Geçerli olduğu alan
+
+Bu sayfa yalnızca şunlar için geçerlidir: **Entegrasyonlar: MCP ve REST API** (web · Docker). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/mcp` `6090` · REST API; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/mcp` `6090` · REST API. Sayfaya özel denetim noktaları: `streamable-http` · `/mcp` · `Authorization` · `6090`.
+
+### DiscVault v26 kararlı
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `/mcp` `6090` · REST API
+
+### DiscVault v26 beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `/mcp` `6090` · REST API
+
+## Ön koşullar
+
+- API
+- HTTPS DiscVault
+- MCP HTTP
+
+## Prosedür
+
+1. **Oluşturun:** API
+2. **Yapılandırın:** `streamable-http` · `https://discvault.example.com/mcp`
+3. **Test edin:** `Authorization`
+4. **İptal edin:** `6090`
+
+### Komutlar ve ayarlar
+
+#### Her iki kanal
+
+```json
+{
+  "mcpServers": {
+    "discvault": {
+      "transport": "streamable-http",
+      "url": "https://discvault.example.com/mcp",
+      "headers": { "Authorization": "******" }
+    }
+  }
+}
+```
+
+```bash
+curl --fail https://discvault.example.com/api/next/health
+```
+
+## Beklenen sonuç
+
+Şunun sonucunu kabul edin: **Entegrasyonlar: MCP ve REST API** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: DiscVault · `streamable-http` · `/mcp`; gizli olarak saklanan sağlayıcı kimlik bilgisi · `Authorization`. Sayfaya özel denetim noktaları: `streamable-http` · `/mcp` · `Authorization` · `6090`.
+
+- DiscVault · `streamable-http` · `/mcp`
+- gizli olarak saklanan sağlayıcı kimlik bilgisi · `Authorization`
+
+## Güvenlik ve geri alma
+
+:::caution
+Şunun güvenli kurtarma sınırı: **Entegrasyonlar: MCP ve REST API** başlatmadan veya devam etmeden önce şu işlemleri gerektirir: entegrasyonu devre dışı bırakın, test veya açığa çıkan kimlik bilgilerini iptal edin, gerekirse yenisini oluşturun ve eskisini yeniden kullanmayın. Sayfaya özel denetim noktaları: `streamable-http` · `/mcp` · `Authorization` · `6090`.
+
+- entegrasyonu devre dışı bırakın, test veya açığa çıkan kimlik bilgilerini iptal edin, gerekirse yenisini oluşturun ve eskisini yeniden kullanmayın
+:::
+
+## Sonraki adım
+
+[Entegrasyonlar: Plex ve Jellyfin](/tr/integrations/plex-jellyfin/)
+
+## Kaynak ve durum
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Kaynak ve durum: `2026-07-14`
+- DiscVault Docs: `0.1.0`

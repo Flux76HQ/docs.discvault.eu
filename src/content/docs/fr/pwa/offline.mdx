@@ -1,0 +1,72 @@
+---
+title: 'PWA: Comportement hors ligne'
+description: 'Instructions propres à la tâche : PWA: Comportement hors ligne: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.'
+pageId: 'pwa-offline'
+products: ['pwa']
+platforms: ['web', 'ios', 'android']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="web · iOS · Android" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Objectif et résultat
+
+Suivez le déroulement propre à cette page pour **PWA: Comportement hors ligne**. Cette procédure utilise `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+## S’applique à
+
+Cette page s’applique uniquement à **PWA: Comportement hors ligne** (web · iOS · Android). Les limites de canal et de données sont : DiscVault · `ghcr.io/helmerznl/discvault:latest`; les écrans en cache peuvent s’ouvrir, mais les données récentes et les écritures exigent le réseau · `Service Worker` · `CacheStorage`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; les écrans en cache peuvent s’ouvrir, mais les données récentes et les écritures exigent le réseau · `Service Worker` · `CacheStorage`. Points de contrôle propres à la page : `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+### DiscVault v26 stable
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- les écrans en cache peuvent s’ouvrir, mais les données récentes et les écritures exigent le réseau · `Service Worker` · `CacheStorage`
+
+### DiscVault v26 bêta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- les écrans en cache peuvent s’ouvrir, mais les données récentes et les écritures exigent le réseau · `Service Worker` · `CacheStorage`
+
+## Prérequis
+
+- PWA
+- `CacheStorage`
+
+## Procédure
+
+1. **Ouvrir:** Bibliothèque → Rechercher
+2. **Tester:** mode avion · `Service Worker`
+3. **Consigner:** `navigator.onLine`
+4. **Reconnecter:** HTTPS
+
+
+
+## Résultat attendu
+
+Validez le résultat de **PWA: Comportement hors ligne** uniquement lorsque tous les résultats suivants sont confirmés : les écrans en cache peuvent s’ouvrir, mais les données récentes et les écritures exigent le réseau; `Service Worker` · `navigator.onLine`. Points de contrôle propres à la page : `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+- les écrans en cache peuvent s’ouvrir, mais les données récentes et les écritures exigent le réseau
+- `Service Worker` · `navigator.onLine`
+
+## Sécurité et retour arrière
+
+:::caution
+La limite de récupération sûre pour **PWA: Comportement hors ligne** impose ces actions avant tout démarrage ou toute poursuite : les écrans en cache peuvent s’ouvrir, mais les données récentes et les écritures exigent le réseau · DiscVault. Points de contrôle propres à la page : `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+- les écrans en cache peuvent s’ouvrir, mais les données récentes et les écritures exigent le réseau · DiscVault
+:::
+
+## Étape suivante
+
+[Dépannage](/fr/troubleshooting/)
+
+## Source et état
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Source et état: `2026-07-14`
+- DiscVault Docs: `0.1.0`

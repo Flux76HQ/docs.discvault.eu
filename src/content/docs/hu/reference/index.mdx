@@ -1,0 +1,74 @@
+---
+title: 'Referencia'
+description: 'Feladatspecifikus útmutató: Referencia: `:latest` · `:beta` · `:dev` · `6080:5000`.'
+pageId: 'reference-index'
+products: ['server', 'pwa', 'ios', 'android']
+platforms: ['all']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="minden platform" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Cél és eredmény
+
+Hajtsa végre az oldalhoz tartozó munkafolyamatot: **Referencia**. Ez az eljárás ezeket használja: `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+## Érvényesség
+
+Ez az oldal kizárólag erre vonatkozik: **Referencia** (minden platform). A csatorna- és adathatárok: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`. Oldalspecifikus ellenőrzési pontok: `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PostgreSQL `/data`
+- API `6080:5000` MCP `6090:6090`
+
+### DiscVault v26 – béta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PostgreSQL `/data`
+- API `6080:5000` MCP `6090:6090`
+
+## Előfeltételek
+
+- kiválasztott kiadási csatorna
+
+## Eljárás
+
+1. **Ellenőrizze:** `:latest` `:beta`
+2. **Jegyezze fel:** a `:dev` csak fejlesztői munkára szolgál, és nem kiadási csatorna; a stabil DiscVault v26 a `:latest`, a béta a `:beta` taget használja · `:dev`
+3. **Jegyezze fel:** `/api/next/health`
+4. **Jegyezze fel:** PostgreSQL `/data`
+
+
+
+## Várt eredmény
+
+Az eredmény csak ennél fogadható el: **Referencia** csak akkor, ha minden alábbi eredmény teljesül: kiválasztott kiadási csatorna · `@sha256:`; `:latest` · `:beta` · `:dev`. Oldalspecifikus ellenőrzési pontok: `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+- kiválasztott kiadási csatorna · `@sha256:`
+- `:latest` · `:beta` · `:dev`
+
+## Biztonság és visszaállítás
+
+:::caution
+A biztonságos helyreállítás határa ennél: **Referencia** ezeket a műveleteket igényli indítás vagy folytatás előtt: a referencia csak olvasható; parancsok vagy adatmódosítás előtt használja a célzott eljárást; a `:dev` csak fejlesztői munkára szolgál, és nem kiadási csatorna; a stabil DiscVault v26 a `:latest`, a béta a `:beta` taget használja · `:dev`. Oldalspecifikus ellenőrzési pontok: `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+- a referencia csak olvasható; parancsok vagy adatmódosítás előtt használja a célzott eljárást
+- a `:dev` csak fejlesztői munkára szolgál, és nem kiadási csatorna; a stabil DiscVault v26 a `:latest`, a béta a `:beta` taget használja · `:dev`
+:::
+
+## Következő lépés
+
+[Kezdés: Áttekintés](/hu/start/)
+
+## Forrás és állapot
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Forrás és állapot: `2026-07-14`
+- DiscVault Docs: `0.1.0`

@@ -1,0 +1,78 @@
+---
+title: 'Uppdatering och migrering: Översikt'
+description: 'Uppgiftsspecifik vägledning för Uppdatering och migrering: Översikt: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.'
+pageId: 'update-index'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Mål och resultat
+
+Följ det sidspecifika arbetsflödet för **Uppdatering och migrering: Översikt**. Den här proceduren använder `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+## Gäller för
+
+Den här sidan gäller endast **Uppdatering och migrering: Översikt** (Docker · Unraid). Kanal- och datagränserna är: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/update/restore/`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/update/restore/`. Sidspecifika kontrollpunkter: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `/update/restore/`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `/update/restore/`
+
+## Förutsättningar
+
+- matchande säkerhetskopieuppsättning
+- versionsinformation och registrerad oföränderlig image-digest
+
+## Procedur
+
+1. **Säkerhetskopiera:** [Uppdatering och migrering: Säkerhetskopia](/sv/update/backup/) · matchande säkerhetskopieuppsättning
+2. **Testa:** [Uppdatering och migrering: Återställning](/sv/update/restore/)
+3. **Kör:** [Uppdatering och migrering: Containeruppdatering](/sv/update/update/) · `DISCVAULT_IMAGE`
+4. **Bevara:** [Uppdatering och migrering: Återställning av image](/sv/update/rollback/)
+
+### Uppgiftsvägar
+
+- [Uppdatering och migrering: Säkerhetskopia](/sv/update/backup/) — 1 PostgreSQL
+- [Uppdatering och migrering: Återställning](/sv/update/restore/) — 2
+- [Uppdatering och migrering: Containeruppdatering](/sv/update/update/) — 3
+- [Uppdatering och migrering: Återställning av image](/sv/update/rollback/) — 4
+
+## Förväntat resultat
+
+Godkänn resultatet för **Uppdatering och migrering: Översikt** endast när alla resultat nedan stämmer: arkiv och dump är inte tomma, kan läsas i en återställningsövning och är knutna till en oföränderlig image-digest; avsett image-digest körs, hälsan lyckas och ägarinloggning, biblioteksantal och ett medieprov godkänns. Sidspecifika kontrollpunkter: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+- arkiv och dump är inte tomma, kan läsas i en återställningsövning och är knutna till en oföränderlig image-digest
+- avsett image-digest körs, hälsan lyckas och ägarinloggning, biblioteksantal och ett medieprov godkänns
+
+## Säkerhet och återställning
+
+:::caution
+Den säkra återställningsgränsen för **Uppdatering och migrering: Översikt** kräver dessa åtgärder innan något startas eller fortsätter: matchande säkerhetskopieuppsättning; `PREVIOUS_IMAGE` · `@sha256:`. Sidspecifika kontrollpunkter: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+- matchande säkerhetskopieuppsättning
+- `PREVIOUS_IMAGE` · `@sha256:`
+:::
+
+## Nästa steg
+
+[Uppdatering och migrering: Säkerhetskopia](/sv/update/backup/)
+
+## Källa och status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Källa och status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

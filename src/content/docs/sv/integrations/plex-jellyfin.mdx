@@ -1,0 +1,82 @@
+---
+title: 'Integrationer: Plex och Jellyfin'
+description: 'Uppgiftsspecifik vägledning för Integrationer: Plex och Jellyfin: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.'
+pageId: 'integrations-plex-jellyfin'
+products: ['server']
+platforms: ['web', 'docker']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="webb · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Mål och resultat
+
+Följ det sidspecifika arbetsflödet för **Integrationer: Plex och Jellyfin**. Den här proceduren använder Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+## Gäller för
+
+Den här sidan gäller endast **Integrationer: Plex och Jellyfin** (webb · Docker). Kanal- och datagränserna är: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26. Sidspecifika kontrollpunkter: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault 26
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault 26
+
+## Förutsättningar
+
+- leverantörsuppgift lagrad som hemlighet
+- Jellyfin
+- ägar- eller administratörssession
+
+## Procedur
+
+1. **Konfigurera:** Administration → Insticksprogram → Leverantör → Konfigurera · Plex Jellyfin
+2. **Testa:** Administration → Insticksprogram → Hälsokontroll
+3. **Kör:** Administration → Insticksprogram → Upptäck utan att spara · `dryRun=true`
+4. **Jämför:** `/api/next/digital-items?limit=200`
+
+### Kommandon och inställningar
+
+#### Båda kanalerna
+
+```bash
+curl --fail http://localhost:6080/api/next/digital-sources
+curl --fail 'http://localhost:6080/api/next/digital-items?limit=200'
+```
+
+## Förväntat resultat
+
+Godkänn resultatet för **Integrationer: Plex och Jellyfin** endast när alla resultat nedan stämmer: Administration → Insticksprogram → Hälsokontroll; Administration → Insticksprogram → Upptäck utan att spara · `dryRun=true`; Plex · Jellyfin · `/api/next/digital-items`. Sidspecifika kontrollpunkter: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+- Administration → Insticksprogram → Hälsokontroll
+- Administration → Insticksprogram → Upptäck utan att spara · `dryRun=true`
+- Plex · Jellyfin · `/api/next/digital-items`
+
+## Säkerhet och återställning
+
+:::caution
+Den säkra återställningsgränsen för **Integrationer: Plex och Jellyfin** kräver dessa åtgärder innan något startas eller fortsätter: inaktivera leverantören före borttagning, säkerhetskopiera `/data/plugins` och återkalla exponerade uppgifter; inaktivera integrationen, återkalla test- eller exponerade uppgifter, skapa nya vid behov och återanvänd aldrig de gamla. Sidspecifika kontrollpunkter: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+- inaktivera leverantören före borttagning, säkerhetskopiera `/data/plugins` och återkalla exponerade uppgifter
+- inaktivera integrationen, återkalla test- eller exponerade uppgifter, skapa nya vid behov och återanvänd aldrig de gamla
+:::
+
+## Nästa steg
+
+[Felsökning](/sv/troubleshooting/)
+
+## Källa och status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Källa och status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

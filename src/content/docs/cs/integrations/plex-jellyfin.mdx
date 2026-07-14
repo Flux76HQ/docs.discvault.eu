@@ -1,0 +1,82 @@
+---
+title: 'Integrace: Plex a Jellyfin'
+description: 'Pokyny pro konkrétní úlohu: Integrace: Plex a Jellyfin: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.'
+pageId: 'integrations-plex-jellyfin'
+products: ['server']
+platforms: ['web', 'docker']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="web · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Cíl a výsledek
+
+Dokončete postup určený pro **Integrace: Plex a Jellyfin**. Tento postup pracuje s Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+## Platí pro
+
+Tato stránka platí pouze pro **Integrace: Plex a Jellyfin** (web · Docker). Hranice kanálu a dat jsou: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26. Kontrolní body této stránky: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+### DiscVault v26 – stabilní
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault 26
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault 26
+
+## Požadavky
+
+- přihlašovací údaj poskytovatele uložený jako tajný
+- Jellyfin
+- relace vlastníka nebo správce
+
+## Postup
+
+1. **Nastavte:** Správa → Pluginy → Poskytovatel → Nastavit · Plex Jellyfin
+2. **Otestujte:** Správa → Pluginy → Kontrola stavu
+3. **Spusťte:** Správa → Pluginy → Najít bez uložení · `dryRun=true`
+4. **Porovnejte:** `/api/next/digital-items?limit=200`
+
+### Příkazy a nastavení
+
+#### Oba kanály
+
+```bash
+curl --fail http://localhost:6080/api/next/digital-sources
+curl --fail 'http://localhost:6080/api/next/digital-items?limit=200'
+```
+
+## Očekávaný výsledek
+
+Výsledek přijměte pro **Integrace: Plex a Jellyfin** pouze pokud platí všechny následující výsledky: Správa → Pluginy → Kontrola stavu; Správa → Pluginy → Najít bez uložení · `dryRun=true`; Plex · Jellyfin · `/api/next/digital-items`. Kontrolní body této stránky: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+- Správa → Pluginy → Kontrola stavu
+- Správa → Pluginy → Najít bez uložení · `dryRun=true`
+- Plex · Jellyfin · `/api/next/digital-items`
+
+## Bezpečnost a návrat
+
+:::caution
+Bezpečná hranice obnovy pro **Integrace: Plex a Jellyfin** vyžaduje před spuštěním nebo pokračováním tyto kroky: před odebráním poskytovatele vypněte, zálohujte `/data/plugins` a odvolejte odhalené přihlašovací údaje; integraci vypněte, odvolejte testovací či odhalené údaje, podle potřeby vytvořte nové a staré nikdy znovu nepoužívejte. Kontrolní body této stránky: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+- před odebráním poskytovatele vypněte, zálohujte `/data/plugins` a odvolejte odhalené přihlašovací údaje
+- integraci vypněte, odvolejte testovací či odhalené údaje, podle potřeby vytvořte nové a staré nikdy znovu nepoužívejte
+:::
+
+## Další krok
+
+[Řešení potíží](/cs/troubleshooting/)
+
+## Zdroj a stav
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Zdroj a stav: `2026-07-14`
+- DiscVault Docs: `0.1.0`

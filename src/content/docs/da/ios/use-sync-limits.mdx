@@ -1,0 +1,68 @@
+---
+title: 'iOS/iPadOS: Daglig brug og synkroniseringsgrænser'
+description: 'Opgavespecifik vejledning til iOS/iPadOS: Daglig brug og synkroniseringsgrænser: SwiftData · App Lock · `/api/v1` · DiscVault.'
+pageId: 'ios-use-sync-limits'
+products: ['ios']
+platforms: ['ios']
+channels: ['beta']
+minVersion: 'iOS/iPadOS 17+'
+sourceRepos: ['helmerzNL/DiscVaultApp', 'helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="beta" platform="iOS" version="iOS/iPadOS 17+" source="helmerzNL/DiscVaultApp · helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Mål og resultat
+
+Gennemfør den sidespecifikke arbejdsgang for **iOS/iPadOS: Daglig brug og synkroniseringsgrænser**. Denne fremgangsmåde arbejder med SwiftData · App Lock · `/api/v1` · DiscVault.
+
+## Gælder for
+
+Denne side gælder kun for **iOS/iPadOS: Daglig brug og synkroniseringsgrænser** (iOS). Kanal- og datagrænserne er: SwiftData · testtitlen bevares efter appgenstart og offline start; `/api/v1` · kildeverificeret betabuild; ingen påstand om offentlig butik. Sidespecifikke kontrolpunkter: SwiftData · App Lock · `/api/v1` · DiscVault.
+
+### Betakanal
+
+- SwiftData · testtitlen bevares efter appgenstart og offline start
+- `/api/v1` · kildeverificeret betabuild; ingen påstand om offentlig butik
+
+## Forudsætninger
+
+- SwiftData
+- lille testbibliotek, der kan kasseres
+
+## Fremgangsmåde
+
+1. **Test:** Bibliotek → Søg · Bibliotek → Tilføj → Scan stregkode / Indtast manuelt · flytilstand
+2. **Opret:** lokalt offline-first-bibliotek · testtitlen bevares efter appgenstart og offline start
+3. **Konfigurér:** Indstillinger → Applås · Indstillinger → Serverforbindelse
+4. **Sammenlign:** valgfri serverforbindelse testet med ét element · ét testelement stemmer lokalt og på serveren, ellers forbliver synkronisering deaktiveret
+
+
+
+## Forventet resultat
+
+Godkend resultatet for **iOS/iPadOS: Daglig brug og synkroniseringsgrænser** kun når alle resultater nedenfor er opfyldt: testtitlen bevares efter appgenstart og offline start; ét testelement stemmer lokalt og på serveren, ellers forbliver synkronisering deaktiveret. Sidespecifikke kontrolpunkter: SwiftData · App Lock · `/api/v1` · DiscVault.
+
+- testtitlen bevares efter appgenstart og offline start
+- ét testelement stemmer lokalt og på serveren, ellers forbliver synkronisering deaktiveret
+
+## Sikkerhed og tilbagerulning
+
+:::caution
+Den sikre gendannelsesgrænse for **iOS/iPadOS: Daglig brug og synkroniseringsgrænser** kræver disse handlinger, før noget startes eller fortsættes: ét testelement stemmer lokalt og på serveren, ellers forbliver synkronisering deaktiveret · lokalt offline-first-bibliotek · `/api/v1`. Sidespecifikke kontrolpunkter: SwiftData · App Lock · `/api/v1` · DiscVault.
+
+- ét testelement stemmer lokalt og på serveren, ellers forbliver synkronisering deaktiveret · lokalt offline-first-bibliotek · `/api/v1`
+:::
+
+## Næste trin
+
+[Android: Opsætning](/da/android/)
+
+## Kilde og status
+
+- [`helmerzNL/DiscVaultApp@9d15ab2a339c`](https://github.com/helmerzNL/DiscVaultApp/commit/9d15ab2a339cefdb164ec0ab29ad69ddabc511c1)
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Kilde og status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

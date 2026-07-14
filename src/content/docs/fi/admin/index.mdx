@@ -1,0 +1,81 @@
+---
+title: 'Ylläpito: Lokit, työt ja turvallisuus'
+description: 'Tehtäväkohtaiset ohjeet: Ylläpito: Lokit, työt ja turvallisuus: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.'
+pageId: 'admin-index'
+products: ['server']
+platforms: ['docker', 'unraid', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid · verkko" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Tavoite ja tulos
+
+Suorita sivukohtainen työnkulku: **Ylläpito: Lokit, työt ja turvallisuus**. Tässä menettelyssä käytetään `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+## Koskee
+
+Tämä sivu koskee vain kohdetta **Ylläpito: Lokit, työt ja turvallisuus** (Docker · Unraid · verkko). Kanava- ja tietorajat ovat: DiscVault · `ghcr.io/helmerznl/discvault:latest`; API MCP PostgreSQL; DiscVault · `ghcr.io/helmerznl/discvault:beta`; API MCP PostgreSQL. Sivukohtaiset tarkistuspisteet: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+### DiscVault v26 – vakaa
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- API MCP PostgreSQL
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- API MCP PostgreSQL
+
+## Edellytykset
+
+- omistajan käyttöoikeus
+- vastaava varmuuskopiosarja
+- aikaleimatut lokit, joista yksityiset tiedot on poistettu
+
+## Toimenpiteet
+
+1. **Tarkista:** `/api/next/health`
+2. **Tarkista:** aikaleimatut lokit, joista yksityiset tiedot on poistettu
+3. **Vahvista:** `next-worker`
+4. **Säilytä:** `--tail=200`
+
+### Komennot ja asetukset
+
+#### Molemmat kanavat
+
+```bash
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml logs --tail=200 next-api next-worker next-mcp postgres
+curl --fail http://localhost:6080/api/next/jobs
+curl --fail http://localhost:6080/api/next/health
+```
+
+## Odotettu tulos
+
+Hyväksy tulos kohteelle **Ylläpito: Lokit, työt ja turvallisuus** vain kun kaikki seuraavat tulokset toteutuvat: yksi vikaantuva kerros eristetään aikaleiman, tilan, image-tiivisteen ja peitetyn virheen kanssa; vastaava varmuuskopiosarja. Sivukohtaiset tarkistuspisteet: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+- yksi vikaantuva kerros eristetään aikaleiman, tilan, image-tiivisteen ja peitetyn virheen kanssa
+- vastaava varmuuskopiosarja
+
+## Turvallisuus ja palautus
+
+:::caution
+Turvallinen palautusraja kohteelle **Ylläpito: Lokit, työt ja turvallisuus** edellyttää näitä toimia ennen käynnistystä tai jatkamista: älä poista ensin volumeja, `/data`-hakemistoa, selaintunnuksia tai sovellustallennusta; säilytä peitetyt lokit ja palauta vain vastaava varmuuskopio. Sivukohtaiset tarkistuspisteet: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+- älä poista ensin volumeja, `/data`-hakemistoa, selaintunnuksia tai sovellustallennusta; säilytä peitetyt lokit ja palauta vain vastaava varmuuskopio
+:::
+
+## Seuraava vaihe
+
+[Vianmääritys](/fi/troubleshooting/)
+
+## Lähde ja tila
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Lähde ja tila: `2026-07-14`
+- DiscVault Docs: `0.1.0`

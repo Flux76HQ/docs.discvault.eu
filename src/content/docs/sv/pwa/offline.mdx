@@ -1,0 +1,72 @@
+---
+title: 'PWA: Offlinebeteende'
+description: 'Uppgiftsspecifik vägledning för PWA: Offlinebeteende: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.'
+pageId: 'pwa-offline'
+products: ['pwa']
+platforms: ['web', 'ios', 'android']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="webb · iOS · Android" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Mål och resultat
+
+Följ det sidspecifika arbetsflödet för **PWA: Offlinebeteende**. Den här proceduren använder `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+## Gäller för
+
+Den här sidan gäller endast **PWA: Offlinebeteende** (webb · iOS · Android). Kanal- och datagränserna är: DiscVault · `ghcr.io/helmerznl/discvault:latest`; cachelagrade vyer kan öppnas, men färska data och skrivningar kräver nätverk · `Service Worker` · `CacheStorage`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; cachelagrade vyer kan öppnas, men färska data och skrivningar kräver nätverk · `Service Worker` · `CacheStorage`. Sidspecifika kontrollpunkter: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- cachelagrade vyer kan öppnas, men färska data och skrivningar kräver nätverk · `Service Worker` · `CacheStorage`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- cachelagrade vyer kan öppnas, men färska data och skrivningar kräver nätverk · `Service Worker` · `CacheStorage`
+
+## Förutsättningar
+
+- PWA
+- `CacheStorage`
+
+## Procedur
+
+1. **Öppna:** Bibliotek → Sök
+2. **Testa:** flygplansläge · `Service Worker`
+3. **Anteckna:** `navigator.onLine`
+4. **Anslut igen:** HTTPS
+
+
+
+## Förväntat resultat
+
+Godkänn resultatet för **PWA: Offlinebeteende** endast när alla resultat nedan stämmer: cachelagrade vyer kan öppnas, men färska data och skrivningar kräver nätverk; `Service Worker` · `navigator.onLine`. Sidspecifika kontrollpunkter: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+- cachelagrade vyer kan öppnas, men färska data och skrivningar kräver nätverk
+- `Service Worker` · `navigator.onLine`
+
+## Säkerhet och återställning
+
+:::caution
+Den säkra återställningsgränsen för **PWA: Offlinebeteende** kräver dessa åtgärder innan något startas eller fortsätter: cachelagrade vyer kan öppnas, men färska data och skrivningar kräver nätverk · DiscVault. Sidspecifika kontrollpunkter: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+- cachelagrade vyer kan öppnas, men färska data och skrivningar kräver nätverk · DiscVault
+:::
+
+## Nästa steg
+
+[Felsökning](/sv/troubleshooting/)
+
+## Källa och status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Källa och status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

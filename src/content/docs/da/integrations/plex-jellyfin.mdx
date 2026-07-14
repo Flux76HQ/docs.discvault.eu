@@ -1,0 +1,82 @@
+---
+title: 'Integrationer: Plex og Jellyfin'
+description: 'Opgavespecifik vejledning til Integrationer: Plex og Jellyfin: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.'
+pageId: 'integrations-plex-jellyfin'
+products: ['server']
+platforms: ['web', 'docker']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="web · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Mål og resultat
+
+Gennemfør den sidespecifikke arbejdsgang for **Integrationer: Plex og Jellyfin**. Denne fremgangsmåde arbejder med Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+## Gælder for
+
+Denne side gælder kun for **Integrationer: Plex og Jellyfin** (web · Docker). Kanal- og datagrænserne er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26. Sidespecifikke kontrolpunkter: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault 26
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault 26
+
+## Forudsætninger
+
+- udbyderlegitimationsoplysning gemt som hemmelighed
+- Jellyfin
+- ejer- eller administratorsession
+
+## Fremgangsmåde
+
+1. **Konfigurér:** Administration → Plugins → Udbyder → Konfigurér · Plex Jellyfin
+2. **Test:** Administration → Plugins → Tilstandskontrol
+3. **Kør:** Administration → Plugins → Find uden at gemme · `dryRun=true`
+4. **Sammenlign:** `/api/next/digital-items?limit=200`
+
+### Kommandoer og indstillinger
+
+#### Begge kanaler
+
+```bash
+curl --fail http://localhost:6080/api/next/digital-sources
+curl --fail 'http://localhost:6080/api/next/digital-items?limit=200'
+```
+
+## Forventet resultat
+
+Godkend resultatet for **Integrationer: Plex og Jellyfin** kun når alle resultater nedenfor er opfyldt: Administration → Plugins → Tilstandskontrol; Administration → Plugins → Find uden at gemme · `dryRun=true`; Plex · Jellyfin · `/api/next/digital-items`. Sidespecifikke kontrolpunkter: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+- Administration → Plugins → Tilstandskontrol
+- Administration → Plugins → Find uden at gemme · `dryRun=true`
+- Plex · Jellyfin · `/api/next/digital-items`
+
+## Sikkerhed og tilbagerulning
+
+:::caution
+Den sikre gendannelsesgrænse for **Integrationer: Plex og Jellyfin** kræver disse handlinger, før noget startes eller fortsættes: deaktivér udbyderen før fjernelse, sikkerhedskopiér `/data/plugins`, og tilbagekald afslørede legitimationsoplysninger; deaktivér integrationen, tilbagekald test- eller afslørede legitimationsoplysninger, opret nye ved behov, og genbrug aldrig de gamle. Sidespecifikke kontrolpunkter: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+- deaktivér udbyderen før fjernelse, sikkerhedskopiér `/data/plugins`, og tilbagekald afslørede legitimationsoplysninger
+- deaktivér integrationen, tilbagekald test- eller afslørede legitimationsoplysninger, opret nye ved behov, og genbrug aldrig de gamle
+:::
+
+## Næste trin
+
+[Fejlfinding](/da/troubleshooting/)
+
+## Kilde og status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Kilde og status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

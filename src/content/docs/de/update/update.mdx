@@ -1,0 +1,114 @@
+---
+title: 'Update und Migration: Container-Update'
+description: 'Aufgabenspezifische Anleitung für Update und Migration: Container-Update: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.'
+pageId: 'update-update'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Ziel und Ergebnis
+
+Führe den seitenspezifischen Ablauf aus für **Update und Migration: Container-Update**. Dieses Verfahren arbeitet mit `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+
+## Gültig für
+
+Diese Seite gilt ausschließlich für **Update und Migration: Container-Update** (Docker · Unraid). Kanal- und Datengrenzen sind: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · Versionshinweise und aufgezeichneter unveränderlicher Image-Digest · passender Sicherungssatz; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · Versionshinweise und aufgezeichneter unveränderlicher Image-Digest · passender Sicherungssatz. Seitenspezifische Kontrollpunkte: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `DISCVAULT_IMAGE`
+- PostgreSQL `/data` · Versionshinweise und aufgezeichneter unveränderlicher Image-Digest · passender Sicherungssatz
+
+### DiscVault v26 – Beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `DISCVAULT_IMAGE`
+- PostgreSQL `/data` · Versionshinweise und aufgezeichneter unveränderlicher Image-Digest · passender Sicherungssatz
+
+## Voraussetzungen
+
+- passender Sicherungssatz
+- Versionshinweise und aufgezeichneter unveränderlicher Image-Digest
+
+## Vorgehen
+
+1. **Verifizieren:** `PREVIOUS_IMAGE=@sha256:…`
+2. **Auswählen:** `DISCVAULT_IMAGE` · `:latest` `:beta`
+3. **Ausführen:** `--force-recreate`
+4. **Vergleichen:** der vorgesehene Image-Digest läuft, Health ist erfolgreich und Owner-Anmeldung, Bibliothekszahl und Medienprobe bestehen
+
+### Befehle und Einstellungen
+
+#### DiscVault v26 – stabil
+
+```bash
+export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
+```
+
+#### DiscVault v26 – Beta
+
+```bash
+export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
+```
+
+#### Beide Kanäle
+
+```bash
+set -euo pipefail
+test -n "$DISCVAULT_IMAGE"
+case "$DISCVAULT_IMAGE" in
+  ghcr.io/helmerznl/discvault:latest|ghcr.io/helmerznl/discvault:beta) ;;
+  *) printf '%s\n' "$DISCVAULT_IMAGE" >&2; exit 64 ;;
+esac
+cd /opt/discvault
+ENV_FILE=/opt/discvault/.env
+ENV_TMP="$(mktemp "$ENV_FILE.update.XXXXXX")"
+trap 'rm -f "$ENV_TMP"' EXIT
+awk -v image="$DISCVAULT_IMAGE" '
+  /^DISCVAULT_IMAGE=/ { print "DISCVAULT_IMAGE=" image; found=1; next }
+  { print }
+  END { if (!found) exit 42 }
+' "$ENV_FILE" > "$ENV_TMP"
+chmod 0600 "$ENV_TMP"
+docker compose --env-file "$ENV_TMP" -p discvault -f compose.yaml config --quiet
+docker compose --env-file "$ENV_TMP" -p discvault -f compose.yaml pull next-api next-worker next-mcp
+docker compose --env-file "$ENV_TMP" -p discvault -f compose.yaml up -d --force-recreate
+docker compose --env-file "$ENV_TMP" -p discvault -f compose.yaml ps
+curl --fail http://localhost:6080/api/next/health
+mv "$ENV_TMP" "$ENV_FILE"
+trap - EXIT
+```
+
+## Erwartetes Ergebnis
+
+Akzeptiere das Ergebnis für **Update und Migration: Container-Update** nur wenn alle folgenden Ergebnisse erfüllt sind: der vorgesehene Image-Digest läuft, Health ist erfolgreich und Owner-Anmeldung, Bibliothekszahl und Medienprobe bestehen. Seitenspezifische Kontrollpunkte: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+
+- der vorgesehene Image-Digest läuft, Health ist erfolgreich und Owner-Anmeldung, Bibliothekszahl und Medienprobe bestehen
+
+## Sicherheit und Rollback
+
+:::caution
+Die sichere Wiederherstellungsgrenze für **Update und Migration: Container-Update** verlangt vor jedem Start oder Fortsetzen diese Maßnahmen: [Update und Migration: Image-Rollback](/de/update/rollback/) · passender Sicherungssatz; Versionshinweise und aufgezeichneter unveränderlicher Image-Digest. Seitenspezifische Kontrollpunkte: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+
+- [Update und Migration: Image-Rollback](/de/update/rollback/) · passender Sicherungssatz
+- Versionshinweise und aufgezeichneter unveränderlicher Image-Digest
+:::
+
+## Nächster Schritt
+
+[Update und Migration: Image-Rollback](/de/update/rollback/)
+
+## Quelle und Status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Quelle und Status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

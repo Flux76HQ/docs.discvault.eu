@@ -1,0 +1,101 @@
+---
+title: 'Aktualizace a migrace: Záloha'
+description: 'Pokyny pro konkrétní úlohu: Aktualizace a migrace: Záloha: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.'
+pageId: 'update-backup'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Cíl a výsledek
+
+Dokončete postup určený pro **Aktualizace a migrace: Záloha**. Tento postup pracuje s `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
+
+## Platí pro
+
+Tato stránka platí pouze pro **Aktualizace a migrace: Záloha** (Docker · Unraid). Hranice kanálu a dat jsou: DiscVault · `ghcr.io/helmerznl/discvault:latest`; dump PostgreSQL a archiv souborů ze stejného okna se zastavenými zápisy; PostgreSQL `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; dump PostgreSQL a archiv souborů ze stejného okna se zastavenými zápisy; PostgreSQL `/data`. Kontrolní body této stránky: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
+
+### DiscVault v26 – stabilní
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- dump PostgreSQL a archiv souborů ze stejného okna se zastavenými zápisy
+- PostgreSQL `/data`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- dump PostgreSQL a archiv souborů ze stejného okna se zastavenými zápisy
+- PostgreSQL `/data`
+
+## Požadavky
+
+- cíl zálohy mimo živá data
+- zapisovatelná trvalá data a volné místo pro zálohu
+
+## Postup
+
+1. **Zaznamenejte:** `PREVIOUS_IMAGE` · `sha256`
+2. **Zastavte:** `next-api` `next-worker` `next-mcp`
+3. **Zálohujte:** `pg_dump -Fc`
+4. **Spusťte:** `next-api` → → MCP
+
+### Příkazy a nastavení
+
+#### Oba kanály
+
+```bash
+set -euo pipefail
+cd /opt/discvault
+install -d -m 0700 /srv/backups
+BACKUP_ID="$(date -u +%Y%m%dT%H%M%SZ)"
+API_ID="$(docker compose --env-file .env -p discvault -f compose.yaml ps -q next-api)"
+IMAGE_ID="$(docker inspect "$API_ID" --format '{{.Image}}')"
+PREVIOUS_IMAGE="$(docker image inspect "$IMAGE_ID" --format '{{index .RepoDigests 0}}')"
+test -n "$PREVIOUS_IMAGE"
+printf 'BACKUP_ID=%s\nPREVIOUS_IMAGE=%s\n' "$BACKUP_ID" "$PREVIOUS_IMAGE" \
+  > "/srv/backups/discvault-$BACKUP_ID.env"
+chmod 0600 "/srv/backups/discvault-$BACKUP_ID.env"
+docker compose --env-file .env -p discvault -f compose.yaml stop next-worker next-mcp next-api
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'pg_dump -Fc -U "$POSTGRES_USER" "$POSTGRES_DB"' \
+  > "/srv/backups/discvault-$BACKUP_ID.dump"
+tar --acls --xattrs -C /srv -czf \
+  "/srv/backups/discvault-data-$BACKUP_ID.tgz" discvault
+docker compose --env-file .env -p discvault -f compose.yaml start next-api
+curl --fail http://localhost:6080/api/next/health
+docker compose --env-file .env -p discvault -f compose.yaml start next-worker next-mcp
+test -s "/srv/backups/discvault-$BACKUP_ID.dump"
+gzip -t "/srv/backups/discvault-data-$BACKUP_ID.tgz"
+```
+
+## Očekávaný výsledek
+
+Výsledek přijměte pro **Aktualizace a migrace: Záloha** pouze pokud platí všechny následující výsledky: archiv a dump nejsou prázdné, lze je přečíst při zkušební obnově a jsou svázány s neměnným digestem obrazu. Kontrolní body této stránky: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
+
+- archiv a dump nejsou prázdné, lze je přečíst při zkušební obnově a jsou svázány s neměnným digestem obrazu
+
+## Bezpečnost a návrat
+
+:::caution
+Bezpečná hranice obnovy pro **Aktualizace a migrace: Záloha** vyžaduje před spuštěním nebo pokračováním tyto kroky: pokud selže některý příkaz zálohy, spusťte pouze nezměněné služby a aktualizaci zrušte; dump PostgreSQL a archiv souborů ze stejného okna se zastavenými zápisy. Kontrolní body této stránky: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
+
+- pokud selže některý příkaz zálohy, spusťte pouze nezměněné služby a aktualizaci zrušte
+- dump PostgreSQL a archiv souborů ze stejného okna se zastavenými zápisy
+:::
+
+## Další krok
+
+[Aktualizace a migrace: Obnovení](/cs/update/restore/)
+
+## Zdroj a stav
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Zdroj a stav: `2026-07-14`
+- DiscVault Docs: `0.1.0`

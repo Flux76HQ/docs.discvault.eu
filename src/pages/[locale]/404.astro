@@ -1,0 +1,37 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import { localizedNotFound } from '../../data/localized-not-found';
+
+export function getStaticPaths() {
+  return Object.entries(localizedNotFound).map(([locale, copy]) => ({
+    params: { locale },
+    props: { locale, copy },
+  }));
+}
+
+const { locale, copy } = Astro.props as {
+  locale: keyof typeof localizedNotFound;
+  copy: (typeof localizedNotFound)[keyof typeof localizedNotFound];
+};
+const [title, message, homeLabel] = copy;
+---
+
+<StarlightPage
+  hasSidebar={false}
+  frontmatter={{
+    title: `404 — ${title}`,
+    description: message,
+    pageId: `localized-404-${locale}`,
+    products: ['docs'],
+    platforms: ['all'],
+    channels: ['stable'],
+    minVersion: '0.1.0',
+    sourceRepos: ['Flux76HQ/App-Guidance'],
+    lastVerified: '2026-07-14',
+    editUrl: false,
+    pagefind: false,
+  }}
+>
+  <p>{message}</p>
+  <p><a href={`/${locale}/`}>{homeLabel}</a></p>
+</StarlightPage>

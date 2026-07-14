@@ -1,0 +1,73 @@
+---
+title: 'PWA: Library and search'
+description: 'Browse, search, filter, and update titles, containers, box sets, collections, watchlist, and history.'
+pageId: 'pwa-library-search'
+products: ['pwa']
+platforms: ['web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Goal and result
+
+Browse, search, filter, and update titles, containers, box sets, collections, watchlist, and history.
+
+## Applies to
+
+In both DiscVault v26 channels, available actions are permission-scoped; viewers cannot perform editor or administrator changes.
+
+### DiscVault v26 stable
+
+- DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
+- PWA · RBAC · account permissions
+
+### DiscVault v26 beta
+
+- DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
+- PWA · RBAC · account permissions
+
+## Prerequisites
+
+- signed-in account with the required permission
+- collection permission
+
+## Procedure
+
+1. **Open:** Library → Search · known title
+2. **Configure:** Library → Filter → Format / Genre / Group
+3. **Compare:** Library → View → Posters / List · same result count
+4. **Test:** Title → Details → Watchlist / Watched · reload persistence
+
+
+
+## Expected result
+
+Search and filters return expected records and an allowed watchlist change persists after reload.
+
+- Library → Search
+- Library → Filter → Format / Genre / Group
+- Title → Details → Watchlist / Watched
+
+## Safety and rollback
+
+:::caution
+Cancel edits before saving. For an incorrect saved change, restore the field in the UI; use a server backup only for bulk corruption.
+
+- cancel an incorrect edit before saving, restore a saved field in the UI, and use a matching server backup for bulk corruption
+:::
+
+## Next step
+
+[PWA: Offline behavior](/pwa/offline/)
+
+## Source and status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Verified: `2026-07-14`
+- DiscVault Docs: `0.1.0`

@@ -1,0 +1,83 @@
+---
+title: '설치: 첫 시작 및 상태 검사'
+description: '작업별 안내: 설치: 첫 시작 및 상태 검사: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.'
+pageId: 'install-first-start-health'
+products: ['server']
+platforms: ['docker', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · 웹" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## 목표 및 결과
+
+이 페이지 전용 절차를 수행합니다: **설치: 첫 시작 및 상태 검사**. 이 절차에서 다루는 항목: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.
+
+## 적용 대상
+
+이 페이지의 적용 범위: **설치: 첫 시작 및 상태 검사** (Docker · 웹). 채널 및 데이터 경계: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/api/next/auth/status`; `6080` → API `5000`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/api/next/auth/status`; `6080` → API `5000`. 이 페이지의 전용 확인 지점: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.
+
+### DiscVault v26 안정판
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `/api/next/auth/status`
+- `6080` → API `5000`
+
+### DiscVault v26 베타
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `/api/next/auth/status`
+- `6080` → API `5000`
+
+## 사전 요구 사항
+
+- `/api/next/health`
+- `/api/next/auth/status`
+
+## 절차
+
+1. **검사:** `postgres`
+2. **확인:** `GET /api/next/health` · HTTP `2xx`
+3. **열기:** `6080:5000`
+4. **확인:** `GET /api/next/auth/status` · WebAuthn
+
+### 명령 및 설정
+
+#### 두 채널
+
+```bash
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml ps
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml logs --tail=100 next-api next-worker next-mcp postgres
+curl --fail http://localhost:6080/api/next/health
+curl --fail http://localhost:6080/api/next/auth/status
+```
+
+## 예상 결과
+
+다음 결과의 승인 조건: **설치: 첫 시작 및 상태 검사** 아래 결과가 모두 충족된 경우에만: 상태 확인이 성공하고 구성한 오리진이 열리며 첫 계정이 소유자가 됨. 이 페이지의 전용 확인 지점: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.
+
+- 상태 확인이 성공하고 구성한 오리진이 열리며 첫 계정이 소유자가 됨
+
+## 안전 및 롤백
+
+:::caution
+안전한 복구 경계: **설치: 첫 시작 및 상태 검사** 시작하거나 계속하기 전에 다음 작업이 필요합니다: 개인 정보를 가린 타임스탬프 로그; 일치하는 백업 세트. 이 페이지의 전용 확인 지점: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.
+
+- 개인 정보를 가린 타임스탬프 로그
+- 일치하는 백업 세트
+:::
+
+## 다음 단계
+
+[업데이트 및 마이그레이션: 백업](/ko/update/backup/)
+
+## 출처 및 상태
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- 출처 및 상태: `2026-07-14`
+- DiscVault Docs: `0.1.0`

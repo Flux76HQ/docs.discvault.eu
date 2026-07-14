@@ -1,0 +1,78 @@
+---
+title: 'Update and migrate: Overview'
+description: 'Use a gated sequence for backup, update, verification, and rollback.'
+pageId: 'update-index'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Goal and result
+
+Use a gated sequence for backup, update, verification, and rollback.
+
+## Applies to
+
+Stable and beta use the same v26 PostgreSQL-backed topology. Change only `DISCVAULT_IMAGE`; review release notes and keep a matched PostgreSQL and `/data` backup before any update or channel switch.
+
+### DiscVault v26 stable
+
+- DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
+- one v26 backup/update/restore topology
+
+### DiscVault v26 beta
+
+- DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
+- one v26 backup/update/restore topology
+
+## Prerequisites
+
+- matching backup set
+- release notes and recorded immutable image digest
+
+## Procedure
+
+1. **Back up:** [Update and migrate: Backup](/update/backup/) · matching backup set
+2. **Test:** [Update and migrate: Restore](/update/restore/) · restore rehearsal
+3. **Run:** [Update and migrate: Container update](/update/update/) · `DISCVAULT_IMAGE`
+4. **Preserve:** [Update and migrate: Image rollback](/update/rollback/) · previous image + matching data
+
+### Task routes
+
+- [Update and migrate: Backup](/update/backup/) — 1 · PostgreSQL + filesystem backup
+- [Update and migrate: Restore](/update/restore/) — 2 · matched restore rehearsal
+- [Update and migrate: Container update](/update/update/) — 3 · image-variable update
+- [Update and migrate: Image rollback](/update/rollback/) — 4 · image + matched data rollback
+
+## Expected result
+
+A backup is tested before pull/recreate, then health and data are verified.
+
+- the archive and dump are non-empty, readable in a restore rehearsal, and tied to an immutable image digest
+- the intended image digest is running, health is successful, and owner login, library count, and one media sample all pass
+
+## Safety and rollback
+
+:::caution
+The previous image reference and matching database/filesystem backup are retained until acceptance.
+
+- matching backup set
+- `PREVIOUS_IMAGE` · `@sha256:`
+:::
+
+## Next step
+
+[Update and migrate: Backup](/update/backup/)
+
+## Source and status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Verified: `2026-07-14`
+- DiscVault Docs: `0.1.0`

@@ -1,0 +1,78 @@
+---
+title: 'Päivitys ja siirto: Yleiskatsaus'
+description: 'Tehtäväkohtaiset ohjeet: Päivitys ja siirto: Yleiskatsaus: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.'
+pageId: 'update-index'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Tavoite ja tulos
+
+Suorita sivukohtainen työnkulku: **Päivitys ja siirto: Yleiskatsaus**. Tässä menettelyssä käytetään `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+## Koskee
+
+Tämä sivu koskee vain kohdetta **Päivitys ja siirto: Yleiskatsaus** (Docker · Unraid). Kanava- ja tietorajat ovat: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/update/restore/`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/update/restore/`. Sivukohtaiset tarkistuspisteet: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+### DiscVault v26 – vakaa
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `/update/restore/`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `/update/restore/`
+
+## Edellytykset
+
+- vastaava varmuuskopiosarja
+- julkaisutiedot ja kirjattu muuttumaton image-tiiviste
+
+## Toimenpiteet
+
+1. **Varmuuskopioi:** [Päivitys ja siirto: Varmuuskopiointi](/fi/update/backup/) · vastaava varmuuskopiosarja
+2. **Testaa:** [Päivitys ja siirto: Palautus](/fi/update/restore/)
+3. **Suorita:** [Päivitys ja siirto: Säilön päivitys](/fi/update/update/) · `DISCVAULT_IMAGE`
+4. **Säilytä:** [Päivitys ja siirto: Levykuvan palautus](/fi/update/rollback/)
+
+### Tehtäväpolut
+
+- [Päivitys ja siirto: Varmuuskopiointi](/fi/update/backup/) — 1 PostgreSQL
+- [Päivitys ja siirto: Palautus](/fi/update/restore/) — 2
+- [Päivitys ja siirto: Säilön päivitys](/fi/update/update/) — 3
+- [Päivitys ja siirto: Levykuvan palautus](/fi/update/rollback/) — 4
+
+## Odotettu tulos
+
+Hyväksy tulos kohteelle **Päivitys ja siirto: Yleiskatsaus** vain kun kaikki seuraavat tulokset toteutuvat: arkisto ja vedos eivät ole tyhjiä, ne voidaan lukea palautusharjoituksessa ja ne liittyvät muuttumattomaan image-tiivisteeseen; tarkoitettu image-tiiviste on käytössä, health onnistuu ja omistajan kirjautuminen, kirjastomäärä sekä mediatesti läpäisevät. Sivukohtaiset tarkistuspisteet: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+- arkisto ja vedos eivät ole tyhjiä, ne voidaan lukea palautusharjoituksessa ja ne liittyvät muuttumattomaan image-tiivisteeseen
+- tarkoitettu image-tiiviste on käytössä, health onnistuu ja omistajan kirjautuminen, kirjastomäärä sekä mediatesti läpäisevät
+
+## Turvallisuus ja palautus
+
+:::caution
+Turvallinen palautusraja kohteelle **Päivitys ja siirto: Yleiskatsaus** edellyttää näitä toimia ennen käynnistystä tai jatkamista: vastaava varmuuskopiosarja; `PREVIOUS_IMAGE` · `@sha256:`. Sivukohtaiset tarkistuspisteet: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+- vastaava varmuuskopiosarja
+- `PREVIOUS_IMAGE` · `@sha256:`
+:::
+
+## Seuraava vaihe
+
+[Päivitys ja siirto: Varmuuskopiointi](/fi/update/backup/)
+
+## Lähde ja tila
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Lähde ja tila: `2026-07-14`
+- DiscVault Docs: `0.1.0`

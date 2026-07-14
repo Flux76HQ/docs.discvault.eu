@@ -1,0 +1,80 @@
+---
+title: 'Start: Przegląd'
+description: 'Instrukcja właściwa dla zadania: Start: Przegląd: `/install/` · `/pwa/` · `/ios/` · `/android/`.'
+pageId: 'start-index'
+products: ['server', 'pwa', 'ios', 'android']
+platforms: ['all']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVaultApp', 'Flux76HQ/DiscVault-AndroidApp']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="wszystkie platformy" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVaultApp · Flux76HQ/DiscVault-AndroidApp" verified="2026-07-14" />
+
+## Cel i rezultat
+
+Wykonaj procedurę właściwą dla strony: **Start: Przegląd**. Ta procedura korzysta z `/install/` · `/pwa/` · `/ios/` · `/android/`.
+
+## Dotyczy
+
+Ta strona dotyczy wyłącznie **Start: Przegląd** (wszystkie platformy). Granice kanału i danych: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL `/data`. Punkty kontrolne tej strony: `/install/` · `/pwa/` · `/ios/` · `/android/`.
+
+### DiscVault v26 – stabilny
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PostgreSQL `/data`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PostgreSQL `/data`
+
+## Wymagania wstępne
+
+- Docker Engine `24+`
+- iOS/iPadOS `17+`
+- Android API `26+`
+
+## Procedura
+
+1. **Wybierz:** [Instalacja: Sposoby instalacji](/pl/install/) · Docker Compose · DiscVault 26
+2. **Wybierz:** [PWA: Przegląd](/pl/pwa/) · HTTPS · PWA
+3. **Wybierz:** [iOS/iPadOS: Konfiguracja](/pl/ios/) · iOS/iPadOS `17+` · SwiftData
+4. **Wybierz:** [Android: Konfiguracja](/pl/android/) · Android API `26+` · Room
+
+### Ścieżki zadań
+
+- [Instalacja: Sposoby instalacji](/pl/install/) — DiscVault 26 PostgreSQL HTTPS
+- [PWA: Przegląd](/pl/pwa/) — PWA
+- [iOS/iPadOS: Konfiguracja](/pl/ios/) — iOS/iPadOS 17 SwiftData
+- [Android: Konfiguracja](/pl/android/) — Android API 26 Room
+
+## Oczekiwany rezultat
+
+Zaakceptuj wynik dla **Start: Przegląd** tylko gdy wszystkie poniższe wyniki są prawdziwe: wybrany kanał wydań; PWA iOS Android. Punkty kontrolne tej strony: `/install/` · `/pwa/` · `/ios/` · `/android/`.
+
+- wybrany kanał wydań
+- PWA iOS Android
+
+## Bezpieczeństwo i wycofanie
+
+:::caution
+Bezpieczna granica odzyskiwania dla **Start: Przegląd** wymaga tych działań przed uruchomieniem lub kontynuacją: dane pozostają nienaruszone. Punkty kontrolne tej strony: `/install/` · `/pwa/` · `/ios/` · `/android/`.
+
+- dane pozostają nienaruszone
+:::
+
+## Następny krok
+
+[Instalacja: Sposoby instalacji](/pl/install/)
+
+## Źródło i stan
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- [`helmerzNL/DiscVaultApp@9d15ab2a339c`](https://github.com/helmerzNL/DiscVaultApp/commit/9d15ab2a339cefdb164ec0ab29ad69ddabc511c1)
+- [`Flux76HQ/DiscVault-AndroidApp@a13ef4bdbb23`](https://github.com/Flux76HQ/DiscVault-AndroidApp/commit/a13ef4bdbb23b6a7e52e01cdf532fa222c1b67de)
+- Źródło i stan: `2026-07-14`
+- DiscVault Docs: `0.1.0`

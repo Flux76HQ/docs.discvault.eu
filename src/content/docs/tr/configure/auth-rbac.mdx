@@ -1,0 +1,79 @@
+---
+title: 'Yapılandırma: Kimlik doğrulama ve RBAC'
+description: 'Göreve özel yönergeler: Yapılandırma: Kimlik doğrulama ve RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.'
+pageId: 'configure-auth-rbac'
+products: ['server']
+platforms: ['web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Amaç ve sonuç
+
+Sayfaya özel iş akışını tamamlayın: **Yapılandırma: Kimlik doğrulama ve RBAC**. Bu prosedür şunları kullanır: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+
+## Geçerli olduğu alan
+
+Bu sayfa yalnızca şunlar için geçerlidir: **Yapılandırma: Kimlik doğrulama ve RBAC** (web). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn. Sayfaya özel denetim noktaları: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+
+### DiscVault v26 kararlı
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- WebAuthn
+
+### DiscVault v26 beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- WebAuthn
+
+## Ön koşullar
+
+- sahip erişimi
+- HTTPS
+- ikinci kurtarma yöntemi
+
+## Prosedür
+
+1. **Açın:** Yönetim → Güvenlik → Kimlik doğrulamayı etkinleştir
+2. **Oluşturun:** Yönetim → Kullanıcılar → 48 saatlik davet oluştur
+3. **Yapılandırın:** Yönetim → Roller → Temel / Gelişmiş
+4. **Test edin:** `48 h`
+
+### Komutlar ve ayarlar
+
+#### Her iki kanal
+
+```bash
+curl --fail http://localhost:6080/api/next/auth/status
+curl --fail http://localhost:6080/api/next/auth/rbac
+```
+
+## Beklenen sonuç
+
+Şunun sonucunu kabul edin: **Yapılandırma: Kimlik doğrulama ve RBAC** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: sahip passkey girişi çalışır, davetli kayıt ayarla eşleşir ve test kullanıcısında yalnız atanmış izinler bulunur. Sayfaya özel denetim noktaları: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+
+- sahip passkey girişi çalışır, davetli kayıt ayarla eşleşir ve test kullanıcısında yalnız atanmış izinler bulunur
+
+## Güvenlik ve geri alma
+
+:::caution
+Şunun güvenli kurtarma sınırı: **Yapılandırma: Kimlik doğrulama ve RBAC** başlatmadan veya devam etmeden önce şu işlemleri gerektirir: sahip oturumunu ve ikinci bir kurtarma yöntemini koruyun; son sahip geçiş anahtarını asla kaldırmayın. Sayfaya özel denetim noktaları: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+
+- sahip oturumunu ve ikinci bir kurtarma yöntemini koruyun; son sahip geçiş anahtarını asla kaldırmayın
+:::
+
+## Sonraki adım
+
+[Yapılandırma: Eklentiler ve meta veriler](/tr/configure/plugins-metadata/)
+
+## Kaynak ve durum
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Kaynak ve durum: `2026-07-14`
+- DiscVault Docs: `0.1.0`

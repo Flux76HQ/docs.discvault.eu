@@ -1,0 +1,78 @@
+---
+title: '設定: プラグインとメタデータ'
+description: 'タスク別の手順: 設定: プラグインとメタデータ: `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.'
+pageId: 'configure-plugins-metadata'
+products: ['server']
+platforms: ['web', 'docker']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Web · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## 目的と結果
+
+このページ専用の手順を実行します: **設定: プラグインとメタデータ**. この手順で扱う項目: `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.
+
+## 対象
+
+このページの対象は **設定: プラグインとメタデータ** (Web · Docker). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26 · `/data/plugins`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26 · `/data/plugins`. このページ固有の確認点: `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.
+
+### DiscVault v26 安定版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault 26 · `/data/plugins`
+
+### DiscVault v26 ベータ版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault 26 · `/data/plugins`
+
+## 前提条件
+
+- 所有者または管理者セッション
+- シークレットとして保存するプロバイダー資格情報
+
+## 手順
+
+1. **確認:** `GET /api/next/plugins/registry`
+2. **設定:** 管理 → プラグイン → プロバイダー → 設定 · シークレットとして保存するプロバイダー資格情報
+3. **テスト:** 管理 → プラグイン → 状態確認 · 管理 → プラグイン → 保存せずに検出 · `dryRun`
+4. **記録:** `secret app_settings`
+
+### コマンドと設定
+
+#### 両方のチャンネル
+
+```bash
+curl --fail http://localhost:6080/api/next/plugins/registry
+curl --fail http://localhost:6080/api/next/metadata/plugins
+```
+
+## 期待される結果
+
+次の結果を受け入れる条件: **設定: プラグインとメタデータ** 以下の結果をすべて確認した場合のみ: レジストリにプロバイダーが表示され、ヘルス確認に成功し、ドライランで期待するメタデータサンプルが返ります. このページ固有の確認点: `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.
+
+- レジストリにプロバイダーが表示され、ヘルス確認に成功し、ドライランで期待するメタデータサンプルが返ります
+
+## 安全性とロールバック
+
+:::caution
+安全な復旧境界: **設定: プラグインとメタデータ** 起動または続行の前に、次の操作が必要です: 削除前にプロバイダーを無効化し、`/data/plugins` をバックアップして、漏えいした資格情報を失効します. このページ固有の確認点: `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.
+
+- 削除前にプロバイダーを無効化し、`/data/plugins` をバックアップして、漏えいした資格情報を失効します
+:::
+
+## 次の手順
+
+[連携: Plex と Jellyfin](/ja/integrations/plex-jellyfin/)
+
+## 情報源と状態
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- 情報源と状態: `2026-07-14`
+- DiscVault Docs: `0.1.0`

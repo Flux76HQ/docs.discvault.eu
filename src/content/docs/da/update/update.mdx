@@ -1,0 +1,114 @@
+---
+title: 'Opdatering og migrering: Containeropdatering'
+description: 'Opgavespecifik vejledning til Opdatering og migrering: Containeropdatering: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.'
+pageId: 'update-update'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Mål og resultat
+
+Gennemfør den sidespecifikke arbejdsgang for **Opdatering og migrering: Containeropdatering**. Denne fremgangsmåde arbejder med `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+
+## Gælder for
+
+Denne side gælder kun for **Opdatering og migrering: Containeropdatering** (Docker · Unraid). Kanal- og datagrænserne er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · udgivelsesnoter og registreret uforanderligt image-digest · tilsvarende backupsæt; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · udgivelsesnoter og registreret uforanderligt image-digest · tilsvarende backupsæt. Sidespecifikke kontrolpunkter: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `DISCVAULT_IMAGE`
+- PostgreSQL `/data` · udgivelsesnoter og registreret uforanderligt image-digest · tilsvarende backupsæt
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `DISCVAULT_IMAGE`
+- PostgreSQL `/data` · udgivelsesnoter og registreret uforanderligt image-digest · tilsvarende backupsæt
+
+## Forudsætninger
+
+- tilsvarende backupsæt
+- udgivelsesnoter og registreret uforanderligt image-digest
+
+## Fremgangsmåde
+
+1. **Bekræft:** `PREVIOUS_IMAGE=@sha256:…`
+2. **Vælg:** `DISCVAULT_IMAGE` · `:latest` `:beta`
+3. **Kør:** `--force-recreate`
+4. **Sammenlign:** det tilsigtede image-digest kører, sundhed lykkes, og ejerlogin, bibliotekstal og én medieprøve består
+
+### Kommandoer og indstillinger
+
+#### DiscVault v26 – stabil
+
+```bash
+export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
+```
+
+#### DiscVault v26 – beta
+
+```bash
+export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
+```
+
+#### Begge kanaler
+
+```bash
+set -euo pipefail
+test -n "$DISCVAULT_IMAGE"
+case "$DISCVAULT_IMAGE" in
+  ghcr.io/helmerznl/discvault:latest|ghcr.io/helmerznl/discvault:beta) ;;
+  *) printf '%s\n' "$DISCVAULT_IMAGE" >&2; exit 64 ;;
+esac
+cd /opt/discvault
+ENV_FILE=/opt/discvault/.env
+ENV_TMP="$(mktemp "$ENV_FILE.update.XXXXXX")"
+trap 'rm -f "$ENV_TMP"' EXIT
+awk -v image="$DISCVAULT_IMAGE" '
+  /^DISCVAULT_IMAGE=/ { print "DISCVAULT_IMAGE=" image; found=1; next }
+  { print }
+  END { if (!found) exit 42 }
+' "$ENV_FILE" > "$ENV_TMP"
+chmod 0600 "$ENV_TMP"
+docker compose --env-file "$ENV_TMP" -p discvault -f compose.yaml config --quiet
+docker compose --env-file "$ENV_TMP" -p discvault -f compose.yaml pull next-api next-worker next-mcp
+docker compose --env-file "$ENV_TMP" -p discvault -f compose.yaml up -d --force-recreate
+docker compose --env-file "$ENV_TMP" -p discvault -f compose.yaml ps
+curl --fail http://localhost:6080/api/next/health
+mv "$ENV_TMP" "$ENV_FILE"
+trap - EXIT
+```
+
+## Forventet resultat
+
+Godkend resultatet for **Opdatering og migrering: Containeropdatering** kun når alle resultater nedenfor er opfyldt: det tilsigtede image-digest kører, sundhed lykkes, og ejerlogin, bibliotekstal og én medieprøve består. Sidespecifikke kontrolpunkter: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+
+- det tilsigtede image-digest kører, sundhed lykkes, og ejerlogin, bibliotekstal og én medieprøve består
+
+## Sikkerhed og tilbagerulning
+
+:::caution
+Den sikre gendannelsesgrænse for **Opdatering og migrering: Containeropdatering** kræver disse handlinger, før noget startes eller fortsættes: [Opdatering og migrering: Tilbagerulning af image](/da/update/rollback/) · tilsvarende backupsæt; udgivelsesnoter og registreret uforanderligt image-digest. Sidespecifikke kontrolpunkter: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+
+- [Opdatering og migrering: Tilbagerulning af image](/da/update/rollback/) · tilsvarende backupsæt
+- udgivelsesnoter og registreret uforanderligt image-digest
+:::
+
+## Næste trin
+
+[Opdatering og migrering: Tilbagerulning af image](/da/update/rollback/)
+
+## Kilde og status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Kilde og status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

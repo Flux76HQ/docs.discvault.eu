@@ -1,0 +1,115 @@
+---
+title: '更新和迁移: 恢复'
+description: '任务专用说明： 更新和迁移: 恢复: `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.'
+pageId: 'update-restore'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## 目标和结果
+
+完成此页面专用的流程： **更新和迁移: 恢复**. 此流程使用 `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.
+
+## 适用范围
+
+本页面仅适用于 **更新和迁移: 恢复** (Docker · Unraid). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; 来自同一停止写入时段的 PostgreSQL 转储与文件归档; 必须先恢复匹配数据，再启动之前的镜像; DiscVault · `ghcr.io/helmerznl/discvault:beta`; 来自同一停止写入时段的 PostgreSQL 转储与文件归档; 必须先恢复匹配数据，再启动之前的镜像. 本页面专用检查点： `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.
+
+### DiscVault v26 稳定版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- 来自同一停止写入时段的 PostgreSQL 转储与文件归档
+- 必须先恢复匹配数据，再启动之前的镜像
+
+### DiscVault v26 测试版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- 来自同一停止写入时段的 PostgreSQL 转储与文件归档
+- 必须先恢复匹配数据，再启动之前的镜像
+
+## 前提条件
+
+- 匹配的备份集
+- 维护时段
+- `PREVIOUS_IMAGE` · 私有 DiscVault 运行时环境文件
+
+## 操作步骤
+
+1. **停止:** `next-api` `next-worker` `next-mcp`
+2. **恢复:** `/data`
+3. **恢复:** PostgreSQL · `pg_restore --exit-on-error`
+4. **启动:** `next-api` → `GET /api/next/health` → `next-worker` `next-mcp`
+
+### 命令和设置
+
+#### 两个通道
+
+```bash
+set -euo pipefail
+BACKUP_ID=20260714T180000Z
+cd /opt/discvault
+. "/srv/backups/discvault-$BACKUP_ID.env"
+test -n "$PREVIOUS_IMAGE"
+export DISCVAULT_IMAGE="$PREVIOUS_IMAGE"
+docker pull "$DISCVAULT_IMAGE"
+ENV_FILE=/opt/discvault/.env
+ENV_TMP="$(mktemp "$ENV_FILE.restore.XXXXXX")"
+trap 'rm -f "$ENV_TMP"' EXIT
+awk -v image="$DISCVAULT_IMAGE" '
+  /^DISCVAULT_IMAGE=/ { print "DISCVAULT_IMAGE=" image; found=1; next }
+  { print }
+  END { if (!found) exit 42 }
+' "$ENV_FILE" > "$ENV_TMP"
+chmod 0600 "$ENV_TMP"
+docker compose --env-file .env -p discvault -f compose.yaml stop next-worker next-mcp next-api
+mv /srv/discvault "/srv/discvault.failed-$(date -u +%Y%m%dT%H%M%SZ)"
+tar --acls --xattrs -C /srv -xzf \
+  "/srv/backups/discvault-data-$BACKUP_ID.tgz"
+docker compose --env-file .env -p discvault -f compose.yaml up -d postgres
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'dropdb --if-exists --force -U "$POSTGRES_USER" "$POSTGRES_DB"'
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'createdb -U "$POSTGRES_USER" "$POSTGRES_DB"'
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'pg_restore --exit-on-error --no-owner -U "$POSTGRES_USER" -d "$POSTGRES_DB"' \
+  < "/srv/backups/discvault-$BACKUP_ID.dump"
+docker compose --env-file .env -p discvault -f compose.yaml up -d --force-recreate next-api
+curl --fail http://localhost:6080/api/next/health
+docker compose --env-file .env -p discvault -f compose.yaml \
+  up -d --force-recreate next-worker next-mcp
+docker compose --env-file .env -p discvault -f compose.yaml ps
+mv "$ENV_TMP" "$ENV_FILE"
+trap - EXIT
+```
+
+## 预期结果
+
+仅在以下条件下接受结果： **更新和迁移: 恢复** 必须确认以下所有结果： 媒体库数量及抽样媒体与所选备份一致; `:latest` `:beta`. 本页面专用检查点： `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.
+
+- 媒体库数量及抽样媒体与所选备份一致
+- `:latest` `:beta`
+
+## 安全与回滚
+
+:::caution
+安全恢复边界： **更新和迁移: 恢复** 在启动或继续任何操作前必须执行： 如果文件系统解压或 pg_restore 失败，必须保持容器、API、工作进程和 MCP 停止，并从未改动的备份副本重试. 本页面专用检查点： `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.
+
+- 如果文件系统解压或 pg_restore 失败，必须保持容器、API、工作进程和 MCP 停止，并从未改动的备份副本重试
+:::
+
+## 下一步
+
+[更新和迁移: 容器更新](/zh/update/update/)
+
+## 来源和状态
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- 来源和状态: `2026-07-14`
+- DiscVault Docs: `0.1.0`

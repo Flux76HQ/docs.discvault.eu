@@ -1,0 +1,82 @@
+---
+title: 'Démarrer: Vue d’ensemble'
+description: 'Instructions propres à la tâche : Démarrer: Vue d’ensemble: Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.'
+pageId: 'start-requirements'
+products: ['server', 'pwa', 'ios', 'android']
+platforms: ['all']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="toutes les plateformes" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Objectif et résultat
+
+Suivez le déroulement propre à cette page pour **Démarrer: Vue d’ensemble**. Cette procédure utilise Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.
+
+## S’applique à
+
+Cette page s’applique uniquement à **Démarrer: Vue d’ensemble** (toutes les plateformes). Les limites de canal et de données sont : DiscVault · `ghcr.io/helmerznl/discvault:latest`; Docker Compose `v2` · PostgreSQL `17` · `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; Docker Compose `v2` · PostgreSQL `17` · `/data`. Points de contrôle propres à la page : Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.
+
+### DiscVault v26 stable
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- Docker Compose `v2` · PostgreSQL `17` · `/data`
+
+### DiscVault v26 bêta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- Docker Compose `v2` · PostgreSQL `17` · `/data`
+
+## Prérequis
+
+- Docker Engine `24+`
+- stockage persistant inscriptible et espace de sauvegarde libre
+- DNS TLS
+
+## Procédure
+
+1. **Inspecter:** Docker Engine `≥24` · Docker Compose `v2`
+2. **Inspecter:** `≥2 GB` · stockage persistant inscriptible et espace de sauvegarde libre
+3. **Configurer:** DNS · TLS · HTTPS · `RP_ID` · `RP_ORIGINS`
+4. **Consigner:** canal de publication choisi
+
+### Commandes et réglages
+
+#### Les deux canaux
+
+```bash
+docker version --format '{{.Server.Version}}'
+docker compose version
+curl --version
+```
+
+## Résultat attendu
+
+Validez le résultat de **Démarrer: Vue d’ensemble** uniquement lorsque tous les résultats suivants sont confirmés : Docker Engine `≥24`; Docker Compose `v2`; HTTPS DNS. Points de contrôle propres à la page : Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.
+
+- Docker Engine `≥24`
+- Docker Compose `v2`
+- HTTPS DNS
+
+## Sécurité et retour arrière
+
+:::caution
+La limite de récupération sûre pour **Démarrer: Vue d’ensemble** impose ces actions avant tout démarrage ou toute poursuite : les contrôles en lecture seule ne modifient aucune donnée ; corrigez les prérequis avant de continuer. Points de contrôle propres à la page : Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.
+
+- les contrôles en lecture seule ne modifient aucune donnée ; corrigez les prérequis avant de continuer
+:::
+
+## Étape suivante
+
+[Installation: Méthodes d’installation](/fr/install/)
+
+## Source et état
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Source et état: `2026-07-14`
+- DiscVault Docs: `0.1.0`

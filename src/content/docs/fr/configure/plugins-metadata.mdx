@@ -1,0 +1,78 @@
+---
+title: 'Configuration: Extensions et métadonnées'
+description: 'Instructions propres à la tâche : Configuration: Extensions et métadonnées: `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.'
+pageId: 'configure-plugins-metadata'
+products: ['server']
+platforms: ['web', 'docker']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="web · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Objectif et résultat
+
+Suivez le déroulement propre à cette page pour **Configuration: Extensions et métadonnées**. Cette procédure utilise `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.
+
+## S’applique à
+
+Cette page s’applique uniquement à **Configuration: Extensions et métadonnées** (web · Docker). Les limites de canal et de données sont : DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26 · `/data/plugins`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26 · `/data/plugins`. Points de contrôle propres à la page : `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.
+
+### DiscVault v26 stable
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault 26 · `/data/plugins`
+
+### DiscVault v26 bêta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault 26 · `/data/plugins`
+
+## Prérequis
+
+- session propriétaire ou administrateur
+- identifiant fournisseur stocké comme secret
+
+## Procédure
+
+1. **Inspecter:** `GET /api/next/plugins/registry`
+2. **Configurer:** Administration → Plugins → Fournisseur → Configurer · identifiant fournisseur stocké comme secret
+3. **Tester:** Administration → Plugins → Contrôle de fonctionnement · Administration → Plugins → Découvrir sans enregistrer · `dryRun`
+4. **Consigner:** `secret app_settings`
+
+### Commandes et réglages
+
+#### Les deux canaux
+
+```bash
+curl --fail http://localhost:6080/api/next/plugins/registry
+curl --fail http://localhost:6080/api/next/metadata/plugins
+```
+
+## Résultat attendu
+
+Validez le résultat de **Configuration: Extensions et métadonnées** uniquement lorsque tous les résultats suivants sont confirmés : le registre liste le fournisseur, son contrôle d’état réussit et un essai renvoie l’échantillon de métadonnées attendu. Points de contrôle propres à la page : `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.
+
+- le registre liste le fournisseur, son contrôle d’état réussit et un essai renvoie l’échantillon de métadonnées attendu
+
+## Sécurité et retour arrière
+
+:::caution
+La limite de récupération sûre pour **Configuration: Extensions et métadonnées** impose ces actions avant tout démarrage ou toute poursuite : désactivez le fournisseur avant retrait, sauvegardez `/data/plugins` et révoquez tout identifiant exposé. Points de contrôle propres à la page : `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.
+
+- désactivez le fournisseur avant retrait, sauvegardez `/data/plugins` et révoquez tout identifiant exposé
+:::
+
+## Étape suivante
+
+[Intégrations: Plex et Jellyfin](/fr/integrations/plex-jellyfin/)
+
+## Source et état
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Source et état: `2026-07-14`
+- DiscVault Docs: `0.1.0`

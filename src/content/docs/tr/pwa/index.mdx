@@ -1,0 +1,76 @@
+---
+title: 'PWA: Genel bakış'
+description: 'Göreve özel yönergeler: PWA: Genel bakış: PWA · HTTPS · `Service Worker` · `/pwa/offline/`.'
+pageId: 'pwa-index'
+products: ['pwa']
+platforms: ['web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Amaç ve sonuç
+
+Sayfaya özel iş akışını tamamlayın: **PWA: Genel bakış**. Bu prosedür şunları kullanır: PWA · HTTPS · `Service Worker` · `/pwa/offline/`.
+
+## Geçerli olduğu alan
+
+Bu sayfa yalnızca şunlar için geçerlidir: **PWA: Genel bakış** (web). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PWA; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PWA. Sayfaya özel denetim noktaları: PWA · HTTPS · `Service Worker` · `/pwa/offline/`.
+
+### DiscVault v26 kararlı
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PWA
+
+### DiscVault v26 beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PWA
+
+## Ön koşullar
+
+- PWA
+- HTTPS DiscVault 26
+
+## Prosedür
+
+1. **Kurun:** [PWA: PWA kurulumu](/tr/pwa/install/) · HTTPS
+2. **Açın:** [PWA: Kitaplık ve arama](/tr/pwa/library-search/)
+3. **Test edin:** [PWA: Çevrimdışı davranış](/tr/pwa/offline/) · `Service Worker`
+4. **Doğrulayın:** `/pwa/offline/`
+
+### Görev yolları
+
+- [PWA: PWA kurulumu](/tr/pwa/install/) — iOS/iPadOS Android
+- [PWA: Kitaplık ve arama](/tr/pwa/library-search/) — HTTPS
+- [PWA: Çevrimdışı davranış](/tr/pwa/offline/) — Service Worker
+
+## Beklenen sonuç
+
+Şunun sonucunu kabul edin: **PWA: Genel bakış** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: Adres çubuğu → DiscVault’u kur · Paylaş → Ana Ekrana Ekle · Tarayıcı menüsü → Uygulamayı yükle; önbellekte ekranlar açılabilir ancak yeni veri ve yazma işlemleri ağ gerektirir. Sayfaya özel denetim noktaları: PWA · HTTPS · `Service Worker` · `/pwa/offline/`.
+
+- Adres çubuğu → DiscVault’u kur · Paylaş → Ana Ekrana Ekle · Tarayıcı menüsü → Uygulamayı yükle
+- önbellekte ekranlar açılabilir ancak yeni veri ve yazma işlemleri ağ gerektirir
+
+## Güvenlik ve geri alma
+
+:::caution
+Şunun güvenli kurtarma sınırı: **PWA: Genel bakış** başlatmadan veya devam etmeden önce şu işlemleri gerektirir: yalnızca yüklü PWA kabuğunu kaldırın; sunucu kitaplığı ve hesap verileri değişmeden kalır. Sayfaya özel denetim noktaları: PWA · HTTPS · `Service Worker` · `/pwa/offline/`.
+
+- yalnızca yüklü PWA kabuğunu kaldırın; sunucu kitaplığı ve hesap verileri değişmeden kalır
+:::
+
+## Sonraki adım
+
+[PWA: PWA kurulumu](/tr/pwa/install/)
+
+## Kaynak ve durum
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Kaynak ve durum: `2026-07-14`
+- DiscVault Docs: `0.1.0`

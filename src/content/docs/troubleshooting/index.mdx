@@ -1,0 +1,82 @@
+---
+title: 'Troubleshooting'
+description: 'Diagnose container startup, reverse proxy/passkeys, PWA cache, native permissions, migration, and data recovery in a safe order.'
+pageId: 'troubleshooting-index'
+products: ['server', 'pwa', 'ios', 'android']
+platforms: ['all']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVaultApp', 'Flux76HQ/DiscVault-AndroidApp']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="all platforms" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVaultApp · Flux76HQ/DiscVault-AndroidApp" verified="2026-07-14" />
+
+## Goal and result
+
+Diagnose container startup, reverse proxy/passkeys, PWA cache, native permissions, migration, and data recovery in a safe order.
+
+## Applies to
+
+Identify the image tag first, then use the shared v26 service graph. A 502 suggests host port 6080 or internal port 5000 health; passkey errors suggest HTTPS, `RP_ID`, or `RP_ORIGINS` mismatch.
+
+### DiscVault v26 stable
+
+- DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
+- same service names, port, endpoint, and data stores
+
+### DiscVault v26 beta
+
+- DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
+- same service names, port, endpoint, and data stores
+
+## Prerequisites
+
+- selected release channel
+- timestamped logs with private data redacted
+- current image digest
+
+## Procedure
+
+1. **Record:** channel + image digest + timestamp
+2. **Isolate:** container → reverse proxy → browser/app → provider → data
+3. **Inspect:** timestamped logs with private data redacted · first failing layer
+4. **Preserve:** PostgreSQL + `/data` + app storage · before recovery
+
+### Commands and settings
+
+#### Both channels
+
+```bash
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml ps
+curl --fail http://localhost:6080/api/next/health
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml logs --tail=200 next-api next-worker next-mcp postgres
+```
+
+## Expected result
+
+The failing layer is isolated to container, proxy, browser/app, provider, or data and the matching health check is recorded.
+
+- one failing layer is isolated with its timestamp, status, image digest, and redacted error
+
+## Safety and rollback
+
+:::caution
+Do not delete volumes, `/data`, browser credentials, or app storage as a first step. Preserve redacted logs and restore a matched backup when data changed.
+
+- do not delete volumes, `/data`, browser credentials, or native app storage first; preserve redacted logs and restore only a matching backup
+:::
+
+## Next step
+
+[Reference](/reference/)
+
+## Source and status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- [`helmerzNL/DiscVaultApp@9d15ab2a339c`](https://github.com/helmerzNL/DiscVaultApp/commit/9d15ab2a339cefdb164ec0ab29ad69ddabc511c1)
+- [`Flux76HQ/DiscVault-AndroidApp@a13ef4bdbb23`](https://github.com/Flux76HQ/DiscVault-AndroidApp/commit/a13ef4bdbb23b6a7e52e01cdf532fa222c1b67de)
+- Verified: `2026-07-14`
+- DiscVault Docs: `0.1.0`

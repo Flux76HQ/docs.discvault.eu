@@ -1,0 +1,78 @@
+---
+title: 'Aktualizacja i migracja: Przegląd'
+description: 'Instrukcja właściwa dla zadania: Aktualizacja i migracja: Przegląd: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.'
+pageId: 'update-index'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Cel i rezultat
+
+Wykonaj procedurę właściwą dla strony: **Aktualizacja i migracja: Przegląd**. Ta procedura korzysta z `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+## Dotyczy
+
+Ta strona dotyczy wyłącznie **Aktualizacja i migracja: Przegląd** (Docker · Unraid). Granice kanału i danych: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/update/restore/`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/update/restore/`. Punkty kontrolne tej strony: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+### DiscVault v26 – stabilny
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `/update/restore/`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `/update/restore/`
+
+## Wymagania wstępne
+
+- pasujący zestaw kopii
+- informacje o wydaniu i zapisany niezmienny skrót obrazu
+
+## Procedura
+
+1. **Utwórz kopię:** [Aktualizacja i migracja: Kopia zapasowa](/pl/update/backup/) · pasujący zestaw kopii
+2. **Przetestuj:** [Aktualizacja i migracja: Przywracanie](/pl/update/restore/)
+3. **Uruchom:** [Aktualizacja i migracja: Aktualizacja kontenera](/pl/update/update/) · `DISCVAULT_IMAGE`
+4. **Zachowaj:** [Aktualizacja i migracja: Wycofanie obrazu](/pl/update/rollback/)
+
+### Ścieżki zadań
+
+- [Aktualizacja i migracja: Kopia zapasowa](/pl/update/backup/) — 1 PostgreSQL
+- [Aktualizacja i migracja: Przywracanie](/pl/update/restore/) — 2
+- [Aktualizacja i migracja: Aktualizacja kontenera](/pl/update/update/) — 3
+- [Aktualizacja i migracja: Wycofanie obrazu](/pl/update/rollback/) — 4
+
+## Oczekiwany rezultat
+
+Zaakceptuj wynik dla **Aktualizacja i migracja: Przegląd** tylko gdy wszystkie poniższe wyniki są prawdziwe: archiwum i zrzut nie są puste, można je odczytać podczas próby i są powiązane z niezmiennym digestem obrazu; działa zamierzony digest obrazu, stan jest prawidłowy, a logowanie właściciela, liczba rekordów i próbka przechodzą. Punkty kontrolne tej strony: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+- archiwum i zrzut nie są puste, można je odczytać podczas próby i są powiązane z niezmiennym digestem obrazu
+- działa zamierzony digest obrazu, stan jest prawidłowy, a logowanie właściciela, liczba rekordów i próbka przechodzą
+
+## Bezpieczeństwo i wycofanie
+
+:::caution
+Bezpieczna granica odzyskiwania dla **Aktualizacja i migracja: Przegląd** wymaga tych działań przed uruchomieniem lub kontynuacją: pasujący zestaw kopii; `PREVIOUS_IMAGE` · `@sha256:`. Punkty kontrolne tej strony: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+- pasujący zestaw kopii
+- `PREVIOUS_IMAGE` · `@sha256:`
+:::
+
+## Następny krok
+
+[Aktualizacja i migracja: Kopia zapasowa](/pl/update/backup/)
+
+## Źródło i stan
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Źródło i stan: `2026-07-14`
+- DiscVault Docs: `0.1.0`

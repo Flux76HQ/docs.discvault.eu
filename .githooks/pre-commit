@@ -1,0 +1,12 @@
+#!/bin/sh
+set -eu
+if command -v pnpm >/dev/null 2>&1; then
+  PM="pnpm"
+else
+  PM="corepack pnpm"
+fi
+$PM exec prettier --check . --log-level warn
+$PM content:check
+$PM translations:check
+$PM links:check
+$PM version:check --staged

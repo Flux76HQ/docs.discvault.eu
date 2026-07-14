@@ -1,0 +1,101 @@
+---
+title: 'Actualización y migración: Copia de seguridad'
+description: 'Instrucciones específicas para Actualización y migración: Copia de seguridad: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.'
+pageId: 'update-backup'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Objetivo y resultado
+
+Completa el flujo específico de la página para **Actualización y migración: Copia de seguridad**. Este procedimiento utiliza `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
+
+## Aplicable a
+
+Esta página se aplica solo a **Actualización y migración: Copia de seguridad** (Docker · Unraid). Sus límites de canal y datos son: DiscVault · `ghcr.io/helmerznl/discvault:latest`; volcado PostgreSQL y archivo de datos del mismo periodo sin escrituras; PostgreSQL `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; volcado PostgreSQL y archivo de datos del mismo periodo sin escrituras; PostgreSQL `/data`. Puntos de control de esta página: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
+
+### DiscVault v26 estable
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- volcado PostgreSQL y archivo de datos del mismo periodo sin escrituras
+- PostgreSQL `/data`
+
+### DiscVault v26 beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- volcado PostgreSQL y archivo de datos del mismo periodo sin escrituras
+- PostgreSQL `/data`
+
+## Requisitos previos
+
+- destino de copia fuera de los datos activos
+- almacenamiento persistente escribible y espacio libre
+
+## Procedimiento
+
+1. **Registra:** `PREVIOUS_IMAGE` · `sha256`
+2. **Detén:** `next-api` `next-worker` `next-mcp`
+3. **Crea una copia:** `pg_dump -Fc`
+4. **Inicia:** `next-api` → → MCP
+
+### Comandos y ajustes
+
+#### Ambos canales
+
+```bash
+set -euo pipefail
+cd /opt/discvault
+install -d -m 0700 /srv/backups
+BACKUP_ID="$(date -u +%Y%m%dT%H%M%SZ)"
+API_ID="$(docker compose --env-file .env -p discvault -f compose.yaml ps -q next-api)"
+IMAGE_ID="$(docker inspect "$API_ID" --format '{{.Image}}')"
+PREVIOUS_IMAGE="$(docker image inspect "$IMAGE_ID" --format '{{index .RepoDigests 0}}')"
+test -n "$PREVIOUS_IMAGE"
+printf 'BACKUP_ID=%s\nPREVIOUS_IMAGE=%s\n' "$BACKUP_ID" "$PREVIOUS_IMAGE" \
+  > "/srv/backups/discvault-$BACKUP_ID.env"
+chmod 0600 "/srv/backups/discvault-$BACKUP_ID.env"
+docker compose --env-file .env -p discvault -f compose.yaml stop next-worker next-mcp next-api
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'pg_dump -Fc -U "$POSTGRES_USER" "$POSTGRES_DB"' \
+  > "/srv/backups/discvault-$BACKUP_ID.dump"
+tar --acls --xattrs -C /srv -czf \
+  "/srv/backups/discvault-data-$BACKUP_ID.tgz" discvault
+docker compose --env-file .env -p discvault -f compose.yaml start next-api
+curl --fail http://localhost:6080/api/next/health
+docker compose --env-file .env -p discvault -f compose.yaml start next-worker next-mcp
+test -s "/srv/backups/discvault-$BACKUP_ID.dump"
+gzip -t "/srv/backups/discvault-data-$BACKUP_ID.tgz"
+```
+
+## Resultado esperado
+
+Acepta el resultado de **Actualización y migración: Copia de seguridad** solo cuando se cumplan todos estos resultados: el archivo y el volcado no están vacíos, son legibles en un ensayo y están ligados a un digest inmutable. Puntos de control de esta página: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
+
+- el archivo y el volcado no están vacíos, son legibles en un ensayo y están ligados a un digest inmutable
+
+## Seguridad y reversión
+
+:::caution
+El límite de recuperación segura de **Actualización y migración: Copia de seguridad** exige estas acciones antes de iniciar o continuar: si falla una orden de copia, reinicia solo los servicios sin cambios y cancela la actualización; volcado PostgreSQL y archivo de datos del mismo periodo sin escrituras. Puntos de control de esta página: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
+
+- si falla una orden de copia, reinicia solo los servicios sin cambios y cancela la actualización
+- volcado PostgreSQL y archivo de datos del mismo periodo sin escrituras
+:::
+
+## Siguiente paso
+
+[Actualización y migración: Restauración](/es/update/restore/)
+
+## Fuente y estado
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Fuente y estado: `2026-07-14`
+- DiscVault Docs: `0.1.0`

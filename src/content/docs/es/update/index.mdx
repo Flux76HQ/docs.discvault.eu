@@ -1,0 +1,78 @@
+---
+title: 'Actualización y migración: Resumen'
+description: 'Instrucciones específicas para Actualización y migración: Resumen: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.'
+pageId: 'update-index'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Objetivo y resultado
+
+Completa el flujo específico de la página para **Actualización y migración: Resumen**. Este procedimiento utiliza `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+## Aplicable a
+
+Esta página se aplica solo a **Actualización y migración: Resumen** (Docker · Unraid). Sus límites de canal y datos son: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/update/restore/`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/update/restore/`. Puntos de control de esta página: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+### DiscVault v26 estable
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `/update/restore/`
+
+### DiscVault v26 beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `/update/restore/`
+
+## Requisitos previos
+
+- juego de copias coincidente
+- notas de versión y digest inmutable registrado
+
+## Procedimiento
+
+1. **Crea una copia:** [Actualización y migración: Copia de seguridad](/es/update/backup/) · juego de copias coincidente
+2. **Prueba:** [Actualización y migración: Restauración](/es/update/restore/)
+3. **Ejecuta:** [Actualización y migración: Actualización del contenedor](/es/update/update/) · `DISCVAULT_IMAGE`
+4. **Conserva:** [Actualización y migración: Reversión de imagen](/es/update/rollback/)
+
+### Rutas de tareas
+
+- [Actualización y migración: Copia de seguridad](/es/update/backup/) — 1 PostgreSQL
+- [Actualización y migración: Restauración](/es/update/restore/) — 2
+- [Actualización y migración: Actualización del contenedor](/es/update/update/) — 3
+- [Actualización y migración: Reversión de imagen](/es/update/rollback/) — 4
+
+## Resultado esperado
+
+Acepta el resultado de **Actualización y migración: Resumen** solo cuando se cumplan todos estos resultados: el archivo y el volcado no están vacíos, son legibles en un ensayo y están ligados a un digest inmutable; se ejecuta el digest previsto, la salud es correcta y pasan el acceso del propietario, el recuento y una muestra multimedia. Puntos de control de esta página: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+- el archivo y el volcado no están vacíos, son legibles en un ensayo y están ligados a un digest inmutable
+- se ejecuta el digest previsto, la salud es correcta y pasan el acceso del propietario, el recuento y una muestra multimedia
+
+## Seguridad y reversión
+
+:::caution
+El límite de recuperación segura de **Actualización y migración: Resumen** exige estas acciones antes de iniciar o continuar: juego de copias coincidente; `PREVIOUS_IMAGE` · `@sha256:`. Puntos de control de esta página: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+- juego de copias coincidente
+- `PREVIOUS_IMAGE` · `@sha256:`
+:::
+
+## Siguiente paso
+
+[Actualización y migración: Copia de seguridad](/es/update/backup/)
+
+## Fuente y estado
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Fuente y estado: `2026-07-14`
+- DiscVault Docs: `0.1.0`

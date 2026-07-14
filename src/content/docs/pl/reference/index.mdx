@@ -1,0 +1,74 @@
+---
+title: 'Dokumentacja'
+description: 'Instrukcja właściwa dla zadania: Dokumentacja: `:latest` · `:beta` · `:dev` · `6080:5000`.'
+pageId: 'reference-index'
+products: ['server', 'pwa', 'ios', 'android']
+platforms: ['all']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="wszystkie platformy" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Cel i rezultat
+
+Wykonaj procedurę właściwą dla strony: **Dokumentacja**. Ta procedura korzysta z `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+## Dotyczy
+
+Ta strona dotyczy wyłącznie **Dokumentacja** (wszystkie platformy). Granice kanału i danych: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`. Punkty kontrolne tej strony: `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+### DiscVault v26 – stabilny
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PostgreSQL `/data`
+- API `6080:5000` MCP `6090:6090`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PostgreSQL `/data`
+- API `6080:5000` MCP `6090:6090`
+
+## Wymagania wstępne
+
+- wybrany kanał wydań
+
+## Procedura
+
+1. **Sprawdź:** `:latest` `:beta`
+2. **Zapisz:** `:dev` służy tylko do prac inżynieryjnych i nie jest kanałem wydań; stabilny DiscVault v26 używa `:latest`, a beta używa `:beta` · `:dev`
+3. **Zapisz:** `/api/next/health`
+4. **Zapisz:** PostgreSQL `/data`
+
+
+
+## Oczekiwany rezultat
+
+Zaakceptuj wynik dla **Dokumentacja** tylko gdy wszystkie poniższe wyniki są prawdziwe: wybrany kanał wydań · `@sha256:`; `:latest` · `:beta` · `:dev`. Punkty kontrolne tej strony: `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+- wybrany kanał wydań · `@sha256:`
+- `:latest` · `:beta` · `:dev`
+
+## Bezpieczeństwo i wycofanie
+
+:::caution
+Bezpieczna granica odzyskiwania dla **Dokumentacja** wymaga tych działań przed uruchomieniem lub kontynuacją: dokumentacja jest tylko do odczytu; użyj właściwej procedury przed poleceniami lub zmianą danych; `:dev` służy tylko do prac inżynieryjnych i nie jest kanałem wydań; stabilny DiscVault v26 używa `:latest`, a beta używa `:beta` · `:dev`. Punkty kontrolne tej strony: `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+- dokumentacja jest tylko do odczytu; użyj właściwej procedury przed poleceniami lub zmianą danych
+- `:dev` służy tylko do prac inżynieryjnych i nie jest kanałem wydań; stabilny DiscVault v26 używa `:latest`, a beta używa `:beta` · `:dev`
+:::
+
+## Następny krok
+
+[Start: Przegląd](/pl/start/)
+
+## Źródło i stan
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Źródło i stan: `2026-07-14`
+- DiscVault Docs: `0.1.0`

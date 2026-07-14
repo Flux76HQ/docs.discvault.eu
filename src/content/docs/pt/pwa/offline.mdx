@@ -1,0 +1,72 @@
+---
+title: 'PWA: Comportamento offline'
+description: 'Instruções específicas para PWA: Comportamento offline: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.'
+pageId: 'pwa-offline'
+products: ['pwa']
+platforms: ['web', 'ios', 'android']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="web · iOS · Android" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Objetivo e resultado
+
+Conclua o procedimento específico da página para **PWA: Comportamento offline**. Este procedimento utiliza `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+## Aplicável a
+
+Esta página aplica-se apenas a **PWA: Comportamento offline** (web · iOS · Android). Os limites de canal e dados são: DiscVault · `ghcr.io/helmerznl/discvault:latest`; os ecrãs em cache podem abrir, mas dados novos e escritas exigem rede · `Service Worker` · `CacheStorage`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; os ecrãs em cache podem abrir, mas dados novos e escritas exigem rede · `Service Worker` · `CacheStorage`. Pontos de controlo desta página: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+### DiscVault v26 estável
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- os ecrãs em cache podem abrir, mas dados novos e escritas exigem rede · `Service Worker` · `CacheStorage`
+
+### DiscVault v26 beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- os ecrãs em cache podem abrir, mas dados novos e escritas exigem rede · `Service Worker` · `CacheStorage`
+
+## Pré-requisitos
+
+- PWA
+- `CacheStorage`
+
+## Procedimento
+
+1. **Abrir:** Biblioteca → Pesquisar
+2. **Testar:** modo de voo · `Service Worker`
+3. **Registar:** `navigator.onLine`
+4. **Voltar a ligar:** HTTPS
+
+
+
+## Resultado esperado
+
+Aceite o resultado de **PWA: Comportamento offline** apenas quando todos os resultados abaixo forem confirmados: os ecrãs em cache podem abrir, mas dados novos e escritas exigem rede; `Service Worker` · `navigator.onLine`. Pontos de controlo desta página: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+- os ecrãs em cache podem abrir, mas dados novos e escritas exigem rede
+- `Service Worker` · `navigator.onLine`
+
+## Segurança e reversão
+
+:::caution
+O limite de recuperação segura de **PWA: Comportamento offline** exige estas ações antes de iniciar ou continuar: os ecrãs em cache podem abrir, mas dados novos e escritas exigem rede · DiscVault. Pontos de controlo desta página: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+- os ecrãs em cache podem abrir, mas dados novos e escritas exigem rede · DiscVault
+:::
+
+## Próximo passo
+
+[Resolução de problemas](/pt/troubleshooting/)
+
+## Fonte e estado
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Fonte e estado: `2026-07-14`
+- DiscVault Docs: `0.1.0`

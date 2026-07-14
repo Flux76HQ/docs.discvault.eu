@@ -1,0 +1,74 @@
+---
+title: 'Referans'
+description: 'Göreve özel yönergeler: Referans: `:latest` · `:beta` · `:dev` · `6080:5000`.'
+pageId: 'reference-index'
+products: ['server', 'pwa', 'ios', 'android']
+platforms: ['all']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="tüm platformlar" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Amaç ve sonuç
+
+Sayfaya özel iş akışını tamamlayın: **Referans**. Bu prosedür şunları kullanır: `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+## Geçerli olduğu alan
+
+Bu sayfa yalnızca şunlar için geçerlidir: **Referans** (tüm platformlar). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`. Sayfaya özel denetim noktaları: `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+### DiscVault v26 kararlı
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PostgreSQL `/data`
+- API `6080:5000` MCP `6090:6090`
+
+### DiscVault v26 beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PostgreSQL `/data`
+- API `6080:5000` MCP `6090:6090`
+
+## Ön koşullar
+
+- seçilen yayın kanalı
+
+## Prosedür
+
+1. **İnceleyin:** `:latest` `:beta`
+2. **Kaydedin:** `:dev` yalnızca mühendislik içindir ve yayın kanalı değildir; kararlı DiscVault v26 `:latest`, beta ise `:beta` kullanır · `:dev`
+3. **Kaydedin:** `/api/next/health`
+4. **Kaydedin:** PostgreSQL `/data`
+
+
+
+## Beklenen sonuç
+
+Şunun sonucunu kabul edin: **Referans** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: seçilen yayın kanalı · `@sha256:`; `:latest` · `:beta` · `:dev`. Sayfaya özel denetim noktaları: `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+- seçilen yayın kanalı · `@sha256:`
+- `:latest` · `:beta` · `:dev`
+
+## Güvenlik ve geri alma
+
+:::caution
+Şunun güvenli kurtarma sınırı: **Referans** başlatmadan veya devam etmeden önce şu işlemleri gerektirir: başvuru salt okunurdur; komut çalıştırmadan veya veri değiştirmeden önce odaklı prosedürü kullanın; `:dev` yalnızca mühendislik içindir ve yayın kanalı değildir; kararlı DiscVault v26 `:latest`, beta ise `:beta` kullanır · `:dev`. Sayfaya özel denetim noktaları: `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+- başvuru salt okunurdur; komut çalıştırmadan veya veri değiştirmeden önce odaklı prosedürü kullanın
+- `:dev` yalnızca mühendislik içindir ve yayın kanalı değildir; kararlı DiscVault v26 `:latest`, beta ise `:beta` kullanır · `:dev`
+:::
+
+## Sonraki adım
+
+[Başlangıç: Genel bakış](/tr/start/)
+
+## Kaynak ve durum
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Kaynak ve durum: `2026-07-14`
+- DiscVault Docs: `0.1.0`

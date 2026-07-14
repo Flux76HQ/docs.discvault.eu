@@ -1,0 +1,74 @@
+---
+title: 'Reference'
+description: 'Pokyny pro konkrétní úlohu: Reference: `:latest` · `:beta` · `:dev` · `6080:5000`.'
+pageId: 'reference-index'
+products: ['server', 'pwa', 'ios', 'android']
+platforms: ['all']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="všechny platformy" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Cíl a výsledek
+
+Dokončete postup určený pro **Reference**. Tento postup pracuje s `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+## Platí pro
+
+Tato stránka platí pouze pro **Reference** (všechny platformy). Hranice kanálu a dat jsou: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`. Kontrolní body této stránky: `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+### DiscVault v26 – stabilní
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PostgreSQL `/data`
+- API `6080:5000` MCP `6090:6090`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PostgreSQL `/data`
+- API `6080:5000` MCP `6090:6090`
+
+## Požadavky
+
+- vybraný kanál vydání
+
+## Postup
+
+1. **Zkontrolujte:** `:latest` `:beta`
+2. **Zaznamenejte:** `:dev` je pouze pro technické práce a není kanálem vydání; stabilní DiscVault v26 používá `:latest` a beta používá `:beta` · `:dev`
+3. **Zaznamenejte:** `/api/next/health`
+4. **Zaznamenejte:** PostgreSQL `/data`
+
+
+
+## Očekávaný výsledek
+
+Výsledek přijměte pro **Reference** pouze pokud platí všechny následující výsledky: vybraný kanál vydání · `@sha256:`; `:latest` · `:beta` · `:dev`. Kontrolní body této stránky: `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+- vybraný kanál vydání · `@sha256:`
+- `:latest` · `:beta` · `:dev`
+
+## Bezpečnost a návrat
+
+:::caution
+Bezpečná hranice obnovy pro **Reference** vyžaduje před spuštěním nebo pokračováním tyto kroky: referenční stránka je pouze pro čtení; před příkazy či změnou dat použijte zaměřený postup; `:dev` je pouze pro technické práce a není kanálem vydání; stabilní DiscVault v26 používá `:latest` a beta používá `:beta` · `:dev`. Kontrolní body této stránky: `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+- referenční stránka je pouze pro čtení; před příkazy či změnou dat použijte zaměřený postup
+- `:dev` je pouze pro technické práce a není kanálem vydání; stabilní DiscVault v26 používá `:latest` a beta používá `:beta` · `:dev`
+:::
+
+## Další krok
+
+[Začít: Přehled](/cs/start/)
+
+## Zdroj a stav
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Zdroj a stav: `2026-07-14`
+- DiscVault Docs: `0.1.0`

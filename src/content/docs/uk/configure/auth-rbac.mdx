@@ -1,0 +1,79 @@
+---
+title: 'Налаштування: Автентифікація та RBAC'
+description: 'Спеціальні інструкції для завдання: Налаштування: Автентифікація та RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.'
+pageId: 'configure-auth-rbac'
+products: ['server']
+platforms: ['web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="веб" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Мета й результат
+
+Виконайте спеціальну процедуру сторінки для **Налаштування: Автентифікація та RBAC**. У цій процедурі використовуються `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+
+## Застосовується до
+
+Ця сторінка стосується лише **Налаштування: Автентифікація та RBAC** (веб). Межі каналу й даних: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn. Контрольні точки цієї сторінки: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+
+### DiscVault v26 – стабільний
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- WebAuthn
+
+### DiscVault v26 – бета
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- WebAuthn
+
+## Передумови
+
+- доступ власника
+- HTTPS
+- другий спосіб відновлення
+
+## Процедура
+
+1. **Відкрийте:** Адміністрування → Безпека → Увімкнути автентифікацію
+2. **Створіть:** Адміністрування → Користувачі → Створити запрошення на 48 годин
+3. **Налаштуйте:** Адміністрування → Ролі → Базовий / Розширений
+4. **Перевірте:** `48 h`
+
+### Команди й налаштування
+
+#### Обидва канали
+
+```bash
+curl --fail http://localhost:6080/api/next/auth/status
+curl --fail http://localhost:6080/api/next/auth/rbac
+```
+
+## Очікуваний результат
+
+Приймайте результат для **Налаштування: Автентифікація та RBAC** лише коли підтверджено всі наведені нижче результати: вхід власника з passkey працює, реєстрація за запрошенням відповідає налаштуванню, а тестовий користувач має лише призначені дозволи. Контрольні точки цієї сторінки: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+
+- вхід власника з passkey працює, реєстрація за запрошенням відповідає налаштуванню, а тестовий користувач має лише призначені дозволи
+
+## Безпека й відкочування
+
+:::caution
+Безпечна межа відновлення для **Налаштування: Автентифікація та RBAC** вимагає цих дій до будь-якого запуску чи продовження: збережіть сеанс власника й другий спосіб відновлення; ніколи не видаляйте останній passkey власника. Контрольні точки цієї сторінки: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+
+- збережіть сеанс власника й другий спосіб відновлення; ніколи не видаляйте останній passkey власника
+:::
+
+## Наступний крок
+
+[Налаштування: Плагіни й метадані](/uk/configure/plugins-metadata/)
+
+## Джерело й стан
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Джерело й стан: `2026-07-14`
+- DiscVault Docs: `0.1.0`

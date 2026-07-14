@@ -1,0 +1,75 @@
+---
+title: 'Integracje: Przegląd integracji'
+description: 'Instrukcja właściwa dla zadania: Integracje: Przegląd integracji: MCP · REST · Plex · Jellyfin.'
+pageId: 'integrations-index'
+products: ['server']
+platforms: ['web', 'docker']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="web · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Cel i rezultat
+
+Wykonaj procedurę właściwą dla strony: **Integracje: Przegląd integracji**. Ta procedura korzysta z MCP · REST · Plex · Jellyfin.
+
+## Dotyczy
+
+Ta strona dotyczy wyłącznie **Integracje: Przegląd integracji** (web · Docker). Granice kanału i danych: DiscVault · `ghcr.io/helmerznl/discvault:latest`; MCP REST Plex Jellyfin; DiscVault · `ghcr.io/helmerznl/discvault:beta`; MCP REST Plex Jellyfin. Punkty kontrolne tej strony: MCP · REST · Plex · Jellyfin.
+
+### DiscVault v26 – stabilny
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- MCP REST Plex Jellyfin
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- MCP REST Plex Jellyfin
+
+## Wymagania wstępne
+
+- HTTPS
+- API
+
+## Procedura
+
+1. **Wybierz:** [Integracje: MCP i REST API](/pl/integrations/mcp-api/)
+2. **Wybierz:** [Integracje: Plex i Jellyfin](/pl/integrations/plex-jellyfin/)
+3. **Skonfiguruj:** HTTPS
+4. **Unieważnij:** Jellyfin
+
+### Ścieżki zadań
+
+- [Integracje: MCP i REST API](/pl/integrations/mcp-api/) — DiscVault 26 MCP REST
+- [Integracje: Plex i Jellyfin](/pl/integrations/plex-jellyfin/) — DiscVault 26
+
+## Oczekiwany rezultat
+
+Zaakceptuj wynik dla **Integracje: Przegląd integracji** tylko gdy wszystkie poniższe wyniki są prawdziwe: poświadczenie dostawcy zapisane jako sekret; HTTPS · MCP · REST · Plex · Jellyfin. Punkty kontrolne tej strony: MCP · REST · Plex · Jellyfin.
+
+- poświadczenie dostawcy zapisane jako sekret
+- HTTPS · MCP · REST · Plex · Jellyfin
+
+## Bezpieczeństwo i wycofanie
+
+:::caution
+Bezpieczna granica odzyskiwania dla **Integracje: Przegląd integracji** wymaga tych działań przed uruchomieniem lub kontynuacją: wyłącz integrację, unieważnij testowe lub ujawnione poświadczenia, w razie potrzeby utwórz nowe i nigdy nie używaj starego ponownie. Punkty kontrolne tej strony: MCP · REST · Plex · Jellyfin.
+
+- wyłącz integrację, unieważnij testowe lub ujawnione poświadczenia, w razie potrzeby utwórz nowe i nigdy nie używaj starego ponownie
+:::
+
+## Następny krok
+
+[Integracje: MCP i REST API](/pl/integrations/mcp-api/)
+
+## Źródło i stan
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Źródło i stan: `2026-07-14`
+- DiscVault Docs: `0.1.0`

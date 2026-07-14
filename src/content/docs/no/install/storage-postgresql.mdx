@@ -1,0 +1,85 @@
+---
+title: 'Installasjon: Varige data og PostgreSQL'
+description: 'Oppgavespesifikk veiledning for Installasjon: Varige data og PostgreSQL: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.'
+pageId: 'install-storage-postgresql'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Mål og resultat
+
+Fullfør den sidespesifikke arbeidsflyten for **Installasjon: Varige data og PostgreSQL**. Denne fremgangsmåten bruker `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
+
+## Gjelder for
+
+Denne siden gjelder bare **Installasjon: Varige data og PostgreSQL** (Docker · Unraid). Kanal- og datagrensene er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL; `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL; `/data`. Sidespesifikke kontrollpunkter: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PostgreSQL
+- `/data`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PostgreSQL
+- `/data`
+
+## Forutsetninger
+
+- `DISCVAULT_POSTGRES_DATA`
+- sikkerhetskopimål utenfor aktiv databane
+- PostgreSQL `17`
+
+## Fremgangsmåte
+
+1. **Kontroller:** `DISCVAULT_POSTGRES_DATA` · `/var/lib/postgresql/data`
+2. **Kontroller:** `DISCVAULT_DATA_DIR` · `/data`
+3. **Bekreft:** `postgres` · `healthy` · `next-api`
+4. **Registrer:** PostgreSQL-dump og filarkiv fra samme skrivelåste tidsrom
+
+### Kommandoer og innstillinger
+
+#### Begge kanaler
+
+```bash
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml ps
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml exec -T postgres sh -c 'pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"'
+docker inspect discvault-next-api-1 --format '{{range .Mounts}}{{.Source}} -> {{.Destination}}{{println}}{{end}}'
+```
+
+## Forventet resultat
+
+Godta resultatet for **Installasjon: Varige data og PostgreSQL** bare når alle resultatene nedenfor er oppfylt: PostgreSQL · `healthy`; `/data`; tilhørende sikkerhetskopisett. Sidespesifikke kontrollpunkter: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
+
+- PostgreSQL · `healthy`
+- `/data`
+- tilhørende sikkerhetskopisett
+
+## Sikkerhet og tilbakerulling
+
+:::caution
+Den sikre gjenopprettingsgrensen for **Installasjon: Varige data og PostgreSQL** krever disse handlingene før noe startes eller fortsetter: PostgreSQL og `/data` er separate lagre og krever ett tilhørende sikkerhetskopisett; sikkerhetskopimål utenfor aktiv databane. Sidespesifikke kontrollpunkter: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
+
+- PostgreSQL og `/data` er separate lagre og krever ett tilhørende sikkerhetskopisett
+- sikkerhetskopimål utenfor aktiv databane
+:::
+
+## Neste trinn
+
+[Installasjon: Omvendt proxy og tilgangsnøkler](/no/install/reverse-proxy-passkeys/)
+
+## Kilde og status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Kilde og status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

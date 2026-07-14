@@ -1,0 +1,101 @@
+---
+title: 'Update and migrate: Backup'
+description: 'Create a consistent backup before update, migration, or configuration changes.'
+pageId: 'update-backup'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Goal and result
+
+Create a consistent backup before update, migration, or configuration changes.
+
+## Applies to
+
+DiscVault v26 stable and beta both require a PostgreSQL dump and the host `/data` directory from the same stopped-writer window.
+
+### DiscVault v26 stable
+
+- DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
+- PostgreSQL dump and filesystem archive from the same stopped-writer window
+- PostgreSQL + `/data`
+
+### DiscVault v26 beta
+
+- DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
+- PostgreSQL dump and filesystem archive from the same stopped-writer window
+- PostgreSQL + `/data`
+
+## Prerequisites
+
+- backup destination outside the live data path
+- writable persistent storage and free backup space
+
+## Procedure
+
+1. **Record:** `PREVIOUS_IMAGE` · immutable `sha256` digest
+2. **Stop:** `next-api` + `next-worker` + `next-mcp` writers
+3. **Back up:** `pg_dump -Fc` + filesystem archive
+4. **Start:** `next-api` → health → worker + MCP · validate both files
+
+### Commands and settings
+
+#### Both channels
+
+```bash
+set -euo pipefail
+cd /opt/discvault
+install -d -m 0700 /srv/backups
+BACKUP_ID="$(date -u +%Y%m%dT%H%M%SZ)"
+API_ID="$(docker compose --env-file .env -p discvault -f compose.yaml ps -q next-api)"
+IMAGE_ID="$(docker inspect "$API_ID" --format '{{.Image}}')"
+PREVIOUS_IMAGE="$(docker image inspect "$IMAGE_ID" --format '{{index .RepoDigests 0}}')"
+test -n "$PREVIOUS_IMAGE"
+printf 'BACKUP_ID=%s\nPREVIOUS_IMAGE=%s\n' "$BACKUP_ID" "$PREVIOUS_IMAGE" \
+  > "/srv/backups/discvault-$BACKUP_ID.env"
+chmod 0600 "/srv/backups/discvault-$BACKUP_ID.env"
+docker compose --env-file .env -p discvault -f compose.yaml stop next-worker next-mcp next-api
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'pg_dump -Fc -U "$POSTGRES_USER" "$POSTGRES_DB"' \
+  > "/srv/backups/discvault-$BACKUP_ID.dump"
+tar --acls --xattrs -C /srv -czf \
+  "/srv/backups/discvault-data-$BACKUP_ID.tgz" discvault
+docker compose --env-file .env -p discvault -f compose.yaml start next-api
+curl --fail http://localhost:6080/api/next/health
+docker compose --env-file .env -p discvault -f compose.yaml start next-worker next-mcp
+test -s "/srv/backups/discvault-$BACKUP_ID.dump"
+gzip -t "/srv/backups/discvault-data-$BACKUP_ID.tgz"
+```
+
+## Expected result
+
+Backup files are non-empty, stored outside the live data path, and can be listed or restored in a rehearsal.
+
+- the archive and dump are non-empty, readable in a restore rehearsal, and tied to an immutable image digest
+
+## Safety and rollback
+
+:::caution
+If any backup command fails, restart the unchanged services and cancel the update.
+
+- if any backup command fails, restart only the unchanged services and cancel the update
+- PostgreSQL dump and filesystem archive from the same stopped-writer window
+:::
+
+## Next step
+
+[Update and migrate: Restore](/update/restore/)
+
+## Source and status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Verified: `2026-07-14`
+- DiscVault Docs: `0.1.0`

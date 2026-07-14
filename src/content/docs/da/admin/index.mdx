@@ -1,0 +1,81 @@
+---
+title: 'Administration: Logfiler, job og sikkerhed'
+description: 'Opgavespecifik vejledning til Administration: Logfiler, job og sikkerhed: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.'
+pageId: 'admin-index'
+products: ['server']
+platforms: ['docker', 'unraid', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Mål og resultat
+
+Gennemfør den sidespecifikke arbejdsgang for **Administration: Logfiler, job og sikkerhed**. Denne fremgangsmåde arbejder med `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+## Gælder for
+
+Denne side gælder kun for **Administration: Logfiler, job og sikkerhed** (Docker · Unraid · web). Kanal- og datagrænserne er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; API MCP PostgreSQL; DiscVault · `ghcr.io/helmerznl/discvault:beta`; API MCP PostgreSQL. Sidespecifikke kontrolpunkter: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- API MCP PostgreSQL
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- API MCP PostgreSQL
+
+## Forudsætninger
+
+- ejeraadgang
+- tilsvarende backupsæt
+- tidsstemplede logfiler med private data fjernet
+
+## Fremgangsmåde
+
+1. **Kontrollér:** `/api/next/health`
+2. **Kontrollér:** tidsstemplede logfiler med private data fjernet
+3. **Bekræft:** `next-worker`
+4. **Bevar:** `--tail=200`
+
+### Kommandoer og indstillinger
+
+#### Begge kanaler
+
+```bash
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml logs --tail=200 next-api next-worker next-mcp postgres
+curl --fail http://localhost:6080/api/next/jobs
+curl --fail http://localhost:6080/api/next/health
+```
+
+## Forventet resultat
+
+Godkend resultatet for **Administration: Logfiler, job og sikkerhed** kun når alle resultater nedenfor er opfyldt: ét fejlende lag er isoleret med tidsstempel, status, image-digest og redigeret fejl; tilsvarende backupsæt. Sidespecifikke kontrolpunkter: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+- ét fejlende lag er isoleret med tidsstempel, status, image-digest og redigeret fejl
+- tilsvarende backupsæt
+
+## Sikkerhed og tilbagerulning
+
+:::caution
+Den sikre gendannelsesgrænse for **Administration: Logfiler, job og sikkerhed** kræver disse handlinger, før noget startes eller fortsættes: slet ikke først volumes, `/data`, browserlegitimationsoplysninger eller app-lager; bevar redigerede logfiler og gendan kun en passende backup. Sidespecifikke kontrolpunkter: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+- slet ikke først volumes, `/data`, browserlegitimationsoplysninger eller app-lager; bevar redigerede logfiler og gendan kun en passende backup
+:::
+
+## Næste trin
+
+[Fejlfinding](/da/troubleshooting/)
+
+## Kilde og status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Kilde og status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

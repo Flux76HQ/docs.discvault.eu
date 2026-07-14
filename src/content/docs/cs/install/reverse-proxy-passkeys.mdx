@@ -1,0 +1,83 @@
+---
+title: 'Instalace: Reverzní proxy a přístupové klíče'
+description: 'Pokyny pro konkrétní úlohu: Instalace: Reverzní proxy a přístupové klíče: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.'
+pageId: 'install-reverse-proxy-passkeys'
+products: ['server']
+platforms: ['docker', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Cíl a výsledek
+
+Dokončete postup určený pro **Instalace: Reverzní proxy a přístupové klíče**. Tento postup pracuje s `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+
+## Platí pro
+
+Tato stránka platí pouze pro **Instalace: Reverzní proxy a přístupové klíče** (Docker · web). Hranice kanálu a dat jsou: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`. Kontrolní body této stránky: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+
+### DiscVault v26 – stabilní
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `RP_ID` `RP_ORIGINS`
+- `6080` API `5000`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `RP_ID` `RP_ORIGINS`
+- `6080` API `5000`
+
+## Požadavky
+
+- DNS
+- TLS
+- `6080`
+
+## Postup
+
+1. **Nastavte:** `RP_ID`
+2. **Nastavte:** `RP_ORIGINS` · HTTPS
+3. **Nastavte:** `http://127.0.0.1:6080`
+4. **Otestujte:** `GET /api/next/health`
+
+### Příkazy a nastavení
+
+#### Oba kanály
+
+```text
+RP_ID=discvault.example.com
+RP_ORIGINS=https://discvault.example.com
+curl --fail https://discvault.example.com/api/next/health
+```
+
+## Očekávaný výsledek
+
+Výsledek přijměte pro **Instalace: Reverzní proxy a přístupové klíče** pouze pokud platí všechny následující výsledky: HTTPS · HTTP `2xx`; `RP_ID`. Kontrolní body této stránky: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+
+- HTTPS · HTTP `2xx`
+- `RP_ID`
+
+## Bezpečnost a návrat
+
+:::caution
+Bezpečná hranice obnovy pro **Instalace: Reverzní proxy a přístupové klíče** vyžaduje před spuštěním nebo pokračováním tyto kroky: obnovte proxy a hodnoty RP společně a zachovejte metodu obnovení vlastníka. Kontrolní body této stránky: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+
+- obnovte proxy a hodnoty RP společně a zachovejte metodu obnovení vlastníka
+:::
+
+## Další krok
+
+[Instalace: První spuštění a kontrola stavu](/cs/install/first-start-health/)
+
+## Zdroj a stav
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Zdroj a stav: `2026-07-14`
+- DiscVault Docs: `0.1.0`

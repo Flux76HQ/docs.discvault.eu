@@ -1,0 +1,78 @@
+---
+title: 'Konfigurálás: Bővítmények és metaadatok'
+description: 'Feladatspecifikus útmutató: Konfigurálás: Bővítmények és metaadatok: `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.'
+pageId: 'configure-plugins-metadata'
+products: ['server']
+platforms: ['web', 'docker']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="web · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Cél és eredmény
+
+Hajtsa végre az oldalhoz tartozó munkafolyamatot: **Konfigurálás: Bővítmények és metaadatok**. Ez az eljárás ezeket használja: `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.
+
+## Érvényesség
+
+Ez az oldal kizárólag erre vonatkozik: **Konfigurálás: Bővítmények és metaadatok** (web · Docker). A csatorna- és adathatárok: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26 · `/data/plugins`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26 · `/data/plugins`. Oldalspecifikus ellenőrzési pontok: `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault 26 · `/data/plugins`
+
+### DiscVault v26 – béta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault 26 · `/data/plugins`
+
+## Előfeltételek
+
+- tulajdonosi vagy rendszergazdai munkamenet
+- titokként tárolt szolgáltatói hitelesítő adat
+
+## Eljárás
+
+1. **Ellenőrizze:** `GET /api/next/plugins/registry`
+2. **Állítsa be:** Adminisztráció → Bővítmények → Szolgáltató → Beállítás · titokként tárolt szolgáltatói hitelesítő adat
+3. **Tesztelje:** Adminisztráció → Bővítmények → Állapotellenőrzés · Adminisztráció → Bővítmények → Felderítés mentés nélkül · `dryRun`
+4. **Jegyezze fel:** `secret app_settings`
+
+### Parancsok és beállítások
+
+#### Mindkét csatorna
+
+```bash
+curl --fail http://localhost:6080/api/next/plugins/registry
+curl --fail http://localhost:6080/api/next/metadata/plugins
+```
+
+## Várt eredmény
+
+Az eredmény csak ennél fogadható el: **Konfigurálás: Bővítmények és metaadatok** csak akkor, ha minden alábbi eredmény teljesül: a registry felsorolja a szolgáltatót, az állapotellenőrzés sikeres, és a próba a várt metaadatmintát adja. Oldalspecifikus ellenőrzési pontok: `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.
+
+- a registry felsorolja a szolgáltatót, az állapotellenőrzés sikeres, és a próba a várt metaadatmintát adja
+
+## Biztonság és visszaállítás
+
+:::caution
+A biztonságos helyreállítás határa ennél: **Konfigurálás: Bővítmények és metaadatok** ezeket a műveleteket igényli indítás vagy folytatás előtt: eltávolítás előtt tiltsa le a szolgáltatót, mentse a `/data/plugins` mappát, és vonja vissza a kiszivárgott hitelesítő adatot. Oldalspecifikus ellenőrzési pontok: `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.
+
+- eltávolítás előtt tiltsa le a szolgáltatót, mentse a `/data/plugins` mappát, és vonja vissza a kiszivárgott hitelesítő adatot
+:::
+
+## Következő lépés
+
+[Integrációk: Plex és Jellyfin](/hu/integrations/plex-jellyfin/)
+
+## Forrás és állapot
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Forrás és állapot: `2026-07-14`
+- DiscVault Docs: `0.1.0`

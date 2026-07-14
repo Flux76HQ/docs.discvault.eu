@@ -1,0 +1,138 @@
+---
+title: 'Konfigurace: Proměnné prostředí'
+description: 'Pokyny pro konkrétní úlohu: Konfigurace: Proměnné prostředí: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.'
+pageId: 'configure-environment'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Cíl a výsledek
+
+Dokončete postup určený pro **Konfigurace: Proměnné prostředí**. Tento postup pracuje s `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+
+## Platí pro
+
+Tato stránka platí pouze pro **Konfigurace: Proměnné prostředí** (Docker · Unraid). Hranice kanálu a dat jsou: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `.env`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `.env`. Kontrolní body této stránky: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+
+### DiscVault v26 – stabilní
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `.env`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `.env`
+
+## Požadavky
+
+- soukromý runtime soubor DiscVault
+- OpenSSL
+- plánované okno restartu
+
+## Postup
+
+1. **Vytvořte:** `/opt/discvault/.env` · oprávnění souboru pouze pro vlastníka (0600)
+2. **Nastavte:** `DISCVAULT_IMAGE` · `RP_ORIGINS`
+3. **Ověřte:** `chmod 0600` · `docker compose config --quiet`
+4. **Spusťte:** při běžných změnách konfigurace neměňte tajné hodnoty JWT a PostgreSQL
+
+### Příkazy a nastavení
+
+#### DiscVault v26 – stabilní
+
+```bash
+export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
+```
+
+#### DiscVault v26 – beta
+
+```bash
+export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
+```
+
+#### Oba kanály
+
+```bash
+set -euo pipefail
+test -n "$DISCVAULT_IMAGE"
+case "$DISCVAULT_IMAGE" in
+  ghcr.io/helmerznl/discvault:latest|ghcr.io/helmerznl/discvault:beta) ;;
+  *) printf '%s\n' "$DISCVAULT_IMAGE" >&2; exit 64 ;;
+esac
+install -d -m 0700 /opt/discvault
+install -d -m 0750 /srv/discvault
+install -d -o 70 -g 70 -m 0700 /srv/discvault-postgres
+cd /opt/discvault
+test -f compose.yaml
+umask 077
+ENV_FILE=/opt/discvault/.env
+test ! -e "$ENV_FILE"
+ENV_TMP="$(mktemp "$ENV_FILE.tmp.XXXXXX")"
+trap 'rm -f "$ENV_TMP"' EXIT
+POSTGRES_PASSWORD="$(openssl rand -hex 32)"
+JWT_SECRET="$(openssl rand -hex 32)"
+printf '%s\n' \
+  "DISCVAULT_IMAGE=$DISCVAULT_IMAGE" \
+  'DISCVAULT_DATA_DIR=/srv/discvault' \
+  'DISCVAULT_POSTGRES_DATA=/srv/discvault-postgres' \
+  'DISCVAULT_API_PORT=6080' \
+  'DISCVAULT_MCP_PORT=6090' \
+  'DISCVAULT_NETWORK_NAME=discvault' \
+  'DISCVAULT_API_WORKERS=2' \
+  'DISCVAULT_API_TIMEOUT=180' \
+  'DISCVAULT_WORKER_ID=worker-1' \
+  'DISCVAULT_WORKER_POLL_INTERVAL=2' \
+  'POSTGRES_DB=discvault' \
+  'POSTGRES_USER=discvault' \
+  "POSTGRES_PASSWORD=$POSTGRES_PASSWORD" \
+  "JWT_SECRET=$JWT_SECRET" \
+  'TZ=Europe/Amsterdam' \
+  'RP_ID=localhost' \
+  'RP_NAME=DiscVault' \
+  'RP_ORIGINS=http://localhost:6080' > "$ENV_TMP"
+chmod 0600 "$ENV_TMP"
+ln "$ENV_TMP" "$ENV_FILE"
+rm -f "$ENV_TMP"
+trap - EXIT
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml config --quiet
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml pull
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml up -d
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml ps
+curl --fail http://localhost:6080/api/next/health
+```
+
+## Očekávaný výsledek
+
+Výsledek přijměte pro **Konfigurace: Proměnné prostředí** pouze pokud platí všechny následující výsledky: oprávnění souboru pouze pro vlastníka (0600); soukromý soubor má režim 600, kontrola Compose projde a vybraný kanál je v pořádku. Kontrolní body této stránky: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+
+- oprávnění souboru pouze pro vlastníka (0600)
+- soukromý soubor má režim 600, kontrola Compose projde a vybraný kanál je v pořádku
+
+## Bezpečnost a návrat
+
+:::caution
+Bezpečná hranice obnovy pro **Konfigurace: Proměnné prostředí** vyžaduje před spuštěním nebo pokračováním tyto kroky: soubor prostředí repozitáře dokumentace nikdy není runtime souborem DiscVault · `.env.example`; při běžných změnách konfigurace neměňte tajné hodnoty JWT a PostgreSQL · `JWT_SECRET` · `POSTGRES_PASSWORD`; při chybě ponechte služby zastavené, obnovte a ověřte předchozí soukromý soubor prostředí a potom znovu vytvořte stejný obraz bez změny tajných hodnot. Kontrolní body této stránky: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+
+- soubor prostředí repozitáře dokumentace nikdy není runtime souborem DiscVault · `.env.example`
+- při běžných změnách konfigurace neměňte tajné hodnoty JWT a PostgreSQL · `JWT_SECRET` · `POSTGRES_PASSWORD`
+- při chybě ponechte služby zastavené, obnovte a ověřte předchozí soukromý soubor prostředí a potom znovu vytvořte stejný obraz bez změny tajných hodnot
+:::
+
+## Další krok
+
+[Konfigurace: Ověřování a RBAC](/cs/configure/auth-rbac/)
+
+## Zdroj a stav
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Zdroj a stav: `2026-07-14`
+- DiscVault Docs: `0.1.0`

@@ -1,0 +1,74 @@
+---
+title: 'PWA: Install the PWA'
+description: 'Install the PWA on desktop, iOS/iPadOS, or Android from the trusted server origin.'
+pageId: 'pwa-install'
+products: ['pwa']
+platforms: ['web', 'ios', 'android']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="web · iOS · Android" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Goal and result
+
+Install the PWA on desktop, iOS/iPadOS, or Android from the trusted server origin.
+
+## Applies to
+
+DiscVault v26 stable and beta use the same PWA installation flow and exact HTTPS origin configured for passkeys.
+
+### DiscVault v26 stable
+
+- DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
+- PWA · `display-mode: standalone` · exact passkey origin
+
+### DiscVault v26 beta
+
+- DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
+- PWA · `display-mode: standalone` · exact passkey origin
+
+## Prerequisites
+
+- HTTPS or localhost
+- signed-in account with the required permission
+
+## Procedure
+
+1. **Install:** Address bar → Install DiscVault · desktop Chromium
+2. **Install:** Share → Add to Home Screen · iOS/iPadOS Safari
+3. **Install:** Browser menu → Install app · Android Chromium
+4. **Verify:** standalone window · same server origin · owner login
+
+
+
+## Expected result
+
+DiscVault launches in a standalone window and owner login works from the installed icon.
+
+- Address bar → Install DiscVault
+- Share → Add to Home Screen
+- Browser menu → Install app
+- signed-in account with the required permission · HTTPS
+
+## Safety and rollback
+
+:::caution
+Remove the installed app from the operating system; this does not delete server data.
+
+- remove only the installed PWA shell; the server library and account data remain untouched
+:::
+
+## Next step
+
+[PWA: Library and search](/pwa/library-search/)
+
+## Source and status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Verified: `2026-07-14`
+- DiscVault Docs: `0.1.0`

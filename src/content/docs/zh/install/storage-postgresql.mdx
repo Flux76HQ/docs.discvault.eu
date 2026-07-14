@@ -1,0 +1,85 @@
+---
+title: '安装: 持久数据和 PostgreSQL'
+description: '任务专用说明： 安装: 持久数据和 PostgreSQL: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.'
+pageId: 'install-storage-postgresql'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## 目标和结果
+
+完成此页面专用的流程： **安装: 持久数据和 PostgreSQL**. 此流程使用 `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
+
+## 适用范围
+
+本页面仅适用于 **安装: 持久数据和 PostgreSQL** (Docker · Unraid). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL; `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL; `/data`. 本页面专用检查点： `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
+
+### DiscVault v26 稳定版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PostgreSQL
+- `/data`
+
+### DiscVault v26 测试版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PostgreSQL
+- `/data`
+
+## 前提条件
+
+- `DISCVAULT_POSTGRES_DATA`
+- 实时数据路径之外的备份位置
+- PostgreSQL `17`
+
+## 操作步骤
+
+1. **检查:** `DISCVAULT_POSTGRES_DATA` · `/var/lib/postgresql/data`
+2. **检查:** `DISCVAULT_DATA_DIR` · `/data`
+3. **验证:** `postgres` · `healthy` · `next-api`
+4. **记录:** 来自同一停止写入时段的 PostgreSQL 转储与文件归档
+
+### 命令和设置
+
+#### 两个通道
+
+```bash
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml ps
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml exec -T postgres sh -c 'pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"'
+docker inspect discvault-next-api-1 --format '{{range .Mounts}}{{.Source}} -> {{.Destination}}{{println}}{{end}}'
+```
+
+## 预期结果
+
+仅在以下条件下接受结果： **安装: 持久数据和 PostgreSQL** 必须确认以下所有结果： PostgreSQL · `healthy`; `/data`; 匹配的备份集. 本页面专用检查点： `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
+
+- PostgreSQL · `healthy`
+- `/data`
+- 匹配的备份集
+
+## 安全与回滚
+
+:::caution
+安全恢复边界： **安装: 持久数据和 PostgreSQL** 在启动或继续任何操作前必须执行： PostgreSQL 与 `/data` 是独立存储，必须使用同一组匹配备份; 实时数据路径之外的备份位置. 本页面专用检查点： `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
+
+- PostgreSQL 与 `/data` 是独立存储，必须使用同一组匹配备份
+- 实时数据路径之外的备份位置
+:::
+
+## 下一步
+
+[安装: 反向代理和通行密钥](/zh/install/reverse-proxy-passkeys/)
+
+## 来源和状态
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- 来源和状态: `2026-07-14`
+- DiscVault Docs: `0.1.0`

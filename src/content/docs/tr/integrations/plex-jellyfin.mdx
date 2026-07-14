@@ -1,0 +1,82 @@
+---
+title: 'Entegrasyonlar: Plex ve Jellyfin'
+description: 'Göreve özel yönergeler: Entegrasyonlar: Plex ve Jellyfin: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.'
+pageId: 'integrations-plex-jellyfin'
+products: ['server']
+platforms: ['web', 'docker']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="web · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Amaç ve sonuç
+
+Sayfaya özel iş akışını tamamlayın: **Entegrasyonlar: Plex ve Jellyfin**. Bu prosedür şunları kullanır: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+## Geçerli olduğu alan
+
+Bu sayfa yalnızca şunlar için geçerlidir: **Entegrasyonlar: Plex ve Jellyfin** (web · Docker). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26. Sayfaya özel denetim noktaları: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+### DiscVault v26 kararlı
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault 26
+
+### DiscVault v26 beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault 26
+
+## Ön koşullar
+
+- gizli olarak saklanan sağlayıcı kimlik bilgisi
+- Jellyfin
+- sahip veya yönetici oturumu
+
+## Prosedür
+
+1. **Yapılandırın:** Yönetim → Eklentiler → Sağlayıcı → Yapılandır · Plex Jellyfin
+2. **Test edin:** Yönetim → Eklentiler → Durum denetimi
+3. **Çalıştırın:** Yönetim → Eklentiler → Kaydetmeden keşfet · `dryRun=true`
+4. **Karşılaştırın:** `/api/next/digital-items?limit=200`
+
+### Komutlar ve ayarlar
+
+#### Her iki kanal
+
+```bash
+curl --fail http://localhost:6080/api/next/digital-sources
+curl --fail 'http://localhost:6080/api/next/digital-items?limit=200'
+```
+
+## Beklenen sonuç
+
+Şunun sonucunu kabul edin: **Entegrasyonlar: Plex ve Jellyfin** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: Yönetim → Eklentiler → Durum denetimi; Yönetim → Eklentiler → Kaydetmeden keşfet · `dryRun=true`; Plex · Jellyfin · `/api/next/digital-items`. Sayfaya özel denetim noktaları: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+- Yönetim → Eklentiler → Durum denetimi
+- Yönetim → Eklentiler → Kaydetmeden keşfet · `dryRun=true`
+- Plex · Jellyfin · `/api/next/digital-items`
+
+## Güvenlik ve geri alma
+
+:::caution
+Şunun güvenli kurtarma sınırı: **Entegrasyonlar: Plex ve Jellyfin** başlatmadan veya devam etmeden önce şu işlemleri gerektirir: kaldırmadan önce sağlayıcıyı devre dışı bırakın, `/data/plugins` yedeğini alın ve açığa çıkan kimlik bilgisini iptal edin; entegrasyonu devre dışı bırakın, test veya açığa çıkan kimlik bilgilerini iptal edin, gerekirse yenisini oluşturun ve eskisini yeniden kullanmayın. Sayfaya özel denetim noktaları: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+- kaldırmadan önce sağlayıcıyı devre dışı bırakın, `/data/plugins` yedeğini alın ve açığa çıkan kimlik bilgisini iptal edin
+- entegrasyonu devre dışı bırakın, test veya açığa çıkan kimlik bilgilerini iptal edin, gerekirse yenisini oluşturun ve eskisini yeniden kullanmayın
+:::
+
+## Sonraki adım
+
+[Sorun giderme](/tr/troubleshooting/)
+
+## Kaynak ve durum
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Kaynak ve durum: `2026-07-14`
+- DiscVault Docs: `0.1.0`

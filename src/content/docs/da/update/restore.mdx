@@ -1,0 +1,115 @@
+---
+title: 'Opdatering og migrering: Gendannelse'
+description: 'Opgavespecifik vejledning til Opdatering og migrering: Gendannelse: `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.'
+pageId: 'update-restore'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Mål og resultat
+
+Gennemfør den sidespecifikke arbejdsgang for **Opdatering og migrering: Gendannelse**. Denne fremgangsmåde arbejder med `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.
+
+## Gælder for
+
+Denne side gælder kun for **Opdatering og migrering: Gendannelse** (Docker · Unraid). Kanal- og datagrænserne er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL-dump og filarkiv fra samme vindue med stoppede skrivere; gendan de tilsvarende data før det tidligere image startes; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL-dump og filarkiv fra samme vindue med stoppede skrivere; gendan de tilsvarende data før det tidligere image startes. Sidespecifikke kontrolpunkter: `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PostgreSQL-dump og filarkiv fra samme vindue med stoppede skrivere
+- gendan de tilsvarende data før det tidligere image startes
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PostgreSQL-dump og filarkiv fra samme vindue med stoppede skrivere
+- gendan de tilsvarende data før det tidligere image startes
+
+## Forudsætninger
+
+- tilsvarende backupsæt
+- vedligeholdelsesvindue
+- `PREVIOUS_IMAGE` · privat DiscVault-runtimefil
+
+## Fremgangsmåde
+
+1. **Stop:** `next-api` `next-worker` `next-mcp`
+2. **Gendan:** `/data`
+3. **Gendan:** PostgreSQL · `pg_restore --exit-on-error`
+4. **Start:** `next-api` → `GET /api/next/health` → `next-worker` `next-mcp`
+
+### Kommandoer og indstillinger
+
+#### Begge kanaler
+
+```bash
+set -euo pipefail
+BACKUP_ID=20260714T180000Z
+cd /opt/discvault
+. "/srv/backups/discvault-$BACKUP_ID.env"
+test -n "$PREVIOUS_IMAGE"
+export DISCVAULT_IMAGE="$PREVIOUS_IMAGE"
+docker pull "$DISCVAULT_IMAGE"
+ENV_FILE=/opt/discvault/.env
+ENV_TMP="$(mktemp "$ENV_FILE.restore.XXXXXX")"
+trap 'rm -f "$ENV_TMP"' EXIT
+awk -v image="$DISCVAULT_IMAGE" '
+  /^DISCVAULT_IMAGE=/ { print "DISCVAULT_IMAGE=" image; found=1; next }
+  { print }
+  END { if (!found) exit 42 }
+' "$ENV_FILE" > "$ENV_TMP"
+chmod 0600 "$ENV_TMP"
+docker compose --env-file .env -p discvault -f compose.yaml stop next-worker next-mcp next-api
+mv /srv/discvault "/srv/discvault.failed-$(date -u +%Y%m%dT%H%M%SZ)"
+tar --acls --xattrs -C /srv -xzf \
+  "/srv/backups/discvault-data-$BACKUP_ID.tgz"
+docker compose --env-file .env -p discvault -f compose.yaml up -d postgres
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'dropdb --if-exists --force -U "$POSTGRES_USER" "$POSTGRES_DB"'
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'createdb -U "$POSTGRES_USER" "$POSTGRES_DB"'
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'pg_restore --exit-on-error --no-owner -U "$POSTGRES_USER" -d "$POSTGRES_DB"' \
+  < "/srv/backups/discvault-$BACKUP_ID.dump"
+docker compose --env-file .env -p discvault -f compose.yaml up -d --force-recreate next-api
+curl --fail http://localhost:6080/api/next/health
+docker compose --env-file .env -p discvault -f compose.yaml \
+  up -d --force-recreate next-worker next-mcp
+docker compose --env-file .env -p discvault -f compose.yaml ps
+mv "$ENV_TMP" "$ENV_FILE"
+trap - EXIT
+```
+
+## Forventet resultat
+
+Godkend resultatet for **Opdatering og migrering: Gendannelse** kun når alle resultater nedenfor er opfyldt: bibliotekstal og medieprøve svarer til den valgte backup; `:latest` `:beta`. Sidespecifikke kontrolpunkter: `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.
+
+- bibliotekstal og medieprøve svarer til den valgte backup
+- `:latest` `:beta`
+
+## Sikkerhed og tilbagerulning
+
+:::caution
+Den sikre gendannelsesgrænse for **Opdatering og migrering: Gendannelse** kræver disse handlinger, før noget startes eller fortsættes: hvis filudpakning eller pg_restore fejler, skal container, API, workers og MCP forblive stoppet; prøv igen fra urørte backupkopier. Sidespecifikke kontrolpunkter: `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.
+
+- hvis filudpakning eller pg_restore fejler, skal container, API, workers og MCP forblive stoppet; prøv igen fra urørte backupkopier
+:::
+
+## Næste trin
+
+[Opdatering og migrering: Containeropdatering](/da/update/update/)
+
+## Kilde og status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Kilde og status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

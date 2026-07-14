@@ -1,0 +1,115 @@
+---
+title: 'Оновлення й міграція: Відкочування образу'
+description: 'Спеціальні інструкції для завдання: Оновлення й міграція: Відкочування образу: `PREVIOUS_IMAGE` · `pg_restore --exit-on-error` · `discvault.failed-` · `DISCVAULT_IMAGE`.'
+pageId: 'update-rollback'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Мета й результат
+
+Виконайте спеціальну процедуру сторінки для **Оновлення й міграція: Відкочування образу**. У цій процедурі використовуються `PREVIOUS_IMAGE` · `pg_restore --exit-on-error` · `discvault.failed-` · `DISCVAULT_IMAGE`.
+
+## Застосовується до
+
+Ця сторінка стосується лише **Оновлення й міграція: Відкочування образу** (Docker · Unraid). Межі каналу й даних: DiscVault · `ghcr.io/helmerznl/discvault:latest`; відновіть відповідні дані до запуску попереднього образу; PostgreSQL `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; відновіть відповідні дані до запуску попереднього образу; PostgreSQL `/data`. Контрольні точки цієї сторінки: `PREVIOUS_IMAGE` · `pg_restore --exit-on-error` · `discvault.failed-` · `DISCVAULT_IMAGE`.
+
+### DiscVault v26 – стабільний
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- відновіть відповідні дані до запуску попереднього образу
+- PostgreSQL `/data`
+
+### DiscVault v26 – бета
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- відновіть відповідні дані до запуску попереднього образу
+- PostgreSQL `/data`
+
+## Передумови
+
+- відповідний комплект резервних копій
+- `PREVIOUS_IMAGE`
+
+## Процедура
+
+1. **Зупиніть:** `next-api` `next-worker` `next-mcp`
+2. **Відновіть:** `/data`
+3. **Відновіть:** PostgreSQL · `pg_restore --exit-on-error`
+4. **Запустіть:** `PREVIOUS_IMAGE` → API → MCP
+
+### Команди й налаштування
+
+#### Обидва канали
+
+```bash
+set -euo pipefail
+BACKUP_ID=20260714T180000Z
+cd /opt/discvault
+. "/srv/backups/discvault-$BACKUP_ID.env"
+test -n "$PREVIOUS_IMAGE"
+export DISCVAULT_IMAGE="$PREVIOUS_IMAGE"
+docker pull "$DISCVAULT_IMAGE"
+ENV_FILE=/opt/discvault/.env
+ENV_TMP="$(mktemp "$ENV_FILE.restore.XXXXXX")"
+trap 'rm -f "$ENV_TMP"' EXIT
+awk -v image="$DISCVAULT_IMAGE" '
+  /^DISCVAULT_IMAGE=/ { print "DISCVAULT_IMAGE=" image; found=1; next }
+  { print }
+  END { if (!found) exit 42 }
+' "$ENV_FILE" > "$ENV_TMP"
+chmod 0600 "$ENV_TMP"
+docker compose --env-file .env -p discvault -f compose.yaml stop next-worker next-mcp next-api
+mv /srv/discvault "/srv/discvault.failed-$(date -u +%Y%m%dT%H%M%SZ)"
+tar --acls --xattrs -C /srv -xzf \
+  "/srv/backups/discvault-data-$BACKUP_ID.tgz"
+docker compose --env-file .env -p discvault -f compose.yaml up -d postgres
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'dropdb --if-exists --force -U "$POSTGRES_USER" "$POSTGRES_DB"'
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'createdb -U "$POSTGRES_USER" "$POSTGRES_DB"'
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'pg_restore --exit-on-error --no-owner -U "$POSTGRES_USER" -d "$POSTGRES_DB"' \
+  < "/srv/backups/discvault-$BACKUP_ID.dump"
+docker compose --env-file .env -p discvault -f compose.yaml up -d --force-recreate next-api
+curl --fail http://localhost:6080/api/next/health
+docker compose --env-file .env -p discvault -f compose.yaml \
+  up -d --force-recreate next-worker next-mcp
+docker compose --env-file .env -p discvault -f compose.yaml ps
+mv "$ENV_TMP" "$ENV_FILE"
+trap - EXIT
+```
+
+## Очікуваний результат
+
+Приймайте результат для **Оновлення й міграція: Відкочування образу** лише коли підтверджено всі наведені нижче результати: `PREVIOUS_IMAGE` · `@sha256:`; відновіть відповідні дані до запуску попереднього образу; кількість записів і зразок медіа відповідають вибраній резервній копії. Контрольні точки цієї сторінки: `PREVIOUS_IMAGE` · `pg_restore --exit-on-error` · `discvault.failed-` · `DISCVAULT_IMAGE`.
+
+- `PREVIOUS_IMAGE` · `@sha256:`
+- відновіть відповідні дані до запуску попереднього образу
+- кількість записів і зразок медіа відповідають вибраній резервній копії
+
+## Безпека й відкочування
+
+:::caution
+Безпечна межа відновлення для **Оновлення й міграція: Відкочування образу** вимагає цих дій до будь-якого запуску чи продовження: якщо розпакування файлів або pg_restore не вдалося, залиште контейнер, API, workers і MCP зупиненими; повторіть із недоторканих копій резервної копії. Контрольні точки цієї сторінки: `PREVIOUS_IMAGE` · `pg_restore --exit-on-error` · `discvault.failed-` · `DISCVAULT_IMAGE`.
+
+- якщо розпакування файлів або pg_restore не вдалося, залиште контейнер, API, workers і MCP зупиненими; повторіть із недоторканих копій резервної копії
+:::
+
+## Наступний крок
+
+[Оновлення й міграція: Міграція до DiscVault 26](/uk/update/migration/)
+
+## Джерело й стан
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Джерело й стан: `2026-07-14`
+- DiscVault Docs: `0.1.0`

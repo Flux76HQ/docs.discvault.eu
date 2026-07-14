@@ -1,0 +1,33 @@
+export const localizedNotFound = {
+  cs: ['Stránka nenalezena', 'Zkontrolujte adresu nebo použijte vyhledávání.', 'Zpět na úvod'],
+  da: ['Siden blev ikke fundet', 'Kontrollér adressen, eller brug søgningen.', 'Til forsiden'],
+  de: ['Seite nicht gefunden', 'Prüfe die Adresse oder verwende die Suche.', 'Zur Startseite'],
+  el: [
+    'Η σελίδα δεν βρέθηκε',
+    'Ελέγξτε τη διεύθυνση ή χρησιμοποιήστε την αναζήτηση.',
+    'Στην αρχική',
+  ],
+  es: ['Página no encontrada', 'Comprueba la dirección o utiliza la búsqueda.', 'Ir al inicio'],
+  fi: ['Sivua ei löytynyt', 'Tarkista osoite tai käytä hakua.', 'Takaisin alkuun'],
+  fr: ['Page introuvable', 'Vérifiez l’adresse ou utilisez la recherche.', 'Retour à l’accueil'],
+  hu: [
+    'Az oldal nem található',
+    'Ellenőrizze a címet, vagy használja a keresést.',
+    'Vissza a kezdőlapra',
+  ],
+  it: ['Pagina non trovata', 'Controlla l’indirizzo o usa la ricerca.', 'Torna alla home'],
+  ja: ['ページが見つかりません', 'URL を確認するか、検索を使用してください。', 'ホームに戻る'],
+  ko: ['페이지를 찾을 수 없음', '주소를 확인하거나 검색을 사용하세요.', '홈으로 돌아가기'],
+  nl: [
+    'Pagina niet gevonden',
+    'Controleer het adres of gebruik de zoekfunctie.',
+    'Terug naar start',
+  ],
+  no: ['Siden ble ikke funnet', 'Kontroller adressen, eller bruk søket.', 'Til forsiden'],
+  pl: ['Nie znaleziono strony', 'Sprawdź adres lub skorzystaj z wyszukiwania.', 'Wróć na start'],
+  pt: ['Página não encontrada', 'Verifique o endereço ou utilize a pesquisa.', 'Voltar ao início'],
+  sv: ['Sidan hittades inte', 'Kontrollera adressen eller använd sökningen.', 'Till startsidan'],
+  tr: ['Sayfa bulunamadı', 'Adresi kontrol edin veya aramayı kullanın.', 'Ana sayfaya dön'],
+  uk: ['Сторінку не знайдено', 'Перевірте адресу або скористайтеся пошуком.', 'На головну'],
+  zh: ['未找到页面', '请检查地址或使用搜索功能。', '返回首页'],
+} as const;

@@ -1,0 +1,97 @@
+---
+title: '安装: Unraid'
+description: '任务专用说明： 安装: Unraid: `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.'
+pageId: 'install-unraid'
+products: ['server']
+platforms: ['unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## 目标和结果
+
+完成此页面专用的流程： **安装: Unraid**. 此流程使用 `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+
+## 适用范围
+
+本页面仅适用于 **安装: Unraid** (Unraid). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL API MCP; `:latest` `:beta`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL API MCP; `:latest` `:beta`. 本页面专用检查点： `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+
+### DiscVault v26 稳定版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PostgreSQL API MCP
+- `:latest` `:beta`
+
+### DiscVault v26 测试版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PostgreSQL API MCP
+- `:latest` `:beta`
+
+## 前提条件
+
+- Unraid `6.12+`
+- `/mnt/user/appdata/discvault/data`
+- OpenSSL
+
+## 操作步骤
+
+1. **安装:** Unraid · [安装: Docker Compose](/zh/install/docker-compose/)
+2. **配置:** `DISCVAULT_IMAGE` · `:latest` `:beta`
+3. **配置:** `DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data` · `DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres`
+4. **验证:** `postgres` · `next-api` · `next-worker` · `next-mcp` · `6080:5000`
+
+### 命令和设置
+
+#### DiscVault v26 稳定版
+
+```text
+DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
+DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data
+DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres
+DISCVAULT_API_PORT=6080
+DISCVAULT_MCP_PORT=6090
+```
+
+#### DiscVault v26 测试版
+
+```text
+DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
+DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data
+DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres
+DISCVAULT_API_PORT=6080
+DISCVAULT_MCP_PORT=6090
+```
+
+## 预期结果
+
+仅在以下条件下接受结果： **安装: Unraid** 必须确认以下所有结果： PostgreSQL; `/data`; HTTP `2xx`. 本页面专用检查点： `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+
+- PostgreSQL
+- `/data`
+- HTTP `2xx`
+
+## 安全与回滚
+
+:::caution
+安全恢复边界： **安装: Unraid** 在启动或继续任何操作前必须执行： 匹配的备份集; `/mnt/user/appdata/discvault/data`. 本页面专用检查点： `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+
+- 匹配的备份集
+- `/mnt/user/appdata/discvault/data`
+:::
+
+## 下一步
+
+[安装: 首次启动和健康检查](/zh/install/first-start-health/)
+
+## 来源和状态
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- 来源和状态: `2026-07-14`
+- DiscVault Docs: `0.1.0`

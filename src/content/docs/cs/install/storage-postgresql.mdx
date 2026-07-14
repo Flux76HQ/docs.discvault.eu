@@ -1,0 +1,85 @@
+---
+title: 'Instalace: Trvalá data a PostgreSQL'
+description: 'Pokyny pro konkrétní úlohu: Instalace: Trvalá data a PostgreSQL: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.'
+pageId: 'install-storage-postgresql'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Cíl a výsledek
+
+Dokončete postup určený pro **Instalace: Trvalá data a PostgreSQL**. Tento postup pracuje s `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
+
+## Platí pro
+
+Tato stránka platí pouze pro **Instalace: Trvalá data a PostgreSQL** (Docker · Unraid). Hranice kanálu a dat jsou: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL; `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL; `/data`. Kontrolní body této stránky: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
+
+### DiscVault v26 – stabilní
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PostgreSQL
+- `/data`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PostgreSQL
+- `/data`
+
+## Požadavky
+
+- `DISCVAULT_POSTGRES_DATA`
+- cíl zálohy mimo živá data
+- PostgreSQL `17`
+
+## Postup
+
+1. **Zkontrolujte:** `DISCVAULT_POSTGRES_DATA` · `/var/lib/postgresql/data`
+2. **Zkontrolujte:** `DISCVAULT_DATA_DIR` · `/data`
+3. **Ověřte:** `postgres` · `healthy` · `next-api`
+4. **Zaznamenejte:** dump PostgreSQL a archiv souborů ze stejného okna se zastavenými zápisy
+
+### Příkazy a nastavení
+
+#### Oba kanály
+
+```bash
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml ps
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml exec -T postgres sh -c 'pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"'
+docker inspect discvault-next-api-1 --format '{{range .Mounts}}{{.Source}} -> {{.Destination}}{{println}}{{end}}'
+```
+
+## Očekávaný výsledek
+
+Výsledek přijměte pro **Instalace: Trvalá data a PostgreSQL** pouze pokud platí všechny následující výsledky: PostgreSQL · `healthy`; `/data`; odpovídající sada záloh. Kontrolní body této stránky: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
+
+- PostgreSQL · `healthy`
+- `/data`
+- odpovídající sada záloh
+
+## Bezpečnost a návrat
+
+:::caution
+Bezpečná hranice obnovy pro **Instalace: Trvalá data a PostgreSQL** vyžaduje před spuštěním nebo pokračováním tyto kroky: PostgreSQL a `/data` jsou oddělená úložiště a vyžadují jednu odpovídající sadu záloh; cíl zálohy mimo živá data. Kontrolní body této stránky: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
+
+- PostgreSQL a `/data` jsou oddělená úložiště a vyžadují jednu odpovídající sadu záloh
+- cíl zálohy mimo živá data
+:::
+
+## Další krok
+
+[Instalace: Reverzní proxy a přístupové klíče](/cs/install/reverse-proxy-passkeys/)
+
+## Zdroj a stav
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Zdroj a stav: `2026-07-14`
+- DiscVault Docs: `0.1.0`

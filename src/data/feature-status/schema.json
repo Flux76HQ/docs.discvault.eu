@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["lastVerified", "sourceCommits", "imageChannels", "features"],
+  "properties": {
+    "lastVerified": { "type": "string", "format": "date" },
+    "sourceCommits": { "type": "object", "additionalProperties": { "type": "string" } },
+    "imageChannels": {
+      "type": "object",
+      "required": ["stable", "beta", "engineering"],
+      "properties": {
+        "stable": { "$ref": "#/$defs/imageChannel" },
+        "beta": { "$ref": "#/$defs/imageChannel" },
+        "engineering": { "$ref": "#/$defs/imageChannel" }
+      },
+      "additionalProperties": false
+    },
+    "features": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "label", "pwa", "ios", "android"],
+        "properties": {
+          "id": { "type": "string" },
+          "label": { "type": "string" },
+          "pwa": { "$ref": "#/$defs/status" },
+          "ios": { "$ref": "#/$defs/status" },
+          "android": { "$ref": "#/$defs/status" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "imageChannel": {
+      "type": "object",
+      "required": ["image", "releaseChannel", "productVersion", "architecture"],
+      "properties": {
+        "image": { "type": "string" },
+        "releaseChannel": { "type": "boolean" },
+        "productVersion": { "type": "string" },
+        "architecture": { "type": "string" },
+        "usage": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "status": {
+      "enum": ["stable", "beta", "limited", "roadmap", "unavailable"]
+    }
+  }
+}

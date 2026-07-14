@@ -1,0 +1,85 @@
+---
+title: 'Instalacja: Trwałe dane i PostgreSQL'
+description: 'Instrukcja właściwa dla zadania: Instalacja: Trwałe dane i PostgreSQL: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.'
+pageId: 'install-storage-postgresql'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Cel i rezultat
+
+Wykonaj procedurę właściwą dla strony: **Instalacja: Trwałe dane i PostgreSQL**. Ta procedura korzysta z `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
+
+## Dotyczy
+
+Ta strona dotyczy wyłącznie **Instalacja: Trwałe dane i PostgreSQL** (Docker · Unraid). Granice kanału i danych: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL; `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL; `/data`. Punkty kontrolne tej strony: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
+
+### DiscVault v26 – stabilny
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PostgreSQL
+- `/data`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PostgreSQL
+- `/data`
+
+## Wymagania wstępne
+
+- `DISCVAULT_POSTGRES_DATA`
+- miejsce kopii poza aktywnymi danymi
+- PostgreSQL `17`
+
+## Procedura
+
+1. **Sprawdź:** `DISCVAULT_POSTGRES_DATA` · `/var/lib/postgresql/data`
+2. **Sprawdź:** `DISCVAULT_DATA_DIR` · `/data`
+3. **Zweryfikuj:** `postgres` · `healthy` · `next-api`
+4. **Zapisz:** zrzut PostgreSQL i archiwum plików z tego samego okna bez zapisów
+
+### Polecenia i ustawienia
+
+#### Oba kanały
+
+```bash
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml ps
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml exec -T postgres sh -c 'pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"'
+docker inspect discvault-next-api-1 --format '{{range .Mounts}}{{.Source}} -> {{.Destination}}{{println}}{{end}}'
+```
+
+## Oczekiwany rezultat
+
+Zaakceptuj wynik dla **Instalacja: Trwałe dane i PostgreSQL** tylko gdy wszystkie poniższe wyniki są prawdziwe: PostgreSQL · `healthy`; `/data`; pasujący zestaw kopii. Punkty kontrolne tej strony: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
+
+- PostgreSQL · `healthy`
+- `/data`
+- pasujący zestaw kopii
+
+## Bezpieczeństwo i wycofanie
+
+:::caution
+Bezpieczna granica odzyskiwania dla **Instalacja: Trwałe dane i PostgreSQL** wymaga tych działań przed uruchomieniem lub kontynuacją: PostgreSQL i `/data` są oddzielnymi magazynami i wymagają jednego pasującego zestawu kopii; miejsce kopii poza aktywnymi danymi. Punkty kontrolne tej strony: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
+
+- PostgreSQL i `/data` są oddzielnymi magazynami i wymagają jednego pasującego zestawu kopii
+- miejsce kopii poza aktywnymi danymi
+:::
+
+## Następny krok
+
+[Instalacja: Odwrotny serwer proxy i klucze dostępu](/pl/install/reverse-proxy-passkeys/)
+
+## Źródło i stan
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Źródło i stan: `2026-07-14`
+- DiscVault Docs: `0.1.0`

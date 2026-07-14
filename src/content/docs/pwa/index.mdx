@@ -1,0 +1,76 @@
+---
+title: 'PWA: Overview'
+description: 'Use the released web application and understand what remains server-dependent.'
+pageId: 'pwa-index'
+products: ['pwa']
+platforms: ['web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Goal and result
+
+Use the released web application and understand what remains server-dependent.
+
+## Applies to
+
+The same DiscVault v26 PWA is served by stable `:latest` and beta `:beta`; availability is not inferred from the channel name.
+
+### DiscVault v26 stable
+
+- DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
+- same v26 PWA shell and server-backed data
+
+### DiscVault v26 beta
+
+- DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
+- same v26 PWA shell and server-backed data
+
+## Prerequisites
+
+- supported browser
+- healthy HTTPS DiscVault 26 origin
+
+## Procedure
+
+1. **Install:** [PWA: Install the PWA](/pwa/install/) · trusted HTTPS origin
+2. **Open:** [PWA: Library and search](/pwa/library-search/) · library + search + filters
+3. **Test:** [PWA: Offline behavior](/pwa/offline/) · `Service Worker` cache boundary
+4. **Verify:** same origin · passkey login · fresh server data after reconnect
+
+### Task routes
+
+- [PWA: Install the PWA](/pwa/install/) — desktop · iOS/iPadOS · Android
+- [PWA: Library and search](/pwa/library-search/) — library · search · filters · watchlist
+- [PWA: Offline behavior](/pwa/offline/) — Service Worker · cache · reconnect
+
+## Expected result
+
+The PWA opens from the configured server and routes to focused usage guidance.
+
+- Address bar → Install DiscVault · Share → Add to Home Screen · Browser menu → Install app
+- cached screens may open, but fresh data and writes require a network connection
+
+## Safety and rollback
+
+:::caution
+Browser installation does not alter server data; remove only the installed shell if needed.
+
+- remove only the installed PWA shell; the server library and account data remain untouched
+:::
+
+## Next step
+
+[PWA: Install the PWA](/pwa/install/)
+
+## Source and status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Verified: `2026-07-14`
+- DiscVault Docs: `0.1.0`

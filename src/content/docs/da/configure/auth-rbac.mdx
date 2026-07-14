@@ -1,0 +1,79 @@
+---
+title: 'Konfiguration: Godkendelse og RBAC'
+description: 'Opgavespecifik vejledning til Konfiguration: Godkendelse og RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.'
+pageId: 'configure-auth-rbac'
+products: ['server']
+platforms: ['web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Mål og resultat
+
+Gennemfør den sidespecifikke arbejdsgang for **Konfiguration: Godkendelse og RBAC**. Denne fremgangsmåde arbejder med `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+
+## Gælder for
+
+Denne side gælder kun for **Konfiguration: Godkendelse og RBAC** (web). Kanal- og datagrænserne er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn. Sidespecifikke kontrolpunkter: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- WebAuthn
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- WebAuthn
+
+## Forudsætninger
+
+- ejeraadgang
+- HTTPS
+- anden gendannelsesmetode
+
+## Fremgangsmåde
+
+1. **Åbn:** Administration → Sikkerhed → Aktivér godkendelse
+2. **Opret:** Administration → Brugere → Opret 48-timers invitation
+3. **Konfigurér:** Administration → Roller → Grundlæggende / Avanceret
+4. **Test:** `48 h`
+
+### Kommandoer og indstillinger
+
+#### Begge kanaler
+
+```bash
+curl --fail http://localhost:6080/api/next/auth/status
+curl --fail http://localhost:6080/api/next/auth/rbac
+```
+
+## Forventet resultat
+
+Godkend resultatet for **Konfiguration: Godkendelse og RBAC** kun når alle resultater nedenfor er opfyldt: ejerens passkey-login virker, invitationsregistrering følger indstillingen, og testbrugeren har kun tildelte tilladelser. Sidespecifikke kontrolpunkter: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+
+- ejerens passkey-login virker, invitationsregistrering følger indstillingen, og testbrugeren har kun tildelte tilladelser
+
+## Sikkerhed og tilbagerulning
+
+:::caution
+Den sikre gendannelsesgrænse for **Konfiguration: Godkendelse og RBAC** kræver disse handlinger, før noget startes eller fortsættes: behold ejersessionen og en anden gendannelsesmetode; fjern aldrig ejerens sidste adgangsnøgle. Sidespecifikke kontrolpunkter: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+
+- behold ejersessionen og en anden gendannelsesmetode; fjern aldrig ejerens sidste adgangsnøgle
+:::
+
+## Næste trin
+
+[Konfiguration: Plugins og metadata](/da/configure/plugins-metadata/)
+
+## Kilde og status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Kilde og status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

@@ -1,0 +1,78 @@
+---
+title: 'Ρύθμιση: Πρόσθετα και μεταδεδομένα'
+description: 'Οδηγίες ειδικά για την εργασία: Ρύθμιση: Πρόσθετα και μεταδεδομένα: `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.'
+pageId: 'configure-plugins-metadata'
+products: ['server']
+platforms: ['web', 'docker']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="ιστός · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Στόχος και αποτέλεσμα
+
+Ολοκληρώστε τη ροή εργασίας της σελίδας για **Ρύθμιση: Πρόσθετα και μεταδεδομένα**. Η διαδικασία χρησιμοποιεί `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.
+
+## Ισχύει για
+
+Αυτή η σελίδα ισχύει μόνο για **Ρύθμιση: Πρόσθετα και μεταδεδομένα** (ιστός · Docker). Τα όρια καναλιού και δεδομένων είναι: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26 · `/data/plugins`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26 · `/data/plugins`. Σημεία ελέγχου της σελίδας: `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.
+
+### DiscVault v26 – σταθερό
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault 26 · `/data/plugins`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault 26 · `/data/plugins`
+
+## Προϋποθέσεις
+
+- συνεδρία κατόχου ή διαχειριστή
+- διαπιστευτήριο παρόχου αποθηκευμένο ως μυστικό
+
+## Διαδικασία
+
+1. **Ελέγξτε:** `GET /api/next/plugins/registry`
+2. **Ρυθμίστε:** Διαχείριση → Πρόσθετα → Πάροχος → Ρύθμιση · διαπιστευτήριο παρόχου αποθηκευμένο ως μυστικό
+3. **Δοκιμάστε:** Διαχείριση → Πρόσθετα → Έλεγχος λειτουργίας · Διαχείριση → Πρόσθετα → Εντοπισμός χωρίς αποθήκευση · `dryRun`
+4. **Καταγράψτε:** `secret app_settings`
+
+### Εντολές και ρυθμίσεις
+
+#### Και τα δύο κανάλια
+
+```bash
+curl --fail http://localhost:6080/api/next/plugins/registry
+curl --fail http://localhost:6080/api/next/metadata/plugins
+```
+
+## Αναμενόμενο αποτέλεσμα
+
+Αποδεχθείτε το αποτέλεσμα για **Ρύθμιση: Πρόσθετα και μεταδεδομένα** μόνο όταν ισχύουν όλα τα παρακάτω αποτελέσματα: το registry εμφανίζει τον πάροχο, ο έλεγχος υγείας περνά και η δοκιμή επιστρέφει το αναμενόμενο δείγμα μεταδεδομένων. Σημεία ελέγχου της σελίδας: `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.
+
+- το registry εμφανίζει τον πάροχο, ο έλεγχος υγείας περνά και η δοκιμή επιστρέφει το αναμενόμενο δείγμα μεταδεδομένων
+
+## Ασφάλεια και επαναφορά
+
+:::caution
+Το ασφαλές όριο ανάκτησης για **Ρύθμιση: Πρόσθετα και μεταδεδομένα** απαιτεί αυτές τις ενέργειες πριν από κάθε εκκίνηση ή συνέχεια: απενεργοποιήστε τον πάροχο πριν την αφαίρεση, αντιγράψτε το `/data/plugins` και ανακαλέστε εκτεθειμένα διαπιστευτήρια. Σημεία ελέγχου της σελίδας: `/api/next/plugins/registry` · `/data/plugins` · `dryRun` · `secret app_settings`.
+
+- απενεργοποιήστε τον πάροχο πριν την αφαίρεση, αντιγράψτε το `/data/plugins` και ανακαλέστε εκτεθειμένα διαπιστευτήρια
+:::
+
+## Επόμενο βήμα
+
+[Ενσωματώσεις: Plex και Jellyfin](/el/integrations/plex-jellyfin/)
+
+## Πηγή και κατάσταση
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Πηγή και κατάσταση: `2026-07-14`
+- DiscVault Docs: `0.1.0`

@@ -1,0 +1,68 @@
+---
+title: 'iOS/iPadOS: 일상 사용 및 동기화 제한'
+description: '작업별 안내: iOS/iPadOS: 일상 사용 및 동기화 제한: SwiftData · App Lock · `/api/v1` · DiscVault.'
+pageId: 'ios-use-sync-limits'
+products: ['ios']
+platforms: ['ios']
+channels: ['beta']
+minVersion: 'iOS/iPadOS 17+'
+sourceRepos: ['helmerzNL/DiscVaultApp', 'helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="beta" platform="iOS" version="iOS/iPadOS 17+" source="helmerzNL/DiscVaultApp · helmerzNL/DiscVault" verified="2026-07-14" />
+
+## 목표 및 결과
+
+이 페이지 전용 절차를 수행합니다: **iOS/iPadOS: 일상 사용 및 동기화 제한**. 이 절차에서 다루는 항목: SwiftData · App Lock · `/api/v1` · DiscVault.
+
+## 적용 대상
+
+이 페이지의 적용 범위: **iOS/iPadOS: 일상 사용 및 동기화 제한** (iOS). 채널 및 데이터 경계: SwiftData · 테스트 제목이 앱 재시작 및 오프라인 실행 후에도 유지됨; `/api/v1` · 소스에서 확인된 베타 빌드이며 공개 스토어 배포를 주장하지 않음. 이 페이지의 전용 확인 지점: SwiftData · App Lock · `/api/v1` · DiscVault.
+
+### 베타 채널
+
+- SwiftData · 테스트 제목이 앱 재시작 및 오프라인 실행 후에도 유지됨
+- `/api/v1` · 소스에서 확인된 베타 빌드이며 공개 스토어 배포를 주장하지 않음
+
+## 사전 요구 사항
+
+- SwiftData
+- 삭제 가능한 소규모 테스트 라이브러리
+
+## 절차
+
+1. **테스트:** 라이브러리 → 검색 · 라이브러리 → 추가 → 바코드 스캔 / 직접 입력 · 비행기 모드
+2. **생성:** 오프라인 우선 로컬 라이브러리 · 테스트 제목이 앱 재시작 및 오프라인 실행 후에도 유지됨
+3. **구성:** 설정 → 앱 잠금 · 설정 → 서버 연결
+4. **비교:** 항목 하나로 테스트한 선택적 서버 연결 · 테스트 항목 하나가 로컬과 서버에서 일치하거나 동기화를 비활성 상태로 유지함
+
+
+
+## 예상 결과
+
+다음 결과의 승인 조건: **iOS/iPadOS: 일상 사용 및 동기화 제한** 아래 결과가 모두 충족된 경우에만: 테스트 제목이 앱 재시작 및 오프라인 실행 후에도 유지됨; 테스트 항목 하나가 로컬과 서버에서 일치하거나 동기화를 비활성 상태로 유지함. 이 페이지의 전용 확인 지점: SwiftData · App Lock · `/api/v1` · DiscVault.
+
+- 테스트 제목이 앱 재시작 및 오프라인 실행 후에도 유지됨
+- 테스트 항목 하나가 로컬과 서버에서 일치하거나 동기화를 비활성 상태로 유지함
+
+## 안전 및 롤백
+
+:::caution
+안전한 복구 경계: **iOS/iPadOS: 일상 사용 및 동기화 제한** 시작하거나 계속하기 전에 다음 작업이 필요합니다: 테스트 항목 하나가 로컬과 서버에서 일치하거나 동기화를 비활성 상태로 유지함 · 오프라인 우선 로컬 라이브러리 · `/api/v1`. 이 페이지의 전용 확인 지점: SwiftData · App Lock · `/api/v1` · DiscVault.
+
+- 테스트 항목 하나가 로컬과 서버에서 일치하거나 동기화를 비활성 상태로 유지함 · 오프라인 우선 로컬 라이브러리 · `/api/v1`
+:::
+
+## 다음 단계
+
+[Android: 설정](/ko/android/)
+
+## 출처 및 상태
+
+- [`helmerzNL/DiscVaultApp@9d15ab2a339c`](https://github.com/helmerzNL/DiscVaultApp/commit/9d15ab2a339cefdb164ec0ab29ad69ddabc511c1)
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- 출처 및 상태: `2026-07-14`
+- DiscVault Docs: `0.1.0`

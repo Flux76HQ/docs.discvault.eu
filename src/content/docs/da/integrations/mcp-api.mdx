@@ -1,0 +1,91 @@
+---
+title: 'Integrationer: MCP og REST API'
+description: 'Opgavespecifik vejledning til Integrationer: MCP og REST API: `streamable-http` · `/mcp` · `Authorization` · `6090`.'
+pageId: 'integrations-mcp-api'
+products: ['server']
+platforms: ['web', 'docker']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="web · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Mål og resultat
+
+Gennemfør den sidespecifikke arbejdsgang for **Integrationer: MCP og REST API**. Denne fremgangsmåde arbejder med `streamable-http` · `/mcp` · `Authorization` · `6090`.
+
+## Gælder for
+
+Denne side gælder kun for **Integrationer: MCP og REST API** (web · Docker). Kanal- og datagrænserne er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/mcp` `6090` · REST API; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/mcp` `6090` · REST API. Sidespecifikke kontrolpunkter: `streamable-http` · `/mcp` · `Authorization` · `6090`.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `/mcp` `6090` · REST API
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `/mcp` `6090` · REST API
+
+## Forudsætninger
+
+- API
+- HTTPS DiscVault
+- MCP HTTP
+
+## Fremgangsmåde
+
+1. **Opret:** API
+2. **Konfigurér:** `streamable-http` · `https://discvault.example.com/mcp`
+3. **Test:** `Authorization`
+4. **Tilbagekald:** `6090`
+
+### Kommandoer og indstillinger
+
+#### Begge kanaler
+
+```json
+{
+  "mcpServers": {
+    "discvault": {
+      "transport": "streamable-http",
+      "url": "https://discvault.example.com/mcp",
+      "headers": { "Authorization": "******" }
+    }
+  }
+}
+```
+
+```bash
+curl --fail https://discvault.example.com/api/next/health
+```
+
+## Forventet resultat
+
+Godkend resultatet for **Integrationer: MCP og REST API** kun når alle resultater nedenfor er opfyldt: DiscVault · `streamable-http` · `/mcp`; udbyderlegitimationsoplysning gemt som hemmelighed · `Authorization`. Sidespecifikke kontrolpunkter: `streamable-http` · `/mcp` · `Authorization` · `6090`.
+
+- DiscVault · `streamable-http` · `/mcp`
+- udbyderlegitimationsoplysning gemt som hemmelighed · `Authorization`
+
+## Sikkerhed og tilbagerulning
+
+:::caution
+Den sikre gendannelsesgrænse for **Integrationer: MCP og REST API** kræver disse handlinger, før noget startes eller fortsættes: deaktivér integrationen, tilbagekald test- eller afslørede legitimationsoplysninger, opret nye ved behov, og genbrug aldrig de gamle. Sidespecifikke kontrolpunkter: `streamable-http` · `/mcp` · `Authorization` · `6090`.
+
+- deaktivér integrationen, tilbagekald test- eller afslørede legitimationsoplysninger, opret nye ved behov, og genbrug aldrig de gamle
+:::
+
+## Næste trin
+
+[Integrationer: Plex og Jellyfin](/da/integrations/plex-jellyfin/)
+
+## Kilde og status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Kilde og status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

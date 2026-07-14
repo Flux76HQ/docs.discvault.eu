@@ -1,0 +1,84 @@
+---
+title: 'Päivitys ja siirto: Siirtyminen DiscVault 26:een'
+description: 'Tehtäväkohtaiset ohjeet: Päivitys ja siirto: Siirtyminen DiscVault 26:een: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.'
+pageId: 'update-migration'
+products: ['server']
+platforms: ['docker', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · verkko" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Tavoite ja tulos
+
+Suorita sivukohtainen työnkulku: **Päivitys ja siirto: Siirtyminen DiscVault 26:een**. Tässä menettelyssä käytetään `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+
+## Koskee
+
+Tämä sivu koskee vain kohdetta **Päivitys ja siirto: Siirtyminen DiscVault 26:een** (Docker · verkko). Kanava- ja tietorajat ovat: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; vain luku -tilassa oleva olemassa olevien tietojen lähde; ei koskaan nykyinen ajonaikainen tietokanta · SQLite → PostgreSQL; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26; vain luku -tilassa oleva olemassa olevien tietojen lähde; ei koskaan nykyinen ajonaikainen tietokanta · SQLite → PostgreSQL. Sivukohtaiset tarkistuspisteet: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+
+### DiscVault v26 – vakaa
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault 26
+- vain luku -tilassa oleva olemassa olevien tietojen lähde; ei koskaan nykyinen ajonaikainen tietokanta · SQLite → PostgreSQL
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault 26
+- vain luku -tilassa oleva olemassa olevien tietojen lähde; ei koskaan nykyinen ajonaikainen tietokanta · SQLite → PostgreSQL
+
+## Edellytykset
+
+- vain luku -tilassa oleva olemassa olevien tietojen lähde; ei koskaan nykyinen ajonaikainen tietokanta · `/data/discvault.db`
+- PostgreSQL-vedos ja tiedostoarkisto samasta kirjoittajat pysäyttävästä ikkunasta
+- omistajan käyttöoikeus
+
+## Toimenpiteet
+
+1. **Varmuuskopioi:** vain luku -tilassa oleva olemassa olevien tietojen lähde; ei koskaan nykyinen ajonaikainen tietokanta · PostgreSQL-vedos ja tiedostoarkisto samasta kirjoittajat pysäyttävästä ikkunasta
+2. **Tarkista:** `/api/next/migration/readiness` · `ready_for_confirmation`
+3. **Suorita:** `POST /api/next/migration/start`
+4. **Vertaa:** valmius on vahvistettu, siirrossa ei ole epäonnistuneita tietueita ja määrät sekä mediatesti täsmäävät
+
+### Komennot ja asetukset
+
+#### Molemmat kanavat
+
+```bash
+curl --fail http://localhost:6080/api/next/migration/readiness
+curl --fail http://localhost:6080/api/next/migration/status
+curl --fail -X POST http://localhost:6080/api/next/migration/start \
+  -H 'Content-Type: application/json' -d '{}'
+curl --fail http://localhost:6080/api/next/migration/status
+```
+
+## Odotettu tulos
+
+Hyväksy tulos kohteelle **Päivitys ja siirto: Siirtyminen DiscVault 26:een** vain kun kaikki seuraavat tulokset toteutuvat: valmius on vahvistettu, siirrossa ei ole epäonnistuneita tietueita ja määrät sekä mediatesti täsmäävät. Sivukohtaiset tarkistuspisteet: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+
+- valmius on vahvistettu, siirrossa ei ole epäonnistuneita tietueita ja määrät sekä mediatesti täsmäävät
+
+## Turvallisuus ja palautus
+
+:::caution
+Turvallinen palautusraja kohteelle **Päivitys ja siirto: Siirtyminen DiscVault 26:een** edellyttää näitä toimia ennen käynnistystä tai jatkamista: pysäytä DiscVaultin kirjoittajat, palauta vastaavat PostgreSQL- ja `/data`-varmuuskopiot äläkä toista tuontia osittain täytettyyn tietokantaan. Sivukohtaiset tarkistuspisteet: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+
+- pysäytä DiscVaultin kirjoittajat, palauta vastaavat PostgreSQL- ja `/data`-varmuuskopiot äläkä toista tuontia osittain täytettyyn tietokantaan
+:::
+
+## Seuraava vaihe
+
+[Määritys: Ympäristömuuttujat](/fi/configure/environment/)
+
+## Lähde ja tila
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Lähde ja tila: `2026-07-14`
+- DiscVault Docs: `0.1.0`

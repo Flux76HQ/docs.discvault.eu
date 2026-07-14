@@ -1,0 +1,138 @@
+---
+title: 'Määritys: Ympäristömuuttujat'
+description: 'Tehtäväkohtaiset ohjeet: Määritys: Ympäristömuuttujat: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.'
+pageId: 'configure-environment'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Tavoite ja tulos
+
+Suorita sivukohtainen työnkulku: **Määritys: Ympäristömuuttujat**. Tässä menettelyssä käytetään `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+
+## Koskee
+
+Tämä sivu koskee vain kohdetta **Määritys: Ympäristömuuttujat** (Docker · Unraid). Kanava- ja tietorajat ovat: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `.env`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `.env`. Sivukohtaiset tarkistuspisteet: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+
+### DiscVault v26 – vakaa
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `.env`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `.env`
+
+## Edellytykset
+
+- yksityinen DiscVault-ajoympäristötiedosto
+- OpenSSL
+- suunniteltu uudelleenkäynnistys
+
+## Toimenpiteet
+
+1. **Luo:** `/opt/discvault/.env` · vain omistajan tiedosto-oikeudet (0600)
+2. **Määritä:** `DISCVAULT_IMAGE` · `RP_ORIGINS`
+3. **Vahvista:** `chmod 0600` · `docker compose config --quiet`
+4. **Käynnistä:** pidä JWT- ja PostgreSQL-salaisuudet ennallaan tavallisissa muutoksissa
+
+### Komennot ja asetukset
+
+#### DiscVault v26 – vakaa
+
+```bash
+export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
+```
+
+#### DiscVault v26 – beta
+
+```bash
+export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
+```
+
+#### Molemmat kanavat
+
+```bash
+set -euo pipefail
+test -n "$DISCVAULT_IMAGE"
+case "$DISCVAULT_IMAGE" in
+  ghcr.io/helmerznl/discvault:latest|ghcr.io/helmerznl/discvault:beta) ;;
+  *) printf '%s\n' "$DISCVAULT_IMAGE" >&2; exit 64 ;;
+esac
+install -d -m 0700 /opt/discvault
+install -d -m 0750 /srv/discvault
+install -d -o 70 -g 70 -m 0700 /srv/discvault-postgres
+cd /opt/discvault
+test -f compose.yaml
+umask 077
+ENV_FILE=/opt/discvault/.env
+test ! -e "$ENV_FILE"
+ENV_TMP="$(mktemp "$ENV_FILE.tmp.XXXXXX")"
+trap 'rm -f "$ENV_TMP"' EXIT
+POSTGRES_PASSWORD="$(openssl rand -hex 32)"
+JWT_SECRET="$(openssl rand -hex 32)"
+printf '%s\n' \
+  "DISCVAULT_IMAGE=$DISCVAULT_IMAGE" \
+  'DISCVAULT_DATA_DIR=/srv/discvault' \
+  'DISCVAULT_POSTGRES_DATA=/srv/discvault-postgres' \
+  'DISCVAULT_API_PORT=6080' \
+  'DISCVAULT_MCP_PORT=6090' \
+  'DISCVAULT_NETWORK_NAME=discvault' \
+  'DISCVAULT_API_WORKERS=2' \
+  'DISCVAULT_API_TIMEOUT=180' \
+  'DISCVAULT_WORKER_ID=worker-1' \
+  'DISCVAULT_WORKER_POLL_INTERVAL=2' \
+  'POSTGRES_DB=discvault' \
+  'POSTGRES_USER=discvault' \
+  "POSTGRES_PASSWORD=$POSTGRES_PASSWORD" \
+  "JWT_SECRET=$JWT_SECRET" \
+  'TZ=Europe/Amsterdam' \
+  'RP_ID=localhost' \
+  'RP_NAME=DiscVault' \
+  'RP_ORIGINS=http://localhost:6080' > "$ENV_TMP"
+chmod 0600 "$ENV_TMP"
+ln "$ENV_TMP" "$ENV_FILE"
+rm -f "$ENV_TMP"
+trap - EXIT
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml config --quiet
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml pull
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml up -d
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml ps
+curl --fail http://localhost:6080/api/next/health
+```
+
+## Odotettu tulos
+
+Hyväksy tulos kohteelle **Määritys: Ympäristömuuttujat** vain kun kaikki seuraavat tulokset toteutuvat: vain omistajan tiedosto-oikeudet (0600); yksityisen tiedoston tila on 600, Compose-tarkistus onnistuu ja valittu kanava toimii terveesti. Sivukohtaiset tarkistuspisteet: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+
+- vain omistajan tiedosto-oikeudet (0600)
+- yksityisen tiedoston tila on 600, Compose-tarkistus onnistuu ja valittu kanava toimii terveesti
+
+## Turvallisuus ja palautus
+
+:::caution
+Turvallinen palautusraja kohteelle **Määritys: Ympäristömuuttujat** edellyttää näitä toimia ennen käynnistystä tai jatkamista: dokumentaatiovaraston ympäristötiedosto ei koskaan ole DiscVault-ajoympäristötiedosto · `.env.example`; pidä JWT- ja PostgreSQL-salaisuudet ennallaan tavallisissa muutoksissa · `JWT_SECRET` · `POSTGRES_PASSWORD`; virhetilanteessa pidä palvelut pysäytettyinä, palauta ja tarkista edellinen yksityinen ympäristötiedosto ja luo sama image uudelleen vaihtamatta salaisuuksia. Sivukohtaiset tarkistuspisteet: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+
+- dokumentaatiovaraston ympäristötiedosto ei koskaan ole DiscVault-ajoympäristötiedosto · `.env.example`
+- pidä JWT- ja PostgreSQL-salaisuudet ennallaan tavallisissa muutoksissa · `JWT_SECRET` · `POSTGRES_PASSWORD`
+- virhetilanteessa pidä palvelut pysäytettyinä, palauta ja tarkista edellinen yksityinen ympäristötiedosto ja luo sama image uudelleen vaihtamatta salaisuuksia
+:::
+
+## Seuraava vaihe
+
+[Määritys: Todennus ja RBAC](/fi/configure/auth-rbac/)
+
+## Lähde ja tila
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Lähde ja tila: `2026-07-14`
+- DiscVault Docs: `0.1.0`

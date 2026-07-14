@@ -1,0 +1,44 @@
+---
+import StatusBadge from './StatusBadge.astro';
+import { currentLocale, labels } from '../data/localized-ui';
+
+interface Props {
+  channels: string;
+  platform: string;
+  version: string;
+  source: string;
+  verified: string;
+}
+const { channels, platform, version, source, verified } = Astro.props;
+const locale = currentLocale(Astro.url.pathname);
+const ui = labels[locale];
+const isV26 = version === 'DiscVault v26';
+const channelLabel = (status: 'stable' | 'beta' | 'roadmap') => {
+  if (isV26 && status === 'stable') return ui.v26Stable;
+  if (isV26 && status === 'beta') return ui.v26Beta;
+  return ui[status];
+};
+const statuses = channels
+  .split(',')
+  .map((status) => status.trim())
+  .filter(
+    (status): status is 'stable' | 'beta' | 'roadmap' =>
+      status === 'stable' || status === 'beta' || status === 'roadmap',
+  );
+---
+
+<aside class="page-meta" aria-label={ui.pageStatus}>
+  {
+    statuses.length === 1 ? (
+      <StatusBadge status={statuses[0]} label={channelLabel(statuses[0])} />
+    ) : (
+      <strong class="channel-scope">
+        {ui.scope}: {isV26 ? `${ui.v26Stable} · ${ui.v26Beta}` : ui.multi}
+      </strong>
+    )
+  }
+  <span>{platform}</span>
+  <span>≥ {version}</span>
+  <span>{source}</span>
+  <time datetime={verified}>{verified}</time>
+</aside>

@@ -1,0 +1,85 @@
+---
+title: 'Встановлення: Постійні дані та PostgreSQL'
+description: 'Спеціальні інструкції для завдання: Встановлення: Постійні дані та PostgreSQL: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.'
+pageId: 'install-storage-postgresql'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Мета й результат
+
+Виконайте спеціальну процедуру сторінки для **Встановлення: Постійні дані та PostgreSQL**. У цій процедурі використовуються `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
+
+## Застосовується до
+
+Ця сторінка стосується лише **Встановлення: Постійні дані та PostgreSQL** (Docker · Unraid). Межі каналу й даних: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL; `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL; `/data`. Контрольні точки цієї сторінки: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
+
+### DiscVault v26 – стабільний
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PostgreSQL
+- `/data`
+
+### DiscVault v26 – бета
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PostgreSQL
+- `/data`
+
+## Передумови
+
+- `DISCVAULT_POSTGRES_DATA`
+- місце резервної копії поза активними даними
+- PostgreSQL `17`
+
+## Процедура
+
+1. **Перевірте:** `DISCVAULT_POSTGRES_DATA` · `/var/lib/postgresql/data`
+2. **Перевірте:** `DISCVAULT_DATA_DIR` · `/data`
+3. **Перевірте:** `postgres` · `healthy` · `next-api`
+4. **Запишіть:** дамп PostgreSQL і файловий архів з одного вікна без запису
+
+### Команди й налаштування
+
+#### Обидва канали
+
+```bash
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml ps
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml exec -T postgres sh -c 'pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"'
+docker inspect discvault-next-api-1 --format '{{range .Mounts}}{{.Source}} -> {{.Destination}}{{println}}{{end}}'
+```
+
+## Очікуваний результат
+
+Приймайте результат для **Встановлення: Постійні дані та PostgreSQL** лише коли підтверджено всі наведені нижче результати: PostgreSQL · `healthy`; `/data`; відповідний комплект резервних копій. Контрольні точки цієї сторінки: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
+
+- PostgreSQL · `healthy`
+- `/data`
+- відповідний комплект резервних копій
+
+## Безпека й відкочування
+
+:::caution
+Безпечна межа відновлення для **Встановлення: Постійні дані та PostgreSQL** вимагає цих дій до будь-якого запуску чи продовження: PostgreSQL і `/data` є окремими сховищами та потребують одного відповідного комплекту копій; місце резервної копії поза активними даними. Контрольні точки цієї сторінки: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
+
+- PostgreSQL і `/data` є окремими сховищами та потребують одного відповідного комплекту копій
+- місце резервної копії поза активними даними
+:::
+
+## Наступний крок
+
+[Встановлення: Зворотний проксі та ключі доступу](/uk/install/reverse-proxy-passkeys/)
+
+## Джерело й стан
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Джерело й стан: `2026-07-14`
+- DiscVault Docs: `0.1.0`

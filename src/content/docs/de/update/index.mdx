@@ -1,0 +1,78 @@
+---
+title: 'Update und Migration: Übersicht'
+description: 'Aufgabenspezifische Anleitung für Update und Migration: Übersicht: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.'
+pageId: 'update-index'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Ziel und Ergebnis
+
+Führe den seitenspezifischen Ablauf aus für **Update und Migration: Übersicht**. Dieses Verfahren arbeitet mit `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+## Gültig für
+
+Diese Seite gilt ausschließlich für **Update und Migration: Übersicht** (Docker · Unraid). Kanal- und Datengrenzen sind: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/update/restore/`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/update/restore/`. Seitenspezifische Kontrollpunkte: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `/update/restore/`
+
+### DiscVault v26 – Beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `/update/restore/`
+
+## Voraussetzungen
+
+- passender Sicherungssatz
+- Versionshinweise und aufgezeichneter unveränderlicher Image-Digest
+
+## Vorgehen
+
+1. **Sichern:** [Update und Migration: Sicherung](/de/update/backup/) · passender Sicherungssatz
+2. **Testen:** [Update und Migration: Wiederherstellung](/de/update/restore/)
+3. **Ausführen:** [Update und Migration: Container-Update](/de/update/update/) · `DISCVAULT_IMAGE`
+4. **Bewahren:** [Update und Migration: Image-Rollback](/de/update/rollback/)
+
+### Aufgabenwege
+
+- [Update und Migration: Sicherung](/de/update/backup/) — 1 PostgreSQL
+- [Update und Migration: Wiederherstellung](/de/update/restore/) — 2
+- [Update und Migration: Container-Update](/de/update/update/) — 3
+- [Update und Migration: Image-Rollback](/de/update/rollback/) — 4
+
+## Erwartetes Ergebnis
+
+Akzeptiere das Ergebnis für **Update und Migration: Übersicht** nur wenn alle folgenden Ergebnisse erfüllt sind: Archiv und Dump sind nicht leer, in einer Wiederherstellungsprobe lesbar und an einen unveränderlichen Image-Digest gebunden; der vorgesehene Image-Digest läuft, Health ist erfolgreich und Owner-Anmeldung, Bibliothekszahl und Medienprobe bestehen. Seitenspezifische Kontrollpunkte: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+- Archiv und Dump sind nicht leer, in einer Wiederherstellungsprobe lesbar und an einen unveränderlichen Image-Digest gebunden
+- der vorgesehene Image-Digest läuft, Health ist erfolgreich und Owner-Anmeldung, Bibliothekszahl und Medienprobe bestehen
+
+## Sicherheit und Rollback
+
+:::caution
+Die sichere Wiederherstellungsgrenze für **Update und Migration: Übersicht** verlangt vor jedem Start oder Fortsetzen diese Maßnahmen: passender Sicherungssatz; `PREVIOUS_IMAGE` · `@sha256:`. Seitenspezifische Kontrollpunkte: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+- passender Sicherungssatz
+- `PREVIOUS_IMAGE` · `@sha256:`
+:::
+
+## Nächster Schritt
+
+[Update und Migration: Sicherung](/de/update/backup/)
+
+## Quelle und Status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Quelle und Status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

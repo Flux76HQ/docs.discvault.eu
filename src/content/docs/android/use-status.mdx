@@ -1,0 +1,68 @@
+---
+title: 'Android: Features and status'
+description: 'Use available Android functions while treating incomplete parity and distribution as explicit status, not released behavior.'
+pageId: 'android-use-status'
+products: ['android']
+platforms: ['android']
+channels: ['beta']
+minVersion: 'Android 8 / API 26+'
+sourceRepos: ['Flux76HQ/DiscVault-AndroidApp', 'helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../components/PageMeta.astro';
+
+<PageMeta channels="beta" platform="Android" version="Android 8 / API 26+" source="Flux76HQ/DiscVault-AndroidApp · helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Goal and result
+
+Use available Android functions while treating incomplete parity and distribution as explicit status, not released behavior.
+
+## Applies to
+
+Beta. Local-library functions are the supported test path; optional server sync and remaining parity must be validated per build. Roadmap features are unavailable until implemented and released.
+
+### Beta channel
+
+- Room · the test title remains after app restart and an offline launch
+- CameraX / ML Kit / WorkManager · build from a verified distribution source
+
+## Prerequisites
+
+- small disposable test library
+- network optional
+
+## Procedure
+
+1. **Verify:** Room · local offline-first library
+2. **Test:** the test title remains after app restart and an offline launch · airplane mode
+3. **Inspect:** CameraX / ML Kit · build from a verified distribution source
+4. **Inspect:** WorkManager · source-verified beta build; no public store availability claim
+
+
+
+## Expected result
+
+Every used function is present in the installed build and local changes remain available offline.
+
+- build from a verified distribution source · Room CameraX ML Kit WorkManager
+- the test title remains after app restart and an offline launch
+
+## Safety and rollback
+
+:::caution
+Disable optional sync after conflict or duplicate errors. Keep a test library until bidirectional behavior is confirmed.
+
+- one test item matches locally and on the server, or synchronization stays disabled · small disposable test library
+:::
+
+## Next step
+
+[Troubleshooting](/troubleshooting/)
+
+## Source and status
+
+- [`Flux76HQ/DiscVault-AndroidApp@a13ef4bdbb23`](https://github.com/Flux76HQ/DiscVault-AndroidApp/commit/a13ef4bdbb23b6a7e52e01cdf532fa222c1b67de)
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Verified: `2026-07-14`
+- DiscVault Docs: `0.1.0`

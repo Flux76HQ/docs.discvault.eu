@@ -1,0 +1,82 @@
+---
+title: 'Інтеграції: Plex і Jellyfin'
+description: 'Спеціальні інструкції для завдання: Інтеграції: Plex і Jellyfin: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.'
+pageId: 'integrations-plex-jellyfin'
+products: ['server']
+platforms: ['web', 'docker']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="веб · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Мета й результат
+
+Виконайте спеціальну процедуру сторінки для **Інтеграції: Plex і Jellyfin**. У цій процедурі використовуються Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+## Застосовується до
+
+Ця сторінка стосується лише **Інтеграції: Plex і Jellyfin** (веб · Docker). Межі каналу й даних: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26. Контрольні точки цієї сторінки: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+### DiscVault v26 – стабільний
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault 26
+
+### DiscVault v26 – бета
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault 26
+
+## Передумови
+
+- облікові дані постачальника, збережені як секрет
+- Jellyfin
+- сеанс власника або адміністратора
+
+## Процедура
+
+1. **Налаштуйте:** Адміністрування → Плагіни → Постачальник → Налаштувати · Plex Jellyfin
+2. **Перевірте:** Адміністрування → Плагіни → Перевірка стану
+3. **Виконайте:** Адміністрування → Плагіни → Виявити без збереження · `dryRun=true`
+4. **Порівняйте:** `/api/next/digital-items?limit=200`
+
+### Команди й налаштування
+
+#### Обидва канали
+
+```bash
+curl --fail http://localhost:6080/api/next/digital-sources
+curl --fail 'http://localhost:6080/api/next/digital-items?limit=200'
+```
+
+## Очікуваний результат
+
+Приймайте результат для **Інтеграції: Plex і Jellyfin** лише коли підтверджено всі наведені нижче результати: Адміністрування → Плагіни → Перевірка стану; Адміністрування → Плагіни → Виявити без збереження · `dryRun=true`; Plex · Jellyfin · `/api/next/digital-items`. Контрольні точки цієї сторінки: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+- Адміністрування → Плагіни → Перевірка стану
+- Адміністрування → Плагіни → Виявити без збереження · `dryRun=true`
+- Plex · Jellyfin · `/api/next/digital-items`
+
+## Безпека й відкочування
+
+:::caution
+Безпечна межа відновлення для **Інтеграції: Plex і Jellyfin** вимагає цих дій до будь-якого запуску чи продовження: вимкніть постачальника до видалення, створіть копію `/data/plugins` і відкличте розкриті облікові дані; вимкніть інтеграцію, відкличте тестові чи розкриті облікові дані, за потреби створіть нові й ніколи не використовуйте старі повторно. Контрольні точки цієї сторінки: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+
+- вимкніть постачальника до видалення, створіть копію `/data/plugins` і відкличте розкриті облікові дані
+- вимкніть інтеграцію, відкличте тестові чи розкриті облікові дані, за потреби створіть нові й ніколи не використовуйте старі повторно
+:::
+
+## Наступний крок
+
+[Усунення проблем](/uk/troubleshooting/)
+
+## Джерело й стан
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Джерело й стан: `2026-07-14`
+- DiscVault Docs: `0.1.0`

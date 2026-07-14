@@ -1,0 +1,82 @@
+---
+title: 'Vianmääritys'
+description: 'Tehtäväkohtaiset ohjeet: Vianmääritys: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.'
+pageId: 'troubleshooting-index'
+products: ['server', 'pwa', 'ios', 'android']
+platforms: ['all']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVaultApp', 'Flux76HQ/DiscVault-AndroidApp']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="kaikki alustat" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVaultApp · Flux76HQ/DiscVault-AndroidApp" verified="2026-07-14" />
+
+## Tavoite ja tulos
+
+Suorita sivukohtainen työnkulku: **Vianmääritys**. Tässä menettelyssä käytetään `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+
+## Koskee
+
+Tämä sivu koskee vain kohdetta **Vianmääritys** (kaikki alustat). Kanava- ja tietorajat ovat: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/api/next/health`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/api/next/health`. Sivukohtaiset tarkistuspisteet: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+
+### DiscVault v26 – vakaa
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `/api/next/health`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `/api/next/health`
+
+## Edellytykset
+
+- valittu julkaisukanava
+- aikaleimatut lokit, joista yksityiset tiedot on poistettu
+- `postgres`
+
+## Toimenpiteet
+
+1. **Kirjaa:** `docker compose`
+2. **Eristä:** säilö → käänteinen välityspalvelin → selain/sovellus → palveluntarjoaja → tiedot
+3. **Tarkista:** aikaleimatut lokit, joista yksityiset tiedot on poistettu
+4. **Säilytä:** PostgreSQL `/data`
+
+### Komennot ja asetukset
+
+#### Molemmat kanavat
+
+```bash
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml ps
+curl --fail http://localhost:6080/api/next/health
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml logs --tail=200 next-api next-worker next-mcp postgres
+```
+
+## Odotettu tulos
+
+Hyväksy tulos kohteelle **Vianmääritys** vain kun kaikki seuraavat tulokset toteutuvat: yksi vikaantuva kerros eristetään aikaleiman, tilan, image-tiivisteen ja peitetyn virheen kanssa. Sivukohtaiset tarkistuspisteet: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+
+- yksi vikaantuva kerros eristetään aikaleiman, tilan, image-tiivisteen ja peitetyn virheen kanssa
+
+## Turvallisuus ja palautus
+
+:::caution
+Turvallinen palautusraja kohteelle **Vianmääritys** edellyttää näitä toimia ennen käynnistystä tai jatkamista: älä poista ensin volumeja, `/data`-hakemistoa, selaintunnuksia tai sovellustallennusta; säilytä peitetyt lokit ja palauta vain vastaava varmuuskopio. Sivukohtaiset tarkistuspisteet: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+
+- älä poista ensin volumeja, `/data`-hakemistoa, selaintunnuksia tai sovellustallennusta; säilytä peitetyt lokit ja palauta vain vastaava varmuuskopio
+:::
+
+## Seuraava vaihe
+
+[Viite](/fi/reference/)
+
+## Lähde ja tila
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- [`helmerzNL/DiscVaultApp@9d15ab2a339c`](https://github.com/helmerzNL/DiscVaultApp/commit/9d15ab2a339cefdb164ec0ab29ad69ddabc511c1)
+- [`Flux76HQ/DiscVault-AndroidApp@a13ef4bdbb23`](https://github.com/Flux76HQ/DiscVault-AndroidApp/commit/a13ef4bdbb23b6a7e52e01cdf532fa222c1b67de)
+- Lähde ja tila: `2026-07-14`
+- DiscVault Docs: `0.1.0`

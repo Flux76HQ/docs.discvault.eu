@@ -1,0 +1,81 @@
+---
+title: 'Admin: Logs, jobs, and security'
+description: 'Monitor health, logs, operations, background jobs, plugin failures, and account security.'
+pageId: 'admin-index'
+products: ['server']
+platforms: ['docker', 'unraid', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Goal and result
+
+Monitor health, logs, operations, background jobs, plugin failures, and account security.
+
+## Applies to
+
+Stable and beta use the same v26 service names and endpoints. Logs can contain titles and user identifiers; redact them before sharing.
+
+### DiscVault v26 stable
+
+- DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
+- same API + worker + MCP + PostgreSQL diagnostics
+
+### DiscVault v26 beta
+
+- DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
+- same API + worker + MCP + PostgreSQL diagnostics
+
+## Prerequisites
+
+- owner access
+- matching backup set
+- timestamped logs with private data redacted
+
+## Procedure
+
+1. **Inspect:** `/api/next/health` · Compose status
+2. **Inspect:** timestamped logs with private data redacted · failed job ID
+3. **Verify:** latest matched backup · secret exposure
+4. **Preserve:** error + timestamp + image digest · before retry
+
+### Commands and settings
+
+#### Both channels
+
+```bash
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml logs --tail=200 next-api next-worker next-mcp postgres
+curl --fail http://localhost:6080/api/next/jobs
+curl --fail http://localhost:6080/api/next/health
+```
+
+## Expected result
+
+Health succeeds, failed jobs have an actionable error, backups are current, and no default or exposed secret remains.
+
+- one failing layer is isolated with its timestamp, status, image digest, and redacted error
+- matching backup set
+
+## Safety and rollback
+
+:::caution
+Pause workers before retrying destructive jobs. Restore configuration and matched data rather than clearing queues or accounts without a backup.
+
+- do not delete volumes, `/data`, browser credentials, or native app storage first; preserve redacted logs and restore only a matching backup
+:::
+
+## Next step
+
+[Troubleshooting](/troubleshooting/)
+
+## Source and status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Verified: `2026-07-14`
+- DiscVault Docs: `0.1.0`

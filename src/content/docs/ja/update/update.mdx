@@ -1,0 +1,114 @@
+---
+title: '更新と移行: コンテナの更新'
+description: 'タスク別の手順: 更新と移行: コンテナの更新: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.'
+pageId: 'update-update'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## 目的と結果
+
+このページ専用の手順を実行します: **更新と移行: コンテナの更新**. この手順で扱う項目: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+
+## 対象
+
+このページの対象は **更新と移行: コンテナの更新** (Docker · Unraid). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · リリースノートと記録済みの不変イメージダイジェスト · 一致するバックアップ一式; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · リリースノートと記録済みの不変イメージダイジェスト · 一致するバックアップ一式. このページ固有の確認点: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+
+### DiscVault v26 安定版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `DISCVAULT_IMAGE`
+- PostgreSQL `/data` · リリースノートと記録済みの不変イメージダイジェスト · 一致するバックアップ一式
+
+### DiscVault v26 ベータ版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `DISCVAULT_IMAGE`
+- PostgreSQL `/data` · リリースノートと記録済みの不変イメージダイジェスト · 一致するバックアップ一式
+
+## 前提条件
+
+- 一致するバックアップ一式
+- リリースノートと記録済みの不変イメージダイジェスト
+
+## 手順
+
+1. **検証:** `PREVIOUS_IMAGE=@sha256:…`
+2. **選択:** `DISCVAULT_IMAGE` · `:latest` `:beta`
+3. **実行:** `--force-recreate`
+4. **比較:** 意図したイメージダイジェストが稼働し、ヘルス確認、所有者ログイン、ライブラリ件数、メディア 1 件がすべて成功します
+
+### コマンドと設定
+
+#### DiscVault v26 安定版
+
+```bash
+export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
+```
+
+#### DiscVault v26 ベータ版
+
+```bash
+export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
+```
+
+#### 両方のチャンネル
+
+```bash
+set -euo pipefail
+test -n "$DISCVAULT_IMAGE"
+case "$DISCVAULT_IMAGE" in
+  ghcr.io/helmerznl/discvault:latest|ghcr.io/helmerznl/discvault:beta) ;;
+  *) printf '%s\n' "$DISCVAULT_IMAGE" >&2; exit 64 ;;
+esac
+cd /opt/discvault
+ENV_FILE=/opt/discvault/.env
+ENV_TMP="$(mktemp "$ENV_FILE.update.XXXXXX")"
+trap 'rm -f "$ENV_TMP"' EXIT
+awk -v image="$DISCVAULT_IMAGE" '
+  /^DISCVAULT_IMAGE=/ { print "DISCVAULT_IMAGE=" image; found=1; next }
+  { print }
+  END { if (!found) exit 42 }
+' "$ENV_FILE" > "$ENV_TMP"
+chmod 0600 "$ENV_TMP"
+docker compose --env-file "$ENV_TMP" -p discvault -f compose.yaml config --quiet
+docker compose --env-file "$ENV_TMP" -p discvault -f compose.yaml pull next-api next-worker next-mcp
+docker compose --env-file "$ENV_TMP" -p discvault -f compose.yaml up -d --force-recreate
+docker compose --env-file "$ENV_TMP" -p discvault -f compose.yaml ps
+curl --fail http://localhost:6080/api/next/health
+mv "$ENV_TMP" "$ENV_FILE"
+trap - EXIT
+```
+
+## 期待される結果
+
+次の結果を受け入れる条件: **更新と移行: コンテナの更新** 以下の結果をすべて確認した場合のみ: 意図したイメージダイジェストが稼働し、ヘルス確認、所有者ログイン、ライブラリ件数、メディア 1 件がすべて成功します. このページ固有の確認点: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+
+- 意図したイメージダイジェストが稼働し、ヘルス確認、所有者ログイン、ライブラリ件数、メディア 1 件がすべて成功します
+
+## 安全性とロールバック
+
+:::caution
+安全な復旧境界: **更新と移行: コンテナの更新** 起動または続行の前に、次の操作が必要です: [更新と移行: イメージのロールバック](/ja/update/rollback/) · 一致するバックアップ一式; リリースノートと記録済みの不変イメージダイジェスト. このページ固有の確認点: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+
+- [更新と移行: イメージのロールバック](/ja/update/rollback/) · 一致するバックアップ一式
+- リリースノートと記録済みの不変イメージダイジェスト
+:::
+
+## 次の手順
+
+[更新と移行: イメージのロールバック](/ja/update/rollback/)
+
+## 情報源と状態
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- 情報源と状態: `2026-07-14`
+- DiscVault Docs: `0.1.0`

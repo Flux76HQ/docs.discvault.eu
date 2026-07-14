@@ -1,0 +1,74 @@
+---
+title: 'Référence'
+description: 'Instructions propres à la tâche : Référence: `:latest` · `:beta` · `:dev` · `6080:5000`.'
+pageId: 'reference-index'
+products: ['server', 'pwa', 'ios', 'android']
+platforms: ['all']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="toutes les plateformes" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Objectif et résultat
+
+Suivez le déroulement propre à cette page pour **Référence**. Cette procédure utilise `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+## S’applique à
+
+Cette page s’applique uniquement à **Référence** (toutes les plateformes). Les limites de canal et de données sont : DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`. Points de contrôle propres à la page : `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+### DiscVault v26 stable
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PostgreSQL `/data`
+- API `6080:5000` MCP `6090:6090`
+
+### DiscVault v26 bêta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PostgreSQL `/data`
+- API `6080:5000` MCP `6090:6090`
+
+## Prérequis
+
+- canal de publication choisi
+
+## Procédure
+
+1. **Inspecter:** `:latest` `:beta`
+2. **Consigner:** `:dev` est réservé à l’ingénierie et n’est pas un canal de publication ; DiscVault v26 stable utilise `:latest` et la bêta `:beta` · `:dev`
+3. **Consigner:** `/api/next/health`
+4. **Consigner:** PostgreSQL `/data`
+
+
+
+## Résultat attendu
+
+Validez le résultat de **Référence** uniquement lorsque tous les résultats suivants sont confirmés : canal de publication choisi · `@sha256:`; `:latest` · `:beta` · `:dev`. Points de contrôle propres à la page : `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+- canal de publication choisi · `@sha256:`
+- `:latest` · `:beta` · `:dev`
+
+## Sécurité et retour arrière
+
+:::caution
+La limite de récupération sûre pour **Référence** impose ces actions avant tout démarrage ou toute poursuite : la référence est en lecture seule ; utilisez la procédure ciblée avant toute commande ou modification; `:dev` est réservé à l’ingénierie et n’est pas un canal de publication ; DiscVault v26 stable utilise `:latest` et la bêta `:beta` · `:dev`. Points de contrôle propres à la page : `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+- la référence est en lecture seule ; utilisez la procédure ciblée avant toute commande ou modification
+- `:dev` est réservé à l’ingénierie et n’est pas un canal de publication ; DiscVault v26 stable utilise `:latest` et la bêta `:beta` · `:dev`
+:::
+
+## Étape suivante
+
+[Démarrer: Vue d’ensemble](/fr/start/)
+
+## Source et état
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Source et état: `2026-07-14`
+- DiscVault Docs: `0.1.0`

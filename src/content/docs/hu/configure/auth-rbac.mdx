@@ -1,0 +1,79 @@
+---
+title: 'Konfigurálás: Hitelesítés és RBAC'
+description: 'Feladatspecifikus útmutató: Konfigurálás: Hitelesítés és RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.'
+pageId: 'configure-auth-rbac'
+products: ['server']
+platforms: ['web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Cél és eredmény
+
+Hajtsa végre az oldalhoz tartozó munkafolyamatot: **Konfigurálás: Hitelesítés és RBAC**. Ez az eljárás ezeket használja: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+
+## Érvényesség
+
+Ez az oldal kizárólag erre vonatkozik: **Konfigurálás: Hitelesítés és RBAC** (web). A csatorna- és adathatárok: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn. Oldalspecifikus ellenőrzési pontok: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- WebAuthn
+
+### DiscVault v26 – béta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- WebAuthn
+
+## Előfeltételek
+
+- tulajdonosi hozzáférés
+- HTTPS
+- második helyreállítási mód
+
+## Eljárás
+
+1. **Nyissa meg:** Adminisztráció → Biztonság → Hitelesítés engedélyezése
+2. **Hozza létre:** Adminisztráció → Felhasználók → 48 órás meghívó létrehozása
+3. **Állítsa be:** Adminisztráció → Szerepkörök → Alap / Speciális
+4. **Tesztelje:** `48 h`
+
+### Parancsok és beállítások
+
+#### Mindkét csatorna
+
+```bash
+curl --fail http://localhost:6080/api/next/auth/status
+curl --fail http://localhost:6080/api/next/auth/rbac
+```
+
+## Várt eredmény
+
+Az eredmény csak ennél fogadható el: **Konfigurálás: Hitelesítés és RBAC** csak akkor, ha minden alábbi eredmény teljesül: a tulajdonosi passkey-belépés működik, a meghívásos regisztráció követi a beállítást, és a tesztfelhasználó csak kiosztott jogokat kap. Oldalspecifikus ellenőrzési pontok: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+
+- a tulajdonosi passkey-belépés működik, a meghívásos regisztráció követi a beállítást, és a tesztfelhasználó csak kiosztott jogokat kap
+
+## Biztonság és visszaállítás
+
+:::caution
+A biztonságos helyreállítás határa ennél: **Konfigurálás: Hitelesítés és RBAC** ezeket a műveleteket igényli indítás vagy folytatás előtt: tartsa meg a tulajdonosi munkamenetet és egy második helyreállítási módot; az utolsó tulajdonosi passkey soha ne törlődjön. Oldalspecifikus ellenőrzési pontok: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+
+- tartsa meg a tulajdonosi munkamenetet és egy második helyreállítási módot; az utolsó tulajdonosi passkey soha ne törlődjön
+:::
+
+## Következő lépés
+
+[Konfigurálás: Bővítmények és metaadatok](/hu/configure/plugins-metadata/)
+
+## Forrás és állapot
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Forrás és állapot: `2026-07-14`
+- DiscVault Docs: `0.1.0`

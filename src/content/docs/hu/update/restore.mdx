@@ -1,0 +1,115 @@
+---
+title: 'Frissítés és migrálás: Visszaállítás'
+description: 'Feladatspecifikus útmutató: Frissítés és migrálás: Visszaállítás: `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.'
+pageId: 'update-restore'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Cél és eredmény
+
+Hajtsa végre az oldalhoz tartozó munkafolyamatot: **Frissítés és migrálás: Visszaállítás**. Ez az eljárás ezeket használja: `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.
+
+## Érvényesség
+
+Ez az oldal kizárólag erre vonatkozik: **Frissítés és migrálás: Visszaállítás** (Docker · Unraid). A csatorna- és adathatárok: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL dump és fájlarchívum ugyanabból a leállított írási ablakból; az illeszkedő adatokat az előző image indítása előtt állítsa vissza; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL dump és fájlarchívum ugyanabból a leállított írási ablakból; az illeszkedő adatokat az előző image indítása előtt állítsa vissza. Oldalspecifikus ellenőrzési pontok: `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PostgreSQL dump és fájlarchívum ugyanabból a leállított írási ablakból
+- az illeszkedő adatokat az előző image indítása előtt állítsa vissza
+
+### DiscVault v26 – béta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PostgreSQL dump és fájlarchívum ugyanabból a leállított írási ablakból
+- az illeszkedő adatokat az előző image indítása előtt állítsa vissza
+
+## Előfeltételek
+
+- illeszkedő mentéskészlet
+- karbantartási időablak
+- `PREVIOUS_IMAGE` · privát DiscVault futásidejű fájl
+
+## Eljárás
+
+1. **Állítsa le:** `next-api` `next-worker` `next-mcp`
+2. **Állítsa vissza:** `/data`
+3. **Állítsa vissza:** PostgreSQL · `pg_restore --exit-on-error`
+4. **Indítsa el:** `next-api` → `GET /api/next/health` → `next-worker` `next-mcp`
+
+### Parancsok és beállítások
+
+#### Mindkét csatorna
+
+```bash
+set -euo pipefail
+BACKUP_ID=20260714T180000Z
+cd /opt/discvault
+. "/srv/backups/discvault-$BACKUP_ID.env"
+test -n "$PREVIOUS_IMAGE"
+export DISCVAULT_IMAGE="$PREVIOUS_IMAGE"
+docker pull "$DISCVAULT_IMAGE"
+ENV_FILE=/opt/discvault/.env
+ENV_TMP="$(mktemp "$ENV_FILE.restore.XXXXXX")"
+trap 'rm -f "$ENV_TMP"' EXIT
+awk -v image="$DISCVAULT_IMAGE" '
+  /^DISCVAULT_IMAGE=/ { print "DISCVAULT_IMAGE=" image; found=1; next }
+  { print }
+  END { if (!found) exit 42 }
+' "$ENV_FILE" > "$ENV_TMP"
+chmod 0600 "$ENV_TMP"
+docker compose --env-file .env -p discvault -f compose.yaml stop next-worker next-mcp next-api
+mv /srv/discvault "/srv/discvault.failed-$(date -u +%Y%m%dT%H%M%SZ)"
+tar --acls --xattrs -C /srv -xzf \
+  "/srv/backups/discvault-data-$BACKUP_ID.tgz"
+docker compose --env-file .env -p discvault -f compose.yaml up -d postgres
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'dropdb --if-exists --force -U "$POSTGRES_USER" "$POSTGRES_DB"'
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'createdb -U "$POSTGRES_USER" "$POSTGRES_DB"'
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'pg_restore --exit-on-error --no-owner -U "$POSTGRES_USER" -d "$POSTGRES_DB"' \
+  < "/srv/backups/discvault-$BACKUP_ID.dump"
+docker compose --env-file .env -p discvault -f compose.yaml up -d --force-recreate next-api
+curl --fail http://localhost:6080/api/next/health
+docker compose --env-file .env -p discvault -f compose.yaml \
+  up -d --force-recreate next-worker next-mcp
+docker compose --env-file .env -p discvault -f compose.yaml ps
+mv "$ENV_TMP" "$ENV_FILE"
+trap - EXIT
+```
+
+## Várt eredmény
+
+Az eredmény csak ennél fogadható el: **Frissítés és migrálás: Visszaállítás** csak akkor, ha minden alábbi eredmény teljesül: a könyvtárdarabszám és a médiaminta egyezik a kiválasztott mentéssel; `:latest` `:beta`. Oldalspecifikus ellenőrzési pontok: `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.
+
+- a könyvtárdarabszám és a médiaminta egyezik a kiválasztott mentéssel
+- `:latest` `:beta`
+
+## Biztonság és visszaállítás
+
+:::caution
+A biztonságos helyreállítás határa ennél: **Frissítés és migrálás: Visszaállítás** ezeket a műveleteket igényli indítás vagy folytatás előtt: ha a fájl-visszaállítás vagy a pg_restore sikertelen, a konténer, az API, a workerek és az MCP maradjanak leállítva; érintetlen mentésmásolatból próbálja újra. Oldalspecifikus ellenőrzési pontok: `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.
+
+- ha a fájl-visszaállítás vagy a pg_restore sikertelen, a konténer, az API, a workerek és az MCP maradjanak leállítva; érintetlen mentésmásolatból próbálja újra
+:::
+
+## Következő lépés
+
+[Frissítés és migrálás: Konténerfrissítés](/hu/update/update/)
+
+## Forrás és állapot
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Forrás és állapot: `2026-07-14`
+- DiscVault Docs: `0.1.0`

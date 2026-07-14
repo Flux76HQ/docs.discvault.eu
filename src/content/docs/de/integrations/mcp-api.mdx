@@ -1,0 +1,91 @@
+---
+title: 'Integrationen: MCP und REST-API'
+description: 'Aufgabenspezifische Anleitung für Integrationen: MCP und REST-API: `streamable-http` · `/mcp` · `Authorization` · `6090`.'
+pageId: 'integrations-mcp-api'
+products: ['server']
+platforms: ['web', 'docker']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Web · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Ziel und Ergebnis
+
+Führe den seitenspezifischen Ablauf aus für **Integrationen: MCP und REST-API**. Dieses Verfahren arbeitet mit `streamable-http` · `/mcp` · `Authorization` · `6090`.
+
+## Gültig für
+
+Diese Seite gilt ausschließlich für **Integrationen: MCP und REST-API** (Web · Docker). Kanal- und Datengrenzen sind: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/mcp` `6090` · REST API; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/mcp` `6090` · REST API. Seitenspezifische Kontrollpunkte: `streamable-http` · `/mcp` · `Authorization` · `6090`.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `/mcp` `6090` · REST API
+
+### DiscVault v26 – Beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `/mcp` `6090` · REST API
+
+## Voraussetzungen
+
+- API
+- HTTPS DiscVault
+- MCP HTTP
+
+## Vorgehen
+
+1. **Erstellen:** API
+2. **Konfigurieren:** `streamable-http` · `https://discvault.example.com/mcp`
+3. **Testen:** `Authorization`
+4. **Widerrufen:** `6090`
+
+### Befehle und Einstellungen
+
+#### Beide Kanäle
+
+```json
+{
+  "mcpServers": {
+    "discvault": {
+      "transport": "streamable-http",
+      "url": "https://discvault.example.com/mcp",
+      "headers": { "Authorization": "******" }
+    }
+  }
+}
+```
+
+```bash
+curl --fail https://discvault.example.com/api/next/health
+```
+
+## Erwartetes Ergebnis
+
+Akzeptiere das Ergebnis für **Integrationen: MCP und REST-API** nur wenn alle folgenden Ergebnisse erfüllt sind: DiscVault · `streamable-http` · `/mcp`; als Secret gespeicherte Anbieter-Zugangsdaten · `Authorization`. Seitenspezifische Kontrollpunkte: `streamable-http` · `/mcp` · `Authorization` · `6090`.
+
+- DiscVault · `streamable-http` · `/mcp`
+- als Secret gespeicherte Anbieter-Zugangsdaten · `Authorization`
+
+## Sicherheit und Rollback
+
+:::caution
+Die sichere Wiederherstellungsgrenze für **Integrationen: MCP und REST-API** verlangt vor jedem Start oder Fortsetzen diese Maßnahmen: Integration deaktivieren, Test- oder offengelegte Zugangsdaten widerrufen, bei Bedarf neue erstellen und alte niemals wiederverwenden. Seitenspezifische Kontrollpunkte: `streamable-http` · `/mcp` · `Authorization` · `6090`.
+
+- Integration deaktivieren, Test- oder offengelegte Zugangsdaten widerrufen, bei Bedarf neue erstellen und alte niemals wiederverwenden
+:::
+
+## Nächster Schritt
+
+[Integrationen: Plex und Jellyfin](/de/integrations/plex-jellyfin/)
+
+## Quelle und Status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Quelle und Status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

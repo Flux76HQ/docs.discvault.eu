@@ -1,0 +1,72 @@
+---
+title: 'PWA: Offlinegedrag'
+description: 'Taakspecifieke instructies voor PWA: Offlinegedrag: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.'
+pageId: 'pwa-offline'
+products: ['pwa']
+platforms: ['web', 'ios', 'android']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="web · iOS · Android" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Doel en resultaat
+
+Voer de paginaspecifieke werkwijze uit voor **PWA: Offlinegedrag**. Deze werkwijze gebruikt `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+## Van toepassing op
+
+Deze pagina is uitsluitend van toepassing op **PWA: Offlinegedrag** (web · iOS · Android). De kanaal- en gegevensgrenzen zijn: DiscVault · `ghcr.io/helmerznl/discvault:latest`; schermen uit de cache kunnen openen, maar nieuwe gegevens en schrijfacties vereisen netwerk · `Service Worker` · `CacheStorage`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; schermen uit de cache kunnen openen, maar nieuwe gegevens en schrijfacties vereisen netwerk · `Service Worker` · `CacheStorage`. Paginaspecifieke controlepunten: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+### DiscVault v26 stabiel
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- schermen uit de cache kunnen openen, maar nieuwe gegevens en schrijfacties vereisen netwerk · `Service Worker` · `CacheStorage`
+
+### DiscVault v26 bèta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- schermen uit de cache kunnen openen, maar nieuwe gegevens en schrijfacties vereisen netwerk · `Service Worker` · `CacheStorage`
+
+## Vereisten
+
+- PWA
+- `CacheStorage`
+
+## Procedure
+
+1. **Openen:** Bibliotheek → Zoeken
+2. **Testen:** vliegtuigmodus · `Service Worker`
+3. **Vastleggen:** `navigator.onLine`
+4. **Opnieuw verbinden:** HTTPS
+
+
+
+## Verwacht resultaat
+
+Accepteer het resultaat voor **PWA: Offlinegedrag** alleen wanneer alle onderstaande resultaten kloppen: schermen uit de cache kunnen openen, maar nieuwe gegevens en schrijfacties vereisen netwerk; `Service Worker` · `navigator.onLine`. Paginaspecifieke controlepunten: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+- schermen uit de cache kunnen openen, maar nieuwe gegevens en schrijfacties vereisen netwerk
+- `Service Worker` · `navigator.onLine`
+
+## Veiligheid en terugdraaien
+
+:::caution
+De veilige herstelgrens voor **PWA: Offlinegedrag** vereist deze acties voordat iets start of doorgaat: schermen uit de cache kunnen openen, maar nieuwe gegevens en schrijfacties vereisen netwerk · DiscVault. Paginaspecifieke controlepunten: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+- schermen uit de cache kunnen openen, maar nieuwe gegevens en schrijfacties vereisen netwerk · DiscVault
+:::
+
+## Volgende stap
+
+[Problemen oplossen](/nl/troubleshooting/)
+
+## Bron en status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Bron en status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

@@ -1,0 +1,76 @@
+---
+title: 'PWA: 概要'
+description: 'タスク別の手順: PWA: 概要: PWA · HTTPS · `Service Worker` · `/pwa/offline/`.'
+pageId: 'pwa-index'
+products: ['pwa']
+platforms: ['web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## 目的と結果
+
+このページ専用の手順を実行します: **PWA: 概要**. この手順で扱う項目: PWA · HTTPS · `Service Worker` · `/pwa/offline/`.
+
+## 対象
+
+このページの対象は **PWA: 概要** (Web). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PWA; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PWA. このページ固有の確認点: PWA · HTTPS · `Service Worker` · `/pwa/offline/`.
+
+### DiscVault v26 安定版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PWA
+
+### DiscVault v26 ベータ版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PWA
+
+## 前提条件
+
+- PWA
+- HTTPS DiscVault 26
+
+## 手順
+
+1. **インストール:** [PWA: PWA のインストール](/ja/pwa/install/) · HTTPS
+2. **開く:** [PWA: ライブラリと検索](/ja/pwa/library-search/)
+3. **テスト:** [PWA: オフライン動作](/ja/pwa/offline/) · `Service Worker`
+4. **検証:** `/pwa/offline/`
+
+### タスク別ルート
+
+- [PWA: PWA のインストール](/ja/pwa/install/) — iOS/iPadOS Android
+- [PWA: ライブラリと検索](/ja/pwa/library-search/) — HTTPS
+- [PWA: オフライン動作](/ja/pwa/offline/) — Service Worker
+
+## 期待される結果
+
+次の結果を受け入れる条件: **PWA: 概要** 以下の結果をすべて確認した場合のみ: アドレスバー → DiscVault をインストール · 共有 → ホーム画面に追加 · ブラウザメニュー → アプリをインストール; キャッシュ済み画面は開く場合がありますが、新しいデータと書き込みには通信が必要です. このページ固有の確認点: PWA · HTTPS · `Service Worker` · `/pwa/offline/`.
+
+- アドレスバー → DiscVault をインストール · 共有 → ホーム画面に追加 · ブラウザメニュー → アプリをインストール
+- キャッシュ済み画面は開く場合がありますが、新しいデータと書き込みには通信が必要です
+
+## 安全性とロールバック
+
+:::caution
+安全な復旧境界: **PWA: 概要** 起動または続行の前に、次の操作が必要です: インストール済み PWA シェルだけを削除し、サーバーライブラリとアカウントデータは変更しません. このページ固有の確認点: PWA · HTTPS · `Service Worker` · `/pwa/offline/`.
+
+- インストール済み PWA シェルだけを削除し、サーバーライブラリとアカウントデータは変更しません
+:::
+
+## 次の手順
+
+[PWA: PWA のインストール](/ja/pwa/install/)
+
+## 情報源と状態
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- 情報源と状態: `2026-07-14`
+- DiscVault Docs: `0.1.0`

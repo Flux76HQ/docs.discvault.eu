@@ -1,0 +1,73 @@
+---
+title: 'PWA: 媒体库和搜索'
+description: '任务专用说明： PWA: 媒体库和搜索: PWA · `watchlist` · `history` · RBAC.'
+pageId: 'pwa-library-search'
+products: ['pwa']
+platforms: ['web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="网页" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## 目标和结果
+
+完成此页面专用的流程： **PWA: 媒体库和搜索**. 此流程使用 PWA · `watchlist` · `history` · RBAC.
+
+## 适用范围
+
+本页面仅适用于 **PWA: 媒体库和搜索** (网页). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; PWA · RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PWA · RBAC. 本页面专用检查点： PWA · `watchlist` · `history` · RBAC.
+
+### DiscVault v26 稳定版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PWA · RBAC
+
+### DiscVault v26 测试版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PWA · RBAC
+
+## 前提条件
+
+- 具有所需权限的已登录账号
+- `watchlist`
+
+## 操作步骤
+
+1. **打开:** 媒体库 → 搜索
+2. **配置:** 媒体库 → 筛选 → 格式 / 类型 / 分组
+3. **比较:** 媒体库 → 视图 → 海报 / 列表
+4. **测试:** 标题 → 详情 → 想看 / 已看
+
+
+
+## 预期结果
+
+仅在以下条件下接受结果： **PWA: 媒体库和搜索** 必须确认以下所有结果： 媒体库 → 搜索; 媒体库 → 筛选 → 格式 / 类型 / 分组; 标题 → 详情 → 想看 / 已看. 本页面专用检查点： PWA · `watchlist` · `history` · RBAC.
+
+- 媒体库 → 搜索
+- 媒体库 → 筛选 → 格式 / 类型 / 分组
+- 标题 → 详情 → 想看 / 已看
+
+## 安全与回滚
+
+:::caution
+安全恢复边界： **PWA: 媒体库和搜索** 在启动或继续任何操作前必须执行： 错误编辑应在保存前取消；已保存字段可在界面中恢复；批量损坏时使用匹配的服务器备份. 本页面专用检查点： PWA · `watchlist` · `history` · RBAC.
+
+- 错误编辑应在保存前取消；已保存字段可在界面中恢复；批量损坏时使用匹配的服务器备份
+:::
+
+## 下一步
+
+[PWA: 离线行为](/zh/pwa/offline/)
+
+## 来源和状态
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- 来源和状态: `2026-07-14`
+- DiscVault Docs: `0.1.0`

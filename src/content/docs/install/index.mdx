@@ -1,0 +1,80 @@
+---
+title: 'Install: Installation routes'
+description: 'Install one DiscVault v26 architecture and select stable or beta with one image variable.'
+pageId: 'install-index'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Goal and result
+
+Install one DiscVault v26 architecture and select stable or beta with one image variable.
+
+## Applies to
+
+`ghcr.io/helmerznl/discvault:latest` is DiscVault v26 stable and `ghcr.io/helmerznl/discvault:beta` is DiscVault v26 beta. Both use PostgreSQL, API, worker, MCP, and persistent `/data`; only `DISCVAULT_IMAGE` differs. The `:dev` tag remains engineering-only.
+
+### DiscVault v26 stable
+
+- DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
+- same DiscVault 26 Compose topology
+- PostgreSQL `17` + persistent `/data`
+
+### DiscVault v26 beta
+
+- DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
+- same DiscVault 26 Compose topology
+- PostgreSQL `17` + persistent `/data`
+
+## Prerequisites
+
+- Docker Engine `24+`
+- Docker Compose `v2`
+
+## Procedure
+
+1. **Choose:** [Install: Docker Compose](/install/docker-compose/) · recommended operational route
+2. **Choose:** [Install: Docker run](/install/docker-run/) · advanced complete equivalent
+3. **Choose:** [Install: Unraid](/install/unraid/) · Unraid Compose Manager
+4. **Record:** `DISCVAULT_IMAGE` · image digest · matching backup set
+
+### Task routes
+
+- [Install: Docker Compose](/install/docker-compose/) — DiscVault 26 · Docker Compose · PostgreSQL + `/data` · `DISCVAULT_IMAGE`
+- [Install: Docker run](/install/docker-run/) — DiscVault 26 · Docker run · PostgreSQL + `/data` · `DATABASE_URL`
+- [Install: Persistent data and PostgreSQL](/install/storage-postgresql/) — DiscVault 26 · PostgreSQL + `/data`
+- [Install: Unraid](/install/unraid/) — DiscVault 26 · Unraid · PostgreSQL + `/data`
+
+## Expected result
+
+You choose one image channel for the shared v26 Compose topology and identify both persistent stores.
+
+- selected release channel
+- PostgreSQL + `/data` · both channels
+
+## Safety and rollback
+
+:::caution
+Review release notes and create a matched PostgreSQL and filesystem backup before switching tags or digests.
+
+- matching backup set
+- release notes and recorded immutable image digest
+:::
+
+## Next step
+
+[Install: Docker Compose](/install/docker-compose/)
+
+## Source and status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Verified: `2026-07-14`
+- DiscVault Docs: `0.1.0`

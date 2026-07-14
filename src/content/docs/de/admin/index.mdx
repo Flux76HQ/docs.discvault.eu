@@ -1,0 +1,81 @@
+---
+title: 'Administration: Protokolle, Jobs und Sicherheit'
+description: 'Aufgabenspezifische Anleitung für Administration: Protokolle, Jobs und Sicherheit: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.'
+pageId: 'admin-index'
+products: ['server']
+platforms: ['docker', 'unraid', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid · Web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Ziel und Ergebnis
+
+Führe den seitenspezifischen Ablauf aus für **Administration: Protokolle, Jobs und Sicherheit**. Dieses Verfahren arbeitet mit `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+## Gültig für
+
+Diese Seite gilt ausschließlich für **Administration: Protokolle, Jobs und Sicherheit** (Docker · Unraid · Web). Kanal- und Datengrenzen sind: DiscVault · `ghcr.io/helmerznl/discvault:latest`; API MCP PostgreSQL; DiscVault · `ghcr.io/helmerznl/discvault:beta`; API MCP PostgreSQL. Seitenspezifische Kontrollpunkte: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- API MCP PostgreSQL
+
+### DiscVault v26 – Beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- API MCP PostgreSQL
+
+## Voraussetzungen
+
+- Owner-Zugriff
+- passender Sicherungssatz
+- zeitgestempelte, bereinigte Protokolle
+
+## Vorgehen
+
+1. **Prüfen:** `/api/next/health`
+2. **Prüfen:** zeitgestempelte, bereinigte Protokolle
+3. **Verifizieren:** `next-worker`
+4. **Bewahren:** `--tail=200`
+
+### Befehle und Einstellungen
+
+#### Beide Kanäle
+
+```bash
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml logs --tail=200 next-api next-worker next-mcp postgres
+curl --fail http://localhost:6080/api/next/jobs
+curl --fail http://localhost:6080/api/next/health
+```
+
+## Erwartetes Ergebnis
+
+Akzeptiere das Ergebnis für **Administration: Protokolle, Jobs und Sicherheit** nur wenn alle folgenden Ergebnisse erfüllt sind: eine fehlerhafte Schicht ist mit Zeitstempel, Status, Image-Digest und bereinigtem Fehler isoliert; passender Sicherungssatz. Seitenspezifische Kontrollpunkte: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+- eine fehlerhafte Schicht ist mit Zeitstempel, Status, Image-Digest und bereinigtem Fehler isoliert
+- passender Sicherungssatz
+
+## Sicherheit und Rollback
+
+:::caution
+Die sichere Wiederherstellungsgrenze für **Administration: Protokolle, Jobs und Sicherheit** verlangt vor jedem Start oder Fortsetzen diese Maßnahmen: Volumes, `/data`, Browser-Zugangsdaten oder App-Speicher nicht zuerst löschen; bereinigte Protokolle sichern und nur passende Sicherung wiederherstellen. Seitenspezifische Kontrollpunkte: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
+
+- Volumes, `/data`, Browser-Zugangsdaten oder App-Speicher nicht zuerst löschen; bereinigte Protokolle sichern und nur passende Sicherung wiederherstellen
+:::
+
+## Nächster Schritt
+
+[Fehlerbehebung](/de/troubleshooting/)
+
+## Quelle und Status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Quelle und Status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

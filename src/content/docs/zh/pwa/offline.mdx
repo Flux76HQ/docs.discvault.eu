@@ -1,0 +1,72 @@
+---
+title: 'PWA: 离线行为'
+description: '任务专用说明： PWA: 离线行为: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.'
+pageId: 'pwa-offline'
+products: ['pwa']
+platforms: ['web', 'ios', 'android']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="网页 · iOS · Android" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## 目标和结果
+
+完成此页面专用的流程： **PWA: 离线行为**. 此流程使用 `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+## 适用范围
+
+本页面仅适用于 **PWA: 离线行为** (网页 · iOS · Android). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; 缓存页面可能可以打开，但新数据及写入操作需要网络 · `Service Worker` · `CacheStorage`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; 缓存页面可能可以打开，但新数据及写入操作需要网络 · `Service Worker` · `CacheStorage`. 本页面专用检查点： `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+### DiscVault v26 稳定版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- 缓存页面可能可以打开，但新数据及写入操作需要网络 · `Service Worker` · `CacheStorage`
+
+### DiscVault v26 测试版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- 缓存页面可能可以打开，但新数据及写入操作需要网络 · `Service Worker` · `CacheStorage`
+
+## 前提条件
+
+- PWA
+- `CacheStorage`
+
+## 操作步骤
+
+1. **打开:** 媒体库 → 搜索
+2. **测试:** 飞行模式 · `Service Worker`
+3. **记录:** `navigator.onLine`
+4. **重新连接:** HTTPS
+
+
+
+## 预期结果
+
+仅在以下条件下接受结果： **PWA: 离线行为** 必须确认以下所有结果： 缓存页面可能可以打开，但新数据及写入操作需要网络; `Service Worker` · `navigator.onLine`. 本页面专用检查点： `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+- 缓存页面可能可以打开，但新数据及写入操作需要网络
+- `Service Worker` · `navigator.onLine`
+
+## 安全与回滚
+
+:::caution
+安全恢复边界： **PWA: 离线行为** 在启动或继续任何操作前必须执行： 缓存页面可能可以打开，但新数据及写入操作需要网络 · DiscVault. 本页面专用检查点： `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+- 缓存页面可能可以打开，但新数据及写入操作需要网络 · DiscVault
+:::
+
+## 下一步
+
+[故障排除](/zh/troubleshooting/)
+
+## 来源和状态
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- 来源和状态: `2026-07-14`
+- DiscVault Docs: `0.1.0`

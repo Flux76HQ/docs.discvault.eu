@@ -1,0 +1,138 @@
+---
+title: '配置: 环境变量'
+description: '任务专用说明： 配置: 环境变量: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.'
+pageId: 'configure-environment'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## 目标和结果
+
+完成此页面专用的流程： **配置: 环境变量**. 此流程使用 `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+
+## 适用范围
+
+本页面仅适用于 **配置: 环境变量** (Docker · Unraid). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; `.env`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `.env`. 本页面专用检查点： `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+
+### DiscVault v26 稳定版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `.env`
+
+### DiscVault v26 测试版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `.env`
+
+## 前提条件
+
+- 私有 DiscVault 运行时环境文件
+- OpenSSL
+- 计划的重启时段
+
+## 操作步骤
+
+1. **创建:** `/opt/discvault/.env` · 仅所有者可访问的文件权限 (0600)
+2. **配置:** `DISCVAULT_IMAGE` · `RP_ORIGINS`
+3. **验证:** `chmod 0600` · `docker compose config --quiet`
+4. **启动:** 常规配置修改期间不要更改 JWT 和 PostgreSQL 机密
+
+### 命令和设置
+
+#### DiscVault v26 稳定版
+
+```bash
+export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
+```
+
+#### DiscVault v26 测试版
+
+```bash
+export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
+```
+
+#### 两个通道
+
+```bash
+set -euo pipefail
+test -n "$DISCVAULT_IMAGE"
+case "$DISCVAULT_IMAGE" in
+  ghcr.io/helmerznl/discvault:latest|ghcr.io/helmerznl/discvault:beta) ;;
+  *) printf '%s\n' "$DISCVAULT_IMAGE" >&2; exit 64 ;;
+esac
+install -d -m 0700 /opt/discvault
+install -d -m 0750 /srv/discvault
+install -d -o 70 -g 70 -m 0700 /srv/discvault-postgres
+cd /opt/discvault
+test -f compose.yaml
+umask 077
+ENV_FILE=/opt/discvault/.env
+test ! -e "$ENV_FILE"
+ENV_TMP="$(mktemp "$ENV_FILE.tmp.XXXXXX")"
+trap 'rm -f "$ENV_TMP"' EXIT
+POSTGRES_PASSWORD="$(openssl rand -hex 32)"
+JWT_SECRET="$(openssl rand -hex 32)"
+printf '%s\n' \
+  "DISCVAULT_IMAGE=$DISCVAULT_IMAGE" \
+  'DISCVAULT_DATA_DIR=/srv/discvault' \
+  'DISCVAULT_POSTGRES_DATA=/srv/discvault-postgres' \
+  'DISCVAULT_API_PORT=6080' \
+  'DISCVAULT_MCP_PORT=6090' \
+  'DISCVAULT_NETWORK_NAME=discvault' \
+  'DISCVAULT_API_WORKERS=2' \
+  'DISCVAULT_API_TIMEOUT=180' \
+  'DISCVAULT_WORKER_ID=worker-1' \
+  'DISCVAULT_WORKER_POLL_INTERVAL=2' \
+  'POSTGRES_DB=discvault' \
+  'POSTGRES_USER=discvault' \
+  "POSTGRES_PASSWORD=$POSTGRES_PASSWORD" \
+  "JWT_SECRET=$JWT_SECRET" \
+  'TZ=Europe/Amsterdam' \
+  'RP_ID=localhost' \
+  'RP_NAME=DiscVault' \
+  'RP_ORIGINS=http://localhost:6080' > "$ENV_TMP"
+chmod 0600 "$ENV_TMP"
+ln "$ENV_TMP" "$ENV_FILE"
+rm -f "$ENV_TMP"
+trap - EXIT
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml config --quiet
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml pull
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml up -d
+docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml ps
+curl --fail http://localhost:6080/api/next/health
+```
+
+## 预期结果
+
+仅在以下条件下接受结果： **配置: 环境变量** 必须确认以下所有结果： 仅所有者可访问的文件权限 (0600); 私有文件权限为 600，Compose 验证成功，且所选通道进入健康状态. 本页面专用检查点： `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+
+- 仅所有者可访问的文件权限 (0600)
+- 私有文件权限为 600，Compose 验证成功，且所选通道进入健康状态
+
+## 安全与回滚
+
+:::caution
+安全恢复边界： **配置: 环境变量** 在启动或继续任何操作前必须执行： 文档仓库的环境文件绝不能作为 DiscVault 运行时文件 · `.env.example`; 常规配置修改期间不要更改 JWT 和 PostgreSQL 机密 · `JWT_SECRET` · `POSTGRES_PASSWORD`; 失败时保持服务停止，恢复并验证之前的私有环境文件，然后使用同一镜像重新创建服务且不轮换机密. 本页面专用检查点： `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+
+- 文档仓库的环境文件绝不能作为 DiscVault 运行时文件 · `.env.example`
+- 常规配置修改期间不要更改 JWT 和 PostgreSQL 机密 · `JWT_SECRET` · `POSTGRES_PASSWORD`
+- 失败时保持服务停止，恢复并验证之前的私有环境文件，然后使用同一镜像重新创建服务且不轮换机密
+:::
+
+## 下一步
+
+[配置: 身份验证和 RBAC](/zh/configure/auth-rbac/)
+
+## 来源和状态
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- 来源和状态: `2026-07-14`
+- DiscVault Docs: `0.1.0`

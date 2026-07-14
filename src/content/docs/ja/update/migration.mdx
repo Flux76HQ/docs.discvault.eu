@@ -1,0 +1,84 @@
+---
+title: '更新と移行: DiscVault 26 への移行'
+description: 'タスク別の手順: 更新と移行: DiscVault 26 への移行: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.'
+pageId: 'update-migration'
+products: ['server']
+platforms: ['docker', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## 目的と結果
+
+このページ専用の手順を実行します: **更新と移行: DiscVault 26 への移行**. この手順で扱う項目: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+
+## 対象
+
+このページの対象は **更新と移行: DiscVault 26 への移行** (Docker · Web). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; 読み取り専用の既存データソースであり、現在のランタイムデータベースではありません · SQLite → PostgreSQL; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26; 読み取り専用の既存データソースであり、現在のランタイムデータベースではありません · SQLite → PostgreSQL. このページ固有の確認点: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+
+### DiscVault v26 安定版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault 26
+- 読み取り専用の既存データソースであり、現在のランタイムデータベースではありません · SQLite → PostgreSQL
+
+### DiscVault v26 ベータ版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault 26
+- 読み取り専用の既存データソースであり、現在のランタイムデータベースではありません · SQLite → PostgreSQL
+
+## 前提条件
+
+- 読み取り専用の既存データソースであり、現在のランタイムデータベースではありません · `/data/discvault.db`
+- 同じ書き込み停止時間帯の PostgreSQL ダンプとファイルアーカイブ
+- 所有者アクセス
+
+## 手順
+
+1. **バックアップ:** 読み取り専用の既存データソースであり、現在のランタイムデータベースではありません · 同じ書き込み停止時間帯の PostgreSQL ダンプとファイルアーカイブ
+2. **確認:** `/api/next/migration/readiness` · `ready_for_confirmation`
+3. **実行:** `POST /api/next/migration/start`
+4. **比較:** 準備完了を確認し、移行の失敗レコードが 0 件で、件数とメディアサンプルが一致します
+
+### コマンドと設定
+
+#### 両方のチャンネル
+
+```bash
+curl --fail http://localhost:6080/api/next/migration/readiness
+curl --fail http://localhost:6080/api/next/migration/status
+curl --fail -X POST http://localhost:6080/api/next/migration/start \
+  -H 'Content-Type: application/json' -d '{}'
+curl --fail http://localhost:6080/api/next/migration/status
+```
+
+## 期待される結果
+
+次の結果を受け入れる条件: **更新と移行: DiscVault 26 への移行** 以下の結果をすべて確認した場合のみ: 準備完了を確認し、移行の失敗レコードが 0 件で、件数とメディアサンプルが一致します. このページ固有の確認点: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+
+- 準備完了を確認し、移行の失敗レコードが 0 件で、件数とメディアサンプルが一致します
+
+## 安全性とロールバック
+
+:::caution
+安全な復旧境界: **更新と移行: DiscVault 26 への移行** 起動または続行の前に、次の操作が必要です: DiscVault の書き込み処理を停止し、一致する PostgreSQL と `/data` のバックアップを復元し、データが一部入ったデータベースへ再インポートしません. このページ固有の確認点: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+
+- DiscVault の書き込み処理を停止し、一致する PostgreSQL と `/data` のバックアップを復元し、データが一部入ったデータベースへ再インポートしません
+:::
+
+## 次の手順
+
+[設定: 環境変数](/ja/configure/environment/)
+
+## 情報源と状態
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- 情報源と状態: `2026-07-14`
+- DiscVault Docs: `0.1.0`

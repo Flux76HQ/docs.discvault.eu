@@ -1,0 +1,69 @@
+---
+title: 'Android: Setup'
+description: 'Set up the Android offline-first foundation from a verified test distribution.'
+pageId: 'android-index'
+products: ['android']
+platforms: ['android']
+channels: ['beta']
+minVersion: 'Android 8 / API 26+'
+sourceRepos: ['Flux76HQ/DiscVault-AndroidApp', 'helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../components/PageMeta.astro';
+
+<PageMeta channels="beta" platform="Android" version="Android 8 / API 26+" source="Flux76HQ/DiscVault-AndroidApp · helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Goal and result
+
+Set up the Android offline-first foundation from a verified test distribution.
+
+## Applies to
+
+Beta foundation/MVP in source. Store availability is not assumed. Local Room storage, library, add flow, and settings must be verified in the installed build.
+
+### Beta channel
+
+- source-verified beta build; no public store availability claim
+- Room · offline-first foundation
+
+## Prerequisites
+
+- Android `8.0+` / API `26+`
+- build from a verified distribution source
+- camera permission
+
+## Procedure
+
+1. **Open:** Launch → Onboarding → Create local library · Android
+2. **Create:** Library → Add → Scan barcode / Enter manually · one test title
+3. **Test:** app restart · Room persistence
+4. **Test:** airplane mode · the test title remains after app restart and an offline launch
+
+
+
+## Expected result
+
+Onboarding completes and a test title survives app restart and an offline launch.
+
+- Launch → Onboarding → Create local library
+- Room · the test title remains after app restart and an offline launch
+
+## Safety and rollback
+
+:::caution
+Do not uninstall while the app contains the only copy of a local library. Preserve/export data when the build offers that action.
+
+- local offline-first library · source-verified beta build; no public store availability claim
+:::
+
+## Next step
+
+[Android: Features and status](/android/use-status/)
+
+## Source and status
+
+- [`Flux76HQ/DiscVault-AndroidApp@a13ef4bdbb23`](https://github.com/Flux76HQ/DiscVault-AndroidApp/commit/a13ef4bdbb23b6a7e52e01cdf532fa222c1b67de)
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Verified: `2026-07-14`
+- DiscVault Docs: `0.1.0`

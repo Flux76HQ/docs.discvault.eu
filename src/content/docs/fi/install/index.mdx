@@ -1,0 +1,80 @@
+---
+title: 'Asennus: Asennusvaihtoehdot'
+description: 'Tehtäväkohtaiset ohjeet: Asennus: Asennusvaihtoehdot: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.'
+pageId: 'install-index'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Tavoite ja tulos
+
+Suorita sivukohtainen työnkulku: **Asennus: Asennusvaihtoehdot**. Tässä menettelyssä käytetään `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+
+## Koskee
+
+Tämä sivu koskee vain kohdetta **Asennus: Asennusvaihtoehdot** (Docker · Unraid). Kanava- ja tietorajat ovat: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; PostgreSQL `17` `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26; PostgreSQL `17` `/data`. Sivukohtaiset tarkistuspisteet: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+
+### DiscVault v26 – vakaa
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault 26
+- PostgreSQL `17` `/data`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault 26
+- PostgreSQL `17` `/data`
+
+## Edellytykset
+
+- Docker Engine `24+`
+- Docker Compose `v2`
+
+## Toimenpiteet
+
+1. **Valitse:** [Asennus: Docker Compose](/fi/install/docker-compose/)
+2. **Valitse:** [Asennus: Docker run](/fi/install/docker-run/)
+3. **Valitse:** [Asennus: Unraid](/fi/install/unraid/) · Unraid
+4. **Kirjaa:** `DISCVAULT_IMAGE` · vastaava varmuuskopiosarja
+
+### Tehtäväpolut
+
+- [Asennus: Docker Compose](/fi/install/docker-compose/) — DiscVault 26 Docker Compose PostgreSQL `/data` `DISCVAULT_IMAGE`
+- [Asennus: Docker run](/fi/install/docker-run/) — DiscVault 26 Docker run PostgreSQL `/data` `DATABASE_URL`
+- [Asennus: Pysyvät tiedot ja PostgreSQL](/fi/install/storage-postgresql/) — DiscVault 26 PostgreSQL `/data`
+- [Asennus: Unraid](/fi/install/unraid/) — DiscVault 26 Unraid PostgreSQL `/data`
+
+## Odotettu tulos
+
+Hyväksy tulos kohteelle **Asennus: Asennusvaihtoehdot** vain kun kaikki seuraavat tulokset toteutuvat: valittu julkaisukanava; PostgreSQL `/data`. Sivukohtaiset tarkistuspisteet: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+
+- valittu julkaisukanava
+- PostgreSQL `/data`
+
+## Turvallisuus ja palautus
+
+:::caution
+Turvallinen palautusraja kohteelle **Asennus: Asennusvaihtoehdot** edellyttää näitä toimia ennen käynnistystä tai jatkamista: vastaava varmuuskopiosarja; julkaisutiedot ja kirjattu muuttumaton image-tiiviste. Sivukohtaiset tarkistuspisteet: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+
+- vastaava varmuuskopiosarja
+- julkaisutiedot ja kirjattu muuttumaton image-tiiviste
+:::
+
+## Seuraava vaihe
+
+[Asennus: Docker Compose](/fi/install/docker-compose/)
+
+## Lähde ja tila
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Lähde ja tila: `2026-07-14`
+- DiscVault Docs: `0.1.0`

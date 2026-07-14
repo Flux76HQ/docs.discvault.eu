@@ -1,0 +1,101 @@
+---
+title: 'Ενημέρωση και μετεγκατάσταση: Αντίγραφο ασφαλείας'
+description: 'Οδηγίες ειδικά για την εργασία: Ενημέρωση και μετεγκατάσταση: Αντίγραφο ασφαλείας: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.'
+pageId: 'update-backup'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Στόχος και αποτέλεσμα
+
+Ολοκληρώστε τη ροή εργασίας της σελίδας για **Ενημέρωση και μετεγκατάσταση: Αντίγραφο ασφαλείας**. Η διαδικασία χρησιμοποιεί `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
+
+## Ισχύει για
+
+Αυτή η σελίδα ισχύει μόνο για **Ενημέρωση και μετεγκατάσταση: Αντίγραφο ασφαλείας** (Docker · Unraid). Τα όρια καναλιού και δεδομένων είναι: DiscVault · `ghcr.io/helmerznl/discvault:latest`; dump PostgreSQL και αρχείο συστήματος από το ίδιο παράθυρο χωρίς εγγραφές; PostgreSQL `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; dump PostgreSQL και αρχείο συστήματος από το ίδιο παράθυρο χωρίς εγγραφές; PostgreSQL `/data`. Σημεία ελέγχου της σελίδας: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
+
+### DiscVault v26 – σταθερό
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- dump PostgreSQL και αρχείο συστήματος από το ίδιο παράθυρο χωρίς εγγραφές
+- PostgreSQL `/data`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- dump PostgreSQL και αρχείο συστήματος από το ίδιο παράθυρο χωρίς εγγραφές
+- PostgreSQL `/data`
+
+## Προϋποθέσεις
+
+- προορισμός αντιγράφων εκτός των ενεργών δεδομένων
+- εγγράψιμη μόνιμη αποθήκευση και ελεύθερος χώρος αντιγράφων
+
+## Διαδικασία
+
+1. **Καταγράψτε:** `PREVIOUS_IMAGE` · `sha256`
+2. **Διακόψτε:** `next-api` `next-worker` `next-mcp`
+3. **Δημιουργήστε αντίγραφο:** `pg_dump -Fc`
+4. **Εκκινήστε:** `next-api` → → MCP
+
+### Εντολές και ρυθμίσεις
+
+#### Και τα δύο κανάλια
+
+```bash
+set -euo pipefail
+cd /opt/discvault
+install -d -m 0700 /srv/backups
+BACKUP_ID="$(date -u +%Y%m%dT%H%M%SZ)"
+API_ID="$(docker compose --env-file .env -p discvault -f compose.yaml ps -q next-api)"
+IMAGE_ID="$(docker inspect "$API_ID" --format '{{.Image}}')"
+PREVIOUS_IMAGE="$(docker image inspect "$IMAGE_ID" --format '{{index .RepoDigests 0}}')"
+test -n "$PREVIOUS_IMAGE"
+printf 'BACKUP_ID=%s\nPREVIOUS_IMAGE=%s\n' "$BACKUP_ID" "$PREVIOUS_IMAGE" \
+  > "/srv/backups/discvault-$BACKUP_ID.env"
+chmod 0600 "/srv/backups/discvault-$BACKUP_ID.env"
+docker compose --env-file .env -p discvault -f compose.yaml stop next-worker next-mcp next-api
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'pg_dump -Fc -U "$POSTGRES_USER" "$POSTGRES_DB"' \
+  > "/srv/backups/discvault-$BACKUP_ID.dump"
+tar --acls --xattrs -C /srv -czf \
+  "/srv/backups/discvault-data-$BACKUP_ID.tgz" discvault
+docker compose --env-file .env -p discvault -f compose.yaml start next-api
+curl --fail http://localhost:6080/api/next/health
+docker compose --env-file .env -p discvault -f compose.yaml start next-worker next-mcp
+test -s "/srv/backups/discvault-$BACKUP_ID.dump"
+gzip -t "/srv/backups/discvault-data-$BACKUP_ID.tgz"
+```
+
+## Αναμενόμενο αποτέλεσμα
+
+Αποδεχθείτε το αποτέλεσμα για **Ενημέρωση και μετεγκατάσταση: Αντίγραφο ασφαλείας** μόνο όταν ισχύουν όλα τα παρακάτω αποτελέσματα: το αρχείο και το dump δεν είναι κενά, διαβάζονται σε δοκιμή επαναφοράς και συνδέονται με αμετάβλητο digest εικόνας. Σημεία ελέγχου της σελίδας: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
+
+- το αρχείο και το dump δεν είναι κενά, διαβάζονται σε δοκιμή επαναφοράς και συνδέονται με αμετάβλητο digest εικόνας
+
+## Ασφάλεια και επαναφορά
+
+:::caution
+Το ασφαλές όριο ανάκτησης για **Ενημέρωση και μετεγκατάσταση: Αντίγραφο ασφαλείας** απαιτεί αυτές τις ενέργειες πριν από κάθε εκκίνηση ή συνέχεια: αν αποτύχει εντολή αντιγράφου, επανεκκινήστε μόνο τις αμετάβλητες υπηρεσίες και ακυρώστε την ενημέρωση; dump PostgreSQL και αρχείο συστήματος από το ίδιο παράθυρο χωρίς εγγραφές. Σημεία ελέγχου της σελίδας: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
+
+- αν αποτύχει εντολή αντιγράφου, επανεκκινήστε μόνο τις αμετάβλητες υπηρεσίες και ακυρώστε την ενημέρωση
+- dump PostgreSQL και αρχείο συστήματος από το ίδιο παράθυρο χωρίς εγγραφές
+:::
+
+## Επόμενο βήμα
+
+[Ενημέρωση και μετεγκατάσταση: Επαναφορά](/el/update/restore/)
+
+## Πηγή και κατάσταση
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Πηγή και κατάσταση: `2026-07-14`
+- DiscVault Docs: `0.1.0`

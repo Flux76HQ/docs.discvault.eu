@@ -1,0 +1,115 @@
+---
+title: 'Aggiornamento e migrazione: Ripristino'
+description: 'Istruzioni specifiche per Aggiornamento e migrazione: Ripristino: `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.'
+pageId: 'update-restore'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Obiettivo e risultato
+
+Completa la procedura specifica della pagina per **Aggiornamento e migrazione: Ripristino**. Questa procedura utilizza `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.
+
+## Si applica a
+
+Questa pagina si applica solo a **Aggiornamento e migrazione: Ripristino** (Docker · Unraid). I limiti di canale e dati sono: DiscVault · `ghcr.io/helmerznl/discvault:latest`; dump PostgreSQL e archivio dei file dalla stessa finestra senza scritture; ripristina i dati corrispondenti prima di avviare l’immagine precedente; DiscVault · `ghcr.io/helmerznl/discvault:beta`; dump PostgreSQL e archivio dei file dalla stessa finestra senza scritture; ripristina i dati corrispondenti prima di avviare l’immagine precedente. Punti di controllo della pagina: `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.
+
+### DiscVault v26 stabile
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- dump PostgreSQL e archivio dei file dalla stessa finestra senza scritture
+- ripristina i dati corrispondenti prima di avviare l’immagine precedente
+
+### DiscVault v26 beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- dump PostgreSQL e archivio dei file dalla stessa finestra senza scritture
+- ripristina i dati corrispondenti prima di avviare l’immagine precedente
+
+## Prerequisiti
+
+- set di backup corrispondente
+- finestra di manutenzione
+- `PREVIOUS_IMAGE` · file runtime privato di DiscVault
+
+## Procedura
+
+1. **Arresta:** `next-api` `next-worker` `next-mcp`
+2. **Ripristina:** `/data`
+3. **Ripristina:** PostgreSQL · `pg_restore --exit-on-error`
+4. **Avvia:** `next-api` → `GET /api/next/health` → `next-worker` `next-mcp`
+
+### Comandi e impostazioni
+
+#### Entrambi i canali
+
+```bash
+set -euo pipefail
+BACKUP_ID=20260714T180000Z
+cd /opt/discvault
+. "/srv/backups/discvault-$BACKUP_ID.env"
+test -n "$PREVIOUS_IMAGE"
+export DISCVAULT_IMAGE="$PREVIOUS_IMAGE"
+docker pull "$DISCVAULT_IMAGE"
+ENV_FILE=/opt/discvault/.env
+ENV_TMP="$(mktemp "$ENV_FILE.restore.XXXXXX")"
+trap 'rm -f "$ENV_TMP"' EXIT
+awk -v image="$DISCVAULT_IMAGE" '
+  /^DISCVAULT_IMAGE=/ { print "DISCVAULT_IMAGE=" image; found=1; next }
+  { print }
+  END { if (!found) exit 42 }
+' "$ENV_FILE" > "$ENV_TMP"
+chmod 0600 "$ENV_TMP"
+docker compose --env-file .env -p discvault -f compose.yaml stop next-worker next-mcp next-api
+mv /srv/discvault "/srv/discvault.failed-$(date -u +%Y%m%dT%H%M%SZ)"
+tar --acls --xattrs -C /srv -xzf \
+  "/srv/backups/discvault-data-$BACKUP_ID.tgz"
+docker compose --env-file .env -p discvault -f compose.yaml up -d postgres
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'dropdb --if-exists --force -U "$POSTGRES_USER" "$POSTGRES_DB"'
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'createdb -U "$POSTGRES_USER" "$POSTGRES_DB"'
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'pg_restore --exit-on-error --no-owner -U "$POSTGRES_USER" -d "$POSTGRES_DB"' \
+  < "/srv/backups/discvault-$BACKUP_ID.dump"
+docker compose --env-file .env -p discvault -f compose.yaml up -d --force-recreate next-api
+curl --fail http://localhost:6080/api/next/health
+docker compose --env-file .env -p discvault -f compose.yaml \
+  up -d --force-recreate next-worker next-mcp
+docker compose --env-file .env -p discvault -f compose.yaml ps
+mv "$ENV_TMP" "$ENV_FILE"
+trap - EXIT
+```
+
+## Risultato previsto
+
+Accetta il risultato per **Aggiornamento e migrazione: Ripristino** solo quando tutti i risultati seguenti sono veri: i conteggi e il campione multimediale corrispondono al backup scelto; `:latest` `:beta`. Punti di controllo della pagina: `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.
+
+- i conteggi e il campione multimediale corrispondono al backup scelto
+- `:latest` `:beta`
+
+## Sicurezza e ripristino
+
+:::caution
+Il limite di ripristino sicuro per **Aggiornamento e migrazione: Ripristino** richiede queste azioni prima di avviare o continuare: se l’estrazione dei file o pg_restore non riesce, lascia arrestati container, API, worker e MCP; riprova da copie di backup intatte. Punti di controllo della pagina: `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.
+
+- se l’estrazione dei file o pg_restore non riesce, lascia arrestati container, API, worker e MCP; riprova da copie di backup intatte
+:::
+
+## Passaggio successivo
+
+[Aggiornamento e migrazione: Aggiornamento del contenitore](/it/update/update/)
+
+## Fonte e stato
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Fonte e stato: `2026-07-14`
+- DiscVault Docs: `0.1.0`

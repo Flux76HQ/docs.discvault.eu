@@ -1,0 +1,72 @@
+---
+title: 'PWA: Toiminta ilman verkkoa'
+description: 'Tehtäväkohtaiset ohjeet: PWA: Toiminta ilman verkkoa: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.'
+pageId: 'pwa-offline'
+products: ['pwa']
+platforms: ['web', 'ios', 'android']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="verkko · iOS · Android" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Tavoite ja tulos
+
+Suorita sivukohtainen työnkulku: **PWA: Toiminta ilman verkkoa**. Tässä menettelyssä käytetään `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+## Koskee
+
+Tämä sivu koskee vain kohdetta **PWA: Toiminta ilman verkkoa** (verkko · iOS · Android). Kanava- ja tietorajat ovat: DiscVault · `ghcr.io/helmerznl/discvault:latest`; välimuistinäkymät voivat avautua, mutta uudet tiedot ja kirjoitukset tarvitsevat verkon · `Service Worker` · `CacheStorage`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; välimuistinäkymät voivat avautua, mutta uudet tiedot ja kirjoitukset tarvitsevat verkon · `Service Worker` · `CacheStorage`. Sivukohtaiset tarkistuspisteet: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+### DiscVault v26 – vakaa
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- välimuistinäkymät voivat avautua, mutta uudet tiedot ja kirjoitukset tarvitsevat verkon · `Service Worker` · `CacheStorage`
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- välimuistinäkymät voivat avautua, mutta uudet tiedot ja kirjoitukset tarvitsevat verkon · `Service Worker` · `CacheStorage`
+
+## Edellytykset
+
+- PWA
+- `CacheStorage`
+
+## Toimenpiteet
+
+1. **Avaa:** Kirjasto → Haku
+2. **Testaa:** lentotila · `Service Worker`
+3. **Kirjaa:** `navigator.onLine`
+4. **Yhdistä uudelleen:** HTTPS
+
+
+
+## Odotettu tulos
+
+Hyväksy tulos kohteelle **PWA: Toiminta ilman verkkoa** vain kun kaikki seuraavat tulokset toteutuvat: välimuistinäkymät voivat avautua, mutta uudet tiedot ja kirjoitukset tarvitsevat verkon; `Service Worker` · `navigator.onLine`. Sivukohtaiset tarkistuspisteet: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+- välimuistinäkymät voivat avautua, mutta uudet tiedot ja kirjoitukset tarvitsevat verkon
+- `Service Worker` · `navigator.onLine`
+
+## Turvallisuus ja palautus
+
+:::caution
+Turvallinen palautusraja kohteelle **PWA: Toiminta ilman verkkoa** edellyttää näitä toimia ennen käynnistystä tai jatkamista: välimuistinäkymät voivat avautua, mutta uudet tiedot ja kirjoitukset tarvitsevat verkon · DiscVault. Sivukohtaiset tarkistuspisteet: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+- välimuistinäkymät voivat avautua, mutta uudet tiedot ja kirjoitukset tarvitsevat verkon · DiscVault
+:::
+
+## Seuraava vaihe
+
+[Vianmääritys](/fi/troubleshooting/)
+
+## Lähde ja tila
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Lähde ja tila: `2026-07-14`
+- DiscVault Docs: `0.1.0`

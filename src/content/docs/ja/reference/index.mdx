@@ -1,0 +1,74 @@
+---
+title: 'リファレンス'
+description: 'タスク別の手順: リファレンス: `:latest` · `:beta` · `:dev` · `6080:5000`.'
+pageId: 'reference-index'
+products: ['server', 'pwa', 'ios', 'android']
+platforms: ['all']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="すべてのプラットフォーム" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## 目的と結果
+
+このページ専用の手順を実行します: **リファレンス**. この手順で扱う項目: `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+## 対象
+
+このページの対象は **リファレンス** (すべてのプラットフォーム). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`. このページ固有の確認点: `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+### DiscVault v26 安定版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PostgreSQL `/data`
+- API `6080:5000` MCP `6090:6090`
+
+### DiscVault v26 ベータ版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PostgreSQL `/data`
+- API `6080:5000` MCP `6090:6090`
+
+## 前提条件
+
+- 選択したリリースチャンネル
+
+## 手順
+
+1. **確認:** `:latest` `:beta`
+2. **記録:** `:dev` はエンジニアリング専用でリリースチャンネルではありません。DiscVault v26 安定版は `:latest`、ベータ版は `:beta` を使用します · `:dev`
+3. **記録:** `/api/next/health`
+4. **記録:** PostgreSQL `/data`
+
+
+
+## 期待される結果
+
+次の結果を受け入れる条件: **リファレンス** 以下の結果をすべて確認した場合のみ: 選択したリリースチャンネル · `@sha256:`; `:latest` · `:beta` · `:dev`. このページ固有の確認点: `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+- 選択したリリースチャンネル · `@sha256:`
+- `:latest` · `:beta` · `:dev`
+
+## 安全性とロールバック
+
+:::caution
+安全な復旧境界: **リファレンス** 起動または続行の前に、次の操作が必要です: リファレンスは読み取り専用です。コマンド実行やデータ変更前に該当する手順を使用します; `:dev` はエンジニアリング専用でリリースチャンネルではありません。DiscVault v26 安定版は `:latest`、ベータ版は `:beta` を使用します · `:dev`. このページ固有の確認点: `:latest` · `:beta` · `:dev` · `6080:5000`.
+
+- リファレンスは読み取り専用です。コマンド実行やデータ変更前に該当する手順を使用します
+- `:dev` はエンジニアリング専用でリリースチャンネルではありません。DiscVault v26 安定版は `:latest`、ベータ版は `:beta` を使用します · `:dev`
+:::
+
+## 次の手順
+
+[開始: 概要](/ja/start/)
+
+## 情報源と状態
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- 情報源と状態: `2026-07-14`
+- DiscVault Docs: `0.1.0`

@@ -1,0 +1,68 @@
+---
+title: 'iOS/iPadOS: Tägliche Nutzung und Synchronisationsgrenzen'
+description: 'Aufgabenspezifische Anleitung für iOS/iPadOS: Tägliche Nutzung und Synchronisationsgrenzen: SwiftData · App Lock · `/api/v1` · DiscVault.'
+pageId: 'ios-use-sync-limits'
+products: ['ios']
+platforms: ['ios']
+channels: ['beta']
+minVersion: 'iOS/iPadOS 17+'
+sourceRepos: ['helmerzNL/DiscVaultApp', 'helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="beta" platform="iOS" version="iOS/iPadOS 17+" source="helmerzNL/DiscVaultApp · helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Ziel und Ergebnis
+
+Führe den seitenspezifischen Ablauf aus für **iOS/iPadOS: Tägliche Nutzung und Synchronisationsgrenzen**. Dieses Verfahren arbeitet mit SwiftData · App Lock · `/api/v1` · DiscVault.
+
+## Gültig für
+
+Diese Seite gilt ausschließlich für **iOS/iPadOS: Tägliche Nutzung und Synchronisationsgrenzen** (iOS). Kanal- und Datengrenzen sind: SwiftData · der Testtitel bleibt nach App-Neustart und Offline-Start erhalten; `/api/v1` · im Quellcode verifizierter Beta-Build; keine Store-Verfügbarkeitsbehauptung. Seitenspezifische Kontrollpunkte: SwiftData · App Lock · `/api/v1` · DiscVault.
+
+### Beta-Kanal
+
+- SwiftData · der Testtitel bleibt nach App-Neustart und Offline-Start erhalten
+- `/api/v1` · im Quellcode verifizierter Beta-Build; keine Store-Verfügbarkeitsbehauptung
+
+## Voraussetzungen
+
+- SwiftData
+- kleine entbehrliche Testbibliothek
+
+## Vorgehen
+
+1. **Testen:** Bibliothek → Suchen · Bibliothek → Hinzufügen → Barcode scannen / Manuell eingeben · Flugmodus
+2. **Erstellen:** lokale Offline-first-Bibliothek · der Testtitel bleibt nach App-Neustart und Offline-Start erhalten
+3. **Konfigurieren:** Einstellungen → App-Sperre · Einstellungen → Serververbindung
+4. **Vergleichen:** optionale Serververbindung mit einem Element getestet · ein Testelement stimmt lokal und auf dem Server überein, sonst bleibt die Synchronisierung aus
+
+
+
+## Erwartetes Ergebnis
+
+Akzeptiere das Ergebnis für **iOS/iPadOS: Tägliche Nutzung und Synchronisationsgrenzen** nur wenn alle folgenden Ergebnisse erfüllt sind: der Testtitel bleibt nach App-Neustart und Offline-Start erhalten; ein Testelement stimmt lokal und auf dem Server überein, sonst bleibt die Synchronisierung aus. Seitenspezifische Kontrollpunkte: SwiftData · App Lock · `/api/v1` · DiscVault.
+
+- der Testtitel bleibt nach App-Neustart und Offline-Start erhalten
+- ein Testelement stimmt lokal und auf dem Server überein, sonst bleibt die Synchronisierung aus
+
+## Sicherheit und Rollback
+
+:::caution
+Die sichere Wiederherstellungsgrenze für **iOS/iPadOS: Tägliche Nutzung und Synchronisationsgrenzen** verlangt vor jedem Start oder Fortsetzen diese Maßnahmen: ein Testelement stimmt lokal und auf dem Server überein, sonst bleibt die Synchronisierung aus · lokale Offline-first-Bibliothek · `/api/v1`. Seitenspezifische Kontrollpunkte: SwiftData · App Lock · `/api/v1` · DiscVault.
+
+- ein Testelement stimmt lokal und auf dem Server überein, sonst bleibt die Synchronisierung aus · lokale Offline-first-Bibliothek · `/api/v1`
+:::
+
+## Nächster Schritt
+
+[Android: Einrichtung](/de/android/)
+
+## Quelle und Status
+
+- [`helmerzNL/DiscVaultApp@9d15ab2a339c`](https://github.com/helmerzNL/DiscVaultApp/commit/9d15ab2a339cefdb164ec0ab29ad69ddabc511c1)
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Quelle und Status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

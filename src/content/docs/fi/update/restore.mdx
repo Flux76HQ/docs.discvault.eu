@@ -1,0 +1,115 @@
+---
+title: 'Päivitys ja siirto: Palautus'
+description: 'Tehtäväkohtaiset ohjeet: Päivitys ja siirto: Palautus: `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.'
+pageId: 'update-restore'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Tavoite ja tulos
+
+Suorita sivukohtainen työnkulku: **Päivitys ja siirto: Palautus**. Tässä menettelyssä käytetään `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.
+
+## Koskee
+
+Tämä sivu koskee vain kohdetta **Päivitys ja siirto: Palautus** (Docker · Unraid). Kanava- ja tietorajat ovat: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL-vedos ja tiedostoarkisto samasta kirjoittajat pysäyttävästä ikkunasta; palauta vastaavat tiedot ennen edellisen imagen käynnistämistä; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL-vedos ja tiedostoarkisto samasta kirjoittajat pysäyttävästä ikkunasta; palauta vastaavat tiedot ennen edellisen imagen käynnistämistä. Sivukohtaiset tarkistuspisteet: `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.
+
+### DiscVault v26 – vakaa
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- PostgreSQL-vedos ja tiedostoarkisto samasta kirjoittajat pysäyttävästä ikkunasta
+- palauta vastaavat tiedot ennen edellisen imagen käynnistämistä
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- PostgreSQL-vedos ja tiedostoarkisto samasta kirjoittajat pysäyttävästä ikkunasta
+- palauta vastaavat tiedot ennen edellisen imagen käynnistämistä
+
+## Edellytykset
+
+- vastaava varmuuskopiosarja
+- huoltoikkuna
+- `PREVIOUS_IMAGE` · yksityinen DiscVault-ajoympäristötiedosto
+
+## Toimenpiteet
+
+1. **Pysäytä:** `next-api` `next-worker` `next-mcp`
+2. **Palauta:** `/data`
+3. **Palauta:** PostgreSQL · `pg_restore --exit-on-error`
+4. **Käynnistä:** `next-api` → `GET /api/next/health` → `next-worker` `next-mcp`
+
+### Komennot ja asetukset
+
+#### Molemmat kanavat
+
+```bash
+set -euo pipefail
+BACKUP_ID=20260714T180000Z
+cd /opt/discvault
+. "/srv/backups/discvault-$BACKUP_ID.env"
+test -n "$PREVIOUS_IMAGE"
+export DISCVAULT_IMAGE="$PREVIOUS_IMAGE"
+docker pull "$DISCVAULT_IMAGE"
+ENV_FILE=/opt/discvault/.env
+ENV_TMP="$(mktemp "$ENV_FILE.restore.XXXXXX")"
+trap 'rm -f "$ENV_TMP"' EXIT
+awk -v image="$DISCVAULT_IMAGE" '
+  /^DISCVAULT_IMAGE=/ { print "DISCVAULT_IMAGE=" image; found=1; next }
+  { print }
+  END { if (!found) exit 42 }
+' "$ENV_FILE" > "$ENV_TMP"
+chmod 0600 "$ENV_TMP"
+docker compose --env-file .env -p discvault -f compose.yaml stop next-worker next-mcp next-api
+mv /srv/discvault "/srv/discvault.failed-$(date -u +%Y%m%dT%H%M%SZ)"
+tar --acls --xattrs -C /srv -xzf \
+  "/srv/backups/discvault-data-$BACKUP_ID.tgz"
+docker compose --env-file .env -p discvault -f compose.yaml up -d postgres
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'dropdb --if-exists --force -U "$POSTGRES_USER" "$POSTGRES_DB"'
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'createdb -U "$POSTGRES_USER" "$POSTGRES_DB"'
+docker compose --env-file .env -p discvault -f compose.yaml exec -T postgres \
+  sh -c 'pg_restore --exit-on-error --no-owner -U "$POSTGRES_USER" -d "$POSTGRES_DB"' \
+  < "/srv/backups/discvault-$BACKUP_ID.dump"
+docker compose --env-file .env -p discvault -f compose.yaml up -d --force-recreate next-api
+curl --fail http://localhost:6080/api/next/health
+docker compose --env-file .env -p discvault -f compose.yaml \
+  up -d --force-recreate next-worker next-mcp
+docker compose --env-file .env -p discvault -f compose.yaml ps
+mv "$ENV_TMP" "$ENV_FILE"
+trap - EXIT
+```
+
+## Odotettu tulos
+
+Hyväksy tulos kohteelle **Päivitys ja siirto: Palautus** vain kun kaikki seuraavat tulokset toteutuvat: kirjastomäärät ja mediatesti vastaavat valittua varmuuskopiota; `:latest` `:beta`. Sivukohtaiset tarkistuspisteet: `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.
+
+- kirjastomäärät ja mediatesti vastaavat valittua varmuuskopiota
+- `:latest` `:beta`
+
+## Turvallisuus ja palautus
+
+:::caution
+Turvallinen palautusraja kohteelle **Päivitys ja siirto: Palautus** edellyttää näitä toimia ennen käynnistystä tai jatkamista: jos tiedostojen purku tai pg_restore epäonnistuu, pidä säilö, API, workerit ja MCP pysäytettyinä ja yritä uudelleen koskemattomista varmuuskopioista. Sivukohtaiset tarkistuspisteet: `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.
+
+- jos tiedostojen purku tai pg_restore epäonnistuu, pidä säilö, API, workerit ja MCP pysäytettyinä ja yritä uudelleen koskemattomista varmuuskopioista
+:::
+
+## Seuraava vaihe
+
+[Päivitys ja siirto: Säilön päivitys](/fi/update/update/)
+
+## Lähde ja tila
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Lähde ja tila: `2026-07-14`
+- DiscVault Docs: `0.1.0`

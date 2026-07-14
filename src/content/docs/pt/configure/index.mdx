@@ -1,0 +1,76 @@
+---
+title: 'Configuração: Visão geral'
+description: 'Instruções específicas para Configuração: Visão geral: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.'
+pageId: 'configure-index'
+products: ['server']
+platforms: ['docker', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Objetivo e resultado
+
+Conclua o procedimento específico da página para **Configuração: Visão geral**. Este procedimento utiliza `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+
+## Aplicável a
+
+Esta página aplica-se apenas a **Configuração: Visão geral** (Docker · web). Os limites de canal e dados são: DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. Pontos de controlo desta página: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+
+### DiscVault v26 estável
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- RBAC
+
+### DiscVault v26 beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- RBAC
+
+## Pré-requisitos
+
+- acesso de proprietário
+- `/configure/auth-rbac/`
+
+## Procedimento
+
+1. **Escolher:** [Configuração: Variáveis de ambiente](/pt/configure/environment/)
+2. **Escolher:** [Configuração: Autenticação e RBAC](/pt/configure/auth-rbac/) · RBAC
+3. **Escolher:** [Configuração: Extensões e metadados](/pt/configure/plugins-metadata/)
+4. **Registar:** `/configure/environment/`
+
+### Percursos de tarefas
+
+- [Configuração: Variáveis de ambiente](/pt/configure/environment/) — `/configure/environment/`
+- [Configuração: Autenticação e RBAC](/pt/configure/auth-rbac/) — DiscVault 26 RBAC
+- [Configuração: Extensões e metadados](/pt/configure/plugins-metadata/) — DiscVault 26
+
+## Resultado esperado
+
+Aceite o resultado de **Configuração: Visão geral** apenas quando todos os resultados abaixo forem confirmados: canal de lançamento selecionado; `/configure/auth-rbac/`. Pontos de controlo desta página: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+
+- canal de lançamento selecionado
+- `/configure/auth-rbac/`
+
+## Segurança e reversão
+
+:::caution
+O limite de recuperação segura de **Configuração: Visão geral** exige estas ações antes de iniciar ou continuar: altere um subsistema de cada vez, guarde o valor anterior e a cópia e reverta antes da alteração seguinte. Pontos de controlo desta página: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+
+- altere um subsistema de cada vez, guarde o valor anterior e a cópia e reverta antes da alteração seguinte
+:::
+
+## Próximo passo
+
+[Configuração: Variáveis de ambiente](/pt/configure/environment/)
+
+## Fonte e estado
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Fonte e estado: `2026-07-14`
+- DiscVault Docs: `0.1.0`

@@ -1,0 +1,114 @@
+---
+title: 'Aktualizace a migrace: Aktualizace kontejneru'
+description: 'Pokyny pro konkrétní úlohu: Aktualizace a migrace: Aktualizace kontejneru: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.'
+pageId: 'update-update'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Cíl a výsledek
+
+Dokončete postup určený pro **Aktualizace a migrace: Aktualizace kontejneru**. Tento postup pracuje s `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+
+## Platí pro
+
+Tato stránka platí pouze pro **Aktualizace a migrace: Aktualizace kontejneru** (Docker · Unraid). Hranice kanálu a dat jsou: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · poznámky k vydání a zaznamenaný neměnný digest · odpovídající sada záloh; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · poznámky k vydání a zaznamenaný neměnný digest · odpovídající sada záloh. Kontrolní body této stránky: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+
+### DiscVault v26 – stabilní
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `DISCVAULT_IMAGE`
+- PostgreSQL `/data` · poznámky k vydání a zaznamenaný neměnný digest · odpovídající sada záloh
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `DISCVAULT_IMAGE`
+- PostgreSQL `/data` · poznámky k vydání a zaznamenaný neměnný digest · odpovídající sada záloh
+
+## Požadavky
+
+- odpovídající sada záloh
+- poznámky k vydání a zaznamenaný neměnný digest
+
+## Postup
+
+1. **Ověřte:** `PREVIOUS_IMAGE=@sha256:…`
+2. **Vyberte:** `DISCVAULT_IMAGE` · `:latest` `:beta`
+3. **Spusťte:** `--force-recreate`
+4. **Porovnejte:** běží zamýšlený digest obrazu, stav je v pořádku a přihlášení vlastníka, počet knihovny i vzorek média projdou
+
+### Příkazy a nastavení
+
+#### DiscVault v26 – stabilní
+
+```bash
+export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
+```
+
+#### DiscVault v26 – beta
+
+```bash
+export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
+```
+
+#### Oba kanály
+
+```bash
+set -euo pipefail
+test -n "$DISCVAULT_IMAGE"
+case "$DISCVAULT_IMAGE" in
+  ghcr.io/helmerznl/discvault:latest|ghcr.io/helmerznl/discvault:beta) ;;
+  *) printf '%s\n' "$DISCVAULT_IMAGE" >&2; exit 64 ;;
+esac
+cd /opt/discvault
+ENV_FILE=/opt/discvault/.env
+ENV_TMP="$(mktemp "$ENV_FILE.update.XXXXXX")"
+trap 'rm -f "$ENV_TMP"' EXIT
+awk -v image="$DISCVAULT_IMAGE" '
+  /^DISCVAULT_IMAGE=/ { print "DISCVAULT_IMAGE=" image; found=1; next }
+  { print }
+  END { if (!found) exit 42 }
+' "$ENV_FILE" > "$ENV_TMP"
+chmod 0600 "$ENV_TMP"
+docker compose --env-file "$ENV_TMP" -p discvault -f compose.yaml config --quiet
+docker compose --env-file "$ENV_TMP" -p discvault -f compose.yaml pull next-api next-worker next-mcp
+docker compose --env-file "$ENV_TMP" -p discvault -f compose.yaml up -d --force-recreate
+docker compose --env-file "$ENV_TMP" -p discvault -f compose.yaml ps
+curl --fail http://localhost:6080/api/next/health
+mv "$ENV_TMP" "$ENV_FILE"
+trap - EXIT
+```
+
+## Očekávaný výsledek
+
+Výsledek přijměte pro **Aktualizace a migrace: Aktualizace kontejneru** pouze pokud platí všechny následující výsledky: běží zamýšlený digest obrazu, stav je v pořádku a přihlášení vlastníka, počet knihovny i vzorek média projdou. Kontrolní body této stránky: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+
+- běží zamýšlený digest obrazu, stav je v pořádku a přihlášení vlastníka, počet knihovny i vzorek média projdou
+
+## Bezpečnost a návrat
+
+:::caution
+Bezpečná hranice obnovy pro **Aktualizace a migrace: Aktualizace kontejneru** vyžaduje před spuštěním nebo pokračováním tyto kroky: [Aktualizace a migrace: Návrat obrazu](/cs/update/rollback/) · odpovídající sada záloh; poznámky k vydání a zaznamenaný neměnný digest. Kontrolní body této stránky: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+
+- [Aktualizace a migrace: Návrat obrazu](/cs/update/rollback/) · odpovídající sada záloh
+- poznámky k vydání a zaznamenaný neměnný digest
+:::
+
+## Další krok
+
+[Aktualizace a migrace: Návrat obrazu](/cs/update/rollback/)
+
+## Zdroj a stav
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Zdroj a stav: `2026-07-14`
+- DiscVault Docs: `0.1.0`

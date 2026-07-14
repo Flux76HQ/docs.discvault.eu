@@ -1,0 +1,82 @@
+---
+title: 'Integrations: Plex and Jellyfin'
+description: 'Connect a digital media source, validate credentials, and dry-run discovery before queuing synchronization.'
+pageId: 'integrations-plex-jellyfin'
+products: ['server']
+platforms: ['web', 'docker']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="web · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Goal and result
+
+Connect a digital media source, validate credentials, and dry-run discovery before queuing synchronization.
+
+## Applies to
+
+The DiscVault v26 plugin workflow is available in stable and beta. Provider secrets are stored as secret settings and are not returned by the API.
+
+### DiscVault v26 stable
+
+- DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault 26 digital-media-source plugins
+
+### DiscVault v26 beta
+
+- DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault 26 digital-media-source plugins
+
+## Prerequisites
+
+- provider credential stored as a secret
+- reachable provider URL
+- owner or administrator session
+
+## Procedure
+
+1. **Configure:** Admin → Plugins → Provider → Configure · Plex / Jellyfin
+2. **Test:** Admin → Plugins → Health check
+3. **Run:** Admin → Plugins → Discover without saving · `dryRun=true`
+4. **Compare:** `/api/next/digital-items?limit=200` · provider library sample
+
+### Commands and settings
+
+#### Both channels
+
+```bash
+curl --fail http://localhost:6080/api/next/digital-sources
+curl --fail 'http://localhost:6080/api/next/digital-items?limit=200'
+```
+
+## Expected result
+
+Health succeeds, dry-run discovery returns expected items, and matched records identify the correct source.
+
+- Admin → Plugins → Health check
+- Admin → Plugins → Discover without saving · `dryRun=true`
+- Plex · Jellyfin · `/api/next/digital-items`
+
+## Safety and rollback
+
+:::caution
+Disable the plugin and revoke its provider credential. Review dry-run output before deleting imported digital links.
+
+- disable the provider before removal, back up `/data/plugins`, and revoke any exposed credential
+- disable the integration, revoke test or exposed credentials, create a new credential if needed, and never reuse the old one
+:::
+
+## Next step
+
+[Troubleshooting](/troubleshooting/)
+
+## Source and status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Verified: `2026-07-14`
+- DiscVault Docs: `0.1.0`

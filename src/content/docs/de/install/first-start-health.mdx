@@ -1,0 +1,83 @@
+---
+title: 'Installation: Erster Start und Zustandsprüfung'
+description: 'Aufgabenspezifische Anleitung für Installation: Erster Start und Zustandsprüfung: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.'
+pageId: 'install-first-start-health'
+products: ['server']
+platforms: ['docker', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Ziel und Ergebnis
+
+Führe den seitenspezifischen Ablauf aus für **Installation: Erster Start und Zustandsprüfung**. Dieses Verfahren arbeitet mit `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.
+
+## Gültig für
+
+Diese Seite gilt ausschließlich für **Installation: Erster Start und Zustandsprüfung** (Docker · Web). Kanal- und Datengrenzen sind: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/api/next/auth/status`; `6080` → API `5000`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/api/next/auth/status`; `6080` → API `5000`. Seitenspezifische Kontrollpunkte: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `/api/next/auth/status`
+- `6080` → API `5000`
+
+### DiscVault v26 – Beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `/api/next/auth/status`
+- `6080` → API `5000`
+
+## Voraussetzungen
+
+- `/api/next/health`
+- `/api/next/auth/status`
+
+## Vorgehen
+
+1. **Prüfen:** `postgres`
+2. **Verifizieren:** `GET /api/next/health` · HTTP `2xx`
+3. **Öffnen:** `6080:5000`
+4. **Verifizieren:** `GET /api/next/auth/status` · WebAuthn
+
+### Befehle und Einstellungen
+
+#### Beide Kanäle
+
+```bash
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml ps
+docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml logs --tail=100 next-api next-worker next-mcp postgres
+curl --fail http://localhost:6080/api/next/health
+curl --fail http://localhost:6080/api/next/auth/status
+```
+
+## Erwartetes Ergebnis
+
+Akzeptiere das Ergebnis für **Installation: Erster Start und Zustandsprüfung** nur wenn alle folgenden Ergebnisse erfüllt sind: Health-Prüfung gelingt, konfigurierte Origin öffnet und das erste Konto ist Owner. Seitenspezifische Kontrollpunkte: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.
+
+- Health-Prüfung gelingt, konfigurierte Origin öffnet und das erste Konto ist Owner
+
+## Sicherheit und Rollback
+
+:::caution
+Die sichere Wiederherstellungsgrenze für **Installation: Erster Start und Zustandsprüfung** verlangt vor jedem Start oder Fortsetzen diese Maßnahmen: zeitgestempelte, bereinigte Protokolle; passender Sicherungssatz. Seitenspezifische Kontrollpunkte: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.
+
+- zeitgestempelte, bereinigte Protokolle
+- passender Sicherungssatz
+:::
+
+## Nächster Schritt
+
+[Update und Migration: Sicherung](/de/update/backup/)
+
+## Quelle und Status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Quelle und Status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

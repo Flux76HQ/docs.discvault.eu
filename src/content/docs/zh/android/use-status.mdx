@@ -1,0 +1,68 @@
+---
+title: 'Android: 功能和状态'
+description: '任务专用说明： Android: 功能和状态: Room · CameraX · ML Kit · WorkManager.'
+pageId: 'android-use-status'
+products: ['android']
+platforms: ['android']
+channels: ['beta']
+minVersion: 'Android 8 / API 26+'
+sourceRepos: ['Flux76HQ/DiscVault-AndroidApp', 'helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="beta" platform="Android" version="Android 8 / API 26+" source="Flux76HQ/DiscVault-AndroidApp · helmerzNL/DiscVault" verified="2026-07-14" />
+
+## 目标和结果
+
+完成此页面专用的流程： **Android: 功能和状态**. 此流程使用 Room · CameraX · ML Kit · WorkManager.
+
+## 适用范围
+
+本页面仅适用于 **Android: 功能和状态** (Android). 通道与数据边界为： Room · 测试条目在应用重启及离线启动后仍然存在; CameraX ML Kit WorkManager · 来自可信分发源的构建. 本页面专用检查点： Room · CameraX · ML Kit · WorkManager.
+
+### 测试版通道
+
+- Room · 测试条目在应用重启及离线启动后仍然存在
+- CameraX ML Kit WorkManager · 来自可信分发源的构建
+
+## 前提条件
+
+- 可随时删除的小型测试媒体库
+- CameraX
+
+## 操作步骤
+
+1. **验证:** Room · 离线优先的本地媒体库
+2. **测试:** 测试条目在应用重启及离线启动后仍然存在 · 飞行模式
+3. **检查:** CameraX ML Kit · 来自可信分发源的构建
+4. **检查:** WorkManager · 经源码验证的测试版构建；不宣称已在公共商店发布
+
+
+
+## 预期结果
+
+仅在以下条件下接受结果： **Android: 功能和状态** 必须确认以下所有结果： 来自可信分发源的构建 · Room CameraX ML Kit WorkManager; 测试条目在应用重启及离线启动后仍然存在. 本页面专用检查点： Room · CameraX · ML Kit · WorkManager.
+
+- 来自可信分发源的构建 · Room CameraX ML Kit WorkManager
+- 测试条目在应用重启及离线启动后仍然存在
+
+## 安全与回滚
+
+:::caution
+安全恢复边界： **Android: 功能和状态** 在启动或继续任何操作前必须执行： 一个测试条目在本地与服务器端一致，否则保持同步禁用 · 可随时删除的小型测试媒体库. 本页面专用检查点： Room · CameraX · ML Kit · WorkManager.
+
+- 一个测试条目在本地与服务器端一致，否则保持同步禁用 · 可随时删除的小型测试媒体库
+:::
+
+## 下一步
+
+[故障排除](/zh/troubleshooting/)
+
+## 来源和状态
+
+- [`Flux76HQ/DiscVault-AndroidApp@a13ef4bdbb23`](https://github.com/Flux76HQ/DiscVault-AndroidApp/commit/a13ef4bdbb23b6a7e52e01cdf532fa222c1b67de)
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- 来源和状态: `2026-07-14`
+- DiscVault Docs: `0.1.0`

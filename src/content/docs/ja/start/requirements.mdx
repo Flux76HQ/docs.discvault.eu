@@ -1,0 +1,82 @@
+---
+title: '開始: 概要'
+description: 'タスク別の手順: 開始: 概要: Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.'
+pageId: 'start-requirements'
+products: ['server', 'pwa', 'ios', 'android']
+platforms: ['all']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="すべてのプラットフォーム" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## 目的と結果
+
+このページ専用の手順を実行します: **開始: 概要**. この手順で扱う項目: Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.
+
+## 対象
+
+このページの対象は **開始: 概要** (すべてのプラットフォーム). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; Docker Compose `v2` · PostgreSQL `17` · `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; Docker Compose `v2` · PostgreSQL `17` · `/data`. このページ固有の確認点: Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.
+
+### DiscVault v26 安定版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- Docker Compose `v2` · PostgreSQL `17` · `/data`
+
+### DiscVault v26 ベータ版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- Docker Compose `v2` · PostgreSQL `17` · `/data`
+
+## 前提条件
+
+- Docker Engine `24+`
+- 書き込み可能な永続ストレージとバックアップ空き容量
+- DNS TLS
+
+## 手順
+
+1. **確認:** Docker Engine `≥24` · Docker Compose `v2`
+2. **確認:** `≥2 GB` · 書き込み可能な永続ストレージとバックアップ空き容量
+3. **設定:** DNS · TLS · HTTPS · `RP_ID` · `RP_ORIGINS`
+4. **記録:** 選択したリリースチャンネル
+
+### コマンドと設定
+
+#### 両方のチャンネル
+
+```bash
+docker version --format '{{.Server.Version}}'
+docker compose version
+curl --version
+```
+
+## 期待される結果
+
+次の結果を受け入れる条件: **開始: 概要** 以下の結果をすべて確認した場合のみ: Docker Engine `≥24`; Docker Compose `v2`; HTTPS DNS. このページ固有の確認点: Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.
+
+- Docker Engine `≥24`
+- Docker Compose `v2`
+- HTTPS DNS
+
+## 安全性とロールバック
+
+:::caution
+安全な復旧境界: **開始: 概要** 起動または続行の前に、次の操作が必要です: 読み取り専用の確認ではデータを変更しません。不足する前提条件を修正してから続行します. このページ固有の確認点: Docker Engine `24+` · Docker Compose `v2` · PostgreSQL `17` · HTTPS.
+
+- 読み取り専用の確認ではデータを変更しません。不足する前提条件を修正してから続行します
+:::
+
+## 次の手順
+
+[インストール: インストール方法](/ja/install/)
+
+## 情報源と状態
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- 情報源と状態: `2026-07-14`
+- DiscVault Docs: `0.1.0`

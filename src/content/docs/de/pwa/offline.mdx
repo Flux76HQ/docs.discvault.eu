@@ -1,0 +1,72 @@
+---
+title: 'PWA: Offlineverhalten'
+description: 'Aufgabenspezifische Anleitung für PWA: Offlineverhalten: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.'
+pageId: 'pwa-offline'
+products: ['pwa']
+platforms: ['web', 'ios', 'android']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Web · iOS · Android" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Ziel und Ergebnis
+
+Führe den seitenspezifischen Ablauf aus für **PWA: Offlineverhalten**. Dieses Verfahren arbeitet mit `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+## Gültig für
+
+Diese Seite gilt ausschließlich für **PWA: Offlineverhalten** (Web · iOS · Android). Kanal- und Datengrenzen sind: DiscVault · `ghcr.io/helmerznl/discvault:latest`; zwischengespeicherte Ansichten können öffnen; neue Daten und Schreibvorgänge brauchen Netzwerk · `Service Worker` · `CacheStorage`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; zwischengespeicherte Ansichten können öffnen; neue Daten und Schreibvorgänge brauchen Netzwerk · `Service Worker` · `CacheStorage`. Seitenspezifische Kontrollpunkte: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+### DiscVault v26 – stabil
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- zwischengespeicherte Ansichten können öffnen; neue Daten und Schreibvorgänge brauchen Netzwerk · `Service Worker` · `CacheStorage`
+
+### DiscVault v26 – Beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- zwischengespeicherte Ansichten können öffnen; neue Daten und Schreibvorgänge brauchen Netzwerk · `Service Worker` · `CacheStorage`
+
+## Voraussetzungen
+
+- PWA
+- `CacheStorage`
+
+## Vorgehen
+
+1. **Öffnen:** Bibliothek → Suchen
+2. **Testen:** Flugmodus · `Service Worker`
+3. **Festhalten:** `navigator.onLine`
+4. **Neu verbinden:** HTTPS
+
+
+
+## Erwartetes Ergebnis
+
+Akzeptiere das Ergebnis für **PWA: Offlineverhalten** nur wenn alle folgenden Ergebnisse erfüllt sind: zwischengespeicherte Ansichten können öffnen; neue Daten und Schreibvorgänge brauchen Netzwerk; `Service Worker` · `navigator.onLine`. Seitenspezifische Kontrollpunkte: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+- zwischengespeicherte Ansichten können öffnen; neue Daten und Schreibvorgänge brauchen Netzwerk
+- `Service Worker` · `navigator.onLine`
+
+## Sicherheit und Rollback
+
+:::caution
+Die sichere Wiederherstellungsgrenze für **PWA: Offlineverhalten** verlangt vor jedem Start oder Fortsetzen diese Maßnahmen: zwischengespeicherte Ansichten können öffnen; neue Daten und Schreibvorgänge brauchen Netzwerk · DiscVault. Seitenspezifische Kontrollpunkte: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
+
+- zwischengespeicherte Ansichten können öffnen; neue Daten und Schreibvorgänge brauchen Netzwerk · DiscVault
+:::
+
+## Nächster Schritt
+
+[Fehlerbehebung](/de/troubleshooting/)
+
+## Quelle und Status
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Quelle und Status: `2026-07-14`
+- DiscVault Docs: `0.1.0`

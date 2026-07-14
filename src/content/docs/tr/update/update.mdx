@@ -1,0 +1,114 @@
+---
+title: 'Güncelleme ve geçiş: Kapsayıcı güncellemesi'
+description: 'Göreve özel yönergeler: Güncelleme ve geçiş: Kapsayıcı güncellemesi: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.'
+pageId: 'update-update'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Amaç ve sonuç
+
+Sayfaya özel iş akışını tamamlayın: **Güncelleme ve geçiş: Kapsayıcı güncellemesi**. Bu prosedür şunları kullanır: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+
+## Geçerli olduğu alan
+
+Bu sayfa yalnızca şunlar için geçerlidir: **Güncelleme ve geçiş: Kapsayıcı güncellemesi** (Docker · Unraid). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · sürüm notları ve kaydedilmiş değişmez imaj özeti · eşleşen yedek kümesi; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · sürüm notları ve kaydedilmiş değişmez imaj özeti · eşleşen yedek kümesi. Sayfaya özel denetim noktaları: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+
+### DiscVault v26 kararlı
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `DISCVAULT_IMAGE`
+- PostgreSQL `/data` · sürüm notları ve kaydedilmiş değişmez imaj özeti · eşleşen yedek kümesi
+
+### DiscVault v26 beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `DISCVAULT_IMAGE`
+- PostgreSQL `/data` · sürüm notları ve kaydedilmiş değişmez imaj özeti · eşleşen yedek kümesi
+
+## Ön koşullar
+
+- eşleşen yedek kümesi
+- sürüm notları ve kaydedilmiş değişmez imaj özeti
+
+## Prosedür
+
+1. **Doğrulayın:** `PREVIOUS_IMAGE=@sha256:…`
+2. **Seçin:** `DISCVAULT_IMAGE` · `:latest` `:beta`
+3. **Çalıştırın:** `--force-recreate`
+4. **Karşılaştırın:** amaçlanan imaj özeti çalışır, sağlık başarılıdır ve sahip girişi, kitaplık sayısı ile bir medya örneği geçer
+
+### Komutlar ve ayarlar
+
+#### DiscVault v26 kararlı
+
+```bash
+export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
+```
+
+#### DiscVault v26 beta
+
+```bash
+export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
+```
+
+#### Her iki kanal
+
+```bash
+set -euo pipefail
+test -n "$DISCVAULT_IMAGE"
+case "$DISCVAULT_IMAGE" in
+  ghcr.io/helmerznl/discvault:latest|ghcr.io/helmerznl/discvault:beta) ;;
+  *) printf '%s\n' "$DISCVAULT_IMAGE" >&2; exit 64 ;;
+esac
+cd /opt/discvault
+ENV_FILE=/opt/discvault/.env
+ENV_TMP="$(mktemp "$ENV_FILE.update.XXXXXX")"
+trap 'rm -f "$ENV_TMP"' EXIT
+awk -v image="$DISCVAULT_IMAGE" '
+  /^DISCVAULT_IMAGE=/ { print "DISCVAULT_IMAGE=" image; found=1; next }
+  { print }
+  END { if (!found) exit 42 }
+' "$ENV_FILE" > "$ENV_TMP"
+chmod 0600 "$ENV_TMP"
+docker compose --env-file "$ENV_TMP" -p discvault -f compose.yaml config --quiet
+docker compose --env-file "$ENV_TMP" -p discvault -f compose.yaml pull next-api next-worker next-mcp
+docker compose --env-file "$ENV_TMP" -p discvault -f compose.yaml up -d --force-recreate
+docker compose --env-file "$ENV_TMP" -p discvault -f compose.yaml ps
+curl --fail http://localhost:6080/api/next/health
+mv "$ENV_TMP" "$ENV_FILE"
+trap - EXIT
+```
+
+## Beklenen sonuç
+
+Şunun sonucunu kabul edin: **Güncelleme ve geçiş: Kapsayıcı güncellemesi** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: amaçlanan imaj özeti çalışır, sağlık başarılıdır ve sahip girişi, kitaplık sayısı ile bir medya örneği geçer. Sayfaya özel denetim noktaları: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+
+- amaçlanan imaj özeti çalışır, sağlık başarılıdır ve sahip girişi, kitaplık sayısı ile bir medya örneği geçer
+
+## Güvenlik ve geri alma
+
+:::caution
+Şunun güvenli kurtarma sınırı: **Güncelleme ve geçiş: Kapsayıcı güncellemesi** başlatmadan veya devam etmeden önce şu işlemleri gerektirir: [Güncelleme ve geçiş: İmajı geri alma](/tr/update/rollback/) · eşleşen yedek kümesi; sürüm notları ve kaydedilmiş değişmez imaj özeti. Sayfaya özel denetim noktaları: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+
+- [Güncelleme ve geçiş: İmajı geri alma](/tr/update/rollback/) · eşleşen yedek kümesi
+- sürüm notları ve kaydedilmiş değişmez imaj özeti
+:::
+
+## Sonraki adım
+
+[Güncelleme ve geçiş: İmajı geri alma](/tr/update/rollback/)
+
+## Kaynak ve durum
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Kaynak ve durum: `2026-07-14`
+- DiscVault Docs: `0.1.0`

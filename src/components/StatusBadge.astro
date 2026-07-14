@@ -1,0 +1,13 @@
+---
+import { currentLocale, labels } from '../data/localized-ui';
+
+interface Props {
+  status: 'stable' | 'beta' | 'limited' | 'roadmap' | 'unavailable';
+  label?: string;
+}
+const { status, label } = Astro.props;
+const locale = currentLocale(Astro.url.pathname);
+const visibleLabel = label ?? labels[locale][status];
+---
+
+<span class:list={['status-badge', `status-${status}`]}>{visibleLabel}</span>

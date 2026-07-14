@@ -1,0 +1,84 @@
+---
+title: 'Aktualizace a migrace: Migrace na DiscVault 26'
+description: 'Pokyny pro konkrétní úlohu: Aktualizace a migrace: Migrace na DiscVault 26: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.'
+pageId: 'update-migration'
+products: ['server']
+platforms: ['docker', 'web']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## Cíl a výsledek
+
+Dokončete postup určený pro **Aktualizace a migrace: Migrace na DiscVault 26**. Tento postup pracuje s `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+
+## Platí pro
+
+Tato stránka platí pouze pro **Aktualizace a migrace: Migrace na DiscVault 26** (Docker · web). Hranice kanálu a dat jsou: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; zdroj existujících dat pouze pro čtení; nikdy aktuální běhová databáze · SQLite → PostgreSQL; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26; zdroj existujících dat pouze pro čtení; nikdy aktuální běhová databáze · SQLite → PostgreSQL. Kontrolní body této stránky: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+
+### DiscVault v26 – stabilní
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault 26
+- zdroj existujících dat pouze pro čtení; nikdy aktuální běhová databáze · SQLite → PostgreSQL
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault 26
+- zdroj existujících dat pouze pro čtení; nikdy aktuální běhová databáze · SQLite → PostgreSQL
+
+## Požadavky
+
+- zdroj existujících dat pouze pro čtení; nikdy aktuální běhová databáze · `/data/discvault.db`
+- dump PostgreSQL a archiv souborů ze stejného okna se zastavenými zápisy
+- přístup vlastníka
+
+## Postup
+
+1. **Zálohujte:** zdroj existujících dat pouze pro čtení; nikdy aktuální běhová databáze · dump PostgreSQL a archiv souborů ze stejného okna se zastavenými zápisy
+2. **Zkontrolujte:** `/api/next/migration/readiness` · `ready_for_confirmation`
+3. **Spusťte:** `POST /api/next/migration/start`
+4. **Porovnejte:** připravenost je potvrzena, migrace nemá žádné chybné záznamy a počty i vzorek médií odpovídají
+
+### Příkazy a nastavení
+
+#### Oba kanály
+
+```bash
+curl --fail http://localhost:6080/api/next/migration/readiness
+curl --fail http://localhost:6080/api/next/migration/status
+curl --fail -X POST http://localhost:6080/api/next/migration/start \
+  -H 'Content-Type: application/json' -d '{}'
+curl --fail http://localhost:6080/api/next/migration/status
+```
+
+## Očekávaný výsledek
+
+Výsledek přijměte pro **Aktualizace a migrace: Migrace na DiscVault 26** pouze pokud platí všechny následující výsledky: připravenost je potvrzena, migrace nemá žádné chybné záznamy a počty i vzorek médií odpovídají. Kontrolní body této stránky: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+
+- připravenost je potvrzena, migrace nemá žádné chybné záznamy a počty i vzorek médií odpovídají
+
+## Bezpečnost a návrat
+
+:::caution
+Bezpečná hranice obnovy pro **Aktualizace a migrace: Migrace na DiscVault 26** vyžaduje před spuštěním nebo pokračováním tyto kroky: zastavte zapisující služby DiscVault, obnovte odpovídající zálohy PostgreSQL a `/data` a nikdy neopakujte import do částečně naplněné databáze. Kontrolní body této stránky: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+
+- zastavte zapisující služby DiscVault, obnovte odpovídající zálohy PostgreSQL a `/data` a nikdy neopakujte import do částečně naplněné databáze
+:::
+
+## Další krok
+
+[Konfigurace: Proměnné prostředí](/cs/configure/environment/)
+
+## Zdroj a stav
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- Zdroj a stav: `2026-07-14`
+- DiscVault Docs: `0.1.0`

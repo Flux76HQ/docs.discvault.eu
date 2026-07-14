@@ -1,0 +1,78 @@
+---
+title: '更新と移行: 概要'
+description: 'タスク別の手順: 更新と移行: 概要: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.'
+pageId: 'update-index'
+products: ['server']
+platforms: ['docker', 'unraid']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-14'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+
+## 目的と結果
+
+このページ専用の手順を実行します: **更新と移行: 概要**. この手順で扱う項目: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+## 対象
+
+このページの対象は **更新と移行: 概要** (Docker · Unraid). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/update/restore/`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/update/restore/`. このページ固有の確認点: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+### DiscVault v26 安定版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `/update/restore/`
+
+### DiscVault v26 ベータ版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- `/update/restore/`
+
+## 前提条件
+
+- 一致するバックアップ一式
+- リリースノートと記録済みの不変イメージダイジェスト
+
+## 手順
+
+1. **バックアップ:** [更新と移行: バックアップ](/ja/update/backup/) · 一致するバックアップ一式
+2. **テスト:** [更新と移行: 復元](/ja/update/restore/)
+3. **実行:** [更新と移行: コンテナの更新](/ja/update/update/) · `DISCVAULT_IMAGE`
+4. **保持:** [更新と移行: イメージのロールバック](/ja/update/rollback/)
+
+### タスク別ルート
+
+- [更新と移行: バックアップ](/ja/update/backup/) — 1 PostgreSQL
+- [更新と移行: 復元](/ja/update/restore/) — 2
+- [更新と移行: コンテナの更新](/ja/update/update/) — 3
+- [更新と移行: イメージのロールバック](/ja/update/rollback/) — 4
+
+## 期待される結果
+
+次の結果を受け入れる条件: **更新と移行: 概要** 以下の結果をすべて確認した場合のみ: アーカイブとダンプが空ではなく、復元リハーサルで読め、変更不可能なイメージダイジェストに対応します; 意図したイメージダイジェストが稼働し、ヘルス確認、所有者ログイン、ライブラリ件数、メディア 1 件がすべて成功します. このページ固有の確認点: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+- アーカイブとダンプが空ではなく、復元リハーサルで読め、変更不可能なイメージダイジェストに対応します
+- 意図したイメージダイジェストが稼働し、ヘルス確認、所有者ログイン、ライブラリ件数、メディア 1 件がすべて成功します
+
+## 安全性とロールバック
+
+:::caution
+安全な復旧境界: **更新と移行: 概要** 起動または続行の前に、次の操作が必要です: 一致するバックアップ一式; `PREVIOUS_IMAGE` · `@sha256:`. このページ固有の確認点: `/update/backup/` · `/update/restore/` · `/update/update/` · `/update/rollback/`.
+
+- 一致するバックアップ一式
+- `PREVIOUS_IMAGE` · `@sha256:`
+:::
+
+## 次の手順
+
+[更新と移行: バックアップ](/ja/update/backup/)
+
+## 情報源と状態
+
+- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- 情報源と状態: `2026-07-14`
+- DiscVault Docs: `0.1.0`
