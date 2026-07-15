@@ -43,7 +43,7 @@ Tato stránka platí pouze pro **Aktualizace a migrace: Aktualizace kontejneru**
 
 1. **Zkontrolujte:** nové instalace používají DiscVault v26 `:latest` nebo `:beta`; zmrazený obraz `:legacy` je pouze pro stávající instalaci předchozí generace, která ještě není připravena k migraci
 2. **Zálohujte:** odpovídající sada záloh
-3. **Vyberte:** Pouze větev Legacy: po záloze změňte jen tag obrazu stávajícího nasazení staré generace na `:legacy`, stáhněte a znovu je vytvořte se stejnou topologií, ověřte sbírku a skončete; níže uvedené příkazy v26 nespouštějte
+3. **Vyberte:** Pouze větev Legacy: po záloze změňte jen tag obrazu stávajícího nasazení staré generace na `:legacy`, stáhněte a znovu je vytvořte se stejnou topologií, ověřte sbírku a skončete; dané stávající nasazení na této stránce nepřepínejte na topologii v26
 4. **Otevřete:** [Aktualizace a migrace: Migrace na DiscVault 26](/cs/update/migration/) · DiscVault 26
 5. **Zachovejte:** ponechte svazky, proměnné prostředí, porty a datovou cestu předchozí generace beze změny; nikdy nevkládejte `:legacy` do v26 topologie Compose s PostgreSQL
 6. **Ověřte:** `DiscVault v26` · `PREVIOUS_IMAGE=@sha256:…`
@@ -119,4 +119,4 @@ Bezpečná hranice obnovy pro **Aktualizace a migrace: Aktualizace kontejneru** 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
 - Zdroj a stav: `2026-07-15`
-- DiscVault Docs: `0.1.2`
+- DiscVault Docs: `0.1.4`

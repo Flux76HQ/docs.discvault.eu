@@ -43,7 +43,7 @@ Deze pagina is uitsluitend van toepassing op **Bijwerken en migreren: Container 
 
 1. **Controleren:** nieuwe installaties gebruiken DiscVault v26 `:latest` of `:beta`; de bevroren `:legacy`-image is alleen voor een bestaande installatie van de vorige generatie die nog niet klaar is voor migratie
 2. **Back-up maken:** bijpassende back-upset
-3. **Kiezen:** Alleen de Legacy-route: wijzig na de back-up uitsluitend de imagetag van de bestaande oude implementatie in `:legacy`, haal deze op en maak hem opnieuw met ongewijzigde topologie, controleer de collectie en stop; voer de onderstaande v26-opdrachten niet uit
+3. **Kiezen:** Alleen de Legacy-route: wijzig na de back-up uitsluitend de imagetag van de bestaande oude implementatie in `:legacy`, haal deze op en maak hem opnieuw met ongewijzigde topologie, controleer de collectie en stop; schakel deze bestaande implementatie op deze pagina niet over naar de v26-topologie
 4. **Openen:** [Bijwerken en migreren: Migratie naar DiscVault 26](/nl/update/migration/) · DiscVault 26
 5. **Bewaren:** houd volumes, omgevingsvariabelen, poorten en het gegevenspad van de vorige generatie ongewijzigd; vervang in de v26 PostgreSQL Compose-topologie nooit een image door `:legacy`
 6. **Verifiëren:** `DiscVault v26` · `PREVIOUS_IMAGE=@sha256:…`
@@ -119,4 +119,4 @@ De veilige herstelgrens voor **Bijwerken en migreren: Container bijwerken** vere
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
 - Bron en status: `2026-07-15`
-- DiscVault Docs: `0.1.2`
+- DiscVault Docs: `0.1.4`

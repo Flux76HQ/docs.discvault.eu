@@ -38,7 +38,6 @@ Denne side gælder kun for **Installation: Installationsmuligheder** (Docker · 
 
 - Docker Engine `24+`
 - Docker Compose `v2`
-- tilsvarende backupsæt
 
 ## Fremgangsmåde
 
@@ -48,7 +47,7 @@ Denne side gælder kun for **Installation: Installationsmuligheder** (Docker · 
 4. **Vælg:** nye installationer bruger DiscVault v26 `:latest` eller `:beta`; det frosne `:legacy`-image er kun til en eksisterende installation af den forrige generation, som endnu ikke er klar til migrering
 5. **Bevar:** behold den forrige generations diskenheder, miljøvariabler, porte og datasti uændret; erstat aldrig et v26 PostgreSQL Compose-image med `:legacy`
 6. **Åbn:** [Opdatering og migrering: Migrering til DiscVault 26](/da/update/migration/) · → DiscVault 26
-7. **Registrér:** `DISCVAULT_IMAGE` · tilsvarende backupsæt
+7. **Registrér:** `DISCVAULT_IMAGE` · kun ved en eksisterende eller legacy-installation: tilsvarende backupsæt
 
 ### Opgaveruter
 
@@ -69,11 +68,11 @@ Godkend resultatet for **Installation: Installationsmuligheder** kun når alle r
 ## Sikkerhed og tilbagerulning
 
 :::caution
-Den sikre gendannelsesgrænse for **Installation: Installationsmuligheder** kræver disse handlinger, før noget startes eller fortsættes: Kun Legacy-grenen: efter backup ændres kun image-tagget for den eksisterende gamle installation til `:legacy`; hent og genskab den med uændret topologi, kontrollér samlingen, og stop; kør ikke v26-kommandoerne nedenfor; det frosne `:legacy`-image modtager ingen DiscVault v26-funktioner, migreringsforbedringer eller fremtidige grænsefladeopdateringer; tilsvarende backupsæt; udgivelsesnoter og registreret uforanderligt image-digest. Sidespecifikke kontrolpunkter: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
+Den sikre gendannelsesgrænse for **Installation: Installationsmuligheder** kræver disse handlinger, før noget startes eller fortsættes: Kun Legacy-grenen: efter backup ændres kun image-tagget for den eksisterende gamle installation til `:legacy`; hent og genskab den med uændret topologi, kontrollér samlingen, og stop; skift ikke den eksisterende installation til v26-topologien på denne side; det frosne `:legacy`-image modtager ingen DiscVault v26-funktioner, migreringsforbedringer eller fremtidige grænsefladeopdateringer; kun ved en eksisterende eller legacy-installation: tilsvarende backupsæt; udgivelsesnoter og registreret uforanderligt image-digest. Sidespecifikke kontrolpunkter: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
-- Kun Legacy-grenen: efter backup ændres kun image-tagget for den eksisterende gamle installation til `:legacy`; hent og genskab den med uændret topologi, kontrollér samlingen, og stop; kør ikke v26-kommandoerne nedenfor
+- Kun Legacy-grenen: efter backup ændres kun image-tagget for den eksisterende gamle installation til `:legacy`; hent og genskab den med uændret topologi, kontrollér samlingen, og stop; skift ikke den eksisterende installation til v26-topologien på denne side
 - det frosne `:legacy`-image modtager ingen DiscVault v26-funktioner, migreringsforbedringer eller fremtidige grænsefladeopdateringer
-- tilsvarende backupsæt
+- kun ved en eksisterende eller legacy-installation: tilsvarende backupsæt
 - udgivelsesnoter og registreret uforanderligt image-digest
 :::
 
@@ -86,4 +85,4 @@ Den sikre gendannelsesgrænse for **Installation: Installationsmuligheder** kræ
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
 - Kilde og status: `2026-07-15`
-- DiscVault Docs: `0.1.2`
+- DiscVault Docs: `0.1.4`

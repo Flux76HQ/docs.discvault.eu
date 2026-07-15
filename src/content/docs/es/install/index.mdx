@@ -38,7 +38,6 @@ Esta página se aplica solo a **Instalación: Opciones de instalación** (Docker
 
 - Docker Engine `24+`
 - Docker Compose `v2`
-- juego de copias coincidente
 
 ## Procedimiento
 
@@ -48,7 +47,7 @@ Esta página se aplica solo a **Instalación: Opciones de instalación** (Docker
 4. **Elige:** las instalaciones nuevas usan DiscVault v26 `:latest` o `:beta`; la imagen congelada `:legacy` es solo para una instalación existente de la generación anterior que aún no esté lista para migrar
 5. **Conserva:** mantén sin cambios los volúmenes, variables de entorno, puertos y ruta de datos de la generación anterior; nunca sustituyas una imagen de la topología Compose v26 con PostgreSQL por `:legacy`
 6. **Abre:** [Actualización y migración: Migración a DiscVault 26](/es/update/migration/) · → DiscVault 26
-7. **Registra:** `DISCVAULT_IMAGE` · juego de copias coincidente
+7. **Registra:** `DISCVAULT_IMAGE` · solo para un despliegue existente o legacy: juego de copias coincidente
 
 ### Rutas de tareas
 
@@ -69,11 +68,11 @@ Acepta el resultado de **Instalación: Opciones de instalación** solo cuando se
 ## Seguridad y reversión
 
 :::caution
-El límite de recuperación segura de **Instalación: Opciones de instalación** exige estas acciones antes de iniciar o continuar: Solo rama Legacy: después de la copia, cambia únicamente la etiqueta de imagen del despliegue antiguo existente a `:legacy`, descárgalo y recréalo con la topología intacta, verifica la colección y detente; no ejecutes los comandos v26 siguientes; la imagen congelada `:legacy` no recibe funciones de DiscVault v26, mejoras de migración ni futuras actualizaciones de interfaz; juego de copias coincidente; notas de versión y digest inmutable registrado. Puntos de control de esta página: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
+El límite de recuperación segura de **Instalación: Opciones de instalación** exige estas acciones antes de iniciar o continuar: Solo rama Legacy: después de la copia, cambia únicamente la etiqueta de imagen del despliegue antiguo existente a `:legacy`, descárgalo y recréalo con la topología intacta, verifica la colección y detente; no cambies ese despliegue existente a la topología v26 en esta página; la imagen congelada `:legacy` no recibe funciones de DiscVault v26, mejoras de migración ni futuras actualizaciones de interfaz; solo para un despliegue existente o legacy: juego de copias coincidente; notas de versión y digest inmutable registrado. Puntos de control de esta página: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
-- Solo rama Legacy: después de la copia, cambia únicamente la etiqueta de imagen del despliegue antiguo existente a `:legacy`, descárgalo y recréalo con la topología intacta, verifica la colección y detente; no ejecutes los comandos v26 siguientes
+- Solo rama Legacy: después de la copia, cambia únicamente la etiqueta de imagen del despliegue antiguo existente a `:legacy`, descárgalo y recréalo con la topología intacta, verifica la colección y detente; no cambies ese despliegue existente a la topología v26 en esta página
 - la imagen congelada `:legacy` no recibe funciones de DiscVault v26, mejoras de migración ni futuras actualizaciones de interfaz
-- juego de copias coincidente
+- solo para un despliegue existente o legacy: juego de copias coincidente
 - notas de versión y digest inmutable registrado
 :::
 
@@ -86,4 +85,4 @@ El límite de recuperación segura de **Instalación: Opciones de instalación**
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
 - Fuente y estado: `2026-07-15`
-- DiscVault Docs: `0.1.2`
+- DiscVault Docs: `0.1.4`

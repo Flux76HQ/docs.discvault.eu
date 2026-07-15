@@ -43,7 +43,7 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 1. **確認:** 新規インストールでは DiscVault v26 の `:latest` または `:beta` を使用します。固定された `:legacy` イメージは、まだ移行しない既存の旧世代インストール専用です
 2. **バックアップ:** 一致するバックアップ一式
-3. **選択:** Legacy 分岐のみ: バックアップ後、既存の旧世代デプロイのイメージタグだけを `:legacy` に変更し、構成を変えずに pull と再作成を行ってコレクションを確認したら終了します。以下の v26 コマンドは実行しません
+3. **選択:** Legacy 分岐のみ: バックアップ後、既存の旧世代デプロイのイメージタグだけを `:legacy` に変更し、構成を変えずに pull と再作成を行ってコレクションを確認したら終了します。このページで、その既存デプロイを v26 トポロジーに切り替えないでください
 4. **開く:** [更新と移行: DiscVault 26 への移行](/ja/update/migration/) · DiscVault 26
 5. **保持:** 旧世代のボリューム、環境変数、ポート、データパスは変更しません。v26 PostgreSQL Compose 構成のイメージを `:legacy` に置き換えないでください
 6. **検証:** `DiscVault v26` · `PREVIOUS_IMAGE=@sha256:…`
@@ -119,4 +119,4 @@ trap - EXIT
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
 - 情報源と状態: `2026-07-15`
-- DiscVault Docs: `0.1.2`
+- DiscVault Docs: `0.1.4`

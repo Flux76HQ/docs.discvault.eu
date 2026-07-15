@@ -29,7 +29,7 @@ const locales = [
 const verified = '2026-07-14';
 const docsVersion = '0.1.0';
 const migratedVerified = '2026-07-15';
-const migratedDocsVersion = '0.1.2';
+const migratedDocsVersion = '0.1.4';
 const commits = {
   'helmerzNL/DiscVault': '6d27c689ac2166651d2c7c74833c1ee225b37ec3',
   'helmerzNL/DiscVault.EU': '583f85c55dc22b63368f997a3b076a093ca0afa1',
@@ -1118,7 +1118,7 @@ const pages = [
     source: [S, M],
     verified: migratedVerified,
     docsVersion: migratedDocsVersion,
-    pre: ['Docker Engine 24+', 'Docker Compose v2', 'matched backup'],
+    pre: ['Docker Engine 24+', 'Docker Compose v2'],
     command:
       'Recommended for both channels: /install/docker-compose/\nAdvanced complete equivalent: /install/docker-run/\nPersistence: /install/storage-postgresql/\nUnraid: /install/unraid/',
     intro:
@@ -1128,7 +1128,7 @@ const pages = [
     expected:
       'A new install selects one v26 channel, while an existing previous-generation install either stays on its unchanged Legacy topology or follows the migration procedure.',
     rollback:
-      'Back up before any pull or recreate. The frozen Legacy image receives no v26 features, migration improvements, or future interface updates.',
+      'Back up an existing or legacy deployment before pulling or recreating it; a fresh install has no prior data to back up. The frozen Legacy image receives no v26 features, migration improvements, or future interface updates.',
     next: 'install/docker-compose',
   },
   {

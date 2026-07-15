@@ -38,7 +38,6 @@ Den här sidan gäller endast **Installation: Installationsvägar** (Docker · U
 
 - Docker Engine `24+`
 - Docker Compose `v2`
-- matchande säkerhetskopieuppsättning
 
 ## Procedur
 
@@ -48,7 +47,7 @@ Den här sidan gäller endast **Installation: Installationsvägar** (Docker · U
 4. **Välj:** nya installationer använder DiscVault v26 `:latest` eller `:beta`; den frysta avbildningen `:legacy` är endast för en befintlig installation av föregående generation som ännu inte är redo att migrera
 5. **Bevara:** behåll föregående generations volymer, miljövariabler, portar och datasökväg oförändrade; ersätt aldrig en avbildning i v26 PostgreSQL Compose-topologin med `:legacy`
 6. **Öppna:** [Uppdatering och migrering: Migrering till DiscVault 26](/sv/update/migration/) · → DiscVault 26
-7. **Anteckna:** `DISCVAULT_IMAGE` · matchande säkerhetskopieuppsättning
+7. **Anteckna:** `DISCVAULT_IMAGE` · endast för en befintlig eller legacy-installation: matchande säkerhetskopieuppsättning
 
 ### Uppgiftsvägar
 
@@ -69,11 +68,11 @@ Godkänn resultatet för **Installation: Installationsvägar** endast när alla 
 ## Säkerhet och återställning
 
 :::caution
-Den säkra återställningsgränsen för **Installation: Installationsvägar** kräver dessa åtgärder innan något startas eller fortsätter: Endast Legacy-grenen: efter säkerhetskopieringen ändrar du bara avbildningstaggen för den befintliga gamla installationen till `:legacy`, hämtar och återskapar den med oförändrad topologi, kontrollerar samlingen och stoppar; kör inte v26-kommandona nedan; den frysta avbildningen `:legacy` får inga DiscVault v26-funktioner, migreringsförbättringar eller framtida gränssnittsuppdateringar; matchande säkerhetskopieuppsättning; versionsinformation och registrerad oföränderlig image-digest. Sidspecifika kontrollpunkter: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
+Den säkra återställningsgränsen för **Installation: Installationsvägar** kräver dessa åtgärder innan något startas eller fortsätter: Endast Legacy-grenen: efter säkerhetskopieringen ändrar du bara avbildningstaggen för den befintliga gamla installationen till `:legacy`, hämtar och återskapar den med oförändrad topologi, kontrollerar samlingen och stoppar; växla inte den befintliga installationen till v26-topologin på den här sidan; den frysta avbildningen `:legacy` får inga DiscVault v26-funktioner, migreringsförbättringar eller framtida gränssnittsuppdateringar; endast för en befintlig eller legacy-installation: matchande säkerhetskopieuppsättning; versionsinformation och registrerad oföränderlig image-digest. Sidspecifika kontrollpunkter: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
-- Endast Legacy-grenen: efter säkerhetskopieringen ändrar du bara avbildningstaggen för den befintliga gamla installationen till `:legacy`, hämtar och återskapar den med oförändrad topologi, kontrollerar samlingen och stoppar; kör inte v26-kommandona nedan
+- Endast Legacy-grenen: efter säkerhetskopieringen ändrar du bara avbildningstaggen för den befintliga gamla installationen till `:legacy`, hämtar och återskapar den med oförändrad topologi, kontrollerar samlingen och stoppar; växla inte den befintliga installationen till v26-topologin på den här sidan
 - den frysta avbildningen `:legacy` får inga DiscVault v26-funktioner, migreringsförbättringar eller framtida gränssnittsuppdateringar
-- matchande säkerhetskopieuppsättning
+- endast för en befintlig eller legacy-installation: matchande säkerhetskopieuppsättning
 - versionsinformation och registrerad oföränderlig image-digest
 :::
 
@@ -86,4 +85,4 @@ Den säkra återställningsgränsen för **Installation: Installationsvägar** k
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
 - Källa och status: `2026-07-15`
-- DiscVault Docs: `0.1.2`
+- DiscVault Docs: `0.1.4`

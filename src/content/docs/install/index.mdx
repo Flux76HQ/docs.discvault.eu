@@ -38,7 +38,6 @@ Choose the DiscVault v26 topology for new installs, or keep an existing previous
 
 - Docker Engine `24+`
 - Docker Compose `v2`
-- matching backup set
 
 ## Procedure
 
@@ -48,7 +47,7 @@ Choose the DiscVault v26 topology for new installs, or keep an existing previous
 4. **Choose:** new installations use DiscVault v26 `:latest` or `:beta`; only an existing previous-generation installation that is not ready to migrate should use the frozen `:legacy` image
 5. **Preserve:** keep the previous generation’s volumes, environment variables, ports, and data path unchanged; never substitute `:legacy` into the v26 PostgreSQL Compose topology
 6. **Open:** [Update and migrate: DiscVault 26 migration](/update/migration/) · existing data → DiscVault 26
-7. **Record:** `DISCVAULT_IMAGE` · image digest · matching backup set
+7. **Record:** `DISCVAULT_IMAGE` · image digest · existing or legacy deployment only: matching backup set
 
 ### Task routes
 
@@ -69,11 +68,11 @@ A new install selects one v26 channel, while an existing previous-generation ins
 ## Safety and rollback
 
 :::caution
-Back up before any pull or recreate. The frozen Legacy image receives no v26 features, migration improvements, or future interface updates.
+Back up an existing or legacy deployment before pulling or recreating it; a fresh install has no prior data to back up. The frozen Legacy image receives no v26 features, migration improvements, or future interface updates.
 
-- Legacy branch only: after backup, change only the existing old-generation deployment image tag to `:legacy`, pull and recreate it with its topology unchanged, verify the collection, and stop; do not run the v26 commands below
+- Legacy branch only: after backup, change only the existing old-generation deployment image tag to `:legacy`, pull and recreate it with its topology unchanged, verify the collection, and stop; do not switch that existing deployment to the v26 topology on this page
 - the frozen `:legacy` image receives no DiscVault v26 features, migration improvements, or future interface updates
-- matching backup set
+- existing or legacy deployment only: matching backup set
 - release notes and recorded immutable image digest
 :::
 
@@ -86,4 +85,4 @@ Back up before any pull or recreate. The frozen Legacy image receives no v26 fea
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
 - Verified: `2026-07-15`
-- DiscVault Docs: `0.1.2`
+- DiscVault Docs: `0.1.4`

@@ -38,7 +38,6 @@ Questa pagina si applica solo a **Installazione: Modalità di installazione** (D
 
 - Docker Engine `24+`
 - Docker Compose `v2`
-- set di backup corrispondente
 
 ## Procedura
 
@@ -48,7 +47,7 @@ Questa pagina si applica solo a **Installazione: Modalità di installazione** (D
 4. **Scegli:** le nuove installazioni usano DiscVault v26 `:latest` o `:beta`; l’immagine congelata `:legacy` è solo per un’installazione esistente della generazione precedente non ancora pronta alla migrazione
 5. **Conserva:** mantieni invariati volumi, variabili d’ambiente, porte e percorso dati della generazione precedente; non sostituire mai un’immagine nella topologia Compose v26 PostgreSQL con `:legacy`
 6. **Apri:** [Aggiornamento e migrazione: Migrazione a DiscVault 26](/it/update/migration/) · → DiscVault 26
-7. **Registra:** `DISCVAULT_IMAGE` · set di backup corrispondente
+7. **Registra:** `DISCVAULT_IMAGE` · solo per un deployment esistente o legacy: set di backup corrispondente
 
 ### Percorsi delle attività
 
@@ -69,11 +68,11 @@ Accetta il risultato per **Installazione: Modalità di installazione** solo quan
 ## Sicurezza e ripristino
 
 :::caution
-Il limite di ripristino sicuro per **Installazione: Modalità di installazione** richiede queste azioni prima di avviare o continuare: Solo ramo Legacy: dopo il backup cambia soltanto il tag immagine del deployment esistente della vecchia generazione in `:legacy`, scaricalo e ricrealo senza modificarne la topologia, verifica la collezione e fermati; non eseguire i comandi v26 seguenti; l’immagine congelata `:legacy` non riceve funzioni DiscVault v26, miglioramenti della migrazione o futuri aggiornamenti dell’interfaccia; set di backup corrispondente; note di rilascio e digest immutabile registrato. Punti di controllo della pagina: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
+Il limite di ripristino sicuro per **Installazione: Modalità di installazione** richiede queste azioni prima di avviare o continuare: Solo ramo Legacy: dopo il backup cambia soltanto il tag immagine del deployment esistente della vecchia generazione in `:legacy`, scaricalo e ricrealo senza modificarne la topologia, verifica la collezione e fermati; non passare questo deployment esistente alla topologia v26 in questa pagina; l’immagine congelata `:legacy` non riceve funzioni DiscVault v26, miglioramenti della migrazione o futuri aggiornamenti dell’interfaccia; solo per un deployment esistente o legacy: set di backup corrispondente; note di rilascio e digest immutabile registrato. Punti di controllo della pagina: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
-- Solo ramo Legacy: dopo il backup cambia soltanto il tag immagine del deployment esistente della vecchia generazione in `:legacy`, scaricalo e ricrealo senza modificarne la topologia, verifica la collezione e fermati; non eseguire i comandi v26 seguenti
+- Solo ramo Legacy: dopo il backup cambia soltanto il tag immagine del deployment esistente della vecchia generazione in `:legacy`, scaricalo e ricrealo senza modificarne la topologia, verifica la collezione e fermati; non passare questo deployment esistente alla topologia v26 in questa pagina
 - l’immagine congelata `:legacy` non riceve funzioni DiscVault v26, miglioramenti della migrazione o futuri aggiornamenti dell’interfaccia
-- set di backup corrispondente
+- solo per un deployment esistente o legacy: set di backup corrispondente
 - note di rilascio e digest immutabile registrato
 :::
 
@@ -86,4 +85,4 @@ Il limite di ripristino sicuro per **Installazione: Modalità di installazione**
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
 - Fonte e stato: `2026-07-15`
-- DiscVault Docs: `0.1.2`
+- DiscVault Docs: `0.1.4`

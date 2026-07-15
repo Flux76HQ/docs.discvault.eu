@@ -43,7 +43,7 @@ Cette page s’applique uniquement à **Mise à jour et migration: Mise à jour 
 
 1. **Inspecter:** les nouvelles installations utilisent DiscVault v26 `:latest` ou `:beta` ; l’image figée `:legacy` est réservée à une installation existante de la génération précédente qui n’est pas encore prête à migrer
 2. **Sauvegarder:** jeu de sauvegardes correspondant
-3. **Choisir:** Branche Legacy uniquement : après la sauvegarde, remplacez seulement le tag d’image du déploiement existant de l’ancienne génération par `:legacy`, téléchargez et recréez-le sans modifier sa topologie, vérifiez la collection et arrêtez-vous ; n’exécutez pas les commandes v26 ci-dessous
+3. **Choisir:** Branche Legacy uniquement : après la sauvegarde, remplacez seulement le tag d’image du déploiement existant de l’ancienne génération par `:legacy`, téléchargez et recréez-le sans modifier sa topologie, vérifiez la collection et arrêtez-vous ; ne faites pas basculer ce déploiement existant vers la topologie v26 sur cette page
 4. **Ouvrir:** [Mise à jour et migration: Migration vers DiscVault 26](/fr/update/migration/) · DiscVault 26
 5. **Conserver:** conservez les volumes, variables d’environnement, ports et chemin de données de la génération précédente ; ne remplacez jamais une image de la topologie Compose v26 PostgreSQL par `:legacy`
 6. **Vérifier:** `DiscVault v26` · `PREVIOUS_IMAGE=@sha256:…`
@@ -119,4 +119,4 @@ La limite de récupération sûre pour **Mise à jour et migration: Mise à jour
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
 - Source et état: `2026-07-15`
-- DiscVault Docs: `0.1.2`
+- DiscVault Docs: `0.1.4`
