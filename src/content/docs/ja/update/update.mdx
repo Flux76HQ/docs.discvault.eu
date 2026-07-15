@@ -1,26 +1,26 @@
 ---
 title: '更新と移行: コンテナの更新'
-description: 'タスク別の手順: 更新と移行: コンテナの更新: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.'
+description: 'タスク別の手順: 更新と移行: コンテナの更新: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.'
 pageId: 'update-update'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
+lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## 目的と結果
 
-このページ専用の手順を実行します: **更新と移行: コンテナの更新**. この手順で扱う項目: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+このページ専用の手順を実行します: **更新と移行: コンテナの更新**. この手順で扱う項目: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
 ## 対象
 
-このページの対象は **更新と移行: コンテナの更新** (Docker · Unraid). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · リリースノートと記録済みの不変イメージダイジェスト · 一致するバックアップ一式; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · リリースノートと記録済みの不変イメージダイジェスト · 一致するバックアップ一式. このページ固有の確認点: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+このページの対象は **更新と移行: コンテナの更新** (Docker · Unraid). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · リリースノートと記録済みの不変イメージダイジェスト · 一致するバックアップ一式; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · リリースノートと記録済みの不変イメージダイジェスト · 一致するバックアップ一式. このページ固有の確認点: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
 ### DiscVault v26 安定版
 
@@ -41,10 +41,15 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## 手順
 
-1. **検証:** `PREVIOUS_IMAGE=@sha256:…`
-2. **選択:** `DISCVAULT_IMAGE` · `:latest` `:beta`
-3. **実行:** `--force-recreate`
-4. **比較:** 意図したイメージダイジェストが稼働し、ヘルス確認、所有者ログイン、ライブラリ件数、メディア 1 件がすべて成功します
+1. **確認:** 新規インストールでは DiscVault v26 の `:latest` または `:beta` を使用します。固定された `:legacy` イメージは、まだ移行しない既存の旧世代インストール専用です
+2. **バックアップ:** 一致するバックアップ一式
+3. **選択:** Legacy 分岐のみ: バックアップ後、既存の旧世代デプロイのイメージタグだけを `:legacy` に変更し、構成を変えずに pull と再作成を行ってコレクションを確認したら終了します。以下の v26 コマンドは実行しません
+4. **開く:** [更新と移行: DiscVault 26 への移行](/ja/update/migration/) · DiscVault 26
+5. **保持:** 旧世代のボリューム、環境変数、ポート、データパスは変更しません。v26 PostgreSQL Compose 構成のイメージを `:legacy` に置き換えないでください
+6. **検証:** `DiscVault v26` · `PREVIOUS_IMAGE=@sha256:…`
+7. **選択:** `DiscVault v26` · `DISCVAULT_IMAGE` · `:latest` `:beta`
+8. **実行:** `DiscVault v26` · `--force-recreate`
+9. **比較:** `DiscVault v26` · 意図したイメージダイジェストが稼働し、ヘルス確認、所有者ログイン、ライブラリ件数、メディア 1 件がすべて成功します
 
 ### コマンドと設定
 
@@ -90,15 +95,17 @@ trap - EXIT
 
 ## 期待される結果
 
-次の結果を受け入れる条件: **更新と移行: コンテナの更新** 以下の結果をすべて確認した場合のみ: 意図したイメージダイジェストが稼働し、ヘルス確認、所有者ログイン、ライブラリ件数、メディア 1 件がすべて成功します. このページ固有の確認点: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+次の結果を受け入れる条件: **更新と移行: コンテナの更新** 以下の結果をすべて確認した場合のみ: 意図したイメージダイジェストが稼働し、ヘルス確認、所有者ログイン、ライブラリ件数、メディア 1 件がすべて成功します; 旧世代のボリューム、環境変数、ポート、データパスは変更しません。v26 PostgreSQL Compose 構成のイメージを `:legacy` に置き換えないでください. このページ固有の確認点: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
 - 意図したイメージダイジェストが稼働し、ヘルス確認、所有者ログイン、ライブラリ件数、メディア 1 件がすべて成功します
+- 旧世代のボリューム、環境変数、ポート、データパスは変更しません。v26 PostgreSQL Compose 構成のイメージを `:legacy` に置き換えないでください
 
 ## 安全性とロールバック
 
 :::caution
-安全な復旧境界: **更新と移行: コンテナの更新** 起動または続行の前に、次の操作が必要です: [更新と移行: イメージのロールバック](/ja/update/rollback/) · 一致するバックアップ一式; リリースノートと記録済みの不変イメージダイジェスト. このページ固有の確認点: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+安全な復旧境界: **更新と移行: コンテナの更新** 起動または続行の前に、次の操作が必要です: 固定された `:legacy` イメージには DiscVault v26 の機能、移行改善、今後のインターフェイス更新は追加されません; [更新と移行: イメージのロールバック](/ja/update/rollback/) · 一致するバックアップ一式; リリースノートと記録済みの不変イメージダイジェスト. このページ固有の確認点: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
+- 固定された `:legacy` イメージには DiscVault v26 の機能、移行改善、今後のインターフェイス更新は追加されません
 - [更新と移行: イメージのロールバック](/ja/update/rollback/) · 一致するバックアップ一式
 - リリースノートと記録済みの不変イメージダイジェスト
 :::
@@ -110,5 +117,6 @@ trap - EXIT
 ## 情報源と状態
 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- 情報源と状態: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
+- 情報源と状態: `2026-07-15`
+- DiscVault Docs: `0.1.2`

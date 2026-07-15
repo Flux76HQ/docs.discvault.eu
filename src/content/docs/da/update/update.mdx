@@ -1,26 +1,26 @@
 ---
 title: 'Opdatering og migrering: Containeropdatering'
-description: 'Opgavespecifik vejledning til Opdatering og migrering: Containeropdatering: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.'
+description: 'Opgavespecifik vejledning til Opdatering og migrering: Containeropdatering: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.'
 pageId: 'update-update'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
+lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Mål og resultat
 
-Gennemfør den sidespecifikke arbejdsgang for **Opdatering og migrering: Containeropdatering**. Denne fremgangsmåde arbejder med `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+Gennemfør den sidespecifikke arbejdsgang for **Opdatering og migrering: Containeropdatering**. Denne fremgangsmåde arbejder med `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
 ## Gælder for
 
-Denne side gælder kun for **Opdatering og migrering: Containeropdatering** (Docker · Unraid). Kanal- og datagrænserne er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · udgivelsesnoter og registreret uforanderligt image-digest · tilsvarende backupsæt; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · udgivelsesnoter og registreret uforanderligt image-digest · tilsvarende backupsæt. Sidespecifikke kontrolpunkter: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+Denne side gælder kun for **Opdatering og migrering: Containeropdatering** (Docker · Unraid). Kanal- og datagrænserne er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · udgivelsesnoter og registreret uforanderligt image-digest · tilsvarende backupsæt; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · udgivelsesnoter og registreret uforanderligt image-digest · tilsvarende backupsæt. Sidespecifikke kontrolpunkter: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
 ### DiscVault v26 – stabil
 
@@ -41,10 +41,15 @@ Denne side gælder kun for **Opdatering og migrering: Containeropdatering** (Doc
 
 ## Fremgangsmåde
 
-1. **Bekræft:** `PREVIOUS_IMAGE=@sha256:…`
-2. **Vælg:** `DISCVAULT_IMAGE` · `:latest` `:beta`
-3. **Kør:** `--force-recreate`
-4. **Sammenlign:** det tilsigtede image-digest kører, sundhed lykkes, og ejerlogin, bibliotekstal og én medieprøve består
+1. **Kontrollér:** nye installationer bruger DiscVault v26 `:latest` eller `:beta`; det frosne `:legacy`-image er kun til en eksisterende installation af den forrige generation, som endnu ikke er klar til migrering
+2. **Sikkerhedskopiér:** tilsvarende backupsæt
+3. **Vælg:** Kun Legacy-grenen: efter backup ændres kun image-tagget for den eksisterende gamle installation til `:legacy`; hent og genskab den med uændret topologi, kontrollér samlingen, og stop; kør ikke v26-kommandoerne nedenfor
+4. **Åbn:** [Opdatering og migrering: Migrering til DiscVault 26](/da/update/migration/) · DiscVault 26
+5. **Bevar:** behold den forrige generations diskenheder, miljøvariabler, porte og datasti uændret; erstat aldrig et v26 PostgreSQL Compose-image med `:legacy`
+6. **Bekræft:** `DiscVault v26` · `PREVIOUS_IMAGE=@sha256:…`
+7. **Vælg:** `DiscVault v26` · `DISCVAULT_IMAGE` · `:latest` `:beta`
+8. **Kør:** `DiscVault v26` · `--force-recreate`
+9. **Sammenlign:** `DiscVault v26` · det tilsigtede image-digest kører, sundhed lykkes, og ejerlogin, bibliotekstal og én medieprøve består
 
 ### Kommandoer og indstillinger
 
@@ -90,15 +95,17 @@ trap - EXIT
 
 ## Forventet resultat
 
-Godkend resultatet for **Opdatering og migrering: Containeropdatering** kun når alle resultater nedenfor er opfyldt: det tilsigtede image-digest kører, sundhed lykkes, og ejerlogin, bibliotekstal og én medieprøve består. Sidespecifikke kontrolpunkter: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+Godkend resultatet for **Opdatering og migrering: Containeropdatering** kun når alle resultater nedenfor er opfyldt: det tilsigtede image-digest kører, sundhed lykkes, og ejerlogin, bibliotekstal og én medieprøve består; behold den forrige generations diskenheder, miljøvariabler, porte og datasti uændret; erstat aldrig et v26 PostgreSQL Compose-image med `:legacy`. Sidespecifikke kontrolpunkter: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
 - det tilsigtede image-digest kører, sundhed lykkes, og ejerlogin, bibliotekstal og én medieprøve består
+- behold den forrige generations diskenheder, miljøvariabler, porte og datasti uændret; erstat aldrig et v26 PostgreSQL Compose-image med `:legacy`
 
 ## Sikkerhed og tilbagerulning
 
 :::caution
-Den sikre gendannelsesgrænse for **Opdatering og migrering: Containeropdatering** kræver disse handlinger, før noget startes eller fortsættes: [Opdatering og migrering: Tilbagerulning af image](/da/update/rollback/) · tilsvarende backupsæt; udgivelsesnoter og registreret uforanderligt image-digest. Sidespecifikke kontrolpunkter: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+Den sikre gendannelsesgrænse for **Opdatering og migrering: Containeropdatering** kræver disse handlinger, før noget startes eller fortsættes: det frosne `:legacy`-image modtager ingen DiscVault v26-funktioner, migreringsforbedringer eller fremtidige grænsefladeopdateringer; [Opdatering og migrering: Tilbagerulning af image](/da/update/rollback/) · tilsvarende backupsæt; udgivelsesnoter og registreret uforanderligt image-digest. Sidespecifikke kontrolpunkter: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
+- det frosne `:legacy`-image modtager ingen DiscVault v26-funktioner, migreringsforbedringer eller fremtidige grænsefladeopdateringer
 - [Opdatering og migrering: Tilbagerulning af image](/da/update/rollback/) · tilsvarende backupsæt
 - udgivelsesnoter og registreret uforanderligt image-digest
 :::
@@ -110,5 +117,6 @@ Den sikre gendannelsesgrænse for **Opdatering og migrering: Containeropdatering
 ## Kilde og status
 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Kilde og status: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
+- Kilde og status: `2026-07-15`
+- DiscVault Docs: `0.1.2`

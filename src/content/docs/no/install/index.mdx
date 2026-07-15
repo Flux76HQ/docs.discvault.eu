@@ -1,26 +1,26 @@
 ---
 title: 'Installasjon: Installasjonsmåter'
-description: 'Oppgavespesifikk veiledning for Installasjon: Installasjonsmåter: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.'
+description: 'Oppgavespesifikk veiledning for Installasjon: Installasjonsmåter: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.'
 pageId: 'install-index'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
+lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Mål og resultat
 
-Fullfør den sidespesifikke arbeidsflyten for **Installasjon: Installasjonsmåter**. Denne fremgangsmåten bruker `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+Fullfør den sidespesifikke arbeidsflyten for **Installasjon: Installasjonsmåter**. Denne fremgangsmåten bruker `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
 ## Gjelder for
 
-Denne siden gjelder bare **Installasjon: Installasjonsmåter** (Docker · Unraid). Kanal- og datagrensene er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; PostgreSQL `17` `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26; PostgreSQL `17` `/data`. Sidespesifikke kontrollpunkter: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+Denne siden gjelder bare **Installasjon: Installasjonsmåter** (Docker · Unraid). Kanal- og datagrensene er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; PostgreSQL `17` `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26; PostgreSQL `17` `/data`. Sidespesifikke kontrollpunkter: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
 ### DiscVault v26 – stabil
 
@@ -38,13 +38,17 @@ Denne siden gjelder bare **Installasjon: Installasjonsmåter** (Docker · Unraid
 
 - Docker Engine `24+`
 - Docker Compose `v2`
+- tilhørende sikkerhetskopisett
 
 ## Fremgangsmåte
 
 1. **Velg:** [Installasjon: Docker Compose](/no/install/docker-compose/)
 2. **Velg:** [Installasjon: Docker run](/no/install/docker-run/)
 3. **Velg:** [Installasjon: Unraid](/no/install/unraid/) · Unraid
-4. **Registrer:** `DISCVAULT_IMAGE` · tilhørende sikkerhetskopisett
+4. **Velg:** nye installasjoner bruker DiscVault v26 `:latest` eller `:beta`; det fryste `:legacy`-imaget er bare for en eksisterende installasjon av forrige generasjon som ennå ikke er klar for migrering
+5. **Bevar:** behold forrige generasjons volumer, miljøvariabler, porter og databane uendret; bytt aldri et image i v26 PostgreSQL Compose-topologien til `:legacy`
+6. **Åpne:** [Oppdatering og migrering: Migrering til DiscVault 26](/no/update/migration/) · → DiscVault 26
+7. **Registrer:** `DISCVAULT_IMAGE` · tilhørende sikkerhetskopisett
 
 ### Oppgaveruter
 
@@ -52,19 +56,23 @@ Denne siden gjelder bare **Installasjon: Installasjonsmåter** (Docker · Unraid
 - [Installasjon: Docker run](/no/install/docker-run/) — DiscVault 26 Docker run PostgreSQL `/data` `DATABASE_URL`
 - [Installasjon: Varige data og PostgreSQL](/no/install/storage-postgresql/) — DiscVault 26 PostgreSQL `/data`
 - [Installasjon: Unraid](/no/install/unraid/) — DiscVault 26 Unraid PostgreSQL `/data`
+- [Oppdatering og migrering: Migrering til DiscVault 26](/no/update/migration/) — → DiscVault 26
 
 ## Forventet resultat
 
-Godta resultatet for **Installasjon: Installasjonsmåter** bare når alle resultatene nedenfor er oppfylt: valgt utgivelseskanal; PostgreSQL `/data`. Sidespesifikke kontrollpunkter: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+Godta resultatet for **Installasjon: Installasjonsmåter** bare når alle resultatene nedenfor er oppfylt: valgt utgivelseskanal; PostgreSQL `/data`; behold forrige generasjons volumer, miljøvariabler, porter og databane uendret; bytt aldri et image i v26 PostgreSQL Compose-topologien til `:legacy`. Sidespesifikke kontrollpunkter: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
 - valgt utgivelseskanal
 - PostgreSQL `/data`
+- behold forrige generasjons volumer, miljøvariabler, porter og databane uendret; bytt aldri et image i v26 PostgreSQL Compose-topologien til `:legacy`
 
 ## Sikkerhet og tilbakerulling
 
 :::caution
-Den sikre gjenopprettingsgrensen for **Installasjon: Installasjonsmåter** krever disse handlingene før noe startes eller fortsetter: tilhørende sikkerhetskopisett; versjonsnotater og registrert uforanderlig image-digest. Sidespesifikke kontrollpunkter: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+Den sikre gjenopprettingsgrensen for **Installasjon: Installasjonsmåter** krever disse handlingene før noe startes eller fortsetter: Bare Legacy-grenen: etter sikkerhetskopien endrer du kun image-taggen for den eksisterende gamle installasjonen til `:legacy`, henter og oppretter den på nytt med uendret topologi, kontrollerer samlingen og stopper; ikke kjør v26-kommandoene nedenfor; det fryste `:legacy`-imaget får ingen DiscVault v26-funksjoner, migreringsforbedringer eller fremtidige grensesnittoppdateringer; tilhørende sikkerhetskopisett; versjonsnotater og registrert uforanderlig image-digest. Sidespesifikke kontrollpunkter: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
+- Bare Legacy-grenen: etter sikkerhetskopien endrer du kun image-taggen for den eksisterende gamle installasjonen til `:legacy`, henter og oppretter den på nytt med uendret topologi, kontrollerer samlingen og stopper; ikke kjør v26-kommandoene nedenfor
+- det fryste `:legacy`-imaget får ingen DiscVault v26-funksjoner, migreringsforbedringer eller fremtidige grensesnittoppdateringer
 - tilhørende sikkerhetskopisett
 - versjonsnotater og registrert uforanderlig image-digest
 :::
@@ -76,5 +84,6 @@ Den sikre gjenopprettingsgrensen for **Installasjon: Installasjonsmåter** kreve
 ## Kilde og status
 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Kilde og status: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
+- Kilde og status: `2026-07-15`
+- DiscVault Docs: `0.1.2`

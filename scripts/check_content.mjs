@@ -54,7 +54,7 @@ const operationalHeadings = [
 const requiredMarkers = {
   'start-index': ['/install/', '/pwa/', '/ios/', '/android/'],
   'start-requirements': ['Docker Engine', 'Docker Compose', 'HTTPS'],
-  'install-index': [':latest', ':beta', 'PostgreSQL', '/data'],
+  'install-index': [':latest', ':beta', ':legacy', 'PostgreSQL', '/data', '/update/migration/'],
   'install-docker-run': ['DATABASE_URL', 'discvault-postgres', '6080:5000', '/api/next/health'],
   'install-docker-compose': ['DISCVAULT_IMAGE', 'postgres:17-alpine', '6080:5000'],
   'install-unraid': [
@@ -63,12 +63,26 @@ const requiredMarkers = {
     'DISCVAULT_IMAGE',
   ],
   'install-storage-postgresql': ['DISCVAULT_POSTGRES_DATA', 'DISCVAULT_DATA_DIR', 'next-api'],
-  'install-reverse-proxy-passkeys': ['RP_ORIGINS', 'RP_ID', '6080', '/api/next/health'],
+  'install-reverse-proxy-passkeys': [
+    'FQDN',
+    'RP_ORIGINS',
+    'RP_ID',
+    '6080',
+    '/api/next/health',
+    'localhost',
+  ],
   'install-first-start-health': ['/api/next/health', '/api/next/auth/status', '6080:5000'],
   'update-index': ['/update/backup/', '/update/update/', '/update/rollback/'],
   'update-backup': ['pg_dump -Fc', 'PREVIOUS_IMAGE', 'next-api'],
   'update-restore': ['pg_restore --exit-on-error', 'discvault.failed-', 'next-worker', 'next-api'],
-  'update-update': [':latest', ':beta', '--force-recreate', 'DISCVAULT_IMAGE'],
+  'update-update': [
+    ':latest',
+    ':beta',
+    ':legacy',
+    '--force-recreate',
+    'DISCVAULT_IMAGE',
+    '/update/migration/',
+  ],
   'update-rollback': ['PREVIOUS_IMAGE', 'pg_restore --exit-on-error', 'discvault.failed-'],
   'update-migration': ['/migration/readiness', 'ready_for_confirmation', '/data/discvault.db'],
   'configure-index': [
@@ -77,11 +91,27 @@ const requiredMarkers = {
     '/configure/plugins-metadata/',
   ],
   'configure-environment': ['/opt/discvault/.env', 'DISCVAULT_IMAGE', 'chmod 0600', 'RP_ORIGINS'],
-  'configure-auth-rbac': ['/api/next/auth/status', '/api/next/auth/rbac', 'WebAuthn'],
+  'configure-auth-rbac': [
+    '/api/next/auth/status',
+    '/api/next/auth/rbac',
+    'WebAuthn',
+    'Windows Hello',
+    'iOS',
+    'Android',
+  ],
   'configure-plugins-metadata': ['/api/next/plugins/registry', '/data/plugins', 'dryRun'],
   'pwa-index': ['Service Worker', '/pwa/offline/', 'HTTPS'],
   'pwa-install': ['display-mode: standalone', 'iOS/iPadOS', 'Android'],
-  'pwa-library-search': ['watchlist', 'history', 'RBAC'],
+  'pwa-library-search': [
+    'watchlist',
+    'history',
+    'RBAC',
+    'Collectors Mode',
+    'merge_editions_as_title',
+    'box_set',
+    'vault',
+    'collection',
+  ],
   'pwa-offline': ['Service Worker', 'CacheStorage', 'navigator.onLine'],
   'ios-index': ['SwiftData', 'iOS/iPadOS', 'App Lock'],
   'ios-use-sync-limits': ['SwiftData', '/api/v1', 'App Lock'],
@@ -196,7 +226,7 @@ for (const file of files) {
   const content = await readFile(file, 'utf8');
   const relative = relativePath(file);
   const locale = localeFor(relative);
-  const frontmatter = content.match(/^---\n([\s\S]*?)\n---/)?.[1];
+  const frontmatter = content.match(/^---\r?\n([\s\S]*?)\r?\n---/)?.[1];
   if (!frontmatter) {
     errors.push(`${relative}: missing frontmatter`);
     continue;
@@ -212,9 +242,14 @@ for (const file of files) {
     errors.push(`${relative}: missing pageId value`);
     continue;
   }
-  const isLegacyMigration = pageId === 'update-migration';
-  if (!isLegacyMigration && /(?:\bSQLite\b|discvault\.db|\blegacy\b)/i.test(content)) {
-    errors.push(`${relative}: legacy/SQLite is allowed only on the existing-data migration page`);
+  const legacyAllowedPageIds = new Set(['install-index', 'update-update', 'update-migration']);
+  if (
+    !legacyAllowedPageIds.has(pageId) &&
+    /(?:\bSQLite\b|discvault\.db|\blegacy\b)/i.test(content)
+  ) {
+    errors.push(
+      `${relative}: legacy/SQLite is allowed only on install choice, container update, or existing-data migration pages`,
+    );
   }
   for (const [claim, pattern] of [
     ['all-in-one runtime', /(?:current\s+)?all-in-one/i],

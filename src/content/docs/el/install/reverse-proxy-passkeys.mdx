@@ -1,51 +1,57 @@
 ---
 title: 'Εγκατάσταση: Αντίστροφος διακομιστής μεσολάβησης και κλειδιά πρόσβασης'
-description: 'Οδηγίες ειδικά για την εργασία: Εγκατάσταση: Αντίστροφος διακομιστής μεσολάβησης και κλειδιά πρόσβασης: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.'
+description: 'Οδηγίες ειδικά για την εργασία: Εγκατάσταση: Αντίστροφος διακομιστής μεσολάβησης και κλειδιά πρόσβασης: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.'
 pageId: 'install-reverse-proxy-passkeys'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
+lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · ιστός" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · ιστός" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Στόχος και αποτέλεσμα
 
-Ολοκληρώστε τη ροή εργασίας της σελίδας για **Εγκατάσταση: Αντίστροφος διακομιστής μεσολάβησης και κλειδιά πρόσβασης**. Η διαδικασία χρησιμοποιεί `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Ολοκληρώστε τη ροή εργασίας της σελίδας για **Εγκατάσταση: Αντίστροφος διακομιστής μεσολάβησης και κλειδιά πρόσβασης**. Η διαδικασία χρησιμοποιεί FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
 
 ## Ισχύει για
 
-Αυτή η σελίδα ισχύει μόνο για **Εγκατάσταση: Αντίστροφος διακομιστής μεσολάβησης και κλειδιά πρόσβασης** (Docker · ιστός). Τα όρια καναλιού και δεδομένων είναι: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`. Σημεία ελέγχου της σελίδας: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Αυτή η σελίδα ισχύει μόνο για **Εγκατάσταση: Αντίστροφος διακομιστής μεσολάβησης και κλειδιά πρόσβασης** (Docker · ιστός). Τα όρια καναλιού και δεδομένων είναι: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`; εκτός της εξαίρεσης ρύθμισης localhost, τα passkeys απαιτούν σταθερό πλήρως προσδιορισμένο όνομα τομέα μέσω αξιόπιστου HTTPS· γυμνή διεύθυνση IP ή απλό HTTP δεν υποστηρίζονται; το `RP_ID` είναι το hostname χωρίς scheme ή θύρα, ενώ το `RP_ORIGINS` είναι το ακριβές πλήρες HTTPS origin· και τα δύο πρέπει να ταιριάζουν με τη διεύθυνση του προγράμματος περιήγησης; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`; εκτός της εξαίρεσης ρύθμισης localhost, τα passkeys απαιτούν σταθερό πλήρως προσδιορισμένο όνομα τομέα μέσω αξιόπιστου HTTPS· γυμνή διεύθυνση IP ή απλό HTTP δεν υποστηρίζονται; το `RP_ID` είναι το hostname χωρίς scheme ή θύρα, ενώ το `RP_ORIGINS` είναι το ακριβές πλήρες HTTPS origin· και τα δύο πρέπει να ταιριάζουν με τη διεύθυνση του προγράμματος περιήγησης. Σημεία ελέγχου της σελίδας: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
 
 ### DiscVault v26 – σταθερό
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - `RP_ID` `RP_ORIGINS`
 - `6080` API `5000`
+- εκτός της εξαίρεσης ρύθμισης localhost, τα passkeys απαιτούν σταθερό πλήρως προσδιορισμένο όνομα τομέα μέσω αξιόπιστου HTTPS· γυμνή διεύθυνση IP ή απλό HTTP δεν υποστηρίζονται
+- το `RP_ID` είναι το hostname χωρίς scheme ή θύρα, ενώ το `RP_ORIGINS` είναι το ακριβές πλήρες HTTPS origin· και τα δύο πρέπει να ταιριάζουν με τη διεύθυνση του προγράμματος περιήγησης
 
 ### DiscVault v26 – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `RP_ID` `RP_ORIGINS`
 - `6080` API `5000`
+- εκτός της εξαίρεσης ρύθμισης localhost, τα passkeys απαιτούν σταθερό πλήρως προσδιορισμένο όνομα τομέα μέσω αξιόπιστου HTTPS· γυμνή διεύθυνση IP ή απλό HTTP δεν υποστηρίζονται
+- το `RP_ID` είναι το hostname χωρίς scheme ή θύρα, ενώ το `RP_ORIGINS` είναι το ακριβές πλήρες HTTPS origin· και τα δύο πρέπει να ταιριάζουν με τη διεύθυνση του προγράμματος περιήγησης
 
 ## Προϋποθέσεις
 
-- DNS
+- FQDN
 - TLS
-- `6080`
+- `RP_ID`
 
 ## Διαδικασία
 
-1. **Ρυθμίστε:** `RP_ID`
-2. **Ρυθμίστε:** `RP_ORIGINS` · HTTPS
-3. **Ρυθμίστε:** `http://127.0.0.1:6080`
-4. **Δοκιμάστε:** `GET /api/next/health`
+1. **Επιλέξτε:** FQDN · εκτός της εξαίρεσης ρύθμισης localhost, τα passkeys απαιτούν σταθερό πλήρως προσδιορισμένο όνομα τομέα μέσω αξιόπιστου HTTPS· γυμνή διεύθυνση IP ή απλό HTTP δεν υποστηρίζονται
+2. **Ρυθμίστε:** `RP_ID`
+3. **Ρυθμίστε:** `RP_ORIGINS` · HTTPS
+4. **Ρυθμίστε:** `http://127.0.0.1:6080`
+5. **Δοκιμάστε:** `GET /api/next/health`
+6. **Καταγράψτε:** επιλέξτε το hostname πριν καταχωρίσετε passkeys· μεταγενέστερη αλλαγή απαιτεί νέα καταχώριση, ενώ το localhost παραμένει μόνο εξαίρεση τοπικής ρύθμισης
 
 ### Εντολές και ρυθμίσεις
 
@@ -59,16 +65,18 @@ curl --fail https://discvault.example.com/api/next/health
 
 ## Αναμενόμενο αποτέλεσμα
 
-Αποδεχθείτε το αποτέλεσμα για **Εγκατάσταση: Αντίστροφος διακομιστής μεσολάβησης και κλειδιά πρόσβασης** μόνο όταν ισχύουν όλα τα παρακάτω αποτελέσματα: HTTPS · HTTP `2xx`; `RP_ID`. Σημεία ελέγχου της σελίδας: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Αποδεχθείτε το αποτέλεσμα για **Εγκατάσταση: Αντίστροφος διακομιστής μεσολάβησης και κλειδιά πρόσβασης** μόνο όταν ισχύουν όλα τα παρακάτω αποτελέσματα: HTTPS · HTTP `2xx`; `RP_ID`; το `RP_ID` είναι το hostname χωρίς scheme ή θύρα, ενώ το `RP_ORIGINS` είναι το ακριβές πλήρες HTTPS origin· και τα δύο πρέπει να ταιριάζουν με τη διεύθυνση του προγράμματος περιήγησης. Σημεία ελέγχου της σελίδας: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
 
 - HTTPS · HTTP `2xx`
 - `RP_ID`
+- το `RP_ID` είναι το hostname χωρίς scheme ή θύρα, ενώ το `RP_ORIGINS` είναι το ακριβές πλήρες HTTPS origin· και τα δύο πρέπει να ταιριάζουν με τη διεύθυνση του προγράμματος περιήγησης
 
 ## Ασφάλεια και επαναφορά
 
 :::caution
-Το ασφαλές όριο ανάκτησης για **Εγκατάσταση: Αντίστροφος διακομιστής μεσολάβησης και κλειδιά πρόσβασης** απαιτεί αυτές τις ενέργειες πριν από κάθε εκκίνηση ή συνέχεια: επαναφέρετε μαζί τις τιμές proxy και RP και διατηρήστε μέθοδο ανάκτησης κατόχου. Σημεία ελέγχου της σελίδας: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Το ασφαλές όριο ανάκτησης για **Εγκατάσταση: Αντίστροφος διακομιστής μεσολάβησης και κλειδιά πρόσβασης** απαιτεί αυτές τις ενέργειες πριν από κάθε εκκίνηση ή συνέχεια: επιλέξτε το hostname πριν καταχωρίσετε passkeys· μεταγενέστερη αλλαγή απαιτεί νέα καταχώριση, ενώ το localhost παραμένει μόνο εξαίρεση τοπικής ρύθμισης; επαναφέρετε μαζί τις τιμές proxy και RP και διατηρήστε μέθοδο ανάκτησης κατόχου. Σημεία ελέγχου της σελίδας: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
 
+- επιλέξτε το hostname πριν καταχωρίσετε passkeys· μεταγενέστερη αλλαγή απαιτεί νέα καταχώριση, ενώ το localhost παραμένει μόνο εξαίρεση τοπικής ρύθμισης
 - επαναφέρετε μαζί τις τιμές proxy και RP και διατηρήστε μέθοδο ανάκτησης κατόχου
 :::
 
@@ -79,5 +87,6 @@ curl --fail https://discvault.example.com/api/next/health
 ## Πηγή και κατάσταση
 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Πηγή και κατάσταση: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
+- Πηγή και κατάσταση: `2026-07-15`
+- DiscVault Docs: `0.1.2`

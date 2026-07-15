@@ -108,12 +108,20 @@ const routes = [
 ] as const;
 ---
 
-<div class="search-launch">
-  <button type="button" id="home-search"
-    ><span aria-hidden="true">⌕</span>
-    <span>{searchText}</span><kbd aria-hidden="true">/</kbd></button
-  >
-</div>
+<home-search-launcher class="search-launch">
+  <form class="home-search-field" role="search">
+    <button type="submit" aria-label={searchText}><span aria-hidden="true">⌕</span></button>
+    <input
+      type="search"
+      id="home-search"
+      name="q"
+      placeholder={searchText}
+      aria-label={searchText}
+      autocomplete="off"
+    />
+    <kbd aria-hidden="true">/</kbd>
+  </form>
+</home-search-launcher>
 <div class="route-grid">
   {
     routes.map((route) => (
@@ -133,8 +141,69 @@ const routes = [
   }
 </div>
 <script>
-  document.querySelector('#home-search')?.addEventListener('click', () => {
-    const search = document.querySelector('button[data-open-modal]');
-    if (search instanceof HTMLButtonElement) search.click();
-  });
+  class HomeSearchLauncher extends HTMLElement {
+    private abortController = new AbortController();
+
+    connectedCallback() {
+      const form = this.querySelector('form');
+      const input = this.querySelector('input[type="search"]');
+      if (!(form instanceof HTMLFormElement) || !(input instanceof HTMLInputElement)) return;
+
+      form.addEventListener(
+        'submit',
+        (event) => {
+          event.preventDefault();
+          void this.openSearch(input.value);
+        },
+        { signal: this.abortController.signal },
+      );
+
+      document.addEventListener(
+        'keydown',
+        (event) => {
+          if (event.key !== '/' || event.metaKey || event.ctrlKey || event.altKey) return;
+          const target = event.target;
+          if (
+            target instanceof HTMLInputElement ||
+            target instanceof HTMLTextAreaElement ||
+            (target instanceof HTMLElement && target.isContentEditable)
+          )
+            return;
+
+          event.preventDefault();
+          input.focus();
+        },
+        { signal: this.abortController.signal },
+      );
+    }
+
+    disconnectedCallback() {
+      this.abortController.abort();
+    }
+
+    private async openSearch(query: string) {
+      await customElements.whenDefined('site-search');
+      const trigger = document.querySelector('site-search button[data-open-modal]');
+      if (!(trigger instanceof HTMLButtonElement)) return;
+
+      trigger.click();
+      const pagefindInput = await this.waitForPagefindInput();
+      if (!pagefindInput) return;
+
+      pagefindInput.value = query;
+      pagefindInput.dispatchEvent(new Event('input', { bubbles: true }));
+      pagefindInput.focus();
+    }
+
+    private async waitForPagefindInput() {
+      for (let attempt = 0; attempt < 60; attempt += 1) {
+        const input = document.querySelector('#starlight__search input');
+        if (input instanceof HTMLInputElement) return input;
+        await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+      }
+    }
+  }
+
+  if (!customElements.get('home-search-launcher'))
+    customElements.define('home-search-launcher', HomeSearchLauncher);
 </script>

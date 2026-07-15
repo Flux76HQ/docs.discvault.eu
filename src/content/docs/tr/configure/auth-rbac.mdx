@@ -1,49 +1,61 @@
 ---
 title: 'Yapılandırma: Kimlik doğrulama ve RBAC'
-description: 'Göreve özel yönergeler: Yapılandırma: Kimlik doğrulama ve RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.'
+description: 'Göreve özel yönergeler: Yapılandırma: Kimlik doğrulama ve RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.'
 pageId: 'configure-auth-rbac'
 products: ['server']
 platforms: ['web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
+lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Amaç ve sonuç
 
-Sayfaya özel iş akışını tamamlayın: **Yapılandırma: Kimlik doğrulama ve RBAC**. Bu prosedür şunları kullanır: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+Sayfaya özel iş akışını tamamlayın: **Yapılandırma: Kimlik doğrulama ve RBAC**. Bu prosedür şunları kullanır: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
 
 ## Geçerli olduğu alan
 
-Bu sayfa yalnızca şunlar için geçerlidir: **Yapılandırma: Kimlik doğrulama ve RBAC** (web). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn. Sayfaya özel denetim noktaları: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+Bu sayfa yalnızca şunlar için geçerlidir: **Yapılandırma: Kimlik doğrulama ve RBAC** (web). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; passkey bir şifreleme anahtarı çiftidir: özel anahtar cihazda veya güvenilir kimlik bilgisi yöneticisinde kalır, DiscVault yalnızca açık anahtarı saklar; passkey anahtarları kimlik avına dayanıklıdır ve siteye özeldir; oturum açma yeniden kullanılabilir hesap parolası yerine cihaz kilidini açmayı kullanır; süreli davet kodu kaydı başlatır ancak yeniden kullanılabilir hesap parolası değildir; normal oturum açma passkey kullanır; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn; passkey bir şifreleme anahtarı çiftidir: özel anahtar cihazda veya güvenilir kimlik bilgisi yöneticisinde kalır, DiscVault yalnızca açık anahtarı saklar; passkey anahtarları kimlik avına dayanıklıdır ve siteye özeldir; oturum açma yeniden kullanılabilir hesap parolası yerine cihaz kilidini açmayı kullanır; süreli davet kodu kaydı başlatır ancak yeniden kullanılabilir hesap parolası değildir; normal oturum açma passkey kullanır. Sayfaya özel denetim noktaları: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
 
 ### DiscVault v26 kararlı
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - WebAuthn
+- passkey bir şifreleme anahtarı çiftidir: özel anahtar cihazda veya güvenilir kimlik bilgisi yöneticisinde kalır, DiscVault yalnızca açık anahtarı saklar
+- passkey anahtarları kimlik avına dayanıklıdır ve siteye özeldir; oturum açma yeniden kullanılabilir hesap parolası yerine cihaz kilidini açmayı kullanır
+- süreli davet kodu kaydı başlatır ancak yeniden kullanılabilir hesap parolası değildir; normal oturum açma passkey kullanır
 
 ### DiscVault v26 beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - WebAuthn
+- passkey bir şifreleme anahtarı çiftidir: özel anahtar cihazda veya güvenilir kimlik bilgisi yöneticisinde kalır, DiscVault yalnızca açık anahtarı saklar
+- passkey anahtarları kimlik avına dayanıklıdır ve siteye özeldir; oturum açma yeniden kullanılabilir hesap parolası yerine cihaz kilidini açmayı kullanır
+- süreli davet kodu kaydı başlatır ancak yeniden kullanılabilir hesap parolası değildir; normal oturum açma passkey kullanır
 
 ## Ön koşullar
 
 - sahip erişimi
-- HTTPS
+- [Kurulum: Ters vekil ve geçiş anahtarları](/tr/install/reverse-proxy-passkeys/) · HTTPS FQDN
 - ikinci kurtarma yöntemi
 
 ## Prosedür
 
-1. **Açın:** Yönetim → Güvenlik → Kimlik doğrulamayı etkinleştir
-2. **Oluşturun:** Yönetim → Kullanıcılar → 48 saatlik davet oluştur
-3. **Yapılandırın:** Yönetim → Roller → Temel / Gelişmiş
-4. **Test edin:** `48 h`
+1. **İnceleyin:** passkey bir şifreleme anahtarı çiftidir: özel anahtar cihazda veya güvenilir kimlik bilgisi yöneticisinde kalır, DiscVault yalnızca açık anahtarı saklar
+2. **Karşılaştırın:** passkey anahtarları kimlik avına dayanıklıdır ve siteye özeldir; oturum açma yeniden kullanılabilir hesap parolası yerine cihaz kilidini açmayı kullanır · süreli davet kodu kaydı başlatır ancak yeniden kullanılabilir hesap parolası değildir; normal oturum açma passkey kullanır
+3. **Doğrulayın:** Windows için güncel passkey destekli tarayıcı ve en az PIN ile Windows Hello gerekir; yerel yönetim için Windows 11 22H2 veya sonrası önerilir
+4. **Doğrulayın:** macOS için Ventura 13 veya sonrası ile iCloud Anahtar Zinciri ya da başka bir passkey destekli kimlik bilgisi yöneticisi gerekir
+5. **Doğrulayın:** iPhone ve iPad için iCloud Anahtar Zinciri ve iki faktörlü kimlik doğrulama ile iOS veya iPadOS 16+; Android için passkey sağlayıcısı ve ekran kilidi ile sürüm 9+ gerekir
+6. **Oluşturun:** telefon ve masaüstü cihazı gibi birden fazla passkey kaydedin ve cihazı değiştirmeden veya kaybetmeden önce bağımsız sahip kurtarma yolunu koruyun
+7. **Açın:** Yönetim → Güvenlik → Kimlik doğrulamayı etkinleştir
+8. **Oluşturun:** Yönetim → Kullanıcılar → 48 saatlik davet oluştur
+9. **Yapılandırın:** Yönetim → Roller → Temel / Gelişmiş
+10. **Test edin:** WebAuthn
 
 ### Komutlar ve ayarlar
 
@@ -56,15 +68,18 @@ curl --fail http://localhost:6080/api/next/auth/rbac
 
 ## Beklenen sonuç
 
-Şunun sonucunu kabul edin: **Yapılandırma: Kimlik doğrulama ve RBAC** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: sahip passkey girişi çalışır, davetli kayıt ayarla eşleşir ve test kullanıcısında yalnız atanmış izinler bulunur. Sayfaya özel denetim noktaları: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+Şunun sonucunu kabul edin: **Yapılandırma: Kimlik doğrulama ve RBAC** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: sahip passkey girişi çalışır, davetli kayıt ayarla eşleşir ve test kullanıcısında yalnız atanmış izinler bulunur; passkey anahtarları kimlik avına dayanıklıdır ve siteye özeldir; oturum açma yeniden kullanılabilir hesap parolası yerine cihaz kilidini açmayı kullanır; süreli davet kodu kaydı başlatır ancak yeniden kullanılabilir hesap parolası değildir; normal oturum açma passkey kullanır. Sayfaya özel denetim noktaları: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
 
 - sahip passkey girişi çalışır, davetli kayıt ayarla eşleşir ve test kullanıcısında yalnız atanmış izinler bulunur
+- passkey anahtarları kimlik avına dayanıklıdır ve siteye özeldir; oturum açma yeniden kullanılabilir hesap parolası yerine cihaz kilidini açmayı kullanır
+- süreli davet kodu kaydı başlatır ancak yeniden kullanılabilir hesap parolası değildir; normal oturum açma passkey kullanır
 
 ## Güvenlik ve geri alma
 
 :::caution
-Şunun güvenli kurtarma sınırı: **Yapılandırma: Kimlik doğrulama ve RBAC** başlatmadan veya devam etmeden önce şu işlemleri gerektirir: sahip oturumunu ve ikinci bir kurtarma yöntemini koruyun; son sahip geçiş anahtarını asla kaldırmayın. Sayfaya özel denetim noktaları: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+Şunun güvenli kurtarma sınırı: **Yapılandırma: Kimlik doğrulama ve RBAC** başlatmadan veya devam etmeden önce şu işlemleri gerektirir: telefon ve masaüstü cihazı gibi birden fazla passkey kaydedin ve cihazı değiştirmeden veya kaybetmeden önce bağımsız sahip kurtarma yolunu koruyun; sahip oturumunu ve ikinci bir kurtarma yöntemini koruyun; son sahip geçiş anahtarını asla kaldırmayın. Sayfaya özel denetim noktaları: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
 
+- telefon ve masaüstü cihazı gibi birden fazla passkey kaydedin ve cihazı değiştirmeden veya kaybetmeden önce bağımsız sahip kurtarma yolunu koruyun
 - sahip oturumunu ve ikinci bir kurtarma yöntemini koruyun; son sahip geçiş anahtarını asla kaldırmayın
 :::
 
@@ -75,5 +90,6 @@ curl --fail http://localhost:6080/api/next/auth/rbac
 ## Kaynak ve durum
 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Kaynak ve durum: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
+- Kaynak ve durum: `2026-07-15`
+- DiscVault Docs: `0.1.2`

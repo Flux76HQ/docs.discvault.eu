@@ -1,49 +1,61 @@
 ---
 title: 'Configuração: Autenticação e RBAC'
-description: 'Instruções específicas para Configuração: Autenticação e RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.'
+description: 'Instruções específicas para Configuração: Autenticação e RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.'
 pageId: 'configure-auth-rbac'
 products: ['server']
 platforms: ['web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
+lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Objetivo e resultado
 
-Conclua o procedimento específico da página para **Configuração: Autenticação e RBAC**. Este procedimento utiliza `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+Conclua o procedimento específico da página para **Configuração: Autenticação e RBAC**. Este procedimento utiliza `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
 
 ## Aplicável a
 
-Esta página aplica-se apenas a **Configuração: Autenticação e RBAC** (web). Os limites de canal e dados são: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn. Pontos de controlo desta página: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+Esta página aplica-se apenas a **Configuração: Autenticação e RBAC** (web). Os limites de canal e dados são: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; uma passkey é um par de chaves criptográficas: a chave privada permanece no dispositivo ou num gestor de credenciais de confiança e o DiscVault guarda apenas a chave pública; as passkeys resistem ao phishing e são exclusivas do site; o início de sessão usa o desbloqueio do dispositivo em vez de uma palavra-passe reutilizável; um código de convite temporário inicia o registo, mas não é uma palavra-passe reutilizável; o início de sessão normal usa uma passkey; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn; uma passkey é um par de chaves criptográficas: a chave privada permanece no dispositivo ou num gestor de credenciais de confiança e o DiscVault guarda apenas a chave pública; as passkeys resistem ao phishing e são exclusivas do site; o início de sessão usa o desbloqueio do dispositivo em vez de uma palavra-passe reutilizável; um código de convite temporário inicia o registo, mas não é uma palavra-passe reutilizável; o início de sessão normal usa uma passkey. Pontos de controlo desta página: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
 
 ### DiscVault v26 estável
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - WebAuthn
+- uma passkey é um par de chaves criptográficas: a chave privada permanece no dispositivo ou num gestor de credenciais de confiança e o DiscVault guarda apenas a chave pública
+- as passkeys resistem ao phishing e são exclusivas do site; o início de sessão usa o desbloqueio do dispositivo em vez de uma palavra-passe reutilizável
+- um código de convite temporário inicia o registo, mas não é uma palavra-passe reutilizável; o início de sessão normal usa uma passkey
 
 ### DiscVault v26 beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - WebAuthn
+- uma passkey é um par de chaves criptográficas: a chave privada permanece no dispositivo ou num gestor de credenciais de confiança e o DiscVault guarda apenas a chave pública
+- as passkeys resistem ao phishing e são exclusivas do site; o início de sessão usa o desbloqueio do dispositivo em vez de uma palavra-passe reutilizável
+- um código de convite temporário inicia o registo, mas não é uma palavra-passe reutilizável; o início de sessão normal usa uma passkey
 
 ## Pré-requisitos
 
 - acesso de proprietário
-- HTTPS
+- [Instalação: Proxy inverso e chaves de acesso](/pt/install/reverse-proxy-passkeys/) · HTTPS FQDN
 - segundo método de recuperação
 
 ## Procedimento
 
-1. **Abrir:** Administração → Segurança → Ativar autenticação
-2. **Criar:** Administração → Utilizadores → Criar convite de 48 horas
-3. **Configurar:** Administração → Funções → Básico / Avançado
-4. **Testar:** `48 h`
+1. **Inspecionar:** uma passkey é um par de chaves criptográficas: a chave privada permanece no dispositivo ou num gestor de credenciais de confiança e o DiscVault guarda apenas a chave pública
+2. **Comparar:** as passkeys resistem ao phishing e são exclusivas do site; o início de sessão usa o desbloqueio do dispositivo em vez de uma palavra-passe reutilizável · um código de convite temporário inicia o registo, mas não é uma palavra-passe reutilizável; o início de sessão normal usa uma passkey
+3. **Verificar:** o Windows requer um navegador atual compatível com passkeys e Windows Hello com pelo menos um PIN; recomenda-se Windows 11 22H2 ou posterior para gestão nativa
+4. **Verificar:** o macOS requer Ventura 13 ou posterior com Porta-chaves iCloud, ou outro gestor de credenciais compatível com passkeys
+5. **Verificar:** iPhone e iPad requerem iOS ou iPadOS 16+ com Porta-chaves iCloud e autenticação de dois fatores; Android requer a versão 9+ com fornecedor de passkeys e bloqueio de ecrã
+6. **Criar:** registe mais do que uma passkey, por exemplo num telefone e computador, e mantenha uma via independente de recuperação do proprietário antes de substituir ou perder um dispositivo
+7. **Abrir:** Administração → Segurança → Ativar autenticação
+8. **Criar:** Administração → Utilizadores → Criar convite de 48 horas
+9. **Configurar:** Administração → Funções → Básico / Avançado
+10. **Testar:** WebAuthn
 
 ### Comandos e definições
 
@@ -56,15 +68,18 @@ curl --fail http://localhost:6080/api/next/auth/rbac
 
 ## Resultado esperado
 
-Aceite o resultado de **Configuração: Autenticação e RBAC** apenas quando todos os resultados abaixo forem confirmados: o login do proprietário com passkey funciona, o registo por convite segue a definição e o utilizador de teste tem apenas as permissões atribuídas. Pontos de controlo desta página: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+Aceite o resultado de **Configuração: Autenticação e RBAC** apenas quando todos os resultados abaixo forem confirmados: o login do proprietário com passkey funciona, o registo por convite segue a definição e o utilizador de teste tem apenas as permissões atribuídas; as passkeys resistem ao phishing e são exclusivas do site; o início de sessão usa o desbloqueio do dispositivo em vez de uma palavra-passe reutilizável; um código de convite temporário inicia o registo, mas não é uma palavra-passe reutilizável; o início de sessão normal usa uma passkey. Pontos de controlo desta página: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
 
 - o login do proprietário com passkey funciona, o registo por convite segue a definição e o utilizador de teste tem apenas as permissões atribuídas
+- as passkeys resistem ao phishing e são exclusivas do site; o início de sessão usa o desbloqueio do dispositivo em vez de uma palavra-passe reutilizável
+- um código de convite temporário inicia o registo, mas não é uma palavra-passe reutilizável; o início de sessão normal usa uma passkey
 
 ## Segurança e reversão
 
 :::caution
-O limite de recuperação segura de **Configuração: Autenticação e RBAC** exige estas ações antes de iniciar ou continuar: mantenha a sessão do proprietário e um segundo método; nunca remova a última passkey do proprietário. Pontos de controlo desta página: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+O limite de recuperação segura de **Configuração: Autenticação e RBAC** exige estas ações antes de iniciar ou continuar: registe mais do que uma passkey, por exemplo num telefone e computador, e mantenha uma via independente de recuperação do proprietário antes de substituir ou perder um dispositivo; mantenha a sessão do proprietário e um segundo método; nunca remova a última passkey do proprietário. Pontos de controlo desta página: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
 
+- registe mais do que uma passkey, por exemplo num telefone e computador, e mantenha uma via independente de recuperação do proprietário antes de substituir ou perder um dispositivo
 - mantenha a sessão do proprietário e um segundo método; nunca remova a última passkey do proprietário
 :::
 
@@ -75,5 +90,6 @@ O limite de recuperação segura de **Configuração: Autenticação e RBAC** ex
 ## Fonte e estado
 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Fonte e estado: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
+- Fonte e estado: `2026-07-15`
+- DiscVault Docs: `0.1.2`

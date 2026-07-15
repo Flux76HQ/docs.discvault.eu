@@ -1,26 +1,26 @@
 ---
 title: 'Päivitys ja siirto: Säilön päivitys'
-description: 'Tehtäväkohtaiset ohjeet: Päivitys ja siirto: Säilön päivitys: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.'
+description: 'Tehtäväkohtaiset ohjeet: Päivitys ja siirto: Säilön päivitys: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.'
 pageId: 'update-update'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
+lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Tavoite ja tulos
 
-Suorita sivukohtainen työnkulku: **Päivitys ja siirto: Säilön päivitys**. Tässä menettelyssä käytetään `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+Suorita sivukohtainen työnkulku: **Päivitys ja siirto: Säilön päivitys**. Tässä menettelyssä käytetään `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
 ## Koskee
 
-Tämä sivu koskee vain kohdetta **Päivitys ja siirto: Säilön päivitys** (Docker · Unraid). Kanava- ja tietorajat ovat: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · julkaisutiedot ja kirjattu muuttumaton image-tiiviste · vastaava varmuuskopiosarja; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · julkaisutiedot ja kirjattu muuttumaton image-tiiviste · vastaava varmuuskopiosarja. Sivukohtaiset tarkistuspisteet: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+Tämä sivu koskee vain kohdetta **Päivitys ja siirto: Säilön päivitys** (Docker · Unraid). Kanava- ja tietorajat ovat: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · julkaisutiedot ja kirjattu muuttumaton image-tiiviste · vastaava varmuuskopiosarja; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · julkaisutiedot ja kirjattu muuttumaton image-tiiviste · vastaava varmuuskopiosarja. Sivukohtaiset tarkistuspisteet: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
 ### DiscVault v26 – vakaa
 
@@ -41,10 +41,15 @@ Tämä sivu koskee vain kohdetta **Päivitys ja siirto: Säilön päivitys** (Do
 
 ## Toimenpiteet
 
-1. **Vahvista:** `PREVIOUS_IMAGE=@sha256:…`
-2. **Valitse:** `DISCVAULT_IMAGE` · `:latest` `:beta`
-3. **Suorita:** `--force-recreate`
-4. **Vertaa:** tarkoitettu image-tiiviste on käytössä, health onnistuu ja omistajan kirjautuminen, kirjastomäärä sekä mediatesti läpäisevät
+1. **Tarkista:** uudet asennukset käyttävät DiscVault v26 -tunnistetta `:latest` tai `:beta`; jäädytetty `:legacy`-image on vain olemassa olevalle edellisen sukupolven asennukselle, jota ei vielä siirretä
+2. **Varmuuskopioi:** vastaava varmuuskopiosarja
+3. **Valitse:** Vain Legacy-haara: vaihda varmuuskopioinnin jälkeen vain nykyisen vanhan käyttöönoton image-tunnisteeksi `:legacy`, vedä ja luo se uudelleen topologiaa muuttamatta, tarkista kokoelma ja lopeta; älä suorita alla olevia v26-komentoja
+4. **Avaa:** [Päivitys ja siirto: Siirtyminen DiscVault 26:een](/fi/update/migration/) · DiscVault 26
+5. **Säilytä:** pidä edellisen sukupolven taltiot, ympäristömuuttujat, portit ja datapolku ennallaan; älä koskaan vaihda v26 PostgreSQL Compose -topologian imagea `:legacy`-imageksi
+6. **Vahvista:** `DiscVault v26` · `PREVIOUS_IMAGE=@sha256:…`
+7. **Valitse:** `DiscVault v26` · `DISCVAULT_IMAGE` · `:latest` `:beta`
+8. **Suorita:** `DiscVault v26` · `--force-recreate`
+9. **Vertaa:** `DiscVault v26` · tarkoitettu image-tiiviste on käytössä, health onnistuu ja omistajan kirjautuminen, kirjastomäärä sekä mediatesti läpäisevät
 
 ### Komennot ja asetukset
 
@@ -90,15 +95,17 @@ trap - EXIT
 
 ## Odotettu tulos
 
-Hyväksy tulos kohteelle **Päivitys ja siirto: Säilön päivitys** vain kun kaikki seuraavat tulokset toteutuvat: tarkoitettu image-tiiviste on käytössä, health onnistuu ja omistajan kirjautuminen, kirjastomäärä sekä mediatesti läpäisevät. Sivukohtaiset tarkistuspisteet: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+Hyväksy tulos kohteelle **Päivitys ja siirto: Säilön päivitys** vain kun kaikki seuraavat tulokset toteutuvat: tarkoitettu image-tiiviste on käytössä, health onnistuu ja omistajan kirjautuminen, kirjastomäärä sekä mediatesti läpäisevät; pidä edellisen sukupolven taltiot, ympäristömuuttujat, portit ja datapolku ennallaan; älä koskaan vaihda v26 PostgreSQL Compose -topologian imagea `:legacy`-imageksi. Sivukohtaiset tarkistuspisteet: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
 - tarkoitettu image-tiiviste on käytössä, health onnistuu ja omistajan kirjautuminen, kirjastomäärä sekä mediatesti läpäisevät
+- pidä edellisen sukupolven taltiot, ympäristömuuttujat, portit ja datapolku ennallaan; älä koskaan vaihda v26 PostgreSQL Compose -topologian imagea `:legacy`-imageksi
 
 ## Turvallisuus ja palautus
 
 :::caution
-Turvallinen palautusraja kohteelle **Päivitys ja siirto: Säilön päivitys** edellyttää näitä toimia ennen käynnistystä tai jatkamista: [Päivitys ja siirto: Levykuvan palautus](/fi/update/rollback/) · vastaava varmuuskopiosarja; julkaisutiedot ja kirjattu muuttumaton image-tiiviste. Sivukohtaiset tarkistuspisteet: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+Turvallinen palautusraja kohteelle **Päivitys ja siirto: Säilön päivitys** edellyttää näitä toimia ennen käynnistystä tai jatkamista: jäädytetty `:legacy`-image ei saa DiscVault v26 -ominaisuuksia, siirron parannuksia eikä tulevia käyttöliittymäpäivityksiä; [Päivitys ja siirto: Levykuvan palautus](/fi/update/rollback/) · vastaava varmuuskopiosarja; julkaisutiedot ja kirjattu muuttumaton image-tiiviste. Sivukohtaiset tarkistuspisteet: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
+- jäädytetty `:legacy`-image ei saa DiscVault v26 -ominaisuuksia, siirron parannuksia eikä tulevia käyttöliittymäpäivityksiä
 - [Päivitys ja siirto: Levykuvan palautus](/fi/update/rollback/) · vastaava varmuuskopiosarja
 - julkaisutiedot ja kirjattu muuttumaton image-tiiviste
 :::
@@ -110,5 +117,6 @@ Turvallinen palautusraja kohteelle **Päivitys ja siirto: Säilön päivitys** e
 ## Lähde ja tila
 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Lähde ja tila: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
+- Lähde ja tila: `2026-07-15`
+- DiscVault Docs: `0.1.2`

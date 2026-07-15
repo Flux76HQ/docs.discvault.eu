@@ -263,8 +263,8 @@ export default defineConfig({
     starlight({
       title: 'DiscVault Docs',
       description: 'Install, use, and operate DiscVault.',
-      logo: { src: './src/assets/discvault-logo.svg', alt: 'DiscVault' },
-      favicon: '/brand/discvault-icon.svg',
+      logo: { src: './src/assets/discvault-logo.png', alt: 'DiscVault' },
+      favicon: '/brand/discvault-icon.png',
       social: [
         {
           icon: 'github',

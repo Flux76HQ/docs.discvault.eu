@@ -1,51 +1,57 @@
 ---
 title: 'Installation: Omvänd proxy och åtkomstnycklar'
-description: 'Uppgiftsspecifik vägledning för Installation: Omvänd proxy och åtkomstnycklar: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.'
+description: 'Uppgiftsspecifik vägledning för Installation: Omvänd proxy och åtkomstnycklar: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.'
 pageId: 'install-reverse-proxy-passkeys'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
+lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · webb" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · webb" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Mål och resultat
 
-Följ det sidspecifika arbetsflödet för **Installation: Omvänd proxy och åtkomstnycklar**. Den här proceduren använder `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Följ det sidspecifika arbetsflödet för **Installation: Omvänd proxy och åtkomstnycklar**. Den här proceduren använder FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
 
 ## Gäller för
 
-Den här sidan gäller endast **Installation: Omvänd proxy och åtkomstnycklar** (Docker · webb). Kanal- och datagränserna är: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`. Sidspecifika kontrollpunkter: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Den här sidan gäller endast **Installation: Omvänd proxy och åtkomstnycklar** (Docker · webb). Kanal- och datagränserna är: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`; utanför localhost-undantaget kräver passkeys ett stabilt fullständigt domännamn över betrodd HTTPS; en ensam IP-adress eller vanlig HTTP stöds inte; `RP_ID` är värdnamnet utan schema eller port, medan `RP_ORIGINS` är exakt fullständig HTTPS-origin; båda måste motsvara adressen som öppnas i webbläsaren; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`; utanför localhost-undantaget kräver passkeys ett stabilt fullständigt domännamn över betrodd HTTPS; en ensam IP-adress eller vanlig HTTP stöds inte; `RP_ID` är värdnamnet utan schema eller port, medan `RP_ORIGINS` är exakt fullständig HTTPS-origin; båda måste motsvara adressen som öppnas i webbläsaren. Sidspecifika kontrollpunkter: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
 
 ### DiscVault v26 – stabil
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - `RP_ID` `RP_ORIGINS`
 - `6080` API `5000`
+- utanför localhost-undantaget kräver passkeys ett stabilt fullständigt domännamn över betrodd HTTPS; en ensam IP-adress eller vanlig HTTP stöds inte
+- `RP_ID` är värdnamnet utan schema eller port, medan `RP_ORIGINS` är exakt fullständig HTTPS-origin; båda måste motsvara adressen som öppnas i webbläsaren
 
 ### DiscVault v26 – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `RP_ID` `RP_ORIGINS`
 - `6080` API `5000`
+- utanför localhost-undantaget kräver passkeys ett stabilt fullständigt domännamn över betrodd HTTPS; en ensam IP-adress eller vanlig HTTP stöds inte
+- `RP_ID` är värdnamnet utan schema eller port, medan `RP_ORIGINS` är exakt fullständig HTTPS-origin; båda måste motsvara adressen som öppnas i webbläsaren
 
 ## Förutsättningar
 
-- DNS
+- FQDN
 - TLS
-- `6080`
+- `RP_ID`
 
 ## Procedur
 
-1. **Konfigurera:** `RP_ID`
-2. **Konfigurera:** `RP_ORIGINS` · HTTPS
-3. **Konfigurera:** `http://127.0.0.1:6080`
-4. **Testa:** `GET /api/next/health`
+1. **Välj:** FQDN · utanför localhost-undantaget kräver passkeys ett stabilt fullständigt domännamn över betrodd HTTPS; en ensam IP-adress eller vanlig HTTP stöds inte
+2. **Konfigurera:** `RP_ID`
+3. **Konfigurera:** `RP_ORIGINS` · HTTPS
+4. **Konfigurera:** `http://127.0.0.1:6080`
+5. **Testa:** `GET /api/next/health`
+6. **Anteckna:** välj värdnamnet innan passkeys registreras; en senare ändring kräver ny registrering, medan localhost bara är ett lokalt installationsundantag
 
 ### Kommandon och inställningar
 
@@ -59,16 +65,18 @@ curl --fail https://discvault.example.com/api/next/health
 
 ## Förväntat resultat
 
-Godkänn resultatet för **Installation: Omvänd proxy och åtkomstnycklar** endast när alla resultat nedan stämmer: HTTPS · HTTP `2xx`; `RP_ID`. Sidspecifika kontrollpunkter: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Godkänn resultatet för **Installation: Omvänd proxy och åtkomstnycklar** endast när alla resultat nedan stämmer: HTTPS · HTTP `2xx`; `RP_ID`; `RP_ID` är värdnamnet utan schema eller port, medan `RP_ORIGINS` är exakt fullständig HTTPS-origin; båda måste motsvara adressen som öppnas i webbläsaren. Sidspecifika kontrollpunkter: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
 
 - HTTPS · HTTP `2xx`
 - `RP_ID`
+- `RP_ID` är värdnamnet utan schema eller port, medan `RP_ORIGINS` är exakt fullständig HTTPS-origin; båda måste motsvara adressen som öppnas i webbläsaren
 
 ## Säkerhet och återställning
 
 :::caution
-Den säkra återställningsgränsen för **Installation: Omvänd proxy och åtkomstnycklar** kräver dessa åtgärder innan något startas eller fortsätter: återställ proxy- och RP-värden tillsammans och behåll en återställningsmetod för ägaren. Sidspecifika kontrollpunkter: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Den säkra återställningsgränsen för **Installation: Omvänd proxy och åtkomstnycklar** kräver dessa åtgärder innan något startas eller fortsätter: välj värdnamnet innan passkeys registreras; en senare ändring kräver ny registrering, medan localhost bara är ett lokalt installationsundantag; återställ proxy- och RP-värden tillsammans och behåll en återställningsmetod för ägaren. Sidspecifika kontrollpunkter: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
 
+- välj värdnamnet innan passkeys registreras; en senare ändring kräver ny registrering, medan localhost bara är ett lokalt installationsundantag
 - återställ proxy- och RP-värden tillsammans och behåll en återställningsmetod för ägaren
 :::
 
@@ -79,5 +87,6 @@ Den säkra återställningsgränsen för **Installation: Omvänd proxy och åtko
 ## Källa och status
 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Källa och status: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
+- Källa och status: `2026-07-15`
+- DiscVault Docs: `0.1.2`

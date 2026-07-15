@@ -1,51 +1,57 @@
 ---
 title: 'Asennus: Käänteinen välityspalvelin ja pääsyavaimet'
-description: 'Tehtäväkohtaiset ohjeet: Asennus: Käänteinen välityspalvelin ja pääsyavaimet: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.'
+description: 'Tehtäväkohtaiset ohjeet: Asennus: Käänteinen välityspalvelin ja pääsyavaimet: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.'
 pageId: 'install-reverse-proxy-passkeys'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
+lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · verkko" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · verkko" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Tavoite ja tulos
 
-Suorita sivukohtainen työnkulku: **Asennus: Käänteinen välityspalvelin ja pääsyavaimet**. Tässä menettelyssä käytetään `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Suorita sivukohtainen työnkulku: **Asennus: Käänteinen välityspalvelin ja pääsyavaimet**. Tässä menettelyssä käytetään FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
 
 ## Koskee
 
-Tämä sivu koskee vain kohdetta **Asennus: Käänteinen välityspalvelin ja pääsyavaimet** (Docker · verkko). Kanava- ja tietorajat ovat: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`. Sivukohtaiset tarkistuspisteet: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Tämä sivu koskee vain kohdetta **Asennus: Käänteinen välityspalvelin ja pääsyavaimet** (Docker · verkko). Kanava- ja tietorajat ovat: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`; localhost-poikkeuksen ulkopuolella passkey-avaimet vaativat vakaan täydellisen toimialuenimen luotetulla HTTPS-yhteydellä; pelkkää IP-osoitetta tai HTTP-yhteyttä ei tueta; `RP_ID` on isäntänimi ilman skeemaa tai porttia, kun taas `RP_ORIGINS` on tarkka täydellinen HTTPS-origin; molempien on vastattava selaimessa avattua osoitetta; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`; localhost-poikkeuksen ulkopuolella passkey-avaimet vaativat vakaan täydellisen toimialuenimen luotetulla HTTPS-yhteydellä; pelkkää IP-osoitetta tai HTTP-yhteyttä ei tueta; `RP_ID` on isäntänimi ilman skeemaa tai porttia, kun taas `RP_ORIGINS` on tarkka täydellinen HTTPS-origin; molempien on vastattava selaimessa avattua osoitetta. Sivukohtaiset tarkistuspisteet: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
 
 ### DiscVault v26 – vakaa
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - `RP_ID` `RP_ORIGINS`
 - `6080` API `5000`
+- localhost-poikkeuksen ulkopuolella passkey-avaimet vaativat vakaan täydellisen toimialuenimen luotetulla HTTPS-yhteydellä; pelkkää IP-osoitetta tai HTTP-yhteyttä ei tueta
+- `RP_ID` on isäntänimi ilman skeemaa tai porttia, kun taas `RP_ORIGINS` on tarkka täydellinen HTTPS-origin; molempien on vastattava selaimessa avattua osoitetta
 
 ### DiscVault v26 – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `RP_ID` `RP_ORIGINS`
 - `6080` API `5000`
+- localhost-poikkeuksen ulkopuolella passkey-avaimet vaativat vakaan täydellisen toimialuenimen luotetulla HTTPS-yhteydellä; pelkkää IP-osoitetta tai HTTP-yhteyttä ei tueta
+- `RP_ID` on isäntänimi ilman skeemaa tai porttia, kun taas `RP_ORIGINS` on tarkka täydellinen HTTPS-origin; molempien on vastattava selaimessa avattua osoitetta
 
 ## Edellytykset
 
-- DNS
+- FQDN
 - TLS
-- `6080`
+- `RP_ID`
 
 ## Toimenpiteet
 
-1. **Määritä:** `RP_ID`
-2. **Määritä:** `RP_ORIGINS` · HTTPS
-3. **Määritä:** `http://127.0.0.1:6080`
-4. **Testaa:** `GET /api/next/health`
+1. **Valitse:** FQDN · localhost-poikkeuksen ulkopuolella passkey-avaimet vaativat vakaan täydellisen toimialuenimen luotetulla HTTPS-yhteydellä; pelkkää IP-osoitetta tai HTTP-yhteyttä ei tueta
+2. **Määritä:** `RP_ID`
+3. **Määritä:** `RP_ORIGINS` · HTTPS
+4. **Määritä:** `http://127.0.0.1:6080`
+5. **Testaa:** `GET /api/next/health`
+6. **Kirjaa:** valitse isäntänimi ennen passkey-rekisteröintiä; myöhempi muutos vaatii rekisteröinnin uudelleen, ja localhost on vain paikallisen asennuksen poikkeus
 
 ### Komennot ja asetukset
 
@@ -59,16 +65,18 @@ curl --fail https://discvault.example.com/api/next/health
 
 ## Odotettu tulos
 
-Hyväksy tulos kohteelle **Asennus: Käänteinen välityspalvelin ja pääsyavaimet** vain kun kaikki seuraavat tulokset toteutuvat: HTTPS · HTTP `2xx`; `RP_ID`. Sivukohtaiset tarkistuspisteet: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Hyväksy tulos kohteelle **Asennus: Käänteinen välityspalvelin ja pääsyavaimet** vain kun kaikki seuraavat tulokset toteutuvat: HTTPS · HTTP `2xx`; `RP_ID`; `RP_ID` on isäntänimi ilman skeemaa tai porttia, kun taas `RP_ORIGINS` on tarkka täydellinen HTTPS-origin; molempien on vastattava selaimessa avattua osoitetta. Sivukohtaiset tarkistuspisteet: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
 
 - HTTPS · HTTP `2xx`
 - `RP_ID`
+- `RP_ID` on isäntänimi ilman skeemaa tai porttia, kun taas `RP_ORIGINS` on tarkka täydellinen HTTPS-origin; molempien on vastattava selaimessa avattua osoitetta
 
 ## Turvallisuus ja palautus
 
 :::caution
-Turvallinen palautusraja kohteelle **Asennus: Käänteinen välityspalvelin ja pääsyavaimet** edellyttää näitä toimia ennen käynnistystä tai jatkamista: palauta välityspalvelin- ja RP-arvot yhdessä ja säilytä omistajan palautustapa. Sivukohtaiset tarkistuspisteet: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Turvallinen palautusraja kohteelle **Asennus: Käänteinen välityspalvelin ja pääsyavaimet** edellyttää näitä toimia ennen käynnistystä tai jatkamista: valitse isäntänimi ennen passkey-rekisteröintiä; myöhempi muutos vaatii rekisteröinnin uudelleen, ja localhost on vain paikallisen asennuksen poikkeus; palauta välityspalvelin- ja RP-arvot yhdessä ja säilytä omistajan palautustapa. Sivukohtaiset tarkistuspisteet: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
 
+- valitse isäntänimi ennen passkey-rekisteröintiä; myöhempi muutos vaatii rekisteröinnin uudelleen, ja localhost on vain paikallisen asennuksen poikkeus
 - palauta välityspalvelin- ja RP-arvot yhdessä ja säilytä omistajan palautustapa
 :::
 
@@ -79,5 +87,6 @@ Turvallinen palautusraja kohteelle **Asennus: Käänteinen välityspalvelin ja p
 ## Lähde ja tila
 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Lähde ja tila: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
+- Lähde ja tila: `2026-07-15`
+- DiscVault Docs: `0.1.2`

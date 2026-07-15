@@ -1,26 +1,26 @@
 ---
 title: 'Kurulum: Kurulum yolları'
-description: 'Göreve özel yönergeler: Kurulum: Kurulum yolları: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.'
+description: 'Göreve özel yönergeler: Kurulum: Kurulum yolları: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.'
 pageId: 'install-index'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
+lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Amaç ve sonuç
 
-Sayfaya özel iş akışını tamamlayın: **Kurulum: Kurulum yolları**. Bu prosedür şunları kullanır: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+Sayfaya özel iş akışını tamamlayın: **Kurulum: Kurulum yolları**. Bu prosedür şunları kullanır: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
 ## Geçerli olduğu alan
 
-Bu sayfa yalnızca şunlar için geçerlidir: **Kurulum: Kurulum yolları** (Docker · Unraid). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; PostgreSQL `17` `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26; PostgreSQL `17` `/data`. Sayfaya özel denetim noktaları: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+Bu sayfa yalnızca şunlar için geçerlidir: **Kurulum: Kurulum yolları** (Docker · Unraid). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; PostgreSQL `17` `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26; PostgreSQL `17` `/data`. Sayfaya özel denetim noktaları: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
 ### DiscVault v26 kararlı
 
@@ -38,13 +38,17 @@ Bu sayfa yalnızca şunlar için geçerlidir: **Kurulum: Kurulum yolları** (Doc
 
 - Docker Engine `24+`
 - Docker Compose `v2`
+- eşleşen yedek kümesi
 
 ## Prosedür
 
 1. **Seçin:** [Kurulum: Docker Compose](/tr/install/docker-compose/)
 2. **Seçin:** [Kurulum: Docker run](/tr/install/docker-run/)
 3. **Seçin:** [Kurulum: Unraid](/tr/install/unraid/) · Unraid
-4. **Kaydedin:** `DISCVAULT_IMAGE` · eşleşen yedek kümesi
+4. **Seçin:** yeni kurulumlar DiscVault v26 `:latest` veya `:beta` kullanır; dondurulmuş `:legacy` imajı yalnızca henüz geçişe hazır olmayan mevcut önceki nesil kurulum içindir
+5. **Koruyun:** önceki neslin birimlerini, ortam değişkenlerini, bağlantı noktalarını ve veri yolunu değiştirmeyin; v26 PostgreSQL Compose topolojisindeki imajı asla `:legacy` ile değiştirmeyin
+6. **Açın:** [Güncelleme ve geçiş: DiscVault 26 geçişi](/tr/update/migration/) · → DiscVault 26
+7. **Kaydedin:** `DISCVAULT_IMAGE` · eşleşen yedek kümesi
 
 ### Görev yolları
 
@@ -52,19 +56,23 @@ Bu sayfa yalnızca şunlar için geçerlidir: **Kurulum: Kurulum yolları** (Doc
 - [Kurulum: Docker run](/tr/install/docker-run/) — DiscVault 26 Docker run PostgreSQL `/data` `DATABASE_URL`
 - [Kurulum: Kalıcı veriler ve PostgreSQL](/tr/install/storage-postgresql/) — DiscVault 26 PostgreSQL `/data`
 - [Kurulum: Unraid](/tr/install/unraid/) — DiscVault 26 Unraid PostgreSQL `/data`
+- [Güncelleme ve geçiş: DiscVault 26 geçişi](/tr/update/migration/) — → DiscVault 26
 
 ## Beklenen sonuç
 
-Şunun sonucunu kabul edin: **Kurulum: Kurulum yolları** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: seçilen yayın kanalı; PostgreSQL `/data`. Sayfaya özel denetim noktaları: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+Şunun sonucunu kabul edin: **Kurulum: Kurulum yolları** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: seçilen yayın kanalı; PostgreSQL `/data`; önceki neslin birimlerini, ortam değişkenlerini, bağlantı noktalarını ve veri yolunu değiştirmeyin; v26 PostgreSQL Compose topolojisindeki imajı asla `:legacy` ile değiştirmeyin. Sayfaya özel denetim noktaları: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
 - seçilen yayın kanalı
 - PostgreSQL `/data`
+- önceki neslin birimlerini, ortam değişkenlerini, bağlantı noktalarını ve veri yolunu değiştirmeyin; v26 PostgreSQL Compose topolojisindeki imajı asla `:legacy` ile değiştirmeyin
 
 ## Güvenlik ve geri alma
 
 :::caution
-Şunun güvenli kurtarma sınırı: **Kurulum: Kurulum yolları** başlatmadan veya devam etmeden önce şu işlemleri gerektirir: eşleşen yedek kümesi; sürüm notları ve kaydedilmiş değişmez imaj özeti. Sayfaya özel denetim noktaları: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+Şunun güvenli kurtarma sınırı: **Kurulum: Kurulum yolları** başlatmadan veya devam etmeden önce şu işlemleri gerektirir: Yalnızca Legacy dalı: yedekten sonra mevcut eski dağıtımın yalnızca imaj etiketini `:legacy` olarak değiştirin, topolojiyi değiştirmeden çekip yeniden oluşturun, koleksiyonu doğrulayıp durun; aşağıdaki v26 komutlarını çalıştırmayın; dondurulmuş `:legacy` imajı DiscVault v26 özelliklerini, geçiş iyileştirmelerini veya gelecekteki arayüz güncellemelerini almaz; eşleşen yedek kümesi; sürüm notları ve kaydedilmiş değişmez imaj özeti. Sayfaya özel denetim noktaları: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
+- Yalnızca Legacy dalı: yedekten sonra mevcut eski dağıtımın yalnızca imaj etiketini `:legacy` olarak değiştirin, topolojiyi değiştirmeden çekip yeniden oluşturun, koleksiyonu doğrulayıp durun; aşağıdaki v26 komutlarını çalıştırmayın
+- dondurulmuş `:legacy` imajı DiscVault v26 özelliklerini, geçiş iyileştirmelerini veya gelecekteki arayüz güncellemelerini almaz
 - eşleşen yedek kümesi
 - sürüm notları ve kaydedilmiş değişmez imaj özeti
 :::
@@ -76,5 +84,6 @@ Bu sayfa yalnızca şunlar için geçerlidir: **Kurulum: Kurulum yolları** (Doc
 ## Kaynak ve durum
 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Kaynak ve durum: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
+- Kaynak ve durum: `2026-07-15`
+- DiscVault Docs: `0.1.2`

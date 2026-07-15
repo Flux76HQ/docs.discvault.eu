@@ -1,26 +1,26 @@
 ---
 title: 'インストール: インストール方法'
-description: 'タスク別の手順: インストール: インストール方法: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.'
+description: 'タスク別の手順: インストール: インストール方法: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.'
 pageId: 'install-index'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
+lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## 目的と結果
 
-このページ専用の手順を実行します: **インストール: インストール方法**. この手順で扱う項目: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+このページ専用の手順を実行します: **インストール: インストール方法**. この手順で扱う項目: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
 ## 対象
 
-このページの対象は **インストール: インストール方法** (Docker · Unraid). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; PostgreSQL `17` `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26; PostgreSQL `17` `/data`. このページ固有の確認点: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+このページの対象は **インストール: インストール方法** (Docker · Unraid). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; PostgreSQL `17` `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26; PostgreSQL `17` `/data`. このページ固有の確認点: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
 ### DiscVault v26 安定版
 
@@ -38,13 +38,17 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 - Docker Engine `24+`
 - Docker Compose `v2`
+- 一致するバックアップ一式
 
 ## 手順
 
 1. **選択:** [インストール: Docker Compose](/ja/install/docker-compose/)
 2. **選択:** [インストール: Docker run](/ja/install/docker-run/)
 3. **選択:** [インストール: Unraid](/ja/install/unraid/) · Unraid
-4. **記録:** `DISCVAULT_IMAGE` · 一致するバックアップ一式
+4. **選択:** 新規インストールでは DiscVault v26 の `:latest` または `:beta` を使用します。固定された `:legacy` イメージは、まだ移行しない既存の旧世代インストール専用です
+5. **保持:** 旧世代のボリューム、環境変数、ポート、データパスは変更しません。v26 PostgreSQL Compose 構成のイメージを `:legacy` に置き換えないでください
+6. **開く:** [更新と移行: DiscVault 26 への移行](/ja/update/migration/) · → DiscVault 26
+7. **記録:** `DISCVAULT_IMAGE` · 一致するバックアップ一式
 
 ### タスク別ルート
 
@@ -52,19 +56,23 @@ import PageMeta from '../../../../components/PageMeta.astro';
 - [インストール: Docker run](/ja/install/docker-run/) — DiscVault 26 Docker run PostgreSQL `/data` `DATABASE_URL`
 - [インストール: 永続データと PostgreSQL](/ja/install/storage-postgresql/) — DiscVault 26 PostgreSQL `/data`
 - [インストール: Unraid](/ja/install/unraid/) — DiscVault 26 Unraid PostgreSQL `/data`
+- [更新と移行: DiscVault 26 への移行](/ja/update/migration/) — → DiscVault 26
 
 ## 期待される結果
 
-次の結果を受け入れる条件: **インストール: インストール方法** 以下の結果をすべて確認した場合のみ: 選択したリリースチャンネル; PostgreSQL `/data`. このページ固有の確認点: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+次の結果を受け入れる条件: **インストール: インストール方法** 以下の結果をすべて確認した場合のみ: 選択したリリースチャンネル; PostgreSQL `/data`; 旧世代のボリューム、環境変数、ポート、データパスは変更しません。v26 PostgreSQL Compose 構成のイメージを `:legacy` に置き換えないでください. このページ固有の確認点: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
 - 選択したリリースチャンネル
 - PostgreSQL `/data`
+- 旧世代のボリューム、環境変数、ポート、データパスは変更しません。v26 PostgreSQL Compose 構成のイメージを `:legacy` に置き換えないでください
 
 ## 安全性とロールバック
 
 :::caution
-安全な復旧境界: **インストール: インストール方法** 起動または続行の前に、次の操作が必要です: 一致するバックアップ一式; リリースノートと記録済みの不変イメージダイジェスト. このページ固有の確認点: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+安全な復旧境界: **インストール: インストール方法** 起動または続行の前に、次の操作が必要です: Legacy 分岐のみ: バックアップ後、既存の旧世代デプロイのイメージタグだけを `:legacy` に変更し、構成を変えずに pull と再作成を行ってコレクションを確認したら終了します。以下の v26 コマンドは実行しません; 固定された `:legacy` イメージには DiscVault v26 の機能、移行改善、今後のインターフェイス更新は追加されません; 一致するバックアップ一式; リリースノートと記録済みの不変イメージダイジェスト. このページ固有の確認点: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
+- Legacy 分岐のみ: バックアップ後、既存の旧世代デプロイのイメージタグだけを `:legacy` に変更し、構成を変えずに pull と再作成を行ってコレクションを確認したら終了します。以下の v26 コマンドは実行しません
+- 固定された `:legacy` イメージには DiscVault v26 の機能、移行改善、今後のインターフェイス更新は追加されません
 - 一致するバックアップ一式
 - リリースノートと記録済みの不変イメージダイジェスト
 :::
@@ -76,5 +84,6 @@ import PageMeta from '../../../../components/PageMeta.astro';
 ## 情報源と状態
 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- 情報源と状態: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
+- 情報源と状態: `2026-07-15`
+- DiscVault Docs: `0.1.2`

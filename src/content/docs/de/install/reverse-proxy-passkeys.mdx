@@ -1,51 +1,57 @@
 ---
 title: 'Installation: Reverse-Proxy und Passkeys'
-description: 'Aufgabenspezifische Anleitung für Installation: Reverse-Proxy und Passkeys: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.'
+description: 'Aufgabenspezifische Anleitung für Installation: Reverse-Proxy und Passkeys: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.'
 pageId: 'install-reverse-proxy-passkeys'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
+lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Ziel und Ergebnis
 
-Führe den seitenspezifischen Ablauf aus für **Installation: Reverse-Proxy und Passkeys**. Dieses Verfahren arbeitet mit `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Führe den seitenspezifischen Ablauf aus für **Installation: Reverse-Proxy und Passkeys**. Dieses Verfahren arbeitet mit FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
 
 ## Gültig für
 
-Diese Seite gilt ausschließlich für **Installation: Reverse-Proxy und Passkeys** (Docker · Web). Kanal- und Datengrenzen sind: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`. Seitenspezifische Kontrollpunkte: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Diese Seite gilt ausschließlich für **Installation: Reverse-Proxy und Passkeys** (Docker · Web). Kanal- und Datengrenzen sind: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`; außerhalb der localhost-Ausnahme benötigen Passkeys einen stabilen vollqualifizierten Domainnamen über vertrauenswürdiges HTTPS; eine reine IP-Adresse oder unverschlüsseltes HTTP wird nicht unterstützt; `RP_ID` ist der Hostname ohne Schema oder Port, `RP_ORIGINS` die exakte vollständige HTTPS-Origin; beide müssen zur im Browser geöffneten Adresse passen; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`; außerhalb der localhost-Ausnahme benötigen Passkeys einen stabilen vollqualifizierten Domainnamen über vertrauenswürdiges HTTPS; eine reine IP-Adresse oder unverschlüsseltes HTTP wird nicht unterstützt; `RP_ID` ist der Hostname ohne Schema oder Port, `RP_ORIGINS` die exakte vollständige HTTPS-Origin; beide müssen zur im Browser geöffneten Adresse passen. Seitenspezifische Kontrollpunkte: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
 
 ### DiscVault v26 – stabil
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - `RP_ID` `RP_ORIGINS`
 - `6080` API `5000`
+- außerhalb der localhost-Ausnahme benötigen Passkeys einen stabilen vollqualifizierten Domainnamen über vertrauenswürdiges HTTPS; eine reine IP-Adresse oder unverschlüsseltes HTTP wird nicht unterstützt
+- `RP_ID` ist der Hostname ohne Schema oder Port, `RP_ORIGINS` die exakte vollständige HTTPS-Origin; beide müssen zur im Browser geöffneten Adresse passen
 
 ### DiscVault v26 – Beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `RP_ID` `RP_ORIGINS`
 - `6080` API `5000`
+- außerhalb der localhost-Ausnahme benötigen Passkeys einen stabilen vollqualifizierten Domainnamen über vertrauenswürdiges HTTPS; eine reine IP-Adresse oder unverschlüsseltes HTTP wird nicht unterstützt
+- `RP_ID` ist der Hostname ohne Schema oder Port, `RP_ORIGINS` die exakte vollständige HTTPS-Origin; beide müssen zur im Browser geöffneten Adresse passen
 
 ## Voraussetzungen
 
-- DNS
+- FQDN
 - TLS
-- `6080`
+- `RP_ID`
 
 ## Vorgehen
 
-1. **Konfigurieren:** `RP_ID`
-2. **Konfigurieren:** `RP_ORIGINS` · HTTPS
-3. **Konfigurieren:** `http://127.0.0.1:6080`
-4. **Testen:** `GET /api/next/health`
+1. **Auswählen:** FQDN · außerhalb der localhost-Ausnahme benötigen Passkeys einen stabilen vollqualifizierten Domainnamen über vertrauenswürdiges HTTPS; eine reine IP-Adresse oder unverschlüsseltes HTTP wird nicht unterstützt
+2. **Konfigurieren:** `RP_ID`
+3. **Konfigurieren:** `RP_ORIGINS` · HTTPS
+4. **Konfigurieren:** `http://127.0.0.1:6080`
+5. **Testen:** `GET /api/next/health`
+6. **Festhalten:** Hostname vor der Passkey-Registrierung wählen; eine spätere Änderung erfordert eine erneute Registrierung, localhost bleibt nur eine lokale Setup-Ausnahme
 
 ### Befehle und Einstellungen
 
@@ -59,16 +65,18 @@ curl --fail https://discvault.example.com/api/next/health
 
 ## Erwartetes Ergebnis
 
-Akzeptiere das Ergebnis für **Installation: Reverse-Proxy und Passkeys** nur wenn alle folgenden Ergebnisse erfüllt sind: HTTPS · HTTP `2xx`; `RP_ID`. Seitenspezifische Kontrollpunkte: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Akzeptiere das Ergebnis für **Installation: Reverse-Proxy und Passkeys** nur wenn alle folgenden Ergebnisse erfüllt sind: HTTPS · HTTP `2xx`; `RP_ID`; `RP_ID` ist der Hostname ohne Schema oder Port, `RP_ORIGINS` die exakte vollständige HTTPS-Origin; beide müssen zur im Browser geöffneten Adresse passen. Seitenspezifische Kontrollpunkte: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
 
 - HTTPS · HTTP `2xx`
 - `RP_ID`
+- `RP_ID` ist der Hostname ohne Schema oder Port, `RP_ORIGINS` die exakte vollständige HTTPS-Origin; beide müssen zur im Browser geöffneten Adresse passen
 
 ## Sicherheit und Rollback
 
 :::caution
-Die sichere Wiederherstellungsgrenze für **Installation: Reverse-Proxy und Passkeys** verlangt vor jedem Start oder Fortsetzen diese Maßnahmen: Proxy- und RP-Werte gemeinsam wiederherstellen und eine Owner-Wiederherstellung behalten. Seitenspezifische Kontrollpunkte: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Die sichere Wiederherstellungsgrenze für **Installation: Reverse-Proxy und Passkeys** verlangt vor jedem Start oder Fortsetzen diese Maßnahmen: Hostname vor der Passkey-Registrierung wählen; eine spätere Änderung erfordert eine erneute Registrierung, localhost bleibt nur eine lokale Setup-Ausnahme; Proxy- und RP-Werte gemeinsam wiederherstellen und eine Owner-Wiederherstellung behalten. Seitenspezifische Kontrollpunkte: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
 
+- Hostname vor der Passkey-Registrierung wählen; eine spätere Änderung erfordert eine erneute Registrierung, localhost bleibt nur eine lokale Setup-Ausnahme
 - Proxy- und RP-Werte gemeinsam wiederherstellen und eine Owner-Wiederherstellung behalten
 :::
 
@@ -79,5 +87,6 @@ Die sichere Wiederherstellungsgrenze für **Installation: Reverse-Proxy und Pass
 ## Quelle und Status
 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Quelle und Status: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
+- Quelle und Status: `2026-07-15`
+- DiscVault Docs: `0.1.2`

@@ -1,51 +1,57 @@
 ---
 title: '安装: 反向代理和通行密钥'
-description: '任务专用说明： 安装: 反向代理和通行密钥: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.'
+description: '任务专用说明： 安装: 反向代理和通行密钥: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.'
 pageId: 'install-reverse-proxy-passkeys'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
+lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · 网页" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · 网页" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## 目标和结果
 
-完成此页面专用的流程： **安装: 反向代理和通行密钥**. 此流程使用 `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+完成此页面专用的流程： **安装: 反向代理和通行密钥**. 此流程使用 FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
 
 ## 适用范围
 
-本页面仅适用于 **安装: 反向代理和通行密钥** (Docker · 网页). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`. 本页面专用检查点： `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+本页面仅适用于 **安装: 反向代理和通行密钥** (Docker · 网页). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`; 除 localhost 设置例外外，通行密钥需要通过受信任 HTTPS 使用稳定的完全限定域名；不支持裸 IP 地址或普通 HTTP; `RP_ID` 是不含方案和端口的主机名，`RP_ORIGINS` 是精确完整的 HTTPS 来源；两者都必须与浏览器中打开的地址一致; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`; 除 localhost 设置例外外，通行密钥需要通过受信任 HTTPS 使用稳定的完全限定域名；不支持裸 IP 地址或普通 HTTP; `RP_ID` 是不含方案和端口的主机名，`RP_ORIGINS` 是精确完整的 HTTPS 来源；两者都必须与浏览器中打开的地址一致. 本页面专用检查点： FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
 
 ### DiscVault v26 稳定版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - `RP_ID` `RP_ORIGINS`
 - `6080` API `5000`
+- 除 localhost 设置例外外，通行密钥需要通过受信任 HTTPS 使用稳定的完全限定域名；不支持裸 IP 地址或普通 HTTP
+- `RP_ID` 是不含方案和端口的主机名，`RP_ORIGINS` 是精确完整的 HTTPS 来源；两者都必须与浏览器中打开的地址一致
 
 ### DiscVault v26 测试版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `RP_ID` `RP_ORIGINS`
 - `6080` API `5000`
+- 除 localhost 设置例外外，通行密钥需要通过受信任 HTTPS 使用稳定的完全限定域名；不支持裸 IP 地址或普通 HTTP
+- `RP_ID` 是不含方案和端口的主机名，`RP_ORIGINS` 是精确完整的 HTTPS 来源；两者都必须与浏览器中打开的地址一致
 
 ## 前提条件
 
-- DNS
+- FQDN
 - TLS
-- `6080`
+- `RP_ID`
 
 ## 操作步骤
 
-1. **配置:** `RP_ID`
-2. **配置:** `RP_ORIGINS` · HTTPS
-3. **配置:** `http://127.0.0.1:6080`
-4. **测试:** `GET /api/next/health`
+1. **选择:** FQDN · 除 localhost 设置例外外，通行密钥需要通过受信任 HTTPS 使用稳定的完全限定域名；不支持裸 IP 地址或普通 HTTP
+2. **配置:** `RP_ID`
+3. **配置:** `RP_ORIGINS` · HTTPS
+4. **配置:** `http://127.0.0.1:6080`
+5. **测试:** `GET /api/next/health`
+6. **记录:** 注册通行密钥前先确定主机名；之后更改主机名需要重新注册，而 localhost 仅作为本地设置例外
 
 ### 命令和设置
 
@@ -59,16 +65,18 @@ curl --fail https://discvault.example.com/api/next/health
 
 ## 预期结果
 
-仅在以下条件下接受结果： **安装: 反向代理和通行密钥** 必须确认以下所有结果： HTTPS · HTTP `2xx`; `RP_ID`. 本页面专用检查点： `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+仅在以下条件下接受结果： **安装: 反向代理和通行密钥** 必须确认以下所有结果： HTTPS · HTTP `2xx`; `RP_ID`; `RP_ID` 是不含方案和端口的主机名，`RP_ORIGINS` 是精确完整的 HTTPS 来源；两者都必须与浏览器中打开的地址一致. 本页面专用检查点： FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
 
 - HTTPS · HTTP `2xx`
 - `RP_ID`
+- `RP_ID` 是不含方案和端口的主机名，`RP_ORIGINS` 是精确完整的 HTTPS 来源；两者都必须与浏览器中打开的地址一致
 
 ## 安全与回滚
 
 :::caution
-安全恢复边界： **安装: 反向代理和通行密钥** 在启动或继续任何操作前必须执行： 必须同时恢复代理与 RP 值，并保留所有者恢复方式. 本页面专用检查点： `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+安全恢复边界： **安装: 反向代理和通行密钥** 在启动或继续任何操作前必须执行： 注册通行密钥前先确定主机名；之后更改主机名需要重新注册，而 localhost 仅作为本地设置例外; 必须同时恢复代理与 RP 值，并保留所有者恢复方式. 本页面专用检查点： FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
 
+- 注册通行密钥前先确定主机名；之后更改主机名需要重新注册，而 localhost 仅作为本地设置例外
 - 必须同时恢复代理与 RP 值，并保留所有者恢复方式
 :::
 
@@ -79,5 +87,6 @@ curl --fail https://discvault.example.com/api/next/health
 ## 来源和状态
 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- 来源和状态: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
+- 来源和状态: `2026-07-15`
+- DiscVault Docs: `0.1.2`

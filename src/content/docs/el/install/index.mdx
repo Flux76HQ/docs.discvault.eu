@@ -1,26 +1,26 @@
 ---
 title: 'Εγκατάσταση: Διαδρομές εγκατάστασης'
-description: 'Οδηγίες ειδικά για την εργασία: Εγκατάσταση: Διαδρομές εγκατάστασης: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.'
+description: 'Οδηγίες ειδικά για την εργασία: Εγκατάσταση: Διαδρομές εγκατάστασης: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.'
 pageId: 'install-index'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
+lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Στόχος και αποτέλεσμα
 
-Ολοκληρώστε τη ροή εργασίας της σελίδας για **Εγκατάσταση: Διαδρομές εγκατάστασης**. Η διαδικασία χρησιμοποιεί `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+Ολοκληρώστε τη ροή εργασίας της σελίδας για **Εγκατάσταση: Διαδρομές εγκατάστασης**. Η διαδικασία χρησιμοποιεί `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
 ## Ισχύει για
 
-Αυτή η σελίδα ισχύει μόνο για **Εγκατάσταση: Διαδρομές εγκατάστασης** (Docker · Unraid). Τα όρια καναλιού και δεδομένων είναι: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; PostgreSQL `17` `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26; PostgreSQL `17` `/data`. Σημεία ελέγχου της σελίδας: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+Αυτή η σελίδα ισχύει μόνο για **Εγκατάσταση: Διαδρομές εγκατάστασης** (Docker · Unraid). Τα όρια καναλιού και δεδομένων είναι: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; PostgreSQL `17` `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26; PostgreSQL `17` `/data`. Σημεία ελέγχου της σελίδας: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
 ### DiscVault v26 – σταθερό
 
@@ -38,13 +38,17 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 - Docker Engine `24+`
 - Docker Compose `v2`
+- αντίστοιχο σύνολο αντιγράφων
 
 ## Διαδικασία
 
 1. **Επιλέξτε:** [Εγκατάσταση: Docker Compose](/el/install/docker-compose/)
 2. **Επιλέξτε:** [Εγκατάσταση: Docker run](/el/install/docker-run/)
 3. **Επιλέξτε:** [Εγκατάσταση: Unraid](/el/install/unraid/) · Unraid
-4. **Καταγράψτε:** `DISCVAULT_IMAGE` · αντίστοιχο σύνολο αντιγράφων
+4. **Επιλέξτε:** οι νέες εγκαταστάσεις χρησιμοποιούν DiscVault v26 `:latest` ή `:beta`· η παγωμένη εικόνα `:legacy` προορίζεται μόνο για υπάρχουσα εγκατάσταση προηγούμενης γενιάς που δεν είναι έτοιμη για μετεγκατάσταση
+5. **Διατηρήστε:** διατηρήστε αμετάβλητα τα volumes, τις μεταβλητές περιβάλλοντος, τις θύρες και τη διαδρομή δεδομένων της προηγούμενης γενιάς· μην αντικαθιστάτε ποτέ εικόνα στην τοπολογία v26 PostgreSQL Compose με `:legacy`
+6. **Ανοίξτε:** [Ενημέρωση και μετεγκατάσταση: Μετεγκατάσταση στο DiscVault 26](/el/update/migration/) · → DiscVault 26
+7. **Καταγράψτε:** `DISCVAULT_IMAGE` · αντίστοιχο σύνολο αντιγράφων
 
 ### Διαδρομές εργασιών
 
@@ -52,19 +56,23 @@ import PageMeta from '../../../../components/PageMeta.astro';
 - [Εγκατάσταση: Docker run](/el/install/docker-run/) — DiscVault 26 Docker run PostgreSQL `/data` `DATABASE_URL`
 - [Εγκατάσταση: Μόνιμα δεδομένα και PostgreSQL](/el/install/storage-postgresql/) — DiscVault 26 PostgreSQL `/data`
 - [Εγκατάσταση: Unraid](/el/install/unraid/) — DiscVault 26 Unraid PostgreSQL `/data`
+- [Ενημέρωση και μετεγκατάσταση: Μετεγκατάσταση στο DiscVault 26](/el/update/migration/) — → DiscVault 26
 
 ## Αναμενόμενο αποτέλεσμα
 
-Αποδεχθείτε το αποτέλεσμα για **Εγκατάσταση: Διαδρομές εγκατάστασης** μόνο όταν ισχύουν όλα τα παρακάτω αποτελέσματα: επιλεγμένο κανάλι έκδοσης; PostgreSQL `/data`. Σημεία ελέγχου της σελίδας: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+Αποδεχθείτε το αποτέλεσμα για **Εγκατάσταση: Διαδρομές εγκατάστασης** μόνο όταν ισχύουν όλα τα παρακάτω αποτελέσματα: επιλεγμένο κανάλι έκδοσης; PostgreSQL `/data`; διατηρήστε αμετάβλητα τα volumes, τις μεταβλητές περιβάλλοντος, τις θύρες και τη διαδρομή δεδομένων της προηγούμενης γενιάς· μην αντικαθιστάτε ποτέ εικόνα στην τοπολογία v26 PostgreSQL Compose με `:legacy`. Σημεία ελέγχου της σελίδας: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
 - επιλεγμένο κανάλι έκδοσης
 - PostgreSQL `/data`
+- διατηρήστε αμετάβλητα τα volumes, τις μεταβλητές περιβάλλοντος, τις θύρες και τη διαδρομή δεδομένων της προηγούμενης γενιάς· μην αντικαθιστάτε ποτέ εικόνα στην τοπολογία v26 PostgreSQL Compose με `:legacy`
 
 ## Ασφάλεια και επαναφορά
 
 :::caution
-Το ασφαλές όριο ανάκτησης για **Εγκατάσταση: Διαδρομές εγκατάστασης** απαιτεί αυτές τις ενέργειες πριν από κάθε εκκίνηση ή συνέχεια: αντίστοιχο σύνολο αντιγράφων; σημειώσεις έκδοσης και καταγεγραμμένο αμετάβλητο digest. Σημεία ελέγχου της σελίδας: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+Το ασφαλές όριο ανάκτησης για **Εγκατάσταση: Διαδρομές εγκατάστασης** απαιτεί αυτές τις ενέργειες πριν από κάθε εκκίνηση ή συνέχεια: Μόνο κλάδος Legacy: μετά το αντίγραφο αλλάξτε μόνο το tag εικόνας του υπάρχοντος παλιού deployment σε `:legacy`, κάντε pull και αναδημιουργία με αμετάβλητη τοπολογία, επαληθεύστε τη συλλογή και σταματήστε· μην εκτελέσετε τις παρακάτω εντολές v26; η παγωμένη εικόνα `:legacy` δεν λαμβάνει λειτουργίες DiscVault v26, βελτιώσεις μετεγκατάστασης ή μελλοντικές ενημερώσεις διεπαφής; αντίστοιχο σύνολο αντιγράφων; σημειώσεις έκδοσης και καταγεγραμμένο αμετάβλητο digest. Σημεία ελέγχου της σελίδας: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
+- Μόνο κλάδος Legacy: μετά το αντίγραφο αλλάξτε μόνο το tag εικόνας του υπάρχοντος παλιού deployment σε `:legacy`, κάντε pull και αναδημιουργία με αμετάβλητη τοπολογία, επαληθεύστε τη συλλογή και σταματήστε· μην εκτελέσετε τις παρακάτω εντολές v26
+- η παγωμένη εικόνα `:legacy` δεν λαμβάνει λειτουργίες DiscVault v26, βελτιώσεις μετεγκατάστασης ή μελλοντικές ενημερώσεις διεπαφής
 - αντίστοιχο σύνολο αντιγράφων
 - σημειώσεις έκδοσης και καταγεγραμμένο αμετάβλητο digest
 :::
@@ -76,5 +84,6 @@ import PageMeta from '../../../../components/PageMeta.astro';
 ## Πηγή και κατάσταση
 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Πηγή και κατάσταση: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
+- Πηγή και κατάσταση: `2026-07-15`
+- DiscVault Docs: `0.1.2`

@@ -1,36 +1,40 @@
 ---
 title: 'PWA: Biblioteca e pesquisa'
-description: 'Instruções específicas para PWA: Biblioteca e pesquisa: PWA · `watchlist` · `history` · RBAC.'
+description: 'Instruções específicas para PWA: Biblioteca e pesquisa: PWA · `watchlist` · `history` · RBAC · `merge_editions_as_title` · `box_set` · `vault` · `collection`.'
 pageId: 'pwa-library-search'
 products: ['pwa']
 platforms: ['web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
+lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Objetivo e resultado
 
-Conclua o procedimento específico da página para **PWA: Biblioteca e pesquisa**. Este procedimento utiliza PWA · `watchlist` · `history` · RBAC.
+Conclua o procedimento específico da página para **PWA: Biblioteca e pesquisa**. Este procedimento utiliza PWA · `watchlist` · `history` · RBAC · `merge_editions_as_title` · `box_set` · `vault` · `collection`.
 
 ## Aplicável a
 
-Esta página aplica-se apenas a **PWA: Biblioteca e pesquisa** (web). Os limites de canal e dados são: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PWA · RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PWA · RBAC. Pontos de controlo desta página: PWA · `watchlist` · `history` · RBAC.
+Esta página aplica-se apenas a **PWA: Biblioteca e pesquisa** (web). Os limites de canal e dados são: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PWA · RBAC; Collectors Mode está desativado por predefinição e apresenta funções avançadas de contentores; `merge_editions_as_title` é uma preferência separada, também desativada por predefinição; quando `merge_editions_as_title` está ativo, várias versões físicas aparecem como um único mosaico; abra-o para ver todas as edições; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PWA · RBAC; Collectors Mode está desativado por predefinição e apresenta funções avançadas de contentores; `merge_editions_as_title` é uma preferência separada, também desativada por predefinição; quando `merge_editions_as_title` está ativo, várias versões físicas aparecem como um único mosaico; abra-o para ver todas as edições. Pontos de controlo desta página: PWA · `watchlist` · `history` · RBAC · `merge_editions_as_title` · `box_set` · `vault` · `collection`.
 
 ### DiscVault v26 estável
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - PWA · RBAC
+- Collectors Mode está desativado por predefinição e apresenta funções avançadas de contentores; `merge_editions_as_title` é uma preferência separada, também desativada por predefinição
+- quando `merge_editions_as_title` está ativo, várias versões físicas aparecem como um único mosaico; abra-o para ver todas as edições
 
 ### DiscVault v26 beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - PWA · RBAC
+- Collectors Mode está desativado por predefinição e apresenta funções avançadas de contentores; `merge_editions_as_title` é uma preferência separada, também desativada por predefinição
+- quando `merge_editions_as_title` está ativo, várias versões físicas aparecem como um único mosaico; abra-o para ver todas as edições
 
 ## Pré-requisitos
 
@@ -43,22 +47,33 @@ Esta página aplica-se apenas a **PWA: Biblioteca e pesquisa** (web). Os limites
 2. **Configurar:** Biblioteca → Filtro → Formato / Género / Grupo
 3. **Comparar:** Biblioteca → Vista → Cartazes / Lista
 4. **Testar:** Título → Detalhes → Lista / Visto
+5. **Configurar:** Collectors Mode está desativado por predefinição e apresenta funções avançadas de contentores; `merge_editions_as_title` é uma preferência separada, também desativada por predefinição
+6. **Testar:** quando `merge_editions_as_title` está ativo, várias versões físicas aparecem como um único mosaico; abra-o para ver todas as edições
+7. **Comparar:** um box-set é um produto físico de venda com código de barras próprio; os filmes continuam títulos individuais ligados como membros diretos
+8. **Comparar:** um vault é um agrupamento criado pelo utilizador para prateleira, caixa ou localização, com filmes diretos e sem significado de produto comercial
+9. **Comparar:** uma collection é um agrupamento temático cujos itens ordenados podem ser filmes, box-sets, vaults ou outras collections, permitindo aninhamento
+10. **Testar:** desativar Collectors Mode oculta a apresentação dos contentores, mas não elimina contentores nem membros
 
 
 
 ## Resultado esperado
 
-Aceite o resultado de **PWA: Biblioteca e pesquisa** apenas quando todos os resultados abaixo forem confirmados: Biblioteca → Pesquisar; Biblioteca → Filtro → Formato / Género / Grupo; Título → Detalhes → Lista / Visto. Pontos de controlo desta página: PWA · `watchlist` · `history` · RBAC.
+Aceite o resultado de **PWA: Biblioteca e pesquisa** apenas quando todos os resultados abaixo forem confirmados: Biblioteca → Pesquisar; Biblioteca → Filtro → Formato / Género / Grupo; Título → Detalhes → Lista / Visto; quando `merge_editions_as_title` está ativo, várias versões físicas aparecem como um único mosaico; abra-o para ver todas as edições; um box-set é um produto físico de venda com código de barras próprio; os filmes continuam títulos individuais ligados como membros diretos; um vault é um agrupamento criado pelo utilizador para prateleira, caixa ou localização, com filmes diretos e sem significado de produto comercial; uma collection é um agrupamento temático cujos itens ordenados podem ser filmes, box-sets, vaults ou outras collections, permitindo aninhamento. Pontos de controlo desta página: PWA · `watchlist` · `history` · RBAC · `merge_editions_as_title` · `box_set` · `vault` · `collection`.
 
 - Biblioteca → Pesquisar
 - Biblioteca → Filtro → Formato / Género / Grupo
 - Título → Detalhes → Lista / Visto
+- quando `merge_editions_as_title` está ativo, várias versões físicas aparecem como um único mosaico; abra-o para ver todas as edições
+- um box-set é um produto físico de venda com código de barras próprio; os filmes continuam títulos individuais ligados como membros diretos
+- um vault é um agrupamento criado pelo utilizador para prateleira, caixa ou localização, com filmes diretos e sem significado de produto comercial
+- uma collection é um agrupamento temático cujos itens ordenados podem ser filmes, box-sets, vaults ou outras collections, permitindo aninhamento
 
 ## Segurança e reversão
 
 :::caution
-O limite de recuperação segura de **PWA: Biblioteca e pesquisa** exige estas ações antes de iniciar ou continuar: cancele uma edição errada antes de guardar, restaure o campo na interface e use uma cópia correspondente perante corrupção em massa. Pontos de controlo desta página: PWA · `watchlist` · `history` · RBAC.
+O limite de recuperação segura de **PWA: Biblioteca e pesquisa** exige estas ações antes de iniciar ou continuar: desativar Collectors Mode oculta a apresentação dos contentores, mas não elimina contentores nem membros; cancele uma edição errada antes de guardar, restaure o campo na interface e use uma cópia correspondente perante corrupção em massa. Pontos de controlo desta página: PWA · `watchlist` · `history` · RBAC · `merge_editions_as_title` · `box_set` · `vault` · `collection`.
 
+- desativar Collectors Mode oculta a apresentação dos contentores, mas não elimina contentores nem membros
 - cancele uma edição errada antes de guardar, restaure o campo na interface e use uma cópia correspondente perante corrupção em massa
 :::
 
@@ -69,5 +84,6 @@ O limite de recuperação segura de **PWA: Biblioteca e pesquisa** exige estas a
 ## Fonte e estado
 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Fonte e estado: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
+- Fonte e estado: `2026-07-15`
+- DiscVault Docs: `0.1.2`

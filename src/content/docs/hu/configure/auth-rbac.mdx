@@ -1,49 +1,61 @@
 ---
 title: 'Konfigurálás: Hitelesítés és RBAC'
-description: 'Feladatspecifikus útmutató: Konfigurálás: Hitelesítés és RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.'
+description: 'Feladatspecifikus útmutató: Konfigurálás: Hitelesítés és RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.'
 pageId: 'configure-auth-rbac'
 products: ['server']
 platforms: ['web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
+lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Cél és eredmény
 
-Hajtsa végre az oldalhoz tartozó munkafolyamatot: **Konfigurálás: Hitelesítés és RBAC**. Ez az eljárás ezeket használja: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+Hajtsa végre az oldalhoz tartozó munkafolyamatot: **Konfigurálás: Hitelesítés és RBAC**. Ez az eljárás ezeket használja: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
 
 ## Érvényesség
 
-Ez az oldal kizárólag erre vonatkozik: **Konfigurálás: Hitelesítés és RBAC** (web). A csatorna- és adathatárok: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn. Oldalspecifikus ellenőrzési pontok: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+Ez az oldal kizárólag erre vonatkozik: **Konfigurálás: Hitelesítés és RBAC** (web). A csatorna- és adathatárok: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; a passkey egy kriptográfiai kulcspár: a privát kulcs az eszközön vagy megbízható hitelesítőadat-kezelőben marad, a DiscVault csak a nyilvános kulcsot tárolja; a passkey adathalászat-ellenálló és webhelyenként egyedi; a bejelentkezés újrahasználható jelszó helyett az eszköz feloldását használja; az időkorlátos meghívókód elindítja a regisztrációt, de nem újrahasználható fiókjelszó; a normál bejelentkezés passkey használatával történik; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn; a passkey egy kriptográfiai kulcspár: a privát kulcs az eszközön vagy megbízható hitelesítőadat-kezelőben marad, a DiscVault csak a nyilvános kulcsot tárolja; a passkey adathalászat-ellenálló és webhelyenként egyedi; a bejelentkezés újrahasználható jelszó helyett az eszköz feloldását használja; az időkorlátos meghívókód elindítja a regisztrációt, de nem újrahasználható fiókjelszó; a normál bejelentkezés passkey használatával történik. Oldalspecifikus ellenőrzési pontok: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
 
 ### DiscVault v26 – stabil
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - WebAuthn
+- a passkey egy kriptográfiai kulcspár: a privát kulcs az eszközön vagy megbízható hitelesítőadat-kezelőben marad, a DiscVault csak a nyilvános kulcsot tárolja
+- a passkey adathalászat-ellenálló és webhelyenként egyedi; a bejelentkezés újrahasználható jelszó helyett az eszköz feloldását használja
+- az időkorlátos meghívókód elindítja a regisztrációt, de nem újrahasználható fiókjelszó; a normál bejelentkezés passkey használatával történik
 
 ### DiscVault v26 – béta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - WebAuthn
+- a passkey egy kriptográfiai kulcspár: a privát kulcs az eszközön vagy megbízható hitelesítőadat-kezelőben marad, a DiscVault csak a nyilvános kulcsot tárolja
+- a passkey adathalászat-ellenálló és webhelyenként egyedi; a bejelentkezés újrahasználható jelszó helyett az eszköz feloldását használja
+- az időkorlátos meghívókód elindítja a regisztrációt, de nem újrahasználható fiókjelszó; a normál bejelentkezés passkey használatával történik
 
 ## Előfeltételek
 
 - tulajdonosi hozzáférés
-- HTTPS
+- [Telepítés: Fordított proxy és hozzáférési kulcsok](/hu/install/reverse-proxy-passkeys/) · HTTPS FQDN
 - második helyreállítási mód
 
 ## Eljárás
 
-1. **Nyissa meg:** Adminisztráció → Biztonság → Hitelesítés engedélyezése
-2. **Hozza létre:** Adminisztráció → Felhasználók → 48 órás meghívó létrehozása
-3. **Állítsa be:** Adminisztráció → Szerepkörök → Alap / Speciális
-4. **Tesztelje:** `48 h`
+1. **Ellenőrizze:** a passkey egy kriptográfiai kulcspár: a privát kulcs az eszközön vagy megbízható hitelesítőadat-kezelőben marad, a DiscVault csak a nyilvános kulcsot tárolja
+2. **Hasonlítsa össze:** a passkey adathalászat-ellenálló és webhelyenként egyedi; a bejelentkezés újrahasználható jelszó helyett az eszköz feloldását használja · az időkorlátos meghívókód elindítja a regisztrációt, de nem újrahasználható fiókjelszó; a normál bejelentkezés passkey használatával történik
+3. **Ellenőrizze:** Windows rendszeren aktuális passkey-képes böngésző és legalább PIN-kóddal beállított Windows Hello szükséges; a natív kezeléshez Windows 11 22H2 vagy újabb ajánlott
+4. **Ellenőrizze:** a macOS Ventura 13 vagy újabb rendszert és iCloud-kulcskarikát, illetve más passkey-képes hitelesítőadat-kezelőt igényel
+5. **Ellenőrizze:** az iPhone és iPad iOS vagy iPadOS 16+ rendszert, iCloud-kulcskarikát és kétlépcsős hitelesítést igényel; az Android 9+ rendszert, passkey-szolgáltatót és képernyőzárat igényel
+6. **Hozza létre:** regisztráljon több passkey-t, például telefonon és asztali eszközön, és az eszköz cseréje vagy elvesztése előtt tartson fenn független tulajdonosi helyreállítási utat
+7. **Nyissa meg:** Adminisztráció → Biztonság → Hitelesítés engedélyezése
+8. **Hozza létre:** Adminisztráció → Felhasználók → 48 órás meghívó létrehozása
+9. **Állítsa be:** Adminisztráció → Szerepkörök → Alap / Speciális
+10. **Tesztelje:** WebAuthn
 
 ### Parancsok és beállítások
 
@@ -56,15 +68,18 @@ curl --fail http://localhost:6080/api/next/auth/rbac
 
 ## Várt eredmény
 
-Az eredmény csak ennél fogadható el: **Konfigurálás: Hitelesítés és RBAC** csak akkor, ha minden alábbi eredmény teljesül: a tulajdonosi passkey-belépés működik, a meghívásos regisztráció követi a beállítást, és a tesztfelhasználó csak kiosztott jogokat kap. Oldalspecifikus ellenőrzési pontok: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+Az eredmény csak ennél fogadható el: **Konfigurálás: Hitelesítés és RBAC** csak akkor, ha minden alábbi eredmény teljesül: a tulajdonosi passkey-belépés működik, a meghívásos regisztráció követi a beállítást, és a tesztfelhasználó csak kiosztott jogokat kap; a passkey adathalászat-ellenálló és webhelyenként egyedi; a bejelentkezés újrahasználható jelszó helyett az eszköz feloldását használja; az időkorlátos meghívókód elindítja a regisztrációt, de nem újrahasználható fiókjelszó; a normál bejelentkezés passkey használatával történik. Oldalspecifikus ellenőrzési pontok: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
 
 - a tulajdonosi passkey-belépés működik, a meghívásos regisztráció követi a beállítást, és a tesztfelhasználó csak kiosztott jogokat kap
+- a passkey adathalászat-ellenálló és webhelyenként egyedi; a bejelentkezés újrahasználható jelszó helyett az eszköz feloldását használja
+- az időkorlátos meghívókód elindítja a regisztrációt, de nem újrahasználható fiókjelszó; a normál bejelentkezés passkey használatával történik
 
 ## Biztonság és visszaállítás
 
 :::caution
-A biztonságos helyreállítás határa ennél: **Konfigurálás: Hitelesítés és RBAC** ezeket a műveleteket igényli indítás vagy folytatás előtt: tartsa meg a tulajdonosi munkamenetet és egy második helyreállítási módot; az utolsó tulajdonosi passkey soha ne törlődjön. Oldalspecifikus ellenőrzési pontok: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+A biztonságos helyreállítás határa ennél: **Konfigurálás: Hitelesítés és RBAC** ezeket a műveleteket igényli indítás vagy folytatás előtt: regisztráljon több passkey-t, például telefonon és asztali eszközön, és az eszköz cseréje vagy elvesztése előtt tartson fenn független tulajdonosi helyreállítási utat; tartsa meg a tulajdonosi munkamenetet és egy második helyreállítási módot; az utolsó tulajdonosi passkey soha ne törlődjön. Oldalspecifikus ellenőrzési pontok: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
 
+- regisztráljon több passkey-t, például telefonon és asztali eszközön, és az eszköz cseréje vagy elvesztése előtt tartson fenn független tulajdonosi helyreállítási utat
 - tartsa meg a tulajdonosi munkamenetet és egy második helyreállítási módot; az utolsó tulajdonosi passkey soha ne törlődjön
 :::
 
@@ -75,5 +90,6 @@ A biztonságos helyreállítás határa ennél: **Konfigurálás: Hitelesítés 
 ## Forrás és állapot
 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Forrás és állapot: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
+- Forrás és állapot: `2026-07-15`
+- DiscVault Docs: `0.1.2`

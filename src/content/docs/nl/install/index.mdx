@@ -1,26 +1,26 @@
 ---
 title: 'Installeren: Installatieroutes'
-description: 'Taakspecifieke instructies voor Installeren: Installatieroutes: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.'
+description: 'Taakspecifieke instructies voor Installeren: Installatieroutes: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.'
 pageId: 'install-index'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
+lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Doel en resultaat
 
-Voer de paginaspecifieke werkwijze uit voor **Installeren: Installatieroutes**. Deze werkwijze gebruikt `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+Voer de paginaspecifieke werkwijze uit voor **Installeren: Installatieroutes**. Deze werkwijze gebruikt `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
 ## Van toepassing op
 
-Deze pagina is uitsluitend van toepassing op **Installeren: Installatieroutes** (Docker · Unraid). De kanaal- en gegevensgrenzen zijn: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; PostgreSQL `17` `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26; PostgreSQL `17` `/data`. Paginaspecifieke controlepunten: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+Deze pagina is uitsluitend van toepassing op **Installeren: Installatieroutes** (Docker · Unraid). De kanaal- en gegevensgrenzen zijn: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; PostgreSQL `17` `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26; PostgreSQL `17` `/data`. Paginaspecifieke controlepunten: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
 ### DiscVault v26 stabiel
 
@@ -38,13 +38,17 @@ Deze pagina is uitsluitend van toepassing op **Installeren: Installatieroutes** 
 
 - Docker Engine `24+`
 - Docker Compose `v2`
+- bijpassende back-upset
 
 ## Procedure
 
 1. **Kiezen:** [Installeren: Docker Compose](/nl/install/docker-compose/)
 2. **Kiezen:** [Installeren: Docker run](/nl/install/docker-run/)
 3. **Kiezen:** [Installeren: Unraid](/nl/install/unraid/) · Unraid
-4. **Vastleggen:** `DISCVAULT_IMAGE` · bijpassende back-upset
+4. **Kiezen:** nieuwe installaties gebruiken DiscVault v26 `:latest` of `:beta`; de bevroren `:legacy`-image is alleen voor een bestaande installatie van de vorige generatie die nog niet klaar is voor migratie
+5. **Bewaren:** houd volumes, omgevingsvariabelen, poorten en het gegevenspad van de vorige generatie ongewijzigd; vervang in de v26 PostgreSQL Compose-topologie nooit een image door `:legacy`
+6. **Openen:** [Bijwerken en migreren: Migratie naar DiscVault 26](/nl/update/migration/) · → DiscVault 26
+7. **Vastleggen:** `DISCVAULT_IMAGE` · bijpassende back-upset
 
 ### Taakroutes
 
@@ -52,19 +56,23 @@ Deze pagina is uitsluitend van toepassing op **Installeren: Installatieroutes** 
 - [Installeren: Docker run](/nl/install/docker-run/) — DiscVault 26 Docker run PostgreSQL `/data` `DATABASE_URL`
 - [Installeren: Blijvende gegevens en PostgreSQL](/nl/install/storage-postgresql/) — DiscVault 26 PostgreSQL `/data`
 - [Installeren: Unraid](/nl/install/unraid/) — DiscVault 26 Unraid PostgreSQL `/data`
+- [Bijwerken en migreren: Migratie naar DiscVault 26](/nl/update/migration/) — → DiscVault 26
 
 ## Verwacht resultaat
 
-Accepteer het resultaat voor **Installeren: Installatieroutes** alleen wanneer alle onderstaande resultaten kloppen: gekozen releasekanaal; PostgreSQL `/data`. Paginaspecifieke controlepunten: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+Accepteer het resultaat voor **Installeren: Installatieroutes** alleen wanneer alle onderstaande resultaten kloppen: gekozen releasekanaal; PostgreSQL `/data`; houd volumes, omgevingsvariabelen, poorten en het gegevenspad van de vorige generatie ongewijzigd; vervang in de v26 PostgreSQL Compose-topologie nooit een image door `:legacy`. Paginaspecifieke controlepunten: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
 - gekozen releasekanaal
 - PostgreSQL `/data`
+- houd volumes, omgevingsvariabelen, poorten en het gegevenspad van de vorige generatie ongewijzigd; vervang in de v26 PostgreSQL Compose-topologie nooit een image door `:legacy`
 
 ## Veiligheid en terugdraaien
 
 :::caution
-De veilige herstelgrens voor **Installeren: Installatieroutes** vereist deze acties voordat iets start of doorgaat: bijpassende back-upset; releaseopmerkingen en vastgelegd onveranderlijk image-digest. Paginaspecifieke controlepunten: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+De veilige herstelgrens voor **Installeren: Installatieroutes** vereist deze acties voordat iets start of doorgaat: Alleen de Legacy-route: wijzig na de back-up uitsluitend de imagetag van de bestaande oude implementatie in `:legacy`, haal deze op en maak hem opnieuw met ongewijzigde topologie, controleer de collectie en stop; voer de onderstaande v26-opdrachten niet uit; de bevroren `:legacy`-image krijgt geen DiscVault v26-functies, migratieverbeteringen of toekomstige interface-updates; bijpassende back-upset; releaseopmerkingen en vastgelegd onveranderlijk image-digest. Paginaspecifieke controlepunten: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
+- Alleen de Legacy-route: wijzig na de back-up uitsluitend de imagetag van de bestaande oude implementatie in `:legacy`, haal deze op en maak hem opnieuw met ongewijzigde topologie, controleer de collectie en stop; voer de onderstaande v26-opdrachten niet uit
+- de bevroren `:legacy`-image krijgt geen DiscVault v26-functies, migratieverbeteringen of toekomstige interface-updates
 - bijpassende back-upset
 - releaseopmerkingen en vastgelegd onveranderlijk image-digest
 :::
@@ -76,5 +84,6 @@ De veilige herstelgrens voor **Installeren: Installatieroutes** vereist deze act
 ## Bron en status
 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Bron en status: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
+- Bron en status: `2026-07-15`
+- DiscVault Docs: `0.1.2`

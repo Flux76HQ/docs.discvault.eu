@@ -1,26 +1,26 @@
 ---
 title: 'Aktualizace a migrace: Aktualizace kontejneru'
-description: 'Pokyny pro konkrétní úlohu: Aktualizace a migrace: Aktualizace kontejneru: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.'
+description: 'Pokyny pro konkrétní úlohu: Aktualizace a migrace: Aktualizace kontejneru: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.'
 pageId: 'update-update'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
+lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Cíl a výsledek
 
-Dokončete postup určený pro **Aktualizace a migrace: Aktualizace kontejneru**. Tento postup pracuje s `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+Dokončete postup určený pro **Aktualizace a migrace: Aktualizace kontejneru**. Tento postup pracuje s `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
 ## Platí pro
 
-Tato stránka platí pouze pro **Aktualizace a migrace: Aktualizace kontejneru** (Docker · Unraid). Hranice kanálu a dat jsou: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · poznámky k vydání a zaznamenaný neměnný digest · odpovídající sada záloh; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · poznámky k vydání a zaznamenaný neměnný digest · odpovídající sada záloh. Kontrolní body této stránky: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+Tato stránka platí pouze pro **Aktualizace a migrace: Aktualizace kontejneru** (Docker · Unraid). Hranice kanálu a dat jsou: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · poznámky k vydání a zaznamenaný neměnný digest · odpovídající sada záloh; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · poznámky k vydání a zaznamenaný neměnný digest · odpovídající sada záloh. Kontrolní body této stránky: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
 ### DiscVault v26 – stabilní
 
@@ -41,10 +41,15 @@ Tato stránka platí pouze pro **Aktualizace a migrace: Aktualizace kontejneru**
 
 ## Postup
 
-1. **Ověřte:** `PREVIOUS_IMAGE=@sha256:…`
-2. **Vyberte:** `DISCVAULT_IMAGE` · `:latest` `:beta`
-3. **Spusťte:** `--force-recreate`
-4. **Porovnejte:** běží zamýšlený digest obrazu, stav je v pořádku a přihlášení vlastníka, počet knihovny i vzorek média projdou
+1. **Zkontrolujte:** nové instalace používají DiscVault v26 `:latest` nebo `:beta`; zmrazený obraz `:legacy` je pouze pro stávající instalaci předchozí generace, která ještě není připravena k migraci
+2. **Zálohujte:** odpovídající sada záloh
+3. **Vyberte:** Pouze větev Legacy: po záloze změňte jen tag obrazu stávajícího nasazení staré generace na `:legacy`, stáhněte a znovu je vytvořte se stejnou topologií, ověřte sbírku a skončete; níže uvedené příkazy v26 nespouštějte
+4. **Otevřete:** [Aktualizace a migrace: Migrace na DiscVault 26](/cs/update/migration/) · DiscVault 26
+5. **Zachovejte:** ponechte svazky, proměnné prostředí, porty a datovou cestu předchozí generace beze změny; nikdy nevkládejte `:legacy` do v26 topologie Compose s PostgreSQL
+6. **Ověřte:** `DiscVault v26` · `PREVIOUS_IMAGE=@sha256:…`
+7. **Vyberte:** `DiscVault v26` · `DISCVAULT_IMAGE` · `:latest` `:beta`
+8. **Spusťte:** `DiscVault v26` · `--force-recreate`
+9. **Porovnejte:** `DiscVault v26` · běží zamýšlený digest obrazu, stav je v pořádku a přihlášení vlastníka, počet knihovny i vzorek média projdou
 
 ### Příkazy a nastavení
 
@@ -90,15 +95,17 @@ trap - EXIT
 
 ## Očekávaný výsledek
 
-Výsledek přijměte pro **Aktualizace a migrace: Aktualizace kontejneru** pouze pokud platí všechny následující výsledky: běží zamýšlený digest obrazu, stav je v pořádku a přihlášení vlastníka, počet knihovny i vzorek média projdou. Kontrolní body této stránky: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+Výsledek přijměte pro **Aktualizace a migrace: Aktualizace kontejneru** pouze pokud platí všechny následující výsledky: běží zamýšlený digest obrazu, stav je v pořádku a přihlášení vlastníka, počet knihovny i vzorek média projdou; ponechte svazky, proměnné prostředí, porty a datovou cestu předchozí generace beze změny; nikdy nevkládejte `:legacy` do v26 topologie Compose s PostgreSQL. Kontrolní body této stránky: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
 - běží zamýšlený digest obrazu, stav je v pořádku a přihlášení vlastníka, počet knihovny i vzorek média projdou
+- ponechte svazky, proměnné prostředí, porty a datovou cestu předchozí generace beze změny; nikdy nevkládejte `:legacy` do v26 topologie Compose s PostgreSQL
 
 ## Bezpečnost a návrat
 
 :::caution
-Bezpečná hranice obnovy pro **Aktualizace a migrace: Aktualizace kontejneru** vyžaduje před spuštěním nebo pokračováním tyto kroky: [Aktualizace a migrace: Návrat obrazu](/cs/update/rollback/) · odpovídající sada záloh; poznámky k vydání a zaznamenaný neměnný digest. Kontrolní body této stránky: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+Bezpečná hranice obnovy pro **Aktualizace a migrace: Aktualizace kontejneru** vyžaduje před spuštěním nebo pokračováním tyto kroky: zmrazený obraz `:legacy` nedostává funkce DiscVault v26, vylepšení migrace ani budoucí aktualizace rozhraní; [Aktualizace a migrace: Návrat obrazu](/cs/update/rollback/) · odpovídající sada záloh; poznámky k vydání a zaznamenaný neměnný digest. Kontrolní body této stránky: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
+- zmrazený obraz `:legacy` nedostává funkce DiscVault v26, vylepšení migrace ani budoucí aktualizace rozhraní
 - [Aktualizace a migrace: Návrat obrazu](/cs/update/rollback/) · odpovídající sada záloh
 - poznámky k vydání a zaznamenaný neměnný digest
 :::
@@ -110,5 +117,6 @@ Bezpečná hranice obnovy pro **Aktualizace a migrace: Aktualizace kontejneru** 
 ## Zdroj a stav
 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Zdroj a stav: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
+- Zdroj a stav: `2026-07-15`
+- DiscVault Docs: `0.1.2`

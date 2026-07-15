@@ -1,36 +1,40 @@
 ---
 title: 'PWA: Bibliothek und Suche'
-description: 'Aufgabenspezifische Anleitung für PWA: Bibliothek und Suche: PWA · `watchlist` · `history` · RBAC.'
+description: 'Aufgabenspezifische Anleitung für PWA: Bibliothek und Suche: PWA · `watchlist` · `history` · RBAC · `merge_editions_as_title` · `box_set` · `vault` · `collection`.'
 pageId: 'pwa-library-search'
 products: ['pwa']
 platforms: ['web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
+lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Ziel und Ergebnis
 
-Führe den seitenspezifischen Ablauf aus für **PWA: Bibliothek und Suche**. Dieses Verfahren arbeitet mit PWA · `watchlist` · `history` · RBAC.
+Führe den seitenspezifischen Ablauf aus für **PWA: Bibliothek und Suche**. Dieses Verfahren arbeitet mit PWA · `watchlist` · `history` · RBAC · `merge_editions_as_title` · `box_set` · `vault` · `collection`.
 
 ## Gültig für
 
-Diese Seite gilt ausschließlich für **PWA: Bibliothek und Suche** (Web). Kanal- und Datengrenzen sind: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PWA · RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PWA · RBAC. Seitenspezifische Kontrollpunkte: PWA · `watchlist` · `history` · RBAC.
+Diese Seite gilt ausschließlich für **PWA: Bibliothek und Suche** (Web). Kanal- und Datengrenzen sind: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PWA · RBAC; Collectors Mode ist standardmäßig aus und aktiviert erweiterte Containerfunktionen; `merge_editions_as_title` ist eine separate, ebenfalls standardmäßig deaktivierte Einstellung; wenn `merge_editions_as_title` aktiviert ist, erscheinen mehrere physische Versionen als eine Bibliothekskachel; die Kachel zeigt alle Editionen; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PWA · RBAC; Collectors Mode ist standardmäßig aus und aktiviert erweiterte Containerfunktionen; `merge_editions_as_title` ist eine separate, ebenfalls standardmäßig deaktivierte Einstellung; wenn `merge_editions_as_title` aktiviert ist, erscheinen mehrere physische Versionen als eine Bibliothekskachel; die Kachel zeigt alle Editionen. Seitenspezifische Kontrollpunkte: PWA · `watchlist` · `history` · RBAC · `merge_editions_as_title` · `box_set` · `vault` · `collection`.
 
 ### DiscVault v26 – stabil
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - PWA · RBAC
+- Collectors Mode ist standardmäßig aus und aktiviert erweiterte Containerfunktionen; `merge_editions_as_title` ist eine separate, ebenfalls standardmäßig deaktivierte Einstellung
+- wenn `merge_editions_as_title` aktiviert ist, erscheinen mehrere physische Versionen als eine Bibliothekskachel; die Kachel zeigt alle Editionen
 
 ### DiscVault v26 – Beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - PWA · RBAC
+- Collectors Mode ist standardmäßig aus und aktiviert erweiterte Containerfunktionen; `merge_editions_as_title` ist eine separate, ebenfalls standardmäßig deaktivierte Einstellung
+- wenn `merge_editions_as_title` aktiviert ist, erscheinen mehrere physische Versionen als eine Bibliothekskachel; die Kachel zeigt alle Editionen
 
 ## Voraussetzungen
 
@@ -43,22 +47,33 @@ Diese Seite gilt ausschließlich für **PWA: Bibliothek und Suche** (Web). Kanal
 2. **Konfigurieren:** Bibliothek → Filter → Format / Genre / Gruppe
 3. **Vergleichen:** Bibliothek → Ansicht → Poster / Liste
 4. **Testen:** Titel → Details → Merkliste / Gesehen
+5. **Konfigurieren:** Collectors Mode ist standardmäßig aus und aktiviert erweiterte Containerfunktionen; `merge_editions_as_title` ist eine separate, ebenfalls standardmäßig deaktivierte Einstellung
+6. **Testen:** wenn `merge_editions_as_title` aktiviert ist, erscheinen mehrere physische Versionen als eine Bibliothekskachel; die Kachel zeigt alle Editionen
+7. **Vergleichen:** ein Box-Set ist ein physisches Handelsprodukt mit eigenem Barcode; seine Filme bleiben einzelne Titel und sind als direkte Filmmitglieder verknüpft
+8. **Vergleichen:** ein Vault ist eine benutzerdefinierte Regal-, Lagerbox- oder Ortsgruppe mit direkten Filmmitgliedern und ohne Bedeutung als Handelsprodukt
+9. **Vergleichen:** eine Collection ist eine thematische Gruppe, deren geordnete Elemente Filme, Box-Sets, Vaults oder andere Collections sein können; Verschachtelung wird unterstützt
+10. **Testen:** das Ausschalten von Collectors Mode blendet die Containerdarstellung aus, löscht aber weder Container noch deren Mitglieder
 
 
 
 ## Erwartetes Ergebnis
 
-Akzeptiere das Ergebnis für **PWA: Bibliothek und Suche** nur wenn alle folgenden Ergebnisse erfüllt sind: Bibliothek → Suchen; Bibliothek → Filter → Format / Genre / Gruppe; Titel → Details → Merkliste / Gesehen. Seitenspezifische Kontrollpunkte: PWA · `watchlist` · `history` · RBAC.
+Akzeptiere das Ergebnis für **PWA: Bibliothek und Suche** nur wenn alle folgenden Ergebnisse erfüllt sind: Bibliothek → Suchen; Bibliothek → Filter → Format / Genre / Gruppe; Titel → Details → Merkliste / Gesehen; wenn `merge_editions_as_title` aktiviert ist, erscheinen mehrere physische Versionen als eine Bibliothekskachel; die Kachel zeigt alle Editionen; ein Box-Set ist ein physisches Handelsprodukt mit eigenem Barcode; seine Filme bleiben einzelne Titel und sind als direkte Filmmitglieder verknüpft; ein Vault ist eine benutzerdefinierte Regal-, Lagerbox- oder Ortsgruppe mit direkten Filmmitgliedern und ohne Bedeutung als Handelsprodukt; eine Collection ist eine thematische Gruppe, deren geordnete Elemente Filme, Box-Sets, Vaults oder andere Collections sein können; Verschachtelung wird unterstützt. Seitenspezifische Kontrollpunkte: PWA · `watchlist` · `history` · RBAC · `merge_editions_as_title` · `box_set` · `vault` · `collection`.
 
 - Bibliothek → Suchen
 - Bibliothek → Filter → Format / Genre / Gruppe
 - Titel → Details → Merkliste / Gesehen
+- wenn `merge_editions_as_title` aktiviert ist, erscheinen mehrere physische Versionen als eine Bibliothekskachel; die Kachel zeigt alle Editionen
+- ein Box-Set ist ein physisches Handelsprodukt mit eigenem Barcode; seine Filme bleiben einzelne Titel und sind als direkte Filmmitglieder verknüpft
+- ein Vault ist eine benutzerdefinierte Regal-, Lagerbox- oder Ortsgruppe mit direkten Filmmitgliedern und ohne Bedeutung als Handelsprodukt
+- eine Collection ist eine thematische Gruppe, deren geordnete Elemente Filme, Box-Sets, Vaults oder andere Collections sein können; Verschachtelung wird unterstützt
 
 ## Sicherheit und Rollback
 
 :::caution
-Die sichere Wiederherstellungsgrenze für **PWA: Bibliothek und Suche** verlangt vor jedem Start oder Fortsetzen diese Maßnahmen: falsche Bearbeitung vor dem Speichern abbrechen, gespeichertes Feld in der UI zurücksetzen und bei Massenschäden passende Serversicherung verwenden. Seitenspezifische Kontrollpunkte: PWA · `watchlist` · `history` · RBAC.
+Die sichere Wiederherstellungsgrenze für **PWA: Bibliothek und Suche** verlangt vor jedem Start oder Fortsetzen diese Maßnahmen: das Ausschalten von Collectors Mode blendet die Containerdarstellung aus, löscht aber weder Container noch deren Mitglieder; falsche Bearbeitung vor dem Speichern abbrechen, gespeichertes Feld in der UI zurücksetzen und bei Massenschäden passende Serversicherung verwenden. Seitenspezifische Kontrollpunkte: PWA · `watchlist` · `history` · RBAC · `merge_editions_as_title` · `box_set` · `vault` · `collection`.
 
+- das Ausschalten von Collectors Mode blendet die Containerdarstellung aus, löscht aber weder Container noch deren Mitglieder
 - falsche Bearbeitung vor dem Speichern abbrechen, gespeichertes Feld in der UI zurücksetzen und bei Massenschäden passende Serversicherung verwenden
 :::
 
@@ -69,5 +84,6 @@ Die sichere Wiederherstellungsgrenze für **PWA: Bibliothek und Suche** verlangt
 ## Quelle und Status
 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Quelle und Status: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
+- Quelle und Status: `2026-07-15`
+- DiscVault Docs: `0.1.2`

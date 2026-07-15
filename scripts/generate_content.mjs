@@ -28,8 +28,11 @@ const locales = [
 ];
 const verified = '2026-07-14';
 const docsVersion = '0.1.0';
+const migratedVerified = '2026-07-15';
+const migratedDocsVersion = '0.1.2';
 const commits = {
   'helmerzNL/DiscVault': '6d27c689ac2166651d2c7c74833c1ee225b37ec3',
+  'helmerzNL/DiscVault.EU': '583f85c55dc22b63368f997a3b076a093ca0afa1',
   'helmerzNL/DiscVaultApp': '9d15ab2a339cefdb164ec0ab29ad69ddabc511c1',
   'Flux76HQ/DiscVault-AndroidApp': 'a13ef4bdbb23b6a7e52e01cdf532fa222c1b67de',
   'Flux76HQ/App-Guidance': 'da1f68d8baf33b3e2fba06684c154755cd261a48',
@@ -1063,6 +1066,7 @@ const categoryNames = {
 };
 
 const S = 'helmerzNL/DiscVault';
+const M = 'helmerzNL/DiscVault.EU';
 const pages = [
   {
     path: 'start/index',
@@ -1111,18 +1115,20 @@ const pages = [
     products: ['server'],
     platforms: ['docker', 'unraid'],
     version: 'DiscVault v26',
-    source: [S],
-    pre: ['Docker Engine 24+', 'Docker Compose v2'],
+    source: [S, M],
+    verified: migratedVerified,
+    docsVersion: migratedDocsVersion,
+    pre: ['Docker Engine 24+', 'Docker Compose v2', 'matched backup'],
     command:
       'Recommended for both channels: /install/docker-compose/\nAdvanced complete equivalent: /install/docker-run/\nPersistence: /install/storage-postgresql/\nUnraid: /install/unraid/',
     intro:
-      'Install one DiscVault v26 architecture and select stable or beta with one image variable.',
+      'Choose the DiscVault v26 topology for new installs, or keep an existing previous-generation deployment on the frozen Legacy image until migration.',
     scope:
-      '`ghcr.io/helmerznl/discvault:latest` is DiscVault v26 stable and `ghcr.io/helmerznl/discvault:beta` is DiscVault v26 beta. Both use PostgreSQL, API, worker, MCP, and persistent `/data`; only `DISCVAULT_IMAGE` differs. The `:dev` tag remains engineering-only.',
+      '`ghcr.io/helmerznl/discvault:latest` is DiscVault v26 stable and `ghcr.io/helmerznl/discvault:beta` is DiscVault v26 beta. Both use PostgreSQL, API, worker, MCP, and persistent `/data`; only `DISCVAULT_IMAGE` differs. The frozen `ghcr.io/helmerznl/discvault:legacy` image is only for an existing previous-generation installation that is not ready to migrate. Keep that installation’s old volumes, environment variables, ports, and data path unchanged; never substitute `:legacy` into the v26 Compose topology. The `:dev` tag remains engineering-only.',
     expected:
-      'You choose one image channel for the shared v26 Compose topology and identify both persistent stores.',
+      'A new install selects one v26 channel, while an existing previous-generation install either stays on its unchanged Legacy topology or follows the migration procedure.',
     rollback:
-      'Review release notes and create a matched PostgreSQL and filesystem backup before switching tags or digests.',
+      'Back up before any pull or recreate. The frozen Legacy image receives no v26 features, migration improvements, or future interface updates.',
     next: 'install/docker-compose',
   },
   {
@@ -1220,18 +1226,20 @@ const pages = [
     products: ['server'],
     platforms: ['docker', 'web'],
     version: 'DiscVault v26',
-    source: [S],
-    pre: ['public DNS', 'TLS certificate', 'WebSocket-capable reverse proxy'],
+    source: [S, M],
+    verified: migratedVerified,
+    docsVersion: migratedDocsVersion,
+    pre: ['public FQDN', 'trusted TLS certificate', 'WebSocket-capable reverse proxy'],
     command:
       'RP_ID=discvault.example.com\nRP_ORIGINS=https://discvault.example.com\nProxy upstream: http://127.0.0.1:6080\nHealth: https://discvault.example.com/api/next/health',
     intro:
-      'Terminate HTTPS at a reverse proxy and keep passkey relying-party values aligned with the public origin.',
+      'Use a stable FQDN over trusted HTTPS and keep passkey relying-party values aligned with the exact public origin.',
     scope:
-      'DiscVault v26 stable and beta both use `RP_ID`, `RP_ORIGINS`, and `/api/next/health`. The proxy connects to host port 6080, which maps to API container port 5000. `RP_ID` is the hostname only.',
+      'DiscVault v26 stable and beta both use `RP_ID`, `RP_ORIGINS`, and `/api/next/health`. Outside the localhost setup exception, passkeys require a stable fully qualified domain name over trusted HTTPS; a bare IP address or plain HTTP is unsupported. `RP_ID` is the hostname without scheme or port, and `RP_ORIGINS` is the exact full HTTPS origin opened in the browser. The proxy connects to host port 6080, which maps to API container port 5000.',
     expected:
-      'The applicable public health URL succeeds and a passkey can be registered and used from the same HTTPS hostname.',
+      'The public health URL succeeds and a passkey can be registered and used from the same FQDN and exact HTTPS origin.',
     rollback:
-      'Restore the prior proxy configuration and RP values together. A hostname change can make existing passkeys unusable, so keep an owner recovery path.',
+      'Restore the prior proxy configuration and RP values together. Choose the hostname before registration: changing it later requires passkey registration again, so keep an owner recovery path.',
     next: 'install/first-start-health',
   },
   {
@@ -1326,17 +1334,20 @@ const pages = [
     products: ['server'],
     platforms: ['docker', 'unraid'],
     version: 'DiscVault v26',
-    source: [S],
-    pre: ['successful backup', 'release notes', 'previous image digest'],
+    source: [S, M],
+    verified: migratedVerified,
+    docsVersion: migratedDocsVersion,
+    pre: ['successful backup', 'release notes', 'previous image digest', 'identified generation'],
     command:
       'Set DISCVAULT_IMAGE to ghcr.io/helmerznl/discvault:latest or ghcr.io/helmerznl/discvault:beta, validate the same Compose file, pull the three app services, and recreate without deleting persistent data.',
-    intro: 'Pull and recreate one channel only, then verify health and representative data.',
+    intro:
+      'Identify the running generation, then update v26 or safely pin an existing old-generation deployment without crossing their topologies.',
     scope:
-      '`ghcr.io/helmerznl/discvault:latest` is DiscVault v26 stable and `ghcr.io/helmerznl/discvault:beta` is DiscVault v26 beta. Both use the same service graph and data schema path. Record the resolved digest because release tags can move.',
+      '`ghcr.io/helmerznl/discvault:latest` is DiscVault v26 stable and `ghcr.io/helmerznl/discvault:beta` is DiscVault v26 beta. Both use the same service graph and data schema path; the executable blocks on this page apply only to v26. An existing previous-generation deployment may be pinned to frozen `:legacy` with its old volumes, variables, ports, and data path unchanged. Never place `:legacy` in the v26 PostgreSQL Compose topology; use the migration procedure to move generations.',
     expected:
-      'The intended image digest is running, health succeeds, and owner login, library count, and one media asset work.',
+      'The intended image digest is running on its matching topology, health succeeds, and owner login, library count, and one media asset work.',
     rollback:
-      'On any failed acceptance check, execute the image rollback with the pre-update data backup available.',
+      'On any failed acceptance check, stop the deployment and restore its previous image with the matching pre-update data backup.',
     next: 'update/rollback',
   },
   {
@@ -1433,18 +1444,20 @@ const pages = [
     products: ['server'],
     platforms: ['web'],
     version: 'DiscVault v26',
-    source: [S],
-    pre: ['owner passkey', 'HTTPS origin', 'second recovery method'],
+    source: [S, M],
+    verified: migratedVerified,
+    docsVersion: migratedDocsVersion,
+    pre: ['owner passkey', 'FQDN over HTTPS', 'second recovery method'],
     command:
       'Admin → Security → Enable authentication\nAdmin → Users → Create 48-hour invite\nAdmin → Roles → Basic or Advanced\nGET /api/next/auth/status\nGET /api/next/auth/rbac',
     intro:
-      'Enable passkeys, invites, users, groups, and role-based access without locking out the owner.',
+      'Use passkeys instead of reusable account passwords, verify platform support, and configure recovery, invites, users, groups, and roles.',
     scope:
-      'DiscVault v26 provides the same WebAuthn and RBAC functions in stable and beta. Basic roles are owner, administrator, media editor, media fan, and media viewer.',
+      'DiscVault v26 provides the same WebAuthn and RBAC functions in stable and beta. A passkey keeps its private key on the device or in a trusted credential manager while DiscVault stores the public key. Time-limited invite codes start registration but are not reusable account passwords. Basic roles are owner, administrator, media editor, media fan, and media viewer. Browser passkey requirements are distinct from native app minimum versions.',
     expected:
-      'Owner login works, invite-only registration behaves as selected, and a test user receives only assigned permissions.',
+      'Owner login works with two recovery-capable passkeys, supported platforms can authenticate, invite-only registration behaves as selected, and a test user receives only assigned permissions.',
     rollback:
-      'Keep the owner session open while testing. Revert role assignments before disabling a user; never delete the only owner or last usable passkey.',
+      'Keep an owner session open, register more than one passkey, and preserve an independent recovery method. Never remove the last owner passkey.',
     next: 'configure/plugins-metadata',
   },
   {
@@ -1516,18 +1529,20 @@ const pages = [
     products: ['pwa'],
     platforms: ['web'],
     version: 'DiscVault v26',
-    source: [S],
+    source: [S, M],
+    verified: migratedVerified,
+    docsVersion: migratedDocsVersion,
     pre: ['signed-in account', 'collection permission'],
     command:
-      'Library → Search\nLibrary → Filter → Format / Genre / Group\nLibrary → View → Posters / List\nTitle → Details → Watchlist / Watched',
+      'Library → Search\nLibrary → Filter → Format / Genre / Group\nLibrary → View → Posters / List\nTitle → Details → Watchlist / Watched\nSettings → Preferences → Collectors → Collectors mode / Merge multiple editions as one title',
     intro:
-      'Browse, search, filter, and update titles, containers, box sets, collections, watchlist, and history.',
+      'Browse, search, and update titles, watchlist, and history, then choose how Collectors Mode, multiple editions, box-sets, vaults, and collections are presented.',
     scope:
-      'In both DiscVault v26 channels, available actions are permission-scoped; viewers cannot perform editor or administrator changes.',
+      'In both DiscVault v26 channels, available actions are permission-scoped; viewers cannot perform editor or administrator changes. Collectors Mode is off by default and exposes the `box_set`, `vault`, and `collection` container types. Merging multiple editions as one title is a separate preference that is also off by default.',
     expected:
-      'Search and filters return expected records and an allowed watchlist change persists after reload.',
+      'Search and filters return expected records, an allowed watchlist change persists, and collector preferences change presentation without deleting containers, members, or editions.',
     rollback:
-      'Cancel edits before saving. For an incorrect saved change, restore the field in the UI; use a server backup only for bulk corruption.',
+      'Turn a presentation preference off to restore the prior view; this does not delete containers or members. Cancel data edits before saving and reserve backup restoration for actual data corruption.',
     next: 'pwa/offline',
   },
   {
@@ -1778,6 +1793,8 @@ const titleFor = (page, locale) => {
 };
 const routeFor = (pagePath, locale) =>
   `${prefix(locale)}/${pagePath.replace(/\/index$/, '')}/`.replace('//', '/');
+const verifiedFor = (page) => page.verified ?? verified;
+const docsVersionFor = (page) => page.docsVersion ?? docsVersion;
 const sourceLinks = (page, locale) =>
   page.source
     .map(
@@ -1785,10 +1802,10 @@ const sourceLinks = (page, locale) =>
         `- [\`${source}@${commits[source].slice(0, 12)}\`](https://github.com/${source}/commit/${commits[source]})`,
     )
     .join('\n') +
-  `\n- ${locale === 'en' ? 'Verified' : l10n[locale][7]}: \`${verified}\`\n- DiscVault Docs: \`${docsVersion}\``;
+  `\n- ${locale === 'en' ? 'Verified' : l10n[locale][7]}: \`${verifiedFor(page)}\`\n- DiscVault Docs: \`${docsVersionFor(page)}\``;
 
 const visibleTechnicalToken =
-  /`[^`\n]+`|\b(?:DiscVault(?: Docs)?|Docker(?: Compose| Engine| run)?|PostgreSQL|SQLite|PWA|HTTPS|HTTP|TLS|DNS|MCP|REST|API|iOS(?:\/iPadOS)?|Android|SwiftData|Room|CameraX|ML Kit|WorkManager|Plex|Jellyfin|OpenSSL|WebSocket|WebAuthn|Unraid|TestFlight|RBAC|JSON)\b|App Lock|Service Worker|→|≠|\b\d+(?:\.\d+)?(?:\+| GB| hours?)?\b/gi;
+  /`[^`\n]+`|\b(?:DiscVault(?: Docs)?|Docker(?: Compose| Engine| run)?|PostgreSQL|SQLite|PWA|HTTPS|HTTP|TLS|DNS|FQDN|MCP|REST|API|iOS(?:\/iPadOS)?|Android|SwiftData|Room|CameraX|ML Kit|WorkManager|Plex|Jellyfin|OpenSSL|WebSocket|WebAuthn|Unraid|TestFlight|RBAC|JSON)\b|App Lock|Service Worker|→|≠|\b\d+(?:\.\d+)?(?:\+| GB| hours?)?\b/gi;
 
 function technicalFragment(value, locale) {
   if (locale === 'en') return value;
@@ -2027,7 +2044,7 @@ platforms: ${yamlArray(page.platforms)}
 channels: ${yamlArray(page.channel)}
 minVersion: ${quote(page.version)}
 sourceRepos: ${yamlArray(page.source)}
-lastVerified: '${verified}'
+lastVerified: '${verifiedFor(page)}'
 ---
 `;
 }
@@ -2038,7 +2055,7 @@ function pageDocument(page, locale) {
   return `${frontmatter(page, locale)}
 import PageMeta from '${componentPrefix}components/PageMeta.astro';
 
-<PageMeta channels="${page.channel.join(',')}" platform="${platformFor(page, locale)}" version="${versionFor(page)}" source="${page.source.join(' · ')}" verified="${verified}" />
+<PageMeta channels="${page.channel.join(',')}" platform="${platformFor(page, locale)}" version="${versionFor(page)}" source="${page.source.join(' · ')}" verified="${verifiedFor(page)}" />
 
 ${procedureBody(page, locale)}`;
 }
@@ -2063,7 +2080,7 @@ hero:
   title: ${quote(title)}
   tagline: ${quote(`${categoryNames.install[i]} · PWA · iOS/iPadOS · Android`)}
   image:
-    file: ${locale === 'en' ? '../../' : '../../../'}assets/discvault-logo.svg
+    file: ${locale === 'en' ? '../../' : '../../../'}assets/discvault-logo.png
   actions: [{ text: ${quote(procedureLocale[locale].startAction)}, link: ${start}, icon: right-arrow, variant: primary }]
 ---
 
