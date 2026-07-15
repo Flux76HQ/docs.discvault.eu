@@ -1,36 +1,40 @@
 ---
 title: 'PWA: Könyvtár és keresés'
-description: 'Feladatspecifikus útmutató: PWA: Könyvtár és keresés: PWA · `watchlist` · `history` · RBAC.'
+description: 'Feladatspecifikus útmutató: PWA: Könyvtár és keresés: PWA · `watchlist` · `history` · RBAC · `merge_editions_as_title` · `box_set` · `vault` · `collection`.'
 pageId: 'pwa-library-search'
 products: ['pwa']
 platforms: ['web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
+lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Cél és eredmény
 
-Hajtsa végre az oldalhoz tartozó munkafolyamatot: **PWA: Könyvtár és keresés**. Ez az eljárás ezeket használja: PWA · `watchlist` · `history` · RBAC.
+Hajtsa végre az oldalhoz tartozó munkafolyamatot: **PWA: Könyvtár és keresés**. Ez az eljárás ezeket használja: PWA · `watchlist` · `history` · RBAC · `merge_editions_as_title` · `box_set` · `vault` · `collection`.
 
 ## Érvényesség
 
-Ez az oldal kizárólag erre vonatkozik: **PWA: Könyvtár és keresés** (web). A csatorna- és adathatárok: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PWA · RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PWA · RBAC. Oldalspecifikus ellenőrzési pontok: PWA · `watchlist` · `history` · RBAC.
+Ez az oldal kizárólag erre vonatkozik: **PWA: Könyvtár és keresés** (web). A csatorna- és adathatárok: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PWA · RBAC; a Collectors Mode alapértelmezésben ki van kapcsolva, és fejlett konténerfunkciókat tesz elérhetővé; a `merge_editions_as_title` külön, szintén alapértelmezésben kikapcsolt beállítás; a `merge_editions_as_title` bekapcsolásakor több fizikai változat egy könyvtárcsempén jelenik meg; a csempét megnyitva minden kiadás látható; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PWA · RBAC; a Collectors Mode alapértelmezésben ki van kapcsolva, és fejlett konténerfunkciókat tesz elérhetővé; a `merge_editions_as_title` külön, szintén alapértelmezésben kikapcsolt beállítás; a `merge_editions_as_title` bekapcsolásakor több fizikai változat egy könyvtárcsempén jelenik meg; a csempét megnyitva minden kiadás látható. Oldalspecifikus ellenőrzési pontok: PWA · `watchlist` · `history` · RBAC · `merge_editions_as_title` · `box_set` · `vault` · `collection`.
 
 ### DiscVault v26 – stabil
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - PWA · RBAC
+- a Collectors Mode alapértelmezésben ki van kapcsolva, és fejlett konténerfunkciókat tesz elérhetővé; a `merge_editions_as_title` külön, szintén alapértelmezésben kikapcsolt beállítás
+- a `merge_editions_as_title` bekapcsolásakor több fizikai változat egy könyvtárcsempén jelenik meg; a csempét megnyitva minden kiadás látható
 
 ### DiscVault v26 – béta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - PWA · RBAC
+- a Collectors Mode alapértelmezésben ki van kapcsolva, és fejlett konténerfunkciókat tesz elérhetővé; a `merge_editions_as_title` külön, szintén alapértelmezésben kikapcsolt beállítás
+- a `merge_editions_as_title` bekapcsolásakor több fizikai változat egy könyvtárcsempén jelenik meg; a csempét megnyitva minden kiadás látható
 
 ## Előfeltételek
 
@@ -43,22 +47,33 @@ Ez az oldal kizárólag erre vonatkozik: **PWA: Könyvtár és keresés** (web).
 2. **Állítsa be:** Könyvtár → Szűrő → Formátum / Műfaj / Csoport
 3. **Hasonlítsa össze:** Könyvtár → Nézet → Poszterek / Lista
 4. **Tesztelje:** Cím → Részletek → Megnézendő / Megnézett
+5. **Állítsa be:** a Collectors Mode alapértelmezésben ki van kapcsolva, és fejlett konténerfunkciókat tesz elérhetővé; a `merge_editions_as_title` külön, szintén alapértelmezésben kikapcsolt beállítás
+6. **Tesztelje:** a `merge_editions_as_title` bekapcsolásakor több fizikai változat egy könyvtárcsempén jelenik meg; a csempét megnyitva minden kiadás látható
+7. **Hasonlítsa össze:** a box-set saját vonalkóddal rendelkező fizikai kereskedelmi termék; filmjei külön címek maradnak közvetlen tagként összekapcsolva
+8. **Hasonlítsa össze:** a vault felhasználó által létrehozott polc-, tárolódoboz- vagy helycsoport közvetlen filmtagokkal, kereskedelmi termék jelentése nélkül
+9. **Hasonlítsa össze:** a collection tematikus csoport, amelynek rendezett elemei filmek, box-setek, vaultok vagy más collection csoportok lehetnek, így beágyazható
+10. **Tesztelje:** a Collectors Mode kikapcsolása elrejti a konténermegjelenítést, de nem törli a konténereket vagy tagjaikat
 
 
 
 ## Várt eredmény
 
-Az eredmény csak ennél fogadható el: **PWA: Könyvtár és keresés** csak akkor, ha minden alábbi eredmény teljesül: Könyvtár → Keresés; Könyvtár → Szűrő → Formátum / Műfaj / Csoport; Cím → Részletek → Megnézendő / Megnézett. Oldalspecifikus ellenőrzési pontok: PWA · `watchlist` · `history` · RBAC.
+Az eredmény csak ennél fogadható el: **PWA: Könyvtár és keresés** csak akkor, ha minden alábbi eredmény teljesül: Könyvtár → Keresés; Könyvtár → Szűrő → Formátum / Műfaj / Csoport; Cím → Részletek → Megnézendő / Megnézett; a `merge_editions_as_title` bekapcsolásakor több fizikai változat egy könyvtárcsempén jelenik meg; a csempét megnyitva minden kiadás látható; a box-set saját vonalkóddal rendelkező fizikai kereskedelmi termék; filmjei külön címek maradnak közvetlen tagként összekapcsolva; a vault felhasználó által létrehozott polc-, tárolódoboz- vagy helycsoport közvetlen filmtagokkal, kereskedelmi termék jelentése nélkül; a collection tematikus csoport, amelynek rendezett elemei filmek, box-setek, vaultok vagy más collection csoportok lehetnek, így beágyazható. Oldalspecifikus ellenőrzési pontok: PWA · `watchlist` · `history` · RBAC · `merge_editions_as_title` · `box_set` · `vault` · `collection`.
 
 - Könyvtár → Keresés
 - Könyvtár → Szűrő → Formátum / Műfaj / Csoport
 - Cím → Részletek → Megnézendő / Megnézett
+- a `merge_editions_as_title` bekapcsolásakor több fizikai változat egy könyvtárcsempén jelenik meg; a csempét megnyitva minden kiadás látható
+- a box-set saját vonalkóddal rendelkező fizikai kereskedelmi termék; filmjei külön címek maradnak közvetlen tagként összekapcsolva
+- a vault felhasználó által létrehozott polc-, tárolódoboz- vagy helycsoport közvetlen filmtagokkal, kereskedelmi termék jelentése nélkül
+- a collection tematikus csoport, amelynek rendezett elemei filmek, box-setek, vaultok vagy más collection csoportok lehetnek, így beágyazható
 
 ## Biztonság és visszaállítás
 
 :::caution
-A biztonságos helyreállítás határa ennél: **PWA: Könyvtár és keresés** ezeket a műveleteket igényli indítás vagy folytatás előtt: hibás szerkesztést mentés előtt szakítson meg, a mentett mezőt a felületen állítsa vissza, tömeges sérülésnél pedig használjon illeszkedő szervermentést. Oldalspecifikus ellenőrzési pontok: PWA · `watchlist` · `history` · RBAC.
+A biztonságos helyreállítás határa ennél: **PWA: Könyvtár és keresés** ezeket a műveleteket igényli indítás vagy folytatás előtt: a Collectors Mode kikapcsolása elrejti a konténermegjelenítést, de nem törli a konténereket vagy tagjaikat; hibás szerkesztést mentés előtt szakítson meg, a mentett mezőt a felületen állítsa vissza, tömeges sérülésnél pedig használjon illeszkedő szervermentést. Oldalspecifikus ellenőrzési pontok: PWA · `watchlist` · `history` · RBAC · `merge_editions_as_title` · `box_set` · `vault` · `collection`.
 
+- a Collectors Mode kikapcsolása elrejti a konténermegjelenítést, de nem törli a konténereket vagy tagjaikat
 - hibás szerkesztést mentés előtt szakítson meg, a mentett mezőt a felületen állítsa vissza, tömeges sérülésnél pedig használjon illeszkedő szervermentést
 :::
 
@@ -69,5 +84,6 @@ A biztonságos helyreállítás határa ennél: **PWA: Könyvtár és keresés**
 ## Forrás és állapot
 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Forrás és állapot: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
+- Forrás és állapot: `2026-07-15`
+- DiscVault Docs: `0.1.2`

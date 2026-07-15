@@ -1,49 +1,61 @@
 ---
 title: 'Konfiguration: Autentisering och RBAC'
-description: 'Uppgiftsspecifik vägledning för Konfiguration: Autentisering och RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.'
+description: 'Uppgiftsspecifik vägledning för Konfiguration: Autentisering och RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.'
 pageId: 'configure-auth-rbac'
 products: ['server']
 platforms: ['web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
+lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="webb" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="webb" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Mål och resultat
 
-Följ det sidspecifika arbetsflödet för **Konfiguration: Autentisering och RBAC**. Den här proceduren använder `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+Följ det sidspecifika arbetsflödet för **Konfiguration: Autentisering och RBAC**. Den här proceduren använder `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
 
 ## Gäller för
 
-Den här sidan gäller endast **Konfiguration: Autentisering och RBAC** (webb). Kanal- och datagränserna är: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn. Sidspecifika kontrollpunkter: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+Den här sidan gäller endast **Konfiguration: Autentisering och RBAC** (webb). Kanal- och datagränserna är: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; en passkey är ett kryptografiskt nyckelpar: den privata nyckeln stannar på enheten eller i en betrodd uppgiftshanterare och DiscVault lagrar bara den offentliga nyckeln; passkeys är nätfiskeresistenta och unika för webbplatsen; inloggning använder enhetens upplåsning i stället för ett återanvändbart kontolösenord; en tidsbegränsad inbjudningskod startar registreringen men är inte ett återanvändbart kontolösenord; vanlig inloggning använder en passkey; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn; en passkey är ett kryptografiskt nyckelpar: den privata nyckeln stannar på enheten eller i en betrodd uppgiftshanterare och DiscVault lagrar bara den offentliga nyckeln; passkeys är nätfiskeresistenta och unika för webbplatsen; inloggning använder enhetens upplåsning i stället för ett återanvändbart kontolösenord; en tidsbegränsad inbjudningskod startar registreringen men är inte ett återanvändbart kontolösenord; vanlig inloggning använder en passkey. Sidspecifika kontrollpunkter: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
 
 ### DiscVault v26 – stabil
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - WebAuthn
+- en passkey är ett kryptografiskt nyckelpar: den privata nyckeln stannar på enheten eller i en betrodd uppgiftshanterare och DiscVault lagrar bara den offentliga nyckeln
+- passkeys är nätfiskeresistenta och unika för webbplatsen; inloggning använder enhetens upplåsning i stället för ett återanvändbart kontolösenord
+- en tidsbegränsad inbjudningskod startar registreringen men är inte ett återanvändbart kontolösenord; vanlig inloggning använder en passkey
 
 ### DiscVault v26 – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - WebAuthn
+- en passkey är ett kryptografiskt nyckelpar: den privata nyckeln stannar på enheten eller i en betrodd uppgiftshanterare och DiscVault lagrar bara den offentliga nyckeln
+- passkeys är nätfiskeresistenta och unika för webbplatsen; inloggning använder enhetens upplåsning i stället för ett återanvändbart kontolösenord
+- en tidsbegränsad inbjudningskod startar registreringen men är inte ett återanvändbart kontolösenord; vanlig inloggning använder en passkey
 
 ## Förutsättningar
 
 - ägaråtkomst
-- HTTPS
+- [Installation: Omvänd proxy och åtkomstnycklar](/sv/install/reverse-proxy-passkeys/) · HTTPS FQDN
 - andra återställningsmetod
 
 ## Procedur
 
-1. **Öppna:** Administration → Säkerhet → Aktivera autentisering
-2. **Skapa:** Administration → Användare → Skapa 48-timmarsinbjudan
-3. **Konfigurera:** Administration → Roller → Grundläggande / Avancerat
-4. **Testa:** `48 h`
+1. **Kontrollera:** en passkey är ett kryptografiskt nyckelpar: den privata nyckeln stannar på enheten eller i en betrodd uppgiftshanterare och DiscVault lagrar bara den offentliga nyckeln
+2. **Jämför:** passkeys är nätfiskeresistenta och unika för webbplatsen; inloggning använder enhetens upplåsning i stället för ett återanvändbart kontolösenord · en tidsbegränsad inbjudningskod startar registreringen men är inte ett återanvändbart kontolösenord; vanlig inloggning använder en passkey
+3. **Verifiera:** Windows kräver en aktuell webbläsare med passkey-stöd och Windows Hello med minst en PIN-kod; Windows 11 22H2 eller senare rekommenderas för inbyggd hantering
+4. **Verifiera:** macOS kräver Ventura 13 eller senare med iCloud-nyckelring, eller en annan uppgiftshanterare med passkey-stöd
+5. **Verifiera:** iPhone och iPad kräver iOS eller iPadOS 16+ med iCloud-nyckelring och tvåfaktorsautentisering; Android kräver version 9+ med en passkey-leverantör och skärmlås
+6. **Skapa:** registrera mer än en passkey, exempelvis på telefon och dator, och behåll en oberoende återställningsväg för ägaren innan en enhet byts ut eller tappas bort
+7. **Öppna:** Administration → Säkerhet → Aktivera autentisering
+8. **Skapa:** Administration → Användare → Skapa 48-timmarsinbjudan
+9. **Konfigurera:** Administration → Roller → Grundläggande / Avancerat
+10. **Testa:** WebAuthn
 
 ### Kommandon och inställningar
 
@@ -56,15 +68,18 @@ curl --fail http://localhost:6080/api/next/auth/rbac
 
 ## Förväntat resultat
 
-Godkänn resultatet för **Konfiguration: Autentisering och RBAC** endast när alla resultat nedan stämmer: ägarens passkey-inloggning fungerar, inbjudningsregistrering följer inställningen och testanvändaren har endast tilldelade behörigheter. Sidspecifika kontrollpunkter: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+Godkänn resultatet för **Konfiguration: Autentisering och RBAC** endast när alla resultat nedan stämmer: ägarens passkey-inloggning fungerar, inbjudningsregistrering följer inställningen och testanvändaren har endast tilldelade behörigheter; passkeys är nätfiskeresistenta och unika för webbplatsen; inloggning använder enhetens upplåsning i stället för ett återanvändbart kontolösenord; en tidsbegränsad inbjudningskod startar registreringen men är inte ett återanvändbart kontolösenord; vanlig inloggning använder en passkey. Sidspecifika kontrollpunkter: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
 
 - ägarens passkey-inloggning fungerar, inbjudningsregistrering följer inställningen och testanvändaren har endast tilldelade behörigheter
+- passkeys är nätfiskeresistenta och unika för webbplatsen; inloggning använder enhetens upplåsning i stället för ett återanvändbart kontolösenord
+- en tidsbegränsad inbjudningskod startar registreringen men är inte ett återanvändbart kontolösenord; vanlig inloggning använder en passkey
 
 ## Säkerhet och återställning
 
 :::caution
-Den säkra återställningsgränsen för **Konfiguration: Autentisering och RBAC** kräver dessa åtgärder innan något startas eller fortsätter: behåll ägarsessionen och en andra återställningsmetod; ta aldrig bort ägarens sista passkey. Sidspecifika kontrollpunkter: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+Den säkra återställningsgränsen för **Konfiguration: Autentisering och RBAC** kräver dessa åtgärder innan något startas eller fortsätter: registrera mer än en passkey, exempelvis på telefon och dator, och behåll en oberoende återställningsväg för ägaren innan en enhet byts ut eller tappas bort; behåll ägarsessionen och en andra återställningsmetod; ta aldrig bort ägarens sista passkey. Sidspecifika kontrollpunkter: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
 
+- registrera mer än en passkey, exempelvis på telefon och dator, och behåll en oberoende återställningsväg för ägaren innan en enhet byts ut eller tappas bort
 - behåll ägarsessionen och en andra återställningsmetod; ta aldrig bort ägarens sista passkey
 :::
 
@@ -75,5 +90,6 @@ Den säkra återställningsgränsen för **Konfiguration: Autentisering och RBAC
 ## Källa och status
 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Källa och status: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
+- Källa och status: `2026-07-15`
+- DiscVault Docs: `0.1.2`

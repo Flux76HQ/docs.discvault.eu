@@ -1,26 +1,26 @@
 ---
 title: 'Telepítés: Telepítési lehetőségek'
-description: 'Feladatspecifikus útmutató: Telepítés: Telepítési lehetőségek: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.'
+description: 'Feladatspecifikus útmutató: Telepítés: Telepítési lehetőségek: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.'
 pageId: 'install-index'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
+lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Cél és eredmény
 
-Hajtsa végre az oldalhoz tartozó munkafolyamatot: **Telepítés: Telepítési lehetőségek**. Ez az eljárás ezeket használja: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+Hajtsa végre az oldalhoz tartozó munkafolyamatot: **Telepítés: Telepítési lehetőségek**. Ez az eljárás ezeket használja: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
 ## Érvényesség
 
-Ez az oldal kizárólag erre vonatkozik: **Telepítés: Telepítési lehetőségek** (Docker · Unraid). A csatorna- és adathatárok: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; PostgreSQL `17` `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26; PostgreSQL `17` `/data`. Oldalspecifikus ellenőrzési pontok: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+Ez az oldal kizárólag erre vonatkozik: **Telepítés: Telepítési lehetőségek** (Docker · Unraid). A csatorna- és adathatárok: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; PostgreSQL `17` `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26; PostgreSQL `17` `/data`. Oldalspecifikus ellenőrzési pontok: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
 ### DiscVault v26 – stabil
 
@@ -38,13 +38,17 @@ Ez az oldal kizárólag erre vonatkozik: **Telepítés: Telepítési lehetőség
 
 - Docker Engine `24+`
 - Docker Compose `v2`
+- illeszkedő mentéskészlet
 
 ## Eljárás
 
 1. **Válassza ki:** [Telepítés: Docker Compose](/hu/install/docker-compose/)
 2. **Válassza ki:** [Telepítés: Docker run](/hu/install/docker-run/)
 3. **Válassza ki:** [Telepítés: Unraid](/hu/install/unraid/) · Unraid
-4. **Jegyezze fel:** `DISCVAULT_IMAGE` · illeszkedő mentéskészlet
+4. **Válassza ki:** az új telepítések a DiscVault v26 `:latest` vagy `:beta` képet használják; a befagyasztott `:legacy` kép csak olyan meglévő előző generációs telepítéshez való, amely még nem áll készen a migrációra
+5. **Őrizze meg:** hagyja változatlanul az előző generáció köteteit, környezeti változóit, portjait és adatútvonalát; a v26 PostgreSQL Compose topológiában soha ne használja a `:legacy` képet
+6. **Nyissa meg:** [Frissítés és migrálás: Átállás DiscVault 26-ra](/hu/update/migration/) · → DiscVault 26
+7. **Jegyezze fel:** `DISCVAULT_IMAGE` · illeszkedő mentéskészlet
 
 ### Feladatútvonalak
 
@@ -52,19 +56,23 @@ Ez az oldal kizárólag erre vonatkozik: **Telepítés: Telepítési lehetőség
 - [Telepítés: Docker run](/hu/install/docker-run/) — DiscVault 26 Docker run PostgreSQL `/data` `DATABASE_URL`
 - [Telepítés: Tartós adatok és PostgreSQL](/hu/install/storage-postgresql/) — DiscVault 26 PostgreSQL `/data`
 - [Telepítés: Unraid](/hu/install/unraid/) — DiscVault 26 Unraid PostgreSQL `/data`
+- [Frissítés és migrálás: Átállás DiscVault 26-ra](/hu/update/migration/) — → DiscVault 26
 
 ## Várt eredmény
 
-Az eredmény csak ennél fogadható el: **Telepítés: Telepítési lehetőségek** csak akkor, ha minden alábbi eredmény teljesül: kiválasztott kiadási csatorna; PostgreSQL `/data`. Oldalspecifikus ellenőrzési pontok: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+Az eredmény csak ennél fogadható el: **Telepítés: Telepítési lehetőségek** csak akkor, ha minden alábbi eredmény teljesül: kiválasztott kiadási csatorna; PostgreSQL `/data`; hagyja változatlanul az előző generáció köteteit, környezeti változóit, portjait és adatútvonalát; a v26 PostgreSQL Compose topológiában soha ne használja a `:legacy` képet. Oldalspecifikus ellenőrzési pontok: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
 - kiválasztott kiadási csatorna
 - PostgreSQL `/data`
+- hagyja változatlanul az előző generáció köteteit, környezeti változóit, portjait és adatútvonalát; a v26 PostgreSQL Compose topológiában soha ne használja a `:legacy` képet
 
 ## Biztonság és visszaállítás
 
 :::caution
-A biztonságos helyreállítás határa ennél: **Telepítés: Telepítési lehetőségek** ezeket a műveleteket igényli indítás vagy folytatás előtt: illeszkedő mentéskészlet; kiadási megjegyzések és rögzített változtathatatlan digest. Oldalspecifikus ellenőrzési pontok: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+A biztonságos helyreállítás határa ennél: **Telepítés: Telepítési lehetőségek** ezeket a műveleteket igényli indítás vagy folytatás előtt: Csak Legacy ág: a mentés után csak a meglévő régi telepítés képcímkéjét állítsa `:legacy` értékre, változatlan topológiával töltse le és hozza létre újra, ellenőrizze a gyűjteményt, majd álljon meg; az alábbi v26 parancsokat ne futtassa; a befagyasztott `:legacy` kép nem kap DiscVault v26 funkciókat, migrációs fejlesztéseket vagy jövőbeli felületfrissítéseket; illeszkedő mentéskészlet; kiadási megjegyzések és rögzített változtathatatlan digest. Oldalspecifikus ellenőrzési pontok: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
+- Csak Legacy ág: a mentés után csak a meglévő régi telepítés képcímkéjét állítsa `:legacy` értékre, változatlan topológiával töltse le és hozza létre újra, ellenőrizze a gyűjteményt, majd álljon meg; az alábbi v26 parancsokat ne futtassa
+- a befagyasztott `:legacy` kép nem kap DiscVault v26 funkciókat, migrációs fejlesztéseket vagy jövőbeli felületfrissítéseket
 - illeszkedő mentéskészlet
 - kiadási megjegyzések és rögzített változtathatatlan digest
 :::
@@ -76,5 +84,6 @@ A biztonságos helyreállítás határa ennél: **Telepítés: Telepítési lehe
 ## Forrás és állapot
 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Forrás és állapot: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
+- Forrás és állapot: `2026-07-15`
+- DiscVault Docs: `0.1.2`

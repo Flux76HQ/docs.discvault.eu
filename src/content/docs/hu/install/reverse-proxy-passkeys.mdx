@@ -1,51 +1,57 @@
 ---
 title: 'Telepítés: Fordított proxy és hozzáférési kulcsok'
-description: 'Feladatspecifikus útmutató: Telepítés: Fordított proxy és hozzáférési kulcsok: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.'
+description: 'Feladatspecifikus útmutató: Telepítés: Fordított proxy és hozzáférési kulcsok: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.'
 pageId: 'install-reverse-proxy-passkeys'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
+lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Cél és eredmény
 
-Hajtsa végre az oldalhoz tartozó munkafolyamatot: **Telepítés: Fordított proxy és hozzáférési kulcsok**. Ez az eljárás ezeket használja: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Hajtsa végre az oldalhoz tartozó munkafolyamatot: **Telepítés: Fordított proxy és hozzáférési kulcsok**. Ez az eljárás ezeket használja: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
 
 ## Érvényesség
 
-Ez az oldal kizárólag erre vonatkozik: **Telepítés: Fordított proxy és hozzáférési kulcsok** (Docker · web). A csatorna- és adathatárok: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`. Oldalspecifikus ellenőrzési pontok: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Ez az oldal kizárólag erre vonatkozik: **Telepítés: Fordított proxy és hozzáférési kulcsok** (Docker · web). A csatorna- és adathatárok: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`; a localhost kivételén kívül a passkey stabil teljes tartománynevet és megbízható HTTPS-t igényel; a puszta IP-cím és a sima HTTP nem támogatott; az `RP_ID` a séma és port nélküli állomásnév, a `RP_ORIGINS` pedig a pontos teljes HTTPS origin; mindkettőnek egyeznie kell a böngészőben megnyitott címmel; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`; a localhost kivételén kívül a passkey stabil teljes tartománynevet és megbízható HTTPS-t igényel; a puszta IP-cím és a sima HTTP nem támogatott; az `RP_ID` a séma és port nélküli állomásnév, a `RP_ORIGINS` pedig a pontos teljes HTTPS origin; mindkettőnek egyeznie kell a böngészőben megnyitott címmel. Oldalspecifikus ellenőrzési pontok: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
 
 ### DiscVault v26 – stabil
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - `RP_ID` `RP_ORIGINS`
 - `6080` API `5000`
+- a localhost kivételén kívül a passkey stabil teljes tartománynevet és megbízható HTTPS-t igényel; a puszta IP-cím és a sima HTTP nem támogatott
+- az `RP_ID` a séma és port nélküli állomásnév, a `RP_ORIGINS` pedig a pontos teljes HTTPS origin; mindkettőnek egyeznie kell a böngészőben megnyitott címmel
 
 ### DiscVault v26 – béta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `RP_ID` `RP_ORIGINS`
 - `6080` API `5000`
+- a localhost kivételén kívül a passkey stabil teljes tartománynevet és megbízható HTTPS-t igényel; a puszta IP-cím és a sima HTTP nem támogatott
+- az `RP_ID` a séma és port nélküli állomásnév, a `RP_ORIGINS` pedig a pontos teljes HTTPS origin; mindkettőnek egyeznie kell a böngészőben megnyitott címmel
 
 ## Előfeltételek
 
-- DNS
+- FQDN
 - TLS
-- `6080`
+- `RP_ID`
 
 ## Eljárás
 
-1. **Állítsa be:** `RP_ID`
-2. **Állítsa be:** `RP_ORIGINS` · HTTPS
-3. **Állítsa be:** `http://127.0.0.1:6080`
-4. **Tesztelje:** `GET /api/next/health`
+1. **Válassza ki:** FQDN · a localhost kivételén kívül a passkey stabil teljes tartománynevet és megbízható HTTPS-t igényel; a puszta IP-cím és a sima HTTP nem támogatott
+2. **Állítsa be:** `RP_ID`
+3. **Állítsa be:** `RP_ORIGINS` · HTTPS
+4. **Állítsa be:** `http://127.0.0.1:6080`
+5. **Tesztelje:** `GET /api/next/health`
+6. **Jegyezze fel:** a passkey regisztrálása előtt válassza ki az állomásnevet; későbbi módosítása új regisztrációt igényel, a localhost pedig csak helyi beállítási kivétel
 
 ### Parancsok és beállítások
 
@@ -59,16 +65,18 @@ curl --fail https://discvault.example.com/api/next/health
 
 ## Várt eredmény
 
-Az eredmény csak ennél fogadható el: **Telepítés: Fordított proxy és hozzáférési kulcsok** csak akkor, ha minden alábbi eredmény teljesül: HTTPS · HTTP `2xx`; `RP_ID`. Oldalspecifikus ellenőrzési pontok: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Az eredmény csak ennél fogadható el: **Telepítés: Fordított proxy és hozzáférési kulcsok** csak akkor, ha minden alábbi eredmény teljesül: HTTPS · HTTP `2xx`; `RP_ID`; az `RP_ID` a séma és port nélküli állomásnév, a `RP_ORIGINS` pedig a pontos teljes HTTPS origin; mindkettőnek egyeznie kell a böngészőben megnyitott címmel. Oldalspecifikus ellenőrzési pontok: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
 
 - HTTPS · HTTP `2xx`
 - `RP_ID`
+- az `RP_ID` a séma és port nélküli állomásnév, a `RP_ORIGINS` pedig a pontos teljes HTTPS origin; mindkettőnek egyeznie kell a böngészőben megnyitott címmel
 
 ## Biztonság és visszaállítás
 
 :::caution
-A biztonságos helyreállítás határa ennél: **Telepítés: Fordított proxy és hozzáférési kulcsok** ezeket a műveleteket igényli indítás vagy folytatás előtt: a proxy- és RP-értékeket együtt állítsa vissza, és tartson meg tulajdonosi helyreállítási módot. Oldalspecifikus ellenőrzési pontok: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+A biztonságos helyreállítás határa ennél: **Telepítés: Fordított proxy és hozzáférési kulcsok** ezeket a műveleteket igényli indítás vagy folytatás előtt: a passkey regisztrálása előtt válassza ki az állomásnevet; későbbi módosítása új regisztrációt igényel, a localhost pedig csak helyi beállítási kivétel; a proxy- és RP-értékeket együtt állítsa vissza, és tartson meg tulajdonosi helyreállítási módot. Oldalspecifikus ellenőrzési pontok: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
 
+- a passkey regisztrálása előtt válassza ki az állomásnevet; későbbi módosítása új regisztrációt igényel, a localhost pedig csak helyi beállítási kivétel
 - a proxy- és RP-értékeket együtt állítsa vissza, és tartson meg tulajdonosi helyreállítási módot
 :::
 
@@ -79,5 +87,6 @@ A biztonságos helyreállítás határa ennél: **Telepítés: Fordított proxy 
 ## Forrás és állapot
 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Forrás és állapot: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
+- Forrás és állapot: `2026-07-15`
+- DiscVault Docs: `0.1.2`

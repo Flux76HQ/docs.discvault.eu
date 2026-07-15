@@ -1,26 +1,26 @@
 ---
 title: '安装: 安装方式'
-description: '任务专用说明： 安装: 安装方式: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.'
+description: '任务专用说明： 安装: 安装方式: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.'
 pageId: 'install-index'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
+lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## 目标和结果
 
-完成此页面专用的流程： **安装: 安装方式**. 此流程使用 `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+完成此页面专用的流程： **安装: 安装方式**. 此流程使用 `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
 ## 适用范围
 
-本页面仅适用于 **安装: 安装方式** (Docker · Unraid). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; PostgreSQL `17` `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26; PostgreSQL `17` `/data`. 本页面专用检查点： `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+本页面仅适用于 **安装: 安装方式** (Docker · Unraid). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; PostgreSQL `17` `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26; PostgreSQL `17` `/data`. 本页面专用检查点： `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
 ### DiscVault v26 稳定版
 
@@ -38,13 +38,17 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 - Docker Engine `24+`
 - Docker Compose `v2`
+- 匹配的备份集
 
 ## 操作步骤
 
 1. **选择:** [安装: Docker Compose](/zh/install/docker-compose/)
 2. **选择:** [安装: Docker run](/zh/install/docker-run/)
 3. **选择:** [安装: Unraid](/zh/install/unraid/) · Unraid
-4. **记录:** `DISCVAULT_IMAGE` · 匹配的备份集
+4. **选择:** 新安装使用 DiscVault v26 `:latest` 或 `:beta`；冻结的 `:legacy` 镜像仅供尚未准备迁移的现有旧版安装使用
+5. **保留:** 保持旧版安装的卷、环境变量、端口和数据路径不变；切勿在 v26 PostgreSQL Compose 拓扑中用 `:legacy` 替换镜像
+6. **打开:** [更新和迁移: 迁移到 DiscVault 26](/zh/update/migration/) · → DiscVault 26
+7. **记录:** `DISCVAULT_IMAGE` · 匹配的备份集
 
 ### 任务路径
 
@@ -52,19 +56,23 @@ import PageMeta from '../../../../components/PageMeta.astro';
 - [安装: Docker run](/zh/install/docker-run/) — DiscVault 26 Docker run PostgreSQL `/data` `DATABASE_URL`
 - [安装: 持久数据和 PostgreSQL](/zh/install/storage-postgresql/) — DiscVault 26 PostgreSQL `/data`
 - [安装: Unraid](/zh/install/unraid/) — DiscVault 26 Unraid PostgreSQL `/data`
+- [更新和迁移: 迁移到 DiscVault 26](/zh/update/migration/) — → DiscVault 26
 
 ## 预期结果
 
-仅在以下条件下接受结果： **安装: 安装方式** 必须确认以下所有结果： 所选发布通道; PostgreSQL `/data`. 本页面专用检查点： `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+仅在以下条件下接受结果： **安装: 安装方式** 必须确认以下所有结果： 所选发布通道; PostgreSQL `/data`; 保持旧版安装的卷、环境变量、端口和数据路径不变；切勿在 v26 PostgreSQL Compose 拓扑中用 `:legacy` 替换镜像. 本页面专用检查点： `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
 - 所选发布通道
 - PostgreSQL `/data`
+- 保持旧版安装的卷、环境变量、端口和数据路径不变；切勿在 v26 PostgreSQL Compose 拓扑中用 `:legacy` 替换镜像
 
 ## 安全与回滚
 
 :::caution
-安全恢复边界： **安装: 安装方式** 在启动或继续任何操作前必须执行： 匹配的备份集; 发行说明及已记录的不可变镜像摘要. 本页面专用检查点： `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+安全恢复边界： **安装: 安装方式** 在启动或继续任何操作前必须执行： 仅限 Legacy 分支：备份后，只将现有旧版部署的镜像标签改为 `:legacy`，保持拓扑不变并拉取、重新创建，验证收藏后停止；不要运行下面的 v26 命令; 冻结的 `:legacy` 镜像不会获得 DiscVault v26 功能、迁移改进或未来界面更新; 匹配的备份集; 发行说明及已记录的不可变镜像摘要. 本页面专用检查点： `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
+- 仅限 Legacy 分支：备份后，只将现有旧版部署的镜像标签改为 `:legacy`，保持拓扑不变并拉取、重新创建，验证收藏后停止；不要运行下面的 v26 命令
+- 冻结的 `:legacy` 镜像不会获得 DiscVault v26 功能、迁移改进或未来界面更新
 - 匹配的备份集
 - 发行说明及已记录的不可变镜像摘要
 :::
@@ -76,5 +84,6 @@ import PageMeta from '../../../../components/PageMeta.astro';
 ## 来源和状态
 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- 来源和状态: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
+- 来源和状态: `2026-07-15`
+- DiscVault Docs: `0.1.2`

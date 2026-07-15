@@ -1,49 +1,61 @@
 ---
 title: 'Konfigurasjon: Autentisering og RBAC'
-description: 'Oppgavespesifikk veiledning for Konfigurasjon: Autentisering og RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.'
+description: 'Oppgavespesifikk veiledning for Konfigurasjon: Autentisering og RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.'
 pageId: 'configure-auth-rbac'
 products: ['server']
 platforms: ['web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
+lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="nett" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="nett" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Mål og resultat
 
-Fullfør den sidespesifikke arbeidsflyten for **Konfigurasjon: Autentisering og RBAC**. Denne fremgangsmåten bruker `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+Fullfør den sidespesifikke arbeidsflyten for **Konfigurasjon: Autentisering og RBAC**. Denne fremgangsmåten bruker `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
 
 ## Gjelder for
 
-Denne siden gjelder bare **Konfigurasjon: Autentisering og RBAC** (nett). Kanal- og datagrensene er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn. Sidespesifikke kontrollpunkter: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+Denne siden gjelder bare **Konfigurasjon: Autentisering og RBAC** (nett). Kanal- og datagrensene er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; en passkey er et kryptografisk nøkkelpar: den private nøkkelen blir på enheten eller i en betrodd legitimasjonsbehandler, og DiscVault lagrer bare den offentlige nøkkelen; passkeys er phishing-resistente og unike for nettstedet; innlogging bruker enhetsopplåsing i stedet for et gjenbrukbart kontopassord; en tidsbegrenset invitasjonskode starter registreringen, men er ikke et gjenbrukbart kontopassord; vanlig innlogging bruker en passkey; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn; en passkey er et kryptografisk nøkkelpar: den private nøkkelen blir på enheten eller i en betrodd legitimasjonsbehandler, og DiscVault lagrer bare den offentlige nøkkelen; passkeys er phishing-resistente og unike for nettstedet; innlogging bruker enhetsopplåsing i stedet for et gjenbrukbart kontopassord; en tidsbegrenset invitasjonskode starter registreringen, men er ikke et gjenbrukbart kontopassord; vanlig innlogging bruker en passkey. Sidespesifikke kontrollpunkter: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
 
 ### DiscVault v26 – stabil
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - WebAuthn
+- en passkey er et kryptografisk nøkkelpar: den private nøkkelen blir på enheten eller i en betrodd legitimasjonsbehandler, og DiscVault lagrer bare den offentlige nøkkelen
+- passkeys er phishing-resistente og unike for nettstedet; innlogging bruker enhetsopplåsing i stedet for et gjenbrukbart kontopassord
+- en tidsbegrenset invitasjonskode starter registreringen, men er ikke et gjenbrukbart kontopassord; vanlig innlogging bruker en passkey
 
 ### DiscVault v26 – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - WebAuthn
+- en passkey er et kryptografisk nøkkelpar: den private nøkkelen blir på enheten eller i en betrodd legitimasjonsbehandler, og DiscVault lagrer bare den offentlige nøkkelen
+- passkeys er phishing-resistente og unike for nettstedet; innlogging bruker enhetsopplåsing i stedet for et gjenbrukbart kontopassord
+- en tidsbegrenset invitasjonskode starter registreringen, men er ikke et gjenbrukbart kontopassord; vanlig innlogging bruker en passkey
 
 ## Forutsetninger
 
 - eiertilgang
-- HTTPS
+- [Installasjon: Omvendt proxy og tilgangsnøkler](/no/install/reverse-proxy-passkeys/) · HTTPS FQDN
 - annen gjenopprettingsmetode
 
 ## Fremgangsmåte
 
-1. **Åpne:** Administrasjon → Sikkerhet → Aktiver autentisering
-2. **Opprett:** Administrasjon → Brukere → Opprett 48-timers invitasjon
-3. **Konfigurer:** Administrasjon → Roller → Grunnleggende / Avansert
-4. **Test:** `48 h`
+1. **Kontroller:** en passkey er et kryptografisk nøkkelpar: den private nøkkelen blir på enheten eller i en betrodd legitimasjonsbehandler, og DiscVault lagrer bare den offentlige nøkkelen
+2. **Sammenlign:** passkeys er phishing-resistente og unike for nettstedet; innlogging bruker enhetsopplåsing i stedet for et gjenbrukbart kontopassord · en tidsbegrenset invitasjonskode starter registreringen, men er ikke et gjenbrukbart kontopassord; vanlig innlogging bruker en passkey
+3. **Bekreft:** Windows trenger en oppdatert nettleser med passkey-støtte og Windows Hello med minst en PIN-kode; Windows 11 22H2 eller nyere anbefales for innebygd administrasjon
+4. **Bekreft:** macOS trenger Ventura 13 eller nyere med iCloud-nøkkelring, eller en annen legitimasjonsbehandler med passkey-støtte
+5. **Bekreft:** iPhone og iPad trenger iOS eller iPadOS 16+ med iCloud-nøkkelring og tofaktorautentisering; Android trenger versjon 9+ med en passkey-leverandør og skjermlås
+6. **Opprett:** registrer mer enn én passkey, for eksempel på telefon og datamaskin, og behold en uavhengig gjenopprettingsvei for eieren før en enhet byttes eller mistes
+7. **Åpne:** Administrasjon → Sikkerhet → Aktiver autentisering
+8. **Opprett:** Administrasjon → Brukere → Opprett 48-timers invitasjon
+9. **Konfigurer:** Administrasjon → Roller → Grunnleggende / Avansert
+10. **Test:** WebAuthn
 
 ### Kommandoer og innstillinger
 
@@ -56,15 +68,18 @@ curl --fail http://localhost:6080/api/next/auth/rbac
 
 ## Forventet resultat
 
-Godta resultatet for **Konfigurasjon: Autentisering og RBAC** bare når alle resultatene nedenfor er oppfylt: eierens passkey-innlogging virker, invitasjonsregistrering følger innstillingen og testbrukeren har bare tildelte rettigheter. Sidespesifikke kontrollpunkter: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+Godta resultatet for **Konfigurasjon: Autentisering og RBAC** bare når alle resultatene nedenfor er oppfylt: eierens passkey-innlogging virker, invitasjonsregistrering følger innstillingen og testbrukeren har bare tildelte rettigheter; passkeys er phishing-resistente og unike for nettstedet; innlogging bruker enhetsopplåsing i stedet for et gjenbrukbart kontopassord; en tidsbegrenset invitasjonskode starter registreringen, men er ikke et gjenbrukbart kontopassord; vanlig innlogging bruker en passkey. Sidespesifikke kontrollpunkter: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
 
 - eierens passkey-innlogging virker, invitasjonsregistrering følger innstillingen og testbrukeren har bare tildelte rettigheter
+- passkeys er phishing-resistente og unike for nettstedet; innlogging bruker enhetsopplåsing i stedet for et gjenbrukbart kontopassord
+- en tidsbegrenset invitasjonskode starter registreringen, men er ikke et gjenbrukbart kontopassord; vanlig innlogging bruker en passkey
 
 ## Sikkerhet og tilbakerulling
 
 :::caution
-Den sikre gjenopprettingsgrensen for **Konfigurasjon: Autentisering og RBAC** krever disse handlingene før noe startes eller fortsetter: behold eierøkten og en annen gjenopprettingsmetode; fjern aldri eierens siste passkey. Sidespesifikke kontrollpunkter: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+Den sikre gjenopprettingsgrensen for **Konfigurasjon: Autentisering og RBAC** krever disse handlingene før noe startes eller fortsetter: registrer mer enn én passkey, for eksempel på telefon og datamaskin, og behold en uavhengig gjenopprettingsvei for eieren før en enhet byttes eller mistes; behold eierøkten og en annen gjenopprettingsmetode; fjern aldri eierens siste passkey. Sidespesifikke kontrollpunkter: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
 
+- registrer mer enn én passkey, for eksempel på telefon og datamaskin, og behold en uavhengig gjenopprettingsvei for eieren før en enhet byttes eller mistes
 - behold eierøkten og en annen gjenopprettingsmetode; fjern aldri eierens siste passkey
 :::
 
@@ -75,5 +90,6 @@ Den sikre gjenopprettingsgrensen for **Konfigurasjon: Autentisering og RBAC** kr
 ## Kilde og status
 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Kilde og status: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
+- Kilde og status: `2026-07-15`
+- DiscVault Docs: `0.1.2`

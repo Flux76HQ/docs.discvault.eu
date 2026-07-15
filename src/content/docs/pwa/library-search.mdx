@@ -1,36 +1,40 @@
 ---
 title: 'PWA: Library and search'
-description: 'Browse, search, filter, and update titles, containers, box sets, collections, watchlist, and history.'
+description: 'Browse, search, and update titles, watchlist, and history, then choose how Collectors Mode, multiple editions, box-sets, vaults, and collections are presented.'
 pageId: 'pwa-library-search'
 products: ['pwa']
 platforms: ['web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
+lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Goal and result
 
-Browse, search, filter, and update titles, containers, box sets, collections, watchlist, and history.
+Browse, search, and update titles, watchlist, and history, then choose how Collectors Mode, multiple editions, box-sets, vaults, and collections are presented.
 
 ## Applies to
 
-In both DiscVault v26 channels, available actions are permission-scoped; viewers cannot perform editor or administrator changes.
+In both DiscVault v26 channels, available actions are permission-scoped; viewers cannot perform editor or administrator changes. Collectors Mode is off by default and exposes the `box_set`, `vault`, and `collection` container types. Merging multiple editions as one title is a separate preference that is also off by default.
 
 ### DiscVault v26 stable
 
 - DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
 - PWA · RBAC · account permissions
+- Collectors Mode is off by default and exposes advanced container features; `merge_editions_as_title` is a separate preference that is also off by default
+- when `merge_editions_as_title` is enabled, multiple physical versions appear as one library tile; open the tile to see every edition
 
 ### DiscVault v26 beta
 
 - DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
 - PWA · RBAC · account permissions
+- Collectors Mode is off by default and exposes advanced container features; `merge_editions_as_title` is a separate preference that is also off by default
+- when `merge_editions_as_title` is enabled, multiple physical versions appear as one library tile; open the tile to see every edition
 
 ## Prerequisites
 
@@ -43,22 +47,33 @@ In both DiscVault v26 channels, available actions are permission-scoped; viewers
 2. **Configure:** Library → Filter → Format / Genre / Group
 3. **Compare:** Library → View → Posters / List · same result count
 4. **Test:** Title → Details → Watchlist / Watched · reload persistence
+5. **Configure:** Collectors Mode is off by default and exposes advanced container features; `merge_editions_as_title` is a separate preference that is also off by default
+6. **Test:** when `merge_editions_as_title` is enabled, multiple physical versions appear as one library tile; open the tile to see every edition
+7. **Compare:** a box-set is a physical retail product with its own barcode; its films remain individual titles linked as direct movie members
+8. **Compare:** a vault is a user-created shelf, storage box, or location grouping with direct movie members and no retail-product meaning
+9. **Compare:** a collection is a thematic grouping whose ordered items may be movies, box-sets, vaults, or other collections, so nesting is supported
+10. **Test:** turning Collectors Mode off hides its container presentation but does not delete containers or their members
 
 
 
 ## Expected result
 
-Search and filters return expected records and an allowed watchlist change persists after reload.
+Search and filters return expected records, an allowed watchlist change persists, and collector preferences change presentation without deleting containers, members, or editions.
 
 - Library → Search
 - Library → Filter → Format / Genre / Group
 - Title → Details → Watchlist / Watched
+- when `merge_editions_as_title` is enabled, multiple physical versions appear as one library tile; open the tile to see every edition
+- a box-set is a physical retail product with its own barcode; its films remain individual titles linked as direct movie members
+- a vault is a user-created shelf, storage box, or location grouping with direct movie members and no retail-product meaning
+- a collection is a thematic grouping whose ordered items may be movies, box-sets, vaults, or other collections, so nesting is supported
 
 ## Safety and rollback
 
 :::caution
-Cancel edits before saving. For an incorrect saved change, restore the field in the UI; use a server backup only for bulk corruption.
+Turn a presentation preference off to restore the prior view; this does not delete containers or members. Cancel data edits before saving and reserve backup restoration for actual data corruption.
 
+- turning Collectors Mode off hides its container presentation but does not delete containers or their members
 - cancel an incorrect edit before saving, restore a saved field in the UI, and use a matching server backup for bulk corruption
 :::
 
@@ -69,5 +84,6 @@ Cancel edits before saving. For an incorrect saved change, restore the field in 
 ## Source and status
 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Verified: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
+- Verified: `2026-07-15`
+- DiscVault Docs: `0.1.2`

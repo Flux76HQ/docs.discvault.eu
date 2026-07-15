@@ -1,36 +1,40 @@
 ---
 title: 'PWA: Bibliotek och sökning'
-description: 'Uppgiftsspecifik vägledning för PWA: Bibliotek och sökning: PWA · `watchlist` · `history` · RBAC.'
+description: 'Uppgiftsspecifik vägledning för PWA: Bibliotek och sökning: PWA · `watchlist` · `history` · RBAC · `merge_editions_as_title` · `box_set` · `vault` · `collection`.'
 pageId: 'pwa-library-search'
 products: ['pwa']
 platforms: ['web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
+lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="webb" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="webb" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Mål och resultat
 
-Följ det sidspecifika arbetsflödet för **PWA: Bibliotek och sökning**. Den här proceduren använder PWA · `watchlist` · `history` · RBAC.
+Följ det sidspecifika arbetsflödet för **PWA: Bibliotek och sökning**. Den här proceduren använder PWA · `watchlist` · `history` · RBAC · `merge_editions_as_title` · `box_set` · `vault` · `collection`.
 
 ## Gäller för
 
-Den här sidan gäller endast **PWA: Bibliotek och sökning** (webb). Kanal- och datagränserna är: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PWA · RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PWA · RBAC. Sidspecifika kontrollpunkter: PWA · `watchlist` · `history` · RBAC.
+Den här sidan gäller endast **PWA: Bibliotek och sökning** (webb). Kanal- och datagränserna är: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PWA · RBAC; Collectors Mode är av som standard och visar avancerade containerfunktioner; `merge_editions_as_title` är en separat inställning som också är av som standard; när `merge_editions_as_title` är aktiverat visas flera fysiska versioner som en biblioteksruta; öppna rutan för att se varje utgåva; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PWA · RBAC; Collectors Mode är av som standard och visar avancerade containerfunktioner; `merge_editions_as_title` är en separat inställning som också är av som standard; när `merge_editions_as_title` är aktiverat visas flera fysiska versioner som en biblioteksruta; öppna rutan för att se varje utgåva. Sidspecifika kontrollpunkter: PWA · `watchlist` · `history` · RBAC · `merge_editions_as_title` · `box_set` · `vault` · `collection`.
 
 ### DiscVault v26 – stabil
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - PWA · RBAC
+- Collectors Mode är av som standard och visar avancerade containerfunktioner; `merge_editions_as_title` är en separat inställning som också är av som standard
+- när `merge_editions_as_title` är aktiverat visas flera fysiska versioner som en biblioteksruta; öppna rutan för att se varje utgåva
 
 ### DiscVault v26 – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - PWA · RBAC
+- Collectors Mode är av som standard och visar avancerade containerfunktioner; `merge_editions_as_title` är en separat inställning som också är av som standard
+- när `merge_editions_as_title` är aktiverat visas flera fysiska versioner som en biblioteksruta; öppna rutan för att se varje utgåva
 
 ## Förutsättningar
 
@@ -43,22 +47,33 @@ Den här sidan gäller endast **PWA: Bibliotek och sökning** (webb). Kanal- och
 2. **Konfigurera:** Bibliotek → Filter → Format / Genre / Grupp
 3. **Jämför:** Bibliotek → Vy → Affischer / Lista
 4. **Testa:** Titel → Detaljer → Bevakningslista / Sedd
+5. **Konfigurera:** Collectors Mode är av som standard och visar avancerade containerfunktioner; `merge_editions_as_title` är en separat inställning som också är av som standard
+6. **Testa:** när `merge_editions_as_title` är aktiverat visas flera fysiska versioner som en biblioteksruta; öppna rutan för att se varje utgåva
+7. **Jämför:** ett box-set är en fysisk handelsprodukt med egen streckkod; filmerna förblir individuella titlar länkade som direkta filmmedlemmar
+8. **Jämför:** ett vault är en användarskapad hyll-, förvaringsbox- eller platsgrupp med direkta filmmedlemmar och utan betydelse som handelsprodukt
+9. **Jämför:** en collection är en tematisk grupp vars ordnade objekt kan vara filmer, box-set, vaults eller andra collections, så nästling stöds
+10. **Testa:** att stänga av Collectors Mode döljer containervisningen men raderar inte containrar eller medlemmar
 
 
 
 ## Förväntat resultat
 
-Godkänn resultatet för **PWA: Bibliotek och sökning** endast när alla resultat nedan stämmer: Bibliotek → Sök; Bibliotek → Filter → Format / Genre / Grupp; Titel → Detaljer → Bevakningslista / Sedd. Sidspecifika kontrollpunkter: PWA · `watchlist` · `history` · RBAC.
+Godkänn resultatet för **PWA: Bibliotek och sökning** endast när alla resultat nedan stämmer: Bibliotek → Sök; Bibliotek → Filter → Format / Genre / Grupp; Titel → Detaljer → Bevakningslista / Sedd; när `merge_editions_as_title` är aktiverat visas flera fysiska versioner som en biblioteksruta; öppna rutan för att se varje utgåva; ett box-set är en fysisk handelsprodukt med egen streckkod; filmerna förblir individuella titlar länkade som direkta filmmedlemmar; ett vault är en användarskapad hyll-, förvaringsbox- eller platsgrupp med direkta filmmedlemmar och utan betydelse som handelsprodukt; en collection är en tematisk grupp vars ordnade objekt kan vara filmer, box-set, vaults eller andra collections, så nästling stöds. Sidspecifika kontrollpunkter: PWA · `watchlist` · `history` · RBAC · `merge_editions_as_title` · `box_set` · `vault` · `collection`.
 
 - Bibliotek → Sök
 - Bibliotek → Filter → Format / Genre / Grupp
 - Titel → Detaljer → Bevakningslista / Sedd
+- när `merge_editions_as_title` är aktiverat visas flera fysiska versioner som en biblioteksruta; öppna rutan för att se varje utgåva
+- ett box-set är en fysisk handelsprodukt med egen streckkod; filmerna förblir individuella titlar länkade som direkta filmmedlemmar
+- ett vault är en användarskapad hyll-, förvaringsbox- eller platsgrupp med direkta filmmedlemmar och utan betydelse som handelsprodukt
+- en collection är en tematisk grupp vars ordnade objekt kan vara filmer, box-set, vaults eller andra collections, så nästling stöds
 
 ## Säkerhet och återställning
 
 :::caution
-Den säkra återställningsgränsen för **PWA: Bibliotek och sökning** kräver dessa åtgärder innan något startas eller fortsätter: avbryt en felaktig redigering före lagring, återställ ett sparat fält i gränssnittet och använd matchande serverkopia vid omfattande skada. Sidspecifika kontrollpunkter: PWA · `watchlist` · `history` · RBAC.
+Den säkra återställningsgränsen för **PWA: Bibliotek och sökning** kräver dessa åtgärder innan något startas eller fortsätter: att stänga av Collectors Mode döljer containervisningen men raderar inte containrar eller medlemmar; avbryt en felaktig redigering före lagring, återställ ett sparat fält i gränssnittet och använd matchande serverkopia vid omfattande skada. Sidspecifika kontrollpunkter: PWA · `watchlist` · `history` · RBAC · `merge_editions_as_title` · `box_set` · `vault` · `collection`.
 
+- att stänga av Collectors Mode döljer containervisningen men raderar inte containrar eller medlemmar
 - avbryt en felaktig redigering före lagring, återställ ett sparat fält i gränssnittet och använd matchande serverkopia vid omfattande skada
 :::
 
@@ -69,5 +84,6 @@ Den säkra återställningsgränsen för **PWA: Bibliotek och sökning** kräver
 ## Källa och status
 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Källa och status: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
+- Källa och status: `2026-07-15`
+- DiscVault Docs: `0.1.2`

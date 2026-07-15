@@ -1,36 +1,40 @@
 ---
 title: 'PWA: Bibliotheek en zoeken'
-description: 'Taakspecifieke instructies voor PWA: Bibliotheek en zoeken: PWA · `watchlist` · `history` · RBAC.'
+description: 'Taakspecifieke instructies voor PWA: Bibliotheek en zoeken: PWA · `watchlist` · `history` · RBAC · `merge_editions_as_title` · `box_set` · `vault` · `collection`.'
 pageId: 'pwa-library-search'
 products: ['pwa']
 platforms: ['web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
+lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Doel en resultaat
 
-Voer de paginaspecifieke werkwijze uit voor **PWA: Bibliotheek en zoeken**. Deze werkwijze gebruikt PWA · `watchlist` · `history` · RBAC.
+Voer de paginaspecifieke werkwijze uit voor **PWA: Bibliotheek en zoeken**. Deze werkwijze gebruikt PWA · `watchlist` · `history` · RBAC · `merge_editions_as_title` · `box_set` · `vault` · `collection`.
 
 ## Van toepassing op
 
-Deze pagina is uitsluitend van toepassing op **PWA: Bibliotheek en zoeken** (web). De kanaal- en gegevensgrenzen zijn: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PWA · RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PWA · RBAC. Paginaspecifieke controlepunten: PWA · `watchlist` · `history` · RBAC.
+Deze pagina is uitsluitend van toepassing op **PWA: Bibliotheek en zoeken** (web). De kanaal- en gegevensgrenzen zijn: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PWA · RBAC; Collectors Mode staat standaard uit en toont geavanceerde containerfuncties; `merge_editions_as_title` is een afzonderlijke voorkeur die eveneens standaard uitstaat; als `merge_editions_as_title` aanstaat, verschijnen meerdere fysieke versies als één bibliotheektegel; open de tegel om elke editie te zien; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PWA · RBAC; Collectors Mode staat standaard uit en toont geavanceerde containerfuncties; `merge_editions_as_title` is een afzonderlijke voorkeur die eveneens standaard uitstaat; als `merge_editions_as_title` aanstaat, verschijnen meerdere fysieke versies als één bibliotheektegel; open de tegel om elke editie te zien. Paginaspecifieke controlepunten: PWA · `watchlist` · `history` · RBAC · `merge_editions_as_title` · `box_set` · `vault` · `collection`.
 
 ### DiscVault v26 stabiel
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - PWA · RBAC
+- Collectors Mode staat standaard uit en toont geavanceerde containerfuncties; `merge_editions_as_title` is een afzonderlijke voorkeur die eveneens standaard uitstaat
+- als `merge_editions_as_title` aanstaat, verschijnen meerdere fysieke versies als één bibliotheektegel; open de tegel om elke editie te zien
 
 ### DiscVault v26 bèta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - PWA · RBAC
+- Collectors Mode staat standaard uit en toont geavanceerde containerfuncties; `merge_editions_as_title` is een afzonderlijke voorkeur die eveneens standaard uitstaat
+- als `merge_editions_as_title` aanstaat, verschijnen meerdere fysieke versies als één bibliotheektegel; open de tegel om elke editie te zien
 
 ## Vereisten
 
@@ -43,22 +47,33 @@ Deze pagina is uitsluitend van toepassing op **PWA: Bibliotheek en zoeken** (web
 2. **Configureren:** Bibliotheek → Filter → Formaat / Genre / Groep
 3. **Vergelijken:** Bibliotheek → Weergave → Posters / Lijst
 4. **Testen:** Titel → Details → Kijklijst / Bekeken
+5. **Configureren:** Collectors Mode staat standaard uit en toont geavanceerde containerfuncties; `merge_editions_as_title` is een afzonderlijke voorkeur die eveneens standaard uitstaat
+6. **Testen:** als `merge_editions_as_title` aanstaat, verschijnen meerdere fysieke versies als één bibliotheektegel; open de tegel om elke editie te zien
+7. **Vergelijken:** een box-set is een fysiek winkelproduct met een eigen barcode; de films blijven afzonderlijke titels die als directe filmleden zijn gekoppeld
+8. **Vergelijken:** een vault is een door de gebruiker gemaakte plank-, opslagdoos- of locatiegroep met directe filmleden en zonder betekenis als winkelproduct
+9. **Vergelijken:** een collection is een thematische groep waarvan de geordende items films, box-sets, vaults of andere collections kunnen zijn, zodat nesten wordt ondersteund
+10. **Testen:** Collectors Mode uitschakelen verbergt de containerweergave maar verwijdert geen containers of leden
 
 
 
 ## Verwacht resultaat
 
-Accepteer het resultaat voor **PWA: Bibliotheek en zoeken** alleen wanneer alle onderstaande resultaten kloppen: Bibliotheek → Zoeken; Bibliotheek → Filter → Formaat / Genre / Groep; Titel → Details → Kijklijst / Bekeken. Paginaspecifieke controlepunten: PWA · `watchlist` · `history` · RBAC.
+Accepteer het resultaat voor **PWA: Bibliotheek en zoeken** alleen wanneer alle onderstaande resultaten kloppen: Bibliotheek → Zoeken; Bibliotheek → Filter → Formaat / Genre / Groep; Titel → Details → Kijklijst / Bekeken; als `merge_editions_as_title` aanstaat, verschijnen meerdere fysieke versies als één bibliotheektegel; open de tegel om elke editie te zien; een box-set is een fysiek winkelproduct met een eigen barcode; de films blijven afzonderlijke titels die als directe filmleden zijn gekoppeld; een vault is een door de gebruiker gemaakte plank-, opslagdoos- of locatiegroep met directe filmleden en zonder betekenis als winkelproduct; een collection is een thematische groep waarvan de geordende items films, box-sets, vaults of andere collections kunnen zijn, zodat nesten wordt ondersteund. Paginaspecifieke controlepunten: PWA · `watchlist` · `history` · RBAC · `merge_editions_as_title` · `box_set` · `vault` · `collection`.
 
 - Bibliotheek → Zoeken
 - Bibliotheek → Filter → Formaat / Genre / Groep
 - Titel → Details → Kijklijst / Bekeken
+- als `merge_editions_as_title` aanstaat, verschijnen meerdere fysieke versies als één bibliotheektegel; open de tegel om elke editie te zien
+- een box-set is een fysiek winkelproduct met een eigen barcode; de films blijven afzonderlijke titels die als directe filmleden zijn gekoppeld
+- een vault is een door de gebruiker gemaakte plank-, opslagdoos- of locatiegroep met directe filmleden en zonder betekenis als winkelproduct
+- een collection is een thematische groep waarvan de geordende items films, box-sets, vaults of andere collections kunnen zijn, zodat nesten wordt ondersteund
 
 ## Veiligheid en terugdraaien
 
 :::caution
-De veilige herstelgrens voor **PWA: Bibliotheek en zoeken** vereist deze acties voordat iets start of doorgaat: annuleer een onjuiste wijziging vóór opslaan, herstel een opgeslagen veld in de UI en gebruik een bijpassende serverback-up bij bulkcorruptie. Paginaspecifieke controlepunten: PWA · `watchlist` · `history` · RBAC.
+De veilige herstelgrens voor **PWA: Bibliotheek en zoeken** vereist deze acties voordat iets start of doorgaat: Collectors Mode uitschakelen verbergt de containerweergave maar verwijdert geen containers of leden; annuleer een onjuiste wijziging vóór opslaan, herstel een opgeslagen veld in de UI en gebruik een bijpassende serverback-up bij bulkcorruptie. Paginaspecifieke controlepunten: PWA · `watchlist` · `history` · RBAC · `merge_editions_as_title` · `box_set` · `vault` · `collection`.
 
+- Collectors Mode uitschakelen verbergt de containerweergave maar verwijdert geen containers of leden
 - annuleer een onjuiste wijziging vóór opslaan, herstel een opgeslagen veld in de UI en gebruik een bijpassende serverback-up bij bulkcorruptie
 :::
 
@@ -69,5 +84,6 @@ De veilige herstelgrens voor **PWA: Bibliotheek en zoeken** vereist deze acties 
 ## Bron en status
 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Bron en status: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
+- Bron en status: `2026-07-15`
+- DiscVault Docs: `0.1.2`

@@ -1,26 +1,26 @@
 ---
 title: '更新和迁移: 容器更新'
-description: '任务专用说明： 更新和迁移: 容器更新: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.'
+description: '任务专用说明： 更新和迁移: 容器更新: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.'
 pageId: 'update-update'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
+lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## 目标和结果
 
-完成此页面专用的流程： **更新和迁移: 容器更新**. 此流程使用 `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+完成此页面专用的流程： **更新和迁移: 容器更新**. 此流程使用 `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
 ## 适用范围
 
-本页面仅适用于 **更新和迁移: 容器更新** (Docker · Unraid). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · 发行说明及已记录的不可变镜像摘要 · 匹配的备份集; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · 发行说明及已记录的不可变镜像摘要 · 匹配的备份集. 本页面专用检查点： `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+本页面仅适用于 **更新和迁移: 容器更新** (Docker · Unraid). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · 发行说明及已记录的不可变镜像摘要 · 匹配的备份集; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · 发行说明及已记录的不可变镜像摘要 · 匹配的备份集. 本页面专用检查点： `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
 ### DiscVault v26 稳定版
 
@@ -41,10 +41,15 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## 操作步骤
 
-1. **验证:** `PREVIOUS_IMAGE=@sha256:…`
-2. **选择:** `DISCVAULT_IMAGE` · `:latest` `:beta`
-3. **运行:** `--force-recreate`
-4. **比较:** 目标镜像摘要正在运行，健康检查成功，且所有者登录、媒体库数量和一个媒体样本均通过
+1. **检查:** 新安装使用 DiscVault v26 `:latest` 或 `:beta`；冻结的 `:legacy` 镜像仅供尚未准备迁移的现有旧版安装使用
+2. **备份:** 匹配的备份集
+3. **选择:** 仅限 Legacy 分支：备份后，只将现有旧版部署的镜像标签改为 `:legacy`，保持拓扑不变并拉取、重新创建，验证收藏后停止；不要运行下面的 v26 命令
+4. **打开:** [更新和迁移: 迁移到 DiscVault 26](/zh/update/migration/) · DiscVault 26
+5. **保留:** 保持旧版安装的卷、环境变量、端口和数据路径不变；切勿在 v26 PostgreSQL Compose 拓扑中用 `:legacy` 替换镜像
+6. **验证:** `DiscVault v26` · `PREVIOUS_IMAGE=@sha256:…`
+7. **选择:** `DiscVault v26` · `DISCVAULT_IMAGE` · `:latest` `:beta`
+8. **运行:** `DiscVault v26` · `--force-recreate`
+9. **比较:** `DiscVault v26` · 目标镜像摘要正在运行，健康检查成功，且所有者登录、媒体库数量和一个媒体样本均通过
 
 ### 命令和设置
 
@@ -90,15 +95,17 @@ trap - EXIT
 
 ## 预期结果
 
-仅在以下条件下接受结果： **更新和迁移: 容器更新** 必须确认以下所有结果： 目标镜像摘要正在运行，健康检查成功，且所有者登录、媒体库数量和一个媒体样本均通过. 本页面专用检查点： `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+仅在以下条件下接受结果： **更新和迁移: 容器更新** 必须确认以下所有结果： 目标镜像摘要正在运行，健康检查成功，且所有者登录、媒体库数量和一个媒体样本均通过; 保持旧版安装的卷、环境变量、端口和数据路径不变；切勿在 v26 PostgreSQL Compose 拓扑中用 `:legacy` 替换镜像. 本页面专用检查点： `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
 - 目标镜像摘要正在运行，健康检查成功，且所有者登录、媒体库数量和一个媒体样本均通过
+- 保持旧版安装的卷、环境变量、端口和数据路径不变；切勿在 v26 PostgreSQL Compose 拓扑中用 `:legacy` 替换镜像
 
 ## 安全与回滚
 
 :::caution
-安全恢复边界： **更新和迁移: 容器更新** 在启动或继续任何操作前必须执行： [更新和迁移: 镜像回滚](/zh/update/rollback/) · 匹配的备份集; 发行说明及已记录的不可变镜像摘要. 本页面专用检查点： `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+安全恢复边界： **更新和迁移: 容器更新** 在启动或继续任何操作前必须执行： 冻结的 `:legacy` 镜像不会获得 DiscVault v26 功能、迁移改进或未来界面更新; [更新和迁移: 镜像回滚](/zh/update/rollback/) · 匹配的备份集; 发行说明及已记录的不可变镜像摘要. 本页面专用检查点： `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
+- 冻结的 `:legacy` 镜像不会获得 DiscVault v26 功能、迁移改进或未来界面更新
 - [更新和迁移: 镜像回滚](/zh/update/rollback/) · 匹配的备份集
 - 发行说明及已记录的不可变镜像摘要
 :::
@@ -110,5 +117,6 @@ trap - EXIT
 ## 来源和状态
 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- 来源和状态: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
+- 来源和状态: `2026-07-15`
+- DiscVault Docs: `0.1.2`

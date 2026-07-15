@@ -22,6 +22,12 @@ export const imageChannels = Object.freeze({
     productVersion,
     architecture: deploymentArchitecture,
   }),
+  legacy: Object.freeze({
+    image: 'ghcr.io/helmerznl/discvault:legacy',
+    label: 'Previous-generation DiscVault (frozen)',
+    productVersion: 'Previous DiscVault generation',
+    architecture: 'Existing legacy deployment topology; not the DiscVault v26 Compose topology',
+  }),
 });
 
 export const deployment = Object.freeze({

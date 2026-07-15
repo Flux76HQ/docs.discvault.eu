@@ -1,26 +1,26 @@
 ---
 title: 'Update and migrate: Container update'
-description: 'Pull and recreate one channel only, then verify health and representative data.'
+description: 'Identify the running generation, then update v26 or safely pin an existing old-generation deployment without crossing their topologies.'
 pageId: 'update-update'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
+lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Goal and result
 
-Pull and recreate one channel only, then verify health and representative data.
+Identify the running generation, then update v26 or safely pin an existing old-generation deployment without crossing their topologies.
 
 ## Applies to
 
-`ghcr.io/helmerznl/discvault:latest` is DiscVault v26 stable and `ghcr.io/helmerznl/discvault:beta` is DiscVault v26 beta. Both use the same service graph and data schema path. Record the resolved digest because release tags can move.
+`ghcr.io/helmerznl/discvault:latest` is DiscVault v26 stable and `ghcr.io/helmerznl/discvault:beta` is DiscVault v26 beta. Both use the same service graph and data schema path; the executable blocks on this page apply only to v26. An existing previous-generation deployment may be pinned to frozen `:legacy` with its old volumes, variables, ports, and data path unchanged. Never place `:legacy` in the v26 PostgreSQL Compose topology; use the migration procedure to move generations.
 
 ### DiscVault v26 stable
 
@@ -41,10 +41,15 @@ Pull and recreate one channel only, then verify health and representative data.
 
 ## Procedure
 
-1. **Verify:** backup manifest · `PREVIOUS_IMAGE=@sha256:…`
-2. **Choose:** `DISCVAULT_IMAGE` · `:latest` / `:beta`
-3. **Run:** Compose pull + `--force-recreate` · without deleting data
-4. **Compare:** the intended image digest is running, health is successful, and owner login, library count, and one media sample all pass
+1. **Inspect:** new installations use DiscVault v26 `:latest` or `:beta`; only an existing previous-generation installation that is not ready to migrate should use the frozen `:legacy` image
+2. **Back up:** matching backup set · before pull or recreate
+3. **Choose:** Legacy branch only: after backup, change only the existing old-generation deployment image tag to `:legacy`, pull and recreate it with its topology unchanged, verify the collection, and stop; do not run the v26 commands below
+4. **Open:** [Update and migrate: DiscVault 26 migration](/update/migration/) · when moving to DiscVault 26
+5. **Preserve:** keep the previous generation’s volumes, environment variables, ports, and data path unchanged; never substitute `:legacy` into the v26 PostgreSQL Compose topology
+6. **Verify:** `DiscVault v26` · backup manifest · `PREVIOUS_IMAGE=@sha256:…`
+7. **Choose:** `DiscVault v26` · `DISCVAULT_IMAGE` · `:latest` / `:beta`
+8. **Run:** `DiscVault v26` · Compose pull + `--force-recreate` · without deleting data
+9. **Compare:** `DiscVault v26` · the intended image digest is running, health is successful, and owner login, library count, and one media sample all pass
 
 ### Commands and settings
 
@@ -90,15 +95,17 @@ trap - EXIT
 
 ## Expected result
 
-The intended image digest is running, health succeeds, and owner login, library count, and one media asset work.
+The intended image digest is running on its matching topology, health succeeds, and owner login, library count, and one media asset work.
 
 - the intended image digest is running, health is successful, and owner login, library count, and one media sample all pass
+- keep the previous generation’s volumes, environment variables, ports, and data path unchanged; never substitute `:legacy` into the v26 PostgreSQL Compose topology
 
 ## Safety and rollback
 
 :::caution
-On any failed acceptance check, execute the image rollback with the pre-update data backup available.
+On any failed acceptance check, stop the deployment and restore its previous image with the matching pre-update data backup.
 
+- the frozen `:legacy` image receives no DiscVault v26 features, migration improvements, or future interface updates
 - [Update and migrate: Image rollback](/update/rollback/) · matching backup set
 - release notes and recorded immutable image digest
 :::
@@ -110,5 +117,6 @@ On any failed acceptance check, execute the image rollback with the pre-update d
 ## Source and status
 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Verified: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
+- Verified: `2026-07-15`
+- DiscVault Docs: `0.1.2`

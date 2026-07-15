@@ -1,26 +1,26 @@
 ---
 title: 'Installation: Installationswege'
-description: 'Aufgabenspezifische Anleitung für Installation: Installationswege: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.'
+description: 'Aufgabenspezifische Anleitung für Installation: Installationswege: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.'
 pageId: 'install-index'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
+lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Ziel und Ergebnis
 
-Führe den seitenspezifischen Ablauf aus für **Installation: Installationswege**. Dieses Verfahren arbeitet mit `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+Führe den seitenspezifischen Ablauf aus für **Installation: Installationswege**. Dieses Verfahren arbeitet mit `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
 ## Gültig für
 
-Diese Seite gilt ausschließlich für **Installation: Installationswege** (Docker · Unraid). Kanal- und Datengrenzen sind: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; PostgreSQL `17` `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26; PostgreSQL `17` `/data`. Seitenspezifische Kontrollpunkte: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+Diese Seite gilt ausschließlich für **Installation: Installationswege** (Docker · Unraid). Kanal- und Datengrenzen sind: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; PostgreSQL `17` `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26; PostgreSQL `17` `/data`. Seitenspezifische Kontrollpunkte: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
 ### DiscVault v26 – stabil
 
@@ -38,13 +38,17 @@ Diese Seite gilt ausschließlich für **Installation: Installationswege** (Docke
 
 - Docker Engine `24+`
 - Docker Compose `v2`
+- passender Sicherungssatz
 
 ## Vorgehen
 
 1. **Auswählen:** [Installation: Docker Compose](/de/install/docker-compose/)
 2. **Auswählen:** [Installation: Docker run](/de/install/docker-run/)
 3. **Auswählen:** [Installation: Unraid](/de/install/unraid/) · Unraid
-4. **Festhalten:** `DISCVAULT_IMAGE` · passender Sicherungssatz
+4. **Auswählen:** neue Installationen verwenden DiscVault v26 `:latest` oder `:beta`; das eingefrorene `:legacy`-Image ist nur für eine vorhandene Installation der vorherigen Generation gedacht, die noch nicht migrieren kann
+5. **Bewahren:** Volumes, Umgebungsvariablen, Ports und Datenpfad der vorherigen Generation unverändert lassen; `:legacy` niemals in die v26-PostgreSQL-Compose-Topologie einsetzen
+6. **Öffnen:** [Update und Migration: Migration zu DiscVault 26](/de/update/migration/) · → DiscVault 26
+7. **Festhalten:** `DISCVAULT_IMAGE` · passender Sicherungssatz
 
 ### Aufgabenwege
 
@@ -52,19 +56,23 @@ Diese Seite gilt ausschließlich für **Installation: Installationswege** (Docke
 - [Installation: Docker run](/de/install/docker-run/) — DiscVault 26 Docker run PostgreSQL `/data` `DATABASE_URL`
 - [Installation: Persistente Daten und PostgreSQL](/de/install/storage-postgresql/) — DiscVault 26 PostgreSQL `/data`
 - [Installation: Unraid](/de/install/unraid/) — DiscVault 26 Unraid PostgreSQL `/data`
+- [Update und Migration: Migration zu DiscVault 26](/de/update/migration/) — → DiscVault 26
 
 ## Erwartetes Ergebnis
 
-Akzeptiere das Ergebnis für **Installation: Installationswege** nur wenn alle folgenden Ergebnisse erfüllt sind: gewählter Release-Kanal; PostgreSQL `/data`. Seitenspezifische Kontrollpunkte: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+Akzeptiere das Ergebnis für **Installation: Installationswege** nur wenn alle folgenden Ergebnisse erfüllt sind: gewählter Release-Kanal; PostgreSQL `/data`; Volumes, Umgebungsvariablen, Ports und Datenpfad der vorherigen Generation unverändert lassen; `:legacy` niemals in die v26-PostgreSQL-Compose-Topologie einsetzen. Seitenspezifische Kontrollpunkte: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
 - gewählter Release-Kanal
 - PostgreSQL `/data`
+- Volumes, Umgebungsvariablen, Ports und Datenpfad der vorherigen Generation unverändert lassen; `:legacy` niemals in die v26-PostgreSQL-Compose-Topologie einsetzen
 
 ## Sicherheit und Rollback
 
 :::caution
-Die sichere Wiederherstellungsgrenze für **Installation: Installationswege** verlangt vor jedem Start oder Fortsetzen diese Maßnahmen: passender Sicherungssatz; Versionshinweise und aufgezeichneter unveränderlicher Image-Digest. Seitenspezifische Kontrollpunkte: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+Die sichere Wiederherstellungsgrenze für **Installation: Installationswege** verlangt vor jedem Start oder Fortsetzen diese Maßnahmen: Nur Legacy-Zweig: nach der Sicherung nur das Image-Tag des vorhandenen alten Deployments auf `:legacy` ändern, mit unveränderter Topologie abrufen und neu erstellen, die Sammlung prüfen und stoppen; die folgenden v26-Befehle nicht ausführen; das eingefrorene `:legacy`-Image erhält keine DiscVault-v26-Funktionen, Migrationsverbesserungen oder künftigen Oberflächenupdates; passender Sicherungssatz; Versionshinweise und aufgezeichneter unveränderlicher Image-Digest. Seitenspezifische Kontrollpunkte: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
+- Nur Legacy-Zweig: nach der Sicherung nur das Image-Tag des vorhandenen alten Deployments auf `:legacy` ändern, mit unveränderter Topologie abrufen und neu erstellen, die Sammlung prüfen und stoppen; die folgenden v26-Befehle nicht ausführen
+- das eingefrorene `:legacy`-Image erhält keine DiscVault-v26-Funktionen, Migrationsverbesserungen oder künftigen Oberflächenupdates
 - passender Sicherungssatz
 - Versionshinweise und aufgezeichneter unveränderlicher Image-Digest
 :::
@@ -76,5 +84,6 @@ Die sichere Wiederherstellungsgrenze für **Installation: Installationswege** ve
 ## Quelle und Status
 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Quelle und Status: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
+- Quelle und Status: `2026-07-15`
+- DiscVault Docs: `0.1.2`

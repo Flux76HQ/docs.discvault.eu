@@ -1,49 +1,61 @@
 ---
 title: 'Määritys: Todennus ja RBAC'
-description: 'Tehtäväkohtaiset ohjeet: Määritys: Todennus ja RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.'
+description: 'Tehtäväkohtaiset ohjeet: Määritys: Todennus ja RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.'
 pageId: 'configure-auth-rbac'
 products: ['server']
 platforms: ['web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
+lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="verkko" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="verkko" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Tavoite ja tulos
 
-Suorita sivukohtainen työnkulku: **Määritys: Todennus ja RBAC**. Tässä menettelyssä käytetään `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+Suorita sivukohtainen työnkulku: **Määritys: Todennus ja RBAC**. Tässä menettelyssä käytetään `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
 
 ## Koskee
 
-Tämä sivu koskee vain kohdetta **Määritys: Todennus ja RBAC** (verkko). Kanava- ja tietorajat ovat: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn. Sivukohtaiset tarkistuspisteet: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+Tämä sivu koskee vain kohdetta **Määritys: Todennus ja RBAC** (verkko). Kanava- ja tietorajat ovat: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; passkey on kryptografinen avainpari: yksityinen avain pysyy laitteessa tai luotetussa tunnusten hallinnassa, ja DiscVault tallentaa vain julkisen avaimen; passkey-avaimet kestävät tietojenkalastelua ja ovat sivustokohtaisia; kirjautuminen käyttää laitteen avausta uudelleenkäytettävän salasanan sijaan; määräaikainen kutsukoodi aloittaa rekisteröinnin, mutta se ei ole uudelleenkäytettävä salasana; tavallinen kirjautuminen käyttää passkey-avainta; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn; passkey on kryptografinen avainpari: yksityinen avain pysyy laitteessa tai luotetussa tunnusten hallinnassa, ja DiscVault tallentaa vain julkisen avaimen; passkey-avaimet kestävät tietojenkalastelua ja ovat sivustokohtaisia; kirjautuminen käyttää laitteen avausta uudelleenkäytettävän salasanan sijaan; määräaikainen kutsukoodi aloittaa rekisteröinnin, mutta se ei ole uudelleenkäytettävä salasana; tavallinen kirjautuminen käyttää passkey-avainta. Sivukohtaiset tarkistuspisteet: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
 
 ### DiscVault v26 – vakaa
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - WebAuthn
+- passkey on kryptografinen avainpari: yksityinen avain pysyy laitteessa tai luotetussa tunnusten hallinnassa, ja DiscVault tallentaa vain julkisen avaimen
+- passkey-avaimet kestävät tietojenkalastelua ja ovat sivustokohtaisia; kirjautuminen käyttää laitteen avausta uudelleenkäytettävän salasanan sijaan
+- määräaikainen kutsukoodi aloittaa rekisteröinnin, mutta se ei ole uudelleenkäytettävä salasana; tavallinen kirjautuminen käyttää passkey-avainta
 
 ### DiscVault v26 – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - WebAuthn
+- passkey on kryptografinen avainpari: yksityinen avain pysyy laitteessa tai luotetussa tunnusten hallinnassa, ja DiscVault tallentaa vain julkisen avaimen
+- passkey-avaimet kestävät tietojenkalastelua ja ovat sivustokohtaisia; kirjautuminen käyttää laitteen avausta uudelleenkäytettävän salasanan sijaan
+- määräaikainen kutsukoodi aloittaa rekisteröinnin, mutta se ei ole uudelleenkäytettävä salasana; tavallinen kirjautuminen käyttää passkey-avainta
 
 ## Edellytykset
 
 - omistajan käyttöoikeus
-- HTTPS
+- [Asennus: Käänteinen välityspalvelin ja pääsyavaimet](/fi/install/reverse-proxy-passkeys/) · HTTPS FQDN
 - toinen palautustapa
 
 ## Toimenpiteet
 
-1. **Avaa:** Ylläpito → Suojaus → Ota tunnistautuminen käyttöön
-2. **Luo:** Ylläpito → Käyttäjät → Luo 48 tunnin kutsu
-3. **Määritä:** Ylläpito → Roolit → Perus / Edistynyt
-4. **Testaa:** `48 h`
+1. **Tarkista:** passkey on kryptografinen avainpari: yksityinen avain pysyy laitteessa tai luotetussa tunnusten hallinnassa, ja DiscVault tallentaa vain julkisen avaimen
+2. **Vertaa:** passkey-avaimet kestävät tietojenkalastelua ja ovat sivustokohtaisia; kirjautuminen käyttää laitteen avausta uudelleenkäytettävän salasanan sijaan · määräaikainen kutsukoodi aloittaa rekisteröinnin, mutta se ei ole uudelleenkäytettävä salasana; tavallinen kirjautuminen käyttää passkey-avainta
+3. **Vahvista:** Windows tarvitsee nykyisen passkey-yhteensopivan selaimen ja Windows Hellon vähintään PIN-koodilla; alkuperäiseen hallintaan suositellaan Windows 11 22H2:ta tai uudempaa
+4. **Vahvista:** macOS tarvitsee Ventura 13:n tai uudemman ja iCloud-avainnipun tai muun passkey-yhteensopivan tunnusten hallinnan
+5. **Vahvista:** iPhone ja iPad tarvitsevat iOS- tai iPadOS 16+:n, iCloud-avainnipun ja kaksivaiheisen todennuksen; Android tarvitsee version 9+, passkey-tarjoajan ja näytön lukituksen
+6. **Luo:** rekisteröi useampi passkey, esimerkiksi puhelimeen ja pöytälaitteeseen, ja säilytä riippumaton omistajan palautusreitti ennen laitteen vaihtamista tai katoamista
+7. **Avaa:** Ylläpito → Suojaus → Ota tunnistautuminen käyttöön
+8. **Luo:** Ylläpito → Käyttäjät → Luo 48 tunnin kutsu
+9. **Määritä:** Ylläpito → Roolit → Perus / Edistynyt
+10. **Testaa:** WebAuthn
 
 ### Komennot ja asetukset
 
@@ -56,15 +68,18 @@ curl --fail http://localhost:6080/api/next/auth/rbac
 
 ## Odotettu tulos
 
-Hyväksy tulos kohteelle **Määritys: Todennus ja RBAC** vain kun kaikki seuraavat tulokset toteutuvat: omistajan passkey-kirjautuminen toimii, kutsurekisteröinti vastaa asetusta ja testikäyttäjällä on vain määritetyt oikeudet. Sivukohtaiset tarkistuspisteet: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+Hyväksy tulos kohteelle **Määritys: Todennus ja RBAC** vain kun kaikki seuraavat tulokset toteutuvat: omistajan passkey-kirjautuminen toimii, kutsurekisteröinti vastaa asetusta ja testikäyttäjällä on vain määritetyt oikeudet; passkey-avaimet kestävät tietojenkalastelua ja ovat sivustokohtaisia; kirjautuminen käyttää laitteen avausta uudelleenkäytettävän salasanan sijaan; määräaikainen kutsukoodi aloittaa rekisteröinnin, mutta se ei ole uudelleenkäytettävä salasana; tavallinen kirjautuminen käyttää passkey-avainta. Sivukohtaiset tarkistuspisteet: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
 
 - omistajan passkey-kirjautuminen toimii, kutsurekisteröinti vastaa asetusta ja testikäyttäjällä on vain määritetyt oikeudet
+- passkey-avaimet kestävät tietojenkalastelua ja ovat sivustokohtaisia; kirjautuminen käyttää laitteen avausta uudelleenkäytettävän salasanan sijaan
+- määräaikainen kutsukoodi aloittaa rekisteröinnin, mutta se ei ole uudelleenkäytettävä salasana; tavallinen kirjautuminen käyttää passkey-avainta
 
 ## Turvallisuus ja palautus
 
 :::caution
-Turvallinen palautusraja kohteelle **Määritys: Todennus ja RBAC** edellyttää näitä toimia ennen käynnistystä tai jatkamista: säilytä omistajan istunto ja toinen palautustapa; älä koskaan poista omistajan viimeistä passkey-avainta. Sivukohtaiset tarkistuspisteet: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+Turvallinen palautusraja kohteelle **Määritys: Todennus ja RBAC** edellyttää näitä toimia ennen käynnistystä tai jatkamista: rekisteröi useampi passkey, esimerkiksi puhelimeen ja pöytälaitteeseen, ja säilytä riippumaton omistajan palautusreitti ennen laitteen vaihtamista tai katoamista; säilytä omistajan istunto ja toinen palautustapa; älä koskaan poista omistajan viimeistä passkey-avainta. Sivukohtaiset tarkistuspisteet: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
 
+- rekisteröi useampi passkey, esimerkiksi puhelimeen ja pöytälaitteeseen, ja säilytä riippumaton omistajan palautusreitti ennen laitteen vaihtamista tai katoamista
 - säilytä omistajan istunto ja toinen palautustapa; älä koskaan poista omistajan viimeistä passkey-avainta
 :::
 
@@ -75,5 +90,6 @@ Turvallinen palautusraja kohteelle **Määritys: Todennus ja RBAC** edellyttää
 ## Lähde ja tila
 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Lähde ja tila: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
+- Lähde ja tila: `2026-07-15`
+- DiscVault Docs: `0.1.2`

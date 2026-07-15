@@ -1,49 +1,61 @@
 ---
 title: 'Configure: Authentication and RBAC'
-description: 'Enable passkeys, invites, users, groups, and role-based access without locking out the owner.'
+description: 'Use passkeys instead of reusable account passwords, verify platform support, and configure recovery, invites, users, groups, and roles.'
 pageId: 'configure-auth-rbac'
 products: ['server']
 platforms: ['web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
+lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Goal and result
 
-Enable passkeys, invites, users, groups, and role-based access without locking out the owner.
+Use passkeys instead of reusable account passwords, verify platform support, and configure recovery, invites, users, groups, and roles.
 
 ## Applies to
 
-DiscVault v26 provides the same WebAuthn and RBAC functions in stable and beta. Basic roles are owner, administrator, media editor, media fan, and media viewer.
+DiscVault v26 provides the same WebAuthn and RBAC functions in stable and beta. A passkey keeps its private key on the device or in a trusted credential manager while DiscVault stores the public key. Time-limited invite codes start registration but are not reusable account passwords. Basic roles are owner, administrator, media editor, media fan, and media viewer. Browser passkey requirements are distinct from native app minimum versions.
 
 ### DiscVault v26 stable
 
 - DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
 - WebAuthn · owner / administrator / editor / fan / viewer
+- a passkey is a cryptographic key pair: the private key stays on the device or in a trusted credential manager, and DiscVault stores only the public key
+- passkeys are phishing-resistant and unique to the site; sign-in uses the device unlock method instead of a reusable account password
+- a time-limited invite code starts registration but is not a reusable account password; normal sign-in uses a passkey
 
 ### DiscVault v26 beta
 
 - DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
 - WebAuthn · owner / administrator / editor / fan / viewer
+- a passkey is a cryptographic key pair: the private key stays on the device or in a trusted credential manager, and DiscVault stores only the public key
+- passkeys are phishing-resistant and unique to the site; sign-in uses the device unlock method instead of a reusable account password
+- a time-limited invite code starts registration but is not a reusable account password; normal sign-in uses a passkey
 
 ## Prerequisites
 
 - owner access
-- HTTPS + passkey
+- [Install: Reverse proxy and passkeys](/install/reverse-proxy-passkeys/) · HTTPS + FQDN
 - second recovery method
 
 ## Procedure
 
-1. **Open:** Admin → Security → Enable authentication
-2. **Create:** Admin → Users → Create 48-hour invite
-3. **Configure:** Admin → Roles → Basic / Advanced
-4. **Test:** second user · assigned permission only · owner session remains open
+1. **Inspect:** a passkey is a cryptographic key pair: the private key stays on the device or in a trusted credential manager, and DiscVault stores only the public key
+2. **Compare:** passkeys are phishing-resistant and unique to the site; sign-in uses the device unlock method instead of a reusable account password · a time-limited invite code starts registration but is not a reusable account password; normal sign-in uses a passkey
+3. **Verify:** Windows needs a current passkey-capable browser and Windows Hello with at least a PIN; Windows 11 22H2 or newer is recommended for native passkey management
+4. **Verify:** macOS needs Ventura 13 or newer with iCloud Keychain, or another passkey-capable credential manager
+5. **Verify:** iPhone and iPad need iOS or iPadOS 16+ with iCloud Keychain and two-factor authentication; Android needs version 9+ with a passkey provider and screen lock
+6. **Create:** register more than one passkey, such as a phone and a desktop device, and keep an independent owner recovery path before replacing or losing a device
+7. **Open:** Admin → Security → Enable authentication
+8. **Create:** Admin → Users → Create 48-hour invite
+9. **Configure:** Admin → Roles → Basic / Advanced
+10. **Test:** second user · assigned permission only · owner session remains open
 
 ### Commands and settings
 
@@ -56,15 +68,18 @@ curl --fail http://localhost:6080/api/next/auth/rbac
 
 ## Expected result
 
-Owner login works, invite-only registration behaves as selected, and a test user receives only assigned permissions.
+Owner login works with two recovery-capable passkeys, supported platforms can authenticate, invite-only registration behaves as selected, and a test user receives only assigned permissions.
 
 - owner passkey login works, invite-only registration matches the setting, and the test user has only assigned permissions
+- passkeys are phishing-resistant and unique to the site; sign-in uses the device unlock method instead of a reusable account password
+- a time-limited invite code starts registration but is not a reusable account password; normal sign-in uses a passkey
 
 ## Safety and rollback
 
 :::caution
-Keep the owner session open while testing. Revert role assignments before disabling a user; never delete the only owner or last usable passkey.
+Keep an owner session open, register more than one passkey, and preserve an independent recovery method. Never remove the last owner passkey.
 
+- register more than one passkey, such as a phone and a desktop device, and keep an independent owner recovery path before replacing or losing a device
 - keep the owner session and a second recovery method; never remove the last owner passkey
 :::
 
@@ -75,5 +90,6 @@ Keep the owner session open while testing. Revert role assignments before disabl
 ## Source and status
 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Verified: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
+- Verified: `2026-07-15`
+- DiscVault Docs: `0.1.2`

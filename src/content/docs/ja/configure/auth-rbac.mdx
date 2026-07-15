@@ -1,49 +1,61 @@
 ---
 title: '設定: 認証と RBAC'
-description: 'タスク別の手順: 設定: 認証と RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.'
+description: 'タスク別の手順: 設定: 認証と RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.'
 pageId: 'configure-auth-rbac'
 products: ['server']
 platforms: ['web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
+lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## 目的と結果
 
-このページ専用の手順を実行します: **設定: 認証と RBAC**. この手順で扱う項目: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+このページ専用の手順を実行します: **設定: 認証と RBAC**. この手順で扱う項目: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
 
 ## 対象
 
-このページの対象は **設定: 認証と RBAC** (Web). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn. このページ固有の確認点: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+このページの対象は **設定: 認証と RBAC** (Web). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; パスキーは暗号鍵のペアです。秘密鍵は端末または信頼できる資格情報マネージャーに残り、DiscVault は公開鍵だけを保存します; パスキーはフィッシング耐性がありサイトごとに固有です。再利用可能なアカウントパスワードではなく端末のロック解除でサインインします; 有効期限付き招待コードは登録開始用で、再利用できるアカウントパスワードではありません。通常のサインインにはパスキーを使います; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn; パスキーは暗号鍵のペアです。秘密鍵は端末または信頼できる資格情報マネージャーに残り、DiscVault は公開鍵だけを保存します; パスキーはフィッシング耐性がありサイトごとに固有です。再利用可能なアカウントパスワードではなく端末のロック解除でサインインします; 有効期限付き招待コードは登録開始用で、再利用できるアカウントパスワードではありません。通常のサインインにはパスキーを使います. このページ固有の確認点: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
 
 ### DiscVault v26 安定版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - WebAuthn
+- パスキーは暗号鍵のペアです。秘密鍵は端末または信頼できる資格情報マネージャーに残り、DiscVault は公開鍵だけを保存します
+- パスキーはフィッシング耐性がありサイトごとに固有です。再利用可能なアカウントパスワードではなく端末のロック解除でサインインします
+- 有効期限付き招待コードは登録開始用で、再利用できるアカウントパスワードではありません。通常のサインインにはパスキーを使います
 
 ### DiscVault v26 ベータ版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - WebAuthn
+- パスキーは暗号鍵のペアです。秘密鍵は端末または信頼できる資格情報マネージャーに残り、DiscVault は公開鍵だけを保存します
+- パスキーはフィッシング耐性がありサイトごとに固有です。再利用可能なアカウントパスワードではなく端末のロック解除でサインインします
+- 有効期限付き招待コードは登録開始用で、再利用できるアカウントパスワードではありません。通常のサインインにはパスキーを使います
 
 ## 前提条件
 
 - 所有者アクセス
-- HTTPS
+- [インストール: リバースプロキシとパスキー](/ja/install/reverse-proxy-passkeys/) · HTTPS FQDN
 - 2 つ目の復旧方法
 
 ## 手順
 
-1. **開く:** 管理 → セキュリティ → 認証を有効化
-2. **作成:** 管理 → ユーザー → 48 時間の招待を作成
-3. **設定:** 管理 → ロール → 基本 / 詳細
-4. **テスト:** `48 h`
+1. **確認:** パスキーは暗号鍵のペアです。秘密鍵は端末または信頼できる資格情報マネージャーに残り、DiscVault は公開鍵だけを保存します
+2. **比較:** パスキーはフィッシング耐性がありサイトごとに固有です。再利用可能なアカウントパスワードではなく端末のロック解除でサインインします · 有効期限付き招待コードは登録開始用で、再利用できるアカウントパスワードではありません。通常のサインインにはパスキーを使います
+3. **検証:** Windows では現在のパスキー対応ブラウザーと、少なくとも PIN を設定した Windows Hello が必要です。ネイティブ管理には Windows 11 22H2 以降を推奨します
+4. **検証:** macOS では Ventura 13 以降と iCloud キーチェーン、または別のパスキー対応資格情報マネージャーが必要です
+5. **検証:** iPhone と iPad では iOS または iPadOS 16 以降、iCloud キーチェーン、2 ファクタ認証が必要です。Android では 9 以降、パスキープロバイダー、画面ロックが必要です
+6. **作成:** 電話とデスクトップ端末など複数のパスキーを登録し、端末の交換や紛失に備えて独立した所有者復旧手段を保持します
+7. **開く:** 管理 → セキュリティ → 認証を有効化
+8. **作成:** 管理 → ユーザー → 48 時間の招待を作成
+9. **設定:** 管理 → ロール → 基本 / 詳細
+10. **テスト:** WebAuthn
 
 ### コマンドと設定
 
@@ -56,15 +68,18 @@ curl --fail http://localhost:6080/api/next/auth/rbac
 
 ## 期待される結果
 
-次の結果を受け入れる条件: **設定: 認証と RBAC** 以下の結果をすべて確認した場合のみ: 所有者のパスキーログインが機能し、招待制登録が設定どおりで、テストユーザーには割り当てた権限だけがあります. このページ固有の確認点: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+次の結果を受け入れる条件: **設定: 認証と RBAC** 以下の結果をすべて確認した場合のみ: 所有者のパスキーログインが機能し、招待制登録が設定どおりで、テストユーザーには割り当てた権限だけがあります; パスキーはフィッシング耐性がありサイトごとに固有です。再利用可能なアカウントパスワードではなく端末のロック解除でサインインします; 有効期限付き招待コードは登録開始用で、再利用できるアカウントパスワードではありません。通常のサインインにはパスキーを使います. このページ固有の確認点: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
 
 - 所有者のパスキーログインが機能し、招待制登録が設定どおりで、テストユーザーには割り当てた権限だけがあります
+- パスキーはフィッシング耐性がありサイトごとに固有です。再利用可能なアカウントパスワードではなく端末のロック解除でサインインします
+- 有効期限付き招待コードは登録開始用で、再利用できるアカウントパスワードではありません。通常のサインインにはパスキーを使います
 
 ## 安全性とロールバック
 
 :::caution
-安全な復旧境界: **設定: 認証と RBAC** 起動または続行の前に、次の操作が必要です: 所有者セッションと 2 つ目の復旧手段を保持し、最後の所有者パスキーは削除しません. このページ固有の確認点: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+安全な復旧境界: **設定: 認証と RBAC** 起動または続行の前に、次の操作が必要です: 電話とデスクトップ端末など複数のパスキーを登録し、端末の交換や紛失に備えて独立した所有者復旧手段を保持します; 所有者セッションと 2 つ目の復旧手段を保持し、最後の所有者パスキーは削除しません. このページ固有の確認点: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
 
+- 電話とデスクトップ端末など複数のパスキーを登録し、端末の交換や紛失に備えて独立した所有者復旧手段を保持します
 - 所有者セッションと 2 つ目の復旧手段を保持し、最後の所有者パスキーは削除しません
 :::
 
@@ -75,5 +90,6 @@ curl --fail http://localhost:6080/api/next/auth/rbac
 ## 情報源と状態
 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- 情報源と状態: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
+- 情報源と状態: `2026-07-15`
+- DiscVault Docs: `0.1.2`

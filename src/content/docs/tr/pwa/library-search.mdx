@@ -1,36 +1,40 @@
 ---
 title: 'PWA: Kitaplık ve arama'
-description: 'Göreve özel yönergeler: PWA: Kitaplık ve arama: PWA · `watchlist` · `history` · RBAC.'
+description: 'Göreve özel yönergeler: PWA: Kitaplık ve arama: PWA · `watchlist` · `history` · RBAC · `merge_editions_as_title` · `box_set` · `vault` · `collection`.'
 pageId: 'pwa-library-search'
 products: ['pwa']
 platforms: ['web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
+lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Amaç ve sonuç
 
-Sayfaya özel iş akışını tamamlayın: **PWA: Kitaplık ve arama**. Bu prosedür şunları kullanır: PWA · `watchlist` · `history` · RBAC.
+Sayfaya özel iş akışını tamamlayın: **PWA: Kitaplık ve arama**. Bu prosedür şunları kullanır: PWA · `watchlist` · `history` · RBAC · `merge_editions_as_title` · `box_set` · `vault` · `collection`.
 
 ## Geçerli olduğu alan
 
-Bu sayfa yalnızca şunlar için geçerlidir: **PWA: Kitaplık ve arama** (web). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PWA · RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PWA · RBAC. Sayfaya özel denetim noktaları: PWA · `watchlist` · `history` · RBAC.
+Bu sayfa yalnızca şunlar için geçerlidir: **PWA: Kitaplık ve arama** (web). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PWA · RBAC; Collectors Mode varsayılan olarak kapalıdır ve gelişmiş kapsayıcı özelliklerini gösterir; `merge_editions_as_title` yine varsayılan olarak kapalı ayrı bir tercihtir; `merge_editions_as_title` etkinleştirildiğinde birden çok fiziksel sürüm tek kitaplık kutucuğu olarak görünür; tüm sürümleri görmek için kutucuğu açın; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PWA · RBAC; Collectors Mode varsayılan olarak kapalıdır ve gelişmiş kapsayıcı özelliklerini gösterir; `merge_editions_as_title` yine varsayılan olarak kapalı ayrı bir tercihtir; `merge_editions_as_title` etkinleştirildiğinde birden çok fiziksel sürüm tek kitaplık kutucuğu olarak görünür; tüm sürümleri görmek için kutucuğu açın. Sayfaya özel denetim noktaları: PWA · `watchlist` · `history` · RBAC · `merge_editions_as_title` · `box_set` · `vault` · `collection`.
 
 ### DiscVault v26 kararlı
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - PWA · RBAC
+- Collectors Mode varsayılan olarak kapalıdır ve gelişmiş kapsayıcı özelliklerini gösterir; `merge_editions_as_title` yine varsayılan olarak kapalı ayrı bir tercihtir
+- `merge_editions_as_title` etkinleştirildiğinde birden çok fiziksel sürüm tek kitaplık kutucuğu olarak görünür; tüm sürümleri görmek için kutucuğu açın
 
 ### DiscVault v26 beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - PWA · RBAC
+- Collectors Mode varsayılan olarak kapalıdır ve gelişmiş kapsayıcı özelliklerini gösterir; `merge_editions_as_title` yine varsayılan olarak kapalı ayrı bir tercihtir
+- `merge_editions_as_title` etkinleştirildiğinde birden çok fiziksel sürüm tek kitaplık kutucuğu olarak görünür; tüm sürümleri görmek için kutucuğu açın
 
 ## Ön koşullar
 
@@ -43,22 +47,33 @@ Bu sayfa yalnızca şunlar için geçerlidir: **PWA: Kitaplık ve arama** (web).
 2. **Yapılandırın:** Kitaplık → Filtre → Biçim / Tür / Grup
 3. **Karşılaştırın:** Kitaplık → Görünüm → Posterler / Liste
 4. **Test edin:** Başlık → Ayrıntılar → İzleme listesi / İzlendi
+5. **Yapılandırın:** Collectors Mode varsayılan olarak kapalıdır ve gelişmiş kapsayıcı özelliklerini gösterir; `merge_editions_as_title` yine varsayılan olarak kapalı ayrı bir tercihtir
+6. **Test edin:** `merge_editions_as_title` etkinleştirildiğinde birden çok fiziksel sürüm tek kitaplık kutucuğu olarak görünür; tüm sürümleri görmek için kutucuğu açın
+7. **Karşılaştırın:** box-set kendi barkodu olan fiziksel perakende ürünüdür; filmleri doğrudan film üyeleri olarak bağlı ayrı başlıklar halinde kalır
+8. **Karşılaştırın:** vault kullanıcı tarafından oluşturulan raf, saklama kutusu veya konum grubudur; doğrudan film üyeleri vardır ve perakende ürün anlamı taşımaz
+9. **Karşılaştırın:** collection sıralı öğeleri film, box-set, vault veya başka collection olabilen tematik gruptur; iç içe yerleştirme desteklenir
+10. **Test edin:** Collectors Mode kapatıldığında kapsayıcı sunumu gizlenir ancak kapsayıcılar veya üyeleri silinmez
 
 
 
 ## Beklenen sonuç
 
-Şunun sonucunu kabul edin: **PWA: Kitaplık ve arama** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: Kitaplık → Ara; Kitaplık → Filtre → Biçim / Tür / Grup; Başlık → Ayrıntılar → İzleme listesi / İzlendi. Sayfaya özel denetim noktaları: PWA · `watchlist` · `history` · RBAC.
+Şunun sonucunu kabul edin: **PWA: Kitaplık ve arama** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: Kitaplık → Ara; Kitaplık → Filtre → Biçim / Tür / Grup; Başlık → Ayrıntılar → İzleme listesi / İzlendi; `merge_editions_as_title` etkinleştirildiğinde birden çok fiziksel sürüm tek kitaplık kutucuğu olarak görünür; tüm sürümleri görmek için kutucuğu açın; box-set kendi barkodu olan fiziksel perakende ürünüdür; filmleri doğrudan film üyeleri olarak bağlı ayrı başlıklar halinde kalır; vault kullanıcı tarafından oluşturulan raf, saklama kutusu veya konum grubudur; doğrudan film üyeleri vardır ve perakende ürün anlamı taşımaz; collection sıralı öğeleri film, box-set, vault veya başka collection olabilen tematik gruptur; iç içe yerleştirme desteklenir. Sayfaya özel denetim noktaları: PWA · `watchlist` · `history` · RBAC · `merge_editions_as_title` · `box_set` · `vault` · `collection`.
 
 - Kitaplık → Ara
 - Kitaplık → Filtre → Biçim / Tür / Grup
 - Başlık → Ayrıntılar → İzleme listesi / İzlendi
+- `merge_editions_as_title` etkinleştirildiğinde birden çok fiziksel sürüm tek kitaplık kutucuğu olarak görünür; tüm sürümleri görmek için kutucuğu açın
+- box-set kendi barkodu olan fiziksel perakende ürünüdür; filmleri doğrudan film üyeleri olarak bağlı ayrı başlıklar halinde kalır
+- vault kullanıcı tarafından oluşturulan raf, saklama kutusu veya konum grubudur; doğrudan film üyeleri vardır ve perakende ürün anlamı taşımaz
+- collection sıralı öğeleri film, box-set, vault veya başka collection olabilen tematik gruptur; iç içe yerleştirme desteklenir
 
 ## Güvenlik ve geri alma
 
 :::caution
-Şunun güvenli kurtarma sınırı: **PWA: Kitaplık ve arama** başlatmadan veya devam etmeden önce şu işlemleri gerektirir: yanlış düzenlemeyi kaydetmeden iptal edin, kaydedilmiş alanı arayüzde geri yükleyin ve toplu bozulmada eşleşen sunucu yedeğini kullanın. Sayfaya özel denetim noktaları: PWA · `watchlist` · `history` · RBAC.
+Şunun güvenli kurtarma sınırı: **PWA: Kitaplık ve arama** başlatmadan veya devam etmeden önce şu işlemleri gerektirir: Collectors Mode kapatıldığında kapsayıcı sunumu gizlenir ancak kapsayıcılar veya üyeleri silinmez; yanlış düzenlemeyi kaydetmeden iptal edin, kaydedilmiş alanı arayüzde geri yükleyin ve toplu bozulmada eşleşen sunucu yedeğini kullanın. Sayfaya özel denetim noktaları: PWA · `watchlist` · `history` · RBAC · `merge_editions_as_title` · `box_set` · `vault` · `collection`.
 
+- Collectors Mode kapatıldığında kapsayıcı sunumu gizlenir ancak kapsayıcılar veya üyeleri silinmez
 - yanlış düzenlemeyi kaydetmeden iptal edin, kaydedilmiş alanı arayüzde geri yükleyin ve toplu bozulmada eşleşen sunucu yedeğini kullanın
 :::
 
@@ -69,5 +84,6 @@ Bu sayfa yalnızca şunlar için geçerlidir: **PWA: Kitaplık ve arama** (web).
 ## Kaynak ve durum
 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Kaynak ve durum: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
+- Kaynak ve durum: `2026-07-15`
+- DiscVault Docs: `0.1.2`

@@ -1,26 +1,26 @@
 ---
 title: 'Instalacja: Sposoby instalacji'
-description: 'Instrukcja właściwa dla zadania: Instalacja: Sposoby instalacji: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.'
+description: 'Instrukcja właściwa dla zadania: Instalacja: Sposoby instalacji: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.'
 pageId: 'install-index'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
+lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Cel i rezultat
 
-Wykonaj procedurę właściwą dla strony: **Instalacja: Sposoby instalacji**. Ta procedura korzysta z `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+Wykonaj procedurę właściwą dla strony: **Instalacja: Sposoby instalacji**. Ta procedura korzysta z `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
 ## Dotyczy
 
-Ta strona dotyczy wyłącznie **Instalacja: Sposoby instalacji** (Docker · Unraid). Granice kanału i danych: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; PostgreSQL `17` `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26; PostgreSQL `17` `/data`. Punkty kontrolne tej strony: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+Ta strona dotyczy wyłącznie **Instalacja: Sposoby instalacji** (Docker · Unraid). Granice kanału i danych: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; PostgreSQL `17` `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26; PostgreSQL `17` `/data`. Punkty kontrolne tej strony: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
 ### DiscVault v26 – stabilny
 
@@ -38,13 +38,17 @@ Ta strona dotyczy wyłącznie **Instalacja: Sposoby instalacji** (Docker · Unra
 
 - Docker Engine `24+`
 - Docker Compose `v2`
+- pasujący zestaw kopii
 
 ## Procedura
 
 1. **Wybierz:** [Instalacja: Docker Compose](/pl/install/docker-compose/)
 2. **Wybierz:** [Instalacja: Docker run](/pl/install/docker-run/)
 3. **Wybierz:** [Instalacja: Unraid](/pl/install/unraid/) · Unraid
-4. **Zapisz:** `DISCVAULT_IMAGE` · pasujący zestaw kopii
+4. **Wybierz:** nowe instalacje używają DiscVault v26 `:latest` lub `:beta`; zamrożony obraz `:legacy` służy tylko istniejącej instalacji poprzedniej generacji, która nie jest jeszcze gotowa do migracji
+5. **Zachowaj:** pozostaw bez zmian woluminy, zmienne środowiskowe, porty i ścieżkę danych poprzedniej generacji; nigdy nie podstawiaj `:legacy` do topologii Compose v26 z PostgreSQL
+6. **Otwórz:** [Aktualizacja i migracja: Migracja do DiscVault 26](/pl/update/migration/) · → DiscVault 26
+7. **Zapisz:** `DISCVAULT_IMAGE` · pasujący zestaw kopii
 
 ### Ścieżki zadań
 
@@ -52,19 +56,23 @@ Ta strona dotyczy wyłącznie **Instalacja: Sposoby instalacji** (Docker · Unra
 - [Instalacja: Docker run](/pl/install/docker-run/) — DiscVault 26 Docker run PostgreSQL `/data` `DATABASE_URL`
 - [Instalacja: Trwałe dane i PostgreSQL](/pl/install/storage-postgresql/) — DiscVault 26 PostgreSQL `/data`
 - [Instalacja: Unraid](/pl/install/unraid/) — DiscVault 26 Unraid PostgreSQL `/data`
+- [Aktualizacja i migracja: Migracja do DiscVault 26](/pl/update/migration/) — → DiscVault 26
 
 ## Oczekiwany rezultat
 
-Zaakceptuj wynik dla **Instalacja: Sposoby instalacji** tylko gdy wszystkie poniższe wyniki są prawdziwe: wybrany kanał wydań; PostgreSQL `/data`. Punkty kontrolne tej strony: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+Zaakceptuj wynik dla **Instalacja: Sposoby instalacji** tylko gdy wszystkie poniższe wyniki są prawdziwe: wybrany kanał wydań; PostgreSQL `/data`; pozostaw bez zmian woluminy, zmienne środowiskowe, porty i ścieżkę danych poprzedniej generacji; nigdy nie podstawiaj `:legacy` do topologii Compose v26 z PostgreSQL. Punkty kontrolne tej strony: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
 - wybrany kanał wydań
 - PostgreSQL `/data`
+- pozostaw bez zmian woluminy, zmienne środowiskowe, porty i ścieżkę danych poprzedniej generacji; nigdy nie podstawiaj `:legacy` do topologii Compose v26 z PostgreSQL
 
 ## Bezpieczeństwo i wycofanie
 
 :::caution
-Bezpieczna granica odzyskiwania dla **Instalacja: Sposoby instalacji** wymaga tych działań przed uruchomieniem lub kontynuacją: pasujący zestaw kopii; informacje o wydaniu i zapisany niezmienny skrót obrazu. Punkty kontrolne tej strony: `:latest` · `:beta` · `DISCVAULT_IMAGE` · PostgreSQL `/data`.
+Bezpieczna granica odzyskiwania dla **Instalacja: Sposoby instalacji** wymaga tych działań przed uruchomieniem lub kontynuacją: Tylko gałąź Legacy: po wykonaniu kopii zmień wyłącznie tag obrazu istniejącego starego wdrożenia na `:legacy`, pobierz i odtwórz je bez zmiany topologii, sprawdź kolekcję i zakończ; nie uruchamiaj poniższych poleceń v26; zamrożony obraz `:legacy` nie otrzymuje funkcji DiscVault v26, ulepszeń migracji ani przyszłych aktualizacji interfejsu; pasujący zestaw kopii; informacje o wydaniu i zapisany niezmienny skrót obrazu. Punkty kontrolne tej strony: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
+- Tylko gałąź Legacy: po wykonaniu kopii zmień wyłącznie tag obrazu istniejącego starego wdrożenia na `:legacy`, pobierz i odtwórz je bez zmiany topologii, sprawdź kolekcję i zakończ; nie uruchamiaj poniższych poleceń v26
+- zamrożony obraz `:legacy` nie otrzymuje funkcji DiscVault v26, ulepszeń migracji ani przyszłych aktualizacji interfejsu
 - pasujący zestaw kopii
 - informacje o wydaniu i zapisany niezmienny skrót obrazu
 :::
@@ -76,5 +84,6 @@ Bezpieczna granica odzyskiwania dla **Instalacja: Sposoby instalacji** wymaga ty
 ## Źródło i stan
 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Źródło i stan: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
+- Źródło i stan: `2026-07-15`
+- DiscVault Docs: `0.1.2`

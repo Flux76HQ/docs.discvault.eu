@@ -1,49 +1,61 @@
 ---
 title: 'Konfiguration: Authentifizierung und RBAC'
-description: 'Aufgabenspezifische Anleitung für Konfiguration: Authentifizierung und RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.'
+description: 'Aufgabenspezifische Anleitung für Konfiguration: Authentifizierung und RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.'
 pageId: 'configure-auth-rbac'
 products: ['server']
 platforms: ['web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
+lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Ziel und Ergebnis
 
-Führe den seitenspezifischen Ablauf aus für **Konfiguration: Authentifizierung und RBAC**. Dieses Verfahren arbeitet mit `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+Führe den seitenspezifischen Ablauf aus für **Konfiguration: Authentifizierung und RBAC**. Dieses Verfahren arbeitet mit `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
 
 ## Gültig für
 
-Diese Seite gilt ausschließlich für **Konfiguration: Authentifizierung und RBAC** (Web). Kanal- und Datengrenzen sind: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn. Seitenspezifische Kontrollpunkte: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+Diese Seite gilt ausschließlich für **Konfiguration: Authentifizierung und RBAC** (Web). Kanal- und Datengrenzen sind: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; ein Passkey ist ein kryptografisches Schlüsselpaar: der private Schlüssel bleibt auf dem Gerät oder in einem vertrauenswürdigen Zugangsdatenmanager, DiscVault speichert nur den öffentlichen Schlüssel; Passkeys sind phishing-resistent und an die Website gebunden; die Anmeldung verwendet die Geräteentsperrung statt eines wiederverwendbaren Kontopassworts; ein zeitlich begrenzter Einladungscode startet die Registrierung, ist aber kein wiederverwendbares Kontopasswort; die normale Anmeldung verwendet einen Passkey; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn; ein Passkey ist ein kryptografisches Schlüsselpaar: der private Schlüssel bleibt auf dem Gerät oder in einem vertrauenswürdigen Zugangsdatenmanager, DiscVault speichert nur den öffentlichen Schlüssel; Passkeys sind phishing-resistent und an die Website gebunden; die Anmeldung verwendet die Geräteentsperrung statt eines wiederverwendbaren Kontopassworts; ein zeitlich begrenzter Einladungscode startet die Registrierung, ist aber kein wiederverwendbares Kontopasswort; die normale Anmeldung verwendet einen Passkey. Seitenspezifische Kontrollpunkte: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
 
 ### DiscVault v26 – stabil
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - WebAuthn
+- ein Passkey ist ein kryptografisches Schlüsselpaar: der private Schlüssel bleibt auf dem Gerät oder in einem vertrauenswürdigen Zugangsdatenmanager, DiscVault speichert nur den öffentlichen Schlüssel
+- Passkeys sind phishing-resistent und an die Website gebunden; die Anmeldung verwendet die Geräteentsperrung statt eines wiederverwendbaren Kontopassworts
+- ein zeitlich begrenzter Einladungscode startet die Registrierung, ist aber kein wiederverwendbares Kontopasswort; die normale Anmeldung verwendet einen Passkey
 
 ### DiscVault v26 – Beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - WebAuthn
+- ein Passkey ist ein kryptografisches Schlüsselpaar: der private Schlüssel bleibt auf dem Gerät oder in einem vertrauenswürdigen Zugangsdatenmanager, DiscVault speichert nur den öffentlichen Schlüssel
+- Passkeys sind phishing-resistent und an die Website gebunden; die Anmeldung verwendet die Geräteentsperrung statt eines wiederverwendbaren Kontopassworts
+- ein zeitlich begrenzter Einladungscode startet die Registrierung, ist aber kein wiederverwendbares Kontopasswort; die normale Anmeldung verwendet einen Passkey
 
 ## Voraussetzungen
 
 - Owner-Zugriff
-- HTTPS
+- [Installation: Reverse-Proxy und Passkeys](/de/install/reverse-proxy-passkeys/) · HTTPS FQDN
 - zweite Wiederherstellungsmethode
 
 ## Vorgehen
 
-1. **Öffnen:** Administration → Sicherheit → Authentifizierung aktivieren
-2. **Erstellen:** Administration → Benutzer → 48-Stunden-Einladung erstellen
-3. **Konfigurieren:** Administration → Rollen → Einfach / Erweitert
-4. **Testen:** `48 h`
+1. **Prüfen:** ein Passkey ist ein kryptografisches Schlüsselpaar: der private Schlüssel bleibt auf dem Gerät oder in einem vertrauenswürdigen Zugangsdatenmanager, DiscVault speichert nur den öffentlichen Schlüssel
+2. **Vergleichen:** Passkeys sind phishing-resistent und an die Website gebunden; die Anmeldung verwendet die Geräteentsperrung statt eines wiederverwendbaren Kontopassworts · ein zeitlich begrenzter Einladungscode startet die Registrierung, ist aber kein wiederverwendbares Kontopasswort; die normale Anmeldung verwendet einen Passkey
+3. **Verifizieren:** Windows benötigt einen aktuellen passkey-fähigen Browser und Windows Hello mit mindestens einer PIN; für die native Passkey-Verwaltung wird Windows 11 22H2 oder neuer empfohlen
+4. **Verifizieren:** macOS benötigt Ventura 13 oder neuer mit iCloud-Schlüsselbund oder einen anderen passkey-fähigen Zugangsdatenmanager
+5. **Verifizieren:** iPhone und iPad benötigen iOS oder iPadOS 16+ mit iCloud-Schlüsselbund und Zwei-Faktor-Authentifizierung; Android benötigt Version 9+ mit Passkey-Anbieter und Displaysperre
+6. **Erstellen:** mehr als einen Passkey registrieren, etwa Telefon und Desktopgerät, und vor Austausch oder Verlust eines Geräts einen unabhängigen Owner-Wiederherstellungsweg behalten
+7. **Öffnen:** Administration → Sicherheit → Authentifizierung aktivieren
+8. **Erstellen:** Administration → Benutzer → 48-Stunden-Einladung erstellen
+9. **Konfigurieren:** Administration → Rollen → Einfach / Erweitert
+10. **Testen:** WebAuthn
 
 ### Befehle und Einstellungen
 
@@ -56,15 +68,18 @@ curl --fail http://localhost:6080/api/next/auth/rbac
 
 ## Erwartetes Ergebnis
 
-Akzeptiere das Ergebnis für **Konfiguration: Authentifizierung und RBAC** nur wenn alle folgenden Ergebnisse erfüllt sind: Owner-Passkey-Anmeldung funktioniert, Einladungsregistrierung entspricht der Einstellung und der Testbenutzer hat nur zugewiesene Rechte. Seitenspezifische Kontrollpunkte: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+Akzeptiere das Ergebnis für **Konfiguration: Authentifizierung und RBAC** nur wenn alle folgenden Ergebnisse erfüllt sind: Owner-Passkey-Anmeldung funktioniert, Einladungsregistrierung entspricht der Einstellung und der Testbenutzer hat nur zugewiesene Rechte; Passkeys sind phishing-resistent und an die Website gebunden; die Anmeldung verwendet die Geräteentsperrung statt eines wiederverwendbaren Kontopassworts; ein zeitlich begrenzter Einladungscode startet die Registrierung, ist aber kein wiederverwendbares Kontopasswort; die normale Anmeldung verwendet einen Passkey. Seitenspezifische Kontrollpunkte: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
 
 - Owner-Passkey-Anmeldung funktioniert, Einladungsregistrierung entspricht der Einstellung und der Testbenutzer hat nur zugewiesene Rechte
+- Passkeys sind phishing-resistent und an die Website gebunden; die Anmeldung verwendet die Geräteentsperrung statt eines wiederverwendbaren Kontopassworts
+- ein zeitlich begrenzter Einladungscode startet die Registrierung, ist aber kein wiederverwendbares Kontopasswort; die normale Anmeldung verwendet einen Passkey
 
 ## Sicherheit und Rollback
 
 :::caution
-Die sichere Wiederherstellungsgrenze für **Konfiguration: Authentifizierung und RBAC** verlangt vor jedem Start oder Fortsetzen diese Maßnahmen: Owner-Sitzung und zweite Wiederherstellung behalten; niemals den letzten Owner-Passkey entfernen. Seitenspezifische Kontrollpunkte: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+Die sichere Wiederherstellungsgrenze für **Konfiguration: Authentifizierung und RBAC** verlangt vor jedem Start oder Fortsetzen diese Maßnahmen: mehr als einen Passkey registrieren, etwa Telefon und Desktopgerät, und vor Austausch oder Verlust eines Geräts einen unabhängigen Owner-Wiederherstellungsweg behalten; Owner-Sitzung und zweite Wiederherstellung behalten; niemals den letzten Owner-Passkey entfernen. Seitenspezifische Kontrollpunkte: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
 
+- mehr als einen Passkey registrieren, etwa Telefon und Desktopgerät, und vor Austausch oder Verlust eines Geräts einen unabhängigen Owner-Wiederherstellungsweg behalten
 - Owner-Sitzung und zweite Wiederherstellung behalten; niemals den letzten Owner-Passkey entfernen
 :::
 
@@ -75,5 +90,6 @@ Die sichere Wiederherstellungsgrenze für **Konfiguration: Authentifizierung und
 ## Quelle und Status
 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Quelle und Status: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
+- Quelle und Status: `2026-07-15`
+- DiscVault Docs: `0.1.2`

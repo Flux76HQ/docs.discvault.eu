@@ -1,36 +1,40 @@
 ---
 title: 'PWA: 媒体库和搜索'
-description: '任务专用说明： PWA: 媒体库和搜索: PWA · `watchlist` · `history` · RBAC.'
+description: '任务专用说明： PWA: 媒体库和搜索: PWA · `watchlist` · `history` · RBAC · `merge_editions_as_title` · `box_set` · `vault` · `collection`.'
 pageId: 'pwa-library-search'
 products: ['pwa']
 platforms: ['web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
+lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="网页" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="网页" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## 目标和结果
 
-完成此页面专用的流程： **PWA: 媒体库和搜索**. 此流程使用 PWA · `watchlist` · `history` · RBAC.
+完成此页面专用的流程： **PWA: 媒体库和搜索**. 此流程使用 PWA · `watchlist` · `history` · RBAC · `merge_editions_as_title` · `box_set` · `vault` · `collection`.
 
 ## 适用范围
 
-本页面仅适用于 **PWA: 媒体库和搜索** (网页). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; PWA · RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PWA · RBAC. 本页面专用检查点： PWA · `watchlist` · `history` · RBAC.
+本页面仅适用于 **PWA: 媒体库和搜索** (网页). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; PWA · RBAC; Collectors Mode 默认关闭并显示高级容器功能；`merge_editions_as_title` 是另一项同样默认关闭的独立偏好设置; 启用 `merge_editions_as_title` 后，多个实体版本显示为一个媒体库磁贴；打开磁贴可查看每个版本; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PWA · RBAC; Collectors Mode 默认关闭并显示高级容器功能；`merge_editions_as_title` 是另一项同样默认关闭的独立偏好设置; 启用 `merge_editions_as_title` 后，多个实体版本显示为一个媒体库磁贴；打开磁贴可查看每个版本. 本页面专用检查点： PWA · `watchlist` · `history` · RBAC · `merge_editions_as_title` · `box_set` · `vault` · `collection`.
 
 ### DiscVault v26 稳定版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - PWA · RBAC
+- Collectors Mode 默认关闭并显示高级容器功能；`merge_editions_as_title` 是另一项同样默认关闭的独立偏好设置
+- 启用 `merge_editions_as_title` 后，多个实体版本显示为一个媒体库磁贴；打开磁贴可查看每个版本
 
 ### DiscVault v26 测试版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - PWA · RBAC
+- Collectors Mode 默认关闭并显示高级容器功能；`merge_editions_as_title` 是另一项同样默认关闭的独立偏好设置
+- 启用 `merge_editions_as_title` 后，多个实体版本显示为一个媒体库磁贴；打开磁贴可查看每个版本
 
 ## 前提条件
 
@@ -43,22 +47,33 @@ import PageMeta from '../../../../components/PageMeta.astro';
 2. **配置:** 媒体库 → 筛选 → 格式 / 类型 / 分组
 3. **比较:** 媒体库 → 视图 → 海报 / 列表
 4. **测试:** 标题 → 详情 → 想看 / 已看
+5. **配置:** Collectors Mode 默认关闭并显示高级容器功能；`merge_editions_as_title` 是另一项同样默认关闭的独立偏好设置
+6. **测试:** 启用 `merge_editions_as_title` 后，多个实体版本显示为一个媒体库磁贴；打开磁贴可查看每个版本
+7. **比较:** box-set 是带有自身条码的实体零售产品；其中的影片仍是作为直接影片成员关联的独立标题
+8. **比较:** vault 是用户创建的货架、储物箱或位置分组，包含直接影片成员，不代表零售产品
+9. **比较:** collection 是主题分组，其有序项目可以是影片、box-set、vault 或其他 collection，因此支持嵌套
+10. **测试:** 关闭 Collectors Mode 会隐藏容器展示，但不会删除容器或其成员
 
 
 
 ## 预期结果
 
-仅在以下条件下接受结果： **PWA: 媒体库和搜索** 必须确认以下所有结果： 媒体库 → 搜索; 媒体库 → 筛选 → 格式 / 类型 / 分组; 标题 → 详情 → 想看 / 已看. 本页面专用检查点： PWA · `watchlist` · `history` · RBAC.
+仅在以下条件下接受结果： **PWA: 媒体库和搜索** 必须确认以下所有结果： 媒体库 → 搜索; 媒体库 → 筛选 → 格式 / 类型 / 分组; 标题 → 详情 → 想看 / 已看; 启用 `merge_editions_as_title` 后，多个实体版本显示为一个媒体库磁贴；打开磁贴可查看每个版本; box-set 是带有自身条码的实体零售产品；其中的影片仍是作为直接影片成员关联的独立标题; vault 是用户创建的货架、储物箱或位置分组，包含直接影片成员，不代表零售产品; collection 是主题分组，其有序项目可以是影片、box-set、vault 或其他 collection，因此支持嵌套. 本页面专用检查点： PWA · `watchlist` · `history` · RBAC · `merge_editions_as_title` · `box_set` · `vault` · `collection`.
 
 - 媒体库 → 搜索
 - 媒体库 → 筛选 → 格式 / 类型 / 分组
 - 标题 → 详情 → 想看 / 已看
+- 启用 `merge_editions_as_title` 后，多个实体版本显示为一个媒体库磁贴；打开磁贴可查看每个版本
+- box-set 是带有自身条码的实体零售产品；其中的影片仍是作为直接影片成员关联的独立标题
+- vault 是用户创建的货架、储物箱或位置分组，包含直接影片成员，不代表零售产品
+- collection 是主题分组，其有序项目可以是影片、box-set、vault 或其他 collection，因此支持嵌套
 
 ## 安全与回滚
 
 :::caution
-安全恢复边界： **PWA: 媒体库和搜索** 在启动或继续任何操作前必须执行： 错误编辑应在保存前取消；已保存字段可在界面中恢复；批量损坏时使用匹配的服务器备份. 本页面专用检查点： PWA · `watchlist` · `history` · RBAC.
+安全恢复边界： **PWA: 媒体库和搜索** 在启动或继续任何操作前必须执行： 关闭 Collectors Mode 会隐藏容器展示，但不会删除容器或其成员; 错误编辑应在保存前取消；已保存字段可在界面中恢复；批量损坏时使用匹配的服务器备份. 本页面专用检查点： PWA · `watchlist` · `history` · RBAC · `merge_editions_as_title` · `box_set` · `vault` · `collection`.
 
+- 关闭 Collectors Mode 会隐藏容器展示，但不会删除容器或其成员
 - 错误编辑应在保存前取消；已保存字段可在界面中恢复；批量损坏时使用匹配的服务器备份
 :::
 
@@ -69,5 +84,6 @@ import PageMeta from '../../../../components/PageMeta.astro';
 ## 来源和状态
 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- 来源和状态: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
+- 来源和状态: `2026-07-15`
+- DiscVault Docs: `0.1.2`

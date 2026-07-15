@@ -1,49 +1,61 @@
 ---
 title: '配置: 身份验证和 RBAC'
-description: '任务专用说明： 配置: 身份验证和 RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.'
+description: '任务专用说明： 配置: 身份验证和 RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.'
 pageId: 'configure-auth-rbac'
 products: ['server']
 platforms: ['web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
+lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="网页" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="网页" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## 目标和结果
 
-完成此页面专用的流程： **配置: 身份验证和 RBAC**. 此流程使用 `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+完成此页面专用的流程： **配置: 身份验证和 RBAC**. 此流程使用 `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
 
 ## 适用范围
 
-本页面仅适用于 **配置: 身份验证和 RBAC** (网页). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn. 本页面专用检查点： `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+本页面仅适用于 **配置: 身份验证和 RBAC** (网页). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; 通行密钥是一对加密密钥：私钥保留在设备或可信凭据管理器中，DiscVault 只存储公钥; 通行密钥可抵御网络钓鱼且每个站点唯一；登录使用设备解锁方式，而不是可重复使用的账户密码; 限时邀请码用于开始注册，但不是可重复使用的账户密码；正常登录使用通行密钥; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn; 通行密钥是一对加密密钥：私钥保留在设备或可信凭据管理器中，DiscVault 只存储公钥; 通行密钥可抵御网络钓鱼且每个站点唯一；登录使用设备解锁方式，而不是可重复使用的账户密码; 限时邀请码用于开始注册，但不是可重复使用的账户密码；正常登录使用通行密钥. 本页面专用检查点： `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
 
 ### DiscVault v26 稳定版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - WebAuthn
+- 通行密钥是一对加密密钥：私钥保留在设备或可信凭据管理器中，DiscVault 只存储公钥
+- 通行密钥可抵御网络钓鱼且每个站点唯一；登录使用设备解锁方式，而不是可重复使用的账户密码
+- 限时邀请码用于开始注册，但不是可重复使用的账户密码；正常登录使用通行密钥
 
 ### DiscVault v26 测试版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - WebAuthn
+- 通行密钥是一对加密密钥：私钥保留在设备或可信凭据管理器中，DiscVault 只存储公钥
+- 通行密钥可抵御网络钓鱼且每个站点唯一；登录使用设备解锁方式，而不是可重复使用的账户密码
+- 限时邀请码用于开始注册，但不是可重复使用的账户密码；正常登录使用通行密钥
 
 ## 前提条件
 
 - 所有者权限
-- HTTPS
+- [安装: 反向代理和通行密钥](/zh/install/reverse-proxy-passkeys/) · HTTPS FQDN
 - 第二种恢复方式
 
 ## 操作步骤
 
-1. **打开:** 管理 → 安全 → 启用身份验证
-2. **创建:** 管理 → 用户 → 创建 48 小时邀请
-3. **配置:** 管理 → 角色 → 基础 / 高级
-4. **测试:** `48 h`
+1. **检查:** 通行密钥是一对加密密钥：私钥保留在设备或可信凭据管理器中，DiscVault 只存储公钥
+2. **比较:** 通行密钥可抵御网络钓鱼且每个站点唯一；登录使用设备解锁方式，而不是可重复使用的账户密码 · 限时邀请码用于开始注册，但不是可重复使用的账户密码；正常登录使用通行密钥
+3. **验证:** Windows 需要当前支持通行密钥的浏览器以及至少配置 PIN 的 Windows Hello；建议使用 Windows 11 22H2 或更高版本进行原生管理
+4. **验证:** macOS 需要 Ventura 13 或更高版本并启用 iCloud 钥匙串，或使用其他支持通行密钥的凭据管理器
+5. **验证:** iPhone 和 iPad 需要 iOS 或 iPadOS 16+、iCloud 钥匙串及双重认证；Android 需要 9+、通行密钥提供商和屏幕锁
+6. **创建:** 注册多个通行密钥，例如手机和桌面设备，并在更换或丢失设备前保留独立的所有者恢复途径
+7. **打开:** 管理 → 安全 → 启用身份验证
+8. **创建:** 管理 → 用户 → 创建 48 小时邀请
+9. **配置:** 管理 → 角色 → 基础 / 高级
+10. **测试:** WebAuthn
 
 ### 命令和设置
 
@@ -56,15 +68,18 @@ curl --fail http://localhost:6080/api/next/auth/rbac
 
 ## 预期结果
 
-仅在以下条件下接受结果： **配置: 身份验证和 RBAC** 必须确认以下所有结果： 所有者通行密钥登录有效，邀请注册符合设置，且测试用户仅拥有分配的权限. 本页面专用检查点： `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+仅在以下条件下接受结果： **配置: 身份验证和 RBAC** 必须确认以下所有结果： 所有者通行密钥登录有效，邀请注册符合设置，且测试用户仅拥有分配的权限; 通行密钥可抵御网络钓鱼且每个站点唯一；登录使用设备解锁方式，而不是可重复使用的账户密码; 限时邀请码用于开始注册，但不是可重复使用的账户密码；正常登录使用通行密钥. 本页面专用检查点： `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
 
 - 所有者通行密钥登录有效，邀请注册符合设置，且测试用户仅拥有分配的权限
+- 通行密钥可抵御网络钓鱼且每个站点唯一；登录使用设备解锁方式，而不是可重复使用的账户密码
+- 限时邀请码用于开始注册，但不是可重复使用的账户密码；正常登录使用通行密钥
 
 ## 安全与回滚
 
 :::caution
-安全恢复边界： **配置: 身份验证和 RBAC** 在启动或继续任何操作前必须执行： 保留所有者会话和第二种恢复方式；绝不能删除最后一个所有者通行密钥. 本页面专用检查点： `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+安全恢复边界： **配置: 身份验证和 RBAC** 在启动或继续任何操作前必须执行： 注册多个通行密钥，例如手机和桌面设备，并在更换或丢失设备前保留独立的所有者恢复途径; 保留所有者会话和第二种恢复方式；绝不能删除最后一个所有者通行密钥. 本页面专用检查点： `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
 
+- 注册多个通行密钥，例如手机和桌面设备，并在更换或丢失设备前保留独立的所有者恢复途径
 - 保留所有者会话和第二种恢复方式；绝不能删除最后一个所有者通行密钥
 :::
 
@@ -75,5 +90,6 @@ curl --fail http://localhost:6080/api/next/auth/rbac
 ## 来源和状态
 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- 来源和状态: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
+- 来源和状态: `2026-07-15`
+- DiscVault Docs: `0.1.2`

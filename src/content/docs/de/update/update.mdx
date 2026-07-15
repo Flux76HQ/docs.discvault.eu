@@ -1,26 +1,26 @@
 ---
 title: 'Update und Migration: Container-Update'
-description: 'Aufgabenspezifische Anleitung für Update und Migration: Container-Update: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.'
+description: 'Aufgabenspezifische Anleitung für Update und Migration: Container-Update: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.'
 pageId: 'update-update'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
+lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Ziel und Ergebnis
 
-Führe den seitenspezifischen Ablauf aus für **Update und Migration: Container-Update**. Dieses Verfahren arbeitet mit `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+Führe den seitenspezifischen Ablauf aus für **Update und Migration: Container-Update**. Dieses Verfahren arbeitet mit `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
 ## Gültig für
 
-Diese Seite gilt ausschließlich für **Update und Migration: Container-Update** (Docker · Unraid). Kanal- und Datengrenzen sind: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · Versionshinweise und aufgezeichneter unveränderlicher Image-Digest · passender Sicherungssatz; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · Versionshinweise und aufgezeichneter unveränderlicher Image-Digest · passender Sicherungssatz. Seitenspezifische Kontrollpunkte: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+Diese Seite gilt ausschließlich für **Update und Migration: Container-Update** (Docker · Unraid). Kanal- und Datengrenzen sind: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · Versionshinweise und aufgezeichneter unveränderlicher Image-Digest · passender Sicherungssatz; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · Versionshinweise und aufgezeichneter unveränderlicher Image-Digest · passender Sicherungssatz. Seitenspezifische Kontrollpunkte: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
 ### DiscVault v26 – stabil
 
@@ -41,10 +41,15 @@ Diese Seite gilt ausschließlich für **Update und Migration: Container-Update**
 
 ## Vorgehen
 
-1. **Verifizieren:** `PREVIOUS_IMAGE=@sha256:…`
-2. **Auswählen:** `DISCVAULT_IMAGE` · `:latest` `:beta`
-3. **Ausführen:** `--force-recreate`
-4. **Vergleichen:** der vorgesehene Image-Digest läuft, Health ist erfolgreich und Owner-Anmeldung, Bibliothekszahl und Medienprobe bestehen
+1. **Prüfen:** neue Installationen verwenden DiscVault v26 `:latest` oder `:beta`; das eingefrorene `:legacy`-Image ist nur für eine vorhandene Installation der vorherigen Generation gedacht, die noch nicht migrieren kann
+2. **Sichern:** passender Sicherungssatz
+3. **Auswählen:** Nur Legacy-Zweig: nach der Sicherung nur das Image-Tag des vorhandenen alten Deployments auf `:legacy` ändern, mit unveränderter Topologie abrufen und neu erstellen, die Sammlung prüfen und stoppen; die folgenden v26-Befehle nicht ausführen
+4. **Öffnen:** [Update und Migration: Migration zu DiscVault 26](/de/update/migration/) · DiscVault 26
+5. **Bewahren:** Volumes, Umgebungsvariablen, Ports und Datenpfad der vorherigen Generation unverändert lassen; `:legacy` niemals in die v26-PostgreSQL-Compose-Topologie einsetzen
+6. **Verifizieren:** `DiscVault v26` · `PREVIOUS_IMAGE=@sha256:…`
+7. **Auswählen:** `DiscVault v26` · `DISCVAULT_IMAGE` · `:latest` `:beta`
+8. **Ausführen:** `DiscVault v26` · `--force-recreate`
+9. **Vergleichen:** `DiscVault v26` · der vorgesehene Image-Digest läuft, Health ist erfolgreich und Owner-Anmeldung, Bibliothekszahl und Medienprobe bestehen
 
 ### Befehle und Einstellungen
 
@@ -90,15 +95,17 @@ trap - EXIT
 
 ## Erwartetes Ergebnis
 
-Akzeptiere das Ergebnis für **Update und Migration: Container-Update** nur wenn alle folgenden Ergebnisse erfüllt sind: der vorgesehene Image-Digest läuft, Health ist erfolgreich und Owner-Anmeldung, Bibliothekszahl und Medienprobe bestehen. Seitenspezifische Kontrollpunkte: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+Akzeptiere das Ergebnis für **Update und Migration: Container-Update** nur wenn alle folgenden Ergebnisse erfüllt sind: der vorgesehene Image-Digest läuft, Health ist erfolgreich und Owner-Anmeldung, Bibliothekszahl und Medienprobe bestehen; Volumes, Umgebungsvariablen, Ports und Datenpfad der vorherigen Generation unverändert lassen; `:legacy` niemals in die v26-PostgreSQL-Compose-Topologie einsetzen. Seitenspezifische Kontrollpunkte: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
 - der vorgesehene Image-Digest läuft, Health ist erfolgreich und Owner-Anmeldung, Bibliothekszahl und Medienprobe bestehen
+- Volumes, Umgebungsvariablen, Ports und Datenpfad der vorherigen Generation unverändert lassen; `:legacy` niemals in die v26-PostgreSQL-Compose-Topologie einsetzen
 
 ## Sicherheit und Rollback
 
 :::caution
-Die sichere Wiederherstellungsgrenze für **Update und Migration: Container-Update** verlangt vor jedem Start oder Fortsetzen diese Maßnahmen: [Update und Migration: Image-Rollback](/de/update/rollback/) · passender Sicherungssatz; Versionshinweise und aufgezeichneter unveränderlicher Image-Digest. Seitenspezifische Kontrollpunkte: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+Die sichere Wiederherstellungsgrenze für **Update und Migration: Container-Update** verlangt vor jedem Start oder Fortsetzen diese Maßnahmen: das eingefrorene `:legacy`-Image erhält keine DiscVault-v26-Funktionen, Migrationsverbesserungen oder künftigen Oberflächenupdates; [Update und Migration: Image-Rollback](/de/update/rollback/) · passender Sicherungssatz; Versionshinweise und aufgezeichneter unveränderlicher Image-Digest. Seitenspezifische Kontrollpunkte: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
+- das eingefrorene `:legacy`-Image erhält keine DiscVault-v26-Funktionen, Migrationsverbesserungen oder künftigen Oberflächenupdates
 - [Update und Migration: Image-Rollback](/de/update/rollback/) · passender Sicherungssatz
 - Versionshinweise und aufgezeichneter unveränderlicher Image-Digest
 :::
@@ -110,5 +117,6 @@ Die sichere Wiederherstellungsgrenze für **Update und Migration: Container-Upda
 ## Quelle und Status
 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Quelle und Status: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
+- Quelle und Status: `2026-07-15`
+- DiscVault Docs: `0.1.2`

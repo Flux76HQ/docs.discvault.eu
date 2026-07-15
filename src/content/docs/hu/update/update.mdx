@@ -1,26 +1,26 @@
 ---
 title: 'Frissítés és migrálás: Konténerfrissítés'
-description: 'Feladatspecifikus útmutató: Frissítés és migrálás: Konténerfrissítés: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.'
+description: 'Feladatspecifikus útmutató: Frissítés és migrálás: Konténerfrissítés: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.'
 pageId: 'update-update'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
+lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Cél és eredmény
 
-Hajtsa végre az oldalhoz tartozó munkafolyamatot: **Frissítés és migrálás: Konténerfrissítés**. Ez az eljárás ezeket használja: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+Hajtsa végre az oldalhoz tartozó munkafolyamatot: **Frissítés és migrálás: Konténerfrissítés**. Ez az eljárás ezeket használja: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
 ## Érvényesség
 
-Ez az oldal kizárólag erre vonatkozik: **Frissítés és migrálás: Konténerfrissítés** (Docker · Unraid). A csatorna- és adathatárok: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · kiadási megjegyzések és rögzített változtathatatlan digest · illeszkedő mentéskészlet; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · kiadási megjegyzések és rögzített változtathatatlan digest · illeszkedő mentéskészlet. Oldalspecifikus ellenőrzési pontok: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+Ez az oldal kizárólag erre vonatkozik: **Frissítés és migrálás: Konténerfrissítés** (Docker · Unraid). A csatorna- és adathatárok: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · kiadási megjegyzések és rögzített változtathatatlan digest · illeszkedő mentéskészlet; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · kiadási megjegyzések és rögzített változtathatatlan digest · illeszkedő mentéskészlet. Oldalspecifikus ellenőrzési pontok: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
 ### DiscVault v26 – stabil
 
@@ -41,10 +41,15 @@ Ez az oldal kizárólag erre vonatkozik: **Frissítés és migrálás: Konténer
 
 ## Eljárás
 
-1. **Ellenőrizze:** `PREVIOUS_IMAGE=@sha256:…`
-2. **Válassza ki:** `DISCVAULT_IMAGE` · `:latest` `:beta`
-3. **Futtassa:** `--force-recreate`
-4. **Hasonlítsa össze:** a kívánt image-digest fut, az állapot egészséges, és a tulajdonosi bejelentkezés, darabszám és médiaminta sikeres
+1. **Ellenőrizze:** az új telepítések a DiscVault v26 `:latest` vagy `:beta` képet használják; a befagyasztott `:legacy` kép csak olyan meglévő előző generációs telepítéshez való, amely még nem áll készen a migrációra
+2. **Készítsen mentést:** illeszkedő mentéskészlet
+3. **Válassza ki:** Csak Legacy ág: a mentés után csak a meglévő régi telepítés képcímkéjét állítsa `:legacy` értékre, változatlan topológiával töltse le és hozza létre újra, ellenőrizze a gyűjteményt, majd álljon meg; az alábbi v26 parancsokat ne futtassa
+4. **Nyissa meg:** [Frissítés és migrálás: Átállás DiscVault 26-ra](/hu/update/migration/) · DiscVault 26
+5. **Őrizze meg:** hagyja változatlanul az előző generáció köteteit, környezeti változóit, portjait és adatútvonalát; a v26 PostgreSQL Compose topológiában soha ne használja a `:legacy` képet
+6. **Ellenőrizze:** `DiscVault v26` · `PREVIOUS_IMAGE=@sha256:…`
+7. **Válassza ki:** `DiscVault v26` · `DISCVAULT_IMAGE` · `:latest` `:beta`
+8. **Futtassa:** `DiscVault v26` · `--force-recreate`
+9. **Hasonlítsa össze:** `DiscVault v26` · a kívánt image-digest fut, az állapot egészséges, és a tulajdonosi bejelentkezés, darabszám és médiaminta sikeres
 
 ### Parancsok és beállítások
 
@@ -90,15 +95,17 @@ trap - EXIT
 
 ## Várt eredmény
 
-Az eredmény csak ennél fogadható el: **Frissítés és migrálás: Konténerfrissítés** csak akkor, ha minden alábbi eredmény teljesül: a kívánt image-digest fut, az állapot egészséges, és a tulajdonosi bejelentkezés, darabszám és médiaminta sikeres. Oldalspecifikus ellenőrzési pontok: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+Az eredmény csak ennél fogadható el: **Frissítés és migrálás: Konténerfrissítés** csak akkor, ha minden alábbi eredmény teljesül: a kívánt image-digest fut, az állapot egészséges, és a tulajdonosi bejelentkezés, darabszám és médiaminta sikeres; hagyja változatlanul az előző generáció köteteit, környezeti változóit, portjait és adatútvonalát; a v26 PostgreSQL Compose topológiában soha ne használja a `:legacy` képet. Oldalspecifikus ellenőrzési pontok: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
 - a kívánt image-digest fut, az állapot egészséges, és a tulajdonosi bejelentkezés, darabszám és médiaminta sikeres
+- hagyja változatlanul az előző generáció köteteit, környezeti változóit, portjait és adatútvonalát; a v26 PostgreSQL Compose topológiában soha ne használja a `:legacy` képet
 
 ## Biztonság és visszaállítás
 
 :::caution
-A biztonságos helyreállítás határa ennél: **Frissítés és migrálás: Konténerfrissítés** ezeket a műveleteket igényli indítás vagy folytatás előtt: [Frissítés és migrálás: Lemezkép visszaállítása](/hu/update/rollback/) · illeszkedő mentéskészlet; kiadási megjegyzések és rögzített változtathatatlan digest. Oldalspecifikus ellenőrzési pontok: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+A biztonságos helyreállítás határa ennél: **Frissítés és migrálás: Konténerfrissítés** ezeket a műveleteket igényli indítás vagy folytatás előtt: a befagyasztott `:legacy` kép nem kap DiscVault v26 funkciókat, migrációs fejlesztéseket vagy jövőbeli felületfrissítéseket; [Frissítés és migrálás: Lemezkép visszaállítása](/hu/update/rollback/) · illeszkedő mentéskészlet; kiadási megjegyzések és rögzített változtathatatlan digest. Oldalspecifikus ellenőrzési pontok: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
+- a befagyasztott `:legacy` kép nem kap DiscVault v26 funkciókat, migrációs fejlesztéseket vagy jövőbeli felületfrissítéseket
 - [Frissítés és migrálás: Lemezkép visszaállítása](/hu/update/rollback/) · illeszkedő mentéskészlet
 - kiadási megjegyzések és rögzített változtathatatlan digest
 :::
@@ -110,5 +117,6 @@ A biztonságos helyreállítás határa ennél: **Frissítés és migrálás: Ko
 ## Forrás és állapot
 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Forrás és állapot: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
+- Forrás és állapot: `2026-07-15`
+- DiscVault Docs: `0.1.2`

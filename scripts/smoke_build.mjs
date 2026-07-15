@@ -36,6 +36,13 @@ await Promise.all(paths.map((path) => access(path)));
 const homepage = await readFile('dist/index.html', 'utf8');
 if (!homepage.includes('DiscVault') || !homepage.includes('hreflang="nl"'))
   throw new Error('Homepage smoke check failed.');
+if (
+  !homepage.includes('<home-search-launcher') ||
+  !homepage.includes('type="search" id="home-search"') ||
+  !homepage.includes('customElements.whenDefined') ||
+  !homepage.includes('site-search button[data-open-modal]')
+)
+  throw new Error('Homepage search input or Starlight search bridge is missing.');
 const procedure = await readFile('dist/install/docker-compose/index.html', 'utf8');
 if (
   !procedure.includes('breadcrumbs') ||

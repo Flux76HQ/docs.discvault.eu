@@ -1,49 +1,61 @@
 ---
 title: 'Konfiguracja: Uwierzytelnianie i RBAC'
-description: 'Instrukcja właściwa dla zadania: Konfiguracja: Uwierzytelnianie i RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.'
+description: 'Instrukcja właściwa dla zadania: Konfiguracja: Uwierzytelnianie i RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.'
 pageId: 'configure-auth-rbac'
 products: ['server']
 platforms: ['web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
+lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Cel i rezultat
 
-Wykonaj procedurę właściwą dla strony: **Konfiguracja: Uwierzytelnianie i RBAC**. Ta procedura korzysta z `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+Wykonaj procedurę właściwą dla strony: **Konfiguracja: Uwierzytelnianie i RBAC**. Ta procedura korzysta z `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
 
 ## Dotyczy
 
-Ta strona dotyczy wyłącznie **Konfiguracja: Uwierzytelnianie i RBAC** (web). Granice kanału i danych: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn. Punkty kontrolne tej strony: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+Ta strona dotyczy wyłącznie **Konfiguracja: Uwierzytelnianie i RBAC** (web). Granice kanału i danych: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; passkey to kryptograficzna para kluczy: klucz prywatny pozostaje na urządzeniu lub w zaufanym menedżerze poświadczeń, a DiscVault przechowuje tylko klucz publiczny; passkeys są odporne na phishing i unikalne dla witryny; logowanie używa odblokowania urządzenia zamiast wielokrotnego hasła konta; ograniczony czasowo kod zaproszenia rozpoczyna rejestrację, ale nie jest wielokrotnym hasłem konta; zwykłe logowanie używa passkey; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn; passkey to kryptograficzna para kluczy: klucz prywatny pozostaje na urządzeniu lub w zaufanym menedżerze poświadczeń, a DiscVault przechowuje tylko klucz publiczny; passkeys są odporne na phishing i unikalne dla witryny; logowanie używa odblokowania urządzenia zamiast wielokrotnego hasła konta; ograniczony czasowo kod zaproszenia rozpoczyna rejestrację, ale nie jest wielokrotnym hasłem konta; zwykłe logowanie używa passkey. Punkty kontrolne tej strony: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
 
 ### DiscVault v26 – stabilny
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - WebAuthn
+- passkey to kryptograficzna para kluczy: klucz prywatny pozostaje na urządzeniu lub w zaufanym menedżerze poświadczeń, a DiscVault przechowuje tylko klucz publiczny
+- passkeys są odporne na phishing i unikalne dla witryny; logowanie używa odblokowania urządzenia zamiast wielokrotnego hasła konta
+- ograniczony czasowo kod zaproszenia rozpoczyna rejestrację, ale nie jest wielokrotnym hasłem konta; zwykłe logowanie używa passkey
 
 ### DiscVault v26 – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - WebAuthn
+- passkey to kryptograficzna para kluczy: klucz prywatny pozostaje na urządzeniu lub w zaufanym menedżerze poświadczeń, a DiscVault przechowuje tylko klucz publiczny
+- passkeys są odporne na phishing i unikalne dla witryny; logowanie używa odblokowania urządzenia zamiast wielokrotnego hasła konta
+- ograniczony czasowo kod zaproszenia rozpoczyna rejestrację, ale nie jest wielokrotnym hasłem konta; zwykłe logowanie używa passkey
 
 ## Wymagania wstępne
 
 - dostęp właściciela
-- HTTPS
+- [Instalacja: Odwrotny serwer proxy i klucze dostępu](/pl/install/reverse-proxy-passkeys/) · HTTPS FQDN
 - druga metoda odzyskiwania
 
 ## Procedura
 
-1. **Otwórz:** Administracja → Bezpieczeństwo → Włącz uwierzytelnianie
-2. **Utwórz:** Administracja → Użytkownicy → Utwórz zaproszenie na 48 godzin
-3. **Skonfiguruj:** Administracja → Role → Podstawowe / Zaawansowane
-4. **Przetestuj:** `48 h`
+1. **Sprawdź:** passkey to kryptograficzna para kluczy: klucz prywatny pozostaje na urządzeniu lub w zaufanym menedżerze poświadczeń, a DiscVault przechowuje tylko klucz publiczny
+2. **Porównaj:** passkeys są odporne na phishing i unikalne dla witryny; logowanie używa odblokowania urządzenia zamiast wielokrotnego hasła konta · ograniczony czasowo kod zaproszenia rozpoczyna rejestrację, ale nie jest wielokrotnym hasłem konta; zwykłe logowanie używa passkey
+3. **Zweryfikuj:** Windows wymaga aktualnej przeglądarki obsługującej passkeys i Windows Hello z co najmniej kodem PIN; do natywnego zarządzania zaleca się Windows 11 22H2 lub nowszy
+4. **Zweryfikuj:** macOS wymaga Ventura 13 lub nowszego z pękiem kluczy iCloud albo innego menedżera poświadczeń obsługującego passkeys
+5. **Zweryfikuj:** iPhone i iPad wymagają iOS lub iPadOS 16+ z pękiem kluczy iCloud i uwierzytelnianiem dwuskładnikowym; Android wymaga wersji 9+ z dostawcą passkeys i blokadą ekranu
+6. **Utwórz:** zarejestruj więcej niż jeden passkey, na przykład na telefonie i komputerze, i zachowaj niezależną drogę odzyskiwania właściciela przed wymianą lub utratą urządzenia
+7. **Otwórz:** Administracja → Bezpieczeństwo → Włącz uwierzytelnianie
+8. **Utwórz:** Administracja → Użytkownicy → Utwórz zaproszenie na 48 godzin
+9. **Skonfiguruj:** Administracja → Role → Podstawowe / Zaawansowane
+10. **Przetestuj:** WebAuthn
 
 ### Polecenia i ustawienia
 
@@ -56,15 +68,18 @@ curl --fail http://localhost:6080/api/next/auth/rbac
 
 ## Oczekiwany rezultat
 
-Zaakceptuj wynik dla **Konfiguracja: Uwierzytelnianie i RBAC** tylko gdy wszystkie poniższe wyniki są prawdziwe: logowanie właściciela passkey działa, rejestracja na zaproszenie odpowiada ustawieniu, a użytkownik testowy ma tylko przypisane uprawnienia. Punkty kontrolne tej strony: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+Zaakceptuj wynik dla **Konfiguracja: Uwierzytelnianie i RBAC** tylko gdy wszystkie poniższe wyniki są prawdziwe: logowanie właściciela passkey działa, rejestracja na zaproszenie odpowiada ustawieniu, a użytkownik testowy ma tylko przypisane uprawnienia; passkeys są odporne na phishing i unikalne dla witryny; logowanie używa odblokowania urządzenia zamiast wielokrotnego hasła konta; ograniczony czasowo kod zaproszenia rozpoczyna rejestrację, ale nie jest wielokrotnym hasłem konta; zwykłe logowanie używa passkey. Punkty kontrolne tej strony: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
 
 - logowanie właściciela passkey działa, rejestracja na zaproszenie odpowiada ustawieniu, a użytkownik testowy ma tylko przypisane uprawnienia
+- passkeys są odporne na phishing i unikalne dla witryny; logowanie używa odblokowania urządzenia zamiast wielokrotnego hasła konta
+- ograniczony czasowo kod zaproszenia rozpoczyna rejestrację, ale nie jest wielokrotnym hasłem konta; zwykłe logowanie używa passkey
 
 ## Bezpieczeństwo i wycofanie
 
 :::caution
-Bezpieczna granica odzyskiwania dla **Konfiguracja: Uwierzytelnianie i RBAC** wymaga tych działań przed uruchomieniem lub kontynuacją: zachowaj sesję właściciela i drugą metodę odzyskiwania; nigdy nie usuwaj ostatniego klucza właściciela. Punkty kontrolne tej strony: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h`.
+Bezpieczna granica odzyskiwania dla **Konfiguracja: Uwierzytelnianie i RBAC** wymaga tych działań przed uruchomieniem lub kontynuacją: zarejestruj więcej niż jeden passkey, na przykład na telefonie i komputerze, i zachowaj niezależną drogę odzyskiwania właściciela przed wymianą lub utratą urządzenia; zachowaj sesję właściciela i drugą metodę odzyskiwania; nigdy nie usuwaj ostatniego klucza właściciela. Punkty kontrolne tej strony: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
 
+- zarejestruj więcej niż jeden passkey, na przykład na telefonie i komputerze, i zachowaj niezależną drogę odzyskiwania właściciela przed wymianą lub utratą urządzenia
 - zachowaj sesję właściciela i drugą metodę odzyskiwania; nigdy nie usuwaj ostatniego klucza właściciela
 :::
 
@@ -75,5 +90,6 @@ Bezpieczna granica odzyskiwania dla **Konfiguracja: Uwierzytelnianie i RBAC** wy
 ## Źródło i stan
 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Źródło i stan: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
+- Źródło i stan: `2026-07-15`
+- DiscVault Docs: `0.1.2`

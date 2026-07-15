@@ -1,26 +1,26 @@
 ---
 title: 'Aktualizacja i migracja: Aktualizacja kontenera'
-description: 'Instrukcja właściwa dla zadania: Aktualizacja i migracja: Aktualizacja kontenera: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.'
+description: 'Instrukcja właściwa dla zadania: Aktualizacja i migracja: Aktualizacja kontenera: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.'
 pageId: 'update-update'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
+lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Cel i rezultat
 
-Wykonaj procedurę właściwą dla strony: **Aktualizacja i migracja: Aktualizacja kontenera**. Ta procedura korzysta z `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+Wykonaj procedurę właściwą dla strony: **Aktualizacja i migracja: Aktualizacja kontenera**. Ta procedura korzysta z `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
 ## Dotyczy
 
-Ta strona dotyczy wyłącznie **Aktualizacja i migracja: Aktualizacja kontenera** (Docker · Unraid). Granice kanału i danych: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · informacje o wydaniu i zapisany niezmienny skrót obrazu · pasujący zestaw kopii; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · informacje o wydaniu i zapisany niezmienny skrót obrazu · pasujący zestaw kopii. Punkty kontrolne tej strony: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+Ta strona dotyczy wyłącznie **Aktualizacja i migracja: Aktualizacja kontenera** (Docker · Unraid). Granice kanału i danych: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · informacje o wydaniu i zapisany niezmienny skrót obrazu · pasujący zestaw kopii; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · informacje o wydaniu i zapisany niezmienny skrót obrazu · pasujący zestaw kopii. Punkty kontrolne tej strony: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
 ### DiscVault v26 – stabilny
 
@@ -41,10 +41,15 @@ Ta strona dotyczy wyłącznie **Aktualizacja i migracja: Aktualizacja kontenera*
 
 ## Procedura
 
-1. **Zweryfikuj:** `PREVIOUS_IMAGE=@sha256:…`
-2. **Wybierz:** `DISCVAULT_IMAGE` · `:latest` `:beta`
-3. **Uruchom:** `--force-recreate`
-4. **Porównaj:** działa zamierzony digest obrazu, stan jest prawidłowy, a logowanie właściciela, liczba rekordów i próbka przechodzą
+1. **Sprawdź:** nowe instalacje używają DiscVault v26 `:latest` lub `:beta`; zamrożony obraz `:legacy` służy tylko istniejącej instalacji poprzedniej generacji, która nie jest jeszcze gotowa do migracji
+2. **Utwórz kopię:** pasujący zestaw kopii
+3. **Wybierz:** Tylko gałąź Legacy: po wykonaniu kopii zmień wyłącznie tag obrazu istniejącego starego wdrożenia na `:legacy`, pobierz i odtwórz je bez zmiany topologii, sprawdź kolekcję i zakończ; nie uruchamiaj poniższych poleceń v26
+4. **Otwórz:** [Aktualizacja i migracja: Migracja do DiscVault 26](/pl/update/migration/) · DiscVault 26
+5. **Zachowaj:** pozostaw bez zmian woluminy, zmienne środowiskowe, porty i ścieżkę danych poprzedniej generacji; nigdy nie podstawiaj `:legacy` do topologii Compose v26 z PostgreSQL
+6. **Zweryfikuj:** `DiscVault v26` · `PREVIOUS_IMAGE=@sha256:…`
+7. **Wybierz:** `DiscVault v26` · `DISCVAULT_IMAGE` · `:latest` `:beta`
+8. **Uruchom:** `DiscVault v26` · `--force-recreate`
+9. **Porównaj:** `DiscVault v26` · działa zamierzony digest obrazu, stan jest prawidłowy, a logowanie właściciela, liczba rekordów i próbka przechodzą
 
 ### Polecenia i ustawienia
 
@@ -90,15 +95,17 @@ trap - EXIT
 
 ## Oczekiwany rezultat
 
-Zaakceptuj wynik dla **Aktualizacja i migracja: Aktualizacja kontenera** tylko gdy wszystkie poniższe wyniki są prawdziwe: działa zamierzony digest obrazu, stan jest prawidłowy, a logowanie właściciela, liczba rekordów i próbka przechodzą. Punkty kontrolne tej strony: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+Zaakceptuj wynik dla **Aktualizacja i migracja: Aktualizacja kontenera** tylko gdy wszystkie poniższe wyniki są prawdziwe: działa zamierzony digest obrazu, stan jest prawidłowy, a logowanie właściciela, liczba rekordów i próbka przechodzą; pozostaw bez zmian woluminy, zmienne środowiskowe, porty i ścieżkę danych poprzedniej generacji; nigdy nie podstawiaj `:legacy` do topologii Compose v26 z PostgreSQL. Punkty kontrolne tej strony: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
 - działa zamierzony digest obrazu, stan jest prawidłowy, a logowanie właściciela, liczba rekordów i próbka przechodzą
+- pozostaw bez zmian woluminy, zmienne środowiskowe, porty i ścieżkę danych poprzedniej generacji; nigdy nie podstawiaj `:legacy` do topologii Compose v26 z PostgreSQL
 
 ## Bezpieczeństwo i wycofanie
 
 :::caution
-Bezpieczna granica odzyskiwania dla **Aktualizacja i migracja: Aktualizacja kontenera** wymaga tych działań przed uruchomieniem lub kontynuacją: [Aktualizacja i migracja: Wycofanie obrazu](/pl/update/rollback/) · pasujący zestaw kopii; informacje o wydaniu i zapisany niezmienny skrót obrazu. Punkty kontrolne tej strony: `:latest` · `:beta` · `DISCVAULT_IMAGE` · `--force-recreate`.
+Bezpieczna granica odzyskiwania dla **Aktualizacja i migracja: Aktualizacja kontenera** wymaga tych działań przed uruchomieniem lub kontynuacją: zamrożony obraz `:legacy` nie otrzymuje funkcji DiscVault v26, ulepszeń migracji ani przyszłych aktualizacji interfejsu; [Aktualizacja i migracja: Wycofanie obrazu](/pl/update/rollback/) · pasujący zestaw kopii; informacje o wydaniu i zapisany niezmienny skrót obrazu. Punkty kontrolne tej strony: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
+- zamrożony obraz `:legacy` nie otrzymuje funkcji DiscVault v26, ulepszeń migracji ani przyszłych aktualizacji interfejsu
 - [Aktualizacja i migracja: Wycofanie obrazu](/pl/update/rollback/) · pasujący zestaw kopii
 - informacje o wydaniu i zapisany niezmienny skrót obrazu
 :::
@@ -110,5 +117,6 @@ Bezpieczna granica odzyskiwania dla **Aktualizacja i migracja: Aktualizacja kont
 ## Źródło i stan
 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Źródło i stan: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
+- Źródło i stan: `2026-07-15`
+- DiscVault Docs: `0.1.2`

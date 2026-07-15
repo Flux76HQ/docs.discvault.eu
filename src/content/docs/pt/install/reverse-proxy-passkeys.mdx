@@ -1,51 +1,57 @@
 ---
 title: 'Instalação: Proxy inverso e chaves de acesso'
-description: 'Instruções específicas para Instalação: Proxy inverso e chaves de acesso: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.'
+description: 'Instruções específicas para Instalação: Proxy inverso e chaves de acesso: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.'
 pageId: 'install-reverse-proxy-passkeys'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
+lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Objetivo e resultado
 
-Conclua o procedimento específico da página para **Instalação: Proxy inverso e chaves de acesso**. Este procedimento utiliza `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Conclua o procedimento específico da página para **Instalação: Proxy inverso e chaves de acesso**. Este procedimento utiliza FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
 
 ## Aplicável a
 
-Esta página aplica-se apenas a **Instalação: Proxy inverso e chaves de acesso** (Docker · web). Os limites de canal e dados são: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`. Pontos de controlo desta página: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Esta página aplica-se apenas a **Instalação: Proxy inverso e chaves de acesso** (Docker · web). Os limites de canal e dados são: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`; fora da exceção localhost, as passkeys requerem um nome de domínio completo e estável por HTTPS fidedigno; um endereço IP isolado ou HTTP simples não são suportados; `RP_ID` é o nome do anfitrião sem esquema ou porta, enquanto `RP_ORIGINS` é a origem HTTPS completa exata; ambos devem corresponder ao endereço aberto no navegador; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`; fora da exceção localhost, as passkeys requerem um nome de domínio completo e estável por HTTPS fidedigno; um endereço IP isolado ou HTTP simples não são suportados; `RP_ID` é o nome do anfitrião sem esquema ou porta, enquanto `RP_ORIGINS` é a origem HTTPS completa exata; ambos devem corresponder ao endereço aberto no navegador. Pontos de controlo desta página: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
 
 ### DiscVault v26 estável
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - `RP_ID` `RP_ORIGINS`
 - `6080` API `5000`
+- fora da exceção localhost, as passkeys requerem um nome de domínio completo e estável por HTTPS fidedigno; um endereço IP isolado ou HTTP simples não são suportados
+- `RP_ID` é o nome do anfitrião sem esquema ou porta, enquanto `RP_ORIGINS` é a origem HTTPS completa exata; ambos devem corresponder ao endereço aberto no navegador
 
 ### DiscVault v26 beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `RP_ID` `RP_ORIGINS`
 - `6080` API `5000`
+- fora da exceção localhost, as passkeys requerem um nome de domínio completo e estável por HTTPS fidedigno; um endereço IP isolado ou HTTP simples não são suportados
+- `RP_ID` é o nome do anfitrião sem esquema ou porta, enquanto `RP_ORIGINS` é a origem HTTPS completa exata; ambos devem corresponder ao endereço aberto no navegador
 
 ## Pré-requisitos
 
-- DNS
+- FQDN
 - TLS
-- `6080`
+- `RP_ID`
 
 ## Procedimento
 
-1. **Configurar:** `RP_ID`
-2. **Configurar:** `RP_ORIGINS` · HTTPS
-3. **Configurar:** `http://127.0.0.1:6080`
-4. **Testar:** `GET /api/next/health`
+1. **Escolher:** FQDN · fora da exceção localhost, as passkeys requerem um nome de domínio completo e estável por HTTPS fidedigno; um endereço IP isolado ou HTTP simples não são suportados
+2. **Configurar:** `RP_ID`
+3. **Configurar:** `RP_ORIGINS` · HTTPS
+4. **Configurar:** `http://127.0.0.1:6080`
+5. **Testar:** `GET /api/next/health`
+6. **Registar:** escolha o nome do anfitrião antes de registar passkeys; alterá-lo depois exige novo registo, enquanto localhost continua apenas uma exceção local
 
 ### Comandos e definições
 
@@ -59,16 +65,18 @@ curl --fail https://discvault.example.com/api/next/health
 
 ## Resultado esperado
 
-Aceite o resultado de **Instalação: Proxy inverso e chaves de acesso** apenas quando todos os resultados abaixo forem confirmados: HTTPS · HTTP `2xx`; `RP_ID`. Pontos de controlo desta página: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Aceite o resultado de **Instalação: Proxy inverso e chaves de acesso** apenas quando todos os resultados abaixo forem confirmados: HTTPS · HTTP `2xx`; `RP_ID`; `RP_ID` é o nome do anfitrião sem esquema ou porta, enquanto `RP_ORIGINS` é a origem HTTPS completa exata; ambos devem corresponder ao endereço aberto no navegador. Pontos de controlo desta página: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
 
 - HTTPS · HTTP `2xx`
 - `RP_ID`
+- `RP_ID` é o nome do anfitrião sem esquema ou porta, enquanto `RP_ORIGINS` é a origem HTTPS completa exata; ambos devem corresponder ao endereço aberto no navegador
 
 ## Segurança e reversão
 
 :::caution
-O limite de recuperação segura de **Instalação: Proxy inverso e chaves de acesso** exige estas ações antes de iniciar ou continuar: restaure em conjunto o proxy e os valores RP e mantenha um método de recuperação do proprietário. Pontos de controlo desta página: `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+O limite de recuperação segura de **Instalação: Proxy inverso e chaves de acesso** exige estas ações antes de iniciar ou continuar: escolha o nome do anfitrião antes de registar passkeys; alterá-lo depois exige novo registo, enquanto localhost continua apenas uma exceção local; restaure em conjunto o proxy e os valores RP e mantenha um método de recuperação do proprietário. Pontos de controlo desta página: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
 
+- escolha o nome do anfitrião antes de registar passkeys; alterá-lo depois exige novo registo, enquanto localhost continua apenas uma exceção local
 - restaure em conjunto o proxy e os valores RP e mantenha um método de recuperação do proprietário
 :::
 
@@ -79,5 +87,6 @@ O limite de recuperação segura de **Instalação: Proxy inverso e chaves de ac
 ## Fonte e estado
 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Fonte e estado: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
+- Fonte e estado: `2026-07-15`
+- DiscVault Docs: `0.1.2`
