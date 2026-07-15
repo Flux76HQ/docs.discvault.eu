@@ -195,12 +195,27 @@ const routes = [
       pagefindInput.focus();
     }
 
-    private async waitForPagefindInput() {
-      for (let attempt = 0; attempt < 60; attempt += 1) {
-        const input = document.querySelector('#starlight__search input');
-        if (input instanceof HTMLInputElement) return input;
-        await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
-      }
+    private waitForPagefindInput(): Promise<HTMLInputElement | null> {
+      const existing = document.querySelector('#starlight__search input');
+      if (existing instanceof HTMLInputElement) return Promise.resolve(existing);
+
+      return new Promise((resolve) => {
+        const signal = this.abortController.signal;
+        let observer: MutationObserver;
+        const finish = (input: HTMLInputElement | null) => {
+          observer.disconnect();
+          signal.removeEventListener('abort', cancel);
+          resolve(input);
+        };
+        const cancel = () => finish(null);
+        observer = new MutationObserver(() => {
+          const input = document.querySelector('#starlight__search input');
+          if (input instanceof HTMLInputElement) finish(input);
+        });
+
+        signal.addEventListener('abort', cancel, { once: true });
+        observer.observe(document.body, { childList: true, subtree: true });
+      });
     }
   }
 

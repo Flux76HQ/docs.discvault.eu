@@ -38,7 +38,6 @@ Cette page s’applique uniquement à **Installation: Méthodes d’installation
 
 - Docker Engine `24+`
 - Docker Compose `v2`
-- jeu de sauvegardes correspondant
 
 ## Procédure
 
@@ -48,7 +47,7 @@ Cette page s’applique uniquement à **Installation: Méthodes d’installation
 4. **Choisir:** les nouvelles installations utilisent DiscVault v26 `:latest` ou `:beta` ; l’image figée `:legacy` est réservée à une installation existante de la génération précédente qui n’est pas encore prête à migrer
 5. **Conserver:** conservez les volumes, variables d’environnement, ports et chemin de données de la génération précédente ; ne remplacez jamais une image de la topologie Compose v26 PostgreSQL par `:legacy`
 6. **Ouvrir:** [Mise à jour et migration: Migration vers DiscVault 26](/fr/update/migration/) · → DiscVault 26
-7. **Consigner:** `DISCVAULT_IMAGE` · jeu de sauvegardes correspondant
+7. **Consigner:** `DISCVAULT_IMAGE` · uniquement pour un déploiement existant ou legacy : jeu de sauvegardes correspondant
 
 ### Parcours par tâche
 
@@ -69,11 +68,11 @@ Validez le résultat de **Installation: Méthodes d’installation** uniquement 
 ## Sécurité et retour arrière
 
 :::caution
-La limite de récupération sûre pour **Installation: Méthodes d’installation** impose ces actions avant tout démarrage ou toute poursuite : Branche Legacy uniquement : après la sauvegarde, remplacez seulement le tag d’image du déploiement existant de l’ancienne génération par `:legacy`, téléchargez et recréez-le sans modifier sa topologie, vérifiez la collection et arrêtez-vous ; n’exécutez pas les commandes v26 ci-dessous; l’image figée `:legacy` ne reçoit ni fonctions DiscVault v26, ni améliorations de migration, ni futures mises à jour de l’interface; jeu de sauvegardes correspondant; notes de version et digest immuable consigné. Points de contrôle propres à la page : `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
+La limite de récupération sûre pour **Installation: Méthodes d’installation** impose ces actions avant tout démarrage ou toute poursuite : Branche Legacy uniquement : après la sauvegarde, remplacez seulement le tag d’image du déploiement existant de l’ancienne génération par `:legacy`, téléchargez et recréez-le sans modifier sa topologie, vérifiez la collection et arrêtez-vous ; ne faites pas basculer ce déploiement existant vers la topologie v26 sur cette page; l’image figée `:legacy` ne reçoit ni fonctions DiscVault v26, ni améliorations de migration, ni futures mises à jour de l’interface; uniquement pour un déploiement existant ou legacy : jeu de sauvegardes correspondant; notes de version et digest immuable consigné. Points de contrôle propres à la page : `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
-- Branche Legacy uniquement : après la sauvegarde, remplacez seulement le tag d’image du déploiement existant de l’ancienne génération par `:legacy`, téléchargez et recréez-le sans modifier sa topologie, vérifiez la collection et arrêtez-vous ; n’exécutez pas les commandes v26 ci-dessous
+- Branche Legacy uniquement : après la sauvegarde, remplacez seulement le tag d’image du déploiement existant de l’ancienne génération par `:legacy`, téléchargez et recréez-le sans modifier sa topologie, vérifiez la collection et arrêtez-vous ; ne faites pas basculer ce déploiement existant vers la topologie v26 sur cette page
 - l’image figée `:legacy` ne reçoit ni fonctions DiscVault v26, ni améliorations de migration, ni futures mises à jour de l’interface
-- jeu de sauvegardes correspondant
+- uniquement pour un déploiement existant ou legacy : jeu de sauvegardes correspondant
 - notes de version et digest immuable consigné
 :::
 
@@ -86,4 +85,4 @@ La limite de récupération sûre pour **Installation: Méthodes d’installatio
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
 - Source et état: `2026-07-15`
-- DiscVault Docs: `0.1.2`
+- DiscVault Docs: `0.1.4`

@@ -43,7 +43,7 @@ Ez az oldal kizárólag erre vonatkozik: **Frissítés és migrálás: Konténer
 
 1. **Ellenőrizze:** az új telepítések a DiscVault v26 `:latest` vagy `:beta` képet használják; a befagyasztott `:legacy` kép csak olyan meglévő előző generációs telepítéshez való, amely még nem áll készen a migrációra
 2. **Készítsen mentést:** illeszkedő mentéskészlet
-3. **Válassza ki:** Csak Legacy ág: a mentés után csak a meglévő régi telepítés képcímkéjét állítsa `:legacy` értékre, változatlan topológiával töltse le és hozza létre újra, ellenőrizze a gyűjteményt, majd álljon meg; az alábbi v26 parancsokat ne futtassa
+3. **Válassza ki:** Csak Legacy ág: a mentés után csak a meglévő régi telepítés képcímkéjét állítsa `:legacy` értékre, változatlan topológiával töltse le és hozza létre újra, ellenőrizze a gyűjteményt, majd álljon meg; ezen az oldalon ne állítsa át a meglévő telepítést a v26 topológiára
 4. **Nyissa meg:** [Frissítés és migrálás: Átállás DiscVault 26-ra](/hu/update/migration/) · DiscVault 26
 5. **Őrizze meg:** hagyja változatlanul az előző generáció köteteit, környezeti változóit, portjait és adatútvonalát; a v26 PostgreSQL Compose topológiában soha ne használja a `:legacy` képet
 6. **Ellenőrizze:** `DiscVault v26` · `PREVIOUS_IMAGE=@sha256:…`
@@ -119,4 +119,4 @@ A biztonságos helyreállítás határa ennél: **Frissítés és migrálás: Ko
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
 - Forrás és állapot: `2026-07-15`
-- DiscVault Docs: `0.1.2`
+- DiscVault Docs: `0.1.4`

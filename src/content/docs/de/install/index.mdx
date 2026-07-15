@@ -38,7 +38,6 @@ Diese Seite gilt ausschließlich für **Installation: Installationswege** (Docke
 
 - Docker Engine `24+`
 - Docker Compose `v2`
-- passender Sicherungssatz
 
 ## Vorgehen
 
@@ -48,7 +47,7 @@ Diese Seite gilt ausschließlich für **Installation: Installationswege** (Docke
 4. **Auswählen:** neue Installationen verwenden DiscVault v26 `:latest` oder `:beta`; das eingefrorene `:legacy`-Image ist nur für eine vorhandene Installation der vorherigen Generation gedacht, die noch nicht migrieren kann
 5. **Bewahren:** Volumes, Umgebungsvariablen, Ports und Datenpfad der vorherigen Generation unverändert lassen; `:legacy` niemals in die v26-PostgreSQL-Compose-Topologie einsetzen
 6. **Öffnen:** [Update und Migration: Migration zu DiscVault 26](/de/update/migration/) · → DiscVault 26
-7. **Festhalten:** `DISCVAULT_IMAGE` · passender Sicherungssatz
+7. **Festhalten:** `DISCVAULT_IMAGE` · nur bei einer vorhandenen oder Legacy-Bereitstellung: passender Sicherungssatz
 
 ### Aufgabenwege
 
@@ -69,11 +68,11 @@ Akzeptiere das Ergebnis für **Installation: Installationswege** nur wenn alle f
 ## Sicherheit und Rollback
 
 :::caution
-Die sichere Wiederherstellungsgrenze für **Installation: Installationswege** verlangt vor jedem Start oder Fortsetzen diese Maßnahmen: Nur Legacy-Zweig: nach der Sicherung nur das Image-Tag des vorhandenen alten Deployments auf `:legacy` ändern, mit unveränderter Topologie abrufen und neu erstellen, die Sammlung prüfen und stoppen; die folgenden v26-Befehle nicht ausführen; das eingefrorene `:legacy`-Image erhält keine DiscVault-v26-Funktionen, Migrationsverbesserungen oder künftigen Oberflächenupdates; passender Sicherungssatz; Versionshinweise und aufgezeichneter unveränderlicher Image-Digest. Seitenspezifische Kontrollpunkte: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
+Die sichere Wiederherstellungsgrenze für **Installation: Installationswege** verlangt vor jedem Start oder Fortsetzen diese Maßnahmen: Nur Legacy-Zweig: nach der Sicherung nur das Image-Tag des vorhandenen alten Deployments auf `:legacy` ändern, mit unveränderter Topologie abrufen und neu erstellen, die Sammlung prüfen und stoppen; dieses vorhandene Deployment auf dieser Seite nicht auf die v26-Topologie umstellen; das eingefrorene `:legacy`-Image erhält keine DiscVault-v26-Funktionen, Migrationsverbesserungen oder künftigen Oberflächenupdates; nur bei einer vorhandenen oder Legacy-Bereitstellung: passender Sicherungssatz; Versionshinweise und aufgezeichneter unveränderlicher Image-Digest. Seitenspezifische Kontrollpunkte: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
-- Nur Legacy-Zweig: nach der Sicherung nur das Image-Tag des vorhandenen alten Deployments auf `:legacy` ändern, mit unveränderter Topologie abrufen und neu erstellen, die Sammlung prüfen und stoppen; die folgenden v26-Befehle nicht ausführen
+- Nur Legacy-Zweig: nach der Sicherung nur das Image-Tag des vorhandenen alten Deployments auf `:legacy` ändern, mit unveränderter Topologie abrufen und neu erstellen, die Sammlung prüfen und stoppen; dieses vorhandene Deployment auf dieser Seite nicht auf die v26-Topologie umstellen
 - das eingefrorene `:legacy`-Image erhält keine DiscVault-v26-Funktionen, Migrationsverbesserungen oder künftigen Oberflächenupdates
-- passender Sicherungssatz
+- nur bei einer vorhandenen oder Legacy-Bereitstellung: passender Sicherungssatz
 - Versionshinweise und aufgezeichneter unveränderlicher Image-Digest
 :::
 
@@ -86,4 +85,4 @@ Die sichere Wiederherstellungsgrenze für **Installation: Installationswege** ve
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
 - Quelle und Status: `2026-07-15`
-- DiscVault Docs: `0.1.2`
+- DiscVault Docs: `0.1.4`

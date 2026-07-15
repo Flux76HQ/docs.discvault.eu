@@ -7,6 +7,7 @@ import {
   productVersion,
 } from './content/product-model.mjs';
 import { procedures } from './content/procedures.mjs';
+import { procedureLocale } from './content/procedure-locales.mjs';
 
 const root = path.resolve('src/content/docs');
 const translatedLocales = [
@@ -327,6 +328,32 @@ for (const file of files) {
     } else {
       for (const marker of markers) {
         if (!content.includes(marker)) errors.push(`${relative}: missing page marker "${marker}"`);
+      }
+    }
+
+    if (pageId === 'install-index') {
+      const prerequisitesBody = sections[2]?.body ?? '';
+      const safetyBody = sections[5]?.body ?? '';
+      const unconditionalBackupTerm = procedureLocale[locale]?.terms?.matchingBackup;
+      const conditionalBackupTerm = procedureLocale[locale]?.terms?.matchingBackupIfExisting;
+      if (unconditionalBackupTerm && prerequisitesBody.includes(unconditionalBackupTerm)) {
+        errors.push(
+          `${relative}: a fresh install must not list a matching backup as an unconditional prerequisite`,
+        );
+      }
+      if (!conditionalBackupTerm || !safetyBody.includes(conditionalBackupTerm)) {
+        errors.push(
+          `${relative}: existing/legacy deployment backup guidance must remain explicitly conditional in "Safety and rollback"`,
+        );
+      }
+    }
+
+    if (pageId === 'pwa-library-search') {
+      const collectorSettingsPath = procedureLocale[locale]?.uiPaths?.collectorSettingsPath;
+      if (!collectorSettingsPath || !content.includes(collectorSettingsPath)) {
+        errors.push(
+          `${relative}: must include the localized Settings → Preferences → Collectors UI path`,
+        );
       }
     }
 

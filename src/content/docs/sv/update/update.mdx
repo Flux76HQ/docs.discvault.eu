@@ -43,7 +43,7 @@ Den här sidan gäller endast **Uppdatering och migrering: Containeruppdatering*
 
 1. **Kontrollera:** nya installationer använder DiscVault v26 `:latest` eller `:beta`; den frysta avbildningen `:legacy` är endast för en befintlig installation av föregående generation som ännu inte är redo att migrera
 2. **Säkerhetskopiera:** matchande säkerhetskopieuppsättning
-3. **Välj:** Endast Legacy-grenen: efter säkerhetskopieringen ändrar du bara avbildningstaggen för den befintliga gamla installationen till `:legacy`, hämtar och återskapar den med oförändrad topologi, kontrollerar samlingen och stoppar; kör inte v26-kommandona nedan
+3. **Välj:** Endast Legacy-grenen: efter säkerhetskopieringen ändrar du bara avbildningstaggen för den befintliga gamla installationen till `:legacy`, hämtar och återskapar den med oförändrad topologi, kontrollerar samlingen och stoppar; växla inte den befintliga installationen till v26-topologin på den här sidan
 4. **Öppna:** [Uppdatering och migrering: Migrering till DiscVault 26](/sv/update/migration/) · DiscVault 26
 5. **Bevara:** behåll föregående generations volymer, miljövariabler, portar och datasökväg oförändrade; ersätt aldrig en avbildning i v26 PostgreSQL Compose-topologin med `:legacy`
 6. **Verifiera:** `DiscVault v26` · `PREVIOUS_IMAGE=@sha256:…`
@@ -119,4 +119,4 @@ Den säkra återställningsgränsen för **Uppdatering och migrering: Containeru
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
 - Källa och status: `2026-07-15`
-- DiscVault Docs: `0.1.2`
+- DiscVault Docs: `0.1.4`

@@ -38,7 +38,6 @@ Ez az oldal kizárólag erre vonatkozik: **Telepítés: Telepítési lehetőség
 
 - Docker Engine `24+`
 - Docker Compose `v2`
-- illeszkedő mentéskészlet
 
 ## Eljárás
 
@@ -48,7 +47,7 @@ Ez az oldal kizárólag erre vonatkozik: **Telepítés: Telepítési lehetőség
 4. **Válassza ki:** az új telepítések a DiscVault v26 `:latest` vagy `:beta` képet használják; a befagyasztott `:legacy` kép csak olyan meglévő előző generációs telepítéshez való, amely még nem áll készen a migrációra
 5. **Őrizze meg:** hagyja változatlanul az előző generáció köteteit, környezeti változóit, portjait és adatútvonalát; a v26 PostgreSQL Compose topológiában soha ne használja a `:legacy` képet
 6. **Nyissa meg:** [Frissítés és migrálás: Átállás DiscVault 26-ra](/hu/update/migration/) · → DiscVault 26
-7. **Jegyezze fel:** `DISCVAULT_IMAGE` · illeszkedő mentéskészlet
+7. **Jegyezze fel:** `DISCVAULT_IMAGE` · csak meglévő vagy legacy telepítésnél: illeszkedő mentéskészlet
 
 ### Feladatútvonalak
 
@@ -69,11 +68,11 @@ Az eredmény csak ennél fogadható el: **Telepítés: Telepítési lehetősége
 ## Biztonság és visszaállítás
 
 :::caution
-A biztonságos helyreállítás határa ennél: **Telepítés: Telepítési lehetőségek** ezeket a műveleteket igényli indítás vagy folytatás előtt: Csak Legacy ág: a mentés után csak a meglévő régi telepítés képcímkéjét állítsa `:legacy` értékre, változatlan topológiával töltse le és hozza létre újra, ellenőrizze a gyűjteményt, majd álljon meg; az alábbi v26 parancsokat ne futtassa; a befagyasztott `:legacy` kép nem kap DiscVault v26 funkciókat, migrációs fejlesztéseket vagy jövőbeli felületfrissítéseket; illeszkedő mentéskészlet; kiadási megjegyzések és rögzített változtathatatlan digest. Oldalspecifikus ellenőrzési pontok: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
+A biztonságos helyreállítás határa ennél: **Telepítés: Telepítési lehetőségek** ezeket a műveleteket igényli indítás vagy folytatás előtt: Csak Legacy ág: a mentés után csak a meglévő régi telepítés képcímkéjét állítsa `:legacy` értékre, változatlan topológiával töltse le és hozza létre újra, ellenőrizze a gyűjteményt, majd álljon meg; ezen az oldalon ne állítsa át a meglévő telepítést a v26 topológiára; a befagyasztott `:legacy` kép nem kap DiscVault v26 funkciókat, migrációs fejlesztéseket vagy jövőbeli felületfrissítéseket; csak meglévő vagy legacy telepítésnél: illeszkedő mentéskészlet; kiadási megjegyzések és rögzített változtathatatlan digest. Oldalspecifikus ellenőrzési pontok: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
-- Csak Legacy ág: a mentés után csak a meglévő régi telepítés képcímkéjét állítsa `:legacy` értékre, változatlan topológiával töltse le és hozza létre újra, ellenőrizze a gyűjteményt, majd álljon meg; az alábbi v26 parancsokat ne futtassa
+- Csak Legacy ág: a mentés után csak a meglévő régi telepítés képcímkéjét állítsa `:legacy` értékre, változatlan topológiával töltse le és hozza létre újra, ellenőrizze a gyűjteményt, majd álljon meg; ezen az oldalon ne állítsa át a meglévő telepítést a v26 topológiára
 - a befagyasztott `:legacy` kép nem kap DiscVault v26 funkciókat, migrációs fejlesztéseket vagy jövőbeli felületfrissítéseket
-- illeszkedő mentéskészlet
+- csak meglévő vagy legacy telepítésnél: illeszkedő mentéskészlet
 - kiadási megjegyzések és rögzített változtathatatlan digest
 :::
 
@@ -86,4 +85,4 @@ A biztonságos helyreállítás határa ennél: **Telepítés: Telepítési lehe
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
 - Forrás és állapot: `2026-07-15`
-- DiscVault Docs: `0.1.2`
+- DiscVault Docs: `0.1.4`

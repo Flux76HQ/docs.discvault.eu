@@ -38,7 +38,6 @@ Ta strona dotyczy wyłącznie **Instalacja: Sposoby instalacji** (Docker · Unra
 
 - Docker Engine `24+`
 - Docker Compose `v2`
-- pasujący zestaw kopii
 
 ## Procedura
 
@@ -48,7 +47,7 @@ Ta strona dotyczy wyłącznie **Instalacja: Sposoby instalacji** (Docker · Unra
 4. **Wybierz:** nowe instalacje używają DiscVault v26 `:latest` lub `:beta`; zamrożony obraz `:legacy` służy tylko istniejącej instalacji poprzedniej generacji, która nie jest jeszcze gotowa do migracji
 5. **Zachowaj:** pozostaw bez zmian woluminy, zmienne środowiskowe, porty i ścieżkę danych poprzedniej generacji; nigdy nie podstawiaj `:legacy` do topologii Compose v26 z PostgreSQL
 6. **Otwórz:** [Aktualizacja i migracja: Migracja do DiscVault 26](/pl/update/migration/) · → DiscVault 26
-7. **Zapisz:** `DISCVAULT_IMAGE` · pasujący zestaw kopii
+7. **Zapisz:** `DISCVAULT_IMAGE` · tylko dla istniejącego lub starszego (legacy) wdrożenia: pasujący zestaw kopii
 
 ### Ścieżki zadań
 
@@ -69,11 +68,11 @@ Zaakceptuj wynik dla **Instalacja: Sposoby instalacji** tylko gdy wszystkie poni
 ## Bezpieczeństwo i wycofanie
 
 :::caution
-Bezpieczna granica odzyskiwania dla **Instalacja: Sposoby instalacji** wymaga tych działań przed uruchomieniem lub kontynuacją: Tylko gałąź Legacy: po wykonaniu kopii zmień wyłącznie tag obrazu istniejącego starego wdrożenia na `:legacy`, pobierz i odtwórz je bez zmiany topologii, sprawdź kolekcję i zakończ; nie uruchamiaj poniższych poleceń v26; zamrożony obraz `:legacy` nie otrzymuje funkcji DiscVault v26, ulepszeń migracji ani przyszłych aktualizacji interfejsu; pasujący zestaw kopii; informacje o wydaniu i zapisany niezmienny skrót obrazu. Punkty kontrolne tej strony: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
+Bezpieczna granica odzyskiwania dla **Instalacja: Sposoby instalacji** wymaga tych działań przed uruchomieniem lub kontynuacją: Tylko gałąź Legacy: po wykonaniu kopii zmień wyłącznie tag obrazu istniejącego starego wdrożenia na `:legacy`, pobierz i odtwórz je bez zmiany topologii, sprawdź kolekcję i zakończ; nie przełączaj tego istniejącego wdrożenia na topologię v26 na tej stronie; zamrożony obraz `:legacy` nie otrzymuje funkcji DiscVault v26, ulepszeń migracji ani przyszłych aktualizacji interfejsu; tylko dla istniejącego lub starszego (legacy) wdrożenia: pasujący zestaw kopii; informacje o wydaniu i zapisany niezmienny skrót obrazu. Punkty kontrolne tej strony: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
-- Tylko gałąź Legacy: po wykonaniu kopii zmień wyłącznie tag obrazu istniejącego starego wdrożenia na `:legacy`, pobierz i odtwórz je bez zmiany topologii, sprawdź kolekcję i zakończ; nie uruchamiaj poniższych poleceń v26
+- Tylko gałąź Legacy: po wykonaniu kopii zmień wyłącznie tag obrazu istniejącego starego wdrożenia na `:legacy`, pobierz i odtwórz je bez zmiany topologii, sprawdź kolekcję i zakończ; nie przełączaj tego istniejącego wdrożenia na topologię v26 na tej stronie
 - zamrożony obraz `:legacy` nie otrzymuje funkcji DiscVault v26, ulepszeń migracji ani przyszłych aktualizacji interfejsu
-- pasujący zestaw kopii
+- tylko dla istniejącego lub starszego (legacy) wdrożenia: pasujący zestaw kopii
 - informacje o wydaniu i zapisany niezmienny skrót obrazu
 :::
 
@@ -86,4 +85,4 @@ Bezpieczna granica odzyskiwania dla **Instalacja: Sposoby instalacji** wymaga ty
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
 - Źródło i stan: `2026-07-15`
-- DiscVault Docs: `0.1.2`
+- DiscVault Docs: `0.1.4`
