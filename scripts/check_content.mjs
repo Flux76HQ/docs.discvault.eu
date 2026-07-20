@@ -244,12 +244,16 @@ for (const file of files) {
     continue;
   }
   const legacyAllowedPageIds = new Set(['install-index', 'update-update', 'update-migration']);
+  const legacyDeploymentContent =
+    pageId === 'install-reverse-proxy-passkeys'
+      ? content.replace(/\bLegacy Authentication\b/gi, 'authentication')
+      : content;
   if (
     !legacyAllowedPageIds.has(pageId) &&
-    /(?:\bSQLite\b|discvault\.db|\blegacy\b)/i.test(content)
+    /(?:\bSQLite\b|discvault\.db|\blegacy\b)/i.test(legacyDeploymentContent)
   ) {
     errors.push(
-      `${relative}: legacy/SQLite is allowed only on install choice, container update, or existing-data migration pages`,
+      `${relative}: legacy deployment/SQLite claims are allowed only on install choice, container update, or existing-data migration pages; "Legacy Authentication" is the only exception on the passkey installation page`,
     );
   }
   for (const [claim, pattern] of [

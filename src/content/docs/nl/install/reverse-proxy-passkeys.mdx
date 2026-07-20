@@ -44,6 +44,14 @@ Deze pagina is uitsluitend van toepassing op **Installeren: Reverse proxy en pas
 - TLS
 - `RP_ID`
 
+### Terugval op Legacy Authentication
+
+:::note[Gepland]
+Legacy Authentication met gebruikersnaam, wachtwoord en tweefactorauthenticatie (2FA) wordt ontwikkeld als terugvaloptie voor installaties zonder geldige FQDN, waar passkeys niet kunnen worden gebruikt.
+
+De installatiestappen en configuratieopties worden hier toegevoegd zodra deze authenticatiemethode beschikbaar is. Beschouw Legacy Authentication tot die tijd niet als een beschikbare installatieroute.
+:::
+
 ## Procedure
 
 1. **Kiezen:** FQDN · buiten de localhost-uitzondering vereisen passkeys een stabiele volledig gekwalificeerde domeinnaam via vertrouwde HTTPS; een los IP-adres of gewone HTTP wordt niet ondersteund
@@ -89,4 +97,4 @@ De veilige herstelgrens voor **Installeren: Reverse proxy en passkeys** vereist 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
 - Bron en status: `2026-07-15`
-- DiscVault Docs: `0.1.4`
+- DiscVault Docs: `0.1.5`

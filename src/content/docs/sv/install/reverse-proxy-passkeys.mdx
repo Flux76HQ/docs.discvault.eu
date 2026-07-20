@@ -44,6 +44,14 @@ Den här sidan gäller endast **Installation: Omvänd proxy och åtkomstnycklar*
 - TLS
 - `RP_ID`
 
+### Legacy Authentication som reserv
+
+:::note[Planerat]
+Legacy Authentication med användarnamn, lösenord och tvåfaktorsautentisering (2FA) utvecklas som reserv för installationer utan ett giltigt FQDN, där passkeys inte kan användas.
+
+Installationssteg och konfigurationsalternativ läggs till här när autentiseringsmetoden är tillgänglig. Fram till dess ska Legacy Authentication inte betraktas som en tillgänglig installationsväg.
+:::
+
 ## Procedur
 
 1. **Välj:** FQDN · utanför localhost-undantaget kräver passkeys ett stabilt fullständigt domännamn över betrodd HTTPS; en ensam IP-adress eller vanlig HTTP stöds inte
@@ -89,4 +97,4 @@ Den säkra återställningsgränsen för **Installation: Omvänd proxy och åtko
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
 - Källa och status: `2026-07-15`
-- DiscVault Docs: `0.1.4`
+- DiscVault Docs: `0.1.5`

@@ -44,6 +44,14 @@ import PageMeta from '../../../../components/PageMeta.astro';
 - TLS
 - `RP_ID`
 
+### Legacy Authentication 대체 방식
+
+:::note[예정]
+사용자 이름, 비밀번호 및 2단계 인증(2FA)을 사용하는 Legacy Authentication은 유효한 FQDN이 없어 패스키를 사용할 수 없는 설치 환경의 대체 방식으로 개발 중입니다.
+
+이 인증 방식을 사용할 수 있게 되면 설정 단계와 구성 옵션이 여기에 추가됩니다. 그전까지는 Legacy Authentication을 사용 가능한 설치 경로로 간주하지 마세요.
+:::
+
 ## 절차
 
 1. **선택:** FQDN · localhost 설정 예외를 제외하면 패스키에는 신뢰할 수 있는 HTTPS의 안정적인 정규화된 도메인 이름이 필요하며, IP 주소만 사용하거나 일반 HTTP를 사용하는 것은 지원되지 않음
@@ -89,4 +97,4 @@ curl --fail https://discvault.example.com/api/next/health
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
 - 출처 및 상태: `2026-07-15`
-- DiscVault Docs: `0.1.4`
+- DiscVault Docs: `0.1.5`

@@ -44,6 +44,14 @@ import PageMeta from '../../../../components/PageMeta.astro';
 - TLS
 - `RP_ID`
 
+### Резервна Legacy Authentication
+
+:::note[Заплановано]
+Legacy Authentication з іменем користувача, паролем і двофакторною автентифікацією (2FA) розробляється як резервний варіант для інсталяцій без дійсного FQDN, де passkeys використовувати неможливо.
+
+Кроки налаштування та параметри конфігурації буде додано сюди, коли цей метод автентифікації стане доступним. До того часу не вважайте Legacy Authentication доступним шляхом інсталяції.
+:::
+
 ## Процедура
 
 1. **Виберіть:** FQDN · поза винятком localhost passkeys потребують стабільного повного доменного імені через довірений HTTPS; окрема IP-адреса чи звичайний HTTP не підтримуються
@@ -89,4 +97,4 @@ curl --fail https://discvault.example.com/api/next/health
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
 - Джерело й стан: `2026-07-15`
-- DiscVault Docs: `0.1.4`
+- DiscVault Docs: `0.1.5`
