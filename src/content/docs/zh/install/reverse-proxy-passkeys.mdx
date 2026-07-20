@@ -44,6 +44,14 @@ import PageMeta from '../../../../components/PageMeta.astro';
 - TLS
 - `RP_ID`
 
+### Legacy Authentication 回退方式
+
+:::note[计划中]
+使用用户名、密码和双因素身份验证（2FA）的 Legacy Authentication 正在开发中，作为没有有效 FQDN、因而无法使用通行密钥的安装环境的回退方式。
+
+此身份验证方式可用后，设置步骤和配置选项将添加到此处。在此之前，请勿将 Legacy Authentication 视为可用的安装路径。
+:::
+
 ## 操作步骤
 
 1. **选择:** FQDN · 除 localhost 设置例外外，通行密钥需要通过受信任 HTTPS 使用稳定的完全限定域名；不支持裸 IP 地址或普通 HTTP
@@ -89,4 +97,4 @@ curl --fail https://discvault.example.com/api/next/health
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
 - 来源和状态: `2026-07-15`
-- DiscVault Docs: `0.1.4`
+- DiscVault Docs: `0.1.5`

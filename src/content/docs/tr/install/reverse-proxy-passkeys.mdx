@@ -44,6 +44,14 @@ Bu sayfa yalnızca şunlar için geçerlidir: **Kurulum: Ters vekil ve geçiş a
 - TLS
 - `RP_ID`
 
+### Legacy Authentication geri dönüşü
+
+:::note[Planlandı]
+Kullanıcı adı, parola ve iki faktörlü kimlik doğrulama (2FA) kullanan Legacy Authentication, geçerli bir FQDN bulunmayan ve passkey kullanılamayan kurulumlar için geri dönüş yöntemi olarak geliştirilmektedir.
+
+Bu kimlik doğrulama yöntemi kullanılabilir olduğunda kurulum adımları ve yapılandırma seçenekleri buraya eklenecektir. O zamana kadar Legacy Authentication kullanılabilir bir kurulum yolu olarak değerlendirilmemelidir.
+:::
+
 ## Prosedür
 
 1. **Seçin:** FQDN · localhost kurulum istisnası dışında passkey için güvenilir HTTPS üzerinden kararlı tam etki alanı adı gerekir; yalnız IP adresi veya düz HTTP desteklenmez
@@ -89,4 +97,4 @@ curl --fail https://discvault.example.com/api/next/health
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
 - Kaynak ve durum: `2026-07-15`
-- DiscVault Docs: `0.1.4`
+- DiscVault Docs: `0.1.5`

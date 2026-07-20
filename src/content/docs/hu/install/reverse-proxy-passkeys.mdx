@@ -44,6 +44,14 @@ Ez az oldal kizárólag erre vonatkozik: **Telepítés: Fordított proxy és hoz
 - TLS
 - `RP_ID`
 
+### Legacy Authentication tartalékmegoldás
+
+:::note[Tervezett]
+A felhasználónévvel, jelszóval és kétfaktoros hitelesítéssel (2FA) működő Legacy Authentication tartalékmegoldásként készül az érvényes FQDN nélküli telepítésekhez, ahol a passkey nem használható.
+
+A beállítási lépések és konfigurációs lehetőségek akkor kerülnek ide, amikor ez a hitelesítési mód elérhető lesz. Addig a Legacy Authentication nem tekinthető elérhető telepítési útnak.
+:::
+
 ## Eljárás
 
 1. **Válassza ki:** FQDN · a localhost kivételén kívül a passkey stabil teljes tartománynevet és megbízható HTTPS-t igényel; a puszta IP-cím és a sima HTTP nem támogatott
@@ -89,4 +97,4 @@ A biztonságos helyreállítás határa ennél: **Telepítés: Fordított proxy 
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
 - Forrás és állapot: `2026-07-15`
-- DiscVault Docs: `0.1.4`
+- DiscVault Docs: `0.1.5`

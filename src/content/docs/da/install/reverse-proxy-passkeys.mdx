@@ -44,6 +44,14 @@ Denne side gælder kun for **Installation: Omvendt proxy og adgangsnøgler** (Do
 - TLS
 - `RP_ID`
 
+### Legacy Authentication som fallback
+
+:::note[Planlagt]
+Legacy Authentication med brugernavn, adgangskode og tofaktorgodkendelse (2FA) udvikles som fallback til installationer uden et gyldigt FQDN, hvor passkeys ikke kan bruges.
+
+Opsætningstrin og konfigurationsmuligheder tilføjes her, når godkendelsesmetoden er tilgængelig. Indtil da må Legacy Authentication ikke betragtes som en tilgængelig installationsvej.
+:::
+
 ## Fremgangsmåde
 
 1. **Vælg:** FQDN · uden for localhost-undtagelsen kræver passkeys et stabilt fuldt kvalificeret domænenavn over betroet HTTPS; en ren IP-adresse eller almindelig HTTP understøttes ikke
@@ -89,4 +97,4 @@ Den sikre gendannelsesgrænse for **Installation: Omvendt proxy og adgangsnøgle
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
 - Kilde og status: `2026-07-15`
-- DiscVault Docs: `0.1.4`
+- DiscVault Docs: `0.1.5`

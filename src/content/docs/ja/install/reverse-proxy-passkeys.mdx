@@ -44,6 +44,14 @@ import PageMeta from '../../../../components/PageMeta.astro';
 - TLS
 - `RP_ID`
 
+### Legacy Authentication のフォールバック
+
+:::note[予定]
+ユーザー名、パスワード、2 要素認証（2FA）を使用する Legacy Authentication は、有効な FQDN がなくパスキーを使用できないインストール向けの代替手段として開発中です。
+
+この認証方式が利用可能になった時点で、セットアップ手順と設定オプションをここに追加します。それまでは、Legacy Authentication を利用可能なインストール経路として扱わないでください。
+:::
+
 ## 手順
 
 1. **選択:** FQDN · localhost のセットアップ例外を除き、パスキーには信頼された HTTPS 上の安定した完全修飾ドメイン名が必要です。IP アドレスだけ、または HTTP には対応しません
@@ -89,4 +97,4 @@ curl --fail https://discvault.example.com/api/next/health
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
 - 情報源と状態: `2026-07-15`
-- DiscVault Docs: `0.1.4`
+- DiscVault Docs: `0.1.5`

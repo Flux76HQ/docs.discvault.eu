@@ -1228,7 +1228,7 @@ const pages = [
     version: 'DiscVault v26',
     source: [S, M],
     verified: migratedVerified,
-    docsVersion: migratedDocsVersion,
+    docsVersion: '0.1.5',
     pre: ['public FQDN', 'trusted TLS certificate', 'WebSocket-capable reverse proxy'],
     command:
       'RP_ID=discvault.example.com\nRP_ORIGINS=https://discvault.example.com\nProxy upstream: http://127.0.0.1:6080\nHealth: https://discvault.example.com/api/next/health',
@@ -1928,6 +1928,18 @@ function renderBlocks(page, spec, locale) {
   return sections.join('\n\n');
 }
 
+function renderNotices(spec, locale) {
+  return (spec.notices ?? [])
+    .map(
+      ({ heading, label, paragraphs }) => `### ${renderPart(heading, locale)}
+
+:::note[${renderPart(label, locale)}]
+${paragraphs.map((paragraph) => renderPart(paragraph, locale)).join('\n\n')}
+:::`,
+    )
+    .join('\n\n');
+}
+
 function procedureBody(page, locale) {
   const labels = l10n[locale];
   const ui = procedureLocale[locale];
@@ -1944,6 +1956,7 @@ function procedureBody(page, locale) {
         `- ${renderItem(parts, locale, markerFor(spec, index, locale) || 'DiscVault')}`,
     )
     .join('\n');
+  const notices = renderNotices(spec, locale);
   const steps = spec.steps
     .map(
       ({ action, parts }, index) =>
@@ -2000,7 +2013,7 @@ ${renderChannelScope(page, spec, locale)}
 
 ## ${labels[2]}
 
-${prerequisites}
+${prerequisites}${notices ? `\n\n${notices}` : ''}
 
 ## ${labels[3]}
 

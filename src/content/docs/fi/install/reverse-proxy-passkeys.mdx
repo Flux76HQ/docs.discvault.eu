@@ -44,6 +44,14 @@ Tämä sivu koskee vain kohdetta **Asennus: Käänteinen välityspalvelin ja pä
 - TLS
 - `RP_ID`
 
+### Legacy Authentication -varamenetelmä
+
+:::note[Suunnitteilla]
+Legacy Authentication käyttäjätunnuksella, salasanalla ja kaksivaiheisella tunnistautumisella (2FA) kehitetään varamenetelmäksi asennuksiin, joilla ei ole kelvollista FQDN-nimeä ja joissa passkey-avaimia ei voi käyttää.
+
+Asennusvaiheet ja määritysvaihtoehdot lisätään tähän, kun tunnistautumismenetelmä on saatavilla. Siihen asti Legacy Authentication ei ole käytettävissä oleva asennusreitti.
+:::
+
 ## Toimenpiteet
 
 1. **Valitse:** FQDN · localhost-poikkeuksen ulkopuolella passkey-avaimet vaativat vakaan täydellisen toimialuenimen luotetulla HTTPS-yhteydellä; pelkkää IP-osoitetta tai HTTP-yhteyttä ei tueta
@@ -89,4 +97,4 @@ Turvallinen palautusraja kohteelle **Asennus: Käänteinen välityspalvelin ja p
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
 - Lähde ja tila: `2026-07-15`
-- DiscVault Docs: `0.1.4`
+- DiscVault Docs: `0.1.5`

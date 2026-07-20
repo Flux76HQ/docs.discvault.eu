@@ -44,6 +44,14 @@ Diese Seite gilt ausschließlich für **Installation: Reverse-Proxy und Passkeys
 - TLS
 - `RP_ID`
 
+### Legacy Authentication als Fallback
+
+:::note[Geplant]
+Legacy Authentication mit Benutzername, Passwort und Zwei-Faktor-Authentifizierung (2FA) wird als Fallback für Installationen ohne gültigen FQDN entwickelt, bei denen Passkeys nicht verwendet werden können.
+
+Die Einrichtungsschritte und Konfigurationsoptionen werden hier ergänzt, sobald diese Authentifizierungsmethode verfügbar ist. Bis dahin darf Legacy Authentication nicht als verfügbarer Installationsweg betrachtet werden.
+:::
+
 ## Vorgehen
 
 1. **Auswählen:** FQDN · außerhalb der localhost-Ausnahme benötigen Passkeys einen stabilen vollqualifizierten Domainnamen über vertrauenswürdiges HTTPS; eine reine IP-Adresse oder unverschlüsseltes HTTP wird nicht unterstützt
@@ -89,4 +97,4 @@ Die sichere Wiederherstellungsgrenze für **Installation: Reverse-Proxy und Pass
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
 - Quelle und Status: `2026-07-15`
-- DiscVault Docs: `0.1.4`
+- DiscVault Docs: `0.1.5`

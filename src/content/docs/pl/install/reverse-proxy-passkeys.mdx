@@ -44,6 +44,14 @@ Ta strona dotyczy wyłącznie **Instalacja: Odwrotny serwer proxy i klucze dost�
 - TLS
 - `RP_ID`
 
+### Awaryjne Legacy Authentication
+
+:::note[Planowane]
+Legacy Authentication z nazwą użytkownika, hasłem i uwierzytelnianiem dwuskładnikowym (2FA) jest rozwijane jako rozwiązanie awaryjne dla instalacji bez prawidłowego FQDN, w których nie można używać passkeys.
+
+Kroki konfiguracji i opcje zostaną dodane tutaj, gdy ta metoda uwierzytelniania będzie dostępna. Do tego czasu nie traktuj Legacy Authentication jako dostępnej ścieżki instalacji.
+:::
+
 ## Procedura
 
 1. **Wybierz:** FQDN · poza wyjątkiem localhost passkeys wymagają stabilnej pełnej nazwy domenowej przez zaufany HTTPS; sam adres IP ani zwykły HTTP nie są obsługiwane
@@ -89,4 +97,4 @@ Bezpieczna granica odzyskiwania dla **Instalacja: Odwrotny serwer proxy i klucze
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
 - Źródło i stan: `2026-07-15`
-- DiscVault Docs: `0.1.4`
+- DiscVault Docs: `0.1.5`

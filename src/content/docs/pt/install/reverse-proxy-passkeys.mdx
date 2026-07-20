@@ -44,6 +44,14 @@ Esta página aplica-se apenas a **Instalação: Proxy inverso e chaves de acesso
 - TLS
 - `RP_ID`
 
+### Alternativa Legacy Authentication
+
+:::note[Planeado]
+Legacy Authentication com nome de utilizador, palavra-passe e autenticação de dois fatores (2FA) está a ser desenvolvida como alternativa para instalações sem um FQDN válido, onde não é possível usar passkeys.
+
+Os passos de configuração e as opções serão adicionados aqui quando este método de autenticação estiver disponível. Até lá, não considere Legacy Authentication uma opção de instalação disponível.
+:::
+
 ## Procedimento
 
 1. **Escolher:** FQDN · fora da exceção localhost, as passkeys requerem um nome de domínio completo e estável por HTTPS fidedigno; um endereço IP isolado ou HTTP simples não são suportados
@@ -89,4 +97,4 @@ O limite de recuperação segura de **Instalação: Proxy inverso e chaves de ac
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
 - Fonte e estado: `2026-07-15`
-- DiscVault Docs: `0.1.4`
+- DiscVault Docs: `0.1.5`

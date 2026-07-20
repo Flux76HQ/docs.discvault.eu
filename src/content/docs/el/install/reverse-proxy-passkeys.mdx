@@ -44,6 +44,14 @@ import PageMeta from '../../../../components/PageMeta.astro';
 - TLS
 - `RP_ID`
 
+### Εναλλακτική Legacy Authentication
+
+:::note[Προγραμματισμένο]
+Το Legacy Authentication με όνομα χρήστη, κωδικό πρόσβασης και έλεγχο ταυτότητας δύο παραγόντων (2FA) αναπτύσσεται ως εναλλακτική για εγκαταστάσεις χωρίς έγκυρο FQDN, όπου δεν μπορούν να χρησιμοποιηθούν passkeys.
+
+Τα βήματα ρύθμισης και οι επιλογές διαμόρφωσης θα προστεθούν εδώ όταν γίνει διαθέσιμη αυτή η μέθοδος ελέγχου ταυτότητας. Μέχρι τότε, μην θεωρείτε το Legacy Authentication διαθέσιμη διαδρομή εγκατάστασης.
+:::
+
 ## Διαδικασία
 
 1. **Επιλέξτε:** FQDN · εκτός της εξαίρεσης ρύθμισης localhost, τα passkeys απαιτούν σταθερό πλήρως προσδιορισμένο όνομα τομέα μέσω αξιόπιστου HTTPS· γυμνή διεύθυνση IP ή απλό HTTP δεν υποστηρίζονται
@@ -89,4 +97,4 @@ curl --fail https://discvault.example.com/api/next/health
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
 - Πηγή και κατάσταση: `2026-07-15`
-- DiscVault Docs: `0.1.4`
+- DiscVault Docs: `0.1.5`

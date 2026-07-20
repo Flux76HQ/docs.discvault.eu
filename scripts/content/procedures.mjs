@@ -526,6 +526,13 @@ docker inspect discvault-next-api-1 --format '{{range .Mounts}}{{.Source}} -> {{
   'install/reverse-proxy-passkeys': {
     markers: ['FQDN', '`RP_ORIGINS`', '`RP_ID`', '`6080`', '`/api/next/health`', 'localhost'],
     prerequisites: [item('public FQDN'), item('trusted TLS certificate'), item('reverse proxy')],
+    notices: [
+      {
+        heading: term('legacyAuthFallbackHeading'),
+        label: term('plannedLabel'),
+        paragraphs: [term('legacyAuthFallbackSummary'), term('legacyAuthFallbackStatus')],
+      },
+    ],
     channels: releaseChannels(
       item('same `RP_ID` + `RP_ORIGINS` configuration'),
       item('proxy host port `6080`; API listens on container port `5000`'),

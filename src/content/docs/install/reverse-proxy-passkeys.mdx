@@ -44,6 +44,14 @@ DiscVault v26 stable and beta both use `RP_ID`, `RP_ORIGINS`, and `/api/next/hea
 - trusted TLS certificate
 - reverse proxy
 
+### Legacy Authentication fallback
+
+:::note[Planned]
+Legacy Authentication with a username, password, and two-factor authentication (2FA) is being developed as a fallback for installations without a valid FQDN, where passkeys cannot be used.
+
+The setup steps and configuration options will be added here when this authentication method is available. Until then, do not treat Legacy Authentication as an available installation route.
+:::
+
 ## Procedure
 
 1. **Choose:** stable FQDN · outside the localhost setup exception, passkeys require a stable fully qualified domain name over trusted HTTPS; a bare IP address or plain HTTP is unsupported
@@ -89,4 +97,4 @@ Restore the prior proxy configuration and RP values together. Choose the hostnam
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
 - Verified: `2026-07-15`
-- DiscVault Docs: `0.1.4`
+- DiscVault Docs: `0.1.5`
