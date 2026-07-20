@@ -1,6 +1,6 @@
 ---
 title: 'Configuração: Visão geral'
-description: 'Instruções específicas para Configuração: Visão geral: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.'
+description: 'Instruções específicas para Configuração: Visão geral: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.'
 pageId: 'configure-index'
 products: ['server']
 platforms: ['docker', 'web']
@@ -16,11 +16,11 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## Objetivo e resultado
 
-Conclua o procedimento específico da página para **Configuração: Visão geral**. Este procedimento utiliza `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Conclua o procedimento específico da página para **Configuração: Visão geral**. Este procedimento utiliza `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 ## Aplicável a
 
-Esta página aplica-se apenas a **Configuração: Visão geral** (Docker · web). Os limites de canal e dados são: DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. Pontos de controlo desta página: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Esta página aplica-se apenas a **Configuração: Visão geral** (Docker · web). Os limites de canal e dados são: DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. Pontos de controlo desta página: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 ### DiscVault v26 estável
 
@@ -41,18 +41,20 @@ Esta página aplica-se apenas a **Configuração: Visão geral** (Docker · web)
 
 1. **Escolher:** [Configuração: Variáveis de ambiente](/pt/configure/environment/)
 2. **Escolher:** [Configuração: Autenticação e RBAC](/pt/configure/auth-rbac/) · RBAC
-3. **Escolher:** [Configuração: Extensões e metadados](/pt/configure/plugins-metadata/)
-4. **Registar:** `/configure/environment/`
+3. **Escolher:** [Instalação: Legacy Authentication](/pt/install/legacy-authentication/)
+4. **Escolher:** [Configuração: Extensões e metadados](/pt/configure/plugins-metadata/)
+5. **Registar:** `/configure/environment/`
 
 ### Percursos de tarefas
 
-- [Configuração: Variáveis de ambiente](/pt/configure/environment/) — `/configure/environment/`
+- [Configuração: Variáveis de ambiente](/pt/configure/environment/) — DiscVault 26 `.env.example`
 - [Configuração: Autenticação e RBAC](/pt/configure/auth-rbac/) — DiscVault 26 RBAC
+- [Instalação: Legacy Authentication](/pt/install/legacy-authentication/) — DiscVault 26 TOTP
 - [Configuração: Extensões e metadados](/pt/configure/plugins-metadata/) — DiscVault 26
 
 ## Resultado esperado
 
-Aceite o resultado de **Configuração: Visão geral** apenas quando todos os resultados abaixo forem confirmados: canal de lançamento selecionado; `/configure/auth-rbac/`. Pontos de controlo desta página: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Aceite o resultado de **Configuração: Visão geral** apenas quando todos os resultados abaixo forem confirmados: canal de lançamento selecionado; `/configure/auth-rbac/`. Pontos de controlo desta página: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 - canal de lançamento selecionado
 - `/configure/auth-rbac/`
@@ -60,7 +62,7 @@ Aceite o resultado de **Configuração: Visão geral** apenas quando todos os re
 ## Segurança e reversão
 
 :::caution
-O limite de recuperação segura de **Configuração: Visão geral** exige estas ações antes de iniciar ou continuar: altere um subsistema de cada vez, guarde o valor anterior e a cópia e reverta antes da alteração seguinte. Pontos de controlo desta página: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+O limite de recuperação segura de **Configuração: Visão geral** exige estas ações antes de iniciar ou continuar: altere um subsistema de cada vez, guarde o valor anterior e a cópia e reverta antes da alteração seguinte. Pontos de controlo desta página: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 - altere um subsistema de cada vez, guarde o valor anterior e a cópia e reverta antes da alteração seguinte
 :::

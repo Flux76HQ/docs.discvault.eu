@@ -1,42 +1,38 @@
 ---
 title: 'Configure: Authentication and RBAC'
-description: 'Use passkeys instead of reusable account passwords, verify platform support, and configure recovery, invites, users, groups, and roles.'
+description: 'Operate Passkeys and RBAC in both channels, and manage optional Legacy Authentication users and recovery in DiscVault 26 beta.'
 pageId: 'configure-auth-rbac'
 products: ['server']
 platforms: ['web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
-lastVerified: '2026-07-15'
+lastVerified: '2026-07-20'
 ---
 
 import PageMeta from '../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
+<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
 
 ## Goal and result
 
-Use passkeys instead of reusable account passwords, verify platform support, and configure recovery, invites, users, groups, and roles.
+Operate Passkeys and RBAC in both channels, and manage optional Legacy Authentication users and recovery in DiscVault 26 beta.
 
 ## Applies to
 
-DiscVault v26 provides the same WebAuthn and RBAC functions in stable and beta. A passkey keeps its private key on the device or in a trusted credential manager while DiscVault stores the public key. Time-limited invite codes start registration but are not reusable account passwords. Basic roles are owner, administrator, media editor, media fan, and media viewer. Browser passkey requirements are distinct from native app minimum versions.
+DiscVault v26 provides WebAuthn and RBAC in stable and beta. A passkey keeps its private key on the device or in a trusted credential manager while DiscVault stores the public key. DiscVault 26 beta additionally supports the opt-in Legacy Authentication capability. Owners and Admins can issue temporary passwords, require a password change, set per-user MFA policy, and control passkey registration. TOTP secrets are encrypted and unified recovery codes are hashed and single-use.
 
 ### DiscVault v26 stable
 
 - DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
 - WebAuthn · owner / administrator / editor / fan / viewer
 - a passkey is a cryptographic key pair: the private key stays on the device or in a trusted credential manager, and DiscVault stores only the public key
-- passkeys are phishing-resistant and unique to the site; sign-in uses the device unlock method instead of a reusable account password
-- a time-limited invite code starts registration but is not a reusable account password; normal sign-in uses a passkey
 
 ### DiscVault v26 beta
 
 - DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
-- WebAuthn · owner / administrator / editor / fan / viewer
-- a passkey is a cryptographic key pair: the private key stays on the device or in a trusted credential manager, and DiscVault stores only the public key
-- passkeys are phishing-resistant and unique to the site; sign-in uses the device unlock method instead of a reusable account password
-- a time-limited invite code starts registration but is not a reusable account password; normal sign-in uses a passkey
+- WebAuthn + optional Legacy Authentication
+- temporary passwords · forced password change · TOTP · recovery codes
 
 ## Prerequisites
 
@@ -55,20 +51,29 @@ DiscVault v26 provides the same WebAuthn and RBAC functions in stable and beta. 
 7. **Open:** Admin → Security → Enable authentication
 8. **Create:** Admin → Users → Create 48-hour invite
 9. **Configure:** Admin → Roles → Basic / Advanced
-10. **Test:** second user · assigned permission only · owner session remains open
+10. **Configure:** on an existing installation, enable password login in Users & roles and approve activation with a fresh Owner or Admin passkey assertion · Owners and Admins can issue temporary passwords, require a password change, set per-user MFA policy, and control passkey registration
+11. **Record:** recovery codes are hashed, single-use, and shared with passkey recovery; backups omit TOTP secrets and recovery material, so MFA users enroll again after restore · disabling Legacy Authentication requires an active Owner passkey; a local-IP-only Owner must establish a valid FQDN and Owner passkey before safe disablement
+12. **Test:** second user · assigned permission only · owner session remains open
 
 ### Commands and settings
 
-#### Both channels
+#### DiscVault v26 stable
 
 ```bash
 curl --fail http://localhost:6080/api/next/auth/status
 curl --fail http://localhost:6080/api/next/auth/rbac
 ```
 
+#### DiscVault v26 beta
+
+```bash
+curl --fail http://localhost:6180/api/next/auth/status
+curl --fail http://localhost:6180/api/next/auth/rbac
+```
+
 ## Expected result
 
-Owner login works with two recovery-capable passkeys, supported platforms can authenticate, invite-only registration behaves as selected, and a test user receives only assigned permissions.
+Owner login retains two recovery-capable passkeys, beta password users receive the intended TOTP and password policy, and a test user receives only assigned permissions.
 
 - owner passkey login works, invite-only registration matches the setting, and the test user has only assigned permissions
 - passkeys are phishing-resistant and unique to the site; sign-in uses the device unlock method instead of a reusable account password
@@ -77,9 +82,12 @@ Owner login works with two recovery-capable passkeys, supported platforms can au
 ## Safety and rollback
 
 :::caution
-Keep an owner session open, register more than one passkey, and preserve an independent recovery method. Never remove the last owner passkey.
+Keep an Owner session open, register more than one passkey, and preserve recovery codes offline. Disabling Legacy Authentication requires an active Owner passkey; after restore, users whose TOTP material was intentionally omitted must enroll again.
 
 - register more than one passkey, such as a phone and a desktop device, and keep an independent owner recovery path before replacing or losing a device
+- passwords require at least 15 characters, cannot equal the username or a denied common password, and are hashed with Argon2id; five failures in 15 minutes lock the account for 15 minutes
+- recovery codes are hashed, single-use, and shared with passkey recovery; backups omit TOTP secrets and recovery material, so MFA users enroll again after restore
+- disabling Legacy Authentication requires an active Owner passkey; a local-IP-only Owner must establish a valid FQDN and Owner passkey before safe disablement
 - keep the owner session and a second recovery method; never remove the last owner passkey
 :::
 
@@ -89,7 +97,12 @@ Keep an owner session open, register more than one passkey, and preserve an inde
 
 ## Source and status
 
-- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
-- Verified: `2026-07-15`
-- DiscVault Docs: `0.1.4`
+- [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
+- [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
+- [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
+- [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
+- Verified: `2026-07-20`
+- DiscVault Docs: `0.1.6`

@@ -1,40 +1,33 @@
 ---
 title: 'Instalación: Docker Compose'
-description: 'Instrucciones específicas para Instalación: Docker Compose: `DISCVAULT_IMAGE` · `postgres:17-alpine` · `6080:5000` · `/api/next/health`.'
+description: 'Instrucciones específicas para Instalación: Docker Compose: `release/v26-beta` · `app/deploy/next/docker-compose.yml` · `app/deploy/next/.env.example` · `DISCVAULT_NEXT_IMAGE` · `ghcr.io/helmerznl/discvault:beta` · `6180:5000` · `LEGACY_AUTH_ENABLED=true`.'
 pageId: 'install-docker-compose'
 products: ['server']
 platforms: ['docker']
-channels: ['stable', 'beta']
+channels: ['beta']
 minVersion: 'DiscVault v26'
 sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+lastVerified: '2026-07-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="beta" platform="Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-20" />
 
 ## Objetivo y resultado
 
-Completa el flujo específico de la página para **Instalación: Docker Compose**. Este procedimiento utiliza `DISCVAULT_IMAGE` · `postgres:17-alpine` · `6080:5000` · `/api/next/health`.
+Completa el flujo específico de la página para **Instalación: Docker Compose**. Este procedimiento utiliza `release/v26-beta` · `app/deploy/next/docker-compose.yml` · `app/deploy/next/.env.example` · `DISCVAULT_NEXT_IMAGE` · `ghcr.io/helmerznl/discvault:beta` · `6180:5000` · `LEGACY_AUTH_ENABLED=true`.
 
 ## Aplicable a
 
-Esta página se aplica solo a **Instalación: Docker Compose** (Docker). Sus límites de canal y datos son: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `postgres:17-alpine`; `DISCVAULT_IMAGE`; `app/deploy/next/docker-compose.yml` · API `5000`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `postgres:17-alpine`; `DISCVAULT_IMAGE`; `app/deploy/next/docker-compose.yml` · API `5000`. Puntos de control de esta página: `DISCVAULT_IMAGE` · `postgres:17-alpine` · `6080:5000` · `/api/next/health`.
-
-### DiscVault v26 estable
-
-- DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- `postgres:17-alpine`
-- `DISCVAULT_IMAGE`
-- `app/deploy/next/docker-compose.yml` · API `5000`
+Esta página se aplica solo a **Instalación: Docker Compose** (Docker). Sus límites de canal y datos son: DiscVault · `ghcr.io/helmerznl/discvault:beta`; `release/v26-beta`; `discvault_next_deploy`; `6180` → API `5000`. Puntos de control de esta página: `release/v26-beta` · `app/deploy/next/docker-compose.yml` · `app/deploy/next/.env.example` · `DISCVAULT_NEXT_IMAGE` · `ghcr.io/helmerznl/discvault:beta` · `6180:5000` · `LEGACY_AUTH_ENABLED=true`.
 
 ### DiscVault v26 beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- `postgres:17-alpine`
-- `DISCVAULT_IMAGE`
-- `app/deploy/next/docker-compose.yml` · API `5000`
+- `release/v26-beta`
+- `discvault_next_deploy`
+- `6180` → API `5000`
 
 ## Requisitos previos
 
@@ -44,196 +37,143 @@ Esta página se aplica solo a **Instalación: Docker Compose** (Docker). Sus lí
 
 ## Procedimiento
 
-1. **Crea:** `/opt/discvault/compose.yaml`
-2. **Elige:** `DISCVAULT_IMAGE` · `:latest` `:beta`
-3. **Crea:** `/opt/discvault/.env` · permisos de archivo solo para el propietario (0600)
-4. **Ejecuta:** `docker compose config --quiet` · `GET /api/next/health`
+1. **Instala:** `docker-compose.yml` · `.env.example` · `release/v26-beta`
+2. **Crea:** `/opt/discvault-next/.env` · permisos de archivo solo para el propietario (0600)
+3. **Elige:** con un FQDN válido mantén `RP_ID` y `RP_ORIGINS` alineados y usa HTTPS de confianza · para una IP privada o de bucle directa sin FQDN deja vacíos `RP_ID` y `RP_ORIGINS`
+4. **Verifica:** `DISCVAULT_NEXT_IMAGE=ghcr.io/helmerznl/discvault:beta` · `:dev`
+5. **Ejecuta:** `docker compose -p discvault_next_deploy config --quiet`
+6. **Prueba:** `GET http://localhost:6180/api/next/health`
 
 ### Comandos y ajustes
-
-#### DiscVault v26 estable
-
-```bash
-export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
-```
 
 #### DiscVault v26 beta
 
 ```bash
-export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
-```
-
-#### Ambos canales
-
-```yaml
-services:
-  postgres:
-    image: postgres:17-alpine
-    restart: unless-stopped
-    environment:
-      POSTGRES_DB: "${POSTGRES_DB:?set POSTGRES_DB}"
-      POSTGRES_USER: "${POSTGRES_USER:?set POSTGRES_USER}"
-      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}"
-      TZ: "${TZ:-Europe/Amsterdam}"
-    volumes:
-      - "${DISCVAULT_POSTGRES_DATA:?set DISCVAULT_POSTGRES_DATA}:/var/lib/postgresql/data"
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
-
-  next-api:
-    image: "${DISCVAULT_IMAGE:?set DISCVAULT_IMAGE}"
-    restart: unless-stopped
-    working_dir: /opt/discvault/backend
-    command:
-      - sh
-      - -c
-      - >-
-        python next_database.py migrate &&
-        exec gunicorn --bind 0.0.0.0:5000
-        --workers ${DISCVAULT_API_WORKERS:-2}
-        --timeout ${DISCVAULT_API_TIMEOUT:-180}
-        next_app:app
-    environment:
-      DATABASE_URL: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}"
-      TZ: "${TZ:-Europe/Amsterdam}"
-      DISCVAULT_DATA_DIR: /data
-      JWT_SECRET: "${JWT_SECRET:?set JWT_SECRET}"
-      RP_ID: "${RP_ID:?set RP_ID}"
-      RP_NAME: "${RP_NAME:-DiscVault}"
-      RP_ORIGINS: "${RP_ORIGINS:?set RP_ORIGINS}"
-      DISCVAULT_PLUGIN_INSTALL_DIR: /data/plugins
-    volumes:
-      - "${DISCVAULT_DATA_DIR:?set DISCVAULT_DATA_DIR}:/data"
-    ports:
-      - "${DISCVAULT_API_PORT:-6080}:5000"
-    depends_on:
-      postgres:
-        condition: service_healthy
-    healthcheck:
-      test:
-        - CMD
-        - python
-        - -c
-        - "import urllib.request; urllib.request.urlopen('http://localhost:5000/api/next/health')"
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 20s
-
-  next-worker:
-    image: "${DISCVAULT_IMAGE:?set DISCVAULT_IMAGE}"
-    restart: unless-stopped
-    working_dir: /opt/discvault/backend
-    command: ["python", "next_worker.py", "work"]
-    environment:
-      DATABASE_URL: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}"
-      TZ: "${TZ:-Europe/Amsterdam}"
-      DISCVAULT_DATA_DIR: /data
-      DISCVAULT_WORKER_ID: "${DISCVAULT_WORKER_ID:-worker-1}"
-      DISCVAULT_WORKER_POLL_INTERVAL: "${DISCVAULT_WORKER_POLL_INTERVAL:-2}"
-      DISCVAULT_PLUGIN_INSTALL_DIR: /data/plugins
-    volumes:
-      - "${DISCVAULT_DATA_DIR:?set DISCVAULT_DATA_DIR}:/data"
-    depends_on:
-      next-api:
-        condition: service_healthy
-
-  next-mcp:
-    image: "${DISCVAULT_IMAGE:?set DISCVAULT_IMAGE}"
-    restart: unless-stopped
-    working_dir: /opt/discvault/mcp-server
-    command: ["python", "server.py", "--http", "--host", "0.0.0.0", "--port", "6090"]
-    environment:
-      DISCVAULT_API: http://next-api:5000
-      TZ: "${TZ:-Europe/Amsterdam}"
-    ports:
-      - "${DISCVAULT_MCP_PORT:-6090}:6090"
-    depends_on:
-      next-api:
-        condition: service_healthy
-    healthcheck:
-      test:
-        - CMD
-        - python
-        - -c
-        - "import urllib.request; urllib.request.urlopen('http://localhost:6090/health')"
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 10s
-
-networks:
-  default:
-    name: "${DISCVAULT_NETWORK_NAME:-discvault}"
-```
-
-```bash
 set -euo pipefail
-test -n "$DISCVAULT_IMAGE"
-case "$DISCVAULT_IMAGE" in
-  ghcr.io/helmerznl/discvault:latest|ghcr.io/helmerznl/discvault:beta) ;;
-  *) printf '%s\n' "$DISCVAULT_IMAGE" >&2; exit 64 ;;
-esac
-install -d -m 0700 /opt/discvault
-install -d -m 0750 /srv/discvault
-install -d -o 70 -g 70 -m 0700 /srv/discvault-postgres
-cd /opt/discvault
-test -f compose.yaml
+install -d -m 0700 /opt/discvault-next
+cd /opt/discvault-next
+curl --fail --location --proto '=https' --tlsv1.2 \
+  --output docker-compose.yml \
+  https://raw.githubusercontent.com/helmerzNL/DiscVault/release/v26-beta/app/deploy/next/docker-compose.yml
+curl --fail --location --proto '=https' --tlsv1.2 \
+  --output .env.example \
+  https://raw.githubusercontent.com/helmerzNL/DiscVault/release/v26-beta/app/deploy/next/.env.example
+
 umask 077
-ENV_FILE=/opt/discvault/.env
+ENV_FILE=/opt/discvault-next/.env
 test ! -e "$ENV_FILE"
 ENV_TMP="$(mktemp "$ENV_FILE.tmp.XXXXXX")"
 trap 'rm -f "$ENV_TMP"' EXIT
 POSTGRES_PASSWORD="$(openssl rand -hex 32)"
-JWT_SECRET="$(openssl rand -hex 32)"
-printf '%s\n' \
-  "DISCVAULT_IMAGE=$DISCVAULT_IMAGE" \
-  'DISCVAULT_DATA_DIR=/srv/discvault' \
-  'DISCVAULT_POSTGRES_DATA=/srv/discvault-postgres' \
-  'DISCVAULT_API_PORT=6080' \
-  'DISCVAULT_MCP_PORT=6090' \
-  'DISCVAULT_NETWORK_NAME=discvault' \
-  'DISCVAULT_API_WORKERS=2' \
-  'DISCVAULT_API_TIMEOUT=180' \
-  'DISCVAULT_WORKER_ID=worker-1' \
-  'DISCVAULT_WORKER_POLL_INTERVAL=2' \
-  'POSTGRES_DB=discvault' \
-  'POSTGRES_USER=discvault' \
-  "POSTGRES_PASSWORD=$POSTGRES_PASSWORD" \
-  "JWT_SECRET=$JWT_SECRET" \
-  'TZ=Europe/Amsterdam' \
-  'RP_ID=localhost' \
-  'RP_NAME=DiscVault' \
-  'RP_ORIGINS=http://localhost:6080' > "$ENV_TMP"
+JWT_SECRET="$(openssl rand -base64 48)"
+awk \
+  -v image='ghcr.io/helmerznl/discvault:beta' \
+  -v postgres_password="$POSTGRES_PASSWORD" \
+  -v jwt_secret="$JWT_SECRET" \
+  -v data_dir='/mnt/user/appdata/discvault' \
+  -v postgres_dir='/mnt/user/appdata/discvault-next/postgres' '
+  /^DISCVAULT_NEXT_IMAGE=/ { print "DISCVAULT_NEXT_IMAGE=" image; next }
+  /^POSTGRES_PASSWORD=/ { print "POSTGRES_PASSWORD=" postgres_password; next }
+  /^JWT_SECRET=/ { print "JWT_SECRET=" jwt_secret; next }
+  /^DISCVAULT_DATA_DIR=/ { print "DISCVAULT_DATA_DIR=" data_dir; next }
+  /^DISCVAULT_NEXT_POSTGRES_DATA=/ {
+    print "DISCVAULT_NEXT_POSTGRES_DATA=" postgres_dir
+    next
+  }
+  /^LEGACY_AUTH_ENABLED=/ { print "LEGACY_AUTH_ENABLED=true"; next }
+  { print }
+' .env.example > "$ENV_TMP"
 chmod 0600 "$ENV_TMP"
 ln "$ENV_TMP" "$ENV_FILE"
 rm -f "$ENV_TMP"
 trap - EXIT
-docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml config --quiet
-docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml pull
-docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml up -d
-docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml ps
-curl --fail http://localhost:6080/api/next/health
+```
+
+```bash
+set -euo pipefail
+cd /opt/discvault-next
+FQDN=discvault.example.com
+ENV_FILE=/opt/discvault-next/.env
+ENV_TMP="$(mktemp "$ENV_FILE.tmp.XXXXXX")"
+trap 'rm -f "$ENV_TMP"' EXIT
+awk -v rp_id="$FQDN" -v rp_origin="https://$FQDN" '
+  /^RP_ID=/ { print "RP_ID=" rp_id; next }
+  /^RP_NAME=/ { print "RP_NAME=DiscVault"; next }
+  /^RP_ORIGINS=/ { print "RP_ORIGINS=" rp_origin; next }
+  /^LEGACY_AUTH_ENABLED=/ { print "LEGACY_AUTH_ENABLED=true"; next }
+  { print }
+' "$ENV_FILE" > "$ENV_TMP"
+chmod 0600 "$ENV_TMP"
+mv "$ENV_TMP" "$ENV_FILE"
+trap - EXIT
+```
+
+```bash
+set -euo pipefail
+cd /opt/discvault-next
+ENV_FILE=/opt/discvault-next/.env
+ENV_TMP="$(mktemp "$ENV_FILE.tmp.XXXXXX")"
+trap 'rm -f "$ENV_TMP"' EXIT
+awk '
+  /^RP_ID=/ { print "RP_ID="; next }
+  /^RP_NAME=/ { print "RP_NAME=DiscVault"; next }
+  /^RP_ORIGINS=/ { print "RP_ORIGINS="; next }
+  /^LEGACY_AUTH_ENABLED=/ { print "LEGACY_AUTH_ENABLED=true"; next }
+  { print }
+' "$ENV_FILE" > "$ENV_TMP"
+chmod 0600 "$ENV_TMP"
+mv "$ENV_TMP" "$ENV_FILE"
+trap - EXIT
+```
+
+```bash
+set -euo pipefail
+cd /opt/discvault-next
+ENV_FILE=/opt/discvault-next/.env
+test "$(stat -c '%a' "$ENV_FILE")" = 600
+read_env() { sed -n "s/^$1=//p" "$ENV_FILE"; }
+
+test "$(read_env DISCVAULT_NEXT_IMAGE)" = 'ghcr.io/helmerznl/discvault:beta'
+! grep -q ':dev' "$ENV_FILE"
+test "$(read_env LEGACY_AUTH_ENABLED)" = true
+POSTGRES_PASSWORD_VALUE="$(read_env POSTGRES_PASSWORD)"
+JWT_SECRET_VALUE="$(read_env JWT_SECRET)"
+test "${#POSTGRES_PASSWORD_VALUE}" -ge 32
+test "$POSTGRES_PASSWORD_VALUE" != 'change-me-to-a-long-random-password'
+test "${#JWT_SECRET_VALUE}" -ge 48
+grep -qx 'DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault' "$ENV_FILE"
+grep -qx 'DISCVAULT_NEXT_POSTGRES_DATA=/mnt/user/appdata/discvault-next/postgres' "$ENV_FILE"
+
+RP_ID_VALUE="$(read_env RP_ID)"
+RP_ORIGINS_VALUE="$(read_env RP_ORIGINS)"
+if [ -z "$RP_ID_VALUE" ]; then
+  test -z "$RP_ORIGINS_VALUE"
+else
+  test "$RP_ORIGINS_VALUE" = "https://$RP_ID_VALUE"
+fi
+
+docker compose -p discvault_next_deploy config --quiet
+docker compose -p discvault_next_deploy pull
+docker compose -p discvault_next_deploy up -d
+docker compose -p discvault_next_deploy ps
+curl --fail http://localhost:6180/api/next/health
 ```
 
 ## Resultado esperado
 
-Acepta el resultado de **Instalación: Docker Compose** solo cuando se cumplan todos estos resultados: `postgres` · `next-api` · `next-worker` · `next-mcp`; `6080` → API `5000`; HTTP `2xx` · `/api/next/health`. Puntos de control de esta página: `DISCVAULT_IMAGE` · `postgres:17-alpine` · `6080:5000` · `/api/next/health`.
+Acepta el resultado de **Instalación: Docker Compose** solo cuando se cumplan todos estos resultados: `postgres` · `next-api` · `next-worker` · `next-mcp`; `6180` → API `5000`; HTTP `2xx` · `/api/next/health`. Puntos de control de esta página: `release/v26-beta` · `app/deploy/next/docker-compose.yml` · `app/deploy/next/.env.example` · `DISCVAULT_NEXT_IMAGE` · `ghcr.io/helmerznl/discvault:beta` · `6180:5000` · `LEGACY_AUTH_ENABLED=true`.
 
 - `postgres` · `next-api` · `next-worker` · `next-mcp`
-- `6080` → API `5000`
+- `6180` → API `5000`
 - HTTP `2xx` · `/api/next/health`
 
 ## Seguridad y reversión
 
 :::caution
-El límite de recuperación segura de **Instalación: Docker Compose** exige estas acciones antes de iniciar o continuar: juego de copias coincidente; notas de versión y digest inmutable registrado; PostgreSQL y `/data` son almacenes separados y requieren un juego de copias coincidente. Puntos de control de esta página: `DISCVAULT_IMAGE` · `postgres:17-alpine` · `6080:5000` · `/api/next/health`.
+El límite de recuperación segura de **Instalación: Docker Compose** exige estas acciones antes de iniciar o continuar: el `.env.example` descargado aún usa `:dev`; el `.env` de ejecución debe cambiarse a `:beta` antes de descargar o iniciar; mantén sin cambios los secretos JWT y PostgreSQL en ediciones normales · `JWT_SECRET` · `POSTGRES_PASSWORD`; PostgreSQL y `/data` son almacenes separados y requieren un juego de copias coincidente. Puntos de control de esta página: `release/v26-beta` · `app/deploy/next/docker-compose.yml` · `app/deploy/next/.env.example` · `DISCVAULT_NEXT_IMAGE` · `ghcr.io/helmerznl/discvault:beta` · `6180:5000` · `LEGACY_AUTH_ENABLED=true`.
 
-- juego de copias coincidente
-- notas de versión y digest inmutable registrado
+- el `.env.example` descargado aún usa `:dev`; el `.env` de ejecución debe cambiarse a `:beta` antes de descargar o iniciar
+- mantén sin cambios los secretos JWT y PostgreSQL en ediciones normales · `JWT_SECRET` · `POSTGRES_PASSWORD`
 - PostgreSQL y `/data` son almacenes separados y requieren un juego de copias coincidente
 :::
 
@@ -243,6 +183,12 @@ El límite de recuperación segura de **Instalación: Docker Compose** exige est
 
 ## Fuente y estado
 
-- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Fuente y estado: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [Moving beta source: `docker-compose.yml`](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/docker-compose.yml)
+- [Raw beta download: `docker-compose.yml`](https://raw.githubusercontent.com/helmerzNL/DiscVault/release/v26-beta/app/deploy/next/docker-compose.yml)
+- [Pinned verification: `docker-compose.yml`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/deploy/next/docker-compose.yml)
+- [Moving beta source: `.env.example`](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/.env.example)
+- [Raw beta download: `.env.example`](https://raw.githubusercontent.com/helmerzNL/DiscVault/release/v26-beta/app/deploy/next/.env.example)
+- [Pinned verification: `.env.example`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/deploy/next/.env.example)
+- Fuente y estado: `2026-07-20`
+- DiscVault Docs: `0.1.6`

@@ -1,36 +1,32 @@
 ---
 title: 'Configuração: Variáveis de ambiente'
-description: 'Instruções específicas para Configuração: Variáveis de ambiente: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.'
+description: 'Instruções específicas para Configuração: Variáveis de ambiente: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.'
 pageId: 'configure-environment'
 products: ['server']
 platforms: ['docker', 'unraid']
-channels: ['stable', 'beta']
+channels: ['beta']
 minVersion: 'DiscVault v26'
 sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+lastVerified: '2026-07-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-20" />
 
 ## Objetivo e resultado
 
-Conclua o procedimento específico da página para **Configuração: Variáveis de ambiente**. Este procedimento utiliza `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+Conclua o procedimento específico da página para **Configuração: Variáveis de ambiente**. Este procedimento utiliza `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.
 
 ## Aplicável a
 
-Esta página aplica-se apenas a **Configuração: Variáveis de ambiente** (Docker · Unraid). Os limites de canal e dados são: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `.env`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `.env`. Pontos de controlo desta página: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
-
-### DiscVault v26 estável
-
-- DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- `.env`
+Esta página aplica-se apenas a **Configuração: Variáveis de ambiente** (Docker · Unraid). Os limites de canal e dados são: DiscVault · `ghcr.io/helmerznl/discvault:beta`; `.env.example` `release/v26-beta`; `0600` · `JWT_SECRET` `POSTGRES_PASSWORD`. Pontos de controlo desta página: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.
 
 ### DiscVault v26 beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- `.env`
+- `.env.example` `release/v26-beta`
+- `0600` · `JWT_SECRET` `POSTGRES_PASSWORD`
 
 ## Pré-requisitos
 
@@ -40,79 +36,130 @@ Esta página aplica-se apenas a **Configuração: Variáveis de ambiente** (Dock
 
 ## Procedimento
 
-1. **Criar:** `/opt/discvault/.env` · permissões de ficheiro apenas para o proprietário (0600)
-2. **Configurar:** `DISCVAULT_IMAGE` · `RP_ORIGINS`
-3. **Verificar:** `chmod 0600` · `docker compose config --quiet`
-4. **Iniciar:** mantenha os segredos JWT e PostgreSQL em alterações normais
+1. **Criar:** `/opt/discvault-next/.env` · permissões de ficheiro apenas para o proprietário (0600)
+2. **Configurar:** `DISCVAULT_NEXT_IMAGE` · `RP_ORIGINS`
+3. **Escolher:** com um FQDN válido mantenha `RP_ID` e `RP_ORIGINS` alinhados e use HTTPS fiável · para um IP privado ou loopback direto sem FQDN deixe `RP_ID` e `RP_ORIGINS` vazios
+4. **Verificar:** `chmod 0600` · `docker compose -p discvault_next_deploy config --quiet`
+5. **Iniciar:** mantenha os segredos JWT e PostgreSQL em alterações normais
 
 ### Comandos e definições
-
-#### DiscVault v26 estável
-
-```bash
-export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
-```
 
 #### DiscVault v26 beta
 
 ```bash
-export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
-```
-
-#### Ambos os canais
-
-```bash
 set -euo pipefail
-test -n "$DISCVAULT_IMAGE"
-case "$DISCVAULT_IMAGE" in
-  ghcr.io/helmerznl/discvault:latest|ghcr.io/helmerznl/discvault:beta) ;;
-  *) printf '%s\n' "$DISCVAULT_IMAGE" >&2; exit 64 ;;
-esac
-install -d -m 0700 /opt/discvault
-install -d -m 0750 /srv/discvault
-install -d -o 70 -g 70 -m 0700 /srv/discvault-postgres
-cd /opt/discvault
-test -f compose.yaml
+install -d -m 0700 /opt/discvault-next
+cd /opt/discvault-next
+curl --fail --location --proto '=https' --tlsv1.2 \
+  --output docker-compose.yml \
+  https://raw.githubusercontent.com/helmerzNL/DiscVault/release/v26-beta/app/deploy/next/docker-compose.yml
+curl --fail --location --proto '=https' --tlsv1.2 \
+  --output .env.example \
+  https://raw.githubusercontent.com/helmerzNL/DiscVault/release/v26-beta/app/deploy/next/.env.example
+
 umask 077
-ENV_FILE=/opt/discvault/.env
+ENV_FILE=/opt/discvault-next/.env
 test ! -e "$ENV_FILE"
 ENV_TMP="$(mktemp "$ENV_FILE.tmp.XXXXXX")"
 trap 'rm -f "$ENV_TMP"' EXIT
 POSTGRES_PASSWORD="$(openssl rand -hex 32)"
-JWT_SECRET="$(openssl rand -hex 32)"
-printf '%s\n' \
-  "DISCVAULT_IMAGE=$DISCVAULT_IMAGE" \
-  'DISCVAULT_DATA_DIR=/srv/discvault' \
-  'DISCVAULT_POSTGRES_DATA=/srv/discvault-postgres' \
-  'DISCVAULT_API_PORT=6080' \
-  'DISCVAULT_MCP_PORT=6090' \
-  'DISCVAULT_NETWORK_NAME=discvault' \
-  'DISCVAULT_API_WORKERS=2' \
-  'DISCVAULT_API_TIMEOUT=180' \
-  'DISCVAULT_WORKER_ID=worker-1' \
-  'DISCVAULT_WORKER_POLL_INTERVAL=2' \
-  'POSTGRES_DB=discvault' \
-  'POSTGRES_USER=discvault' \
-  "POSTGRES_PASSWORD=$POSTGRES_PASSWORD" \
-  "JWT_SECRET=$JWT_SECRET" \
-  'TZ=Europe/Amsterdam' \
-  'RP_ID=localhost' \
-  'RP_NAME=DiscVault' \
-  'RP_ORIGINS=http://localhost:6080' > "$ENV_TMP"
+JWT_SECRET="$(openssl rand -base64 48)"
+awk \
+  -v image='ghcr.io/helmerznl/discvault:beta' \
+  -v postgres_password="$POSTGRES_PASSWORD" \
+  -v jwt_secret="$JWT_SECRET" \
+  -v data_dir='/mnt/user/appdata/discvault' \
+  -v postgres_dir='/mnt/user/appdata/discvault-next/postgres' '
+  /^DISCVAULT_NEXT_IMAGE=/ { print "DISCVAULT_NEXT_IMAGE=" image; next }
+  /^POSTGRES_PASSWORD=/ { print "POSTGRES_PASSWORD=" postgres_password; next }
+  /^JWT_SECRET=/ { print "JWT_SECRET=" jwt_secret; next }
+  /^DISCVAULT_DATA_DIR=/ { print "DISCVAULT_DATA_DIR=" data_dir; next }
+  /^DISCVAULT_NEXT_POSTGRES_DATA=/ {
+    print "DISCVAULT_NEXT_POSTGRES_DATA=" postgres_dir
+    next
+  }
+  /^LEGACY_AUTH_ENABLED=/ { print "LEGACY_AUTH_ENABLED=true"; next }
+  { print }
+' .env.example > "$ENV_TMP"
 chmod 0600 "$ENV_TMP"
 ln "$ENV_TMP" "$ENV_FILE"
 rm -f "$ENV_TMP"
 trap - EXIT
-docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml config --quiet
-docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml pull
-docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml up -d
-docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml ps
-curl --fail http://localhost:6080/api/next/health
+```
+
+```bash
+set -euo pipefail
+cd /opt/discvault-next
+FQDN=discvault.example.com
+ENV_FILE=/opt/discvault-next/.env
+ENV_TMP="$(mktemp "$ENV_FILE.tmp.XXXXXX")"
+trap 'rm -f "$ENV_TMP"' EXIT
+awk -v rp_id="$FQDN" -v rp_origin="https://$FQDN" '
+  /^RP_ID=/ { print "RP_ID=" rp_id; next }
+  /^RP_NAME=/ { print "RP_NAME=DiscVault"; next }
+  /^RP_ORIGINS=/ { print "RP_ORIGINS=" rp_origin; next }
+  /^LEGACY_AUTH_ENABLED=/ { print "LEGACY_AUTH_ENABLED=true"; next }
+  { print }
+' "$ENV_FILE" > "$ENV_TMP"
+chmod 0600 "$ENV_TMP"
+mv "$ENV_TMP" "$ENV_FILE"
+trap - EXIT
+```
+
+```bash
+set -euo pipefail
+cd /opt/discvault-next
+ENV_FILE=/opt/discvault-next/.env
+ENV_TMP="$(mktemp "$ENV_FILE.tmp.XXXXXX")"
+trap 'rm -f "$ENV_TMP"' EXIT
+awk '
+  /^RP_ID=/ { print "RP_ID="; next }
+  /^RP_NAME=/ { print "RP_NAME=DiscVault"; next }
+  /^RP_ORIGINS=/ { print "RP_ORIGINS="; next }
+  /^LEGACY_AUTH_ENABLED=/ { print "LEGACY_AUTH_ENABLED=true"; next }
+  { print }
+' "$ENV_FILE" > "$ENV_TMP"
+chmod 0600 "$ENV_TMP"
+mv "$ENV_TMP" "$ENV_FILE"
+trap - EXIT
+```
+
+```bash
+set -euo pipefail
+cd /opt/discvault-next
+ENV_FILE=/opt/discvault-next/.env
+test "$(stat -c '%a' "$ENV_FILE")" = 600
+read_env() { sed -n "s/^$1=//p" "$ENV_FILE"; }
+
+test "$(read_env DISCVAULT_NEXT_IMAGE)" = 'ghcr.io/helmerznl/discvault:beta'
+! grep -q ':dev' "$ENV_FILE"
+test "$(read_env LEGACY_AUTH_ENABLED)" = true
+POSTGRES_PASSWORD_VALUE="$(read_env POSTGRES_PASSWORD)"
+JWT_SECRET_VALUE="$(read_env JWT_SECRET)"
+test "${#POSTGRES_PASSWORD_VALUE}" -ge 32
+test "$POSTGRES_PASSWORD_VALUE" != 'change-me-to-a-long-random-password'
+test "${#JWT_SECRET_VALUE}" -ge 48
+grep -qx 'DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault' "$ENV_FILE"
+grep -qx 'DISCVAULT_NEXT_POSTGRES_DATA=/mnt/user/appdata/discvault-next/postgres' "$ENV_FILE"
+
+RP_ID_VALUE="$(read_env RP_ID)"
+RP_ORIGINS_VALUE="$(read_env RP_ORIGINS)"
+if [ -z "$RP_ID_VALUE" ]; then
+  test -z "$RP_ORIGINS_VALUE"
+else
+  test "$RP_ORIGINS_VALUE" = "https://$RP_ID_VALUE"
+fi
+
+docker compose -p discvault_next_deploy config --quiet
+docker compose -p discvault_next_deploy pull
+docker compose -p discvault_next_deploy up -d
+docker compose -p discvault_next_deploy ps
+curl --fail http://localhost:6180/api/next/health
 ```
 
 ## Resultado esperado
 
-Aceite o resultado de **Configuração: Variáveis de ambiente** apenas quando todos os resultados abaixo forem confirmados: permissões de ficheiro apenas para o proprietário (0600); o ficheiro privado tem modo 600, a validação do Compose é concluída e o canal escolhido fica saudável. Pontos de controlo desta página: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+Aceite o resultado de **Configuração: Variáveis de ambiente** apenas quando todos os resultados abaixo forem confirmados: permissões de ficheiro apenas para o proprietário (0600); o ficheiro privado tem modo 600, a validação do Compose é concluída e o canal escolhido fica saudável. Pontos de controlo desta página: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.
 
 - permissões de ficheiro apenas para o proprietário (0600)
 - o ficheiro privado tem modo 600, a validação do Compose é concluída e o canal escolhido fica saudável
@@ -120,10 +167,11 @@ Aceite o resultado de **Configuração: Variáveis de ambiente** apenas quando t
 ## Segurança e reversão
 
 :::caution
-O limite de recuperação segura de **Configuração: Variáveis de ambiente** exige estas ações antes de iniciar ou continuar: o ficheiro de ambiente do repositório de documentação nunca é um ficheiro de execução do DiscVault · `.env.example`; mantenha os segredos JWT e PostgreSQL em alterações normais · `JWT_SECRET` · `POSTGRES_PASSWORD`; em caso de falha, mantenha os serviços parados, restaure e valide o ficheiro de ambiente privado anterior e recrie a mesma imagem sem rodar segredos. Pontos de controlo desta página: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+O limite de recuperação segura de **Configuração: Variáveis de ambiente** exige estas ações antes de iniciar ou continuar: o ficheiro de ambiente do repositório de documentação nunca é um ficheiro de execução do DiscVault · `.env.example`; mantenha os segredos JWT e PostgreSQL em alterações normais · `JWT_SECRET` · `POSTGRES_PASSWORD`; o `.env.example` transferido ainda usa `:dev`; o `.env` de execução tem de mudar para `:beta` antes do pull ou arranque; em caso de falha, mantenha os serviços parados, restaure e valide o ficheiro de ambiente privado anterior e recrie a mesma imagem sem rodar segredos. Pontos de controlo desta página: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.
 
 - o ficheiro de ambiente do repositório de documentação nunca é um ficheiro de execução do DiscVault · `.env.example`
 - mantenha os segredos JWT e PostgreSQL em alterações normais · `JWT_SECRET` · `POSTGRES_PASSWORD`
+- o `.env.example` transferido ainda usa `:dev`; o `.env` de execução tem de mudar para `:beta` antes do pull ou arranque
 - em caso de falha, mantenha os serviços parados, restaure e valide o ficheiro de ambiente privado anterior e recrie a mesma imagem sem rodar segredos
 :::
 
@@ -133,6 +181,12 @@ O limite de recuperação segura de **Configuração: Variáveis de ambiente** e
 
 ## Fonte e estado
 
-- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Fonte e estado: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [Moving beta source: `docker-compose.yml`](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/docker-compose.yml)
+- [Raw beta download: `docker-compose.yml`](https://raw.githubusercontent.com/helmerzNL/DiscVault/release/v26-beta/app/deploy/next/docker-compose.yml)
+- [Pinned verification: `docker-compose.yml`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/deploy/next/docker-compose.yml)
+- [Moving beta source: `.env.example`](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/.env.example)
+- [Raw beta download: `.env.example`](https://raw.githubusercontent.com/helmerzNL/DiscVault/release/v26-beta/app/deploy/next/.env.example)
+- [Pinned verification: `.env.example`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/deploy/next/.env.example)
+- Fonte e estado: `2026-07-20`
+- DiscVault Docs: `0.1.6`

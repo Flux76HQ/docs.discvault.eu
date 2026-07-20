@@ -1,6 +1,6 @@
 ---
 title: 'Konfigurálás: Áttekintés'
-description: 'Feladatspecifikus útmutató: Konfigurálás: Áttekintés: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.'
+description: 'Feladatspecifikus útmutató: Konfigurálás: Áttekintés: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.'
 pageId: 'configure-index'
 products: ['server']
 platforms: ['docker', 'web']
@@ -16,11 +16,11 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## Cél és eredmény
 
-Hajtsa végre az oldalhoz tartozó munkafolyamatot: **Konfigurálás: Áttekintés**. Ez az eljárás ezeket használja: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Hajtsa végre az oldalhoz tartozó munkafolyamatot: **Konfigurálás: Áttekintés**. Ez az eljárás ezeket használja: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 ## Érvényesség
 
-Ez az oldal kizárólag erre vonatkozik: **Konfigurálás: Áttekintés** (Docker · web). A csatorna- és adathatárok: DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. Oldalspecifikus ellenőrzési pontok: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Ez az oldal kizárólag erre vonatkozik: **Konfigurálás: Áttekintés** (Docker · web). A csatorna- és adathatárok: DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. Oldalspecifikus ellenőrzési pontok: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 ### DiscVault v26 – stabil
 
@@ -41,18 +41,20 @@ Ez az oldal kizárólag erre vonatkozik: **Konfigurálás: Áttekintés** (Docke
 
 1. **Válassza ki:** [Konfigurálás: Környezeti változók](/hu/configure/environment/)
 2. **Válassza ki:** [Konfigurálás: Hitelesítés és RBAC](/hu/configure/auth-rbac/) · RBAC
-3. **Válassza ki:** [Konfigurálás: Bővítmények és metaadatok](/hu/configure/plugins-metadata/)
-4. **Jegyezze fel:** `/configure/environment/`
+3. **Válassza ki:** [Telepítés: Legacy Authentication](/hu/install/legacy-authentication/)
+4. **Válassza ki:** [Konfigurálás: Bővítmények és metaadatok](/hu/configure/plugins-metadata/)
+5. **Jegyezze fel:** `/configure/environment/`
 
 ### Feladatútvonalak
 
-- [Konfigurálás: Környezeti változók](/hu/configure/environment/) — `/configure/environment/`
+- [Konfigurálás: Környezeti változók](/hu/configure/environment/) — DiscVault 26 `.env.example`
 - [Konfigurálás: Hitelesítés és RBAC](/hu/configure/auth-rbac/) — DiscVault 26 RBAC
+- [Telepítés: Legacy Authentication](/hu/install/legacy-authentication/) — DiscVault 26 TOTP
 - [Konfigurálás: Bővítmények és metaadatok](/hu/configure/plugins-metadata/) — DiscVault 26
 
 ## Várt eredmény
 
-Az eredmény csak ennél fogadható el: **Konfigurálás: Áttekintés** csak akkor, ha minden alábbi eredmény teljesül: kiválasztott kiadási csatorna; `/configure/auth-rbac/`. Oldalspecifikus ellenőrzési pontok: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Az eredmény csak ennél fogadható el: **Konfigurálás: Áttekintés** csak akkor, ha minden alábbi eredmény teljesül: kiválasztott kiadási csatorna; `/configure/auth-rbac/`. Oldalspecifikus ellenőrzési pontok: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 - kiválasztott kiadási csatorna
 - `/configure/auth-rbac/`
@@ -60,7 +62,7 @@ Az eredmény csak ennél fogadható el: **Konfigurálás: Áttekintés** csak ak
 ## Biztonság és visszaállítás
 
 :::caution
-A biztonságos helyreállítás határa ennél: **Konfigurálás: Áttekintés** ezeket a műveleteket igényli indítás vagy folytatás előtt: egyszerre egy alrendszert módosítson, őrizze meg az előző értéket és mentést, és a következő módosítás előtt állítsa vissza. Oldalspecifikus ellenőrzési pontok: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+A biztonságos helyreállítás határa ennél: **Konfigurálás: Áttekintés** ezeket a műveleteket igényli indítás vagy folytatás előtt: egyszerre egy alrendszert módosítson, őrizze meg az előző értéket és mentést, és a következő módosítás előtt állítsa vissza. Oldalspecifikus ellenőrzési pontok: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 - egyszerre egy alrendszert módosítson, őrizze meg az előző értéket és mentést, és a következő módosítás előtt állítsa vissza
 :::

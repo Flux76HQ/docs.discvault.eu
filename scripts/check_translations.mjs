@@ -160,7 +160,12 @@ for (const file of canonical) {
       errors.push(`Missing visible channel metadata: ${localizedFile}`);
     }
     if (source.includes("minVersion: 'DiscVault v26'") && file !== 'index.mdx') {
-      for (const channel of ['v26Stable', 'v26Beta']) {
+      const sourceChannels = source.match(/^channels:\s*\[([^\]]+)\]/m)?.[1] ?? '';
+      const expectedChannels = [
+        ...(sourceChannels.includes("'stable'") ? ['v26Stable'] : []),
+        ...(sourceChannels.includes("'beta'") ? ['v26Beta'] : []),
+      ];
+      for (const channel of expectedChannels) {
         if (!visible.includes(`### ${procedureLocale[locale][channel]}`)) {
           errors.push(`Missing localized ${channel} heading: ${localizedFile}`);
         }

@@ -7,12 +7,12 @@ platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
-lastVerified: '2026-07-15'
+lastVerified: '2026-07-20'
 ---
 
 import PageMeta from '../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
 
 ## Goal and result
 
@@ -20,18 +20,18 @@ Choose the DiscVault v26 topology for new installs, or keep an existing previous
 
 ## Applies to
 
-`ghcr.io/helmerznl/discvault:latest` is DiscVault v26 stable and `ghcr.io/helmerznl/discvault:beta` is DiscVault v26 beta. Both use PostgreSQL, API, worker, MCP, and persistent `/data`; only `DISCVAULT_IMAGE` differs. The frozen `ghcr.io/helmerznl/discvault:legacy` image is only for an existing previous-generation installation that is not ready to migrate. Keep that installation’s old volumes, environment variables, ports, and data path unchanged; never substitute `:legacy` into the v26 Compose topology. The `:dev` tag remains engineering-only.
+`ghcr.io/helmerznl/discvault:latest` is DiscVault v26 stable and `ghcr.io/helmerznl/discvault:beta` is DiscVault v26 beta. The official `app/deploy/next/docker-compose.yml` and `.env.example` procedure is beta-only and uses `DISCVAULT_NEXT_IMAGE`; the advanced Docker-run procedure remains available for both channels. The frozen `ghcr.io/helmerznl/discvault:legacy` image is only for an existing previous-generation installation that is not ready to migrate. Never substitute that deployment image into the v26 beta topology.
 
 ### DiscVault v26 stable
 
 - DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
-- same DiscVault 26 Compose topology
+- select the procedure whose channel metadata matches the running image
 - PostgreSQL `17` + persistent `/data`
 
 ### DiscVault v26 beta
 
 - DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
-- same DiscVault 26 Compose topology
+- select the procedure whose channel metadata matches the running image
 - PostgreSQL `17` + persistent `/data`
 
 ## Prerequisites
@@ -41,8 +41,8 @@ Choose the DiscVault v26 topology for new installs, or keep an existing previous
 
 ## Procedure
 
-1. **Choose:** [Install: Docker Compose](/install/docker-compose/) · recommended operational route
-2. **Choose:** [Install: Docker run](/install/docker-run/) · advanced complete equivalent
+1. **Choose:** [Install: Docker Compose](/install/docker-compose/) · official DiscVault 26 beta deployment files
+2. **Choose:** [Install: Docker run](/install/docker-run/) · advanced stable or beta equivalent
 3. **Choose:** [Install: Unraid](/install/unraid/) · Unraid Compose Manager
 4. **Choose:** new installations use DiscVault v26 `:latest` or `:beta`; only an existing previous-generation installation that is not ready to migrate should use the frozen `:legacy` image
 5. **Preserve:** keep the previous generation’s volumes, environment variables, ports, and data path unchanged; never substitute `:legacy` into the v26 PostgreSQL Compose topology
@@ -51,7 +51,7 @@ Choose the DiscVault v26 topology for new installs, or keep an existing previous
 
 ### Task routes
 
-- [Install: Docker Compose](/install/docker-compose/) — DiscVault 26 · Docker Compose · PostgreSQL + `/data` · `DISCVAULT_IMAGE`
+- [Install: Docker Compose](/install/docker-compose/) — DiscVault 26 beta · official `release/v26-beta` files · `DISCVAULT_NEXT_IMAGE`
 - [Install: Docker run](/install/docker-run/) — DiscVault 26 · Docker run · PostgreSQL + `/data` · `DATABASE_URL`
 - [Install: Persistent data and PostgreSQL](/install/storage-postgresql/) — DiscVault 26 · PostgreSQL + `/data`
 - [Install: Unraid](/install/unraid/) — DiscVault 26 · Unraid · PostgreSQL + `/data`
@@ -82,7 +82,7 @@ Back up an existing or legacy deployment before pulling or recreating it; a fres
 
 ## Source and status
 
-- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
-- Verified: `2026-07-15`
-- DiscVault Docs: `0.1.4`
+- Verified: `2026-07-20`
+- DiscVault Docs: `0.1.6`

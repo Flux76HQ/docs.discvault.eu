@@ -1,38 +1,37 @@
 ---
 title: 'Installazione: Primo avvio e controllo dello stato'
-description: 'Istruzioni specifiche per Installazione: Primo avvio e controllo dello stato: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.'
+description: 'Istruzioni specifiche per Installazione: Primo avvio e controllo dello stato: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · `6180:5000` · WebAuthn.'
 pageId: 'install-first-start-health'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
 sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+lastVerified: '2026-07-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-20" />
 
 ## Obiettivo e risultato
 
-Completa la procedura specifica della pagina per **Installazione: Primo avvio e controllo dello stato**. Questa procedura utilizza `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.
+Completa la procedura specifica della pagina per **Installazione: Primo avvio e controllo dello stato**. Questa procedura utilizza `/api/next/health` · `/api/next/auth/status` · `6080:5000` · `6180:5000` · WebAuthn.
 
 ## Si applica a
 
-Questa pagina si applica solo a **Installazione: Primo avvio e controllo dello stato** (Docker · web). I limiti di canale e dati sono: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/api/next/auth/status`; `6080` → API `5000`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/api/next/auth/status`; `6080` → API `5000`. Punti di controllo della pagina: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.
+Questa pagina si applica solo a **Installazione: Primo avvio e controllo dello stato** (Docker · web). I limiti di canale e dati sono: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `6080` → API `5000`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/api/next/auth/status`; `6180` → API `5000`. Punti di controllo della pagina: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · `6180:5000` · WebAuthn.
 
 ### DiscVault v26 stabile
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- `/api/next/auth/status`
 - `6080` → API `5000`
 
 ### DiscVault v26 beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `/api/next/auth/status`
-- `6080` → API `5000`
+- `6180` → API `5000`
 
 ## Prerequisiti
 
@@ -43,12 +42,13 @@ Questa pagina si applica solo a **Installazione: Primo avvio e controllo dello s
 
 1. **Controlla:** `postgres`
 2. **Verifica:** `GET /api/next/health` · HTTP `2xx`
-3. **Apri:** `6080:5000`
-4. **Verifica:** `GET /api/next/auth/status` · WebAuthn
+3. **Scegli:** [Installazione: Legacy Authentication](/it/install/legacy-authentication/)
+4. **Apri:** `6180:5000`
+5. **Verifica:** `GET /api/next/auth/status` · WebAuthn TOTP
 
 ### Comandi e impostazioni
 
-#### Entrambi i canali
+#### DiscVault v26 stabile
 
 ```bash
 docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml ps
@@ -57,16 +57,25 @@ curl --fail http://localhost:6080/api/next/health
 curl --fail http://localhost:6080/api/next/auth/status
 ```
 
+#### DiscVault v26 beta
+
+```bash
+docker compose -p discvault_next_deploy -f /opt/discvault-next/docker-compose.yml ps
+docker compose -p discvault_next_deploy -f /opt/discvault-next/docker-compose.yml logs --tail=100 next-api next-worker next-mcp postgres
+curl --fail http://localhost:6180/api/next/health
+curl --fail http://localhost:6180/api/next/auth/status
+```
+
 ## Risultato previsto
 
-Accetta il risultato per **Installazione: Primo avvio e controllo dello stato** solo quando tutti i risultati seguenti sono veri: lo stato è integro, l’origine configurata si apre e il primo account è proprietario. Punti di controllo della pagina: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.
+Accetta il risultato per **Installazione: Primo avvio e controllo dello stato** solo quando tutti i risultati seguenti sono veri: lo stato è integro, l’origine configurata si apre e il primo account è proprietario. Punti di controllo della pagina: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · `6180:5000` · WebAuthn.
 
 - lo stato è integro, l’origine configurata si apre e il primo account è proprietario
 
 ## Sicurezza e ripristino
 
 :::caution
-Il limite di ripristino sicuro per **Installazione: Primo avvio e controllo dello stato** richiede queste azioni prima di avviare o continuare: log con data e dati privati oscurati; set di backup corrispondente. Punti di controllo della pagina: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.
+Il limite di ripristino sicuro per **Installazione: Primo avvio e controllo dello stato** richiede queste azioni prima di avviare o continuare: log con data e dati privati oscurati; set di backup corrispondente. Punti di controllo della pagina: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · `6180:5000` · WebAuthn.
 
 - log con data e dati privati oscurati
 - set di backup corrispondente
@@ -78,6 +87,11 @@ Il limite di ripristino sicuro per **Installazione: Primo avvio e controllo dell
 
 ## Fonte e stato
 
-- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Fonte e stato: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
+- [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
+- [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
+- [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
+- Fonte e stato: `2026-07-20`
+- DiscVault Docs: `0.1.6`

@@ -1,38 +1,37 @@
 ---
 title: 'Instalace: První spuštění a kontrola stavu'
-description: 'Pokyny pro konkrétní úlohu: Instalace: První spuštění a kontrola stavu: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.'
+description: 'Pokyny pro konkrétní úlohu: Instalace: První spuštění a kontrola stavu: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · `6180:5000` · WebAuthn.'
 pageId: 'install-first-start-health'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
 sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+lastVerified: '2026-07-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-20" />
 
 ## Cíl a výsledek
 
-Dokončete postup určený pro **Instalace: První spuštění a kontrola stavu**. Tento postup pracuje s `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.
+Dokončete postup určený pro **Instalace: První spuštění a kontrola stavu**. Tento postup pracuje s `/api/next/health` · `/api/next/auth/status` · `6080:5000` · `6180:5000` · WebAuthn.
 
 ## Platí pro
 
-Tato stránka platí pouze pro **Instalace: První spuštění a kontrola stavu** (Docker · web). Hranice kanálu a dat jsou: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/api/next/auth/status`; `6080` → API `5000`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/api/next/auth/status`; `6080` → API `5000`. Kontrolní body této stránky: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.
+Tato stránka platí pouze pro **Instalace: První spuštění a kontrola stavu** (Docker · web). Hranice kanálu a dat jsou: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `6080` → API `5000`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/api/next/auth/status`; `6180` → API `5000`. Kontrolní body této stránky: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · `6180:5000` · WebAuthn.
 
 ### DiscVault v26 – stabilní
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- `/api/next/auth/status`
 - `6080` → API `5000`
 
 ### DiscVault v26 – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `/api/next/auth/status`
-- `6080` → API `5000`
+- `6180` → API `5000`
 
 ## Požadavky
 
@@ -43,12 +42,13 @@ Tato stránka platí pouze pro **Instalace: První spuštění a kontrola stavu*
 
 1. **Zkontrolujte:** `postgres`
 2. **Ověřte:** `GET /api/next/health` · HTTP `2xx`
-3. **Otevřete:** `6080:5000`
-4. **Ověřte:** `GET /api/next/auth/status` · WebAuthn
+3. **Vyberte:** [Instalace: Legacy Authentication](/cs/install/legacy-authentication/)
+4. **Otevřete:** `6180:5000`
+5. **Ověřte:** `GET /api/next/auth/status` · WebAuthn TOTP
 
 ### Příkazy a nastavení
 
-#### Oba kanály
+#### DiscVault v26 – stabilní
 
 ```bash
 docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml ps
@@ -57,16 +57,25 @@ curl --fail http://localhost:6080/api/next/health
 curl --fail http://localhost:6080/api/next/auth/status
 ```
 
+#### DiscVault v26 – beta
+
+```bash
+docker compose -p discvault_next_deploy -f /opt/discvault-next/docker-compose.yml ps
+docker compose -p discvault_next_deploy -f /opt/discvault-next/docker-compose.yml logs --tail=100 next-api next-worker next-mcp postgres
+curl --fail http://localhost:6180/api/next/health
+curl --fail http://localhost:6180/api/next/auth/status
+```
+
 ## Očekávaný výsledek
 
-Výsledek přijměte pro **Instalace: První spuštění a kontrola stavu** pouze pokud platí všechny následující výsledky: kontrola stavu projde, nastavený origin se otevře a první účet je vlastníkem. Kontrolní body této stránky: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.
+Výsledek přijměte pro **Instalace: První spuštění a kontrola stavu** pouze pokud platí všechny následující výsledky: kontrola stavu projde, nastavený origin se otevře a první účet je vlastníkem. Kontrolní body této stránky: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · `6180:5000` · WebAuthn.
 
 - kontrola stavu projde, nastavený origin se otevře a první účet je vlastníkem
 
 ## Bezpečnost a návrat
 
 :::caution
-Bezpečná hranice obnovy pro **Instalace: První spuštění a kontrola stavu** vyžaduje před spuštěním nebo pokračováním tyto kroky: protokoly s časem a skrytými soukromými údaji; odpovídající sada záloh. Kontrolní body této stránky: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.
+Bezpečná hranice obnovy pro **Instalace: První spuštění a kontrola stavu** vyžaduje před spuštěním nebo pokračováním tyto kroky: protokoly s časem a skrytými soukromými údaji; odpovídající sada záloh. Kontrolní body této stránky: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · `6180:5000` · WebAuthn.
 
 - protokoly s časem a skrytými soukromými údaji
 - odpovídající sada záloh
@@ -78,6 +87,11 @@ Bezpečná hranice obnovy pro **Instalace: První spuštění a kontrola stavu**
 
 ## Zdroj a stav
 
-- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Zdroj a stav: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
+- [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
+- [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
+- [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
+- Zdroj a stav: `2026-07-20`
+- DiscVault Docs: `0.1.6`

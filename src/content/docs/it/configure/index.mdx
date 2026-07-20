@@ -1,6 +1,6 @@
 ---
 title: 'Configurazione: Panoramica'
-description: 'Istruzioni specifiche per Configurazione: Panoramica: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.'
+description: 'Istruzioni specifiche per Configurazione: Panoramica: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.'
 pageId: 'configure-index'
 products: ['server']
 platforms: ['docker', 'web']
@@ -16,11 +16,11 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## Obiettivo e risultato
 
-Completa la procedura specifica della pagina per **Configurazione: Panoramica**. Questa procedura utilizza `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Completa la procedura specifica della pagina per **Configurazione: Panoramica**. Questa procedura utilizza `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 ## Si applica a
 
-Questa pagina si applica solo a **Configurazione: Panoramica** (Docker · web). I limiti di canale e dati sono: DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. Punti di controllo della pagina: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Questa pagina si applica solo a **Configurazione: Panoramica** (Docker · web). I limiti di canale e dati sono: DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. Punti di controllo della pagina: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 ### DiscVault v26 stabile
 
@@ -41,18 +41,20 @@ Questa pagina si applica solo a **Configurazione: Panoramica** (Docker · web). 
 
 1. **Scegli:** [Configurazione: Variabili di ambiente](/it/configure/environment/)
 2. **Scegli:** [Configurazione: Autenticazione e RBAC](/it/configure/auth-rbac/) · RBAC
-3. **Scegli:** [Configurazione: Plugin e metadati](/it/configure/plugins-metadata/)
-4. **Registra:** `/configure/environment/`
+3. **Scegli:** [Installazione: Legacy Authentication](/it/install/legacy-authentication/)
+4. **Scegli:** [Configurazione: Plugin e metadati](/it/configure/plugins-metadata/)
+5. **Registra:** `/configure/environment/`
 
 ### Percorsi delle attività
 
-- [Configurazione: Variabili di ambiente](/it/configure/environment/) — `/configure/environment/`
+- [Configurazione: Variabili di ambiente](/it/configure/environment/) — DiscVault 26 `.env.example`
 - [Configurazione: Autenticazione e RBAC](/it/configure/auth-rbac/) — DiscVault 26 RBAC
+- [Installazione: Legacy Authentication](/it/install/legacy-authentication/) — DiscVault 26 TOTP
 - [Configurazione: Plugin e metadati](/it/configure/plugins-metadata/) — DiscVault 26
 
 ## Risultato previsto
 
-Accetta il risultato per **Configurazione: Panoramica** solo quando tutti i risultati seguenti sono veri: canale di rilascio scelto; `/configure/auth-rbac/`. Punti di controllo della pagina: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Accetta il risultato per **Configurazione: Panoramica** solo quando tutti i risultati seguenti sono veri: canale di rilascio scelto; `/configure/auth-rbac/`. Punti di controllo della pagina: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 - canale di rilascio scelto
 - `/configure/auth-rbac/`
@@ -60,7 +62,7 @@ Accetta il risultato per **Configurazione: Panoramica** solo quando tutti i risu
 ## Sicurezza e ripristino
 
 :::caution
-Il limite di ripristino sicuro per **Configurazione: Panoramica** richiede queste azioni prima di avviare o continuare: modifica un sottosistema alla volta, conserva valore e backup precedenti e ripristina prima della modifica successiva. Punti di controllo della pagina: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Il limite di ripristino sicuro per **Configurazione: Panoramica** richiede queste azioni prima di avviare o continuare: modifica un sottosistema alla volta, conserva valore e backup precedenti e ripristina prima della modifica successiva. Punti di controllo della pagina: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 - modifica un sottosistema alla volta, conserva valore e backup precedenti e ripristina prima della modifica successiva
 :::

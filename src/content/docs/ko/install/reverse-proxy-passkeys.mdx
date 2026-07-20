@@ -1,79 +1,87 @@
 ---
 title: '설치: 리버스 프록시 및 패스키'
-description: '작업별 안내: 설치: 리버스 프록시 및 패스키: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.'
+description: '작업별 안내: 설치: 리버스 프록시 및 패스키: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.'
 pageId: 'install-reverse-proxy-passkeys'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
-lastVerified: '2026-07-15'
+lastVerified: '2026-07-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · 웹" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
+<PageMeta channels="stable,beta" platform="Docker · 웹" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
 
 ## 목표 및 결과
 
-이 페이지 전용 절차를 수행합니다: **설치: 리버스 프록시 및 패스키**. 이 절차에서 다루는 항목: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+이 페이지 전용 절차를 수행합니다: **설치: 리버스 프록시 및 패스키**. 이 절차에서 다루는 항목: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 ## 적용 대상
 
-이 페이지의 적용 범위: **설치: 리버스 프록시 및 패스키** (Docker · 웹). 채널 및 데이터 경계: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`; localhost 설정 예외를 제외하면 패스키에는 신뢰할 수 있는 HTTPS의 안정적인 정규화된 도메인 이름이 필요하며, IP 주소만 사용하거나 일반 HTTP를 사용하는 것은 지원되지 않음; `RP_ID`는 스킴과 포트가 없는 호스트 이름이고 `RP_ORIGINS`는 정확한 전체 HTTPS 오리진이며, 둘 다 브라우저에서 연 주소와 일치해야 함; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`; localhost 설정 예외를 제외하면 패스키에는 신뢰할 수 있는 HTTPS의 안정적인 정규화된 도메인 이름이 필요하며, IP 주소만 사용하거나 일반 HTTP를 사용하는 것은 지원되지 않음; `RP_ID`는 스킴과 포트가 없는 호스트 이름이고 `RP_ORIGINS`는 정확한 전체 HTTPS 오리진이며, 둘 다 브라우저에서 연 주소와 일치해야 함. 이 페이지의 전용 확인 지점: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+이 페이지의 적용 범위: **설치: 리버스 프록시 및 패스키** (Docker · 웹). 채널 및 데이터 경계: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6080`; localhost 설정 예외를 제외하면 패스키에는 신뢰할 수 있는 HTTPS의 안정적인 정규화된 도메인 이름이 필요하며, IP 주소만 사용하거나 일반 HTTP를 사용하는 것은 지원되지 않음; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; `LEGACY_AUTH_ENABLED=true`. 이 페이지의 전용 확인 지점: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 ### DiscVault v26 안정판
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- `RP_ID` `RP_ORIGINS`
-- `6080` API `5000`
+- `RP_ID` `RP_ORIGINS` · `6080`
 - localhost 설정 예외를 제외하면 패스키에는 신뢰할 수 있는 HTTPS의 안정적인 정규화된 도메인 이름이 필요하며, IP 주소만 사용하거나 일반 HTTP를 사용하는 것은 지원되지 않음
-- `RP_ID`는 스킴과 포트가 없는 호스트 이름이고 `RP_ORIGINS`는 정확한 전체 HTTPS 오리진이며, 둘 다 브라우저에서 연 주소와 일치해야 함
 
 ### DiscVault v26 베타
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- `RP_ID` `RP_ORIGINS`
-- `6080` API `5000`
-- localhost 설정 예외를 제외하면 패스키에는 신뢰할 수 있는 HTTPS의 안정적인 정규화된 도메인 이름이 필요하며, IP 주소만 사용하거나 일반 HTTP를 사용하는 것은 지원되지 않음
-- `RP_ID`는 스킴과 포트가 없는 호스트 이름이고 `RP_ORIGINS`는 정확한 전체 HTTPS 오리진이며, 둘 다 브라우저에서 연 주소와 일치해야 함
+- `RP_ID` `RP_ORIGINS` · `6180`
+- `LEGACY_AUTH_ENABLED=true`
 
 ## 사전 요구 사항
 
 - FQDN
-- TLS
+- `RP_ORIGINS`
 - `RP_ID`
 
 ### Legacy Authentication 대체 방식
 
-:::note[예정]
-사용자 이름, 비밀번호 및 2단계 인증(2FA)을 사용하는 Legacy Authentication은 유효한 FQDN이 없어 패스키를 사용할 수 없는 설치 환경의 대체 방식으로 개발 중입니다.
+:::note[베타에서 사용 가능]
+사용자 이름, 비밀번호 및 2단계 인증(2FA)을 사용하는 Legacy Authentication은 패스키를 사용할 수 없을 때 DiscVault 26 베타에서 대체 방식으로 제공됩니다.
 
-이 인증 방식을 사용할 수 있게 되면 설정 단계와 구성 옵션이 여기에 추가됩니다. 그전까지는 Legacy Authentication을 사용 가능한 설치 경로로 간주하지 마세요.
+기능을 활성화하거나 첫 번째 소유자를 만들기 전에 `/install/legacy-authentication/` 절차를 따르세요.
 :::
 
 ## 절차
 
 1. **선택:** FQDN · localhost 설정 예외를 제외하면 패스키에는 신뢰할 수 있는 HTTPS의 안정적인 정규화된 도메인 이름이 필요하며, IP 주소만 사용하거나 일반 HTTP를 사용하는 것은 지원되지 않음
-2. **구성:** `RP_ID`
-3. **구성:** `RP_ORIGINS` · HTTPS
-4. **구성:** `http://127.0.0.1:6080`
-5. **테스트:** `GET /api/next/health`
-6. **기록:** 패스키를 등록하기 전에 호스트 이름을 선택하고 나중에 변경하면 다시 등록해야 하며 localhost는 로컬 설정 예외로만 유지됨
+2. **선택:** [설치: Legacy Authentication](/ko/install/legacy-authentication/) · FQDN 없는 직접 사설 또는 루프백 IP에서는 `RP_ID`와 `RP_ORIGINS`를 비워 둠
+3. **구성:** `RP_ID`
+4. **구성:** `RP_ORIGINS` · HTTPS
+5. **구성:** `6080` `6180`
+6. **테스트:** `GET /api/next/health`
+7. **기록:** 패스키를 등록하기 전에 호스트 이름을 선택하고 나중에 변경하면 다시 등록해야 하며 localhost는 로컬 설정 예외로만 유지됨
 
 ### 명령 및 설정
 
-#### 두 채널
+#### DiscVault v26 안정판
 
 ```text
 RP_ID=discvault.example.com
+RP_NAME=DiscVault
 RP_ORIGINS=https://discvault.example.com
 curl --fail https://discvault.example.com/api/next/health
 ```
 
+#### DiscVault v26 베타
+
+```text
+RP_ID=discvault.example.com
+RP_NAME=DiscVault
+RP_ORIGINS=https://discvault.example.com
+LEGACY_AUTH_ENABLED=true
+curl --fail http://localhost:6180/api/next/health
+```
+
 ## 예상 결과
 
-다음 결과의 승인 조건: **설치: 리버스 프록시 및 패스키** 아래 결과가 모두 충족된 경우에만: HTTPS · HTTP `2xx`; `RP_ID`; `RP_ID`는 스킴과 포트가 없는 호스트 이름이고 `RP_ORIGINS`는 정확한 전체 HTTPS 오리진이며, 둘 다 브라우저에서 연 주소와 일치해야 함. 이 페이지의 전용 확인 지점: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+다음 결과의 승인 조건: **설치: 리버스 프록시 및 패스키** 아래 결과가 모두 충족된 경우에만: HTTPS · HTTP `2xx`; `RP_ID`; `RP_ID`는 스킴과 포트가 없는 호스트 이름이고 `RP_ORIGINS`는 정확한 전체 HTTPS 오리진이며, 둘 다 브라우저에서 연 주소와 일치해야 함. 이 페이지의 전용 확인 지점: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 - HTTPS · HTTP `2xx`
 - `RP_ID`
@@ -82,9 +90,10 @@ curl --fail https://discvault.example.com/api/next/health
 ## 안전 및 롤백
 
 :::caution
-안전한 복구 경계: **설치: 리버스 프록시 및 패스키** 시작하거나 계속하기 전에 다음 작업이 필요합니다: 패스키를 등록하기 전에 호스트 이름을 선택하고 나중에 변경하면 다시 등록해야 하며 localhost는 로컬 설정 예외로만 유지됨; 프록시와 RP 값을 함께 복원하고 소유자 복구 수단을 유지함. 이 페이지의 전용 확인 지점: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+안전한 복구 경계: **설치: 리버스 프록시 및 패스키** 시작하거나 계속하기 전에 다음 작업이 필요합니다: 패스키를 등록하기 전에 호스트 이름을 선택하고 나중에 변경하면 다시 등록해야 하며 localhost는 로컬 설정 예외로만 유지됨; 유효하지 않거나 빈 RP 설정을 사용하는 직접 사설 또는 루프백 요청만 TOTP 없는 부트스트랩을 제공할 수 있으며 사용자 이름, 비밀번호 및 2FA 경로에서는 TOTP를 유지함; 프록시와 RP 값을 함께 복원하고 소유자 복구 수단을 유지함. 이 페이지의 전용 확인 지점: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 - 패스키를 등록하기 전에 호스트 이름을 선택하고 나중에 변경하면 다시 등록해야 하며 localhost는 로컬 설정 예외로만 유지됨
+- 유효하지 않거나 빈 RP 설정을 사용하는 직접 사설 또는 루프백 요청만 TOTP 없는 부트스트랩을 제공할 수 있으며 사용자 이름, 비밀번호 및 2FA 경로에서는 TOTP를 유지함
 - 프록시와 RP 값을 함께 복원하고 소유자 복구 수단을 유지함
 :::
 
@@ -94,7 +103,12 @@ curl --fail https://discvault.example.com/api/next/health
 
 ## 출처 및 상태
 
-- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
-- 출처 및 상태: `2026-07-15`
-- DiscVault Docs: `0.1.5`
+- [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
+- [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
+- [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
+- [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
+- 출처 및 상태: `2026-07-20`
+- DiscVault Docs: `0.1.6`

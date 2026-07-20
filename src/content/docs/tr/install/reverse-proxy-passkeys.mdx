@@ -1,79 +1,87 @@
 ---
 title: 'Kurulum: Ters vekil ve geçiş anahtarları'
-description: 'Göreve özel yönergeler: Kurulum: Ters vekil ve geçiş anahtarları: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.'
+description: 'Göreve özel yönergeler: Kurulum: Ters vekil ve geçiş anahtarları: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.'
 pageId: 'install-reverse-proxy-passkeys'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
-lastVerified: '2026-07-15'
+lastVerified: '2026-07-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
 
 ## Amaç ve sonuç
 
-Sayfaya özel iş akışını tamamlayın: **Kurulum: Ters vekil ve geçiş anahtarları**. Bu prosedür şunları kullanır: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Sayfaya özel iş akışını tamamlayın: **Kurulum: Ters vekil ve geçiş anahtarları**. Bu prosedür şunları kullanır: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 ## Geçerli olduğu alan
 
-Bu sayfa yalnızca şunlar için geçerlidir: **Kurulum: Ters vekil ve geçiş anahtarları** (Docker · web). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`; localhost kurulum istisnası dışında passkey için güvenilir HTTPS üzerinden kararlı tam etki alanı adı gerekir; yalnız IP adresi veya düz HTTP desteklenmez; `RP_ID` şema veya bağlantı noktası olmadan ana bilgisayar adıdır; `RP_ORIGINS` ise tam HTTPS origin değeridir ve ikisi de tarayıcıda açılan adresle eşleşmelidir; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`; localhost kurulum istisnası dışında passkey için güvenilir HTTPS üzerinden kararlı tam etki alanı adı gerekir; yalnız IP adresi veya düz HTTP desteklenmez; `RP_ID` şema veya bağlantı noktası olmadan ana bilgisayar adıdır; `RP_ORIGINS` ise tam HTTPS origin değeridir ve ikisi de tarayıcıda açılan adresle eşleşmelidir. Sayfaya özel denetim noktaları: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Bu sayfa yalnızca şunlar için geçerlidir: **Kurulum: Ters vekil ve geçiş anahtarları** (Docker · web). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6080`; localhost kurulum istisnası dışında passkey için güvenilir HTTPS üzerinden kararlı tam etki alanı adı gerekir; yalnız IP adresi veya düz HTTP desteklenmez; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; `LEGACY_AUTH_ENABLED=true`. Sayfaya özel denetim noktaları: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 ### DiscVault v26 kararlı
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- `RP_ID` `RP_ORIGINS`
-- `6080` API `5000`
+- `RP_ID` `RP_ORIGINS` · `6080`
 - localhost kurulum istisnası dışında passkey için güvenilir HTTPS üzerinden kararlı tam etki alanı adı gerekir; yalnız IP adresi veya düz HTTP desteklenmez
-- `RP_ID` şema veya bağlantı noktası olmadan ana bilgisayar adıdır; `RP_ORIGINS` ise tam HTTPS origin değeridir ve ikisi de tarayıcıda açılan adresle eşleşmelidir
 
 ### DiscVault v26 beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- `RP_ID` `RP_ORIGINS`
-- `6080` API `5000`
-- localhost kurulum istisnası dışında passkey için güvenilir HTTPS üzerinden kararlı tam etki alanı adı gerekir; yalnız IP adresi veya düz HTTP desteklenmez
-- `RP_ID` şema veya bağlantı noktası olmadan ana bilgisayar adıdır; `RP_ORIGINS` ise tam HTTPS origin değeridir ve ikisi de tarayıcıda açılan adresle eşleşmelidir
+- `RP_ID` `RP_ORIGINS` · `6180`
+- `LEGACY_AUTH_ENABLED=true`
 
 ## Ön koşullar
 
 - FQDN
-- TLS
+- `RP_ORIGINS`
 - `RP_ID`
 
 ### Legacy Authentication geri dönüşü
 
-:::note[Planlandı]
-Kullanıcı adı, parola ve iki faktörlü kimlik doğrulama (2FA) kullanan Legacy Authentication, geçerli bir FQDN bulunmayan ve passkey kullanılamayan kurulumlar için geri dönüş yöntemi olarak geliştirilmektedir.
+:::note[Betada kullanılabilir]
+Kullanıcı adı, parola ve iki faktörlü kimlik doğrulama (2FA) kullanan Legacy Authentication, passkey kullanılamadığında DiscVault 26 betada sunulur.
 
-Bu kimlik doğrulama yöntemi kullanılabilir olduğunda kurulum adımları ve yapılandırma seçenekleri buraya eklenecektir. O zamana kadar Legacy Authentication kullanılabilir bir kurulum yolu olarak değerlendirilmemelidir.
+Özelliği etkinleştirmeden veya ilk sahibi oluşturmadan önce `/install/legacy-authentication/` adımlarını izleyin.
 :::
 
 ## Prosedür
 
 1. **Seçin:** FQDN · localhost kurulum istisnası dışında passkey için güvenilir HTTPS üzerinden kararlı tam etki alanı adı gerekir; yalnız IP adresi veya düz HTTP desteklenmez
-2. **Yapılandırın:** `RP_ID`
-3. **Yapılandırın:** `RP_ORIGINS` · HTTPS
-4. **Yapılandırın:** `http://127.0.0.1:6080`
-5. **Test edin:** `GET /api/next/health`
-6. **Kaydedin:** passkey kaydetmeden önce ana bilgisayar adını seçin; daha sonra değiştirmek yeniden kayıt gerektirir ve localhost yalnızca yerel kurulum istisnasıdır
+2. **Seçin:** [Kurulum: Legacy Authentication](/tr/install/legacy-authentication/) · FQDN olmadan doğrudan özel veya geri döngü IP için `RP_ID` ve `RP_ORIGINS` değerlerini boş bırakın
+3. **Yapılandırın:** `RP_ID`
+4. **Yapılandırın:** `RP_ORIGINS` · HTTPS
+5. **Yapılandırın:** `6080` `6180`
+6. **Test edin:** `GET /api/next/health`
+7. **Kaydedin:** passkey kaydetmeden önce ana bilgisayar adını seçin; daha sonra değiştirmek yeniden kayıt gerektirir ve localhost yalnızca yerel kurulum istisnasıdır
 
 ### Komutlar ve ayarlar
 
-#### Her iki kanal
+#### DiscVault v26 kararlı
 
 ```text
 RP_ID=discvault.example.com
+RP_NAME=DiscVault
 RP_ORIGINS=https://discvault.example.com
 curl --fail https://discvault.example.com/api/next/health
 ```
 
+#### DiscVault v26 beta
+
+```text
+RP_ID=discvault.example.com
+RP_NAME=DiscVault
+RP_ORIGINS=https://discvault.example.com
+LEGACY_AUTH_ENABLED=true
+curl --fail http://localhost:6180/api/next/health
+```
+
 ## Beklenen sonuç
 
-Şunun sonucunu kabul edin: **Kurulum: Ters vekil ve geçiş anahtarları** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: HTTPS · HTTP `2xx`; `RP_ID`; `RP_ID` şema veya bağlantı noktası olmadan ana bilgisayar adıdır; `RP_ORIGINS` ise tam HTTPS origin değeridir ve ikisi de tarayıcıda açılan adresle eşleşmelidir. Sayfaya özel denetim noktaları: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Şunun sonucunu kabul edin: **Kurulum: Ters vekil ve geçiş anahtarları** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: HTTPS · HTTP `2xx`; `RP_ID`; `RP_ID` şema veya bağlantı noktası olmadan ana bilgisayar adıdır; `RP_ORIGINS` ise tam HTTPS origin değeridir ve ikisi de tarayıcıda açılan adresle eşleşmelidir. Sayfaya özel denetim noktaları: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 - HTTPS · HTTP `2xx`
 - `RP_ID`
@@ -82,9 +90,10 @@ curl --fail https://discvault.example.com/api/next/health
 ## Güvenlik ve geri alma
 
 :::caution
-Şunun güvenli kurtarma sınırı: **Kurulum: Ters vekil ve geçiş anahtarları** başlatmadan veya devam etmeden önce şu işlemleri gerektirir: passkey kaydetmeden önce ana bilgisayar adını seçin; daha sonra değiştirmek yeniden kayıt gerektirir ve localhost yalnızca yerel kurulum istisnasıdır; proxy ve RP değerlerini birlikte geri yükleyin ve bir sahip kurtarma yöntemi bulundurun. Sayfaya özel denetim noktaları: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Şunun güvenli kurtarma sınırı: **Kurulum: Ters vekil ve geçiş anahtarları** başlatmadan veya devam etmeden önce şu işlemleri gerektirir: passkey kaydetmeden önce ana bilgisayar adını seçin; daha sonra değiştirmek yeniden kayıt gerektirir ve localhost yalnızca yerel kurulum istisnasıdır; yalnızca geçersiz veya boş RP ayarlarına sahip doğrudan özel ya da geri döngü isteği TOTP olmadan başlangıç sunabilir; kullanıcı adı, parola ve 2FA için TOTP etkin kalsın; proxy ve RP değerlerini birlikte geri yükleyin ve bir sahip kurtarma yöntemi bulundurun. Sayfaya özel denetim noktaları: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 - passkey kaydetmeden önce ana bilgisayar adını seçin; daha sonra değiştirmek yeniden kayıt gerektirir ve localhost yalnızca yerel kurulum istisnasıdır
+- yalnızca geçersiz veya boş RP ayarlarına sahip doğrudan özel ya da geri döngü isteği TOTP olmadan başlangıç sunabilir; kullanıcı adı, parola ve 2FA için TOTP etkin kalsın
 - proxy ve RP değerlerini birlikte geri yükleyin ve bir sahip kurtarma yöntemi bulundurun
 :::
 
@@ -94,7 +103,12 @@ curl --fail https://discvault.example.com/api/next/health
 
 ## Kaynak ve durum
 
-- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
-- Kaynak ve durum: `2026-07-15`
-- DiscVault Docs: `0.1.5`
+- [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
+- [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
+- [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
+- [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
+- Kaynak ve durum: `2026-07-20`
+- DiscVault Docs: `0.1.6`

@@ -30,6 +30,9 @@ const verified = '2026-07-14';
 const docsVersion = '0.1.0';
 const migratedVerified = '2026-07-15';
 const migratedDocsVersion = '0.1.4';
+const betaVerified = '2026-07-20';
+const betaDocsVersion = '0.1.6';
+const betaSourceCommit = '4352c060ccd6fd625a828f6e20c24f111c9ef743';
 const commits = {
   'helmerzNL/DiscVault': '6d27c689ac2166651d2c7c74833c1ee225b37ec3',
   'helmerzNL/DiscVault.EU': '583f85c55dc22b63368f997a3b076a093ca0afa1',
@@ -37,6 +40,54 @@ const commits = {
   'Flux76HQ/DiscVault-AndroidApp': 'a13ef4bdbb23b6a7e52e01cdf532fa222c1b67de',
   'Flux76HQ/App-Guidance': 'da1f68d8baf33b3e2fba06684c154755cd261a48',
 };
+const betaDeploymentSourceFiles = [
+  {
+    label: 'Moving beta source: `docker-compose.yml`',
+    url: 'https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/docker-compose.yml',
+  },
+  {
+    label: 'Raw beta download: `docker-compose.yml`',
+    url: 'https://raw.githubusercontent.com/helmerzNL/DiscVault/release/v26-beta/app/deploy/next/docker-compose.yml',
+  },
+  {
+    label: 'Pinned verification: `docker-compose.yml`',
+    url: `https://github.com/helmerzNL/DiscVault/blob/${betaSourceCommit}/app/deploy/next/docker-compose.yml`,
+  },
+  {
+    label: 'Moving beta source: `.env.example`',
+    url: 'https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/.env.example',
+  },
+  {
+    label: 'Raw beta download: `.env.example`',
+    url: 'https://raw.githubusercontent.com/helmerzNL/DiscVault/release/v26-beta/app/deploy/next/.env.example',
+  },
+  {
+    label: 'Pinned verification: `.env.example`',
+    url: `https://github.com/helmerzNL/DiscVault/blob/${betaSourceCommit}/app/deploy/next/.env.example`,
+  },
+];
+const betaAuthSourceFiles = [
+  {
+    label: 'Moving beta source: Legacy Authentication deployment notes',
+    url: 'https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md',
+  },
+  {
+    label: 'Pinned verification: `next_auth.py`',
+    url: `https://github.com/helmerzNL/DiscVault/blob/${betaSourceCommit}/app/backend/next_auth.py`,
+  },
+  {
+    label: 'Pinned verification: `next_legacy_auth.py`',
+    url: `https://github.com/helmerzNL/DiscVault/blob/${betaSourceCommit}/app/backend/next_legacy_auth.py`,
+  },
+  {
+    label: 'Pinned verification: Legacy Authentication schema',
+    url: `https://github.com/helmerzNL/DiscVault/blob/${betaSourceCommit}/app/backend/migrations_next/041_legacy_auth.sql`,
+  },
+  {
+    label: 'Pinned verification: unified recovery codes',
+    url: `https://github.com/helmerzNL/DiscVault/blob/${betaSourceCommit}/app/backend/migrations_next/042_unified_recovery_codes.sql`,
+  },
+];
 
 // The first entries provide localized headings and page titles. Procedure-specific facts and
 // translated action/term data live in scripts/content/ and are validated independently.
@@ -1116,15 +1167,16 @@ const pages = [
     platforms: ['docker', 'unraid'],
     version: 'DiscVault v26',
     source: [S, M],
-    verified: migratedVerified,
-    docsVersion: migratedDocsVersion,
+    sourceCommits: { [S]: betaSourceCommit },
+    verified: betaVerified,
+    docsVersion: betaDocsVersion,
     pre: ['Docker Engine 24+', 'Docker Compose v2'],
     command:
-      'Recommended for both channels: /install/docker-compose/\nAdvanced complete equivalent: /install/docker-run/\nPersistence: /install/storage-postgresql/\nUnraid: /install/unraid/',
+      'Official beta files: /install/docker-compose/\nAdvanced stable or beta equivalent: /install/docker-run/\nPersistence: /install/storage-postgresql/\nUnraid: /install/unraid/',
     intro:
       'Choose the DiscVault v26 topology for new installs, or keep an existing previous-generation deployment on the frozen Legacy image until migration.',
     scope:
-      '`ghcr.io/helmerznl/discvault:latest` is DiscVault v26 stable and `ghcr.io/helmerznl/discvault:beta` is DiscVault v26 beta. Both use PostgreSQL, API, worker, MCP, and persistent `/data`; only `DISCVAULT_IMAGE` differs. The frozen `ghcr.io/helmerznl/discvault:legacy` image is only for an existing previous-generation installation that is not ready to migrate. Keep that installation’s old volumes, environment variables, ports, and data path unchanged; never substitute `:legacy` into the v26 Compose topology. The `:dev` tag remains engineering-only.',
+      '`ghcr.io/helmerznl/discvault:latest` is DiscVault v26 stable and `ghcr.io/helmerznl/discvault:beta` is DiscVault v26 beta. The official `app/deploy/next/docker-compose.yml` and `.env.example` procedure is beta-only and uses `DISCVAULT_NEXT_IMAGE`; the advanced Docker-run procedure remains available for both channels. The frozen `ghcr.io/helmerznl/discvault:legacy` image is only for an existing previous-generation installation that is not ready to migrate. Never substitute that deployment image into the v26 beta topology.',
     expected:
       'A new install selects one v26 channel, while an existing previous-generation install either stays on its unchanged Legacy topology or follows the migration procedure.',
     rollback:
@@ -1157,22 +1209,25 @@ const pages = [
     path: 'install/docker-compose',
     category: 'install',
     topic: 'Docker Compose',
-    channel: ['stable', 'beta'],
+    channel: ['beta'],
     products: ['server'],
     platforms: ['docker'],
     version: 'DiscVault v26',
     source: [S],
+    sourceCommits: { [S]: betaSourceCommit },
+    sourceFiles: betaDeploymentSourceFiles,
+    verified: betaVerified,
+    docsVersion: betaDocsVersion,
     pre: ['Docker Compose v2', 'OpenSSL', 'persistent PostgreSQL and /data paths'],
     command:
-      'Use one compose.yaml with postgres, next-api, next-worker, and next-mcp. Set DISCVAULT_IMAGE to ghcr.io/helmerznl/discvault:latest or ghcr.io/helmerznl/discvault:beta.',
-    intro:
-      'Deploy the recommended DiscVault v26 topology with PostgreSQL, API, worker, MCP, and persistent filesystem data.',
+      'Download app/deploy/next/docker-compose.yml and .env.example from release/v26-beta, then force DISCVAULT_NEXT_IMAGE=ghcr.io/helmerznl/discvault:beta before startup.',
+    intro: 'Deploy DiscVault 26 beta from the canonical moving Compose and environment files.',
     scope:
-      'Derived from `app/deploy/next/docker-compose.yml` at the verified source commit, this Compose file is identical for DiscVault v26 stable and beta. `DISCVAULT_IMAGE` is the only channel selector. The `next-*` service names and `/api/next` path are source-defined v26 names in both channels. The `6080:5000` mapping exposes host port 6080 to Gunicorn on internal API port 5000.',
+      'This page applies only to DiscVault 26 beta. It downloads the moving `release/v26-beta` files and lists commit-pinned verification links. Because the current source `.env.example` still defaults to the engineering `:dev` image, the procedure rewrites and validates `DISCVAULT_NEXT_IMAGE=ghcr.io/helmerznl/discvault:beta` before pull or startup. It uses project `discvault_next_deploy`, host API port `6180`, persistent `/mnt/user/appdata/discvault`, and PostgreSQL path `/mnt/user/appdata/discvault-next/postgres`.',
     expected:
-      'Compose reports PostgreSQL healthy and API, worker, and MCP running; PostgreSQL and `/data` remain on their configured host paths.',
+      'Compose project `discvault_next_deploy` reports PostgreSQL healthy and API, worker, and MCP running from the beta image; the health endpoint succeeds on host port 6180.',
     rollback:
-      'Run `docker compose down` without deleting data, then restore the matched PostgreSQL and `/data` backup before recreating the previous image digest.',
+      'Run `docker compose -p discvault_next_deploy down` without deleting data, preserve `.env`, and restore the matched PostgreSQL and `/data` backup before recreating the previous beta digest.',
     next: 'install/first-start-health',
   },
   {
@@ -1227,19 +1282,48 @@ const pages = [
     platforms: ['docker', 'web'],
     version: 'DiscVault v26',
     source: [S, M],
-    verified: migratedVerified,
-    docsVersion: '0.1.5',
-    pre: ['public FQDN', 'trusted TLS certificate', 'WebSocket-capable reverse proxy'],
+    sourceCommits: { [S]: betaSourceCommit },
+    sourceFiles: betaAuthSourceFiles,
+    verified: betaVerified,
+    docsVersion: betaDocsVersion,
+    pre: ['running deployment', 'chosen Passkey or Legacy Authentication route'],
     command:
-      'RP_ID=discvault.example.com\nRP_ORIGINS=https://discvault.example.com\nProxy upstream: http://127.0.0.1:6080\nHealth: https://discvault.example.com/api/next/health',
+      'Passkeys: RP_ID=discvault.example.com and RP_ORIGINS=https://discvault.example.com\nBeta fallback: /install/legacy-authentication/\nStable proxy upstream: http://127.0.0.1:6080\nBeta proxy upstream: http://127.0.0.1:6180',
     intro:
-      'Use a stable FQDN over trusted HTTPS and keep passkey relying-party values aligned with the exact public origin.',
+      'Choose Passkeys on a stable HTTPS FQDN, or use the beta Legacy Authentication fallback when a valid FQDN is unavailable.',
     scope:
-      'DiscVault v26 stable and beta both use `RP_ID`, `RP_ORIGINS`, and `/api/next/health`. Outside the localhost setup exception, passkeys require a stable fully qualified domain name over trusted HTTPS; a bare IP address or plain HTTP is unsupported. `RP_ID` is the hostname without scheme or port, and `RP_ORIGINS` is the exact full HTTPS origin opened in the browser. The proxy connects to host port 6080, which maps to API container port 5000.',
+      'Passkeys require a stable fully qualified domain name over trusted HTTPS: `RP_ID` is the hostname without scheme or port and `RP_ORIGINS` is the exact HTTPS origin. The stable deployment uses host port 6080 and the canonical beta Compose deployment uses 6180. DiscVault 26 beta can instead expose optional Legacy Authentication for a direct private or loopback IP by setting `LEGACY_AUTH_ENABLED=true` and leaving `RP_ID` and `RP_ORIGINS` empty.',
     expected:
-      'The public health URL succeeds and a passkey can be registered and used from the same FQDN and exact HTTPS origin.',
+      'The chosen origin reports healthy and either a passkey works on the exact HTTPS FQDN or the beta Legacy Authentication route reaches first-owner setup.',
     rollback:
       'Restore the prior proxy configuration and RP values together. Choose the hostname before registration: changing it later requires passkey registration again, so keep an owner recovery path.',
+    next: 'install/first-start-health',
+  },
+  {
+    path: 'install/legacy-authentication',
+    category: 'install',
+    topic: 'Legacy Authentication',
+    topicTerm: 'legacyAuthenticationTitle',
+    channel: ['beta'],
+    products: ['server'],
+    platforms: ['docker', 'web'],
+    version: 'DiscVault v26',
+    source: [S],
+    sourceCommits: { [S]: betaSourceCommit },
+    sourceFiles: betaAuthSourceFiles,
+    verified: betaVerified,
+    docsVersion: betaDocsVersion,
+    pre: ['DiscVault 26 beta', 'LEGACY_AUTH_ENABLED=true', 'authenticator app'],
+    command:
+      'FQDN: RP_ID=discvault.example.com and RP_ORIGINS=https://discvault.example.com\nLocal IP: RP_ID= and RP_ORIGINS=\nLEGACY_AUTH_ENABLED=true\nHealth and status: http://localhost:6180/api/next/auth/status',
+    intro:
+      'Configure the implemented DiscVault 26 beta username/password fallback with TOTP, recovery codes, and fail-closed activation.',
+    scope:
+      'Legacy Authentication is an optional DiscVault 26 beta capability. Fresh instances with no users or credentials can atomically bootstrap the first Owner after password-risk acknowledgement; existing installations activate password login in Users & roles with a fresh Owner or Admin passkey assertion. Passwords require at least 15 characters and Argon2id storage. TOTP and single-use recovery codes are the recommended fallback path. Only a direct private or loopback request with invalid or empty RP settings may explicitly opt out of TOTP during first-owner bootstrap.',
+    expected:
+      'The first or existing Owner can authenticate with a policy-compliant password and TOTP, recovery codes are acknowledged and stored offline, and account lockout works after repeated failures.',
+    rollback:
+      'Keep an active Owner session and passkey recovery path. Disabling Legacy Authentication requires an Owner passkey; backups omit TOTP secrets and recovery material, so MFA users must enroll again after restore.',
     next: 'install/first-start-health',
   },
   {
@@ -1251,15 +1335,19 @@ const pages = [
     platforms: ['docker', 'web'],
     version: 'DiscVault v26',
     source: [S],
-    pre: ['running container', 'browser on configured origin'],
+    sourceCommits: { [S]: betaSourceCommit },
+    sourceFiles: betaAuthSourceFiles,
+    verified: betaVerified,
+    docsVersion: betaDocsVersion,
+    pre: ['running deployment', 'browser on configured Passkey or Legacy Authentication origin'],
     command:
-      'docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml ps\ncurl --fail http://localhost:6080/api/next/health\ncurl --fail http://localhost:6080/api/next/auth/status',
+      'Stable: curl --fail http://localhost:6080/api/next/health\nBeta: docker compose -p discvault_next_deploy ps and curl --fail http://localhost:6180/api/next/auth/status',
     intro:
       'Verify startup and create the first owner only after the correct channel reports healthy.',
     scope:
-      'Both release channels expose the v26 API with the `6080:5000` host-to-container mapping and use the same health and authentication endpoints.',
+      'Stable uses the established Passkey first-owner flow on host port 6080. The canonical beta Compose deployment uses host port 6180 and offers either Passkeys on a valid HTTPS FQDN or Legacy Authentication when its two-layer gate is enabled.',
     expected:
-      'Health returns success, the configured origin opens, and the first account becomes owner. Subsequent registration follows invite/auth settings.',
+      'Health returns success, the configured origin opens, and the first account becomes Owner through the selected Passkey or beta password-plus-TOTP route.',
     rollback:
       'If owner creation fails, do not reset data blindly. Save logs and restore the pre-start data backup with the same image.',
     next: 'update/backup',
@@ -1405,11 +1493,11 @@ const pages = [
     source: [S],
     pre: ['owner access', 'configuration backup'],
     command:
-      'Environment: /configure/environment/\nAuthentication: /configure/auth-rbac/\nPlugins: /configure/plugins-metadata/',
+      'Official beta environment: /configure/environment/\nAuthentication and RBAC: /configure/auth-rbac/\nLegacy Authentication onboarding: /install/legacy-authentication/\nPlugins: /configure/plugins-metadata/',
     intro:
-      'Configure runtime values, authentication, roles, and providers without exposing secrets.',
+      'Configure runtime values, Passkeys, beta Legacy Authentication, roles, and providers without exposing secrets.',
     scope:
-      'The same v26 configuration model applies to stable and beta; only `DISCVAULT_IMAGE` selects the release channel.',
+      'Passkeys, RBAC, and plugins apply to stable and beta. The official `release/v26-beta` Compose environment and Legacy Authentication procedures are beta-only and use the `DISCVAULT_NEXT_*` variable names.',
     expected: 'You reach the focused configuration procedure for your channel.',
     rollback: 'Change one subsystem at a time and retain the previous value.',
     next: 'configure/environment',
@@ -1418,22 +1506,26 @@ const pages = [
     path: 'configure/environment',
     category: 'configure',
     topic: 25,
-    channel: ['stable', 'beta'],
+    channel: ['beta'],
     products: ['server'],
     platforms: ['docker', 'unraid'],
     version: 'DiscVault v26',
     source: [S],
+    sourceCommits: { [S]: betaSourceCommit },
+    sourceFiles: betaDeploymentSourceFiles,
+    verified: betaVerified,
+    docsVersion: betaDocsVersion,
     pre: ['private environment file', 'restart window'],
     command:
-      'DISCVAULT_IMAGE=<:latest-or-:beta>\nDISCVAULT_DATA_DIR=/srv/discvault\nDISCVAULT_POSTGRES_DATA=/srv/discvault-postgres\nDISCVAULT_API_PORT=6080\nDISCVAULT_MCP_PORT=6090\nRP_ID=discvault.example.com\nRP_ORIGINS=https://discvault.example.com',
+      'DISCVAULT_NEXT_IMAGE=ghcr.io/helmerznl/discvault:beta\nDISCVAULT_DATA_DIR=/mnt/user/appdata/discvault\nDISCVAULT_NEXT_POSTGRES_DATA=/mnt/user/appdata/discvault-next/postgres\nDISCVAULT_NEXT_API_PORT=6180\nRP_ID=discvault.example.com or empty for direct local IP\nLEGACY_AUTH_ENABLED=true',
     intro:
-      'Set runtime environment variables in the deployment environment, not in this documentation repository.',
+      'Create the private DiscVault 26 beta runtime environment from the canonical moving `.env.example` without retaining its `:dev` image default.',
     scope:
-      'DiscVault v26 stable and beta use the same `.env` keys, PostgreSQL variables, `RP_ORIGINS`, ports, and persistent paths. Only `DISCVAULT_IMAGE` differs. Generate passwords and JWT secrets into a mode-600 file.',
+      'This page applies to the official DiscVault 26 beta deployment. Generate `POSTGRES_PASSWORD` and one stable `JWT_SECRET` with `openssl rand -base64 48` into a mode-600 `.env`. Force `DISCVAULT_NEXT_IMAGE=ghcr.io/helmerznl/discvault:beta`; set the supplied data paths; and choose either aligned FQDN values or empty `RP_ID` and `RP_ORIGINS` for a direct local-IP Legacy Authentication route.',
     expected:
-      '`docker compose config` resolves required non-secret values and the selected channel starts healthy.',
+      '`docker compose -p discvault_next_deploy config` resolves the beta environment, no `:dev` tag remains in `.env`, and health succeeds on port 6180.',
     rollback:
-      'On failure, keep services stopped, restore the prior private environment file, validate it with `docker compose config --quiet`, and recreate the same image. Do not rotate `JWT_SECRET` or `POSTGRES_PASSWORD` during ordinary rollback.',
+      'On failure, keep services stopped, restore the prior private `.env`, validate it with project `discvault_next_deploy`, and recreate the same beta digest. Do not rotate `JWT_SECRET` or `POSTGRES_PASSWORD` during ordinary rollback.',
     next: 'configure/auth-rbac',
   },
   {
@@ -1445,19 +1537,21 @@ const pages = [
     platforms: ['web'],
     version: 'DiscVault v26',
     source: [S, M],
-    verified: migratedVerified,
-    docsVersion: migratedDocsVersion,
-    pre: ['owner passkey', 'FQDN over HTTPS', 'second recovery method'],
+    sourceCommits: { [S]: betaSourceCommit },
+    sourceFiles: betaAuthSourceFiles,
+    verified: betaVerified,
+    docsVersion: betaDocsVersion,
+    pre: ['Owner access', 'Passkey recovery', 'offline recovery-code storage'],
     command:
-      'Admin → Security → Enable authentication\nAdmin → Users → Create 48-hour invite\nAdmin → Roles → Basic or Advanced\nGET /api/next/auth/status\nGET /api/next/auth/rbac',
+      'Admin → Security → Enable authentication\nAdmin → Users & roles → Legacy Authentication (beta)\nAdmin → Users → Create 48-hour invite\nAdmin → Roles → Basic or Advanced\nGET /api/next/auth/status\nGET /api/next/auth/rbac',
     intro:
-      'Use passkeys instead of reusable account passwords, verify platform support, and configure recovery, invites, users, groups, and roles.',
+      'Operate Passkeys and RBAC in both channels, and manage optional Legacy Authentication users and recovery in DiscVault 26 beta.',
     scope:
-      'DiscVault v26 provides the same WebAuthn and RBAC functions in stable and beta. A passkey keeps its private key on the device or in a trusted credential manager while DiscVault stores the public key. Time-limited invite codes start registration but are not reusable account passwords. Basic roles are owner, administrator, media editor, media fan, and media viewer. Browser passkey requirements are distinct from native app minimum versions.',
+      'DiscVault v26 provides WebAuthn and RBAC in stable and beta. A passkey keeps its private key on the device or in a trusted credential manager while DiscVault stores the public key. DiscVault 26 beta additionally supports the opt-in Legacy Authentication capability. Owners and Admins can issue temporary passwords, require a password change, set per-user MFA policy, and control passkey registration. TOTP secrets are encrypted and unified recovery codes are hashed and single-use.',
     expected:
-      'Owner login works with two recovery-capable passkeys, supported platforms can authenticate, invite-only registration behaves as selected, and a test user receives only assigned permissions.',
+      'Owner login retains two recovery-capable passkeys, beta password users receive the intended TOTP and password policy, and a test user receives only assigned permissions.',
     rollback:
-      'Keep an owner session open, register more than one passkey, and preserve an independent recovery method. Never remove the last owner passkey.',
+      'Keep an Owner session open, register more than one passkey, and preserve recovery codes offline. Disabling Legacy Authentication requires an active Owner passkey; after restore, users whose TOTP material was intentionally omitted must enroll again.',
     next: 'configure/plugins-metadata',
   },
   {
@@ -1786,7 +1880,11 @@ const localeIndex = (locale) => locales.indexOf(locale);
 const prefix = (locale) => (locale === 'en' ? '' : `/${locale}`);
 const titleFor = (page, locale) => {
   const i = localeIndex(locale);
-  const topic = typeof page.topic === 'number' ? l10n[locale][page.topic] : page.topic;
+  const topic = page.topicTerm
+    ? procedureLocale[locale].terms[page.topicTerm]
+    : typeof page.topic === 'number'
+      ? l10n[locale][page.topic]
+      : page.topic;
   return page.category === 'troubleshooting' || page.category === 'reference'
     ? categoryNames[page.category][i]
     : `${categoryNames[page.category][i]}: ${topic}`;
@@ -1795,17 +1893,21 @@ const routeFor = (pagePath, locale) =>
   `${prefix(locale)}/${pagePath.replace(/\/index$/, '')}/`.replace('//', '/');
 const verifiedFor = (page) => page.verified ?? verified;
 const docsVersionFor = (page) => page.docsVersion ?? docsVersion;
+const sourceCommitFor = (page, source) => page.sourceCommits?.[source] ?? commits[source];
 const sourceLinks = (page, locale) =>
   page.source
     .map(
       (source) =>
-        `- [\`${source}@${commits[source].slice(0, 12)}\`](https://github.com/${source}/commit/${commits[source]})`,
+        `- [\`${source}@${sourceCommitFor(page, source).slice(0, 12)}\`](https://github.com/${source}/commit/${sourceCommitFor(page, source)})`,
     )
     .join('\n') +
+  (page.sourceFiles?.length
+    ? `\n${page.sourceFiles.map(({ label, url }) => `- [${label}](${url})`).join('\n')}`
+    : '') +
   `\n- ${locale === 'en' ? 'Verified' : l10n[locale][7]}: \`${verifiedFor(page)}\`\n- DiscVault Docs: \`${docsVersionFor(page)}\``;
 
 const visibleTechnicalToken =
-  /`[^`\n]+`|\b(?:DiscVault(?: Docs)?|Docker(?: Compose| Engine| run)?|PostgreSQL|SQLite|PWA|HTTPS|HTTP|TLS|DNS|FQDN|MCP|REST|API|iOS(?:\/iPadOS)?|Android|SwiftData|Room|CameraX|ML Kit|WorkManager|Plex|Jellyfin|OpenSSL|WebSocket|WebAuthn|Unraid|TestFlight|RBAC|JSON)\b|App Lock|Service Worker|→|≠|\b\d+(?:\.\d+)?(?:\+| GB| hours?)?\b/gi;
+  /`[^`\n]+`|\b(?:DiscVault(?: Docs)?|Docker(?: Compose| Engine| run)?|PostgreSQL|SQLite|PWA|HTTPS|HTTP|TLS|DNS|FQDN|MCP|REST|API|iOS(?:\/iPadOS)?|Android|SwiftData|Room|CameraX|ML Kit|WorkManager|Plex|Jellyfin|OpenSSL|WebSocket|WebAuthn|Unraid|TestFlight|RBAC|JSON|TOTP|Argon2id)\b|App Lock|Service Worker|→|≠|\b\d+(?:\.\d+)?(?:\+| GB| hours?)?\b/gi;
 
 function technicalFragment(value, locale) {
   if (locale === 'en') return value;

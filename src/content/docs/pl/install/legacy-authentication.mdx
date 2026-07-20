@@ -1,0 +1,107 @@
+---
+title: 'Instalacja: Legacy Authentication'
+description: 'Instrukcja właściwa dla zadania: Instalacja: Legacy Authentication: `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.'
+pageId: 'install-legacy-authentication'
+products: ['server']
+platforms: ['docker', 'web']
+channels: ['beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-20'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-20" />
+
+## Cel i rezultat
+
+Wykonaj procedurę właściwą dla strony: **Instalacja: Legacy Authentication**. Ta procedura korzysta z `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.
+
+## Dotyczy
+
+Ta strona dotyczy wyłącznie **Instalacja: Legacy Authentication** (Docker · web). Granice kanału i danych: DiscVault · `ghcr.io/helmerznl/discvault:beta`; TOTP; FQDN HTTPS. Punkty kontrolne tej strony: `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- TOTP
+- FQDN HTTPS
+
+## Wymagania wstępne
+
+- Legacy Authentication z nazwą użytkownika, hasłem i uwierzytelnianiem dwuskładnikowym (2FA) jest dostępne w DiscVault 26 beta, gdy nie można używać passkeys.
+- dostęp właściciela · w nowej instancji bez użytkowników lub danych logowania kreator atomowo tworzy pierwszego właściciela po zaakceptowaniu ryzyka hasła
+- TOTP · kody odzyskiwania są haszowane, jednorazowe i wspólne z odzyskiwaniem passkey; kopie pomijają sekrety TOTP i dane odzyskiwania, więc MFA trzeba zarejestrować ponownie
+
+### Awaryjne Legacy Authentication
+
+:::note[Dostępne w wersji beta]
+tylko bezpośrednie prywatne lub zwrotne żądanie z nieprawidłowym lub pustym RP może oferować start bez TOTP; pozostaw TOTP dla nazwy użytkownika, hasła i 2FA
+:::
+
+## Procedura
+
+1. **Skonfiguruj:** `LEGACY_AUTH_ENABLED=true` · przy prawidłowym FQDN uzgodnij `RP_ID` z `RP_ORIGINS` i używaj zaufanego HTTPS
+2. **Skonfiguruj:** `RP_ID=` · `RP_ORIGINS=` · dla bezpośredniego prywatnego lub zwrotnego IP bez FQDN pozostaw `RP_ID` i `RP_ORIGINS` puste
+3. **Wybierz:** w nowej instancji bez użytkowników lub danych logowania kreator atomowo tworzy pierwszego właściciela po zaakceptowaniu ryzyka hasła · w istniejącej instalacji włącz logowanie hasłem w Użytkownicy i role i zatwierdź świeżym potwierdzeniem passkey właściciela lub administratora
+4. **Utwórz:** hasło wymaga co najmniej 15 znaków, nie może być nazwą użytkownika ani odrzuconym popularnym hasłem i jest haszowane Argon2id; pięć błędów w 15 minut blokuje na 15 minut · TOTP · kody odzyskiwania są haszowane, jednorazowe i wspólne z odzyskiwaniem passkey; kopie pomijają sekrety TOTP i dane odzyskiwania, więc MFA trzeba zarejestrować ponownie
+5. **Skonfiguruj:** właściciele i administratorzy mogą wydawać hasła tymczasowe, wymagać zmiany, ustawiać MFA użytkownika i kontrolować rejestrację passkeys
+6. **Przetestuj:** Legacy Authentication z nazwą użytkownika, hasłem i uwierzytelnianiem dwuskładnikowym (2FA) jest dostępne w DiscVault 26 beta, gdy nie można używać passkeys. · `GET /api/next/auth/status`
+7. **Zapisz:** kody odzyskiwania są haszowane, jednorazowe i wspólne z odzyskiwaniem passkey; kopie pomijają sekrety TOTP i dane odzyskiwania, więc MFA trzeba zarejestrować ponownie
+
+### Polecenia i ustawienia
+
+#### DiscVault v26 – beta
+
+```text
+RP_ID=discvault.example.com
+RP_NAME=DiscVault
+RP_ORIGINS=https://discvault.example.com
+LEGACY_AUTH_ENABLED=true
+```
+
+```text
+RP_ID=
+RP_NAME=DiscVault
+RP_ORIGINS=
+LEGACY_AUTH_ENABLED=true
+```
+
+```bash
+curl --fail http://localhost:6180/api/next/health
+curl --fail http://localhost:6180/api/next/auth/status
+```
+
+## Oczekiwany rezultat
+
+Zaakceptuj wynik dla **Instalacja: Legacy Authentication** tylko gdy wszystkie poniższe wyniki są prawdziwe: Legacy Authentication z nazwą użytkownika, hasłem i uwierzytelnianiem dwuskładnikowym (2FA) jest dostępne w DiscVault 26 beta, gdy nie można używać passkeys.; TOTP · kody odzyskiwania są haszowane, jednorazowe i wspólne z odzyskiwaniem passkey; kopie pomijają sekrety TOTP i dane odzyskiwania, więc MFA trzeba zarejestrować ponownie; hasło wymaga co najmniej 15 znaków, nie może być nazwą użytkownika ani odrzuconym popularnym hasłem i jest haszowane Argon2id; pięć błędów w 15 minut blokuje na 15 minut. Punkty kontrolne tej strony: `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.
+
+- Legacy Authentication z nazwą użytkownika, hasłem i uwierzytelnianiem dwuskładnikowym (2FA) jest dostępne w DiscVault 26 beta, gdy nie można używać passkeys.
+- TOTP · kody odzyskiwania są haszowane, jednorazowe i wspólne z odzyskiwaniem passkey; kopie pomijają sekrety TOTP i dane odzyskiwania, więc MFA trzeba zarejestrować ponownie
+- hasło wymaga co najmniej 15 znaków, nie może być nazwą użytkownika ani odrzuconym popularnym hasłem i jest haszowane Argon2id; pięć błędów w 15 minut blokuje na 15 minut
+
+## Bezpieczeństwo i wycofanie
+
+:::caution
+Bezpieczna granica odzyskiwania dla **Instalacja: Legacy Authentication** wymaga tych działań przed uruchomieniem lub kontynuacją: hasło wymaga co najmniej 15 znaków, nie może być nazwą użytkownika ani odrzuconym popularnym hasłem i jest haszowane Argon2id; pięć błędów w 15 minut blokuje na 15 minut; kody odzyskiwania są haszowane, jednorazowe i wspólne z odzyskiwaniem passkey; kopie pomijają sekrety TOTP i dane odzyskiwania, więc MFA trzeba zarejestrować ponownie; wyłączenie Legacy Authentication wymaga aktywnego passkey właściciela; właściciel tylko z lokalnym IP musi wcześniej ustanowić prawidłowy FQDN i passkey. Punkty kontrolne tej strony: `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.
+
+- hasło wymaga co najmniej 15 znaków, nie może być nazwą użytkownika ani odrzuconym popularnym hasłem i jest haszowane Argon2id; pięć błędów w 15 minut blokuje na 15 minut
+- kody odzyskiwania są haszowane, jednorazowe i wspólne z odzyskiwaniem passkey; kopie pomijają sekrety TOTP i dane odzyskiwania, więc MFA trzeba zarejestrować ponownie
+- wyłączenie Legacy Authentication wymaga aktywnego passkey właściciela; właściciel tylko z lokalnym IP musi wcześniej ustanowić prawidłowy FQDN i passkey
+:::
+
+## Następny krok
+
+[Instalacja: Pierwsze uruchomienie i kontrola stanu](/pl/install/first-start-health/)
+
+## Źródło i stan
+
+- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
+- [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
+- [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
+- [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
+- Źródło i stan: `2026-07-20`
+- DiscVault Docs: `0.1.6`

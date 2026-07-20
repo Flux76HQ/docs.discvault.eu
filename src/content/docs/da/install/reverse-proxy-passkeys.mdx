@@ -1,79 +1,87 @@
 ---
 title: 'Installation: Omvendt proxy og adgangsnøgler'
-description: 'Opgavespecifik vejledning til Installation: Omvendt proxy og adgangsnøgler: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.'
+description: 'Opgavespecifik vejledning til Installation: Omvendt proxy og adgangsnøgler: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.'
 pageId: 'install-reverse-proxy-passkeys'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
-lastVerified: '2026-07-15'
+lastVerified: '2026-07-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
 
 ## Mål og resultat
 
-Gennemfør den sidespecifikke arbejdsgang for **Installation: Omvendt proxy og adgangsnøgler**. Denne fremgangsmåde arbejder med FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Gennemfør den sidespecifikke arbejdsgang for **Installation: Omvendt proxy og adgangsnøgler**. Denne fremgangsmåde arbejder med FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 ## Gælder for
 
-Denne side gælder kun for **Installation: Omvendt proxy og adgangsnøgler** (Docker · web). Kanal- og datagrænserne er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`; uden for localhost-undtagelsen kræver passkeys et stabilt fuldt kvalificeret domænenavn over betroet HTTPS; en ren IP-adresse eller almindelig HTTP understøttes ikke; `RP_ID` er værtsnavnet uden skema eller port, mens `RP_ORIGINS` er den nøjagtige fulde HTTPS-origin; begge skal svare til adressen i browseren; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`; uden for localhost-undtagelsen kræver passkeys et stabilt fuldt kvalificeret domænenavn over betroet HTTPS; en ren IP-adresse eller almindelig HTTP understøttes ikke; `RP_ID` er værtsnavnet uden skema eller port, mens `RP_ORIGINS` er den nøjagtige fulde HTTPS-origin; begge skal svare til adressen i browseren. Sidespecifikke kontrolpunkter: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Denne side gælder kun for **Installation: Omvendt proxy og adgangsnøgler** (Docker · web). Kanal- og datagrænserne er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6080`; uden for localhost-undtagelsen kræver passkeys et stabilt fuldt kvalificeret domænenavn over betroet HTTPS; en ren IP-adresse eller almindelig HTTP understøttes ikke; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; `LEGACY_AUTH_ENABLED=true`. Sidespecifikke kontrolpunkter: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 ### DiscVault v26 – stabil
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- `RP_ID` `RP_ORIGINS`
-- `6080` API `5000`
+- `RP_ID` `RP_ORIGINS` · `6080`
 - uden for localhost-undtagelsen kræver passkeys et stabilt fuldt kvalificeret domænenavn over betroet HTTPS; en ren IP-adresse eller almindelig HTTP understøttes ikke
-- `RP_ID` er værtsnavnet uden skema eller port, mens `RP_ORIGINS` er den nøjagtige fulde HTTPS-origin; begge skal svare til adressen i browseren
 
 ### DiscVault v26 – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- `RP_ID` `RP_ORIGINS`
-- `6080` API `5000`
-- uden for localhost-undtagelsen kræver passkeys et stabilt fuldt kvalificeret domænenavn over betroet HTTPS; en ren IP-adresse eller almindelig HTTP understøttes ikke
-- `RP_ID` er værtsnavnet uden skema eller port, mens `RP_ORIGINS` er den nøjagtige fulde HTTPS-origin; begge skal svare til adressen i browseren
+- `RP_ID` `RP_ORIGINS` · `6180`
+- `LEGACY_AUTH_ENABLED=true`
 
 ## Forudsætninger
 
 - FQDN
-- TLS
+- `RP_ORIGINS`
 - `RP_ID`
 
 ### Legacy Authentication som fallback
 
-:::note[Planlagt]
-Legacy Authentication med brugernavn, adgangskode og tofaktorgodkendelse (2FA) udvikles som fallback til installationer uden et gyldigt FQDN, hvor passkeys ikke kan bruges.
+:::note[Tilgængelig i beta]
+Legacy Authentication med brugernavn, adgangskode og tofaktorgodkendelse (2FA) er tilgængelig i DiscVault 26 beta som fallback, når passkeys ikke kan bruges.
 
-Opsætningstrin og konfigurationsmuligheder tilføjes her, når godkendelsesmetoden er tilgængelig. Indtil da må Legacy Authentication ikke betragtes som en tilgængelig installationsvej.
+Følg `/install/legacy-authentication/`, før funktionen aktiveres eller den første ejer oprettes.
 :::
 
 ## Fremgangsmåde
 
 1. **Vælg:** FQDN · uden for localhost-undtagelsen kræver passkeys et stabilt fuldt kvalificeret domænenavn over betroet HTTPS; en ren IP-adresse eller almindelig HTTP understøttes ikke
-2. **Konfigurér:** `RP_ID`
-3. **Konfigurér:** `RP_ORIGINS` · HTTPS
-4. **Konfigurér:** `http://127.0.0.1:6080`
-5. **Test:** `GET /api/next/health`
-6. **Registrér:** vælg værtsnavnet før registrering af passkeys; en senere ændring kræver ny registrering, mens localhost kun er en lokal opsætningsundtagelse
+2. **Vælg:** [Installation: Legacy Authentication](/da/install/legacy-authentication/) · ved en direkte privat eller loopback-IP uden FQDN skal `RP_ID` og `RP_ORIGINS` være tomme
+3. **Konfigurér:** `RP_ID`
+4. **Konfigurér:** `RP_ORIGINS` · HTTPS
+5. **Konfigurér:** `6080` `6180`
+6. **Test:** `GET /api/next/health`
+7. **Registrér:** vælg værtsnavnet før registrering af passkeys; en senere ændring kræver ny registrering, mens localhost kun er en lokal opsætningsundtagelse
 
 ### Kommandoer og indstillinger
 
-#### Begge kanaler
+#### DiscVault v26 – stabil
 
 ```text
 RP_ID=discvault.example.com
+RP_NAME=DiscVault
 RP_ORIGINS=https://discvault.example.com
 curl --fail https://discvault.example.com/api/next/health
 ```
 
+#### DiscVault v26 – beta
+
+```text
+RP_ID=discvault.example.com
+RP_NAME=DiscVault
+RP_ORIGINS=https://discvault.example.com
+LEGACY_AUTH_ENABLED=true
+curl --fail http://localhost:6180/api/next/health
+```
+
 ## Forventet resultat
 
-Godkend resultatet for **Installation: Omvendt proxy og adgangsnøgler** kun når alle resultater nedenfor er opfyldt: HTTPS · HTTP `2xx`; `RP_ID`; `RP_ID` er værtsnavnet uden skema eller port, mens `RP_ORIGINS` er den nøjagtige fulde HTTPS-origin; begge skal svare til adressen i browseren. Sidespecifikke kontrolpunkter: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Godkend resultatet for **Installation: Omvendt proxy og adgangsnøgler** kun når alle resultater nedenfor er opfyldt: HTTPS · HTTP `2xx`; `RP_ID`; `RP_ID` er værtsnavnet uden skema eller port, mens `RP_ORIGINS` er den nøjagtige fulde HTTPS-origin; begge skal svare til adressen i browseren. Sidespecifikke kontrolpunkter: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 - HTTPS · HTTP `2xx`
 - `RP_ID`
@@ -82,9 +90,10 @@ Godkend resultatet for **Installation: Omvendt proxy og adgangsnøgler** kun nå
 ## Sikkerhed og tilbagerulning
 
 :::caution
-Den sikre gendannelsesgrænse for **Installation: Omvendt proxy og adgangsnøgler** kræver disse handlinger, før noget startes eller fortsættes: vælg værtsnavnet før registrering af passkeys; en senere ændring kræver ny registrering, mens localhost kun er en lokal opsætningsundtagelse; gendan proxy- og RP-værdier sammen, og behold en gendannelsesmetode for ejeren. Sidespecifikke kontrolpunkter: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Den sikre gendannelsesgrænse for **Installation: Omvendt proxy og adgangsnøgler** kræver disse handlinger, før noget startes eller fortsættes: vælg værtsnavnet før registrering af passkeys; en senere ændring kræver ny registrering, mens localhost kun er en lokal opsætningsundtagelse; kun en direkte privat eller loopback-anmodning med ugyldige eller tomme RP-indstillinger kan tilbyde opstart uden TOTP; behold TOTP til brugernavn, adgangskode og 2FA; gendan proxy- og RP-værdier sammen, og behold en gendannelsesmetode for ejeren. Sidespecifikke kontrolpunkter: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 - vælg værtsnavnet før registrering af passkeys; en senere ændring kræver ny registrering, mens localhost kun er en lokal opsætningsundtagelse
+- kun en direkte privat eller loopback-anmodning med ugyldige eller tomme RP-indstillinger kan tilbyde opstart uden TOTP; behold TOTP til brugernavn, adgangskode og 2FA
 - gendan proxy- og RP-værdier sammen, og behold en gendannelsesmetode for ejeren
 :::
 
@@ -94,7 +103,12 @@ Den sikre gendannelsesgrænse for **Installation: Omvendt proxy og adgangsnøgle
 
 ## Kilde og status
 
-- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
-- Kilde og status: `2026-07-15`
-- DiscVault Docs: `0.1.5`
+- [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
+- [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
+- [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
+- [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
+- Kilde og status: `2026-07-20`
+- DiscVault Docs: `0.1.6`
