@@ -1,38 +1,37 @@
 ---
 title: 'Installeren: Eerste start en statuscontrole'
-description: 'Taakspecifieke instructies voor Installeren: Eerste start en statuscontrole: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.'
+description: 'Taakspecifieke instructies voor Installeren: Eerste start en statuscontrole: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · `6180:5000` · WebAuthn.'
 pageId: 'install-first-start-health'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
 sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+lastVerified: '2026-07-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-20" />
 
 ## Doel en resultaat
 
-Voer de paginaspecifieke werkwijze uit voor **Installeren: Eerste start en statuscontrole**. Deze werkwijze gebruikt `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.
+Voer de paginaspecifieke werkwijze uit voor **Installeren: Eerste start en statuscontrole**. Deze werkwijze gebruikt `/api/next/health` · `/api/next/auth/status` · `6080:5000` · `6180:5000` · WebAuthn.
 
 ## Van toepassing op
 
-Deze pagina is uitsluitend van toepassing op **Installeren: Eerste start en statuscontrole** (Docker · web). De kanaal- en gegevensgrenzen zijn: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/api/next/auth/status`; `6080` → API `5000`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/api/next/auth/status`; `6080` → API `5000`. Paginaspecifieke controlepunten: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.
+Deze pagina is uitsluitend van toepassing op **Installeren: Eerste start en statuscontrole** (Docker · web). De kanaal- en gegevensgrenzen zijn: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `6080` → API `5000`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/api/next/auth/status`; `6180` → API `5000`. Paginaspecifieke controlepunten: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · `6180:5000` · WebAuthn.
 
 ### DiscVault v26 stabiel
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- `/api/next/auth/status`
 - `6080` → API `5000`
 
 ### DiscVault v26 bèta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `/api/next/auth/status`
-- `6080` → API `5000`
+- `6180` → API `5000`
 
 ## Vereisten
 
@@ -43,12 +42,13 @@ Deze pagina is uitsluitend van toepassing op **Installeren: Eerste start en stat
 
 1. **Controleren:** `postgres`
 2. **Verifiëren:** `GET /api/next/health` · HTTP `2xx`
-3. **Openen:** `6080:5000`
-4. **Verifiëren:** `GET /api/next/auth/status` · WebAuthn
+3. **Kiezen:** [Installeren: Legacy Authentication](/nl/install/legacy-authentication/)
+4. **Openen:** `6180:5000`
+5. **Verifiëren:** `GET /api/next/auth/status` · WebAuthn TOTP
 
 ### Opdrachten en instellingen
 
-#### Beide kanalen
+#### DiscVault v26 stabiel
 
 ```bash
 docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml ps
@@ -57,16 +57,25 @@ curl --fail http://localhost:6080/api/next/health
 curl --fail http://localhost:6080/api/next/auth/status
 ```
 
+#### DiscVault v26 bèta
+
+```bash
+docker compose -p discvault_next_deploy -f /opt/discvault-next/docker-compose.yml ps
+docker compose -p discvault_next_deploy -f /opt/discvault-next/docker-compose.yml logs --tail=100 next-api next-worker next-mcp postgres
+curl --fail http://localhost:6180/api/next/health
+curl --fail http://localhost:6180/api/next/auth/status
+```
+
 ## Verwacht resultaat
 
-Accepteer het resultaat voor **Installeren: Eerste start en statuscontrole** alleen wanneer alle onderstaande resultaten kloppen: health slaagt, de ingestelde origin opent en het eerste account is eigenaar. Paginaspecifieke controlepunten: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.
+Accepteer het resultaat voor **Installeren: Eerste start en statuscontrole** alleen wanneer alle onderstaande resultaten kloppen: health slaagt, de ingestelde origin opent en het eerste account is eigenaar. Paginaspecifieke controlepunten: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · `6180:5000` · WebAuthn.
 
 - health slaagt, de ingestelde origin opent en het eerste account is eigenaar
 
 ## Veiligheid en terugdraaien
 
 :::caution
-De veilige herstelgrens voor **Installeren: Eerste start en statuscontrole** vereist deze acties voordat iets start of doorgaat: logboeken met tijdstip en afgeschermde privégegevens; bijpassende back-upset. Paginaspecifieke controlepunten: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · WebAuthn.
+De veilige herstelgrens voor **Installeren: Eerste start en statuscontrole** vereist deze acties voordat iets start of doorgaat: logboeken met tijdstip en afgeschermde privégegevens; bijpassende back-upset. Paginaspecifieke controlepunten: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · `6180:5000` · WebAuthn.
 
 - logboeken met tijdstip en afgeschermde privégegevens
 - bijpassende back-upset
@@ -78,6 +87,11 @@ De veilige herstelgrens voor **Installeren: Eerste start en statuscontrole** ver
 
 ## Bron en status
 
-- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Bron en status: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
+- [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
+- [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
+- [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
+- Bron en status: `2026-07-20`
+- DiscVault Docs: `0.1.6`

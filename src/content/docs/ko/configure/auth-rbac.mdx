@@ -1,42 +1,38 @@
 ---
 title: '구성: 인증 및 RBAC'
-description: '작업별 안내: 구성: 인증 및 RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.'
+description: '작업별 안내: 구성: 인증 및 RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.'
 pageId: 'configure-auth-rbac'
 products: ['server']
 platforms: ['web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
-lastVerified: '2026-07-15'
+lastVerified: '2026-07-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="웹" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
+<PageMeta channels="stable,beta" platform="웹" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
 
 ## 목표 및 결과
 
-이 페이지 전용 절차를 수행합니다: **구성: 인증 및 RBAC**. 이 절차에서 다루는 항목: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
+이 페이지 전용 절차를 수행합니다: **구성: 인증 및 RBAC**. 이 절차에서 다루는 항목: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
 
 ## 적용 대상
 
-이 페이지의 적용 범위: **구성: 인증 및 RBAC** (웹). 채널 및 데이터 경계: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; 패스키는 암호화 키 쌍으로, 개인 키는 기기나 신뢰할 수 있는 자격 증명 관리자에 남고 DiscVault는 공개 키만 저장함; 패스키는 피싱에 강하고 사이트별로 고유하며, 재사용 가능한 계정 암호 대신 기기 잠금 해제로 로그인함; 시간 제한 초대 코드는 등록을 시작하지만 재사용 가능한 계정 암호가 아니며 일반 로그인은 패스키를 사용함; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn; 패스키는 암호화 키 쌍으로, 개인 키는 기기나 신뢰할 수 있는 자격 증명 관리자에 남고 DiscVault는 공개 키만 저장함; 패스키는 피싱에 강하고 사이트별로 고유하며, 재사용 가능한 계정 암호 대신 기기 잠금 해제로 로그인함; 시간 제한 초대 코드는 등록을 시작하지만 재사용 가능한 계정 암호가 아니며 일반 로그인은 패스키를 사용함. 이 페이지의 전용 확인 지점: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
+이 페이지의 적용 범위: **구성: 인증 및 RBAC** (웹). 채널 및 데이터 경계: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; 패스키는 암호화 키 쌍으로, 개인 키는 기기나 신뢰할 수 있는 자격 증명 관리자에 남고 DiscVault는 공개 키만 저장함; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn; TOTP. 이 페이지의 전용 확인 지점: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
 
 ### DiscVault v26 안정판
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - WebAuthn
 - 패스키는 암호화 키 쌍으로, 개인 키는 기기나 신뢰할 수 있는 자격 증명 관리자에 남고 DiscVault는 공개 키만 저장함
-- 패스키는 피싱에 강하고 사이트별로 고유하며, 재사용 가능한 계정 암호 대신 기기 잠금 해제로 로그인함
-- 시간 제한 초대 코드는 등록을 시작하지만 재사용 가능한 계정 암호가 아니며 일반 로그인은 패스키를 사용함
 
 ### DiscVault v26 베타
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - WebAuthn
-- 패스키는 암호화 키 쌍으로, 개인 키는 기기나 신뢰할 수 있는 자격 증명 관리자에 남고 DiscVault는 공개 키만 저장함
-- 패스키는 피싱에 강하고 사이트별로 고유하며, 재사용 가능한 계정 암호 대신 기기 잠금 해제로 로그인함
-- 시간 제한 초대 코드는 등록을 시작하지만 재사용 가능한 계정 암호가 아니며 일반 로그인은 패스키를 사용함
+- TOTP
 
 ## 사전 요구 사항
 
@@ -55,20 +51,29 @@ import PageMeta from '../../../../components/PageMeta.astro';
 7. **열기:** 관리 → 보안 → 인증 활성화
 8. **생성:** 관리 → 사용자 → 48시간 초대 생성
 9. **구성:** 관리 → 역할 → 기본 / 고급
-10. **테스트:** WebAuthn
+10. **구성:** 기존 설치에서는 사용자 및 역할에서 비밀번호 로그인을 활성화하고 소유자 또는 관리자의 새 패스키 확인으로 승인함 · 소유자와 관리자는 임시 비밀번호 발급, 변경 요구, 사용자별 MFA 정책 설정 및 패스키 등록 제어가 가능함
+11. **기록:** 복구 코드는 해시된 일회용이며 패스키 복구와 공유되고 백업에는 TOTP 비밀과 복구 자료가 없어 복원 후 MFA를 다시 등록해야 함 · Legacy Authentication 비활성화에는 활성 소유자 패스키가 필요하며 로컬 IP 전용 소유자는 안전한 비활성화 전에 유효한 FQDN과 소유자 패스키를 설정해야 함
+12. **테스트:** `/api/next/auth/rbac`
 
 ### 명령 및 설정
 
-#### 두 채널
+#### DiscVault v26 안정판
 
 ```bash
 curl --fail http://localhost:6080/api/next/auth/status
 curl --fail http://localhost:6080/api/next/auth/rbac
 ```
 
+#### DiscVault v26 베타
+
+```bash
+curl --fail http://localhost:6180/api/next/auth/status
+curl --fail http://localhost:6180/api/next/auth/rbac
+```
+
 ## 예상 결과
 
-다음 결과의 승인 조건: **구성: 인증 및 RBAC** 아래 결과가 모두 충족된 경우에만: 소유자 패스키 로그인이 작동하고 초대 전용 등록이 설정과 일치하며 테스트 사용자에게 할당된 권한만 있음; 패스키는 피싱에 강하고 사이트별로 고유하며, 재사용 가능한 계정 암호 대신 기기 잠금 해제로 로그인함; 시간 제한 초대 코드는 등록을 시작하지만 재사용 가능한 계정 암호가 아니며 일반 로그인은 패스키를 사용함. 이 페이지의 전용 확인 지점: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
+다음 결과의 승인 조건: **구성: 인증 및 RBAC** 아래 결과가 모두 충족된 경우에만: 소유자 패스키 로그인이 작동하고 초대 전용 등록이 설정과 일치하며 테스트 사용자에게 할당된 권한만 있음; 패스키는 피싱에 강하고 사이트별로 고유하며, 재사용 가능한 계정 암호 대신 기기 잠금 해제로 로그인함; 시간 제한 초대 코드는 등록을 시작하지만 재사용 가능한 계정 암호가 아니며 일반 로그인은 패스키를 사용함. 이 페이지의 전용 확인 지점: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
 
 - 소유자 패스키 로그인이 작동하고 초대 전용 등록이 설정과 일치하며 테스트 사용자에게 할당된 권한만 있음
 - 패스키는 피싱에 강하고 사이트별로 고유하며, 재사용 가능한 계정 암호 대신 기기 잠금 해제로 로그인함
@@ -77,9 +82,12 @@ curl --fail http://localhost:6080/api/next/auth/rbac
 ## 안전 및 롤백
 
 :::caution
-안전한 복구 경계: **구성: 인증 및 RBAC** 시작하거나 계속하기 전에 다음 작업이 필요합니다: 휴대폰과 데스크톱 기기처럼 둘 이상의 패스키를 등록하고 기기 교체나 분실 전에 독립적인 소유자 복구 경로를 유지함; 소유자 세션과 두 번째 복구 수단을 유지하고 마지막 소유자 패스키를 제거하지 않음. 이 페이지의 전용 확인 지점: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
+안전한 복구 경계: **구성: 인증 및 RBAC** 시작하거나 계속하기 전에 다음 작업이 필요합니다: 휴대폰과 데스크톱 기기처럼 둘 이상의 패스키를 등록하고 기기 교체나 분실 전에 독립적인 소유자 복구 경로를 유지함; 비밀번호는 15자 이상이어야 하고 사용자 이름 또는 거부된 일반 비밀번호와 같을 수 없으며 Argon2id로 해시되고 15분 내 5회 실패하면 15분 잠김; 복구 코드는 해시된 일회용이며 패스키 복구와 공유되고 백업에는 TOTP 비밀과 복구 자료가 없어 복원 후 MFA를 다시 등록해야 함; Legacy Authentication 비활성화에는 활성 소유자 패스키가 필요하며 로컬 IP 전용 소유자는 안전한 비활성화 전에 유효한 FQDN과 소유자 패스키를 설정해야 함; 소유자 세션과 두 번째 복구 수단을 유지하고 마지막 소유자 패스키를 제거하지 않음. 이 페이지의 전용 확인 지점: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
 
 - 휴대폰과 데스크톱 기기처럼 둘 이상의 패스키를 등록하고 기기 교체나 분실 전에 독립적인 소유자 복구 경로를 유지함
+- 비밀번호는 15자 이상이어야 하고 사용자 이름 또는 거부된 일반 비밀번호와 같을 수 없으며 Argon2id로 해시되고 15분 내 5회 실패하면 15분 잠김
+- 복구 코드는 해시된 일회용이며 패스키 복구와 공유되고 백업에는 TOTP 비밀과 복구 자료가 없어 복원 후 MFA를 다시 등록해야 함
+- Legacy Authentication 비활성화에는 활성 소유자 패스키가 필요하며 로컬 IP 전용 소유자는 안전한 비활성화 전에 유효한 FQDN과 소유자 패스키를 설정해야 함
 - 소유자 세션과 두 번째 복구 수단을 유지하고 마지막 소유자 패스키를 제거하지 않음
 :::
 
@@ -89,7 +97,12 @@ curl --fail http://localhost:6080/api/next/auth/rbac
 
 ## 출처 및 상태
 
-- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
-- 출처 및 상태: `2026-07-15`
-- DiscVault Docs: `0.1.4`
+- [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
+- [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
+- [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
+- [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
+- 출처 및 상태: `2026-07-20`
+- DiscVault Docs: `0.1.6`

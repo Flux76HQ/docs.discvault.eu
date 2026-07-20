@@ -1,6 +1,6 @@
 ---
 title: '配置: 概览'
-description: '任务专用说明： 配置: 概览: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.'
+description: '任务专用说明： 配置: 概览: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.'
 pageId: 'configure-index'
 products: ['server']
 platforms: ['docker', 'web']
@@ -16,11 +16,11 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## 目标和结果
 
-完成此页面专用的流程： **配置: 概览**. 此流程使用 `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+完成此页面专用的流程： **配置: 概览**. 此流程使用 `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 ## 适用范围
 
-本页面仅适用于 **配置: 概览** (Docker · 网页). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. 本页面专用检查点： `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+本页面仅适用于 **配置: 概览** (Docker · 网页). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. 本页面专用检查点： `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 ### DiscVault v26 稳定版
 
@@ -41,18 +41,20 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 1. **选择:** [配置: 环境变量](/zh/configure/environment/)
 2. **选择:** [配置: 身份验证和 RBAC](/zh/configure/auth-rbac/) · RBAC
-3. **选择:** [配置: 插件和元数据](/zh/configure/plugins-metadata/)
-4. **记录:** `/configure/environment/`
+3. **选择:** [安装: Legacy Authentication](/zh/install/legacy-authentication/)
+4. **选择:** [配置: 插件和元数据](/zh/configure/plugins-metadata/)
+5. **记录:** `/configure/environment/`
 
 ### 任务路径
 
-- [配置: 环境变量](/zh/configure/environment/) — `/configure/environment/`
+- [配置: 环境变量](/zh/configure/environment/) — DiscVault 26 `.env.example`
 - [配置: 身份验证和 RBAC](/zh/configure/auth-rbac/) — DiscVault 26 RBAC
+- [安装: Legacy Authentication](/zh/install/legacy-authentication/) — DiscVault 26 TOTP
 - [配置: 插件和元数据](/zh/configure/plugins-metadata/) — DiscVault 26
 
 ## 预期结果
 
-仅在以下条件下接受结果： **配置: 概览** 必须确认以下所有结果： 所选发布通道; `/configure/auth-rbac/`. 本页面专用检查点： `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+仅在以下条件下接受结果： **配置: 概览** 必须确认以下所有结果： 所选发布通道; `/configure/auth-rbac/`. 本页面专用检查点： `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 - 所选发布通道
 - `/configure/auth-rbac/`
@@ -60,7 +62,7 @@ import PageMeta from '../../../../components/PageMeta.astro';
 ## 安全与回滚
 
 :::caution
-安全恢复边界： **配置: 概览** 在启动或继续任何操作前必须执行： 每次只更改一个子系统，保留旧值与备份，并在下一项更改前完成回滚. 本页面专用检查点： `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+安全恢复边界： **配置: 概览** 在启动或继续任何操作前必须执行： 每次只更改一个子系统，保留旧值与备份，并在下一项更改前完成回滚. 本页面专用检查点： `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 - 每次只更改一个子系统，保留旧值与备份，并在下一项更改前完成回滚
 :::

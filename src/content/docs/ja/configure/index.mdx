@@ -1,6 +1,6 @@
 ---
 title: '設定: 概要'
-description: 'タスク別の手順: 設定: 概要: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.'
+description: 'タスク別の手順: 設定: 概要: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.'
 pageId: 'configure-index'
 products: ['server']
 platforms: ['docker', 'web']
@@ -16,11 +16,11 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## 目的と結果
 
-このページ専用の手順を実行します: **設定: 概要**. この手順で扱う項目: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+このページ専用の手順を実行します: **設定: 概要**. この手順で扱う項目: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 ## 対象
 
-このページの対象は **設定: 概要** (Docker · Web). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. このページ固有の確認点: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+このページの対象は **設定: 概要** (Docker · Web). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. このページ固有の確認点: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 ### DiscVault v26 安定版
 
@@ -41,18 +41,20 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 1. **選択:** [設定: 環境変数](/ja/configure/environment/)
 2. **選択:** [設定: 認証と RBAC](/ja/configure/auth-rbac/) · RBAC
-3. **選択:** [設定: プラグインとメタデータ](/ja/configure/plugins-metadata/)
-4. **記録:** `/configure/environment/`
+3. **選択:** [インストール: Legacy Authentication](/ja/install/legacy-authentication/)
+4. **選択:** [設定: プラグインとメタデータ](/ja/configure/plugins-metadata/)
+5. **記録:** `/configure/environment/`
 
 ### タスク別ルート
 
-- [設定: 環境変数](/ja/configure/environment/) — `/configure/environment/`
+- [設定: 環境変数](/ja/configure/environment/) — DiscVault 26 `.env.example`
 - [設定: 認証と RBAC](/ja/configure/auth-rbac/) — DiscVault 26 RBAC
+- [インストール: Legacy Authentication](/ja/install/legacy-authentication/) — DiscVault 26 TOTP
 - [設定: プラグインとメタデータ](/ja/configure/plugins-metadata/) — DiscVault 26
 
 ## 期待される結果
 
-次の結果を受け入れる条件: **設定: 概要** 以下の結果をすべて確認した場合のみ: 選択したリリースチャンネル; `/configure/auth-rbac/`. このページ固有の確認点: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+次の結果を受け入れる条件: **設定: 概要** 以下の結果をすべて確認した場合のみ: 選択したリリースチャンネル; `/configure/auth-rbac/`. このページ固有の確認点: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 - 選択したリリースチャンネル
 - `/configure/auth-rbac/`
@@ -60,7 +62,7 @@ import PageMeta from '../../../../components/PageMeta.astro';
 ## 安全性とロールバック
 
 :::caution
-安全な復旧境界: **設定: 概要** 起動または続行の前に、次の操作が必要です: 一度に 1 つのサブシステムだけを変更し、以前の値とバックアップを保持し、次の変更前にロールバックします. このページ固有の確認点: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+安全な復旧境界: **設定: 概要** 起動または続行の前に、次の操作が必要です: 一度に 1 つのサブシステムだけを変更し、以前の値とバックアップを保持し、次の変更前にロールバックします. このページ固有の確認点: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 - 一度に 1 つのサブシステムだけを変更し、以前の値とバックアップを保持し、次の変更前にロールバックします
 :::

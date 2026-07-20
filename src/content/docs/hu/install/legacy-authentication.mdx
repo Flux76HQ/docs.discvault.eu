@@ -1,0 +1,107 @@
+---
+title: 'Telepítés: Legacy Authentication'
+description: 'Feladatspecifikus útmutató: Telepítés: Legacy Authentication: `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.'
+pageId: 'install-legacy-authentication'
+products: ['server']
+platforms: ['docker', 'web']
+channels: ['beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-20'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-20" />
+
+## Cél és eredmény
+
+Hajtsa végre az oldalhoz tartozó munkafolyamatot: **Telepítés: Legacy Authentication**. Ez az eljárás ezeket használja: `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.
+
+## Érvényesség
+
+Ez az oldal kizárólag erre vonatkozik: **Telepítés: Legacy Authentication** (Docker · web). A csatorna- és adathatárok: DiscVault · `ghcr.io/helmerznl/discvault:beta`; TOTP; FQDN HTTPS. Oldalspecifikus ellenőrzési pontok: `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.
+
+### DiscVault v26 – béta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- TOTP
+- FQDN HTTPS
+
+## Előfeltételek
+
+- A felhasználónévvel, jelszóval és kétfaktoros hitelesítéssel (2FA) működő Legacy Authentication elérhető a DiscVault 26 bétában, ha a passkey nem használható.
+- tulajdonosi hozzáférés · felhasználók és hitelesítő adatok nélküli új példányon a varázsló a jelszókockázat elfogadása után atomikusan létrehozza az első tulajdonost
+- TOTP · a helyreállító kódok hash-elt, egyszer használatos és a passkey-helyreállítással közös kódok; a mentésből kimarad a TOTP-titok és helyreállítási anyag, ezért az MFA-t újra be kell állítani
+
+### Legacy Authentication tartalékmegoldás
+
+:::note[Elérhető a bétában]
+csak közvetlen privát vagy loopback kérés érvénytelen vagy üres RP-beállítással kínálhat TOTP nélküli bootstrapot; a felhasználónév, jelszó és 2FA úton tartsa meg a TOTP-t
+:::
+
+## Eljárás
+
+1. **Állítsa be:** `LEGACY_AUTH_ENABLED=true` · érvényes FQDN esetén hangolja össze az `RP_ID` és `RP_ORIGINS` értékét, és használjon megbízható HTTPS-t
+2. **Állítsa be:** `RP_ID=` · `RP_ORIGINS=` · FQDN nélküli közvetlen privát vagy loopback IP esetén hagyja üresen az `RP_ID` és `RP_ORIGINS` értékét
+3. **Válassza ki:** felhasználók és hitelesítő adatok nélküli új példányon a varázsló a jelszókockázat elfogadása után atomikusan létrehozza az első tulajdonost · meglévő telepítésen engedélyezze a jelszavas belépést a Felhasználók és szerepkörök alatt, majd friss tulajdonosi vagy admin passkey-ellenőrzéssel hagyja jóvá
+4. **Hozza létre:** a jelszó legalább 15 karakteres, nem lehet a felhasználónév vagy tiltott gyakori jelszó, és Argon2id hash védi; 15 percen belül öt hiba 15 perces zárolást okoz · TOTP · a helyreállító kódok hash-elt, egyszer használatos és a passkey-helyreállítással közös kódok; a mentésből kimarad a TOTP-titok és helyreállítási anyag, ezért az MFA-t újra be kell állítani
+5. **Állítsa be:** tulajdonosok és adminok ideiglenes jelszót adhatnak, cserét írhatnak elő, felhasználói MFA-házirendet állíthatnak és szabályozhatják a passkey-regisztrációt
+6. **Tesztelje:** A felhasználónévvel, jelszóval és kétfaktoros hitelesítéssel (2FA) működő Legacy Authentication elérhető a DiscVault 26 bétában, ha a passkey nem használható. · `GET /api/next/auth/status`
+7. **Jegyezze fel:** a helyreállító kódok hash-elt, egyszer használatos és a passkey-helyreállítással közös kódok; a mentésből kimarad a TOTP-titok és helyreállítási anyag, ezért az MFA-t újra be kell állítani
+
+### Parancsok és beállítások
+
+#### DiscVault v26 – béta
+
+```text
+RP_ID=discvault.example.com
+RP_NAME=DiscVault
+RP_ORIGINS=https://discvault.example.com
+LEGACY_AUTH_ENABLED=true
+```
+
+```text
+RP_ID=
+RP_NAME=DiscVault
+RP_ORIGINS=
+LEGACY_AUTH_ENABLED=true
+```
+
+```bash
+curl --fail http://localhost:6180/api/next/health
+curl --fail http://localhost:6180/api/next/auth/status
+```
+
+## Várt eredmény
+
+Az eredmény csak ennél fogadható el: **Telepítés: Legacy Authentication** csak akkor, ha minden alábbi eredmény teljesül: A felhasználónévvel, jelszóval és kétfaktoros hitelesítéssel (2FA) működő Legacy Authentication elérhető a DiscVault 26 bétában, ha a passkey nem használható.; TOTP · a helyreállító kódok hash-elt, egyszer használatos és a passkey-helyreállítással közös kódok; a mentésből kimarad a TOTP-titok és helyreállítási anyag, ezért az MFA-t újra be kell állítani; a jelszó legalább 15 karakteres, nem lehet a felhasználónév vagy tiltott gyakori jelszó, és Argon2id hash védi; 15 percen belül öt hiba 15 perces zárolást okoz. Oldalspecifikus ellenőrzési pontok: `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.
+
+- A felhasználónévvel, jelszóval és kétfaktoros hitelesítéssel (2FA) működő Legacy Authentication elérhető a DiscVault 26 bétában, ha a passkey nem használható.
+- TOTP · a helyreállító kódok hash-elt, egyszer használatos és a passkey-helyreállítással közös kódok; a mentésből kimarad a TOTP-titok és helyreállítási anyag, ezért az MFA-t újra be kell állítani
+- a jelszó legalább 15 karakteres, nem lehet a felhasználónév vagy tiltott gyakori jelszó, és Argon2id hash védi; 15 percen belül öt hiba 15 perces zárolást okoz
+
+## Biztonság és visszaállítás
+
+:::caution
+A biztonságos helyreállítás határa ennél: **Telepítés: Legacy Authentication** ezeket a műveleteket igényli indítás vagy folytatás előtt: a jelszó legalább 15 karakteres, nem lehet a felhasználónév vagy tiltott gyakori jelszó, és Argon2id hash védi; 15 percen belül öt hiba 15 perces zárolást okoz; a helyreállító kódok hash-elt, egyszer használatos és a passkey-helyreállítással közös kódok; a mentésből kimarad a TOTP-titok és helyreállítási anyag, ezért az MFA-t újra be kell állítani; a Legacy Authentication kikapcsolásához aktív tulajdonosi passkey kell; csak helyi IP-t használó tulajdonosnak előbb érvényes FQDN-t és passkey-t kell létrehoznia. Oldalspecifikus ellenőrzési pontok: `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.
+
+- a jelszó legalább 15 karakteres, nem lehet a felhasználónév vagy tiltott gyakori jelszó, és Argon2id hash védi; 15 percen belül öt hiba 15 perces zárolást okoz
+- a helyreállító kódok hash-elt, egyszer használatos és a passkey-helyreállítással közös kódok; a mentésből kimarad a TOTP-titok és helyreállítási anyag, ezért az MFA-t újra be kell állítani
+- a Legacy Authentication kikapcsolásához aktív tulajdonosi passkey kell; csak helyi IP-t használó tulajdonosnak előbb érvényes FQDN-t és passkey-t kell létrehoznia
+:::
+
+## Következő lépés
+
+[Telepítés: Első indítás és állapotellenőrzés](/hu/install/first-start-health/)
+
+## Forrás és állapot
+
+- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
+- [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
+- [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
+- [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
+- Forrás és állapot: `2026-07-20`
+- DiscVault Docs: `0.1.6`

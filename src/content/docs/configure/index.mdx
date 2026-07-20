@@ -1,6 +1,6 @@
 ---
 title: 'Configure: Overview'
-description: 'Configure runtime values, authentication, roles, and providers without exposing secrets.'
+description: 'Configure runtime values, Passkeys, beta Legacy Authentication, roles, and providers without exposing secrets.'
 pageId: 'configure-index'
 products: ['server']
 platforms: ['docker', 'web']
@@ -16,11 +16,11 @@ import PageMeta from '../../../components/PageMeta.astro';
 
 ## Goal and result
 
-Configure runtime values, authentication, roles, and providers without exposing secrets.
+Configure runtime values, Passkeys, beta Legacy Authentication, roles, and providers without exposing secrets.
 
 ## Applies to
 
-The same v26 configuration model applies to stable and beta; only `DISCVAULT_IMAGE` selects the release channel.
+Passkeys, RBAC, and plugins apply to stable and beta. The official `release/v26-beta` Compose environment and Legacy Authentication procedures are beta-only and use the `DISCVAULT_NEXT_*` variable names.
 
 ### DiscVault v26 stable
 
@@ -39,15 +39,17 @@ The same v26 configuration model applies to stable and beta; only `DISCVAULT_IMA
 
 ## Procedure
 
-1. **Choose:** [Configure: Environment variables](/configure/environment/) · runtime assignments
-2. **Choose:** [Configure: Authentication and RBAC](/configure/auth-rbac/) · passkeys + RBAC
-3. **Choose:** [Configure: Plugins and metadata](/configure/plugins-metadata/) · provider registry
-4. **Record:** one subsystem change · previous value · acceptance result
+1. **Choose:** [Configure: Environment variables](/configure/environment/) · official beta runtime assignments
+2. **Choose:** [Configure: Authentication and RBAC](/configure/auth-rbac/) · Passkeys + Legacy Authentication + RBAC
+3. **Choose:** [Install: Legacy Authentication](/install/legacy-authentication/) · beta onboarding and recovery
+4. **Choose:** [Configure: Plugins and metadata](/configure/plugins-metadata/) · provider registry
+5. **Record:** one subsystem change · previous value · acceptance result
 
 ### Task routes
 
-- [Configure: Environment variables](/configure/environment/) — v26 Compose variables · secrets
-- [Configure: Authentication and RBAC](/configure/auth-rbac/) — DiscVault 26 · passkeys · invites · RBAC
+- [Configure: Environment variables](/configure/environment/) — DiscVault 26 beta · official `.env.example` · secrets
+- [Configure: Authentication and RBAC](/configure/auth-rbac/) — DiscVault 26 · Passkeys · beta Legacy Authentication · invites · RBAC
+- [Install: Legacy Authentication](/install/legacy-authentication/) — DiscVault 26 beta · password + TOTP · recovery
 - [Configure: Plugins and metadata](/configure/plugins-metadata/) — DiscVault 26 · plugins · metadata
 
 ## Expected result

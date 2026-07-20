@@ -1,79 +1,87 @@
 ---
 title: 'Εγκατάσταση: Αντίστροφος διακομιστής μεσολάβησης και κλειδιά πρόσβασης'
-description: 'Οδηγίες ειδικά για την εργασία: Εγκατάσταση: Αντίστροφος διακομιστής μεσολάβησης και κλειδιά πρόσβασης: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.'
+description: 'Οδηγίες ειδικά για την εργασία: Εγκατάσταση: Αντίστροφος διακομιστής μεσολάβησης και κλειδιά πρόσβασης: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.'
 pageId: 'install-reverse-proxy-passkeys'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
-lastVerified: '2026-07-15'
+lastVerified: '2026-07-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · ιστός" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
+<PageMeta channels="stable,beta" platform="Docker · ιστός" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
 
 ## Στόχος και αποτέλεσμα
 
-Ολοκληρώστε τη ροή εργασίας της σελίδας για **Εγκατάσταση: Αντίστροφος διακομιστής μεσολάβησης και κλειδιά πρόσβασης**. Η διαδικασία χρησιμοποιεί FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Ολοκληρώστε τη ροή εργασίας της σελίδας για **Εγκατάσταση: Αντίστροφος διακομιστής μεσολάβησης και κλειδιά πρόσβασης**. Η διαδικασία χρησιμοποιεί FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 ## Ισχύει για
 
-Αυτή η σελίδα ισχύει μόνο για **Εγκατάσταση: Αντίστροφος διακομιστής μεσολάβησης και κλειδιά πρόσβασης** (Docker · ιστός). Τα όρια καναλιού και δεδομένων είναι: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`; εκτός της εξαίρεσης ρύθμισης localhost, τα passkeys απαιτούν σταθερό πλήρως προσδιορισμένο όνομα τομέα μέσω αξιόπιστου HTTPS· γυμνή διεύθυνση IP ή απλό HTTP δεν υποστηρίζονται; το `RP_ID` είναι το hostname χωρίς scheme ή θύρα, ενώ το `RP_ORIGINS` είναι το ακριβές πλήρες HTTPS origin· και τα δύο πρέπει να ταιριάζουν με τη διεύθυνση του προγράμματος περιήγησης; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`; εκτός της εξαίρεσης ρύθμισης localhost, τα passkeys απαιτούν σταθερό πλήρως προσδιορισμένο όνομα τομέα μέσω αξιόπιστου HTTPS· γυμνή διεύθυνση IP ή απλό HTTP δεν υποστηρίζονται; το `RP_ID` είναι το hostname χωρίς scheme ή θύρα, ενώ το `RP_ORIGINS` είναι το ακριβές πλήρες HTTPS origin· και τα δύο πρέπει να ταιριάζουν με τη διεύθυνση του προγράμματος περιήγησης. Σημεία ελέγχου της σελίδας: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Αυτή η σελίδα ισχύει μόνο για **Εγκατάσταση: Αντίστροφος διακομιστής μεσολάβησης και κλειδιά πρόσβασης** (Docker · ιστός). Τα όρια καναλιού και δεδομένων είναι: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6080`; εκτός της εξαίρεσης ρύθμισης localhost, τα passkeys απαιτούν σταθερό πλήρως προσδιορισμένο όνομα τομέα μέσω αξιόπιστου HTTPS· γυμνή διεύθυνση IP ή απλό HTTP δεν υποστηρίζονται; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; `LEGACY_AUTH_ENABLED=true`. Σημεία ελέγχου της σελίδας: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 ### DiscVault v26 – σταθερό
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- `RP_ID` `RP_ORIGINS`
-- `6080` API `5000`
+- `RP_ID` `RP_ORIGINS` · `6080`
 - εκτός της εξαίρεσης ρύθμισης localhost, τα passkeys απαιτούν σταθερό πλήρως προσδιορισμένο όνομα τομέα μέσω αξιόπιστου HTTPS· γυμνή διεύθυνση IP ή απλό HTTP δεν υποστηρίζονται
-- το `RP_ID` είναι το hostname χωρίς scheme ή θύρα, ενώ το `RP_ORIGINS` είναι το ακριβές πλήρες HTTPS origin· και τα δύο πρέπει να ταιριάζουν με τη διεύθυνση του προγράμματος περιήγησης
 
 ### DiscVault v26 – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- `RP_ID` `RP_ORIGINS`
-- `6080` API `5000`
-- εκτός της εξαίρεσης ρύθμισης localhost, τα passkeys απαιτούν σταθερό πλήρως προσδιορισμένο όνομα τομέα μέσω αξιόπιστου HTTPS· γυμνή διεύθυνση IP ή απλό HTTP δεν υποστηρίζονται
-- το `RP_ID` είναι το hostname χωρίς scheme ή θύρα, ενώ το `RP_ORIGINS` είναι το ακριβές πλήρες HTTPS origin· και τα δύο πρέπει να ταιριάζουν με τη διεύθυνση του προγράμματος περιήγησης
+- `RP_ID` `RP_ORIGINS` · `6180`
+- `LEGACY_AUTH_ENABLED=true`
 
 ## Προϋποθέσεις
 
 - FQDN
-- TLS
+- `RP_ORIGINS`
 - `RP_ID`
 
 ### Εναλλακτική Legacy Authentication
 
-:::note[Προγραμματισμένο]
-Το Legacy Authentication με όνομα χρήστη, κωδικό πρόσβασης και έλεγχο ταυτότητας δύο παραγόντων (2FA) αναπτύσσεται ως εναλλακτική για εγκαταστάσεις χωρίς έγκυρο FQDN, όπου δεν μπορούν να χρησιμοποιηθούν passkeys.
+:::note[Διαθέσιμο στην beta]
+Το Legacy Authentication με όνομα χρήστη, κωδικό πρόσβασης και έλεγχο δύο παραγόντων (2FA) είναι διαθέσιμο στο DiscVault 26 beta όταν δεν μπορούν να χρησιμοποιηθούν passkeys.
 
-Τα βήματα ρύθμισης και οι επιλογές διαμόρφωσης θα προστεθούν εδώ όταν γίνει διαθέσιμη αυτή η μέθοδος ελέγχου ταυτότητας. Μέχρι τότε, μην θεωρείτε το Legacy Authentication διαθέσιμη διαδρομή εγκατάστασης.
+Ακολουθήστε το `/install/legacy-authentication/` πριν ενεργοποιήσετε τη δυνατότητα ή δημιουργήσετε τον πρώτο κάτοχο.
 :::
 
 ## Διαδικασία
 
 1. **Επιλέξτε:** FQDN · εκτός της εξαίρεσης ρύθμισης localhost, τα passkeys απαιτούν σταθερό πλήρως προσδιορισμένο όνομα τομέα μέσω αξιόπιστου HTTPS· γυμνή διεύθυνση IP ή απλό HTTP δεν υποστηρίζονται
-2. **Ρυθμίστε:** `RP_ID`
-3. **Ρυθμίστε:** `RP_ORIGINS` · HTTPS
-4. **Ρυθμίστε:** `http://127.0.0.1:6080`
-5. **Δοκιμάστε:** `GET /api/next/health`
-6. **Καταγράψτε:** επιλέξτε το hostname πριν καταχωρίσετε passkeys· μεταγενέστερη αλλαγή απαιτεί νέα καταχώριση, ενώ το localhost παραμένει μόνο εξαίρεση τοπικής ρύθμισης
+2. **Επιλέξτε:** [Εγκατάσταση: Legacy Authentication](/el/install/legacy-authentication/) · για άμεση ιδιωτική ή loopback IP χωρίς FQDN αφήστε κενά τα `RP_ID` και `RP_ORIGINS`
+3. **Ρυθμίστε:** `RP_ID`
+4. **Ρυθμίστε:** `RP_ORIGINS` · HTTPS
+5. **Ρυθμίστε:** `6080` `6180`
+6. **Δοκιμάστε:** `GET /api/next/health`
+7. **Καταγράψτε:** επιλέξτε το hostname πριν καταχωρίσετε passkeys· μεταγενέστερη αλλαγή απαιτεί νέα καταχώριση, ενώ το localhost παραμένει μόνο εξαίρεση τοπικής ρύθμισης
 
 ### Εντολές και ρυθμίσεις
 
-#### Και τα δύο κανάλια
+#### DiscVault v26 – σταθερό
 
 ```text
 RP_ID=discvault.example.com
+RP_NAME=DiscVault
 RP_ORIGINS=https://discvault.example.com
 curl --fail https://discvault.example.com/api/next/health
 ```
 
+#### DiscVault v26 – beta
+
+```text
+RP_ID=discvault.example.com
+RP_NAME=DiscVault
+RP_ORIGINS=https://discvault.example.com
+LEGACY_AUTH_ENABLED=true
+curl --fail http://localhost:6180/api/next/health
+```
+
 ## Αναμενόμενο αποτέλεσμα
 
-Αποδεχθείτε το αποτέλεσμα για **Εγκατάσταση: Αντίστροφος διακομιστής μεσολάβησης και κλειδιά πρόσβασης** μόνο όταν ισχύουν όλα τα παρακάτω αποτελέσματα: HTTPS · HTTP `2xx`; `RP_ID`; το `RP_ID` είναι το hostname χωρίς scheme ή θύρα, ενώ το `RP_ORIGINS` είναι το ακριβές πλήρες HTTPS origin· και τα δύο πρέπει να ταιριάζουν με τη διεύθυνση του προγράμματος περιήγησης. Σημεία ελέγχου της σελίδας: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Αποδεχθείτε το αποτέλεσμα για **Εγκατάσταση: Αντίστροφος διακομιστής μεσολάβησης και κλειδιά πρόσβασης** μόνο όταν ισχύουν όλα τα παρακάτω αποτελέσματα: HTTPS · HTTP `2xx`; `RP_ID`; το `RP_ID` είναι το hostname χωρίς scheme ή θύρα, ενώ το `RP_ORIGINS` είναι το ακριβές πλήρες HTTPS origin· και τα δύο πρέπει να ταιριάζουν με τη διεύθυνση του προγράμματος περιήγησης. Σημεία ελέγχου της σελίδας: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 - HTTPS · HTTP `2xx`
 - `RP_ID`
@@ -82,9 +90,10 @@ curl --fail https://discvault.example.com/api/next/health
 ## Ασφάλεια και επαναφορά
 
 :::caution
-Το ασφαλές όριο ανάκτησης για **Εγκατάσταση: Αντίστροφος διακομιστής μεσολάβησης και κλειδιά πρόσβασης** απαιτεί αυτές τις ενέργειες πριν από κάθε εκκίνηση ή συνέχεια: επιλέξτε το hostname πριν καταχωρίσετε passkeys· μεταγενέστερη αλλαγή απαιτεί νέα καταχώριση, ενώ το localhost παραμένει μόνο εξαίρεση τοπικής ρύθμισης; επαναφέρετε μαζί τις τιμές proxy και RP και διατηρήστε μέθοδο ανάκτησης κατόχου. Σημεία ελέγχου της σελίδας: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Το ασφαλές όριο ανάκτησης για **Εγκατάσταση: Αντίστροφος διακομιστής μεσολάβησης και κλειδιά πρόσβασης** απαιτεί αυτές τις ενέργειες πριν από κάθε εκκίνηση ή συνέχεια: επιλέξτε το hostname πριν καταχωρίσετε passkeys· μεταγενέστερη αλλαγή απαιτεί νέα καταχώριση, ενώ το localhost παραμένει μόνο εξαίρεση τοπικής ρύθμισης; μόνο άμεσο ιδιωτικό ή loopback αίτημα με άκυρες ή κενές ρυθμίσεις RP μπορεί να προσφέρει bootstrap χωρίς TOTP· διατηρήστε το TOTP για όνομα χρήστη, κωδικό και 2FA; επαναφέρετε μαζί τις τιμές proxy και RP και διατηρήστε μέθοδο ανάκτησης κατόχου. Σημεία ελέγχου της σελίδας: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 - επιλέξτε το hostname πριν καταχωρίσετε passkeys· μεταγενέστερη αλλαγή απαιτεί νέα καταχώριση, ενώ το localhost παραμένει μόνο εξαίρεση τοπικής ρύθμισης
+- μόνο άμεσο ιδιωτικό ή loopback αίτημα με άκυρες ή κενές ρυθμίσεις RP μπορεί να προσφέρει bootstrap χωρίς TOTP· διατηρήστε το TOTP για όνομα χρήστη, κωδικό και 2FA
 - επαναφέρετε μαζί τις τιμές proxy και RP και διατηρήστε μέθοδο ανάκτησης κατόχου
 :::
 
@@ -94,7 +103,12 @@ curl --fail https://discvault.example.com/api/next/health
 
 ## Πηγή και κατάσταση
 
-- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
-- Πηγή και κατάσταση: `2026-07-15`
-- DiscVault Docs: `0.1.5`
+- [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
+- [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
+- [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
+- [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
+- Πηγή και κατάσταση: `2026-07-20`
+- DiscVault Docs: `0.1.6`

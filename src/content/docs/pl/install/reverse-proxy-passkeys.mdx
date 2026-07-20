@@ -1,79 +1,87 @@
 ---
 title: 'Instalacja: Odwrotny serwer proxy i klucze dostępu'
-description: 'Instrukcja właściwa dla zadania: Instalacja: Odwrotny serwer proxy i klucze dostępu: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.'
+description: 'Instrukcja właściwa dla zadania: Instalacja: Odwrotny serwer proxy i klucze dostępu: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.'
 pageId: 'install-reverse-proxy-passkeys'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
-lastVerified: '2026-07-15'
+lastVerified: '2026-07-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
 
 ## Cel i rezultat
 
-Wykonaj procedurę właściwą dla strony: **Instalacja: Odwrotny serwer proxy i klucze dostępu**. Ta procedura korzysta z FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Wykonaj procedurę właściwą dla strony: **Instalacja: Odwrotny serwer proxy i klucze dostępu**. Ta procedura korzysta z FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 ## Dotyczy
 
-Ta strona dotyczy wyłącznie **Instalacja: Odwrotny serwer proxy i klucze dostępu** (Docker · web). Granice kanału i danych: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`; poza wyjątkiem localhost passkeys wymagają stabilnej pełnej nazwy domenowej przez zaufany HTTPS; sam adres IP ani zwykły HTTP nie są obsługiwane; `RP_ID` to nazwa hosta bez schematu i portu, a `RP_ORIGINS` to dokładne pełne źródło HTTPS; oba muszą odpowiadać adresowi otwartemu w przeglądarce; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`; poza wyjątkiem localhost passkeys wymagają stabilnej pełnej nazwy domenowej przez zaufany HTTPS; sam adres IP ani zwykły HTTP nie są obsługiwane; `RP_ID` to nazwa hosta bez schematu i portu, a `RP_ORIGINS` to dokładne pełne źródło HTTPS; oba muszą odpowiadać adresowi otwartemu w przeglądarce. Punkty kontrolne tej strony: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Ta strona dotyczy wyłącznie **Instalacja: Odwrotny serwer proxy i klucze dostępu** (Docker · web). Granice kanału i danych: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6080`; poza wyjątkiem localhost passkeys wymagają stabilnej pełnej nazwy domenowej przez zaufany HTTPS; sam adres IP ani zwykły HTTP nie są obsługiwane; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; `LEGACY_AUTH_ENABLED=true`. Punkty kontrolne tej strony: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 ### DiscVault v26 – stabilny
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- `RP_ID` `RP_ORIGINS`
-- `6080` API `5000`
+- `RP_ID` `RP_ORIGINS` · `6080`
 - poza wyjątkiem localhost passkeys wymagają stabilnej pełnej nazwy domenowej przez zaufany HTTPS; sam adres IP ani zwykły HTTP nie są obsługiwane
-- `RP_ID` to nazwa hosta bez schematu i portu, a `RP_ORIGINS` to dokładne pełne źródło HTTPS; oba muszą odpowiadać adresowi otwartemu w przeglądarce
 
 ### DiscVault v26 – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- `RP_ID` `RP_ORIGINS`
-- `6080` API `5000`
-- poza wyjątkiem localhost passkeys wymagają stabilnej pełnej nazwy domenowej przez zaufany HTTPS; sam adres IP ani zwykły HTTP nie są obsługiwane
-- `RP_ID` to nazwa hosta bez schematu i portu, a `RP_ORIGINS` to dokładne pełne źródło HTTPS; oba muszą odpowiadać adresowi otwartemu w przeglądarce
+- `RP_ID` `RP_ORIGINS` · `6180`
+- `LEGACY_AUTH_ENABLED=true`
 
 ## Wymagania wstępne
 
 - FQDN
-- TLS
+- `RP_ORIGINS`
 - `RP_ID`
 
 ### Awaryjne Legacy Authentication
 
-:::note[Planowane]
-Legacy Authentication z nazwą użytkownika, hasłem i uwierzytelnianiem dwuskładnikowym (2FA) jest rozwijane jako rozwiązanie awaryjne dla instalacji bez prawidłowego FQDN, w których nie można używać passkeys.
+:::note[Dostępne w wersji beta]
+Legacy Authentication z nazwą użytkownika, hasłem i uwierzytelnianiem dwuskładnikowym (2FA) jest dostępne w DiscVault 26 beta, gdy nie można używać passkeys.
 
-Kroki konfiguracji i opcje zostaną dodane tutaj, gdy ta metoda uwierzytelniania będzie dostępna. Do tego czasu nie traktuj Legacy Authentication jako dostępnej ścieżki instalacji.
+Przed włączeniem funkcji lub utworzeniem pierwszego właściciela wykonaj `/install/legacy-authentication/`.
 :::
 
 ## Procedura
 
 1. **Wybierz:** FQDN · poza wyjątkiem localhost passkeys wymagają stabilnej pełnej nazwy domenowej przez zaufany HTTPS; sam adres IP ani zwykły HTTP nie są obsługiwane
-2. **Skonfiguruj:** `RP_ID`
-3. **Skonfiguruj:** `RP_ORIGINS` · HTTPS
-4. **Skonfiguruj:** `http://127.0.0.1:6080`
-5. **Przetestuj:** `GET /api/next/health`
-6. **Zapisz:** wybierz nazwę hosta przed rejestracją passkeys; późniejsza zmiana wymaga ponownej rejestracji, a localhost pozostaje tylko wyjątkiem lokalnej konfiguracji
+2. **Wybierz:** [Instalacja: Legacy Authentication](/pl/install/legacy-authentication/) · dla bezpośredniego prywatnego lub zwrotnego IP bez FQDN pozostaw `RP_ID` i `RP_ORIGINS` puste
+3. **Skonfiguruj:** `RP_ID`
+4. **Skonfiguruj:** `RP_ORIGINS` · HTTPS
+5. **Skonfiguruj:** `6080` `6180`
+6. **Przetestuj:** `GET /api/next/health`
+7. **Zapisz:** wybierz nazwę hosta przed rejestracją passkeys; późniejsza zmiana wymaga ponownej rejestracji, a localhost pozostaje tylko wyjątkiem lokalnej konfiguracji
 
 ### Polecenia i ustawienia
 
-#### Oba kanały
+#### DiscVault v26 – stabilny
 
 ```text
 RP_ID=discvault.example.com
+RP_NAME=DiscVault
 RP_ORIGINS=https://discvault.example.com
 curl --fail https://discvault.example.com/api/next/health
 ```
 
+#### DiscVault v26 – beta
+
+```text
+RP_ID=discvault.example.com
+RP_NAME=DiscVault
+RP_ORIGINS=https://discvault.example.com
+LEGACY_AUTH_ENABLED=true
+curl --fail http://localhost:6180/api/next/health
+```
+
 ## Oczekiwany rezultat
 
-Zaakceptuj wynik dla **Instalacja: Odwrotny serwer proxy i klucze dostępu** tylko gdy wszystkie poniższe wyniki są prawdziwe: HTTPS · HTTP `2xx`; `RP_ID`; `RP_ID` to nazwa hosta bez schematu i portu, a `RP_ORIGINS` to dokładne pełne źródło HTTPS; oba muszą odpowiadać adresowi otwartemu w przeglądarce. Punkty kontrolne tej strony: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Zaakceptuj wynik dla **Instalacja: Odwrotny serwer proxy i klucze dostępu** tylko gdy wszystkie poniższe wyniki są prawdziwe: HTTPS · HTTP `2xx`; `RP_ID`; `RP_ID` to nazwa hosta bez schematu i portu, a `RP_ORIGINS` to dokładne pełne źródło HTTPS; oba muszą odpowiadać adresowi otwartemu w przeglądarce. Punkty kontrolne tej strony: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 - HTTPS · HTTP `2xx`
 - `RP_ID`
@@ -82,9 +90,10 @@ Zaakceptuj wynik dla **Instalacja: Odwrotny serwer proxy i klucze dostępu** tyl
 ## Bezpieczeństwo i wycofanie
 
 :::caution
-Bezpieczna granica odzyskiwania dla **Instalacja: Odwrotny serwer proxy i klucze dostępu** wymaga tych działań przed uruchomieniem lub kontynuacją: wybierz nazwę hosta przed rejestracją passkeys; późniejsza zmiana wymaga ponownej rejestracji, a localhost pozostaje tylko wyjątkiem lokalnej konfiguracji; przywróć razem proxy i wartości RP oraz zachowaj metodę odzyskiwania właściciela. Punkty kontrolne tej strony: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Bezpieczna granica odzyskiwania dla **Instalacja: Odwrotny serwer proxy i klucze dostępu** wymaga tych działań przed uruchomieniem lub kontynuacją: wybierz nazwę hosta przed rejestracją passkeys; późniejsza zmiana wymaga ponownej rejestracji, a localhost pozostaje tylko wyjątkiem lokalnej konfiguracji; tylko bezpośrednie prywatne lub zwrotne żądanie z nieprawidłowym lub pustym RP może oferować start bez TOTP; pozostaw TOTP dla nazwy użytkownika, hasła i 2FA; przywróć razem proxy i wartości RP oraz zachowaj metodę odzyskiwania właściciela. Punkty kontrolne tej strony: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 - wybierz nazwę hosta przed rejestracją passkeys; późniejsza zmiana wymaga ponownej rejestracji, a localhost pozostaje tylko wyjątkiem lokalnej konfiguracji
+- tylko bezpośrednie prywatne lub zwrotne żądanie z nieprawidłowym lub pustym RP może oferować start bez TOTP; pozostaw TOTP dla nazwy użytkownika, hasła i 2FA
 - przywróć razem proxy i wartości RP oraz zachowaj metodę odzyskiwania właściciela
 :::
 
@@ -94,7 +103,12 @@ Bezpieczna granica odzyskiwania dla **Instalacja: Odwrotny serwer proxy i klucze
 
 ## Źródło i stan
 
-- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
-- Źródło i stan: `2026-07-15`
-- DiscVault Docs: `0.1.5`
+- [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
+- [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
+- [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
+- [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
+- Źródło i stan: `2026-07-20`
+- DiscVault Docs: `0.1.6`

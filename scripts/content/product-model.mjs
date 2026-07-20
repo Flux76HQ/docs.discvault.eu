@@ -31,13 +31,14 @@ export const imageChannels = Object.freeze({
 });
 
 export const deployment = Object.freeze({
-  composeProject: 'discvault',
+  composeProject: 'discvault_next_deploy',
   services: Object.freeze(['postgres', 'next-api', 'next-worker', 'next-mcp']),
   database: 'PostgreSQL 17',
   filesystem: '/data',
-  apiHostPort: 6080,
+  apiHostPort: 6180,
   apiContainerPort: 5000,
   mcpHostPort: 6090,
   healthEndpoint: '/api/next/health',
-  sourceCompose: 'app/deploy/next/docker-compose.yml@6d27c689ac2166651d2c7c74833c1ee225b37ec3',
+  sourceCompose: 'app/deploy/next/docker-compose.yml@4352c060ccd6fd625a828f6e20c24f111c9ef743',
+  sourceEnvironment: 'app/deploy/next/.env.example@4352c060ccd6fd625a828f6e20c24f111c9ef743',
 });

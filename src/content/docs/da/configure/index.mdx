@@ -1,6 +1,6 @@
 ---
 title: 'Konfiguration: Oversigt'
-description: 'Opgavespecifik vejledning til Konfiguration: Oversigt: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.'
+description: 'Opgavespecifik vejledning til Konfiguration: Oversigt: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.'
 pageId: 'configure-index'
 products: ['server']
 platforms: ['docker', 'web']
@@ -16,11 +16,11 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## Mål og resultat
 
-Gennemfør den sidespecifikke arbejdsgang for **Konfiguration: Oversigt**. Denne fremgangsmåde arbejder med `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Gennemfør den sidespecifikke arbejdsgang for **Konfiguration: Oversigt**. Denne fremgangsmåde arbejder med `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 ## Gælder for
 
-Denne side gælder kun for **Konfiguration: Oversigt** (Docker · web). Kanal- og datagrænserne er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. Sidespecifikke kontrolpunkter: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Denne side gælder kun for **Konfiguration: Oversigt** (Docker · web). Kanal- og datagrænserne er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. Sidespecifikke kontrolpunkter: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 ### DiscVault v26 – stabil
 
@@ -41,18 +41,20 @@ Denne side gælder kun for **Konfiguration: Oversigt** (Docker · web). Kanal- o
 
 1. **Vælg:** [Konfiguration: Miljøvariabler](/da/configure/environment/)
 2. **Vælg:** [Konfiguration: Godkendelse og RBAC](/da/configure/auth-rbac/) · RBAC
-3. **Vælg:** [Konfiguration: Plugins og metadata](/da/configure/plugins-metadata/)
-4. **Registrér:** `/configure/environment/`
+3. **Vælg:** [Installation: Legacy Authentication](/da/install/legacy-authentication/)
+4. **Vælg:** [Konfiguration: Plugins og metadata](/da/configure/plugins-metadata/)
+5. **Registrér:** `/configure/environment/`
 
 ### Opgaveruter
 
-- [Konfiguration: Miljøvariabler](/da/configure/environment/) — `/configure/environment/`
+- [Konfiguration: Miljøvariabler](/da/configure/environment/) — DiscVault 26 `.env.example`
 - [Konfiguration: Godkendelse og RBAC](/da/configure/auth-rbac/) — DiscVault 26 RBAC
+- [Installation: Legacy Authentication](/da/install/legacy-authentication/) — DiscVault 26 TOTP
 - [Konfiguration: Plugins og metadata](/da/configure/plugins-metadata/) — DiscVault 26
 
 ## Forventet resultat
 
-Godkend resultatet for **Konfiguration: Oversigt** kun når alle resultater nedenfor er opfyldt: valgt udgivelseskanal; `/configure/auth-rbac/`. Sidespecifikke kontrolpunkter: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Godkend resultatet for **Konfiguration: Oversigt** kun når alle resultater nedenfor er opfyldt: valgt udgivelseskanal; `/configure/auth-rbac/`. Sidespecifikke kontrolpunkter: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 - valgt udgivelseskanal
 - `/configure/auth-rbac/`
@@ -60,7 +62,7 @@ Godkend resultatet for **Konfiguration: Oversigt** kun når alle resultater nede
 ## Sikkerhed og tilbagerulning
 
 :::caution
-Den sikre gendannelsesgrænse for **Konfiguration: Oversigt** kræver disse handlinger, før noget startes eller fortsættes: ændr ét delsystem ad gangen, behold tidligere værdi og backup, og rul tilbage før næste ændring. Sidespecifikke kontrolpunkter: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Den sikre gendannelsesgrænse for **Konfiguration: Oversigt** kræver disse handlinger, før noget startes eller fortsættes: ændr ét delsystem ad gangen, behold tidligere værdi og backup, og rul tilbage før næste ændring. Sidespecifikke kontrolpunkter: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 - ændr ét delsystem ad gangen, behold tidligere værdi og backup, og rul tilbage før næste ændring
 :::

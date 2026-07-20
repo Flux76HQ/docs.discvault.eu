@@ -1,0 +1,107 @@
+---
+title: 'Install: Legacy Authentication'
+description: 'Configure the implemented DiscVault 26 beta username/password fallback with TOTP, recovery codes, and fail-closed activation.'
+pageId: 'install-legacy-authentication'
+products: ['server']
+platforms: ['docker', 'web']
+channels: ['beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-20'
+---
+
+import PageMeta from '../../../components/PageMeta.astro';
+
+<PageMeta channels="beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-20" />
+
+## Goal and result
+
+Configure the implemented DiscVault 26 beta username/password fallback with TOTP, recovery codes, and fail-closed activation.
+
+## Applies to
+
+Legacy Authentication is an optional DiscVault 26 beta capability. Fresh instances with no users or credentials can atomically bootstrap the first Owner after password-risk acknowledgement; existing installations activate password login in Users & roles with a fresh Owner or Admin passkey assertion. Passwords require at least 15 characters and Argon2id storage. TOTP and single-use recovery codes are the recommended fallback path. Only a direct private or loopback request with invalid or empty RP settings may explicitly opt out of TOTP during first-owner bootstrap.
+
+### DiscVault v26 beta
+
+- DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
+- optional username + password + TOTP capability
+- Passkeys remain preferred when a valid FQDN and trusted HTTPS are available
+
+## Prerequisites
+
+- Legacy Authentication with a username, password, and two-factor authentication (2FA) is available in DiscVault 26 beta as a fallback when passkeys cannot be used.
+- owner access · on a brand-new instance with no users or credentials, the setup wizard atomically creates the first Owner after password-risk acknowledgement
+- TOTP · recovery codes are hashed, single-use, and shared with passkey recovery; backups omit TOTP secrets and recovery material, so MFA users enroll again after restore
+
+### Legacy Authentication fallback
+
+:::note[Available in beta]
+only a direct private or loopback request with invalid or empty passkey RP settings may offer a no-TOTP bootstrap; keep TOTP enabled for username/password+2FA and never treat forwarded or public IP access as this exception
+:::
+
+## Procedure
+
+1. **Configure:** `LEGACY_AUTH_ENABLED=true` · with a valid FQDN, keep `RP_ID` and `RP_ORIGINS` aligned and use trusted HTTPS
+2. **Configure:** `RP_ID=` · `RP_ORIGINS=` · for a direct private or loopback IP without an FQDN, leave `RP_ID` and `RP_ORIGINS` empty
+3. **Choose:** on a brand-new instance with no users or credentials, the setup wizard atomically creates the first Owner after password-risk acknowledgement · on an existing installation, enable password login in Users & roles and approve activation with a fresh Owner or Admin passkey assertion
+4. **Create:** passwords require at least 15 characters, cannot equal the username or a denied common password, and are hashed with Argon2id; five failures in 15 minutes lock the account for 15 minutes · TOTP · recovery codes are hashed, single-use, and shared with passkey recovery; backups omit TOTP secrets and recovery material, so MFA users enroll again after restore
+5. **Configure:** Owners and Admins can issue temporary passwords, require a password change, set per-user MFA policy, and control passkey registration
+6. **Test:** Legacy Authentication with a username, password, and two-factor authentication (2FA) is available in DiscVault 26 beta as a fallback when passkeys cannot be used. · `GET /api/next/auth/status`
+7. **Record:** recovery codes are hashed, single-use, and shared with passkey recovery; backups omit TOTP secrets and recovery material, so MFA users enroll again after restore
+
+### Commands and settings
+
+#### DiscVault v26 beta
+
+```text
+RP_ID=discvault.example.com
+RP_NAME=DiscVault
+RP_ORIGINS=https://discvault.example.com
+LEGACY_AUTH_ENABLED=true
+```
+
+```text
+RP_ID=
+RP_NAME=DiscVault
+RP_ORIGINS=
+LEGACY_AUTH_ENABLED=true
+```
+
+```bash
+curl --fail http://localhost:6180/api/next/health
+curl --fail http://localhost:6180/api/next/auth/status
+```
+
+## Expected result
+
+The first or existing Owner can authenticate with a policy-compliant password and TOTP, recovery codes are acknowledged and stored offline, and account lockout works after repeated failures.
+
+- Legacy Authentication with a username, password, and two-factor authentication (2FA) is available in DiscVault 26 beta as a fallback when passkeys cannot be used.
+- TOTP · recovery codes are hashed, single-use, and shared with passkey recovery; backups omit TOTP secrets and recovery material, so MFA users enroll again after restore
+- passwords require at least 15 characters, cannot equal the username or a denied common password, and are hashed with Argon2id; five failures in 15 minutes lock the account for 15 minutes
+
+## Safety and rollback
+
+:::caution
+Keep an active Owner session and passkey recovery path. Disabling Legacy Authentication requires an Owner passkey; backups omit TOTP secrets and recovery material, so MFA users must enroll again after restore.
+
+- passwords require at least 15 characters, cannot equal the username or a denied common password, and are hashed with Argon2id; five failures in 15 minutes lock the account for 15 minutes
+- recovery codes are hashed, single-use, and shared with passkey recovery; backups omit TOTP secrets and recovery material, so MFA users enroll again after restore
+- disabling Legacy Authentication requires an active Owner passkey; a local-IP-only Owner must establish a valid FQDN and Owner passkey before safe disablement
+:::
+
+## Next step
+
+[Install: First start and health check](/install/first-start-health/)
+
+## Source and status
+
+- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
+- [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
+- [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
+- [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
+- Verified: `2026-07-20`
+- DiscVault Docs: `0.1.6`

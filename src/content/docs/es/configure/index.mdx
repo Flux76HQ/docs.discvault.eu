@@ -1,6 +1,6 @@
 ---
 title: 'Configuración: Resumen'
-description: 'Instrucciones específicas para Configuración: Resumen: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.'
+description: 'Instrucciones específicas para Configuración: Resumen: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.'
 pageId: 'configure-index'
 products: ['server']
 platforms: ['docker', 'web']
@@ -16,11 +16,11 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## Objetivo y resultado
 
-Completa el flujo específico de la página para **Configuración: Resumen**. Este procedimiento utiliza `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Completa el flujo específico de la página para **Configuración: Resumen**. Este procedimiento utiliza `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 ## Aplicable a
 
-Esta página se aplica solo a **Configuración: Resumen** (Docker · web). Sus límites de canal y datos son: DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. Puntos de control de esta página: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Esta página se aplica solo a **Configuración: Resumen** (Docker · web). Sus límites de canal y datos son: DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. Puntos de control de esta página: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 ### DiscVault v26 estable
 
@@ -41,18 +41,20 @@ Esta página se aplica solo a **Configuración: Resumen** (Docker · web). Sus l
 
 1. **Elige:** [Configuración: Variables de entorno](/es/configure/environment/)
 2. **Elige:** [Configuración: Autenticación y RBAC](/es/configure/auth-rbac/) · RBAC
-3. **Elige:** [Configuración: Complementos y metadatos](/es/configure/plugins-metadata/)
-4. **Registra:** `/configure/environment/`
+3. **Elige:** [Instalación: Legacy Authentication](/es/install/legacy-authentication/)
+4. **Elige:** [Configuración: Complementos y metadatos](/es/configure/plugins-metadata/)
+5. **Registra:** `/configure/environment/`
 
 ### Rutas de tareas
 
-- [Configuración: Variables de entorno](/es/configure/environment/) — `/configure/environment/`
+- [Configuración: Variables de entorno](/es/configure/environment/) — DiscVault 26 `.env.example`
 - [Configuración: Autenticación y RBAC](/es/configure/auth-rbac/) — DiscVault 26 RBAC
+- [Instalación: Legacy Authentication](/es/install/legacy-authentication/) — DiscVault 26 TOTP
 - [Configuración: Complementos y metadatos](/es/configure/plugins-metadata/) — DiscVault 26
 
 ## Resultado esperado
 
-Acepta el resultado de **Configuración: Resumen** solo cuando se cumplan todos estos resultados: canal de publicación elegido; `/configure/auth-rbac/`. Puntos de control de esta página: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Acepta el resultado de **Configuración: Resumen** solo cuando se cumplan todos estos resultados: canal de publicación elegido; `/configure/auth-rbac/`. Puntos de control de esta página: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 - canal de publicación elegido
 - `/configure/auth-rbac/`
@@ -60,7 +62,7 @@ Acepta el resultado de **Configuración: Resumen** solo cuando se cumplan todos 
 ## Seguridad y reversión
 
 :::caution
-El límite de recuperación segura de **Configuración: Resumen** exige estas acciones antes de iniciar o continuar: cambia un subsistema cada vez, conserva su valor anterior y copia, y reviértelo antes del siguiente cambio. Puntos de control de esta página: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+El límite de recuperación segura de **Configuración: Resumen** exige estas acciones antes de iniciar o continuar: cambia un subsistema cada vez, conserva su valor anterior y copia, y reviértelo antes del siguiente cambio. Puntos de control de esta página: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 - cambia un subsistema cada vez, conserva su valor anterior y copia, y reviértelo antes del siguiente cambio
 :::

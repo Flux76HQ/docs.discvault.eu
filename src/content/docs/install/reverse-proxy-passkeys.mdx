@@ -1,79 +1,87 @@
 ---
 title: 'Install: Reverse proxy and passkeys'
-description: 'Use a stable FQDN over trusted HTTPS and keep passkey relying-party values aligned with the exact public origin.'
+description: 'Choose Passkeys on a stable HTTPS FQDN, or use the beta Legacy Authentication fallback when a valid FQDN is unavailable.'
 pageId: 'install-reverse-proxy-passkeys'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
-lastVerified: '2026-07-15'
+lastVerified: '2026-07-20'
 ---
 
 import PageMeta from '../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
 
 ## Goal and result
 
-Use a stable FQDN over trusted HTTPS and keep passkey relying-party values aligned with the exact public origin.
+Choose Passkeys on a stable HTTPS FQDN, or use the beta Legacy Authentication fallback when a valid FQDN is unavailable.
 
 ## Applies to
 
-DiscVault v26 stable and beta both use `RP_ID`, `RP_ORIGINS`, and `/api/next/health`. Outside the localhost setup exception, passkeys require a stable fully qualified domain name over trusted HTTPS; a bare IP address or plain HTTP is unsupported. `RP_ID` is the hostname without scheme or port, and `RP_ORIGINS` is the exact full HTTPS origin opened in the browser. The proxy connects to host port 6080, which maps to API container port 5000.
+Passkeys require a stable fully qualified domain name over trusted HTTPS: `RP_ID` is the hostname without scheme or port and `RP_ORIGINS` is the exact HTTPS origin. The stable deployment uses host port 6080 and the canonical beta Compose deployment uses 6180. DiscVault 26 beta can instead expose optional Legacy Authentication for a direct private or loopback IP by setting `LEGACY_AUTH_ENABLED=true` and leaving `RP_ID` and `RP_ORIGINS` empty.
 
 ### DiscVault v26 stable
 
 - DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
-- same `RP_ID` + `RP_ORIGINS` configuration
-- proxy host port `6080`; API listens on container port `5000`
+- Passkeys · `RP_ID` + `RP_ORIGINS` · proxy host port `6080`
 - outside the localhost setup exception, passkeys require a stable fully qualified domain name over trusted HTTPS; a bare IP address or plain HTTP is unsupported
-- `RP_ID` is the hostname without scheme or port, while `RP_ORIGINS` is the exact full HTTPS origin; both must match the address opened in the browser
 
 ### DiscVault v26 beta
 
 - DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
-- same `RP_ID` + `RP_ORIGINS` configuration
-- proxy host port `6080`; API listens on container port `5000`
-- outside the localhost setup exception, passkeys require a stable fully qualified domain name over trusted HTTPS; a bare IP address or plain HTTP is unsupported
-- `RP_ID` is the hostname without scheme or port, while `RP_ORIGINS` is the exact full HTTPS origin; both must match the address opened in the browser
+- Passkeys · `RP_ID` + `RP_ORIGINS` · proxy host port `6180`
+- Legacy Authentication · `LEGACY_AUTH_ENABLED=true` · direct local IP fallback
 
 ## Prerequisites
 
-- public FQDN
-- trusted TLS certificate
-- reverse proxy
+- running deployment
+- browser access
+- authentication route
 
 ### Legacy Authentication fallback
 
-:::note[Planned]
-Legacy Authentication with a username, password, and two-factor authentication (2FA) is being developed as a fallback for installations without a valid FQDN, where passkeys cannot be used.
+:::note[Available in beta]
+Legacy Authentication with a username, password, and two-factor authentication (2FA) is available in DiscVault 26 beta as a fallback when passkeys cannot be used.
 
-The setup steps and configuration options will be added here when this authentication method is available. Until then, do not treat Legacy Authentication as an available installation route.
+Follow `/install/legacy-authentication/` before enabling the capability or creating the first Owner.
 :::
 
 ## Procedure
 
-1. **Choose:** stable FQDN · outside the localhost setup exception, passkeys require a stable fully qualified domain name over trusted HTTPS; a bare IP address or plain HTTP is unsupported
-2. **Configure:** `RP_ID` · hostname only
-3. **Configure:** `RP_ORIGINS` · exact public HTTPS origin
-4. **Configure:** proxy upstream · `http://127.0.0.1:6080`
-5. **Test:** `GET /api/next/health` · passkey registration · same origin
-6. **Record:** choose the hostname before registering passkeys; changing it later requires passkey registration again, while localhost remains only a local setup exception
+1. **Choose:** stable FQDN + Passkeys · outside the localhost setup exception, passkeys require a stable fully qualified domain name over trusted HTTPS; a bare IP address or plain HTTP is unsupported
+2. **Choose:** [Install: Legacy Authentication](/install/legacy-authentication/) · for a direct private or loopback IP without an FQDN, leave `RP_ID` and `RP_ORIGINS` empty
+3. **Configure:** `RP_ID` · hostname only
+4. **Configure:** `RP_ORIGINS` · exact public HTTPS origin
+5. **Configure:** proxy upstream · stable `6080` / beta `6180`
+6. **Test:** `GET /api/next/health` · passkey registration · same origin
+7. **Record:** choose the hostname before registering passkeys; changing it later requires passkey registration again, while localhost remains only a local setup exception
 
 ### Commands and settings
 
-#### Both channels
+#### DiscVault v26 stable
 
 ```text
 RP_ID=discvault.example.com
+RP_NAME=DiscVault
 RP_ORIGINS=https://discvault.example.com
 curl --fail https://discvault.example.com/api/next/health
 ```
 
+#### DiscVault v26 beta
+
+```text
+RP_ID=discvault.example.com
+RP_NAME=DiscVault
+RP_ORIGINS=https://discvault.example.com
+LEGACY_AUTH_ENABLED=true
+curl --fail http://localhost:6180/api/next/health
+```
+
 ## Expected result
 
-The public health URL succeeds and a passkey can be registered and used from the same FQDN and exact HTTPS origin.
+The chosen origin reports healthy and either a passkey works on the exact HTTPS FQDN or the beta Legacy Authentication route reaches first-owner setup.
 
 - HTTPS health · HTTP `2xx`
 - passkey · `RP_ID` + public origin
@@ -85,6 +93,7 @@ The public health URL succeeds and a passkey can be registered and used from the
 Restore the prior proxy configuration and RP values together. Choose the hostname before registration: changing it later requires passkey registration again, so keep an owner recovery path.
 
 - choose the hostname before registering passkeys; changing it later requires passkey registration again, while localhost remains only a local setup exception
+- only a direct private or loopback request with invalid or empty passkey RP settings may offer a no-TOTP bootstrap; keep TOTP enabled for username/password+2FA and never treat forwarded or public IP access as this exception
 - restore proxy and RP values together and keep an owner recovery method
 :::
 
@@ -94,7 +103,12 @@ Restore the prior proxy configuration and RP values together. Choose the hostnam
 
 ## Source and status
 
-- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
-- Verified: `2026-07-15`
-- DiscVault Docs: `0.1.5`
+- [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
+- [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
+- [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
+- [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
+- Verified: `2026-07-20`
+- DiscVault Docs: `0.1.6`
