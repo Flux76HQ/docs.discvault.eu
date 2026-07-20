@@ -1,42 +1,38 @@
 ---
 title: '配置: 身份验证和 RBAC'
-description: '任务专用说明： 配置: 身份验证和 RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.'
+description: '任务专用说明： 配置: 身份验证和 RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.'
 pageId: 'configure-auth-rbac'
 products: ['server']
 platforms: ['web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
-lastVerified: '2026-07-15'
+lastVerified: '2026-07-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="网页" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
+<PageMeta channels="stable,beta" platform="网页" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
 
 ## 目标和结果
 
-完成此页面专用的流程： **配置: 身份验证和 RBAC**. 此流程使用 `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
+完成此页面专用的流程： **配置: 身份验证和 RBAC**. 此流程使用 `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
 
 ## 适用范围
 
-本页面仅适用于 **配置: 身份验证和 RBAC** (网页). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; 通行密钥是一对加密密钥：私钥保留在设备或可信凭据管理器中，DiscVault 只存储公钥; 通行密钥可抵御网络钓鱼且每个站点唯一；登录使用设备解锁方式，而不是可重复使用的账户密码; 限时邀请码用于开始注册，但不是可重复使用的账户密码；正常登录使用通行密钥; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn; 通行密钥是一对加密密钥：私钥保留在设备或可信凭据管理器中，DiscVault 只存储公钥; 通行密钥可抵御网络钓鱼且每个站点唯一；登录使用设备解锁方式，而不是可重复使用的账户密码; 限时邀请码用于开始注册，但不是可重复使用的账户密码；正常登录使用通行密钥. 本页面专用检查点： `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
+本页面仅适用于 **配置: 身份验证和 RBAC** (网页). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; 通行密钥是一对加密密钥：私钥保留在设备或可信凭据管理器中，DiscVault 只存储公钥; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn; TOTP. 本页面专用检查点： `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
 
 ### DiscVault v26 稳定版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - WebAuthn
 - 通行密钥是一对加密密钥：私钥保留在设备或可信凭据管理器中，DiscVault 只存储公钥
-- 通行密钥可抵御网络钓鱼且每个站点唯一；登录使用设备解锁方式，而不是可重复使用的账户密码
-- 限时邀请码用于开始注册，但不是可重复使用的账户密码；正常登录使用通行密钥
 
 ### DiscVault v26 测试版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - WebAuthn
-- 通行密钥是一对加密密钥：私钥保留在设备或可信凭据管理器中，DiscVault 只存储公钥
-- 通行密钥可抵御网络钓鱼且每个站点唯一；登录使用设备解锁方式，而不是可重复使用的账户密码
-- 限时邀请码用于开始注册，但不是可重复使用的账户密码；正常登录使用通行密钥
+- TOTP
 
 ## 前提条件
 
@@ -55,20 +51,29 @@ import PageMeta from '../../../../components/PageMeta.astro';
 7. **打开:** 管理 → 安全 → 启用身份验证
 8. **创建:** 管理 → 用户 → 创建 48 小时邀请
 9. **配置:** 管理 → 角色 → 基础 / 高级
-10. **测试:** WebAuthn
+10. **配置:** 在现有安装中，应在用户和角色中启用密码登录，并通过所有者或管理员的新通行密钥验证进行批准 · 所有者和管理员可以签发临时密码、要求修改密码、设置每用户 MFA 策略并控制通行密钥注册
+11. **记录:** 恢复代码经过哈希处理、仅可使用一次并与通行密钥恢复共用；备份不包含 TOTP 密钥和恢复材料，因此还原后需重新注册 MFA · 禁用 Legacy Authentication 需要有效的所有者通行密钥；仅使用本地 IP 的所有者必须先建立有效 FQDN 和所有者通行密钥
+12. **测试:** `/api/next/auth/rbac`
 
 ### 命令和设置
 
-#### 两个通道
+#### DiscVault v26 稳定版
 
 ```bash
 curl --fail http://localhost:6080/api/next/auth/status
 curl --fail http://localhost:6080/api/next/auth/rbac
 ```
 
+#### DiscVault v26 测试版
+
+```bash
+curl --fail http://localhost:6180/api/next/auth/status
+curl --fail http://localhost:6180/api/next/auth/rbac
+```
+
 ## 预期结果
 
-仅在以下条件下接受结果： **配置: 身份验证和 RBAC** 必须确认以下所有结果： 所有者通行密钥登录有效，邀请注册符合设置，且测试用户仅拥有分配的权限; 通行密钥可抵御网络钓鱼且每个站点唯一；登录使用设备解锁方式，而不是可重复使用的账户密码; 限时邀请码用于开始注册，但不是可重复使用的账户密码；正常登录使用通行密钥. 本页面专用检查点： `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
+仅在以下条件下接受结果： **配置: 身份验证和 RBAC** 必须确认以下所有结果： 所有者通行密钥登录有效，邀请注册符合设置，且测试用户仅拥有分配的权限; 通行密钥可抵御网络钓鱼且每个站点唯一；登录使用设备解锁方式，而不是可重复使用的账户密码; 限时邀请码用于开始注册，但不是可重复使用的账户密码；正常登录使用通行密钥. 本页面专用检查点： `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
 
 - 所有者通行密钥登录有效，邀请注册符合设置，且测试用户仅拥有分配的权限
 - 通行密钥可抵御网络钓鱼且每个站点唯一；登录使用设备解锁方式，而不是可重复使用的账户密码
@@ -77,9 +82,12 @@ curl --fail http://localhost:6080/api/next/auth/rbac
 ## 安全与回滚
 
 :::caution
-安全恢复边界： **配置: 身份验证和 RBAC** 在启动或继续任何操作前必须执行： 注册多个通行密钥，例如手机和桌面设备，并在更换或丢失设备前保留独立的所有者恢复途径; 保留所有者会话和第二种恢复方式；绝不能删除最后一个所有者通行密钥. 本页面专用检查点： `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
+安全恢复边界： **配置: 身份验证和 RBAC** 在启动或继续任何操作前必须执行： 注册多个通行密钥，例如手机和桌面设备，并在更换或丢失设备前保留独立的所有者恢复途径; 密码至少需要 15 个字符，不得等于用户名或被拒绝的常见密码，并使用 Argon2id 哈希；15 分钟内失败五次会锁定账户 15 分钟; 恢复代码经过哈希处理、仅可使用一次并与通行密钥恢复共用；备份不包含 TOTP 密钥和恢复材料，因此还原后需重新注册 MFA; 禁用 Legacy Authentication 需要有效的所有者通行密钥；仅使用本地 IP 的所有者必须先建立有效 FQDN 和所有者通行密钥; 保留所有者会话和第二种恢复方式；绝不能删除最后一个所有者通行密钥. 本页面专用检查点： `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
 
 - 注册多个通行密钥，例如手机和桌面设备，并在更换或丢失设备前保留独立的所有者恢复途径
+- 密码至少需要 15 个字符，不得等于用户名或被拒绝的常见密码，并使用 Argon2id 哈希；15 分钟内失败五次会锁定账户 15 分钟
+- 恢复代码经过哈希处理、仅可使用一次并与通行密钥恢复共用；备份不包含 TOTP 密钥和恢复材料，因此还原后需重新注册 MFA
+- 禁用 Legacy Authentication 需要有效的所有者通行密钥；仅使用本地 IP 的所有者必须先建立有效 FQDN 和所有者通行密钥
 - 保留所有者会话和第二种恢复方式；绝不能删除最后一个所有者通行密钥
 :::
 
@@ -89,7 +97,12 @@ curl --fail http://localhost:6080/api/next/auth/rbac
 
 ## 来源和状态
 
-- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
-- 来源和状态: `2026-07-15`
-- DiscVault Docs: `0.1.4`
+- [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
+- [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
+- [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
+- [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
+- 来源和状态: `2026-07-20`
+- DiscVault Docs: `0.1.6`

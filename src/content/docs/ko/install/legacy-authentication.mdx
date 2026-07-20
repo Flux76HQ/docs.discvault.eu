@@ -1,0 +1,107 @@
+---
+title: '설치: Legacy Authentication'
+description: '작업별 안내: 설치: Legacy Authentication: `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.'
+pageId: 'install-legacy-authentication'
+products: ['server']
+platforms: ['docker', 'web']
+channels: ['beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-20'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="beta" platform="Docker · 웹" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-20" />
+
+## 목표 및 결과
+
+이 페이지 전용 절차를 수행합니다: **설치: Legacy Authentication**. 이 절차에서 다루는 항목: `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.
+
+## 적용 대상
+
+이 페이지의 적용 범위: **설치: Legacy Authentication** (Docker · 웹). 채널 및 데이터 경계: DiscVault · `ghcr.io/helmerznl/discvault:beta`; TOTP; FQDN HTTPS. 이 페이지의 전용 확인 지점: `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.
+
+### DiscVault v26 베타
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- TOTP
+- FQDN HTTPS
+
+## 사전 요구 사항
+
+- 사용자 이름, 비밀번호 및 2단계 인증(2FA)을 사용하는 Legacy Authentication은 패스키를 사용할 수 없을 때 DiscVault 26 베타에서 대체 방식으로 제공됩니다.
+- 소유자 접근 권한 · 사용자나 자격 증명이 없는 새 인스턴스에서는 비밀번호 위험 확인 후 설정 마법사가 첫 번째 소유자를 원자적으로 생성함
+- TOTP · 복구 코드는 해시된 일회용이며 패스키 복구와 공유되고 백업에는 TOTP 비밀과 복구 자료가 없어 복원 후 MFA를 다시 등록해야 함
+
+### Legacy Authentication 대체 방식
+
+:::note[베타에서 사용 가능]
+유효하지 않거나 빈 RP 설정을 사용하는 직접 사설 또는 루프백 요청만 TOTP 없는 부트스트랩을 제공할 수 있으며 사용자 이름, 비밀번호 및 2FA 경로에서는 TOTP를 유지함
+:::
+
+## 절차
+
+1. **구성:** `LEGACY_AUTH_ENABLED=true` · 유효한 FQDN에서는 `RP_ID`와 `RP_ORIGINS`를 일치시키고 신뢰할 수 있는 HTTPS를 사용함
+2. **구성:** `RP_ID=` · `RP_ORIGINS=` · FQDN 없는 직접 사설 또는 루프백 IP에서는 `RP_ID`와 `RP_ORIGINS`를 비워 둠
+3. **선택:** 사용자나 자격 증명이 없는 새 인스턴스에서는 비밀번호 위험 확인 후 설정 마법사가 첫 번째 소유자를 원자적으로 생성함 · 기존 설치에서는 사용자 및 역할에서 비밀번호 로그인을 활성화하고 소유자 또는 관리자의 새 패스키 확인으로 승인함
+4. **생성:** 비밀번호는 15자 이상이어야 하고 사용자 이름 또는 거부된 일반 비밀번호와 같을 수 없으며 Argon2id로 해시되고 15분 내 5회 실패하면 15분 잠김 · TOTP · 복구 코드는 해시된 일회용이며 패스키 복구와 공유되고 백업에는 TOTP 비밀과 복구 자료가 없어 복원 후 MFA를 다시 등록해야 함
+5. **구성:** 소유자와 관리자는 임시 비밀번호 발급, 변경 요구, 사용자별 MFA 정책 설정 및 패스키 등록 제어가 가능함
+6. **테스트:** 사용자 이름, 비밀번호 및 2단계 인증(2FA)을 사용하는 Legacy Authentication은 패스키를 사용할 수 없을 때 DiscVault 26 베타에서 대체 방식으로 제공됩니다. · `GET /api/next/auth/status`
+7. **기록:** 복구 코드는 해시된 일회용이며 패스키 복구와 공유되고 백업에는 TOTP 비밀과 복구 자료가 없어 복원 후 MFA를 다시 등록해야 함
+
+### 명령 및 설정
+
+#### DiscVault v26 베타
+
+```text
+RP_ID=discvault.example.com
+RP_NAME=DiscVault
+RP_ORIGINS=https://discvault.example.com
+LEGACY_AUTH_ENABLED=true
+```
+
+```text
+RP_ID=
+RP_NAME=DiscVault
+RP_ORIGINS=
+LEGACY_AUTH_ENABLED=true
+```
+
+```bash
+curl --fail http://localhost:6180/api/next/health
+curl --fail http://localhost:6180/api/next/auth/status
+```
+
+## 예상 결과
+
+다음 결과의 승인 조건: **설치: Legacy Authentication** 아래 결과가 모두 충족된 경우에만: 사용자 이름, 비밀번호 및 2단계 인증(2FA)을 사용하는 Legacy Authentication은 패스키를 사용할 수 없을 때 DiscVault 26 베타에서 대체 방식으로 제공됩니다.; TOTP · 복구 코드는 해시된 일회용이며 패스키 복구와 공유되고 백업에는 TOTP 비밀과 복구 자료가 없어 복원 후 MFA를 다시 등록해야 함; 비밀번호는 15자 이상이어야 하고 사용자 이름 또는 거부된 일반 비밀번호와 같을 수 없으며 Argon2id로 해시되고 15분 내 5회 실패하면 15분 잠김. 이 페이지의 전용 확인 지점: `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.
+
+- 사용자 이름, 비밀번호 및 2단계 인증(2FA)을 사용하는 Legacy Authentication은 패스키를 사용할 수 없을 때 DiscVault 26 베타에서 대체 방식으로 제공됩니다.
+- TOTP · 복구 코드는 해시된 일회용이며 패스키 복구와 공유되고 백업에는 TOTP 비밀과 복구 자료가 없어 복원 후 MFA를 다시 등록해야 함
+- 비밀번호는 15자 이상이어야 하고 사용자 이름 또는 거부된 일반 비밀번호와 같을 수 없으며 Argon2id로 해시되고 15분 내 5회 실패하면 15분 잠김
+
+## 안전 및 롤백
+
+:::caution
+안전한 복구 경계: **설치: Legacy Authentication** 시작하거나 계속하기 전에 다음 작업이 필요합니다: 비밀번호는 15자 이상이어야 하고 사용자 이름 또는 거부된 일반 비밀번호와 같을 수 없으며 Argon2id로 해시되고 15분 내 5회 실패하면 15분 잠김; 복구 코드는 해시된 일회용이며 패스키 복구와 공유되고 백업에는 TOTP 비밀과 복구 자료가 없어 복원 후 MFA를 다시 등록해야 함; Legacy Authentication 비활성화에는 활성 소유자 패스키가 필요하며 로컬 IP 전용 소유자는 안전한 비활성화 전에 유효한 FQDN과 소유자 패스키를 설정해야 함. 이 페이지의 전용 확인 지점: `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.
+
+- 비밀번호는 15자 이상이어야 하고 사용자 이름 또는 거부된 일반 비밀번호와 같을 수 없으며 Argon2id로 해시되고 15분 내 5회 실패하면 15분 잠김
+- 복구 코드는 해시된 일회용이며 패스키 복구와 공유되고 백업에는 TOTP 비밀과 복구 자료가 없어 복원 후 MFA를 다시 등록해야 함
+- Legacy Authentication 비활성화에는 활성 소유자 패스키가 필요하며 로컬 IP 전용 소유자는 안전한 비활성화 전에 유효한 FQDN과 소유자 패스키를 설정해야 함
+:::
+
+## 다음 단계
+
+[설치: 첫 시작 및 상태 검사](/ko/install/first-start-health/)
+
+## 출처 및 상태
+
+- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
+- [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
+- [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
+- [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
+- 출처 및 상태: `2026-07-20`
+- DiscVault Docs: `0.1.6`

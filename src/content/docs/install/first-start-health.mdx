@@ -7,12 +7,12 @@ platforms: ['docker', 'web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
 sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+lastVerified: '2026-07-20'
 ---
 
 import PageMeta from '../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-20" />
 
 ## Goal and result
 
@@ -20,19 +20,18 @@ Verify startup and create the first owner only after the correct channel reports
 
 ## Applies to
 
-Both release channels expose the v26 API with the `6080:5000` host-to-container mapping and use the same health and authentication endpoints.
+Stable uses the established Passkey first-owner flow on host port 6080. The canonical beta Compose deployment uses host port 6180 and offers either Passkeys on a valid HTTPS FQDN or Legacy Authentication when its two-layer gate is enabled.
 
 ### DiscVault v26 stable
 
 - DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
-- same health and authentication endpoints
-- host `6080` → internal API `5000`
+- Passkey first-owner flow · host `6080` → internal API `5000`
 
 ### DiscVault v26 beta
 
 - DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
-- same health and authentication endpoints
-- host `6080` → internal API `5000`
+- Passkey or Legacy Authentication first-owner flow
+- host `6180` → internal API `5000`
 
 ## Prerequisites
 
@@ -43,12 +42,13 @@ Both release channels expose the v26 API with the `6080:5000` host-to-container 
 
 1. **Inspect:** Compose status · `postgres` health · startup logs
 2. **Verify:** `GET /api/next/health` · HTTP `2xx`
-3. **Open:** configured origin · first account
-4. **Verify:** owner · `GET /api/next/auth/status` · WebAuthn
+3. **Choose:** Passkey owner · [Install: Legacy Authentication](/install/legacy-authentication/)
+4. **Open:** configured origin · first Owner
+5. **Verify:** Owner · `GET /api/next/auth/status` · WebAuthn or password + TOTP
 
 ### Commands and settings
 
-#### Both channels
+#### DiscVault v26 stable
 
 ```bash
 docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml ps
@@ -57,9 +57,18 @@ curl --fail http://localhost:6080/api/next/health
 curl --fail http://localhost:6080/api/next/auth/status
 ```
 
+#### DiscVault v26 beta
+
+```bash
+docker compose -p discvault_next_deploy -f /opt/discvault-next/docker-compose.yml ps
+docker compose -p discvault_next_deploy -f /opt/discvault-next/docker-compose.yml logs --tail=100 next-api next-worker next-mcp postgres
+curl --fail http://localhost:6180/api/next/health
+curl --fail http://localhost:6180/api/next/auth/status
+```
+
 ## Expected result
 
-Health returns success, the configured origin opens, and the first account becomes owner. Subsequent registration follows invite/auth settings.
+Health returns success, the configured origin opens, and the first account becomes Owner through the selected Passkey or beta password-plus-TOTP route.
 
 - health succeeds, the configured origin opens, and the first account is the owner
 
@@ -78,6 +87,11 @@ If owner creation fails, do not reset data blindly. Save logs and restore the pr
 
 ## Source and status
 
-- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Verified: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
+- [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
+- [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
+- [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
+- Verified: `2026-07-20`
+- DiscVault Docs: `0.1.6`

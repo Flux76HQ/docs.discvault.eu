@@ -1,6 +1,6 @@
 ---
 title: 'Konfiguracja: Przegląd'
-description: 'Instrukcja właściwa dla zadania: Konfiguracja: Przegląd: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.'
+description: 'Instrukcja właściwa dla zadania: Konfiguracja: Przegląd: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.'
 pageId: 'configure-index'
 products: ['server']
 platforms: ['docker', 'web']
@@ -16,11 +16,11 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## Cel i rezultat
 
-Wykonaj procedurę właściwą dla strony: **Konfiguracja: Przegląd**. Ta procedura korzysta z `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Wykonaj procedurę właściwą dla strony: **Konfiguracja: Przegląd**. Ta procedura korzysta z `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 ## Dotyczy
 
-Ta strona dotyczy wyłącznie **Konfiguracja: Przegląd** (Docker · web). Granice kanału i danych: DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. Punkty kontrolne tej strony: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Ta strona dotyczy wyłącznie **Konfiguracja: Przegląd** (Docker · web). Granice kanału i danych: DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. Punkty kontrolne tej strony: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 ### DiscVault v26 – stabilny
 
@@ -41,18 +41,20 @@ Ta strona dotyczy wyłącznie **Konfiguracja: Przegląd** (Docker · web). Grani
 
 1. **Wybierz:** [Konfiguracja: Zmienne środowiskowe](/pl/configure/environment/)
 2. **Wybierz:** [Konfiguracja: Uwierzytelnianie i RBAC](/pl/configure/auth-rbac/) · RBAC
-3. **Wybierz:** [Konfiguracja: Wtyczki i metadane](/pl/configure/plugins-metadata/)
-4. **Zapisz:** `/configure/environment/`
+3. **Wybierz:** [Instalacja: Legacy Authentication](/pl/install/legacy-authentication/)
+4. **Wybierz:** [Konfiguracja: Wtyczki i metadane](/pl/configure/plugins-metadata/)
+5. **Zapisz:** `/configure/environment/`
 
 ### Ścieżki zadań
 
-- [Konfiguracja: Zmienne środowiskowe](/pl/configure/environment/) — `/configure/environment/`
+- [Konfiguracja: Zmienne środowiskowe](/pl/configure/environment/) — DiscVault 26 `.env.example`
 - [Konfiguracja: Uwierzytelnianie i RBAC](/pl/configure/auth-rbac/) — DiscVault 26 RBAC
+- [Instalacja: Legacy Authentication](/pl/install/legacy-authentication/) — DiscVault 26 TOTP
 - [Konfiguracja: Wtyczki i metadane](/pl/configure/plugins-metadata/) — DiscVault 26
 
 ## Oczekiwany rezultat
 
-Zaakceptuj wynik dla **Konfiguracja: Przegląd** tylko gdy wszystkie poniższe wyniki są prawdziwe: wybrany kanał wydań; `/configure/auth-rbac/`. Punkty kontrolne tej strony: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Zaakceptuj wynik dla **Konfiguracja: Przegląd** tylko gdy wszystkie poniższe wyniki są prawdziwe: wybrany kanał wydań; `/configure/auth-rbac/`. Punkty kontrolne tej strony: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 - wybrany kanał wydań
 - `/configure/auth-rbac/`
@@ -60,7 +62,7 @@ Zaakceptuj wynik dla **Konfiguracja: Przegląd** tylko gdy wszystkie poniższe w
 ## Bezpieczeństwo i wycofanie
 
 :::caution
-Bezpieczna granica odzyskiwania dla **Konfiguracja: Przegląd** wymaga tych działań przed uruchomieniem lub kontynuacją: zmieniaj jeden podsystem naraz, zachowaj poprzednią wartość i kopię oraz wycofaj przed kolejną zmianą. Punkty kontrolne tej strony: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Bezpieczna granica odzyskiwania dla **Konfiguracja: Przegląd** wymaga tych działań przed uruchomieniem lub kontynuacją: zmieniaj jeden podsystem naraz, zachowaj poprzednią wartość i kopię oraz wycofaj przed kolejną zmianą. Punkty kontrolne tej strony: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 - zmieniaj jeden podsystem naraz, zachowaj poprzednią wartość i kopię oraz wycofaj przed kolejną zmianą
 :::

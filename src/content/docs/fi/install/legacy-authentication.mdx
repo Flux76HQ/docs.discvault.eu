@@ -1,0 +1,107 @@
+---
+title: 'Asennus: Legacy Authentication'
+description: 'Tehtäväkohtaiset ohjeet: Asennus: Legacy Authentication: `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.'
+pageId: 'install-legacy-authentication'
+products: ['server']
+platforms: ['docker', 'web']
+channels: ['beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-20'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="beta" platform="Docker · verkko" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-20" />
+
+## Tavoite ja tulos
+
+Suorita sivukohtainen työnkulku: **Asennus: Legacy Authentication**. Tässä menettelyssä käytetään `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.
+
+## Koskee
+
+Tämä sivu koskee vain kohdetta **Asennus: Legacy Authentication** (Docker · verkko). Kanava- ja tietorajat ovat: DiscVault · `ghcr.io/helmerznl/discvault:beta`; TOTP; FQDN HTTPS. Sivukohtaiset tarkistuspisteet: `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- TOTP
+- FQDN HTTPS
+
+## Edellytykset
+
+- Legacy Authentication käyttäjätunnuksella, salasanalla ja kaksivaiheisella tunnistautumisella (2FA) on saatavilla DiscVault 26 betassa, kun passkey-avaimia ei voi käyttää.
+- omistajan käyttöoikeus · uudessa instanssissa ilman käyttäjiä tai tunnuksia ohjattu toiminto luo ensimmäisen omistajan atomisesti salasanariskin hyväksymisen jälkeen
+- TOTP · palautuskoodit ovat hajautettuja, kertakäyttöisiä ja yhteisiä passkey-palautuksen kanssa; varmuuskopiot eivät sisällä TOTP-salaisuuksia tai palautusmateriaalia, joten MFA rekisteröidään uudelleen
+
+### Legacy Authentication -varamenetelmä
+
+:::note[Saatavilla betassa]
+vain suora yksityinen tai loopback-pyyntö virheellisillä tai tyhjillä RP-asetuksilla voi tarjota käynnistyksen ilman TOTP:tä; pidä TOTP käytössä käyttäjätunnus-, salasana- ja 2FA-polulla
+:::
+
+## Toimenpiteet
+
+1. **Määritä:** `LEGACY_AUTH_ENABLED=true` · kelvollisella FQDN-nimellä pidä `RP_ID` ja `RP_ORIGINS` samoina ja käytä luotettua HTTPS-yhteyttä
+2. **Määritä:** `RP_ID=` · `RP_ORIGINS=` · suoralla yksityisellä tai loopback-IP-osoitteella ilman FQDN-nimeä jätä `RP_ID` ja `RP_ORIGINS` tyhjiksi
+3. **Valitse:** uudessa instanssissa ilman käyttäjiä tai tunnuksia ohjattu toiminto luo ensimmäisen omistajan atomisesti salasanariskin hyväksymisen jälkeen · olemassa olevassa asennuksessa ota salasanakirjautuminen käyttöön Käyttäjät ja roolit -kohdassa ja hyväksy tuoreella omistajan tai ylläpitäjän passkey-vahvistuksella
+4. **Luo:** salasanassa on oltava vähintään 15 merkkiä, se ei saa olla käyttäjätunnus tai estetty yleinen salasana ja se hajautetaan Argon2id:llä; viisi virhettä 15 minuutissa lukitsee 15 minuutiksi · TOTP · palautuskoodit ovat hajautettuja, kertakäyttöisiä ja yhteisiä passkey-palautuksen kanssa; varmuuskopiot eivät sisällä TOTP-salaisuuksia tai palautusmateriaalia, joten MFA rekisteröidään uudelleen
+5. **Määritä:** omistajat ja ylläpitäjät voivat antaa väliaikaisia salasanoja, vaatia vaihdon, asettaa käyttäjäkohtaisen MFA:n ja hallita passkey-rekisteröintiä
+6. **Testaa:** Legacy Authentication käyttäjätunnuksella, salasanalla ja kaksivaiheisella tunnistautumisella (2FA) on saatavilla DiscVault 26 betassa, kun passkey-avaimia ei voi käyttää. · `GET /api/next/auth/status`
+7. **Kirjaa:** palautuskoodit ovat hajautettuja, kertakäyttöisiä ja yhteisiä passkey-palautuksen kanssa; varmuuskopiot eivät sisällä TOTP-salaisuuksia tai palautusmateriaalia, joten MFA rekisteröidään uudelleen
+
+### Komennot ja asetukset
+
+#### DiscVault v26 – beta
+
+```text
+RP_ID=discvault.example.com
+RP_NAME=DiscVault
+RP_ORIGINS=https://discvault.example.com
+LEGACY_AUTH_ENABLED=true
+```
+
+```text
+RP_ID=
+RP_NAME=DiscVault
+RP_ORIGINS=
+LEGACY_AUTH_ENABLED=true
+```
+
+```bash
+curl --fail http://localhost:6180/api/next/health
+curl --fail http://localhost:6180/api/next/auth/status
+```
+
+## Odotettu tulos
+
+Hyväksy tulos kohteelle **Asennus: Legacy Authentication** vain kun kaikki seuraavat tulokset toteutuvat: Legacy Authentication käyttäjätunnuksella, salasanalla ja kaksivaiheisella tunnistautumisella (2FA) on saatavilla DiscVault 26 betassa, kun passkey-avaimia ei voi käyttää.; TOTP · palautuskoodit ovat hajautettuja, kertakäyttöisiä ja yhteisiä passkey-palautuksen kanssa; varmuuskopiot eivät sisällä TOTP-salaisuuksia tai palautusmateriaalia, joten MFA rekisteröidään uudelleen; salasanassa on oltava vähintään 15 merkkiä, se ei saa olla käyttäjätunnus tai estetty yleinen salasana ja se hajautetaan Argon2id:llä; viisi virhettä 15 minuutissa lukitsee 15 minuutiksi. Sivukohtaiset tarkistuspisteet: `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.
+
+- Legacy Authentication käyttäjätunnuksella, salasanalla ja kaksivaiheisella tunnistautumisella (2FA) on saatavilla DiscVault 26 betassa, kun passkey-avaimia ei voi käyttää.
+- TOTP · palautuskoodit ovat hajautettuja, kertakäyttöisiä ja yhteisiä passkey-palautuksen kanssa; varmuuskopiot eivät sisällä TOTP-salaisuuksia tai palautusmateriaalia, joten MFA rekisteröidään uudelleen
+- salasanassa on oltava vähintään 15 merkkiä, se ei saa olla käyttäjätunnus tai estetty yleinen salasana ja se hajautetaan Argon2id:llä; viisi virhettä 15 minuutissa lukitsee 15 minuutiksi
+
+## Turvallisuus ja palautus
+
+:::caution
+Turvallinen palautusraja kohteelle **Asennus: Legacy Authentication** edellyttää näitä toimia ennen käynnistystä tai jatkamista: salasanassa on oltava vähintään 15 merkkiä, se ei saa olla käyttäjätunnus tai estetty yleinen salasana ja se hajautetaan Argon2id:llä; viisi virhettä 15 minuutissa lukitsee 15 minuutiksi; palautuskoodit ovat hajautettuja, kertakäyttöisiä ja yhteisiä passkey-palautuksen kanssa; varmuuskopiot eivät sisällä TOTP-salaisuuksia tai palautusmateriaalia, joten MFA rekisteröidään uudelleen; Legacy Authenticationin poiskytkentä vaatii aktiivisen omistajan passkey-avaimen; vain paikallis-IP:tä käyttävän omistajan on ensin luotava kelvollinen FQDN ja passkey. Sivukohtaiset tarkistuspisteet: `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.
+
+- salasanassa on oltava vähintään 15 merkkiä, se ei saa olla käyttäjätunnus tai estetty yleinen salasana ja se hajautetaan Argon2id:llä; viisi virhettä 15 minuutissa lukitsee 15 minuutiksi
+- palautuskoodit ovat hajautettuja, kertakäyttöisiä ja yhteisiä passkey-palautuksen kanssa; varmuuskopiot eivät sisällä TOTP-salaisuuksia tai palautusmateriaalia, joten MFA rekisteröidään uudelleen
+- Legacy Authenticationin poiskytkentä vaatii aktiivisen omistajan passkey-avaimen; vain paikallis-IP:tä käyttävän omistajan on ensin luotava kelvollinen FQDN ja passkey
+:::
+
+## Seuraava vaihe
+
+[Asennus: Ensimmäinen käynnistys ja kuntotarkistus](/fi/install/first-start-health/)
+
+## Lähde ja tila
+
+- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
+- [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
+- [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
+- [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
+- Lähde ja tila: `2026-07-20`
+- DiscVault Docs: `0.1.6`

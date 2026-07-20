@@ -1,6 +1,6 @@
 ---
 title: 'Ρύθμιση: Επισκόπηση'
-description: 'Οδηγίες ειδικά για την εργασία: Ρύθμιση: Επισκόπηση: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.'
+description: 'Οδηγίες ειδικά για την εργασία: Ρύθμιση: Επισκόπηση: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.'
 pageId: 'configure-index'
 products: ['server']
 platforms: ['docker', 'web']
@@ -16,11 +16,11 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## Στόχος και αποτέλεσμα
 
-Ολοκληρώστε τη ροή εργασίας της σελίδας για **Ρύθμιση: Επισκόπηση**. Η διαδικασία χρησιμοποιεί `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Ολοκληρώστε τη ροή εργασίας της σελίδας για **Ρύθμιση: Επισκόπηση**. Η διαδικασία χρησιμοποιεί `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 ## Ισχύει για
 
-Αυτή η σελίδα ισχύει μόνο για **Ρύθμιση: Επισκόπηση** (Docker · ιστός). Τα όρια καναλιού και δεδομένων είναι: DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. Σημεία ελέγχου της σελίδας: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Αυτή η σελίδα ισχύει μόνο για **Ρύθμιση: Επισκόπηση** (Docker · ιστός). Τα όρια καναλιού και δεδομένων είναι: DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. Σημεία ελέγχου της σελίδας: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 ### DiscVault v26 – σταθερό
 
@@ -41,18 +41,20 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 1. **Επιλέξτε:** [Ρύθμιση: Μεταβλητές περιβάλλοντος](/el/configure/environment/)
 2. **Επιλέξτε:** [Ρύθμιση: Ταυτοποίηση και RBAC](/el/configure/auth-rbac/) · RBAC
-3. **Επιλέξτε:** [Ρύθμιση: Πρόσθετα και μεταδεδομένα](/el/configure/plugins-metadata/)
-4. **Καταγράψτε:** `/configure/environment/`
+3. **Επιλέξτε:** [Εγκατάσταση: Legacy Authentication](/el/install/legacy-authentication/)
+4. **Επιλέξτε:** [Ρύθμιση: Πρόσθετα και μεταδεδομένα](/el/configure/plugins-metadata/)
+5. **Καταγράψτε:** `/configure/environment/`
 
 ### Διαδρομές εργασιών
 
-- [Ρύθμιση: Μεταβλητές περιβάλλοντος](/el/configure/environment/) — `/configure/environment/`
+- [Ρύθμιση: Μεταβλητές περιβάλλοντος](/el/configure/environment/) — DiscVault 26 `.env.example`
 - [Ρύθμιση: Ταυτοποίηση και RBAC](/el/configure/auth-rbac/) — DiscVault 26 RBAC
+- [Εγκατάσταση: Legacy Authentication](/el/install/legacy-authentication/) — DiscVault 26 TOTP
 - [Ρύθμιση: Πρόσθετα και μεταδεδομένα](/el/configure/plugins-metadata/) — DiscVault 26
 
 ## Αναμενόμενο αποτέλεσμα
 
-Αποδεχθείτε το αποτέλεσμα για **Ρύθμιση: Επισκόπηση** μόνο όταν ισχύουν όλα τα παρακάτω αποτελέσματα: επιλεγμένο κανάλι έκδοσης; `/configure/auth-rbac/`. Σημεία ελέγχου της σελίδας: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Αποδεχθείτε το αποτέλεσμα για **Ρύθμιση: Επισκόπηση** μόνο όταν ισχύουν όλα τα παρακάτω αποτελέσματα: επιλεγμένο κανάλι έκδοσης; `/configure/auth-rbac/`. Σημεία ελέγχου της σελίδας: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 - επιλεγμένο κανάλι έκδοσης
 - `/configure/auth-rbac/`
@@ -60,7 +62,7 @@ import PageMeta from '../../../../components/PageMeta.astro';
 ## Ασφάλεια και επαναφορά
 
 :::caution
-Το ασφαλές όριο ανάκτησης για **Ρύθμιση: Επισκόπηση** απαιτεί αυτές τις ενέργειες πριν από κάθε εκκίνηση ή συνέχεια: αλλάζετε ένα υποσύστημα κάθε φορά, κρατήστε την προηγούμενη τιμή και το αντίγραφο και επαναφέρετε πριν την επόμενη αλλαγή. Σημεία ελέγχου της σελίδας: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Το ασφαλές όριο ανάκτησης για **Ρύθμιση: Επισκόπηση** απαιτεί αυτές τις ενέργειες πριν από κάθε εκκίνηση ή συνέχεια: αλλάζετε ένα υποσύστημα κάθε φορά, κρατήστε την προηγούμενη τιμή και το αντίγραφο και επαναφέρετε πριν την επόμενη αλλαγή. Σημεία ελέγχου της σελίδας: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 - αλλάζετε ένα υποσύστημα κάθε φορά, κρατήστε την προηγούμενη τιμή και το αντίγραφο και επαναφέρετε πριν την επόμενη αλλαγή
 :::

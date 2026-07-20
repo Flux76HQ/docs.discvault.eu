@@ -1,36 +1,32 @@
 ---
 title: '구성: 환경 변수'
-description: '작업별 안내: 구성: 환경 변수: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.'
+description: '작업별 안내: 구성: 환경 변수: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.'
 pageId: 'configure-environment'
 products: ['server']
 platforms: ['docker', 'unraid']
-channels: ['stable', 'beta']
+channels: ['beta']
 minVersion: 'DiscVault v26'
 sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+lastVerified: '2026-07-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-20" />
 
 ## 목표 및 결과
 
-이 페이지 전용 절차를 수행합니다: **구성: 환경 변수**. 이 절차에서 다루는 항목: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+이 페이지 전용 절차를 수행합니다: **구성: 환경 변수**. 이 절차에서 다루는 항목: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.
 
 ## 적용 대상
 
-이 페이지의 적용 범위: **구성: 환경 변수** (Docker · Unraid). 채널 및 데이터 경계: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `.env`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `.env`. 이 페이지의 전용 확인 지점: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
-
-### DiscVault v26 안정판
-
-- DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- `.env`
+이 페이지의 적용 범위: **구성: 환경 변수** (Docker · Unraid). 채널 및 데이터 경계: DiscVault · `ghcr.io/helmerznl/discvault:beta`; `.env.example` `release/v26-beta`; `0600` · `JWT_SECRET` `POSTGRES_PASSWORD`. 이 페이지의 전용 확인 지점: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.
 
 ### DiscVault v26 베타
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- `.env`
+- `.env.example` `release/v26-beta`
+- `0600` · `JWT_SECRET` `POSTGRES_PASSWORD`
 
 ## 사전 요구 사항
 
@@ -40,79 +36,130 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## 절차
 
-1. **생성:** `/opt/discvault/.env` · 소유자 전용 파일 권한(0600)
-2. **구성:** `DISCVAULT_IMAGE` · `RP_ORIGINS`
-3. **확인:** `chmod 0600` · `docker compose config --quiet`
-4. **시작:** 일반 설정 변경 중에는 JWT 및 PostgreSQL 비밀을 바꾸지 않음
+1. **생성:** `/opt/discvault-next/.env` · 소유자 전용 파일 권한(0600)
+2. **구성:** `DISCVAULT_NEXT_IMAGE` · `RP_ORIGINS`
+3. **선택:** 유효한 FQDN에서는 `RP_ID`와 `RP_ORIGINS`를 일치시키고 신뢰할 수 있는 HTTPS를 사용함 · FQDN 없는 직접 사설 또는 루프백 IP에서는 `RP_ID`와 `RP_ORIGINS`를 비워 둠
+4. **확인:** `chmod 0600` · `docker compose -p discvault_next_deploy config --quiet`
+5. **시작:** 일반 설정 변경 중에는 JWT 및 PostgreSQL 비밀을 바꾸지 않음
 
 ### 명령 및 설정
-
-#### DiscVault v26 안정판
-
-```bash
-export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
-```
 
 #### DiscVault v26 베타
 
 ```bash
-export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
-```
-
-#### 두 채널
-
-```bash
 set -euo pipefail
-test -n "$DISCVAULT_IMAGE"
-case "$DISCVAULT_IMAGE" in
-  ghcr.io/helmerznl/discvault:latest|ghcr.io/helmerznl/discvault:beta) ;;
-  *) printf '%s\n' "$DISCVAULT_IMAGE" >&2; exit 64 ;;
-esac
-install -d -m 0700 /opt/discvault
-install -d -m 0750 /srv/discvault
-install -d -o 70 -g 70 -m 0700 /srv/discvault-postgres
-cd /opt/discvault
-test -f compose.yaml
+install -d -m 0700 /opt/discvault-next
+cd /opt/discvault-next
+curl --fail --location --proto '=https' --tlsv1.2 \
+  --output docker-compose.yml \
+  https://raw.githubusercontent.com/helmerzNL/DiscVault/release/v26-beta/app/deploy/next/docker-compose.yml
+curl --fail --location --proto '=https' --tlsv1.2 \
+  --output .env.example \
+  https://raw.githubusercontent.com/helmerzNL/DiscVault/release/v26-beta/app/deploy/next/.env.example
+
 umask 077
-ENV_FILE=/opt/discvault/.env
+ENV_FILE=/opt/discvault-next/.env
 test ! -e "$ENV_FILE"
 ENV_TMP="$(mktemp "$ENV_FILE.tmp.XXXXXX")"
 trap 'rm -f "$ENV_TMP"' EXIT
 POSTGRES_PASSWORD="$(openssl rand -hex 32)"
-JWT_SECRET="$(openssl rand -hex 32)"
-printf '%s\n' \
-  "DISCVAULT_IMAGE=$DISCVAULT_IMAGE" \
-  'DISCVAULT_DATA_DIR=/srv/discvault' \
-  'DISCVAULT_POSTGRES_DATA=/srv/discvault-postgres' \
-  'DISCVAULT_API_PORT=6080' \
-  'DISCVAULT_MCP_PORT=6090' \
-  'DISCVAULT_NETWORK_NAME=discvault' \
-  'DISCVAULT_API_WORKERS=2' \
-  'DISCVAULT_API_TIMEOUT=180' \
-  'DISCVAULT_WORKER_ID=worker-1' \
-  'DISCVAULT_WORKER_POLL_INTERVAL=2' \
-  'POSTGRES_DB=discvault' \
-  'POSTGRES_USER=discvault' \
-  "POSTGRES_PASSWORD=$POSTGRES_PASSWORD" \
-  "JWT_SECRET=$JWT_SECRET" \
-  'TZ=Europe/Amsterdam' \
-  'RP_ID=localhost' \
-  'RP_NAME=DiscVault' \
-  'RP_ORIGINS=http://localhost:6080' > "$ENV_TMP"
+JWT_SECRET="$(openssl rand -base64 48)"
+awk \
+  -v image='ghcr.io/helmerznl/discvault:beta' \
+  -v postgres_password="$POSTGRES_PASSWORD" \
+  -v jwt_secret="$JWT_SECRET" \
+  -v data_dir='/mnt/user/appdata/discvault' \
+  -v postgres_dir='/mnt/user/appdata/discvault-next/postgres' '
+  /^DISCVAULT_NEXT_IMAGE=/ { print "DISCVAULT_NEXT_IMAGE=" image; next }
+  /^POSTGRES_PASSWORD=/ { print "POSTGRES_PASSWORD=" postgres_password; next }
+  /^JWT_SECRET=/ { print "JWT_SECRET=" jwt_secret; next }
+  /^DISCVAULT_DATA_DIR=/ { print "DISCVAULT_DATA_DIR=" data_dir; next }
+  /^DISCVAULT_NEXT_POSTGRES_DATA=/ {
+    print "DISCVAULT_NEXT_POSTGRES_DATA=" postgres_dir
+    next
+  }
+  /^LEGACY_AUTH_ENABLED=/ { print "LEGACY_AUTH_ENABLED=true"; next }
+  { print }
+' .env.example > "$ENV_TMP"
 chmod 0600 "$ENV_TMP"
 ln "$ENV_TMP" "$ENV_FILE"
 rm -f "$ENV_TMP"
 trap - EXIT
-docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml config --quiet
-docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml pull
-docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml up -d
-docker compose --env-file "$ENV_FILE" -p discvault -f compose.yaml ps
-curl --fail http://localhost:6080/api/next/health
+```
+
+```bash
+set -euo pipefail
+cd /opt/discvault-next
+FQDN=discvault.example.com
+ENV_FILE=/opt/discvault-next/.env
+ENV_TMP="$(mktemp "$ENV_FILE.tmp.XXXXXX")"
+trap 'rm -f "$ENV_TMP"' EXIT
+awk -v rp_id="$FQDN" -v rp_origin="https://$FQDN" '
+  /^RP_ID=/ { print "RP_ID=" rp_id; next }
+  /^RP_NAME=/ { print "RP_NAME=DiscVault"; next }
+  /^RP_ORIGINS=/ { print "RP_ORIGINS=" rp_origin; next }
+  /^LEGACY_AUTH_ENABLED=/ { print "LEGACY_AUTH_ENABLED=true"; next }
+  { print }
+' "$ENV_FILE" > "$ENV_TMP"
+chmod 0600 "$ENV_TMP"
+mv "$ENV_TMP" "$ENV_FILE"
+trap - EXIT
+```
+
+```bash
+set -euo pipefail
+cd /opt/discvault-next
+ENV_FILE=/opt/discvault-next/.env
+ENV_TMP="$(mktemp "$ENV_FILE.tmp.XXXXXX")"
+trap 'rm -f "$ENV_TMP"' EXIT
+awk '
+  /^RP_ID=/ { print "RP_ID="; next }
+  /^RP_NAME=/ { print "RP_NAME=DiscVault"; next }
+  /^RP_ORIGINS=/ { print "RP_ORIGINS="; next }
+  /^LEGACY_AUTH_ENABLED=/ { print "LEGACY_AUTH_ENABLED=true"; next }
+  { print }
+' "$ENV_FILE" > "$ENV_TMP"
+chmod 0600 "$ENV_TMP"
+mv "$ENV_TMP" "$ENV_FILE"
+trap - EXIT
+```
+
+```bash
+set -euo pipefail
+cd /opt/discvault-next
+ENV_FILE=/opt/discvault-next/.env
+test "$(stat -c '%a' "$ENV_FILE")" = 600
+read_env() { sed -n "s/^$1=//p" "$ENV_FILE"; }
+
+test "$(read_env DISCVAULT_NEXT_IMAGE)" = 'ghcr.io/helmerznl/discvault:beta'
+! grep -q ':dev' "$ENV_FILE"
+test "$(read_env LEGACY_AUTH_ENABLED)" = true
+POSTGRES_PASSWORD_VALUE="$(read_env POSTGRES_PASSWORD)"
+JWT_SECRET_VALUE="$(read_env JWT_SECRET)"
+test "${#POSTGRES_PASSWORD_VALUE}" -ge 32
+test "$POSTGRES_PASSWORD_VALUE" != 'change-me-to-a-long-random-password'
+test "${#JWT_SECRET_VALUE}" -ge 48
+grep -qx 'DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault' "$ENV_FILE"
+grep -qx 'DISCVAULT_NEXT_POSTGRES_DATA=/mnt/user/appdata/discvault-next/postgres' "$ENV_FILE"
+
+RP_ID_VALUE="$(read_env RP_ID)"
+RP_ORIGINS_VALUE="$(read_env RP_ORIGINS)"
+if [ -z "$RP_ID_VALUE" ]; then
+  test -z "$RP_ORIGINS_VALUE"
+else
+  test "$RP_ORIGINS_VALUE" = "https://$RP_ID_VALUE"
+fi
+
+docker compose -p discvault_next_deploy config --quiet
+docker compose -p discvault_next_deploy pull
+docker compose -p discvault_next_deploy up -d
+docker compose -p discvault_next_deploy ps
+curl --fail http://localhost:6180/api/next/health
 ```
 
 ## 예상 결과
 
-다음 결과의 승인 조건: **구성: 환경 변수** 아래 결과가 모두 충족된 경우에만: 소유자 전용 파일 권한(0600); 비공개 파일이 모드 600이고 Compose 검증이 성공하며 선택한 채널이 정상 상태가 됨. 이 페이지의 전용 확인 지점: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+다음 결과의 승인 조건: **구성: 환경 변수** 아래 결과가 모두 충족된 경우에만: 소유자 전용 파일 권한(0600); 비공개 파일이 모드 600이고 Compose 검증이 성공하며 선택한 채널이 정상 상태가 됨. 이 페이지의 전용 확인 지점: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.
 
 - 소유자 전용 파일 권한(0600)
 - 비공개 파일이 모드 600이고 Compose 검증이 성공하며 선택한 채널이 정상 상태가 됨
@@ -120,10 +167,11 @@ curl --fail http://localhost:6080/api/next/health
 ## 안전 및 롤백
 
 :::caution
-안전한 복구 경계: **구성: 환경 변수** 시작하거나 계속하기 전에 다음 작업이 필요합니다: 문서 저장소의 환경 파일은 DiscVault 런타임 파일이 아님 · `.env.example`; 일반 설정 변경 중에는 JWT 및 PostgreSQL 비밀을 바꾸지 않음 · `JWT_SECRET` · `POSTGRES_PASSWORD`; 실패하면 서비스를 중지한 채 이전 비공개 환경 파일을 복원하고 검증한 다음 비밀을 교체하지 않고 동일한 이미지를 다시 생성함. 이 페이지의 전용 확인 지점: `/opt/discvault/.env` · `DISCVAULT_IMAGE` · `chmod 0600` · `RP_ORIGINS`.
+안전한 복구 경계: **구성: 환경 변수** 시작하거나 계속하기 전에 다음 작업이 필요합니다: 문서 저장소의 환경 파일은 DiscVault 런타임 파일이 아님 · `.env.example`; 일반 설정 변경 중에는 JWT 및 PostgreSQL 비밀을 바꾸지 않음 · `JWT_SECRET` · `POSTGRES_PASSWORD`; 다운로드한 `.env.example`의 기본값은 아직 `:dev`이므로 pull 또는 시작 전에 런타임 `.env`를 `:beta`로 변경해야 함; 실패하면 서비스를 중지한 채 이전 비공개 환경 파일을 복원하고 검증한 다음 비밀을 교체하지 않고 동일한 이미지를 다시 생성함. 이 페이지의 전용 확인 지점: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.
 
 - 문서 저장소의 환경 파일은 DiscVault 런타임 파일이 아님 · `.env.example`
 - 일반 설정 변경 중에는 JWT 및 PostgreSQL 비밀을 바꾸지 않음 · `JWT_SECRET` · `POSTGRES_PASSWORD`
+- 다운로드한 `.env.example`의 기본값은 아직 `:dev`이므로 pull 또는 시작 전에 런타임 `.env`를 `:beta`로 변경해야 함
 - 실패하면 서비스를 중지한 채 이전 비공개 환경 파일을 복원하고 검증한 다음 비밀을 교체하지 않고 동일한 이미지를 다시 생성함
 :::
 
@@ -133,6 +181,12 @@ curl --fail http://localhost:6080/api/next/health
 
 ## 출처 및 상태
 
-- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- 출처 및 상태: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [Moving beta source: `docker-compose.yml`](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/docker-compose.yml)
+- [Raw beta download: `docker-compose.yml`](https://raw.githubusercontent.com/helmerzNL/DiscVault/release/v26-beta/app/deploy/next/docker-compose.yml)
+- [Pinned verification: `docker-compose.yml`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/deploy/next/docker-compose.yml)
+- [Moving beta source: `.env.example`](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/.env.example)
+- [Raw beta download: `.env.example`](https://raw.githubusercontent.com/helmerzNL/DiscVault/release/v26-beta/app/deploy/next/.env.example)
+- [Pinned verification: `.env.example`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/deploy/next/.env.example)
+- 출처 및 상태: `2026-07-20`
+- DiscVault Docs: `0.1.6`

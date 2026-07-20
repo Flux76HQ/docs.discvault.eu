@@ -1,42 +1,38 @@
 ---
 title: '設定: 認証と RBAC'
-description: 'タスク別の手順: 設定: 認証と RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.'
+description: 'タスク別の手順: 設定: 認証と RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.'
 pageId: 'configure-auth-rbac'
 products: ['server']
 platforms: ['web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
-lastVerified: '2026-07-15'
+lastVerified: '2026-07-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
+<PageMeta channels="stable,beta" platform="Web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
 
 ## 目的と結果
 
-このページ専用の手順を実行します: **設定: 認証と RBAC**. この手順で扱う項目: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
+このページ専用の手順を実行します: **設定: 認証と RBAC**. この手順で扱う項目: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
 
 ## 対象
 
-このページの対象は **設定: 認証と RBAC** (Web). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; パスキーは暗号鍵のペアです。秘密鍵は端末または信頼できる資格情報マネージャーに残り、DiscVault は公開鍵だけを保存します; パスキーはフィッシング耐性がありサイトごとに固有です。再利用可能なアカウントパスワードではなく端末のロック解除でサインインします; 有効期限付き招待コードは登録開始用で、再利用できるアカウントパスワードではありません。通常のサインインにはパスキーを使います; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn; パスキーは暗号鍵のペアです。秘密鍵は端末または信頼できる資格情報マネージャーに残り、DiscVault は公開鍵だけを保存します; パスキーはフィッシング耐性がありサイトごとに固有です。再利用可能なアカウントパスワードではなく端末のロック解除でサインインします; 有効期限付き招待コードは登録開始用で、再利用できるアカウントパスワードではありません。通常のサインインにはパスキーを使います. このページ固有の確認点: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
+このページの対象は **設定: 認証と RBAC** (Web). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; パスキーは暗号鍵のペアです。秘密鍵は端末または信頼できる資格情報マネージャーに残り、DiscVault は公開鍵だけを保存します; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn; TOTP. このページ固有の確認点: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
 
 ### DiscVault v26 安定版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - WebAuthn
 - パスキーは暗号鍵のペアです。秘密鍵は端末または信頼できる資格情報マネージャーに残り、DiscVault は公開鍵だけを保存します
-- パスキーはフィッシング耐性がありサイトごとに固有です。再利用可能なアカウントパスワードではなく端末のロック解除でサインインします
-- 有効期限付き招待コードは登録開始用で、再利用できるアカウントパスワードではありません。通常のサインインにはパスキーを使います
 
 ### DiscVault v26 ベータ版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - WebAuthn
-- パスキーは暗号鍵のペアです。秘密鍵は端末または信頼できる資格情報マネージャーに残り、DiscVault は公開鍵だけを保存します
-- パスキーはフィッシング耐性がありサイトごとに固有です。再利用可能なアカウントパスワードではなく端末のロック解除でサインインします
-- 有効期限付き招待コードは登録開始用で、再利用できるアカウントパスワードではありません。通常のサインインにはパスキーを使います
+- TOTP
 
 ## 前提条件
 
@@ -55,20 +51,29 @@ import PageMeta from '../../../../components/PageMeta.astro';
 7. **開く:** 管理 → セキュリティ → 認証を有効化
 8. **作成:** 管理 → ユーザー → 48 時間の招待を作成
 9. **設定:** 管理 → ロール → 基本 / 詳細
-10. **テスト:** WebAuthn
+10. **設定:** 既存インストールではユーザーとロールでパスワードログインを有効にし、所有者または管理者の新しいパスキー検証で承認します · 所有者と管理者は一時パスワードの発行、変更の強制、ユーザー別 MFA ポリシー、パスキー登録の制御を行えます
+11. **記録:** 復旧コードはハッシュ化された使い捨てでパスキー復旧と共通です。バックアップには TOTP シークレットと復旧情報が含まれないため、復元後に MFA を再登録します · Legacy Authentication の無効化には有効な所有者パスキーが必要です。ローカル IP のみの所有者は無効化前に有効な FQDN と所有者パスキーを設定します
+12. **テスト:** `/api/next/auth/rbac`
 
 ### コマンドと設定
 
-#### 両方のチャンネル
+#### DiscVault v26 安定版
 
 ```bash
 curl --fail http://localhost:6080/api/next/auth/status
 curl --fail http://localhost:6080/api/next/auth/rbac
 ```
 
+#### DiscVault v26 ベータ版
+
+```bash
+curl --fail http://localhost:6180/api/next/auth/status
+curl --fail http://localhost:6180/api/next/auth/rbac
+```
+
 ## 期待される結果
 
-次の結果を受け入れる条件: **設定: 認証と RBAC** 以下の結果をすべて確認した場合のみ: 所有者のパスキーログインが機能し、招待制登録が設定どおりで、テストユーザーには割り当てた権限だけがあります; パスキーはフィッシング耐性がありサイトごとに固有です。再利用可能なアカウントパスワードではなく端末のロック解除でサインインします; 有効期限付き招待コードは登録開始用で、再利用できるアカウントパスワードではありません。通常のサインインにはパスキーを使います. このページ固有の確認点: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
+次の結果を受け入れる条件: **設定: 認証と RBAC** 以下の結果をすべて確認した場合のみ: 所有者のパスキーログインが機能し、招待制登録が設定どおりで、テストユーザーには割り当てた権限だけがあります; パスキーはフィッシング耐性がありサイトごとに固有です。再利用可能なアカウントパスワードではなく端末のロック解除でサインインします; 有効期限付き招待コードは登録開始用で、再利用できるアカウントパスワードではありません。通常のサインインにはパスキーを使います. このページ固有の確認点: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
 
 - 所有者のパスキーログインが機能し、招待制登録が設定どおりで、テストユーザーには割り当てた権限だけがあります
 - パスキーはフィッシング耐性がありサイトごとに固有です。再利用可能なアカウントパスワードではなく端末のロック解除でサインインします
@@ -77,9 +82,12 @@ curl --fail http://localhost:6080/api/next/auth/rbac
 ## 安全性とロールバック
 
 :::caution
-安全な復旧境界: **設定: 認証と RBAC** 起動または続行の前に、次の操作が必要です: 電話とデスクトップ端末など複数のパスキーを登録し、端末の交換や紛失に備えて独立した所有者復旧手段を保持します; 所有者セッションと 2 つ目の復旧手段を保持し、最後の所有者パスキーは削除しません. このページ固有の確認点: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
+安全な復旧境界: **設定: 認証と RBAC** 起動または続行の前に、次の操作が必要です: 電話とデスクトップ端末など複数のパスキーを登録し、端末の交換や紛失に備えて独立した所有者復旧手段を保持します; パスワードは 15 文字以上で、ユーザー名や拒否対象の一般的なパスワードは使用できず、Argon2id でハッシュ化されます。15 分間に 5 回失敗すると 15 分間ロックされます; 復旧コードはハッシュ化された使い捨てでパスキー復旧と共通です。バックアップには TOTP シークレットと復旧情報が含まれないため、復元後に MFA を再登録します; Legacy Authentication の無効化には有効な所有者パスキーが必要です。ローカル IP のみの所有者は無効化前に有効な FQDN と所有者パスキーを設定します; 所有者セッションと 2 つ目の復旧手段を保持し、最後の所有者パスキーは削除しません. このページ固有の確認点: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
 
 - 電話とデスクトップ端末など複数のパスキーを登録し、端末の交換や紛失に備えて独立した所有者復旧手段を保持します
+- パスワードは 15 文字以上で、ユーザー名や拒否対象の一般的なパスワードは使用できず、Argon2id でハッシュ化されます。15 分間に 5 回失敗すると 15 分間ロックされます
+- 復旧コードはハッシュ化された使い捨てでパスキー復旧と共通です。バックアップには TOTP シークレットと復旧情報が含まれないため、復元後に MFA を再登録します
+- Legacy Authentication の無効化には有効な所有者パスキーが必要です。ローカル IP のみの所有者は無効化前に有効な FQDN と所有者パスキーを設定します
 - 所有者セッションと 2 つ目の復旧手段を保持し、最後の所有者パスキーは削除しません
 :::
 
@@ -89,7 +97,12 @@ curl --fail http://localhost:6080/api/next/auth/rbac
 
 ## 情報源と状態
 
-- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
-- 情報源と状態: `2026-07-15`
-- DiscVault Docs: `0.1.4`
+- [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
+- [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
+- [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
+- [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
+- 情報源と状態: `2026-07-20`
+- DiscVault Docs: `0.1.6`

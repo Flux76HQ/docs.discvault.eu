@@ -1,6 +1,6 @@
 ---
 title: 'Konfigurace: Přehled'
-description: 'Pokyny pro konkrétní úlohu: Konfigurace: Přehled: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.'
+description: 'Pokyny pro konkrétní úlohu: Konfigurace: Přehled: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.'
 pageId: 'configure-index'
 products: ['server']
 platforms: ['docker', 'web']
@@ -16,11 +16,11 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## Cíl a výsledek
 
-Dokončete postup určený pro **Konfigurace: Přehled**. Tento postup pracuje s `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Dokončete postup určený pro **Konfigurace: Přehled**. Tento postup pracuje s `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 ## Platí pro
 
-Tato stránka platí pouze pro **Konfigurace: Přehled** (Docker · web). Hranice kanálu a dat jsou: DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. Kontrolní body této stránky: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Tato stránka platí pouze pro **Konfigurace: Přehled** (Docker · web). Hranice kanálu a dat jsou: DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. Kontrolní body této stránky: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 ### DiscVault v26 – stabilní
 
@@ -41,18 +41,20 @@ Tato stránka platí pouze pro **Konfigurace: Přehled** (Docker · web). Hranic
 
 1. **Vyberte:** [Konfigurace: Proměnné prostředí](/cs/configure/environment/)
 2. **Vyberte:** [Konfigurace: Ověřování a RBAC](/cs/configure/auth-rbac/) · RBAC
-3. **Vyberte:** [Konfigurace: Pluginy a metadata](/cs/configure/plugins-metadata/)
-4. **Zaznamenejte:** `/configure/environment/`
+3. **Vyberte:** [Instalace: Legacy Authentication](/cs/install/legacy-authentication/)
+4. **Vyberte:** [Konfigurace: Pluginy a metadata](/cs/configure/plugins-metadata/)
+5. **Zaznamenejte:** `/configure/environment/`
 
 ### Cesty k úlohám
 
-- [Konfigurace: Proměnné prostředí](/cs/configure/environment/) — `/configure/environment/`
+- [Konfigurace: Proměnné prostředí](/cs/configure/environment/) — DiscVault 26 `.env.example`
 - [Konfigurace: Ověřování a RBAC](/cs/configure/auth-rbac/) — DiscVault 26 RBAC
+- [Instalace: Legacy Authentication](/cs/install/legacy-authentication/) — DiscVault 26 TOTP
 - [Konfigurace: Pluginy a metadata](/cs/configure/plugins-metadata/) — DiscVault 26
 
 ## Očekávaný výsledek
 
-Výsledek přijměte pro **Konfigurace: Přehled** pouze pokud platí všechny následující výsledky: vybraný kanál vydání; `/configure/auth-rbac/`. Kontrolní body této stránky: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Výsledek přijměte pro **Konfigurace: Přehled** pouze pokud platí všechny následující výsledky: vybraný kanál vydání; `/configure/auth-rbac/`. Kontrolní body této stránky: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 - vybraný kanál vydání
 - `/configure/auth-rbac/`
@@ -60,7 +62,7 @@ Výsledek přijměte pro **Konfigurace: Přehled** pouze pokud platí všechny n
 ## Bezpečnost a návrat
 
 :::caution
-Bezpečná hranice obnovy pro **Konfigurace: Přehled** vyžaduje před spuštěním nebo pokračováním tyto kroky: měňte vždy jen jeden subsystém, zachovejte jeho předchozí hodnotu a zálohu a před další změnou jej vraťte. Kontrolní body této stránky: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Bezpečná hranice obnovy pro **Konfigurace: Přehled** vyžaduje před spuštěním nebo pokračováním tyto kroky: měňte vždy jen jeden subsystém, zachovejte jeho předchozí hodnotu a zálohu a před další změnou jej vraťte. Kontrolní body této stránky: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 - měňte vždy jen jeden subsystém, zachovejte jeho předchozí hodnotu a zálohu a před další změnou jej vraťte
 :::

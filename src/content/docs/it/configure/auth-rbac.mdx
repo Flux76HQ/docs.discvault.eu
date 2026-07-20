@@ -1,42 +1,38 @@
 ---
 title: 'Configurazione: Autenticazione e RBAC'
-description: 'Istruzioni specifiche per Configurazione: Autenticazione e RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.'
+description: 'Istruzioni specifiche per Configurazione: Autenticazione e RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.'
 pageId: 'configure-auth-rbac'
 products: ['server']
 platforms: ['web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
-lastVerified: '2026-07-15'
+lastVerified: '2026-07-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
+<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
 
 ## Obiettivo e risultato
 
-Completa la procedura specifica della pagina per **Configurazione: Autenticazione e RBAC**. Questa procedura utilizza `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
+Completa la procedura specifica della pagina per **Configurazione: Autenticazione e RBAC**. Questa procedura utilizza `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
 
 ## Si applica a
 
-Questa pagina si applica solo a **Configurazione: Autenticazione e RBAC** (web). I limiti di canale e dati sono: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; una passkey è una coppia di chiavi crittografiche: la chiave privata resta sul dispositivo o in un gestore affidabile e DiscVault conserva solo la chiave pubblica; le passkey resistono al phishing e sono uniche per il sito; l’accesso usa lo sblocco del dispositivo invece di una password riutilizzabile; un codice invito con scadenza avvia la registrazione ma non è una password riutilizzabile; l’accesso normale usa una passkey; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn; una passkey è una coppia di chiavi crittografiche: la chiave privata resta sul dispositivo o in un gestore affidabile e DiscVault conserva solo la chiave pubblica; le passkey resistono al phishing e sono uniche per il sito; l’accesso usa lo sblocco del dispositivo invece di una password riutilizzabile; un codice invito con scadenza avvia la registrazione ma non è una password riutilizzabile; l’accesso normale usa una passkey. Punti di controllo della pagina: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
+Questa pagina si applica solo a **Configurazione: Autenticazione e RBAC** (web). I limiti di canale e dati sono: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; una passkey è una coppia di chiavi crittografiche: la chiave privata resta sul dispositivo o in un gestore affidabile e DiscVault conserva solo la chiave pubblica; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn; TOTP. Punti di controllo della pagina: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
 
 ### DiscVault v26 stabile
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - WebAuthn
 - una passkey è una coppia di chiavi crittografiche: la chiave privata resta sul dispositivo o in un gestore affidabile e DiscVault conserva solo la chiave pubblica
-- le passkey resistono al phishing e sono uniche per il sito; l’accesso usa lo sblocco del dispositivo invece di una password riutilizzabile
-- un codice invito con scadenza avvia la registrazione ma non è una password riutilizzabile; l’accesso normale usa una passkey
 
 ### DiscVault v26 beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - WebAuthn
-- una passkey è una coppia di chiavi crittografiche: la chiave privata resta sul dispositivo o in un gestore affidabile e DiscVault conserva solo la chiave pubblica
-- le passkey resistono al phishing e sono uniche per il sito; l’accesso usa lo sblocco del dispositivo invece di una password riutilizzabile
-- un codice invito con scadenza avvia la registrazione ma non è una password riutilizzabile; l’accesso normale usa una passkey
+- TOTP
 
 ## Prerequisiti
 
@@ -55,20 +51,29 @@ Questa pagina si applica solo a **Configurazione: Autenticazione e RBAC** (web).
 7. **Apri:** Amministrazione → Sicurezza → Abilita autenticazione
 8. **Crea:** Amministrazione → Utenti → Crea invito di 48 ore
 9. **Configura:** Amministrazione → Ruoli → Base / Avanzato
-10. **Prova:** WebAuthn
+10. **Configura:** su un’installazione esistente abilita il login con password in Utenti e ruoli e approva con una nuova verifica passkey di proprietario o amministratore · proprietari e amministratori possono emettere password temporanee, imporre il cambio, definire MFA per utente e controllare la registrazione passkey
+11. **Registra:** i codici di recupero sono hash, monouso e condivisi con il recupero passkey; i backup omettono segreti TOTP e materiale di recupero, quindi MFA va registrata di nuovo · disabilitare Legacy Authentication richiede una passkey attiva del proprietario; un proprietario solo su IP locale deve prima configurare FQDN valido e passkey
+12. **Prova:** `/api/next/auth/rbac`
 
 ### Comandi e impostazioni
 
-#### Entrambi i canali
+#### DiscVault v26 stabile
 
 ```bash
 curl --fail http://localhost:6080/api/next/auth/status
 curl --fail http://localhost:6080/api/next/auth/rbac
 ```
 
+#### DiscVault v26 beta
+
+```bash
+curl --fail http://localhost:6180/api/next/auth/status
+curl --fail http://localhost:6180/api/next/auth/rbac
+```
+
 ## Risultato previsto
 
-Accetta il risultato per **Configurazione: Autenticazione e RBAC** solo quando tutti i risultati seguenti sono veri: l’accesso proprietario con passkey funziona, la registrazione su invito segue l’impostazione e l’utente test ha solo i permessi assegnati; le passkey resistono al phishing e sono uniche per il sito; l’accesso usa lo sblocco del dispositivo invece di una password riutilizzabile; un codice invito con scadenza avvia la registrazione ma non è una password riutilizzabile; l’accesso normale usa una passkey. Punti di controllo della pagina: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
+Accetta il risultato per **Configurazione: Autenticazione e RBAC** solo quando tutti i risultati seguenti sono veri: l’accesso proprietario con passkey funziona, la registrazione su invito segue l’impostazione e l’utente test ha solo i permessi assegnati; le passkey resistono al phishing e sono uniche per il sito; l’accesso usa lo sblocco del dispositivo invece di una password riutilizzabile; un codice invito con scadenza avvia la registrazione ma non è una password riutilizzabile; l’accesso normale usa una passkey. Punti di controllo della pagina: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
 
 - l’accesso proprietario con passkey funziona, la registrazione su invito segue l’impostazione e l’utente test ha solo i permessi assegnati
 - le passkey resistono al phishing e sono uniche per il sito; l’accesso usa lo sblocco del dispositivo invece di una password riutilizzabile
@@ -77,9 +82,12 @@ Accetta il risultato per **Configurazione: Autenticazione e RBAC** solo quando t
 ## Sicurezza e ripristino
 
 :::caution
-Il limite di ripristino sicuro per **Configurazione: Autenticazione e RBAC** richiede queste azioni prima di avviare o continuare: registra più di una passkey, ad esempio su telefono e computer, e conserva un percorso di recupero proprietario indipendente prima di sostituire o perdere un dispositivo; mantieni la sessione proprietario e un secondo metodo; non rimuovere mai l’ultima passkey proprietario. Punti di controllo della pagina: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
+Il limite di ripristino sicuro per **Configurazione: Autenticazione e RBAC** richiede queste azioni prima di avviare o continuare: registra più di una passkey, ad esempio su telefono e computer, e conserva un percorso di recupero proprietario indipendente prima di sostituire o perdere un dispositivo; le password richiedono almeno 15 caratteri, non possono coincidere con nome utente o password comune negata e usano hash Argon2id; cinque errori in 15 minuti bloccano per 15 minuti; i codici di recupero sono hash, monouso e condivisi con il recupero passkey; i backup omettono segreti TOTP e materiale di recupero, quindi MFA va registrata di nuovo; disabilitare Legacy Authentication richiede una passkey attiva del proprietario; un proprietario solo su IP locale deve prima configurare FQDN valido e passkey; mantieni la sessione proprietario e un secondo metodo; non rimuovere mai l’ultima passkey proprietario. Punti di controllo della pagina: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
 
 - registra più di una passkey, ad esempio su telefono e computer, e conserva un percorso di recupero proprietario indipendente prima di sostituire o perdere un dispositivo
+- le password richiedono almeno 15 caratteri, non possono coincidere con nome utente o password comune negata e usano hash Argon2id; cinque errori in 15 minuti bloccano per 15 minuti
+- i codici di recupero sono hash, monouso e condivisi con il recupero passkey; i backup omettono segreti TOTP e materiale di recupero, quindi MFA va registrata di nuovo
+- disabilitare Legacy Authentication richiede una passkey attiva del proprietario; un proprietario solo su IP locale deve prima configurare FQDN valido e passkey
 - mantieni la sessione proprietario e un secondo metodo; non rimuovere mai l’ultima passkey proprietario
 :::
 
@@ -89,7 +97,12 @@ Il limite di ripristino sicuro per **Configurazione: Autenticazione e RBAC** ric
 
 ## Fonte e stato
 
-- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
-- Fonte e stato: `2026-07-15`
-- DiscVault Docs: `0.1.4`
+- [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
+- [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
+- [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
+- [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
+- Fonte e stato: `2026-07-20`
+- DiscVault Docs: `0.1.6`

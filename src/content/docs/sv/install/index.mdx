@@ -7,12 +7,12 @@ platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
-lastVerified: '2026-07-15'
+lastVerified: '2026-07-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
 
 ## Mål och resultat
 
@@ -20,18 +20,18 @@ Följ det sidspecifika arbetsflödet för **Installation: Installationsvägar**.
 
 ## Gäller för
 
-Den här sidan gäller endast **Installation: Installationsvägar** (Docker · Unraid). Kanal- och datagränserna är: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; PostgreSQL `17` `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26; PostgreSQL `17` `/data`. Sidspecifika kontrollpunkter: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
+Den här sidan gäller endast **Installation: Installationsvägar** (Docker · Unraid). Kanal- och datagränserna är: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `:beta`; PostgreSQL `17` `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `:beta`; PostgreSQL `17` `/data`. Sidspecifika kontrollpunkter: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
 ### DiscVault v26 – stabil
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- DiscVault 26
+- `:beta`
 - PostgreSQL `17` `/data`
 
 ### DiscVault v26 – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- DiscVault 26
+- `:beta`
 - PostgreSQL `17` `/data`
 
 ## Förutsättningar
@@ -41,7 +41,7 @@ Den här sidan gäller endast **Installation: Installationsvägar** (Docker · U
 
 ## Procedur
 
-1. **Välj:** [Installation: Docker Compose](/sv/install/docker-compose/)
+1. **Välj:** [Installation: Docker Compose](/sv/install/docker-compose/) · DiscVault 26
 2. **Välj:** [Installation: Docker run](/sv/install/docker-run/)
 3. **Välj:** [Installation: Unraid](/sv/install/unraid/) · Unraid
 4. **Välj:** nya installationer använder DiscVault v26 `:latest` eller `:beta`; den frysta avbildningen `:legacy` är endast för en befintlig installation av föregående generation som ännu inte är redo att migrera
@@ -51,7 +51,7 @@ Den här sidan gäller endast **Installation: Installationsvägar** (Docker · U
 
 ### Uppgiftsvägar
 
-- [Installation: Docker Compose](/sv/install/docker-compose/) — DiscVault 26 Docker Compose PostgreSQL `/data` `DISCVAULT_IMAGE`
+- [Installation: Docker Compose](/sv/install/docker-compose/) — DiscVault 26 `release/v26-beta` `DISCVAULT_NEXT_IMAGE`
 - [Installation: Docker run](/sv/install/docker-run/) — DiscVault 26 Docker run PostgreSQL `/data` `DATABASE_URL`
 - [Installation: Beständiga data och PostgreSQL](/sv/install/storage-postgresql/) — DiscVault 26 PostgreSQL `/data`
 - [Installation: Unraid](/sv/install/unraid/) — DiscVault 26 Unraid PostgreSQL `/data`
@@ -82,7 +82,7 @@ Den säkra återställningsgränsen för **Installation: Installationsvägar** k
 
 ## Källa och status
 
-- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
-- Källa och status: `2026-07-15`
-- DiscVault Docs: `0.1.4`
+- Källa och status: `2026-07-20`
+- DiscVault Docs: `0.1.6`

@@ -1,6 +1,6 @@
 ---
 title: 'Yapılandırma: Genel bakış'
-description: 'Göreve özel yönergeler: Yapılandırma: Genel bakış: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.'
+description: 'Göreve özel yönergeler: Yapılandırma: Genel bakış: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.'
 pageId: 'configure-index'
 products: ['server']
 platforms: ['docker', 'web']
@@ -16,11 +16,11 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## Amaç ve sonuç
 
-Sayfaya özel iş akışını tamamlayın: **Yapılandırma: Genel bakış**. Bu prosedür şunları kullanır: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Sayfaya özel iş akışını tamamlayın: **Yapılandırma: Genel bakış**. Bu prosedür şunları kullanır: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 ## Geçerli olduğu alan
 
-Bu sayfa yalnızca şunlar için geçerlidir: **Yapılandırma: Genel bakış** (Docker · web). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. Sayfaya özel denetim noktaları: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Bu sayfa yalnızca şunlar için geçerlidir: **Yapılandırma: Genel bakış** (Docker · web). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. Sayfaya özel denetim noktaları: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 ### DiscVault v26 kararlı
 
@@ -41,18 +41,20 @@ Bu sayfa yalnızca şunlar için geçerlidir: **Yapılandırma: Genel bakış** 
 
 1. **Seçin:** [Yapılandırma: Ortam değişkenleri](/tr/configure/environment/)
 2. **Seçin:** [Yapılandırma: Kimlik doğrulama ve RBAC](/tr/configure/auth-rbac/) · RBAC
-3. **Seçin:** [Yapılandırma: Eklentiler ve meta veriler](/tr/configure/plugins-metadata/)
-4. **Kaydedin:** `/configure/environment/`
+3. **Seçin:** [Kurulum: Legacy Authentication](/tr/install/legacy-authentication/)
+4. **Seçin:** [Yapılandırma: Eklentiler ve meta veriler](/tr/configure/plugins-metadata/)
+5. **Kaydedin:** `/configure/environment/`
 
 ### Görev yolları
 
-- [Yapılandırma: Ortam değişkenleri](/tr/configure/environment/) — `/configure/environment/`
+- [Yapılandırma: Ortam değişkenleri](/tr/configure/environment/) — DiscVault 26 `.env.example`
 - [Yapılandırma: Kimlik doğrulama ve RBAC](/tr/configure/auth-rbac/) — DiscVault 26 RBAC
+- [Kurulum: Legacy Authentication](/tr/install/legacy-authentication/) — DiscVault 26 TOTP
 - [Yapılandırma: Eklentiler ve meta veriler](/tr/configure/plugins-metadata/) — DiscVault 26
 
 ## Beklenen sonuç
 
-Şunun sonucunu kabul edin: **Yapılandırma: Genel bakış** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: seçilen yayın kanalı; `/configure/auth-rbac/`. Sayfaya özel denetim noktaları: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Şunun sonucunu kabul edin: **Yapılandırma: Genel bakış** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: seçilen yayın kanalı; `/configure/auth-rbac/`. Sayfaya özel denetim noktaları: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 - seçilen yayın kanalı
 - `/configure/auth-rbac/`
@@ -60,7 +62,7 @@ Bu sayfa yalnızca şunlar için geçerlidir: **Yapılandırma: Genel bakış** 
 ## Güvenlik ve geri alma
 
 :::caution
-Şunun güvenli kurtarma sınırı: **Yapılandırma: Genel bakış** başlatmadan veya devam etmeden önce şu işlemleri gerektirir: her seferinde bir alt sistemi değiştirin, önceki değeri ve yedeği koruyun ve sonraki değişiklikten önce geri alın. Sayfaya özel denetim noktaları: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Şunun güvenli kurtarma sınırı: **Yapılandırma: Genel bakış** başlatmadan veya devam etmeden önce şu işlemleri gerektirir: her seferinde bir alt sistemi değiştirin, önceki değeri ve yedeği koruyun ve sonraki değişiklikten önce geri alın. Sayfaya özel denetim noktaları: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 - her seferinde bir alt sistemi değiştirin, önceki değeri ve yedeği koruyun ve sonraki değişiklikten önce geri alın
 :::

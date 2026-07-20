@@ -1,79 +1,87 @@
 ---
 title: 'Installeren: Reverse proxy en passkeys'
-description: 'Taakspecifieke instructies voor Installeren: Reverse proxy en passkeys: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.'
+description: 'Taakspecifieke instructies voor Installeren: Reverse proxy en passkeys: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.'
 pageId: 'install-reverse-proxy-passkeys'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
-lastVerified: '2026-07-15'
+lastVerified: '2026-07-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
 
 ## Doel en resultaat
 
-Voer de paginaspecifieke werkwijze uit voor **Installeren: Reverse proxy en passkeys**. Deze werkwijze gebruikt FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Voer de paginaspecifieke werkwijze uit voor **Installeren: Reverse proxy en passkeys**. Deze werkwijze gebruikt FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 ## Van toepassing op
 
-Deze pagina is uitsluitend van toepassing op **Installeren: Reverse proxy en passkeys** (Docker · web). De kanaal- en gegevensgrenzen zijn: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`; buiten de localhost-uitzondering vereisen passkeys een stabiele volledig gekwalificeerde domeinnaam via vertrouwde HTTPS; een los IP-adres of gewone HTTP wordt niet ondersteund; `RP_ID` is de hostnaam zonder schema of poort, terwijl `RP_ORIGINS` de exacte volledige HTTPS-origin is; beide moeten overeenkomen met het adres in de browser; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`; buiten de localhost-uitzondering vereisen passkeys een stabiele volledig gekwalificeerde domeinnaam via vertrouwde HTTPS; een los IP-adres of gewone HTTP wordt niet ondersteund; `RP_ID` is de hostnaam zonder schema of poort, terwijl `RP_ORIGINS` de exacte volledige HTTPS-origin is; beide moeten overeenkomen met het adres in de browser. Paginaspecifieke controlepunten: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Deze pagina is uitsluitend van toepassing op **Installeren: Reverse proxy en passkeys** (Docker · web). De kanaal- en gegevensgrenzen zijn: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6080`; buiten de localhost-uitzondering vereisen passkeys een stabiele volledig gekwalificeerde domeinnaam via vertrouwde HTTPS; een los IP-adres of gewone HTTP wordt niet ondersteund; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; `LEGACY_AUTH_ENABLED=true`. Paginaspecifieke controlepunten: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 ### DiscVault v26 stabiel
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- `RP_ID` `RP_ORIGINS`
-- `6080` API `5000`
+- `RP_ID` `RP_ORIGINS` · `6080`
 - buiten de localhost-uitzondering vereisen passkeys een stabiele volledig gekwalificeerde domeinnaam via vertrouwde HTTPS; een los IP-adres of gewone HTTP wordt niet ondersteund
-- `RP_ID` is de hostnaam zonder schema of poort, terwijl `RP_ORIGINS` de exacte volledige HTTPS-origin is; beide moeten overeenkomen met het adres in de browser
 
 ### DiscVault v26 bèta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- `RP_ID` `RP_ORIGINS`
-- `6080` API `5000`
-- buiten de localhost-uitzondering vereisen passkeys een stabiele volledig gekwalificeerde domeinnaam via vertrouwde HTTPS; een los IP-adres of gewone HTTP wordt niet ondersteund
-- `RP_ID` is de hostnaam zonder schema of poort, terwijl `RP_ORIGINS` de exacte volledige HTTPS-origin is; beide moeten overeenkomen met het adres in de browser
+- `RP_ID` `RP_ORIGINS` · `6180`
+- `LEGACY_AUTH_ENABLED=true`
 
 ## Vereisten
 
 - FQDN
-- TLS
+- `RP_ORIGINS`
 - `RP_ID`
 
 ### Terugval op Legacy Authentication
 
-:::note[Gepland]
-Legacy Authentication met gebruikersnaam, wachtwoord en tweefactorauthenticatie (2FA) wordt ontwikkeld als terugvaloptie voor installaties zonder geldige FQDN, waar passkeys niet kunnen worden gebruikt.
+:::note[Beschikbaar in bèta]
+Legacy Authentication met gebruikersnaam, wachtwoord en tweefactorauthenticatie (2FA) is in DiscVault 26 bèta beschikbaar als terugvaloptie wanneer passkeys niet bruikbaar zijn.
 
-De installatiestappen en configuratieopties worden hier toegevoegd zodra deze authenticatiemethode beschikbaar is. Beschouw Legacy Authentication tot die tijd niet als een beschikbare installatieroute.
+Volg `/install/legacy-authentication/` voordat je de mogelijkheid inschakelt of de eerste eigenaar maakt.
 :::
 
 ## Procedure
 
 1. **Kiezen:** FQDN · buiten de localhost-uitzondering vereisen passkeys een stabiele volledig gekwalificeerde domeinnaam via vertrouwde HTTPS; een los IP-adres of gewone HTTP wordt niet ondersteund
-2. **Configureren:** `RP_ID`
-3. **Configureren:** `RP_ORIGINS` · HTTPS
-4. **Configureren:** `http://127.0.0.1:6080`
-5. **Testen:** `GET /api/next/health`
-6. **Vastleggen:** kies de hostnaam voordat je passkeys registreert; later wijzigen vereist nieuwe registratie, terwijl localhost alleen een lokale installatie-uitzondering blijft
+2. **Kiezen:** [Installeren: Legacy Authentication](/nl/install/legacy-authentication/) · laat voor een direct privé- of loopback-IP zonder FQDN `RP_ID` en `RP_ORIGINS` leeg
+3. **Configureren:** `RP_ID`
+4. **Configureren:** `RP_ORIGINS` · HTTPS
+5. **Configureren:** `6080` `6180`
+6. **Testen:** `GET /api/next/health`
+7. **Vastleggen:** kies de hostnaam voordat je passkeys registreert; later wijzigen vereist nieuwe registratie, terwijl localhost alleen een lokale installatie-uitzondering blijft
 
 ### Opdrachten en instellingen
 
-#### Beide kanalen
+#### DiscVault v26 stabiel
 
 ```text
 RP_ID=discvault.example.com
+RP_NAME=DiscVault
 RP_ORIGINS=https://discvault.example.com
 curl --fail https://discvault.example.com/api/next/health
 ```
 
+#### DiscVault v26 bèta
+
+```text
+RP_ID=discvault.example.com
+RP_NAME=DiscVault
+RP_ORIGINS=https://discvault.example.com
+LEGACY_AUTH_ENABLED=true
+curl --fail http://localhost:6180/api/next/health
+```
+
 ## Verwacht resultaat
 
-Accepteer het resultaat voor **Installeren: Reverse proxy en passkeys** alleen wanneer alle onderstaande resultaten kloppen: HTTPS · HTTP `2xx`; `RP_ID`; `RP_ID` is de hostnaam zonder schema of poort, terwijl `RP_ORIGINS` de exacte volledige HTTPS-origin is; beide moeten overeenkomen met het adres in de browser. Paginaspecifieke controlepunten: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Accepteer het resultaat voor **Installeren: Reverse proxy en passkeys** alleen wanneer alle onderstaande resultaten kloppen: HTTPS · HTTP `2xx`; `RP_ID`; `RP_ID` is de hostnaam zonder schema of poort, terwijl `RP_ORIGINS` de exacte volledige HTTPS-origin is; beide moeten overeenkomen met het adres in de browser. Paginaspecifieke controlepunten: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 - HTTPS · HTTP `2xx`
 - `RP_ID`
@@ -82,9 +90,10 @@ Accepteer het resultaat voor **Installeren: Reverse proxy en passkeys** alleen w
 ## Veiligheid en terugdraaien
 
 :::caution
-De veilige herstelgrens voor **Installeren: Reverse proxy en passkeys** vereist deze acties voordat iets start of doorgaat: kies de hostnaam voordat je passkeys registreert; later wijzigen vereist nieuwe registratie, terwijl localhost alleen een lokale installatie-uitzondering blijft; herstel proxy- en RP-waarden samen en behoud een herstelmethode voor de eigenaar. Paginaspecifieke controlepunten: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+De veilige herstelgrens voor **Installeren: Reverse proxy en passkeys** vereist deze acties voordat iets start of doorgaat: kies de hostnaam voordat je passkeys registreert; later wijzigen vereist nieuwe registratie, terwijl localhost alleen een lokale installatie-uitzondering blijft; alleen een direct privé- of loopbackverzoek met ongeldige of lege RP-instellingen kan bootstrap zonder TOTP aanbieden; laat TOTP aan voor gebruikersnaam, wachtwoord en 2FA; herstel proxy- en RP-waarden samen en behoud een herstelmethode voor de eigenaar. Paginaspecifieke controlepunten: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 - kies de hostnaam voordat je passkeys registreert; later wijzigen vereist nieuwe registratie, terwijl localhost alleen een lokale installatie-uitzondering blijft
+- alleen een direct privé- of loopbackverzoek met ongeldige of lege RP-instellingen kan bootstrap zonder TOTP aanbieden; laat TOTP aan voor gebruikersnaam, wachtwoord en 2FA
 - herstel proxy- en RP-waarden samen en behoud een herstelmethode voor de eigenaar
 :::
 
@@ -94,7 +103,12 @@ De veilige herstelgrens voor **Installeren: Reverse proxy en passkeys** vereist 
 
 ## Bron en status
 
-- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
-- Bron en status: `2026-07-15`
-- DiscVault Docs: `0.1.5`
+- [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
+- [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
+- [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
+- [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
+- Bron en status: `2026-07-20`
+- DiscVault Docs: `0.1.6`

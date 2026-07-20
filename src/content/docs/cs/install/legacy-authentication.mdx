@@ -1,0 +1,107 @@
+---
+title: 'Instalace: Legacy Authentication'
+description: 'Pokyny pro konkrétní úlohu: Instalace: Legacy Authentication: `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.'
+pageId: 'install-legacy-authentication'
+products: ['server']
+platforms: ['docker', 'web']
+channels: ['beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-20'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-20" />
+
+## Cíl a výsledek
+
+Dokončete postup určený pro **Instalace: Legacy Authentication**. Tento postup pracuje s `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.
+
+## Platí pro
+
+Tato stránka platí pouze pro **Instalace: Legacy Authentication** (Docker · web). Hranice kanálu a dat jsou: DiscVault · `ghcr.io/helmerznl/discvault:beta`; TOTP; FQDN HTTPS. Kontrolní body této stránky: `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.
+
+### DiscVault v26 – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- TOTP
+- FQDN HTTPS
+
+## Požadavky
+
+- Legacy Authentication s uživatelským jménem, heslem a dvoufaktorovým ověřením (2FA) je v DiscVault 26 beta k dispozici jako záloha, když nelze použít passkeys.
+- přístup vlastníka · na nové instanci bez uživatelů či přihlašovacích údajů průvodce po potvrzení rizika hesla atomicky vytvoří prvního vlastníka
+- TOTP · obnovovací kódy jsou hashované, jednorázové a sdílené s obnovou passkeys; zálohy vynechávají TOTP tajemství a obnovovací materiál, takže uživatelé MFA po obnově registrují znovu
+
+### Záložní ověřování Legacy Authentication
+
+:::note[Dostupné v beta verzi]
+pouze přímý privátní nebo loopback požadavek s neplatným či prázdným RP pro passkeys může nabídnout bootstrap bez TOTP; pro uživatelské jméno, heslo a 2FA ponechte TOTP zapnuté
+:::
+
+## Postup
+
+1. **Nastavte:** `LEGACY_AUTH_ENABLED=true` · s platným FQDN udržujte `RP_ID` a `RP_ORIGINS` shodné a používejte důvěryhodné HTTPS
+2. **Nastavte:** `RP_ID=` · `RP_ORIGINS=` · pro přímou privátní nebo loopback IP bez FQDN ponechte `RP_ID` a `RP_ORIGINS` prázdné
+3. **Vyberte:** na nové instanci bez uživatelů či přihlašovacích údajů průvodce po potvrzení rizika hesla atomicky vytvoří prvního vlastníka · ve stávající instalaci zapněte přihlášení heslem v Uživatelé a role a potvrďte aktivaci čerstvým passkey vlastníka nebo správce
+4. **Vytvořte:** hesla mají nejméně 15 znaků, nesmí být shodná s uživatelským jménem ani zakázaným běžným heslem a hashují se Argon2id; pět chyb za 15 minut zamkne účet na 15 minut · TOTP · obnovovací kódy jsou hashované, jednorázové a sdílené s obnovou passkeys; zálohy vynechávají TOTP tajemství a obnovovací materiál, takže uživatelé MFA po obnově registrují znovu
+5. **Nastavte:** vlastníci a správci mohou vydat dočasná hesla, vyžadovat změnu hesla, nastavit MFA pro uživatele a řídit registraci passkeys
+6. **Otestujte:** Legacy Authentication s uživatelským jménem, heslem a dvoufaktorovým ověřením (2FA) je v DiscVault 26 beta k dispozici jako záloha, když nelze použít passkeys. · `GET /api/next/auth/status`
+7. **Zaznamenejte:** obnovovací kódy jsou hashované, jednorázové a sdílené s obnovou passkeys; zálohy vynechávají TOTP tajemství a obnovovací materiál, takže uživatelé MFA po obnově registrují znovu
+
+### Příkazy a nastavení
+
+#### DiscVault v26 – beta
+
+```text
+RP_ID=discvault.example.com
+RP_NAME=DiscVault
+RP_ORIGINS=https://discvault.example.com
+LEGACY_AUTH_ENABLED=true
+```
+
+```text
+RP_ID=
+RP_NAME=DiscVault
+RP_ORIGINS=
+LEGACY_AUTH_ENABLED=true
+```
+
+```bash
+curl --fail http://localhost:6180/api/next/health
+curl --fail http://localhost:6180/api/next/auth/status
+```
+
+## Očekávaný výsledek
+
+Výsledek přijměte pro **Instalace: Legacy Authentication** pouze pokud platí všechny následující výsledky: Legacy Authentication s uživatelským jménem, heslem a dvoufaktorovým ověřením (2FA) je v DiscVault 26 beta k dispozici jako záloha, když nelze použít passkeys.; TOTP · obnovovací kódy jsou hashované, jednorázové a sdílené s obnovou passkeys; zálohy vynechávají TOTP tajemství a obnovovací materiál, takže uživatelé MFA po obnově registrují znovu; hesla mají nejméně 15 znaků, nesmí být shodná s uživatelským jménem ani zakázaným běžným heslem a hashují se Argon2id; pět chyb za 15 minut zamkne účet na 15 minut. Kontrolní body této stránky: `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.
+
+- Legacy Authentication s uživatelským jménem, heslem a dvoufaktorovým ověřením (2FA) je v DiscVault 26 beta k dispozici jako záloha, když nelze použít passkeys.
+- TOTP · obnovovací kódy jsou hashované, jednorázové a sdílené s obnovou passkeys; zálohy vynechávají TOTP tajemství a obnovovací materiál, takže uživatelé MFA po obnově registrují znovu
+- hesla mají nejméně 15 znaků, nesmí být shodná s uživatelským jménem ani zakázaným běžným heslem a hashují se Argon2id; pět chyb za 15 minut zamkne účet na 15 minut
+
+## Bezpečnost a návrat
+
+:::caution
+Bezpečná hranice obnovy pro **Instalace: Legacy Authentication** vyžaduje před spuštěním nebo pokračováním tyto kroky: hesla mají nejméně 15 znaků, nesmí být shodná s uživatelským jménem ani zakázaným běžným heslem a hashují se Argon2id; pět chyb za 15 minut zamkne účet na 15 minut; obnovovací kódy jsou hashované, jednorázové a sdílené s obnovou passkeys; zálohy vynechávají TOTP tajemství a obnovovací materiál, takže uživatelé MFA po obnově registrují znovu; vypnutí Legacy Authentication vyžaduje aktivní passkey vlastníka; vlastník pouze na místní IP musí před bezpečným vypnutím nastavit platný FQDN a passkey. Kontrolní body této stránky: `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.
+
+- hesla mají nejméně 15 znaků, nesmí být shodná s uživatelským jménem ani zakázaným běžným heslem a hashují se Argon2id; pět chyb za 15 minut zamkne účet na 15 minut
+- obnovovací kódy jsou hashované, jednorázové a sdílené s obnovou passkeys; zálohy vynechávají TOTP tajemství a obnovovací materiál, takže uživatelé MFA po obnově registrují znovu
+- vypnutí Legacy Authentication vyžaduje aktivní passkey vlastníka; vlastník pouze na místní IP musí před bezpečným vypnutím nastavit platný FQDN a passkey
+:::
+
+## Další krok
+
+[Instalace: První spuštění a kontrola stavu](/cs/install/first-start-health/)
+
+## Zdroj a stav
+
+- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
+- [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
+- [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
+- [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
+- Zdroj a stav: `2026-07-20`
+- DiscVault Docs: `0.1.6`

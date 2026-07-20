@@ -1,6 +1,6 @@
 ---
 title: 'Configureren: Overzicht'
-description: 'Taakspecifieke instructies voor Configureren: Overzicht: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.'
+description: 'Taakspecifieke instructies voor Configureren: Overzicht: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.'
 pageId: 'configure-index'
 products: ['server']
 platforms: ['docker', 'web']
@@ -16,11 +16,11 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## Doel en resultaat
 
-Voer de paginaspecifieke werkwijze uit voor **Configureren: Overzicht**. Deze werkwijze gebruikt `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Voer de paginaspecifieke werkwijze uit voor **Configureren: Overzicht**. Deze werkwijze gebruikt `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 ## Van toepassing op
 
-Deze pagina is uitsluitend van toepassing op **Configureren: Overzicht** (Docker · web). De kanaal- en gegevensgrenzen zijn: DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. Paginaspecifieke controlepunten: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Deze pagina is uitsluitend van toepassing op **Configureren: Overzicht** (Docker · web). De kanaal- en gegevensgrenzen zijn: DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. Paginaspecifieke controlepunten: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 ### DiscVault v26 stabiel
 
@@ -41,18 +41,20 @@ Deze pagina is uitsluitend van toepassing op **Configureren: Overzicht** (Docker
 
 1. **Kiezen:** [Configureren: Omgevingsvariabelen](/nl/configure/environment/)
 2. **Kiezen:** [Configureren: Authenticatie en RBAC](/nl/configure/auth-rbac/) · RBAC
-3. **Kiezen:** [Configureren: Plug-ins en metadata](/nl/configure/plugins-metadata/)
-4. **Vastleggen:** `/configure/environment/`
+3. **Kiezen:** [Installeren: Legacy Authentication](/nl/install/legacy-authentication/)
+4. **Kiezen:** [Configureren: Plug-ins en metadata](/nl/configure/plugins-metadata/)
+5. **Vastleggen:** `/configure/environment/`
 
 ### Taakroutes
 
-- [Configureren: Omgevingsvariabelen](/nl/configure/environment/) — `/configure/environment/`
+- [Configureren: Omgevingsvariabelen](/nl/configure/environment/) — DiscVault 26 `.env.example`
 - [Configureren: Authenticatie en RBAC](/nl/configure/auth-rbac/) — DiscVault 26 RBAC
+- [Installeren: Legacy Authentication](/nl/install/legacy-authentication/) — DiscVault 26 TOTP
 - [Configureren: Plug-ins en metadata](/nl/configure/plugins-metadata/) — DiscVault 26
 
 ## Verwacht resultaat
 
-Accepteer het resultaat voor **Configureren: Overzicht** alleen wanneer alle onderstaande resultaten kloppen: gekozen releasekanaal; `/configure/auth-rbac/`. Paginaspecifieke controlepunten: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Accepteer het resultaat voor **Configureren: Overzicht** alleen wanneer alle onderstaande resultaten kloppen: gekozen releasekanaal; `/configure/auth-rbac/`. Paginaspecifieke controlepunten: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 - gekozen releasekanaal
 - `/configure/auth-rbac/`
@@ -60,7 +62,7 @@ Accepteer het resultaat voor **Configureren: Overzicht** alleen wanneer alle ond
 ## Veiligheid en terugdraaien
 
 :::caution
-De veilige herstelgrens voor **Configureren: Overzicht** vereist deze acties voordat iets start of doorgaat: wijzig één subsysteem tegelijk, bewaar de vorige waarde en back-up en draai terug vóór de volgende wijziging. Paginaspecifieke controlepunten: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+De veilige herstelgrens voor **Configureren: Overzicht** vereist deze acties voordat iets start of doorgaat: wijzig één subsysteem tegelijk, bewaar de vorige waarde en back-up en draai terug vóór de volgende wijziging. Paginaspecifieke controlepunten: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 - wijzig één subsysteem tegelijk, bewaar de vorige waarde en back-up en draai terug vóór de volgende wijziging
 :::

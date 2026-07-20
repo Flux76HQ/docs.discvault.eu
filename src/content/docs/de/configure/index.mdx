@@ -1,6 +1,6 @@
 ---
 title: 'Konfiguration: Übersicht'
-description: 'Aufgabenspezifische Anleitung für Konfiguration: Übersicht: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.'
+description: 'Aufgabenspezifische Anleitung für Konfiguration: Übersicht: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.'
 pageId: 'configure-index'
 products: ['server']
 platforms: ['docker', 'web']
@@ -16,11 +16,11 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## Ziel und Ergebnis
 
-Führe den seitenspezifischen Ablauf aus für **Konfiguration: Übersicht**. Dieses Verfahren arbeitet mit `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Führe den seitenspezifischen Ablauf aus für **Konfiguration: Übersicht**. Dieses Verfahren arbeitet mit `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 ## Gültig für
 
-Diese Seite gilt ausschließlich für **Konfiguration: Übersicht** (Docker · Web). Kanal- und Datengrenzen sind: DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. Seitenspezifische Kontrollpunkte: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Diese Seite gilt ausschließlich für **Konfiguration: Übersicht** (Docker · Web). Kanal- und Datengrenzen sind: DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. Seitenspezifische Kontrollpunkte: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 ### DiscVault v26 – stabil
 
@@ -41,18 +41,20 @@ Diese Seite gilt ausschließlich für **Konfiguration: Übersicht** (Docker · W
 
 1. **Auswählen:** [Konfiguration: Umgebungsvariablen](/de/configure/environment/)
 2. **Auswählen:** [Konfiguration: Authentifizierung und RBAC](/de/configure/auth-rbac/) · RBAC
-3. **Auswählen:** [Konfiguration: Plugins und Metadaten](/de/configure/plugins-metadata/)
-4. **Festhalten:** `/configure/environment/`
+3. **Auswählen:** [Installation: Legacy Authentication](/de/install/legacy-authentication/)
+4. **Auswählen:** [Konfiguration: Plugins und Metadaten](/de/configure/plugins-metadata/)
+5. **Festhalten:** `/configure/environment/`
 
 ### Aufgabenwege
 
-- [Konfiguration: Umgebungsvariablen](/de/configure/environment/) — `/configure/environment/`
+- [Konfiguration: Umgebungsvariablen](/de/configure/environment/) — DiscVault 26 `.env.example`
 - [Konfiguration: Authentifizierung und RBAC](/de/configure/auth-rbac/) — DiscVault 26 RBAC
+- [Installation: Legacy Authentication](/de/install/legacy-authentication/) — DiscVault 26 TOTP
 - [Konfiguration: Plugins und Metadaten](/de/configure/plugins-metadata/) — DiscVault 26
 
 ## Erwartetes Ergebnis
 
-Akzeptiere das Ergebnis für **Konfiguration: Übersicht** nur wenn alle folgenden Ergebnisse erfüllt sind: gewählter Release-Kanal; `/configure/auth-rbac/`. Seitenspezifische Kontrollpunkte: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Akzeptiere das Ergebnis für **Konfiguration: Übersicht** nur wenn alle folgenden Ergebnisse erfüllt sind: gewählter Release-Kanal; `/configure/auth-rbac/`. Seitenspezifische Kontrollpunkte: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 - gewählter Release-Kanal
 - `/configure/auth-rbac/`
@@ -60,7 +62,7 @@ Akzeptiere das Ergebnis für **Konfiguration: Übersicht** nur wenn alle folgend
 ## Sicherheit und Rollback
 
 :::caution
-Die sichere Wiederherstellungsgrenze für **Konfiguration: Übersicht** verlangt vor jedem Start oder Fortsetzen diese Maßnahmen: jeweils nur ein Subsystem ändern, vorherigen Wert und Sicherung behalten und vor der nächsten Änderung zurückrollen. Seitenspezifische Kontrollpunkte: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Die sichere Wiederherstellungsgrenze für **Konfiguration: Übersicht** verlangt vor jedem Start oder Fortsetzen diese Maßnahmen: jeweils nur ein Subsystem ändern, vorherigen Wert und Sicherung behalten und vor der nächsten Änderung zurückrollen. Seitenspezifische Kontrollpunkte: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 - jeweils nur ein Subsystem ändern, vorherigen Wert und Sicherung behalten und vor der nächsten Änderung zurückrollen
 :::

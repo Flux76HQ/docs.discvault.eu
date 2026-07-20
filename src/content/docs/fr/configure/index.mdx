@@ -1,6 +1,6 @@
 ---
 title: 'Configuration: Vue d’ensemble'
-description: 'Instructions propres à la tâche : Configuration: Vue d’ensemble: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.'
+description: 'Instructions propres à la tâche : Configuration: Vue d’ensemble: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.'
 pageId: 'configure-index'
 products: ['server']
 platforms: ['docker', 'web']
@@ -16,11 +16,11 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## Objectif et résultat
 
-Suivez le déroulement propre à cette page pour **Configuration: Vue d’ensemble**. Cette procédure utilise `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Suivez le déroulement propre à cette page pour **Configuration: Vue d’ensemble**. Cette procédure utilise `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 ## S’applique à
 
-Cette page s’applique uniquement à **Configuration: Vue d’ensemble** (Docker · web). Les limites de canal et de données sont : DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. Points de contrôle propres à la page : `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Cette page s’applique uniquement à **Configuration: Vue d’ensemble** (Docker · web). Les limites de canal et de données sont : DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. Points de contrôle propres à la page : `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 ### DiscVault v26 stable
 
@@ -41,18 +41,20 @@ Cette page s’applique uniquement à **Configuration: Vue d’ensemble** (Docke
 
 1. **Choisir:** [Configuration: Variables d’environnement](/fr/configure/environment/)
 2. **Choisir:** [Configuration: Authentification et RBAC](/fr/configure/auth-rbac/) · RBAC
-3. **Choisir:** [Configuration: Extensions et métadonnées](/fr/configure/plugins-metadata/)
-4. **Consigner:** `/configure/environment/`
+3. **Choisir:** [Installation: Legacy Authentication](/fr/install/legacy-authentication/)
+4. **Choisir:** [Configuration: Extensions et métadonnées](/fr/configure/plugins-metadata/)
+5. **Consigner:** `/configure/environment/`
 
 ### Parcours par tâche
 
-- [Configuration: Variables d’environnement](/fr/configure/environment/) — `/configure/environment/`
+- [Configuration: Variables d’environnement](/fr/configure/environment/) — DiscVault 26 `.env.example`
 - [Configuration: Authentification et RBAC](/fr/configure/auth-rbac/) — DiscVault 26 RBAC
+- [Installation: Legacy Authentication](/fr/install/legacy-authentication/) — DiscVault 26 TOTP
 - [Configuration: Extensions et métadonnées](/fr/configure/plugins-metadata/) — DiscVault 26
 
 ## Résultat attendu
 
-Validez le résultat de **Configuration: Vue d’ensemble** uniquement lorsque tous les résultats suivants sont confirmés : canal de publication choisi; `/configure/auth-rbac/`. Points de contrôle propres à la page : `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Validez le résultat de **Configuration: Vue d’ensemble** uniquement lorsque tous les résultats suivants sont confirmés : canal de publication choisi; `/configure/auth-rbac/`. Points de contrôle propres à la page : `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 - canal de publication choisi
 - `/configure/auth-rbac/`
@@ -60,7 +62,7 @@ Validez le résultat de **Configuration: Vue d’ensemble** uniquement lorsque t
 ## Sécurité et retour arrière
 
 :::caution
-La limite de récupération sûre pour **Configuration: Vue d’ensemble** impose ces actions avant tout démarrage ou toute poursuite : modifiez un seul sous-système à la fois, conservez sa valeur et sa sauvegarde, puis annulez avant le changement suivant. Points de contrôle propres à la page : `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+La limite de récupération sûre pour **Configuration: Vue d’ensemble** impose ces actions avant tout démarrage ou toute poursuite : modifiez un seul sous-système à la fois, conservez sa valeur et sa sauvegarde, puis annulez avant le changement suivant. Points de contrôle propres à la page : `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 - modifiez un seul sous-système à la fois, conservez sa valeur et sa sauvegarde, puis annulez avant le changement suivant
 :::

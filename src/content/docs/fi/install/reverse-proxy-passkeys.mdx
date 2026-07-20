@@ -1,79 +1,87 @@
 ---
 title: 'Asennus: Käänteinen välityspalvelin ja pääsyavaimet'
-description: 'Tehtäväkohtaiset ohjeet: Asennus: Käänteinen välityspalvelin ja pääsyavaimet: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.'
+description: 'Tehtäväkohtaiset ohjeet: Asennus: Käänteinen välityspalvelin ja pääsyavaimet: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.'
 pageId: 'install-reverse-proxy-passkeys'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
-lastVerified: '2026-07-15'
+lastVerified: '2026-07-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · verkko" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
+<PageMeta channels="stable,beta" platform="Docker · verkko" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
 
 ## Tavoite ja tulos
 
-Suorita sivukohtainen työnkulku: **Asennus: Käänteinen välityspalvelin ja pääsyavaimet**. Tässä menettelyssä käytetään FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Suorita sivukohtainen työnkulku: **Asennus: Käänteinen välityspalvelin ja pääsyavaimet**. Tässä menettelyssä käytetään FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 ## Koskee
 
-Tämä sivu koskee vain kohdetta **Asennus: Käänteinen välityspalvelin ja pääsyavaimet** (Docker · verkko). Kanava- ja tietorajat ovat: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`; localhost-poikkeuksen ulkopuolella passkey-avaimet vaativat vakaan täydellisen toimialuenimen luotetulla HTTPS-yhteydellä; pelkkää IP-osoitetta tai HTTP-yhteyttä ei tueta; `RP_ID` on isäntänimi ilman skeemaa tai porttia, kun taas `RP_ORIGINS` on tarkka täydellinen HTTPS-origin; molempien on vastattava selaimessa avattua osoitetta; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS`; `6080` API `5000`; localhost-poikkeuksen ulkopuolella passkey-avaimet vaativat vakaan täydellisen toimialuenimen luotetulla HTTPS-yhteydellä; pelkkää IP-osoitetta tai HTTP-yhteyttä ei tueta; `RP_ID` on isäntänimi ilman skeemaa tai porttia, kun taas `RP_ORIGINS` on tarkka täydellinen HTTPS-origin; molempien on vastattava selaimessa avattua osoitetta. Sivukohtaiset tarkistuspisteet: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Tämä sivu koskee vain kohdetta **Asennus: Käänteinen välityspalvelin ja pääsyavaimet** (Docker · verkko). Kanava- ja tietorajat ovat: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6080`; localhost-poikkeuksen ulkopuolella passkey-avaimet vaativat vakaan täydellisen toimialuenimen luotetulla HTTPS-yhteydellä; pelkkää IP-osoitetta tai HTTP-yhteyttä ei tueta; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; `LEGACY_AUTH_ENABLED=true`. Sivukohtaiset tarkistuspisteet: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 ### DiscVault v26 – vakaa
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- `RP_ID` `RP_ORIGINS`
-- `6080` API `5000`
+- `RP_ID` `RP_ORIGINS` · `6080`
 - localhost-poikkeuksen ulkopuolella passkey-avaimet vaativat vakaan täydellisen toimialuenimen luotetulla HTTPS-yhteydellä; pelkkää IP-osoitetta tai HTTP-yhteyttä ei tueta
-- `RP_ID` on isäntänimi ilman skeemaa tai porttia, kun taas `RP_ORIGINS` on tarkka täydellinen HTTPS-origin; molempien on vastattava selaimessa avattua osoitetta
 
 ### DiscVault v26 – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- `RP_ID` `RP_ORIGINS`
-- `6080` API `5000`
-- localhost-poikkeuksen ulkopuolella passkey-avaimet vaativat vakaan täydellisen toimialuenimen luotetulla HTTPS-yhteydellä; pelkkää IP-osoitetta tai HTTP-yhteyttä ei tueta
-- `RP_ID` on isäntänimi ilman skeemaa tai porttia, kun taas `RP_ORIGINS` on tarkka täydellinen HTTPS-origin; molempien on vastattava selaimessa avattua osoitetta
+- `RP_ID` `RP_ORIGINS` · `6180`
+- `LEGACY_AUTH_ENABLED=true`
 
 ## Edellytykset
 
 - FQDN
-- TLS
+- `RP_ORIGINS`
 - `RP_ID`
 
 ### Legacy Authentication -varamenetelmä
 
-:::note[Suunnitteilla]
-Legacy Authentication käyttäjätunnuksella, salasanalla ja kaksivaiheisella tunnistautumisella (2FA) kehitetään varamenetelmäksi asennuksiin, joilla ei ole kelvollista FQDN-nimeä ja joissa passkey-avaimia ei voi käyttää.
+:::note[Saatavilla betassa]
+Legacy Authentication käyttäjätunnuksella, salasanalla ja kaksivaiheisella tunnistautumisella (2FA) on saatavilla DiscVault 26 betassa, kun passkey-avaimia ei voi käyttää.
 
-Asennusvaiheet ja määritysvaihtoehdot lisätään tähän, kun tunnistautumismenetelmä on saatavilla. Siihen asti Legacy Authentication ei ole käytettävissä oleva asennusreitti.
+Noudata ohjetta `/install/legacy-authentication/` ennen ominaisuuden käyttöönottoa tai ensimmäisen omistajan luontia.
 :::
 
 ## Toimenpiteet
 
 1. **Valitse:** FQDN · localhost-poikkeuksen ulkopuolella passkey-avaimet vaativat vakaan täydellisen toimialuenimen luotetulla HTTPS-yhteydellä; pelkkää IP-osoitetta tai HTTP-yhteyttä ei tueta
-2. **Määritä:** `RP_ID`
-3. **Määritä:** `RP_ORIGINS` · HTTPS
-4. **Määritä:** `http://127.0.0.1:6080`
-5. **Testaa:** `GET /api/next/health`
-6. **Kirjaa:** valitse isäntänimi ennen passkey-rekisteröintiä; myöhempi muutos vaatii rekisteröinnin uudelleen, ja localhost on vain paikallisen asennuksen poikkeus
+2. **Valitse:** [Asennus: Legacy Authentication](/fi/install/legacy-authentication/) · suoralla yksityisellä tai loopback-IP-osoitteella ilman FQDN-nimeä jätä `RP_ID` ja `RP_ORIGINS` tyhjiksi
+3. **Määritä:** `RP_ID`
+4. **Määritä:** `RP_ORIGINS` · HTTPS
+5. **Määritä:** `6080` `6180`
+6. **Testaa:** `GET /api/next/health`
+7. **Kirjaa:** valitse isäntänimi ennen passkey-rekisteröintiä; myöhempi muutos vaatii rekisteröinnin uudelleen, ja localhost on vain paikallisen asennuksen poikkeus
 
 ### Komennot ja asetukset
 
-#### Molemmat kanavat
+#### DiscVault v26 – vakaa
 
 ```text
 RP_ID=discvault.example.com
+RP_NAME=DiscVault
 RP_ORIGINS=https://discvault.example.com
 curl --fail https://discvault.example.com/api/next/health
 ```
 
+#### DiscVault v26 – beta
+
+```text
+RP_ID=discvault.example.com
+RP_NAME=DiscVault
+RP_ORIGINS=https://discvault.example.com
+LEGACY_AUTH_ENABLED=true
+curl --fail http://localhost:6180/api/next/health
+```
+
 ## Odotettu tulos
 
-Hyväksy tulos kohteelle **Asennus: Käänteinen välityspalvelin ja pääsyavaimet** vain kun kaikki seuraavat tulokset toteutuvat: HTTPS · HTTP `2xx`; `RP_ID`; `RP_ID` on isäntänimi ilman skeemaa tai porttia, kun taas `RP_ORIGINS` on tarkka täydellinen HTTPS-origin; molempien on vastattava selaimessa avattua osoitetta. Sivukohtaiset tarkistuspisteet: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Hyväksy tulos kohteelle **Asennus: Käänteinen välityspalvelin ja pääsyavaimet** vain kun kaikki seuraavat tulokset toteutuvat: HTTPS · HTTP `2xx`; `RP_ID`; `RP_ID` on isäntänimi ilman skeemaa tai porttia, kun taas `RP_ORIGINS` on tarkka täydellinen HTTPS-origin; molempien on vastattava selaimessa avattua osoitetta. Sivukohtaiset tarkistuspisteet: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 - HTTPS · HTTP `2xx`
 - `RP_ID`
@@ -82,9 +90,10 @@ Hyväksy tulos kohteelle **Asennus: Käänteinen välityspalvelin ja pääsyavai
 ## Turvallisuus ja palautus
 
 :::caution
-Turvallinen palautusraja kohteelle **Asennus: Käänteinen välityspalvelin ja pääsyavaimet** edellyttää näitä toimia ennen käynnistystä tai jatkamista: valitse isäntänimi ennen passkey-rekisteröintiä; myöhempi muutos vaatii rekisteröinnin uudelleen, ja localhost on vain paikallisen asennuksen poikkeus; palauta välityspalvelin- ja RP-arvot yhdessä ja säilytä omistajan palautustapa. Sivukohtaiset tarkistuspisteet: FQDN · `RP_ORIGINS` · `RP_ID` · `6080` · `/api/next/health`.
+Turvallinen palautusraja kohteelle **Asennus: Käänteinen välityspalvelin ja pääsyavaimet** edellyttää näitä toimia ennen käynnistystä tai jatkamista: valitse isäntänimi ennen passkey-rekisteröintiä; myöhempi muutos vaatii rekisteröinnin uudelleen, ja localhost on vain paikallisen asennuksen poikkeus; vain suora yksityinen tai loopback-pyyntö virheellisillä tai tyhjillä RP-asetuksilla voi tarjota käynnistyksen ilman TOTP:tä; pidä TOTP käytössä käyttäjätunnus-, salasana- ja 2FA-polulla; palauta välityspalvelin- ja RP-arvot yhdessä ja säilytä omistajan palautustapa. Sivukohtaiset tarkistuspisteet: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 - valitse isäntänimi ennen passkey-rekisteröintiä; myöhempi muutos vaatii rekisteröinnin uudelleen, ja localhost on vain paikallisen asennuksen poikkeus
+- vain suora yksityinen tai loopback-pyyntö virheellisillä tai tyhjillä RP-asetuksilla voi tarjota käynnistyksen ilman TOTP:tä; pidä TOTP käytössä käyttäjätunnus-, salasana- ja 2FA-polulla
 - palauta välityspalvelin- ja RP-arvot yhdessä ja säilytä omistajan palautustapa
 :::
 
@@ -94,7 +103,12 @@ Turvallinen palautusraja kohteelle **Asennus: Käänteinen välityspalvelin ja p
 
 ## Lähde ja tila
 
-- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
-- Lähde ja tila: `2026-07-15`
-- DiscVault Docs: `0.1.5`
+- [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
+- [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
+- [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
+- [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
+- Lähde ja tila: `2026-07-20`
+- DiscVault Docs: `0.1.6`

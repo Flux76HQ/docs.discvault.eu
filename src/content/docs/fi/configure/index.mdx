@@ -1,6 +1,6 @@
 ---
 title: 'Määritys: Yleiskatsaus'
-description: 'Tehtäväkohtaiset ohjeet: Määritys: Yleiskatsaus: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.'
+description: 'Tehtäväkohtaiset ohjeet: Määritys: Yleiskatsaus: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.'
 pageId: 'configure-index'
 products: ['server']
 platforms: ['docker', 'web']
@@ -16,11 +16,11 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## Tavoite ja tulos
 
-Suorita sivukohtainen työnkulku: **Määritys: Yleiskatsaus**. Tässä menettelyssä käytetään `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Suorita sivukohtainen työnkulku: **Määritys: Yleiskatsaus**. Tässä menettelyssä käytetään `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 ## Koskee
 
-Tämä sivu koskee vain kohdetta **Määritys: Yleiskatsaus** (Docker · verkko). Kanava- ja tietorajat ovat: DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. Sivukohtaiset tarkistuspisteet: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Tämä sivu koskee vain kohdetta **Määritys: Yleiskatsaus** (Docker · verkko). Kanava- ja tietorajat ovat: DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. Sivukohtaiset tarkistuspisteet: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 ### DiscVault v26 – vakaa
 
@@ -41,18 +41,20 @@ Tämä sivu koskee vain kohdetta **Määritys: Yleiskatsaus** (Docker · verkko)
 
 1. **Valitse:** [Määritys: Ympäristömuuttujat](/fi/configure/environment/)
 2. **Valitse:** [Määritys: Todennus ja RBAC](/fi/configure/auth-rbac/) · RBAC
-3. **Valitse:** [Määritys: Liitännäiset ja metatiedot](/fi/configure/plugins-metadata/)
-4. **Kirjaa:** `/configure/environment/`
+3. **Valitse:** [Asennus: Legacy Authentication](/fi/install/legacy-authentication/)
+4. **Valitse:** [Määritys: Liitännäiset ja metatiedot](/fi/configure/plugins-metadata/)
+5. **Kirjaa:** `/configure/environment/`
 
 ### Tehtäväpolut
 
-- [Määritys: Ympäristömuuttujat](/fi/configure/environment/) — `/configure/environment/`
+- [Määritys: Ympäristömuuttujat](/fi/configure/environment/) — DiscVault 26 `.env.example`
 - [Määritys: Todennus ja RBAC](/fi/configure/auth-rbac/) — DiscVault 26 RBAC
+- [Asennus: Legacy Authentication](/fi/install/legacy-authentication/) — DiscVault 26 TOTP
 - [Määritys: Liitännäiset ja metatiedot](/fi/configure/plugins-metadata/) — DiscVault 26
 
 ## Odotettu tulos
 
-Hyväksy tulos kohteelle **Määritys: Yleiskatsaus** vain kun kaikki seuraavat tulokset toteutuvat: valittu julkaisukanava; `/configure/auth-rbac/`. Sivukohtaiset tarkistuspisteet: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Hyväksy tulos kohteelle **Määritys: Yleiskatsaus** vain kun kaikki seuraavat tulokset toteutuvat: valittu julkaisukanava; `/configure/auth-rbac/`. Sivukohtaiset tarkistuspisteet: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 - valittu julkaisukanava
 - `/configure/auth-rbac/`
@@ -60,7 +62,7 @@ Hyväksy tulos kohteelle **Määritys: Yleiskatsaus** vain kun kaikki seuraavat 
 ## Turvallisuus ja palautus
 
 :::caution
-Turvallinen palautusraja kohteelle **Määritys: Yleiskatsaus** edellyttää näitä toimia ennen käynnistystä tai jatkamista: muuta yksi alijärjestelmä kerrallaan, säilytä edellinen arvo ja varmuuskopio ja palauta ennen seuraavaa muutosta. Sivukohtaiset tarkistuspisteet: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/plugins-metadata/`.
+Turvallinen palautusraja kohteelle **Määritys: Yleiskatsaus** edellyttää näitä toimia ennen käynnistystä tai jatkamista: muuta yksi alijärjestelmä kerrallaan, säilytä edellinen arvo ja varmuuskopio ja palauta ennen seuraavaa muutosta. Sivukohtaiset tarkistuspisteet: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 - muuta yksi alijärjestelmä kerrallaan, säilytä edellinen arvo ja varmuuskopio ja palauta ennen seuraavaa muutosta
 :::

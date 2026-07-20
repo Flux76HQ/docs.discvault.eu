@@ -1,0 +1,107 @@
+---
+title: '安装: Legacy Authentication'
+description: '任务专用说明： 安装: Legacy Authentication: `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.'
+pageId: 'install-legacy-authentication'
+products: ['server']
+platforms: ['docker', 'web']
+channels: ['beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault']
+lastVerified: '2026-07-20'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="beta" platform="Docker · 网页" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-20" />
+
+## 目标和结果
+
+完成此页面专用的流程： **安装: Legacy Authentication**. 此流程使用 `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.
+
+## 适用范围
+
+本页面仅适用于 **安装: Legacy Authentication** (Docker · 网页). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:beta`; TOTP; FQDN HTTPS. 本页面专用检查点： `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.
+
+### DiscVault v26 测试版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:beta`
+- TOTP
+- FQDN HTTPS
+
+## 前提条件
+
+- 使用用户名、密码和双因素身份验证（2FA）的 Legacy Authentication 已在 DiscVault 26 测试版中提供，可在无法使用通行密钥时作为回退方式。
+- 所有者权限 · 在没有用户或凭据的新实例上，设置向导会在确认密码风险后以原子方式创建首位所有者
+- TOTP · 恢复代码经过哈希处理、仅可使用一次并与通行密钥恢复共用；备份不包含 TOTP 密钥和恢复材料，因此还原后需重新注册 MFA
+
+### Legacy Authentication 回退方式
+
+:::note[测试版可用]
+仅当请求直接来自私有或回环地址且 RP 设置无效或为空时，才可能提供无 TOTP 引导；用户名、密码和 2FA 路径应保持启用 TOTP
+:::
+
+## 操作步骤
+
+1. **配置:** `LEGACY_AUTH_ENABLED=true` · 使用有效 FQDN 时，应保持 `RP_ID` 与 `RP_ORIGINS` 一致并使用受信任的 HTTPS
+2. **配置:** `RP_ID=` · `RP_ORIGINS=` · 对于没有 FQDN 的直连私有或回环 IP，请将 `RP_ID` 和 `RP_ORIGINS` 留空
+3. **选择:** 在没有用户或凭据的新实例上，设置向导会在确认密码风险后以原子方式创建首位所有者 · 在现有安装中，应在用户和角色中启用密码登录，并通过所有者或管理员的新通行密钥验证进行批准
+4. **创建:** 密码至少需要 15 个字符，不得等于用户名或被拒绝的常见密码，并使用 Argon2id 哈希；15 分钟内失败五次会锁定账户 15 分钟 · TOTP · 恢复代码经过哈希处理、仅可使用一次并与通行密钥恢复共用；备份不包含 TOTP 密钥和恢复材料，因此还原后需重新注册 MFA
+5. **配置:** 所有者和管理员可以签发临时密码、要求修改密码、设置每用户 MFA 策略并控制通行密钥注册
+6. **测试:** 使用用户名、密码和双因素身份验证（2FA）的 Legacy Authentication 已在 DiscVault 26 测试版中提供，可在无法使用通行密钥时作为回退方式。 · `GET /api/next/auth/status`
+7. **记录:** 恢复代码经过哈希处理、仅可使用一次并与通行密钥恢复共用；备份不包含 TOTP 密钥和恢复材料，因此还原后需重新注册 MFA
+
+### 命令和设置
+
+#### DiscVault v26 测试版
+
+```text
+RP_ID=discvault.example.com
+RP_NAME=DiscVault
+RP_ORIGINS=https://discvault.example.com
+LEGACY_AUTH_ENABLED=true
+```
+
+```text
+RP_ID=
+RP_NAME=DiscVault
+RP_ORIGINS=
+LEGACY_AUTH_ENABLED=true
+```
+
+```bash
+curl --fail http://localhost:6180/api/next/health
+curl --fail http://localhost:6180/api/next/auth/status
+```
+
+## 预期结果
+
+仅在以下条件下接受结果： **安装: Legacy Authentication** 必须确认以下所有结果： 使用用户名、密码和双因素身份验证（2FA）的 Legacy Authentication 已在 DiscVault 26 测试版中提供，可在无法使用通行密钥时作为回退方式。; TOTP · 恢复代码经过哈希处理、仅可使用一次并与通行密钥恢复共用；备份不包含 TOTP 密钥和恢复材料，因此还原后需重新注册 MFA; 密码至少需要 15 个字符，不得等于用户名或被拒绝的常见密码，并使用 Argon2id 哈希；15 分钟内失败五次会锁定账户 15 分钟. 本页面专用检查点： `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.
+
+- 使用用户名、密码和双因素身份验证（2FA）的 Legacy Authentication 已在 DiscVault 26 测试版中提供，可在无法使用通行密钥时作为回退方式。
+- TOTP · 恢复代码经过哈希处理、仅可使用一次并与通行密钥恢复共用；备份不包含 TOTP 密钥和恢复材料，因此还原后需重新注册 MFA
+- 密码至少需要 15 个字符，不得等于用户名或被拒绝的常见密码，并使用 Argon2id 哈希；15 分钟内失败五次会锁定账户 15 分钟
+
+## 安全与回滚
+
+:::caution
+安全恢复边界： **安装: Legacy Authentication** 在启动或继续任何操作前必须执行： 密码至少需要 15 个字符，不得等于用户名或被拒绝的常见密码，并使用 Argon2id 哈希；15 分钟内失败五次会锁定账户 15 分钟; 恢复代码经过哈希处理、仅可使用一次并与通行密钥恢复共用；备份不包含 TOTP 密钥和恢复材料，因此还原后需重新注册 MFA; 禁用 Legacy Authentication 需要有效的所有者通行密钥；仅使用本地 IP 的所有者必须先建立有效 FQDN 和所有者通行密钥. 本页面专用检查点： `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.
+
+- 密码至少需要 15 个字符，不得等于用户名或被拒绝的常见密码，并使用 Argon2id 哈希；15 分钟内失败五次会锁定账户 15 分钟
+- 恢复代码经过哈希处理、仅可使用一次并与通行密钥恢复共用；备份不包含 TOTP 密钥和恢复材料，因此还原后需重新注册 MFA
+- 禁用 Legacy Authentication 需要有效的所有者通行密钥；仅使用本地 IP 的所有者必须先建立有效 FQDN 和所有者通行密钥
+:::
+
+## 下一步
+
+[安装: 首次启动和健康检查](/zh/install/first-start-health/)
+
+## 来源和状态
+
+- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
+- [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
+- [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
+- [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
+- 来源和状态: `2026-07-20`
+- DiscVault Docs: `0.1.6`

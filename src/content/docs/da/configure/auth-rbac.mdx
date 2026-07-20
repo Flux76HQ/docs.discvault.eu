@@ -1,42 +1,38 @@
 ---
 title: 'Konfiguration: Godkendelse og RBAC'
-description: 'Opgavespecifik vejledning til Konfiguration: Godkendelse og RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.'
+description: 'Opgavespecifik vejledning til Konfiguration: Godkendelse og RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.'
 pageId: 'configure-auth-rbac'
 products: ['server']
 platforms: ['web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
-lastVerified: '2026-07-15'
+lastVerified: '2026-07-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
+<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
 
 ## Mål og resultat
 
-Gennemfør den sidespecifikke arbejdsgang for **Konfiguration: Godkendelse og RBAC**. Denne fremgangsmåde arbejder med `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
+Gennemfør den sidespecifikke arbejdsgang for **Konfiguration: Godkendelse og RBAC**. Denne fremgangsmåde arbejder med `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
 
 ## Gælder for
 
-Denne side gælder kun for **Konfiguration: Godkendelse og RBAC** (web). Kanal- og datagrænserne er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; en passkey er et kryptografisk nøglepar: den private nøgle bliver på enheden eller i en betroet legitimationsadministrator, og DiscVault gemmer kun den offentlige nøgle; passkeys er phishing-resistente og unikke for webstedet; login bruger enhedens oplåsning i stedet for en genanvendelig kontoadgangskode; en tidsbegrænset invitationskode starter registrering, men er ikke en genanvendelig kontoadgangskode; normal login bruger en passkey; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn; en passkey er et kryptografisk nøglepar: den private nøgle bliver på enheden eller i en betroet legitimationsadministrator, og DiscVault gemmer kun den offentlige nøgle; passkeys er phishing-resistente og unikke for webstedet; login bruger enhedens oplåsning i stedet for en genanvendelig kontoadgangskode; en tidsbegrænset invitationskode starter registrering, men er ikke en genanvendelig kontoadgangskode; normal login bruger en passkey. Sidespecifikke kontrolpunkter: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
+Denne side gælder kun for **Konfiguration: Godkendelse og RBAC** (web). Kanal- og datagrænserne er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; en passkey er et kryptografisk nøglepar: den private nøgle bliver på enheden eller i en betroet legitimationsadministrator, og DiscVault gemmer kun den offentlige nøgle; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn; TOTP. Sidespecifikke kontrolpunkter: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
 
 ### DiscVault v26 – stabil
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - WebAuthn
 - en passkey er et kryptografisk nøglepar: den private nøgle bliver på enheden eller i en betroet legitimationsadministrator, og DiscVault gemmer kun den offentlige nøgle
-- passkeys er phishing-resistente og unikke for webstedet; login bruger enhedens oplåsning i stedet for en genanvendelig kontoadgangskode
-- en tidsbegrænset invitationskode starter registrering, men er ikke en genanvendelig kontoadgangskode; normal login bruger en passkey
 
 ### DiscVault v26 – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - WebAuthn
-- en passkey er et kryptografisk nøglepar: den private nøgle bliver på enheden eller i en betroet legitimationsadministrator, og DiscVault gemmer kun den offentlige nøgle
-- passkeys er phishing-resistente og unikke for webstedet; login bruger enhedens oplåsning i stedet for en genanvendelig kontoadgangskode
-- en tidsbegrænset invitationskode starter registrering, men er ikke en genanvendelig kontoadgangskode; normal login bruger en passkey
+- TOTP
 
 ## Forudsætninger
 
@@ -55,20 +51,29 @@ Denne side gælder kun for **Konfiguration: Godkendelse og RBAC** (web). Kanal- 
 7. **Åbn:** Administration → Sikkerhed → Aktivér godkendelse
 8. **Opret:** Administration → Brugere → Opret 48-timers invitation
 9. **Konfigurér:** Administration → Roller → Grundlæggende / Avanceret
-10. **Test:** WebAuthn
+10. **Konfigurér:** på en eksisterende installation aktiveres adgangskodelogin i Brugere og roller og godkendes med en ny passkey-bekræftelse fra ejer eller administrator · ejere og administratorer kan udstede midlertidige adgangskoder, kræve ændring, indstille MFA pr. bruger og styre passkey-registrering
+11. **Registrér:** gendannelseskoder er hashværdi, engangs og fælles med passkey-gendannelse; backup udelader TOTP-hemmeligheder og gendannelsesmateriale, så MFA tilmeldes igen efter gendannelse · deaktivering af Legacy Authentication kræver en aktiv ejer-passkey; en ejer kun på lokal IP skal oprette gyldigt FQDN og ejer-passkey før sikker deaktivering
+12. **Test:** `/api/next/auth/rbac`
 
 ### Kommandoer og indstillinger
 
-#### Begge kanaler
+#### DiscVault v26 – stabil
 
 ```bash
 curl --fail http://localhost:6080/api/next/auth/status
 curl --fail http://localhost:6080/api/next/auth/rbac
 ```
 
+#### DiscVault v26 – beta
+
+```bash
+curl --fail http://localhost:6180/api/next/auth/status
+curl --fail http://localhost:6180/api/next/auth/rbac
+```
+
 ## Forventet resultat
 
-Godkend resultatet for **Konfiguration: Godkendelse og RBAC** kun når alle resultater nedenfor er opfyldt: ejerens passkey-login virker, invitationsregistrering følger indstillingen, og testbrugeren har kun tildelte tilladelser; passkeys er phishing-resistente og unikke for webstedet; login bruger enhedens oplåsning i stedet for en genanvendelig kontoadgangskode; en tidsbegrænset invitationskode starter registrering, men er ikke en genanvendelig kontoadgangskode; normal login bruger en passkey. Sidespecifikke kontrolpunkter: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
+Godkend resultatet for **Konfiguration: Godkendelse og RBAC** kun når alle resultater nedenfor er opfyldt: ejerens passkey-login virker, invitationsregistrering følger indstillingen, og testbrugeren har kun tildelte tilladelser; passkeys er phishing-resistente og unikke for webstedet; login bruger enhedens oplåsning i stedet for en genanvendelig kontoadgangskode; en tidsbegrænset invitationskode starter registrering, men er ikke en genanvendelig kontoadgangskode; normal login bruger en passkey. Sidespecifikke kontrolpunkter: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
 
 - ejerens passkey-login virker, invitationsregistrering følger indstillingen, og testbrugeren har kun tildelte tilladelser
 - passkeys er phishing-resistente og unikke for webstedet; login bruger enhedens oplåsning i stedet for en genanvendelig kontoadgangskode
@@ -77,9 +82,12 @@ Godkend resultatet for **Konfiguration: Godkendelse og RBAC** kun når alle resu
 ## Sikkerhed og tilbagerulning
 
 :::caution
-Den sikre gendannelsesgrænse for **Konfiguration: Godkendelse og RBAC** kræver disse handlinger, før noget startes eller fortsættes: registrér mere end én passkey, f.eks. en telefon og en computer, og behold en uafhængig gendannelsesvej for ejeren før en enhed udskiftes eller mistes; behold ejersessionen og en anden gendannelsesmetode; fjern aldrig ejerens sidste adgangsnøgle. Sidespecifikke kontrolpunkter: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+`.
+Den sikre gendannelsesgrænse for **Konfiguration: Godkendelse og RBAC** kræver disse handlinger, før noget startes eller fortsættes: registrér mere end én passkey, f.eks. en telefon og en computer, og behold en uafhængig gendannelsesvej for ejeren før en enhed udskiftes eller mistes; adgangskoder kræver mindst 15 tegn, må ikke være brugernavnet eller en afvist almindelig kode og hashes med Argon2id; fem fejl på 15 minutter låser kontoen i 15 minutter; gendannelseskoder er hashværdi, engangs og fælles med passkey-gendannelse; backup udelader TOTP-hemmeligheder og gendannelsesmateriale, så MFA tilmeldes igen efter gendannelse; deaktivering af Legacy Authentication kræver en aktiv ejer-passkey; en ejer kun på lokal IP skal oprette gyldigt FQDN og ejer-passkey før sikker deaktivering; behold ejersessionen og en anden gendannelsesmetode; fjern aldrig ejerens sidste adgangsnøgle. Sidespecifikke kontrolpunkter: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
 
 - registrér mere end én passkey, f.eks. en telefon og en computer, og behold en uafhængig gendannelsesvej for ejeren før en enhed udskiftes eller mistes
+- adgangskoder kræver mindst 15 tegn, må ikke være brugernavnet eller en afvist almindelig kode og hashes med Argon2id; fem fejl på 15 minutter låser kontoen i 15 minutter
+- gendannelseskoder er hashværdi, engangs og fælles med passkey-gendannelse; backup udelader TOTP-hemmeligheder og gendannelsesmateriale, så MFA tilmeldes igen efter gendannelse
+- deaktivering af Legacy Authentication kræver en aktiv ejer-passkey; en ejer kun på lokal IP skal oprette gyldigt FQDN og ejer-passkey før sikker deaktivering
 - behold ejersessionen og en anden gendannelsesmetode; fjern aldrig ejerens sidste adgangsnøgle
 :::
 
@@ -89,7 +97,12 @@ Den sikre gendannelsesgrænse for **Konfiguration: Godkendelse og RBAC** kræver
 
 ## Kilde og status
 
-- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
-- Kilde og status: `2026-07-15`
-- DiscVault Docs: `0.1.4`
+- [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
+- [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
+- [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
+- [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
+- Kilde og status: `2026-07-20`
+- DiscVault Docs: `0.1.6`

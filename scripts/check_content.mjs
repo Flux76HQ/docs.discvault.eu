@@ -52,12 +52,32 @@ const operationalHeadings = [
   'Next step',
   'Source and status',
 ];
+const betaOnlyPageIds = new Set([
+  'install-docker-compose',
+  'install-legacy-authentication',
+  'configure-environment',
+]);
+const channelVariantPageIds = new Set([
+  'install-index',
+  'install-reverse-proxy-passkeys',
+  'install-first-start-health',
+  'configure-index',
+  'configure-auth-rbac',
+]);
 const requiredMarkers = {
   'start-index': ['/install/', '/pwa/', '/ios/', '/android/'],
   'start-requirements': ['Docker Engine', 'Docker Compose', 'HTTPS'],
   'install-index': [':latest', ':beta', ':legacy', 'PostgreSQL', '/data', '/update/migration/'],
   'install-docker-run': ['DATABASE_URL', 'discvault-postgres', '6080:5000', '/api/next/health'],
-  'install-docker-compose': ['DISCVAULT_IMAGE', 'postgres:17-alpine', '6080:5000'],
+  'install-docker-compose': [
+    'release/v26-beta',
+    'app/deploy/next/docker-compose.yml',
+    'app/deploy/next/.env.example',
+    'DISCVAULT_NEXT_IMAGE',
+    'ghcr.io/helmerznl/discvault:beta',
+    'discvault_next_deploy',
+    '6180',
+  ],
   'install-unraid': [
     '/mnt/user/appdata/discvault/data',
     '/mnt/user/appdata/discvault/postgres',
@@ -68,11 +88,27 @@ const requiredMarkers = {
     'FQDN',
     'RP_ORIGINS',
     'RP_ID',
-    '6080',
+    'LEGACY_AUTH_ENABLED',
+    '/install/legacy-authentication/',
     '/api/next/health',
     'localhost',
   ],
-  'install-first-start-health': ['/api/next/health', '/api/next/auth/status', '6080:5000'],
+  'install-legacy-authentication': [
+    'Legacy Authentication',
+    'LEGACY_AUTH_ENABLED=true',
+    'RP_ID=',
+    'RP_ORIGINS=',
+    'TOTP',
+    'Argon2id',
+    '/api/next/auth/status',
+  ],
+  'install-first-start-health': [
+    '/api/next/health',
+    '/api/next/auth/status',
+    'localhost:6080',
+    'localhost:6180',
+    'Legacy Authentication',
+  ],
   'update-index': ['/update/backup/', '/update/update/', '/update/rollback/'],
   'update-backup': ['pg_dump -Fc', 'PREVIOUS_IMAGE', 'next-api'],
   'update-restore': ['pg_restore --exit-on-error', 'discvault.failed-', 'next-worker', 'next-api'],
@@ -91,7 +127,15 @@ const requiredMarkers = {
     '/configure/auth-rbac/',
     '/configure/plugins-metadata/',
   ],
-  'configure-environment': ['/opt/discvault/.env', 'DISCVAULT_IMAGE', 'chmod 0600', 'RP_ORIGINS'],
+  'configure-environment': [
+    '/opt/discvault-next/.env',
+    'DISCVAULT_NEXT_IMAGE',
+    'DISCVAULT_NEXT_POSTGRES_DATA',
+    'chmod 0600',
+    'openssl rand -base64 48',
+    'RP_ORIGINS',
+    'LEGACY_AUTH_ENABLED',
+  ],
   'configure-auth-rbac': [
     '/api/next/auth/status',
     '/api/next/auth/rbac',
@@ -99,6 +143,9 @@ const requiredMarkers = {
     'Windows Hello',
     'iOS',
     'Android',
+    'Legacy Authentication',
+    'Argon2id',
+    'TOTP',
   ],
   'configure-plugins-metadata': ['/api/next/plugins/registry', '/data/plugins', 'dryRun'],
   'pwa-index': ['Service Worker', '/pwa/offline/', 'HTTPS'],
@@ -244,30 +291,38 @@ for (const file of files) {
     continue;
   }
   const legacyAllowedPageIds = new Set(['install-index', 'update-update', 'update-migration']);
-  const legacyDeploymentContent =
-    pageId === 'install-reverse-proxy-passkeys'
-      ? content.replace(/\bLegacy Authentication\b/gi, 'authentication')
-      : content;
-  if (
-    !legacyAllowedPageIds.has(pageId) &&
-    /(?:\bSQLite\b|discvault\.db|\blegacy\b)/i.test(legacyDeploymentContent)
-  ) {
+  const legacyAuthenticationPageIds = new Set([
+    'install-docker-compose',
+    'install-reverse-proxy-passkeys',
+    'install-legacy-authentication',
+    'install-first-start-health',
+    'configure-index',
+    'configure-environment',
+    'configure-auth-rbac',
+  ]);
+  const legacyDeploymentPattern = legacyAuthenticationPageIds.has(pageId)
+    ? /(?:\bSQLite\b|discvault\.db)/i
+    : /(?:\bSQLite\b|discvault\.db|\blegacy\b)/i;
+  if (!legacyAllowedPageIds.has(pageId) && legacyDeploymentPattern.test(content)) {
     errors.push(
-      `${relative}: legacy deployment/SQLite claims are allowed only on install choice, container update, or existing-data migration pages; "Legacy Authentication" is the only exception on the passkey installation page`,
+      `${relative}: legacy deployment/SQLite claims are allowed only on install choice, container update, or existing-data migration pages; exact "Legacy Authentication" wording is permitted only on its beta auth procedures`,
     );
   }
-  for (const [claim, pattern] of [
+  const forbiddenClaims = [
     ['all-in-one runtime', /(?:current\s+)?all-in-one/i],
     ['filesystem-only runtime architecture', /single\s+`?\/data`?/i],
     ['old health endpoint', /\/api\/health\b/i],
-    ['old API port', /\b6180\b/],
     ['old API port mapping', /\b6080:80\b/],
     ['singular RP_ORIGIN', /\bRP_ORIGIN\b(?!S)/],
     [
       'channel-exclusive PostgreSQL',
       /PostgreSQL[^.\n]{0,80}beta[- ]only|beta[- ]only[^.\n]{0,80}PostgreSQL/i,
     ],
-  ]) {
+  ];
+  if (!betaOnlyPageIds.has(pageId) && !channelVariantPageIds.has(pageId)) {
+    forbiddenClaims.push(['beta deployment API port on shared page', /\b6180\b/]);
+  }
+  for (const [claim, pattern] of forbiddenClaims) {
     if (pattern.test(content)) errors.push(`${relative}: forbidden ${claim} claim`);
   }
   const products = frontmatter.match(/^products:\s*\[([^\]]+)\]/m)?.[1] ?? '';
@@ -277,8 +332,12 @@ for (const file of files) {
     if (!/minVersion:\s*'DiscVault v26'/.test(frontmatter)) {
       errors.push(`${relative}: v26 server/PWA page must use unambiguous DiscVault v26 metadata`);
     }
-    if (!/'stable'/.test(channelMetadata) || !/'beta'/.test(channelMetadata)) {
-      errors.push(`${relative}: v26 server/PWA functionality must cover stable and beta`);
+    if (betaOnlyPageIds.has(pageId)) {
+      if (/'stable'/.test(channelMetadata) || !/'beta'/.test(channelMetadata)) {
+        errors.push(`${relative}: beta-only v26 page must expose only the beta channel`);
+      }
+    } else if (!/'stable'/.test(channelMetadata) || !/'beta'/.test(channelMetadata)) {
+      errors.push(`${relative}: shared v26 server/PWA functionality must cover stable and beta`);
     }
   }
   if (pageId === 'home') {
@@ -464,10 +523,18 @@ const v26ProcedureIds = Object.keys(procedures).filter(
 );
 for (const id of v26ProcedureIds) {
   const spec = procedures[id];
-  if (!spec.channels.stable || !spec.channels.beta) {
-    errors.push(`${id}: DiscVault v26 procedure must cover stable and beta`);
+  const pageId = id.replaceAll('/', '-');
+  if (betaOnlyPageIds.has(pageId)) {
+    if (spec.channels.stable || !spec.channels.beta) {
+      errors.push(`${id}: beta-only procedure must expose beta and omit stable`);
+    }
     continue;
   }
+  if (!spec.channels.stable || !spec.channels.beta) {
+    errors.push(`${id}: shared DiscVault v26 procedure must cover stable and beta`);
+    continue;
+  }
+  if (channelVariantPageIds.has(pageId)) continue;
   const stableArchitecture = JSON.stringify(spec.channels.stable.slice(1));
   const betaArchitecture = JSON.stringify(spec.channels.beta.slice(1));
   if (stableArchitecture !== betaArchitecture) {
@@ -548,26 +615,44 @@ assertOrder('Advanced Docker run topology', dockerRun, [
 ]);
 
 const composePage = await readFile(path.join(root, 'install/docker-compose.mdx'), 'utf8');
-const composeBlocks = fencedBlocks(composePage).filter(({ language }) => language === 'yaml');
-if (composeBlocks.length !== 1) {
-  errors.push('install/docker-compose.mdx: expected one canonical Compose YAML block');
-} else {
-  const compose = composeBlocks[0].body;
-  for (const marker of [
-    'postgres:',
-    'next-api:',
-    'next-worker:',
-    'next-mcp:',
-    'image: "${DISCVAULT_IMAGE:?set DISCVAULT_IMAGE}"',
-    'DATABASE_URL:',
-    '${DISCVAULT_POSTGRES_DATA:',
-    '${DISCVAULT_DATA_DIR:',
-    '${DISCVAULT_API_PORT:-6080}:5000',
-    '/api/next/health',
-  ]) {
-    if (!compose.includes(marker)) {
-      errors.push(`install/docker-compose.mdx: canonical topology missing "${marker}"`);
-    }
+for (const marker of [
+  'raw.githubusercontent.com/helmerzNL/DiscVault/release/v26-beta/app/deploy/next/docker-compose.yml',
+  'raw.githubusercontent.com/helmerzNL/DiscVault/release/v26-beta/app/deploy/next/.env.example',
+  'DISCVAULT_NEXT_IMAGE=ghcr.io/helmerznl/discvault:beta',
+  'DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault',
+  'DISCVAULT_NEXT_POSTGRES_DATA=/mnt/user/appdata/discvault-next/postgres',
+  'docker compose -p discvault_next_deploy config --quiet',
+  '! grep -q \':dev\' "$ENV_FILE"',
+  'curl --fail http://localhost:6180/api/next/health',
+]) {
+  if (!composePage.includes(marker)) {
+    errors.push(`install/docker-compose.mdx: canonical beta deployment missing "${marker}"`);
+  }
+}
+for (const marker of [
+  `github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/docker-compose.yml`,
+  `github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/.env.example`,
+  `github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/deploy/next/docker-compose.yml`,
+  `github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/deploy/next/.env.example`,
+]) {
+  if (!composePage.includes(marker)) {
+    errors.push(`install/docker-compose.mdx: missing beta source link "${marker}"`);
+  }
+}
+
+const legacyAuthPage = await readFile(path.join(root, 'install/legacy-authentication.mdx'), 'utf8');
+for (const marker of [
+  'LEGACY_AUTH_ENABLED=true',
+  'passwords require at least 15 characters',
+  'Argon2id',
+  'five failures',
+  '15 minutes',
+  'single-use recovery codes',
+  'backups omit TOTP secrets',
+  'Disabling Legacy Authentication requires an Owner passkey',
+]) {
+  if (!legacyAuthPage.includes(marker)) {
+    errors.push(`install/legacy-authentication.mdx: missing security claim "${marker}"`);
   }
 }
 
@@ -591,19 +676,24 @@ assertOrder('Channel-aware update', updatePage, [
 
 const environment = await readFile(path.join(root, 'configure/environment.mdx'), 'utf8');
 for (const marker of [
-  '/opt/discvault/.env',
-  'DISCVAULT_IMAGE',
-  '--env-file',
+  '/opt/discvault-next/.env',
+  'DISCVAULT_NEXT_IMAGE',
+  'DISCVAULT_NEXT_POSTGRES_DATA',
   'chmod 0600',
-  'openssl rand -hex 32',
+  'openssl rand -base64 48',
   'test ! -e "$ENV_FILE"',
   'mktemp "$ENV_FILE.tmp.XXXXXX"',
   'ln "$ENV_TMP" "$ENV_FILE"',
+  'LEGACY_AUTH_ENABLED=true',
   'documentation repository environment file is never a DiscVault runtime file',
 ]) {
   if (!environment.includes(marker)) errors.push(`configure/environment.mdx: missing "${marker}"`);
 }
-if (/<(?:long|random|secret|password)[^>]*>|REPLACE_WITH|change-me/i.test(environment)) {
+if (
+  /(?:POSTGRES_PASSWORD|JWT_SECRET)=(?:<[^>\n]+>|REPLACE_WITH[^\s\n]*|change-me[^\s\n]*)/i.test(
+    environment,
+  )
+) {
   errors.push('configure/environment.mdx: command-like secret placeholder is forbidden');
 }
 
@@ -634,7 +724,7 @@ for (const [relative, body] of secretFileBlocks) {
     'umask 077',
     'test ! -e "$ENV_FILE"',
     'mktemp "$ENV_FILE.tmp.XXXXXX"',
-    'openssl rand -hex 32',
+    'openssl rand -',
     '> "$ENV_TMP"',
     'ln "$ENV_TMP" "$ENV_FILE"',
   ]);
