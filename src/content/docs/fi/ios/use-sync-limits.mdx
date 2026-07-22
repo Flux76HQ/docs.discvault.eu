@@ -1,31 +1,38 @@
 ---
 title: 'iOS/iPadOS: Päivittäinen käyttö ja synkronoinnin rajat'
-description: 'Tehtäväkohtaiset ohjeet: iOS/iPadOS: Päivittäinen käyttö ja synkronoinnin rajat: SwiftData · App Lock · `/api/v1` · DiscVault.'
+description: 'Tehtäväkohtaiset ohjeet: iOS/iPadOS: Päivittäinen käyttö ja synkronoinnin rajat: SwiftData · TestFlight · App Lock · `/api/v1` · DiscVault.'
 pageId: 'ios-use-sync-limits'
 products: ['ios']
 platforms: ['ios']
-channels: ['beta']
+channels: ['stable', 'beta']
 minVersion: 'iOS/iPadOS 17+'
 sourceRepos: ['helmerzNL/DiscVaultApp', 'helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+lastVerified: '2026-07-22'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="iOS" version="iOS/iPadOS 17+" source="helmerzNL/DiscVaultApp · helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="iOS" version="iOS/iPadOS 17+" source="helmerzNL/DiscVaultApp · helmerzNL/DiscVault" verified="2026-07-22" />
 
 ## Tavoite ja tulos
 
-Suorita sivukohtainen työnkulku: **iOS/iPadOS: Päivittäinen käyttö ja synkronoinnin rajat**. Tässä menettelyssä käytetään SwiftData · App Lock · `/api/v1` · DiscVault.
+Suorita sivukohtainen työnkulku: **iOS/iPadOS: Päivittäinen käyttö ja synkronoinnin rajat**. Tässä menettelyssä käytetään SwiftData · TestFlight · App Lock · `/api/v1` · DiscVault.
 
 ## Koskee
 
-Tämä sivu koskee vain kohdetta **iOS/iPadOS: Päivittäinen käyttö ja synkronoinnin rajat** (iOS). Kanava- ja tietorajat ovat: SwiftData · testinimike säilyy sovelluksen uudelleenkäynnistyksen ja offline-avauksen jälkeen; `/api/v1` · lähdekoodista vahvistettu beta; ei väitettä kauppajulkaisusta. Sivukohtaiset tarkistuspisteet: SwiftData · App Lock · `/api/v1` · DiscVault.
+Tämä sivu koskee vain kohdetta **iOS/iPadOS: Päivittäinen käyttö ja synkronoinnin rajat** (iOS). Kanava- ja tietorajat ovat: julkinen App Store -julkaisu iPhonelle ja iPadille; SwiftData · testinimike säilyy sovelluksen uudelleenkäynnistyksen ja offline-avauksen jälkeen; `/api/v1` · yksi testikohde vastaa paikallista ja palvelimen tietuetta tai synkronointi pidetään poissa käytöstä; valinnainen TestFlight-beta ennakkoversioille; SwiftData · testinimike säilyy sovelluksen uudelleenkäynnistyksen ja offline-avauksen jälkeen; `/api/v1` · yksi testikohde vastaa paikallista ja palvelimen tietuetta tai synkronointi pidetään poissa käytöstä. Sivukohtaiset tarkistuspisteet: SwiftData · TestFlight · App Lock · `/api/v1` · DiscVault.
+
+### Vakaa kanava
+
+- julkinen App Store -julkaisu iPhonelle ja iPadille
+- SwiftData · testinimike säilyy sovelluksen uudelleenkäynnistyksen ja offline-avauksen jälkeen
+- `/api/v1` · yksi testikohde vastaa paikallista ja palvelimen tietuetta tai synkronointi pidetään poissa käytöstä
 
 ### Betakanava
 
+- valinnainen TestFlight-beta ennakkoversioille
 - SwiftData · testinimike säilyy sovelluksen uudelleenkäynnistyksen ja offline-avauksen jälkeen
-- `/api/v1` · lähdekoodista vahvistettu beta; ei väitettä kauppajulkaisusta
+- `/api/v1` · yksi testikohde vastaa paikallista ja palvelimen tietuetta tai synkronointi pidetään poissa käytöstä
 
 ## Edellytykset
 
@@ -43,7 +50,7 @@ Tämä sivu koskee vain kohdetta **iOS/iPadOS: Päivittäinen käyttö ja synkro
 
 ## Odotettu tulos
 
-Hyväksy tulos kohteelle **iOS/iPadOS: Päivittäinen käyttö ja synkronoinnin rajat** vain kun kaikki seuraavat tulokset toteutuvat: testinimike säilyy sovelluksen uudelleenkäynnistyksen ja offline-avauksen jälkeen; yksi testikohde vastaa paikallista ja palvelimen tietuetta tai synkronointi pidetään poissa käytöstä. Sivukohtaiset tarkistuspisteet: SwiftData · App Lock · `/api/v1` · DiscVault.
+Hyväksy tulos kohteelle **iOS/iPadOS: Päivittäinen käyttö ja synkronoinnin rajat** vain kun kaikki seuraavat tulokset toteutuvat: testinimike säilyy sovelluksen uudelleenkäynnistyksen ja offline-avauksen jälkeen; yksi testikohde vastaa paikallista ja palvelimen tietuetta tai synkronointi pidetään poissa käytöstä. Sivukohtaiset tarkistuspisteet: SwiftData · TestFlight · App Lock · `/api/v1` · DiscVault.
 
 - testinimike säilyy sovelluksen uudelleenkäynnistyksen ja offline-avauksen jälkeen
 - yksi testikohde vastaa paikallista ja palvelimen tietuetta tai synkronointi pidetään poissa käytöstä
@@ -51,7 +58,7 @@ Hyväksy tulos kohteelle **iOS/iPadOS: Päivittäinen käyttö ja synkronoinnin 
 ## Turvallisuus ja palautus
 
 :::caution
-Turvallinen palautusraja kohteelle **iOS/iPadOS: Päivittäinen käyttö ja synkronoinnin rajat** edellyttää näitä toimia ennen käynnistystä tai jatkamista: yksi testikohde vastaa paikallista ja palvelimen tietuetta tai synkronointi pidetään poissa käytöstä · paikallinen offline-first-kirjasto · `/api/v1`. Sivukohtaiset tarkistuspisteet: SwiftData · App Lock · `/api/v1` · DiscVault.
+Turvallinen palautusraja kohteelle **iOS/iPadOS: Päivittäinen käyttö ja synkronoinnin rajat** edellyttää näitä toimia ennen käynnistystä tai jatkamista: yksi testikohde vastaa paikallista ja palvelimen tietuetta tai synkronointi pidetään poissa käytöstä · paikallinen offline-first-kirjasto · `/api/v1`. Sivukohtaiset tarkistuspisteet: SwiftData · TestFlight · App Lock · `/api/v1` · DiscVault.
 
 - yksi testikohde vastaa paikallista ja palvelimen tietuetta tai synkronointi pidetään poissa käytöstä · paikallinen offline-first-kirjasto · `/api/v1`
 :::
@@ -64,5 +71,7 @@ Turvallinen palautusraja kohteelle **iOS/iPadOS: Päivittäinen käyttö ja synk
 
 - [`helmerzNL/DiscVaultApp@9d15ab2a339c`](https://github.com/helmerzNL/DiscVaultApp/commit/9d15ab2a339cefdb164ec0ab29ad69ddabc511c1)
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Lähde ja tila: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [Download DiscVault on the App Store](https://apps.apple.com/app/discvault/id6788772918)
+- [Join the DiscVault TestFlight beta](https://testflight.apple.com/join/6bJetcyy)
+- Lähde ja tila: `2026-07-22`
+- DiscVault Docs: `0.1.7`

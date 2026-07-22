@@ -1,31 +1,38 @@
 ---
 title: 'iOS/iPadOS: Daglig användning och synkroniseringsgränser'
-description: 'Uppgiftsspecifik vägledning för iOS/iPadOS: Daglig användning och synkroniseringsgränser: SwiftData · App Lock · `/api/v1` · DiscVault.'
+description: 'Uppgiftsspecifik vägledning för iOS/iPadOS: Daglig användning och synkroniseringsgränser: SwiftData · TestFlight · App Lock · `/api/v1` · DiscVault.'
 pageId: 'ios-use-sync-limits'
 products: ['ios']
 platforms: ['ios']
-channels: ['beta']
+channels: ['stable', 'beta']
 minVersion: 'iOS/iPadOS 17+'
 sourceRepos: ['helmerzNL/DiscVaultApp', 'helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+lastVerified: '2026-07-22'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="iOS" version="iOS/iPadOS 17+" source="helmerzNL/DiscVaultApp · helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="iOS" version="iOS/iPadOS 17+" source="helmerzNL/DiscVaultApp · helmerzNL/DiscVault" verified="2026-07-22" />
 
 ## Mål och resultat
 
-Följ det sidspecifika arbetsflödet för **iOS/iPadOS: Daglig användning och synkroniseringsgränser**. Den här proceduren använder SwiftData · App Lock · `/api/v1` · DiscVault.
+Följ det sidspecifika arbetsflödet för **iOS/iPadOS: Daglig användning och synkroniseringsgränser**. Den här proceduren använder SwiftData · TestFlight · App Lock · `/api/v1` · DiscVault.
 
 ## Gäller för
 
-Den här sidan gäller endast **iOS/iPadOS: Daglig användning och synkroniseringsgränser** (iOS). Kanal- och datagränserna är: SwiftData · testtiteln finns kvar efter omstart och offlineöppning; `/api/v1` · källverifierad betaversion; inget påstående om publik butik. Sidspecifika kontrollpunkter: SwiftData · App Lock · `/api/v1` · DiscVault.
+Den här sidan gäller endast **iOS/iPadOS: Daglig användning och synkroniseringsgränser** (iOS). Kanal- och datagränserna är: offentlig App Store-version för iPhone och iPad; SwiftData · testtiteln finns kvar efter omstart och offlineöppning; `/api/v1` · ett testobjekt stämmer lokalt och på servern, annars förblir synkronisering avstängd; valfri TestFlight-beta för förhandsversioner; SwiftData · testtiteln finns kvar efter omstart och offlineöppning; `/api/v1` · ett testobjekt stämmer lokalt och på servern, annars förblir synkronisering avstängd. Sidspecifika kontrollpunkter: SwiftData · TestFlight · App Lock · `/api/v1` · DiscVault.
+
+### Stabil kanal
+
+- offentlig App Store-version för iPhone och iPad
+- SwiftData · testtiteln finns kvar efter omstart och offlineöppning
+- `/api/v1` · ett testobjekt stämmer lokalt och på servern, annars förblir synkronisering avstängd
 
 ### Betakanal
 
+- valfri TestFlight-beta för förhandsversioner
 - SwiftData · testtiteln finns kvar efter omstart och offlineöppning
-- `/api/v1` · källverifierad betaversion; inget påstående om publik butik
+- `/api/v1` · ett testobjekt stämmer lokalt och på servern, annars förblir synkronisering avstängd
 
 ## Förutsättningar
 
@@ -43,7 +50,7 @@ Den här sidan gäller endast **iOS/iPadOS: Daglig användning och synkroniserin
 
 ## Förväntat resultat
 
-Godkänn resultatet för **iOS/iPadOS: Daglig användning och synkroniseringsgränser** endast när alla resultat nedan stämmer: testtiteln finns kvar efter omstart och offlineöppning; ett testobjekt stämmer lokalt och på servern, annars förblir synkronisering avstängd. Sidspecifika kontrollpunkter: SwiftData · App Lock · `/api/v1` · DiscVault.
+Godkänn resultatet för **iOS/iPadOS: Daglig användning och synkroniseringsgränser** endast när alla resultat nedan stämmer: testtiteln finns kvar efter omstart och offlineöppning; ett testobjekt stämmer lokalt och på servern, annars förblir synkronisering avstängd. Sidspecifika kontrollpunkter: SwiftData · TestFlight · App Lock · `/api/v1` · DiscVault.
 
 - testtiteln finns kvar efter omstart och offlineöppning
 - ett testobjekt stämmer lokalt och på servern, annars förblir synkronisering avstängd
@@ -51,7 +58,7 @@ Godkänn resultatet för **iOS/iPadOS: Daglig användning och synkroniseringsgr�
 ## Säkerhet och återställning
 
 :::caution
-Den säkra återställningsgränsen för **iOS/iPadOS: Daglig användning och synkroniseringsgränser** kräver dessa åtgärder innan något startas eller fortsätter: ett testobjekt stämmer lokalt och på servern, annars förblir synkronisering avstängd · lokalt offline-first-bibliotek · `/api/v1`. Sidspecifika kontrollpunkter: SwiftData · App Lock · `/api/v1` · DiscVault.
+Den säkra återställningsgränsen för **iOS/iPadOS: Daglig användning och synkroniseringsgränser** kräver dessa åtgärder innan något startas eller fortsätter: ett testobjekt stämmer lokalt och på servern, annars förblir synkronisering avstängd · lokalt offline-first-bibliotek · `/api/v1`. Sidspecifika kontrollpunkter: SwiftData · TestFlight · App Lock · `/api/v1` · DiscVault.
 
 - ett testobjekt stämmer lokalt och på servern, annars förblir synkronisering avstängd · lokalt offline-first-bibliotek · `/api/v1`
 :::
@@ -64,5 +71,7 @@ Den säkra återställningsgränsen för **iOS/iPadOS: Daglig användning och sy
 
 - [`helmerzNL/DiscVaultApp@9d15ab2a339c`](https://github.com/helmerzNL/DiscVaultApp/commit/9d15ab2a339cefdb164ec0ab29ad69ddabc511c1)
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Källa och status: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [Download DiscVault on the App Store](https://apps.apple.com/app/discvault/id6788772918)
+- [Join the DiscVault TestFlight beta](https://testflight.apple.com/join/6bJetcyy)
+- Källa och status: `2026-07-22`
+- DiscVault Docs: `0.1.7`

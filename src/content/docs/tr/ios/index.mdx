@@ -1,36 +1,41 @@
 ---
 title: 'iOS/iPadOS: Kurulum'
-description: 'Göreve özel yönergeler: iOS/iPadOS: Kurulum: SwiftData · iOS/iPadOS `17+` · WebAuthn · App Lock.'
+description: 'Göreve özel yönergeler: iOS/iPadOS: Kurulum: SwiftData · iOS/iPadOS `17+` · TestFlight · App Lock.'
 pageId: 'ios-index'
 products: ['ios']
 platforms: ['ios']
-channels: ['beta']
+channels: ['stable', 'beta']
 minVersion: 'iOS/iPadOS 17+'
 sourceRepos: ['helmerzNL/DiscVaultApp', 'helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+lastVerified: '2026-07-22'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="iOS" version="iOS/iPadOS 17+" source="helmerzNL/DiscVaultApp · helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="iOS" version="iOS/iPadOS 17+" source="helmerzNL/DiscVaultApp · helmerzNL/DiscVault" verified="2026-07-22" />
 
 ## Amaç ve sonuç
 
-Sayfaya özel iş akışını tamamlayın: **iOS/iPadOS: Kurulum**. Bu prosedür şunları kullanır: SwiftData · iOS/iPadOS `17+` · WebAuthn · App Lock.
+Sayfaya özel iş akışını tamamlayın: **iOS/iPadOS: Kurulum**. Bu prosedür şunları kullanır: SwiftData · iOS/iPadOS `17+` · TestFlight · App Lock.
 
 ## Geçerli olduğu alan
 
-Bu sayfa yalnızca şunlar için geçerlidir: **iOS/iPadOS: Kurulum** (iOS). Kanal ve veri sınırları: kaynakta doğrulanmış beta derlemesi; genel mağaza kullanılabilirliği iddiası yok; SwiftData. Sayfaya özel denetim noktaları: SwiftData · iOS/iPadOS `17+` · WebAuthn · App Lock.
+Bu sayfa yalnızca şunlar için geçerlidir: **iOS/iPadOS: Kurulum** (iOS). Kanal ve veri sınırları: iPhone ve iPad için herkese açık App Store sürümü; SwiftData; ön sürüm derlemeleri için isteğe bağlı TestFlight beta; SwiftData. Sayfaya özel denetim noktaları: SwiftData · iOS/iPadOS `17+` · TestFlight · App Lock.
+
+### Kararlı kanal
+
+- iPhone ve iPad için herkese açık App Store sürümü
+- SwiftData
 
 ### Beta kanalı
 
-- kaynakta doğrulanmış beta derlemesi; genel mağaza kullanılabilirliği iddiası yok
+- ön sürüm derlemeleri için isteğe bağlı TestFlight beta
 - SwiftData
 
 ## Ön koşullar
 
 - iOS/iPadOS `17+`
-- doğrulanmış dağıtım kaynağından derleme
+- iPhone ve iPad için herkese açık App Store sürümü · ön sürüm derlemeleri için isteğe bağlı TestFlight beta
 - kamera izni
 
 ## Prosedür
@@ -44,7 +49,7 @@ Bu sayfa yalnızca şunlar için geçerlidir: **iOS/iPadOS: Kurulum** (iOS). Kan
 
 ## Beklenen sonuç
 
-Şunun sonucunu kabul edin: **iOS/iPadOS: Kurulum** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: Başlat → İlk kurulum → Yerel kitaplık oluştur; test başlığı yeniden başlatma ve çevrimdışı açılıştan sonra kalır. Sayfaya özel denetim noktaları: SwiftData · iOS/iPadOS `17+` · WebAuthn · App Lock.
+Şunun sonucunu kabul edin: **iOS/iPadOS: Kurulum** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: Başlat → İlk kurulum → Yerel kitaplık oluştur; test başlığı yeniden başlatma ve çevrimdışı açılıştan sonra kalır. Sayfaya özel denetim noktaları: SwiftData · iOS/iPadOS `17+` · TestFlight · App Lock.
 
 - Başlat → İlk kurulum → Yerel kitaplık oluştur
 - test başlığı yeniden başlatma ve çevrimdışı açılıştan sonra kalır
@@ -52,9 +57,9 @@ Bu sayfa yalnızca şunlar için geçerlidir: **iOS/iPadOS: Kurulum** (iOS). Kan
 ## Güvenlik ve geri alma
 
 :::caution
-Şunun güvenli kurtarma sınırı: **iOS/iPadOS: Kurulum** başlatmadan veya devam etmeden önce şu işlemleri gerektirir: yerel çevrimdışı öncelikli kitaplık · kaynakta doğrulanmış beta derlemesi; genel mağaza kullanılabilirliği iddiası yok. Sayfaya özel denetim noktaları: SwiftData · iOS/iPadOS `17+` · WebAuthn · App Lock.
+Şunun güvenli kurtarma sınırı: **iOS/iPadOS: Kurulum** başlatmadan veya devam etmeden önce şu işlemleri gerektirir: yerel çevrimdışı öncelikli kitaplık. Sayfaya özel denetim noktaları: SwiftData · iOS/iPadOS `17+` · TestFlight · App Lock.
 
-- yerel çevrimdışı öncelikli kitaplık · kaynakta doğrulanmış beta derlemesi; genel mağaza kullanılabilirliği iddiası yok
+- yerel çevrimdışı öncelikli kitaplık
 :::
 
 ## Sonraki adım
@@ -65,5 +70,7 @@ Bu sayfa yalnızca şunlar için geçerlidir: **iOS/iPadOS: Kurulum** (iOS). Kan
 
 - [`helmerzNL/DiscVaultApp@9d15ab2a339c`](https://github.com/helmerzNL/DiscVaultApp/commit/9d15ab2a339cefdb164ec0ab29ad69ddabc511c1)
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Kaynak ve durum: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [Download DiscVault on the App Store](https://apps.apple.com/app/discvault/id6788772918)
+- [Join the DiscVault TestFlight beta](https://testflight.apple.com/join/6bJetcyy)
+- Kaynak ve durum: `2026-07-22`
+- DiscVault Docs: `0.1.7`

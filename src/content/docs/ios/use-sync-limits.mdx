@@ -4,15 +4,15 @@ description: 'Use the local library, lists, scanning, notifications, app lock, a
 pageId: 'ios-use-sync-limits'
 products: ['ios']
 platforms: ['ios']
-channels: ['beta']
+channels: ['stable', 'beta']
 minVersion: 'iOS/iPadOS 17+'
 sourceRepos: ['helmerzNL/DiscVaultApp', 'helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+lastVerified: '2026-07-22'
 ---
 
 import PageMeta from '../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="iOS" version="iOS/iPadOS 17+" source="helmerzNL/DiscVaultApp · helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="iOS" version="iOS/iPadOS 17+" source="helmerzNL/DiscVaultApp · helmerzNL/DiscVault" verified="2026-07-22" />
 
 ## Goal and result
 
@@ -20,12 +20,19 @@ Use the local library, lists, scanning, notifications, app lock, and optional se
 
 ## Applies to
 
-Beta. Local/offline use is verified. The native source previously contained placeholder `/api/v1` sync routes; only the server connection behavior confirmed by the installed build should be trusted.
+Local and offline use is available in both the App Store release and TestFlight beta. Native server synchronization is not a released capability; only server connection behavior explicitly confirmed by the installed build should be trusted.
+
+### Stable channel
+
+- public App Store release for iPhone and iPad
+- SwiftData · the test title remains after app restart and an offline launch
+- `/api/v1` · one test item matches locally and on the server, or synchronization stays disabled
 
 ### Beta channel
 
+- optional TestFlight beta for prerelease builds
 - SwiftData · the test title remains after app restart and an offline launch
-- `/api/v1` · source-verified beta build; no public store availability claim
+- `/api/v1` · one test item matches locally and on the server, or synchronization stays disabled
 
 ## Prerequisites
 
@@ -64,5 +71,7 @@ Disable the server connection after sync errors and keep the local library autho
 
 - [`helmerzNL/DiscVaultApp@9d15ab2a339c`](https://github.com/helmerzNL/DiscVaultApp/commit/9d15ab2a339cefdb164ec0ab29ad69ddabc511c1)
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Verified: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [Download DiscVault on the App Store](https://apps.apple.com/app/discvault/id6788772918)
+- [Join the DiscVault TestFlight beta](https://testflight.apple.com/join/6bJetcyy)
+- Verified: `2026-07-22`
+- DiscVault Docs: `0.1.7`

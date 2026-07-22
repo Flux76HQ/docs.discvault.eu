@@ -1,36 +1,41 @@
 ---
 title: 'iOS/iPadOS: Konfiguracja'
-description: 'Instrukcja właściwa dla zadania: iOS/iPadOS: Konfiguracja: SwiftData · iOS/iPadOS `17+` · WebAuthn · App Lock.'
+description: 'Instrukcja właściwa dla zadania: iOS/iPadOS: Konfiguracja: SwiftData · iOS/iPadOS `17+` · TestFlight · App Lock.'
 pageId: 'ios-index'
 products: ['ios']
 platforms: ['ios']
-channels: ['beta']
+channels: ['stable', 'beta']
 minVersion: 'iOS/iPadOS 17+'
 sourceRepos: ['helmerzNL/DiscVaultApp', 'helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+lastVerified: '2026-07-22'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="iOS" version="iOS/iPadOS 17+" source="helmerzNL/DiscVaultApp · helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="iOS" version="iOS/iPadOS 17+" source="helmerzNL/DiscVaultApp · helmerzNL/DiscVault" verified="2026-07-22" />
 
 ## Cel i rezultat
 
-Wykonaj procedurę właściwą dla strony: **iOS/iPadOS: Konfiguracja**. Ta procedura korzysta z SwiftData · iOS/iPadOS `17+` · WebAuthn · App Lock.
+Wykonaj procedurę właściwą dla strony: **iOS/iPadOS: Konfiguracja**. Ta procedura korzysta z SwiftData · iOS/iPadOS `17+` · TestFlight · App Lock.
 
 ## Dotyczy
 
-Ta strona dotyczy wyłącznie **iOS/iPadOS: Konfiguracja** (iOS). Granice kanału i danych: beta zweryfikowana w kodzie; bez deklaracji publikacji w sklepie; SwiftData. Punkty kontrolne tej strony: SwiftData · iOS/iPadOS `17+` · WebAuthn · App Lock.
+Ta strona dotyczy wyłącznie **iOS/iPadOS: Konfiguracja** (iOS). Granice kanału i danych: publiczna wersja w App Store na iPhone’a i iPada; SwiftData; opcjonalna beta TestFlight dla wersji przedpremierowych; SwiftData. Punkty kontrolne tej strony: SwiftData · iOS/iPadOS `17+` · TestFlight · App Lock.
+
+### Kanał stabilny
+
+- publiczna wersja w App Store na iPhone’a i iPada
+- SwiftData
 
 ### Kanał beta
 
-- beta zweryfikowana w kodzie; bez deklaracji publikacji w sklepie
+- opcjonalna beta TestFlight dla wersji przedpremierowych
 - SwiftData
 
 ## Wymagania wstępne
 
 - iOS/iPadOS `17+`
-- kompilacja ze zweryfikowanego źródła
+- publiczna wersja w App Store na iPhone’a i iPada · opcjonalna beta TestFlight dla wersji przedpremierowych
 - uprawnienie aparatu
 
 ## Procedura
@@ -44,7 +49,7 @@ Ta strona dotyczy wyłącznie **iOS/iPadOS: Konfiguracja** (iOS). Granice kanał
 
 ## Oczekiwany rezultat
 
-Zaakceptuj wynik dla **iOS/iPadOS: Konfiguracja** tylko gdy wszystkie poniższe wyniki są prawdziwe: Uruchomienie → Wprowadzenie → Utwórz lokalną bibliotekę; tytuł testowy pozostaje po restarcie i uruchomieniu offline. Punkty kontrolne tej strony: SwiftData · iOS/iPadOS `17+` · WebAuthn · App Lock.
+Zaakceptuj wynik dla **iOS/iPadOS: Konfiguracja** tylko gdy wszystkie poniższe wyniki są prawdziwe: Uruchomienie → Wprowadzenie → Utwórz lokalną bibliotekę; tytuł testowy pozostaje po restarcie i uruchomieniu offline. Punkty kontrolne tej strony: SwiftData · iOS/iPadOS `17+` · TestFlight · App Lock.
 
 - Uruchomienie → Wprowadzenie → Utwórz lokalną bibliotekę
 - tytuł testowy pozostaje po restarcie i uruchomieniu offline
@@ -52,9 +57,9 @@ Zaakceptuj wynik dla **iOS/iPadOS: Konfiguracja** tylko gdy wszystkie poniższe 
 ## Bezpieczeństwo i wycofanie
 
 :::caution
-Bezpieczna granica odzyskiwania dla **iOS/iPadOS: Konfiguracja** wymaga tych działań przed uruchomieniem lub kontynuacją: lokalna biblioteka offline-first · beta zweryfikowana w kodzie; bez deklaracji publikacji w sklepie. Punkty kontrolne tej strony: SwiftData · iOS/iPadOS `17+` · WebAuthn · App Lock.
+Bezpieczna granica odzyskiwania dla **iOS/iPadOS: Konfiguracja** wymaga tych działań przed uruchomieniem lub kontynuacją: lokalna biblioteka offline-first. Punkty kontrolne tej strony: SwiftData · iOS/iPadOS `17+` · TestFlight · App Lock.
 
-- lokalna biblioteka offline-first · beta zweryfikowana w kodzie; bez deklaracji publikacji w sklepie
+- lokalna biblioteka offline-first
 :::
 
 ## Następny krok
@@ -65,5 +70,7 @@ Bezpieczna granica odzyskiwania dla **iOS/iPadOS: Konfiguracja** wymaga tych dzi
 
 - [`helmerzNL/DiscVaultApp@9d15ab2a339c`](https://github.com/helmerzNL/DiscVaultApp/commit/9d15ab2a339cefdb164ec0ab29ad69ddabc511c1)
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Źródło i stan: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [Download DiscVault on the App Store](https://apps.apple.com/app/discvault/id6788772918)
+- [Join the DiscVault TestFlight beta](https://testflight.apple.com/join/6bJetcyy)
+- Źródło i stan: `2026-07-22`
+- DiscVault Docs: `0.1.7`

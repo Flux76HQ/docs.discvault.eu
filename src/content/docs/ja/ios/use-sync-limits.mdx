@@ -1,31 +1,38 @@
 ---
 title: 'iOS/iPadOS: 日常利用と同期の制限'
-description: 'タスク別の手順: iOS/iPadOS: 日常利用と同期の制限: SwiftData · App Lock · `/api/v1` · DiscVault.'
+description: 'タスク別の手順: iOS/iPadOS: 日常利用と同期の制限: SwiftData · TestFlight · App Lock · `/api/v1` · DiscVault.'
 pageId: 'ios-use-sync-limits'
 products: ['ios']
 platforms: ['ios']
-channels: ['beta']
+channels: ['stable', 'beta']
 minVersion: 'iOS/iPadOS 17+'
 sourceRepos: ['helmerzNL/DiscVaultApp', 'helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+lastVerified: '2026-07-22'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="iOS" version="iOS/iPadOS 17+" source="helmerzNL/DiscVaultApp · helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="iOS" version="iOS/iPadOS 17+" source="helmerzNL/DiscVaultApp · helmerzNL/DiscVault" verified="2026-07-22" />
 
 ## 目的と結果
 
-このページ専用の手順を実行します: **iOS/iPadOS: 日常利用と同期の制限**. この手順で扱う項目: SwiftData · App Lock · `/api/v1` · DiscVault.
+このページ専用の手順を実行します: **iOS/iPadOS: 日常利用と同期の制限**. この手順で扱う項目: SwiftData · TestFlight · App Lock · `/api/v1` · DiscVault.
 
 ## 対象
 
-このページの対象は **iOS/iPadOS: 日常利用と同期の制限** (iOS). チャンネルとデータの境界: SwiftData · テストタイトルがアプリ再起動後とオフライン起動後も残る; `/api/v1` · ソースで確認したベータビルド。公開ストア配信は保証しません. このページ固有の確認点: SwiftData · App Lock · `/api/v1` · DiscVault.
+このページの対象は **iOS/iPadOS: 日常利用と同期の制限** (iOS). チャンネルとデータの境界: iPhoneとiPad向けApp Store公開版; SwiftData · テストタイトルがアプリ再起動後とオフライン起動後も残る; `/api/v1` · 1 件のテスト項目がローカルとサーバーで一致するか、同期を無効のままにする; プレリリースビルド向けの任意のTestFlightベータ; SwiftData · テストタイトルがアプリ再起動後とオフライン起動後も残る; `/api/v1` · 1 件のテスト項目がローカルとサーバーで一致するか、同期を無効のままにする. このページ固有の確認点: SwiftData · TestFlight · App Lock · `/api/v1` · DiscVault.
+
+### 安定版チャンネル
+
+- iPhoneとiPad向けApp Store公開版
+- SwiftData · テストタイトルがアプリ再起動後とオフライン起動後も残る
+- `/api/v1` · 1 件のテスト項目がローカルとサーバーで一致するか、同期を無効のままにする
 
 ### ベータチャンネル
 
+- プレリリースビルド向けの任意のTestFlightベータ
 - SwiftData · テストタイトルがアプリ再起動後とオフライン起動後も残る
-- `/api/v1` · ソースで確認したベータビルド。公開ストア配信は保証しません
+- `/api/v1` · 1 件のテスト項目がローカルとサーバーで一致するか、同期を無効のままにする
 
 ## 前提条件
 
@@ -43,7 +50,7 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## 期待される結果
 
-次の結果を受け入れる条件: **iOS/iPadOS: 日常利用と同期の制限** 以下の結果をすべて確認した場合のみ: テストタイトルがアプリ再起動後とオフライン起動後も残る; 1 件のテスト項目がローカルとサーバーで一致するか、同期を無効のままにする. このページ固有の確認点: SwiftData · App Lock · `/api/v1` · DiscVault.
+次の結果を受け入れる条件: **iOS/iPadOS: 日常利用と同期の制限** 以下の結果をすべて確認した場合のみ: テストタイトルがアプリ再起動後とオフライン起動後も残る; 1 件のテスト項目がローカルとサーバーで一致するか、同期を無効のままにする. このページ固有の確認点: SwiftData · TestFlight · App Lock · `/api/v1` · DiscVault.
 
 - テストタイトルがアプリ再起動後とオフライン起動後も残る
 - 1 件のテスト項目がローカルとサーバーで一致するか、同期を無効のままにする
@@ -51,7 +58,7 @@ import PageMeta from '../../../../components/PageMeta.astro';
 ## 安全性とロールバック
 
 :::caution
-安全な復旧境界: **iOS/iPadOS: 日常利用と同期の制限** 起動または続行の前に、次の操作が必要です: 1 件のテスト項目がローカルとサーバーで一致するか、同期を無効のままにする · オフライン優先のローカルライブラリ · `/api/v1`. このページ固有の確認点: SwiftData · App Lock · `/api/v1` · DiscVault.
+安全な復旧境界: **iOS/iPadOS: 日常利用と同期の制限** 起動または続行の前に、次の操作が必要です: 1 件のテスト項目がローカルとサーバーで一致するか、同期を無効のままにする · オフライン優先のローカルライブラリ · `/api/v1`. このページ固有の確認点: SwiftData · TestFlight · App Lock · `/api/v1` · DiscVault.
 
 - 1 件のテスト項目がローカルとサーバーで一致するか、同期を無効のままにする · オフライン優先のローカルライブラリ · `/api/v1`
 :::
@@ -64,5 +71,7 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 - [`helmerzNL/DiscVaultApp@9d15ab2a339c`](https://github.com/helmerzNL/DiscVaultApp/commit/9d15ab2a339cefdb164ec0ab29ad69ddabc511c1)
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- 情報源と状態: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [Download DiscVault on the App Store](https://apps.apple.com/app/discvault/id6788772918)
+- [Join the DiscVault TestFlight beta](https://testflight.apple.com/join/6bJetcyy)
+- 情報源と状態: `2026-07-22`
+- DiscVault Docs: `0.1.7`

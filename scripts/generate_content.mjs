@@ -33,6 +33,8 @@ const migratedDocsVersion = '0.1.4';
 const betaVerified = '2026-07-20';
 const betaDocsVersion = '0.1.6';
 const betaSourceCommit = '4352c060ccd6fd625a828f6e20c24f111c9ef743';
+const iosVerified = '2026-07-22';
+const iosDocsVersion = '0.1.7';
 const commits = {
   'helmerzNL/DiscVault': '6d27c689ac2166651d2c7c74833c1ee225b37ec3',
   'helmerzNL/DiscVault.EU': '583f85c55dc22b63368f997a3b076a093ca0afa1',
@@ -86,6 +88,16 @@ const betaAuthSourceFiles = [
   {
     label: 'Pinned verification: unified recovery codes',
     url: `https://github.com/helmerzNL/DiscVault/blob/${betaSourceCommit}/app/backend/migrations_next/042_unified_recovery_codes.sql`,
+  },
+];
+const iosDistributionSourceFiles = [
+  {
+    label: 'Download DiscVault on the App Store',
+    url: 'https://apps.apple.com/app/discvault/id6788772918',
+  },
+  {
+    label: 'Join the DiscVault TestFlight beta',
+    url: 'https://testflight.apple.com/join/6bJetcyy',
   },
 ];
 
@@ -1664,17 +1676,21 @@ const pages = [
     path: 'ios/index',
     category: 'ios',
     topic: 31,
-    channel: ['beta'],
+    channel: ['stable', 'beta'],
     products: ['ios'],
     platforms: ['ios'],
     version: 'iOS/iPadOS 17+',
     source: ['helmerzNL/DiscVaultApp', S],
-    pre: ['iOS/iPadOS 17+', 'TestFlight or approved build source', 'camera permission'],
+    sourceFiles: iosDistributionSourceFiles,
+    verified: iosVerified,
+    docsVersion: iosDocsVersion,
+    pre: ['iOS/iPadOS 17+', 'App Store or TestFlight', 'camera permission'],
     command:
       'Launch → Onboarding → Create local library\nLibrary → + → Scan barcode or Enter manually\nSettings → App Lock',
-    intro: 'Set up the native offline-first iOS/iPadOS app from a verified distribution source.',
+    intro:
+      'Install the native offline-first iOS/iPadOS app from the App Store, or use TestFlight for beta builds.',
     scope:
-      'Beta source implementation. Local SwiftData library, scanning, lists, details, notifications, and app lock are verified in source; public App Store availability is not assumed.',
+      'DiscVault is publicly available for iPhone and iPad through the App Store. An optional TestFlight channel provides prerelease beta builds. The local SwiftData library, scanning, lists, details, and app lock are available without a DiscVault server.',
     expected:
       'Onboarding completes and a manually added or scanned title remains after restarting the app.',
     rollback:
@@ -1685,18 +1701,21 @@ const pages = [
     path: 'ios/use-sync-limits',
     category: 'ios',
     topic: 32,
-    channel: ['beta'],
+    channel: ['stable', 'beta'],
     products: ['ios'],
     platforms: ['ios'],
     version: 'iOS/iPadOS 17+',
     source: ['helmerzNL/DiscVaultApp', S],
+    sourceFiles: iosDistributionSourceFiles,
+    verified: iosVerified,
+    docsVersion: iosDocsVersion,
     pre: ['completed onboarding', 'local backup or test library'],
     command:
       'Library → Search / Scan / Add manually\nLists → Create list → Add title\nSettings → App Lock\nSettings → Server connection',
     intro:
       'Use the local library, lists, scanning, notifications, app lock, and optional server connection without assuming unsupported synchronization.',
     scope:
-      'Beta. Local/offline use is verified. The native source previously contained placeholder `/api/v1` sync routes; only the server connection behavior confirmed by the installed build should be trusted.',
+      'Local and offline use is available in both the App Store release and TestFlight beta. Native server synchronization is not a released capability; only server connection behavior explicitly confirmed by the installed build should be trusted.',
     expected:
       'Local edits persist offline. Any sync test clearly reports success and produces matching records on both sides before broader use.',
     rollback:

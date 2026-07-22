@@ -1,36 +1,41 @@
 ---
 title: 'iOS/iPadOS: 設定'
-description: 'タスク別の手順: iOS/iPadOS: 設定: SwiftData · iOS/iPadOS `17+` · WebAuthn · App Lock.'
+description: 'タスク別の手順: iOS/iPadOS: 設定: SwiftData · iOS/iPadOS `17+` · TestFlight · App Lock.'
 pageId: 'ios-index'
 products: ['ios']
 platforms: ['ios']
-channels: ['beta']
+channels: ['stable', 'beta']
 minVersion: 'iOS/iPadOS 17+'
 sourceRepos: ['helmerzNL/DiscVaultApp', 'helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+lastVerified: '2026-07-22'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="iOS" version="iOS/iPadOS 17+" source="helmerzNL/DiscVaultApp · helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="iOS" version="iOS/iPadOS 17+" source="helmerzNL/DiscVaultApp · helmerzNL/DiscVault" verified="2026-07-22" />
 
 ## 目的と結果
 
-このページ専用の手順を実行します: **iOS/iPadOS: 設定**. この手順で扱う項目: SwiftData · iOS/iPadOS `17+` · WebAuthn · App Lock.
+このページ専用の手順を実行します: **iOS/iPadOS: 設定**. この手順で扱う項目: SwiftData · iOS/iPadOS `17+` · TestFlight · App Lock.
 
 ## 対象
 
-このページの対象は **iOS/iPadOS: 設定** (iOS). チャンネルとデータの境界: ソースで確認したベータビルド。公開ストア配信は保証しません; SwiftData. このページ固有の確認点: SwiftData · iOS/iPadOS `17+` · WebAuthn · App Lock.
+このページの対象は **iOS/iPadOS: 設定** (iOS). チャンネルとデータの境界: iPhoneとiPad向けApp Store公開版; SwiftData; プレリリースビルド向けの任意のTestFlightベータ; SwiftData. このページ固有の確認点: SwiftData · iOS/iPadOS `17+` · TestFlight · App Lock.
+
+### 安定版チャンネル
+
+- iPhoneとiPad向けApp Store公開版
+- SwiftData
 
 ### ベータチャンネル
 
-- ソースで確認したベータビルド。公開ストア配信は保証しません
+- プレリリースビルド向けの任意のTestFlightベータ
 - SwiftData
 
 ## 前提条件
 
 - iOS/iPadOS `17+`
-- 確認済み配布元のビルド
+- iPhoneとiPad向けApp Store公開版 · プレリリースビルド向けの任意のTestFlightベータ
 - カメラ権限
 
 ## 手順
@@ -44,7 +49,7 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## 期待される結果
 
-次の結果を受け入れる条件: **iOS/iPadOS: 設定** 以下の結果をすべて確認した場合のみ: 起動 → オンボーディング → ローカルライブラリを作成; テストタイトルがアプリ再起動後とオフライン起動後も残る. このページ固有の確認点: SwiftData · iOS/iPadOS `17+` · WebAuthn · App Lock.
+次の結果を受け入れる条件: **iOS/iPadOS: 設定** 以下の結果をすべて確認した場合のみ: 起動 → オンボーディング → ローカルライブラリを作成; テストタイトルがアプリ再起動後とオフライン起動後も残る. このページ固有の確認点: SwiftData · iOS/iPadOS `17+` · TestFlight · App Lock.
 
 - 起動 → オンボーディング → ローカルライブラリを作成
 - テストタイトルがアプリ再起動後とオフライン起動後も残る
@@ -52,9 +57,9 @@ import PageMeta from '../../../../components/PageMeta.astro';
 ## 安全性とロールバック
 
 :::caution
-安全な復旧境界: **iOS/iPadOS: 設定** 起動または続行の前に、次の操作が必要です: オフライン優先のローカルライブラリ · ソースで確認したベータビルド。公開ストア配信は保証しません. このページ固有の確認点: SwiftData · iOS/iPadOS `17+` · WebAuthn · App Lock.
+安全な復旧境界: **iOS/iPadOS: 設定** 起動または続行の前に、次の操作が必要です: オフライン優先のローカルライブラリ. このページ固有の確認点: SwiftData · iOS/iPadOS `17+` · TestFlight · App Lock.
 
-- オフライン優先のローカルライブラリ · ソースで確認したベータビルド。公開ストア配信は保証しません
+- オフライン優先のローカルライブラリ
 :::
 
 ## 次の手順
@@ -65,5 +70,7 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 - [`helmerzNL/DiscVaultApp@9d15ab2a339c`](https://github.com/helmerzNL/DiscVaultApp/commit/9d15ab2a339cefdb164ec0ab29ad69ddabc511c1)
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- 情報源と状態: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [Download DiscVault on the App Store](https://apps.apple.com/app/discvault/id6788772918)
+- [Join the DiscVault TestFlight beta](https://testflight.apple.com/join/6bJetcyy)
+- 情報源と状態: `2026-07-22`
+- DiscVault Docs: `0.1.7`
