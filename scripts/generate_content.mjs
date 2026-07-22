@@ -34,7 +34,7 @@ const betaVerified = '2026-07-20';
 const betaDocsVersion = '0.1.6';
 const betaSourceCommit = '4352c060ccd6fd625a828f6e20c24f111c9ef743';
 const iosVerified = '2026-07-22';
-const iosDocsVersion = '0.1.7';
+const iosDocsVersion = '0.1.9';
 const commits = {
   'helmerzNL/DiscVault': '6d27c689ac2166651d2c7c74833c1ee225b37ec3',
   'helmerzNL/DiscVault.EU': '583f85c55dc22b63368f997a3b076a093ca0afa1',
@@ -1684,6 +1684,7 @@ const pages = [
     sourceFiles: iosDistributionSourceFiles,
     verified: iosVerified,
     docsVersion: iosDocsVersion,
+    appStoreBadge: true,
     pre: ['iOS/iPadOS 17+', 'App Store or TestFlight', 'camera permission'],
     command:
       'Launch → Onboarding → Create local library\nLibrary → + → Scan barcode or Enter manually\nSettings → App Lock',
@@ -2126,7 +2127,7 @@ ${spec.safety
 
   return `## ${labels[0]}
 
-${goal}
+${goal}${page.appStoreBadge ? '\n\n<AppStoreBadge />' : ''}
 
 ## ${labels[1]}
 
@@ -2186,8 +2187,11 @@ lastVerified: '${verifiedFor(page)}'
 function pageDocument(page, locale) {
   const depth = page.path.split('/').length;
   const componentPrefix = '../'.repeat(depth + (locale === 'en' ? 1 : 2));
+  const appStoreImport = page.appStoreBadge
+    ? `\nimport AppStoreBadge from '${componentPrefix}components/AppStoreBadge.astro';`
+    : '';
   return `${frontmatter(page, locale)}
-import PageMeta from '${componentPrefix}components/PageMeta.astro';
+import PageMeta from '${componentPrefix}components/PageMeta.astro';${appStoreImport}
 
 <PageMeta channels="${page.channel.join(',')}" platform="${platformFor(page, locale)}" version="${versionFor(page)}" source="${page.source.join(' · ')}" verified="${verifiedFor(page)}" />
 
@@ -2219,8 +2223,10 @@ hero:
 ---
 
 import RouteGrid from '${componentPrefix}components/RouteGrid.astro';
+import AppStoreBadge from '${componentPrefix}components/AppStoreBadge.astro';
 
 <RouteGrid />
+<AppStoreBadge />
 `;
 }
 

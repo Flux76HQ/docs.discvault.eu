@@ -2,6 +2,8 @@ import { access, readFile } from 'node:fs/promises';
 
 const paths = [
   'dist/index.html',
+  'dist/brand/download-on-the-app-store.svg',
+  'dist/ios/index.html',
   'dist/install/docker-compose/index.html',
   'dist/update/restore/index.html',
   'dist/pwa/offline/index.html',
@@ -34,7 +36,12 @@ const paths = [
 ];
 await Promise.all(paths.map((path) => access(path)));
 const homepage = await readFile('dist/index.html', 'utf8');
-if (!homepage.includes('DiscVault') || !homepage.includes('hreflang="nl"'))
+if (
+  !homepage.includes('DiscVault') ||
+  !homepage.includes('hreflang="nl"') ||
+  !homepage.includes('/brand/download-on-the-app-store.svg') ||
+  !homepage.includes('https://apps.apple.com/app/discvault/id6788772918')
+)
   throw new Error('Homepage smoke check failed.');
 const hasSearchInput = /<input\b(?=[^>]*\btype="search")(?=[^>]*\bid="home-search")[^>]*>/.test(
   homepage,
@@ -54,6 +61,12 @@ if (
 const japaneseProcedure = await readFile('dist/ja/ios/use-sync-limits/index.html', 'utf8');
 if (!japaneseProcedure.includes('ドキュメントの問題を報告'))
   throw new Error('Localized feedback link is missing from the Japanese procedure.');
+const iosSetup = await readFile('dist/ios/index.html', 'utf8');
+if (
+  !iosSetup.includes('/brand/download-on-the-app-store.svg') ||
+  !iosSetup.includes('https://apps.apple.com/app/discvault/id6788772918')
+)
+  throw new Error('App Store badge or listing link is missing from the iOS setup page.');
 const localizedNotFound = await readFile('dist/nl/404/index.html', 'utf8');
 if (!localizedNotFound.includes('Pagina niet gevonden'))
   throw new Error('Localized 404 route is missing.');
