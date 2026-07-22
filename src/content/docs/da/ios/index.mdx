@@ -1,36 +1,41 @@
 ---
 title: 'iOS/iPadOS: Opsætning'
-description: 'Opgavespecifik vejledning til iOS/iPadOS: Opsætning: SwiftData · iOS/iPadOS `17+` · WebAuthn · App Lock.'
+description: 'Opgavespecifik vejledning til iOS/iPadOS: Opsætning: SwiftData · iOS/iPadOS `17+` · TestFlight · App Lock.'
 pageId: 'ios-index'
 products: ['ios']
 platforms: ['ios']
-channels: ['beta']
+channels: ['stable', 'beta']
 minVersion: 'iOS/iPadOS 17+'
 sourceRepos: ['helmerzNL/DiscVaultApp', 'helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+lastVerified: '2026-07-22'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="iOS" version="iOS/iPadOS 17+" source="helmerzNL/DiscVaultApp · helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="iOS" version="iOS/iPadOS 17+" source="helmerzNL/DiscVaultApp · helmerzNL/DiscVault" verified="2026-07-22" />
 
 ## Mål og resultat
 
-Gennemfør den sidespecifikke arbejdsgang for **iOS/iPadOS: Opsætning**. Denne fremgangsmåde arbejder med SwiftData · iOS/iPadOS `17+` · WebAuthn · App Lock.
+Gennemfør den sidespecifikke arbejdsgang for **iOS/iPadOS: Opsætning**. Denne fremgangsmåde arbejder med SwiftData · iOS/iPadOS `17+` · TestFlight · App Lock.
 
 ## Gælder for
 
-Denne side gælder kun for **iOS/iPadOS: Opsætning** (iOS). Kanal- og datagrænserne er: kildeverificeret betabuild; ingen påstand om offentlig butik; SwiftData. Sidespecifikke kontrolpunkter: SwiftData · iOS/iPadOS `17+` · WebAuthn · App Lock.
+Denne side gælder kun for **iOS/iPadOS: Opsætning** (iOS). Kanal- og datagrænserne er: offentlig App Store-udgivelse til iPhone og iPad; SwiftData; valgfri TestFlight-beta til forhåndsversioner; SwiftData. Sidespecifikke kontrolpunkter: SwiftData · iOS/iPadOS `17+` · TestFlight · App Lock.
+
+### Stabil kanal
+
+- offentlig App Store-udgivelse til iPhone og iPad
+- SwiftData
 
 ### Betakanal
 
-- kildeverificeret betabuild; ingen påstand om offentlig butik
+- valgfri TestFlight-beta til forhåndsversioner
 - SwiftData
 
 ## Forudsætninger
 
 - iOS/iPadOS `17+`
-- build fra en verificeret distributionskilde
+- offentlig App Store-udgivelse til iPhone og iPad · valgfri TestFlight-beta til forhåndsversioner
 - kameratilladelse
 
 ## Fremgangsmåde
@@ -44,7 +49,7 @@ Denne side gælder kun for **iOS/iPadOS: Opsætning** (iOS). Kanal- og datagræn
 
 ## Forventet resultat
 
-Godkend resultatet for **iOS/iPadOS: Opsætning** kun når alle resultater nedenfor er opfyldt: Start → Introduktion → Opret lokalt bibliotek; testtitlen bevares efter appgenstart og offline start. Sidespecifikke kontrolpunkter: SwiftData · iOS/iPadOS `17+` · WebAuthn · App Lock.
+Godkend resultatet for **iOS/iPadOS: Opsætning** kun når alle resultater nedenfor er opfyldt: Start → Introduktion → Opret lokalt bibliotek; testtitlen bevares efter appgenstart og offline start. Sidespecifikke kontrolpunkter: SwiftData · iOS/iPadOS `17+` · TestFlight · App Lock.
 
 - Start → Introduktion → Opret lokalt bibliotek
 - testtitlen bevares efter appgenstart og offline start
@@ -52,9 +57,9 @@ Godkend resultatet for **iOS/iPadOS: Opsætning** kun når alle resultater neden
 ## Sikkerhed og tilbagerulning
 
 :::caution
-Den sikre gendannelsesgrænse for **iOS/iPadOS: Opsætning** kræver disse handlinger, før noget startes eller fortsættes: lokalt offline-first-bibliotek · kildeverificeret betabuild; ingen påstand om offentlig butik. Sidespecifikke kontrolpunkter: SwiftData · iOS/iPadOS `17+` · WebAuthn · App Lock.
+Den sikre gendannelsesgrænse for **iOS/iPadOS: Opsætning** kræver disse handlinger, før noget startes eller fortsættes: lokalt offline-first-bibliotek. Sidespecifikke kontrolpunkter: SwiftData · iOS/iPadOS `17+` · TestFlight · App Lock.
 
-- lokalt offline-first-bibliotek · kildeverificeret betabuild; ingen påstand om offentlig butik
+- lokalt offline-first-bibliotek
 :::
 
 ## Næste trin
@@ -65,5 +70,7 @@ Den sikre gendannelsesgrænse for **iOS/iPadOS: Opsætning** kræver disse handl
 
 - [`helmerzNL/DiscVaultApp@9d15ab2a339c`](https://github.com/helmerzNL/DiscVaultApp/commit/9d15ab2a339cefdb164ec0ab29ad69ddabc511c1)
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Kilde og status: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [Download DiscVault on the App Store](https://apps.apple.com/app/discvault/id6788772918)
+- [Join the DiscVault TestFlight beta](https://testflight.apple.com/join/6bJetcyy)
+- Kilde og status: `2026-07-22`
+- DiscVault Docs: `0.1.7`

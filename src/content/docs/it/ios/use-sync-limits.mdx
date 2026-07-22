@@ -1,31 +1,38 @@
 ---
 title: 'iOS/iPadOS: Uso quotidiano e limiti di sincronizzazione'
-description: 'Istruzioni specifiche per iOS/iPadOS: Uso quotidiano e limiti di sincronizzazione: SwiftData · App Lock · `/api/v1` · DiscVault.'
+description: 'Istruzioni specifiche per iOS/iPadOS: Uso quotidiano e limiti di sincronizzazione: SwiftData · TestFlight · App Lock · `/api/v1` · DiscVault.'
 pageId: 'ios-use-sync-limits'
 products: ['ios']
 platforms: ['ios']
-channels: ['beta']
+channels: ['stable', 'beta']
 minVersion: 'iOS/iPadOS 17+'
 sourceRepos: ['helmerzNL/DiscVaultApp', 'helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+lastVerified: '2026-07-22'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="iOS" version="iOS/iPadOS 17+" source="helmerzNL/DiscVaultApp · helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="iOS" version="iOS/iPadOS 17+" source="helmerzNL/DiscVaultApp · helmerzNL/DiscVault" verified="2026-07-22" />
 
 ## Obiettivo e risultato
 
-Completa la procedura specifica della pagina per **iOS/iPadOS: Uso quotidiano e limiti di sincronizzazione**. Questa procedura utilizza SwiftData · App Lock · `/api/v1` · DiscVault.
+Completa la procedura specifica della pagina per **iOS/iPadOS: Uso quotidiano e limiti di sincronizzazione**. Questa procedura utilizza SwiftData · TestFlight · App Lock · `/api/v1` · DiscVault.
 
 ## Si applica a
 
-Questa pagina si applica solo a **iOS/iPadOS: Uso quotidiano e limiti di sincronizzazione** (iOS). I limiti di canale e dati sono: SwiftData · il titolo di prova resta dopo il riavvio e l’apertura offline; `/api/v1` · build beta verificata nel sorgente; nessuna dichiarazione sullo store. Punti di controllo della pagina: SwiftData · App Lock · `/api/v1` · DiscVault.
+Questa pagina si applica solo a **iOS/iPadOS: Uso quotidiano e limiti di sincronizzazione** (iOS). I limiti di canale e dati sono: versione pubblica su App Store per iPhone e iPad; SwiftData · il titolo di prova resta dopo il riavvio e l’apertura offline; `/api/v1` · un elemento coincide in locale e sul server, altrimenti la sincronizzazione resta disabilitata; beta TestFlight facoltativa per le build preliminari; SwiftData · il titolo di prova resta dopo il riavvio e l’apertura offline; `/api/v1` · un elemento coincide in locale e sul server, altrimenti la sincronizzazione resta disabilitata. Punti di controllo della pagina: SwiftData · TestFlight · App Lock · `/api/v1` · DiscVault.
+
+### Canale stabile
+
+- versione pubblica su App Store per iPhone e iPad
+- SwiftData · il titolo di prova resta dopo il riavvio e l’apertura offline
+- `/api/v1` · un elemento coincide in locale e sul server, altrimenti la sincronizzazione resta disabilitata
 
 ### Canale beta
 
+- beta TestFlight facoltativa per le build preliminari
 - SwiftData · il titolo di prova resta dopo il riavvio e l’apertura offline
-- `/api/v1` · build beta verificata nel sorgente; nessuna dichiarazione sullo store
+- `/api/v1` · un elemento coincide in locale e sul server, altrimenti la sincronizzazione resta disabilitata
 
 ## Prerequisiti
 
@@ -43,7 +50,7 @@ Questa pagina si applica solo a **iOS/iPadOS: Uso quotidiano e limiti di sincron
 
 ## Risultato previsto
 
-Accetta il risultato per **iOS/iPadOS: Uso quotidiano e limiti di sincronizzazione** solo quando tutti i risultati seguenti sono veri: il titolo di prova resta dopo il riavvio e l’apertura offline; un elemento coincide in locale e sul server, altrimenti la sincronizzazione resta disabilitata. Punti di controllo della pagina: SwiftData · App Lock · `/api/v1` · DiscVault.
+Accetta il risultato per **iOS/iPadOS: Uso quotidiano e limiti di sincronizzazione** solo quando tutti i risultati seguenti sono veri: il titolo di prova resta dopo il riavvio e l’apertura offline; un elemento coincide in locale e sul server, altrimenti la sincronizzazione resta disabilitata. Punti di controllo della pagina: SwiftData · TestFlight · App Lock · `/api/v1` · DiscVault.
 
 - il titolo di prova resta dopo il riavvio e l’apertura offline
 - un elemento coincide in locale e sul server, altrimenti la sincronizzazione resta disabilitata
@@ -51,7 +58,7 @@ Accetta il risultato per **iOS/iPadOS: Uso quotidiano e limiti di sincronizzazio
 ## Sicurezza e ripristino
 
 :::caution
-Il limite di ripristino sicuro per **iOS/iPadOS: Uso quotidiano e limiti di sincronizzazione** richiede queste azioni prima di avviare o continuare: un elemento coincide in locale e sul server, altrimenti la sincronizzazione resta disabilitata · libreria locale offline-first · `/api/v1`. Punti di controllo della pagina: SwiftData · App Lock · `/api/v1` · DiscVault.
+Il limite di ripristino sicuro per **iOS/iPadOS: Uso quotidiano e limiti di sincronizzazione** richiede queste azioni prima di avviare o continuare: un elemento coincide in locale e sul server, altrimenti la sincronizzazione resta disabilitata · libreria locale offline-first · `/api/v1`. Punti di controllo della pagina: SwiftData · TestFlight · App Lock · `/api/v1` · DiscVault.
 
 - un elemento coincide in locale e sul server, altrimenti la sincronizzazione resta disabilitata · libreria locale offline-first · `/api/v1`
 :::
@@ -64,5 +71,7 @@ Il limite di ripristino sicuro per **iOS/iPadOS: Uso quotidiano e limiti di sinc
 
 - [`helmerzNL/DiscVaultApp@9d15ab2a339c`](https://github.com/helmerzNL/DiscVaultApp/commit/9d15ab2a339cefdb164ec0ab29ad69ddabc511c1)
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Fonte e stato: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [Download DiscVault on the App Store](https://apps.apple.com/app/discvault/id6788772918)
+- [Join the DiscVault TestFlight beta](https://testflight.apple.com/join/6bJetcyy)
+- Fonte e stato: `2026-07-22`
+- DiscVault Docs: `0.1.7`

@@ -1,36 +1,41 @@
 ---
 title: 'iOS/iPadOS: Configuration'
-description: 'Instructions propres à la tâche : iOS/iPadOS: Configuration: SwiftData · iOS/iPadOS `17+` · WebAuthn · App Lock.'
+description: 'Instructions propres à la tâche : iOS/iPadOS: Configuration: SwiftData · iOS/iPadOS `17+` · TestFlight · App Lock.'
 pageId: 'ios-index'
 products: ['ios']
 platforms: ['ios']
-channels: ['beta']
+channels: ['stable', 'beta']
 minVersion: 'iOS/iPadOS 17+'
 sourceRepos: ['helmerzNL/DiscVaultApp', 'helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+lastVerified: '2026-07-22'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="iOS" version="iOS/iPadOS 17+" source="helmerzNL/DiscVaultApp · helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="iOS" version="iOS/iPadOS 17+" source="helmerzNL/DiscVaultApp · helmerzNL/DiscVault" verified="2026-07-22" />
 
 ## Objectif et résultat
 
-Suivez le déroulement propre à cette page pour **iOS/iPadOS: Configuration**. Cette procédure utilise SwiftData · iOS/iPadOS `17+` · WebAuthn · App Lock.
+Suivez le déroulement propre à cette page pour **iOS/iPadOS: Configuration**. Cette procédure utilise SwiftData · iOS/iPadOS `17+` · TestFlight · App Lock.
 
 ## S’applique à
 
-Cette page s’applique uniquement à **iOS/iPadOS: Configuration** (iOS). Les limites de canal et de données sont : build bêta vérifié dans le code, sans promesse de disponibilité publique; SwiftData. Points de contrôle propres à la page : SwiftData · iOS/iPadOS `17+` · WebAuthn · App Lock.
+Cette page s’applique uniquement à **iOS/iPadOS: Configuration** (iOS). Les limites de canal et de données sont : version publique sur l’App Store pour iPhone et iPad; SwiftData; bêta TestFlight facultative pour les préversions; SwiftData. Points de contrôle propres à la page : SwiftData · iOS/iPadOS `17+` · TestFlight · App Lock.
+
+### Canal stable
+
+- version publique sur l’App Store pour iPhone et iPad
+- SwiftData
 
 ### Canal bêta
 
-- build bêta vérifié dans le code, sans promesse de disponibilité publique
+- bêta TestFlight facultative pour les préversions
 - SwiftData
 
 ## Prérequis
 
 - iOS/iPadOS `17+`
-- build provenant d’une source vérifiée
+- version publique sur l’App Store pour iPhone et iPad · bêta TestFlight facultative pour les préversions
 - autorisation de la caméra
 
 ## Procédure
@@ -44,7 +49,7 @@ Cette page s’applique uniquement à **iOS/iPadOS: Configuration** (iOS). Les l
 
 ## Résultat attendu
 
-Validez le résultat de **iOS/iPadOS: Configuration** uniquement lorsque tous les résultats suivants sont confirmés : Lancer → Prise en main → Créer la bibliothèque locale; le titre de test reste présent après redémarrage et ouverture hors ligne. Points de contrôle propres à la page : SwiftData · iOS/iPadOS `17+` · WebAuthn · App Lock.
+Validez le résultat de **iOS/iPadOS: Configuration** uniquement lorsque tous les résultats suivants sont confirmés : Lancer → Prise en main → Créer la bibliothèque locale; le titre de test reste présent après redémarrage et ouverture hors ligne. Points de contrôle propres à la page : SwiftData · iOS/iPadOS `17+` · TestFlight · App Lock.
 
 - Lancer → Prise en main → Créer la bibliothèque locale
 - le titre de test reste présent après redémarrage et ouverture hors ligne
@@ -52,9 +57,9 @@ Validez le résultat de **iOS/iPadOS: Configuration** uniquement lorsque tous le
 ## Sécurité et retour arrière
 
 :::caution
-La limite de récupération sûre pour **iOS/iPadOS: Configuration** impose ces actions avant tout démarrage ou toute poursuite : bibliothèque locale prioritaire hors ligne · build bêta vérifié dans le code, sans promesse de disponibilité publique. Points de contrôle propres à la page : SwiftData · iOS/iPadOS `17+` · WebAuthn · App Lock.
+La limite de récupération sûre pour **iOS/iPadOS: Configuration** impose ces actions avant tout démarrage ou toute poursuite : bibliothèque locale prioritaire hors ligne. Points de contrôle propres à la page : SwiftData · iOS/iPadOS `17+` · TestFlight · App Lock.
 
-- bibliothèque locale prioritaire hors ligne · build bêta vérifié dans le code, sans promesse de disponibilité publique
+- bibliothèque locale prioritaire hors ligne
 :::
 
 ## Étape suivante
@@ -65,5 +70,7 @@ La limite de récupération sûre pour **iOS/iPadOS: Configuration** impose ces 
 
 - [`helmerzNL/DiscVaultApp@9d15ab2a339c`](https://github.com/helmerzNL/DiscVaultApp/commit/9d15ab2a339cefdb164ec0ab29ad69ddabc511c1)
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Source et état: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [Download DiscVault on the App Store](https://apps.apple.com/app/discvault/id6788772918)
+- [Join the DiscVault TestFlight beta](https://testflight.apple.com/join/6bJetcyy)
+- Source et état: `2026-07-22`
+- DiscVault Docs: `0.1.7`

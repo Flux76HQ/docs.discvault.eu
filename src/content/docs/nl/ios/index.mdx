@@ -1,36 +1,41 @@
 ---
 title: 'iOS/iPadOS: Instellen'
-description: 'Taakspecifieke instructies voor iOS/iPadOS: Instellen: SwiftData · iOS/iPadOS `17+` · WebAuthn · App Lock.'
+description: 'Taakspecifieke instructies voor iOS/iPadOS: Instellen: SwiftData · iOS/iPadOS `17+` · TestFlight · App Lock.'
 pageId: 'ios-index'
 products: ['ios']
 platforms: ['ios']
-channels: ['beta']
+channels: ['stable', 'beta']
 minVersion: 'iOS/iPadOS 17+'
 sourceRepos: ['helmerzNL/DiscVaultApp', 'helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+lastVerified: '2026-07-22'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="iOS" version="iOS/iPadOS 17+" source="helmerzNL/DiscVaultApp · helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="iOS" version="iOS/iPadOS 17+" source="helmerzNL/DiscVaultApp · helmerzNL/DiscVault" verified="2026-07-22" />
 
 ## Doel en resultaat
 
-Voer de paginaspecifieke werkwijze uit voor **iOS/iPadOS: Instellen**. Deze werkwijze gebruikt SwiftData · iOS/iPadOS `17+` · WebAuthn · App Lock.
+Voer de paginaspecifieke werkwijze uit voor **iOS/iPadOS: Instellen**. Deze werkwijze gebruikt SwiftData · iOS/iPadOS `17+` · TestFlight · App Lock.
 
 ## Van toepassing op
 
-Deze pagina is uitsluitend van toepassing op **iOS/iPadOS: Instellen** (iOS). De kanaal- en gegevensgrenzen zijn: in broncode geverifieerde bètabuild; geen claim over openbare store; SwiftData. Paginaspecifieke controlepunten: SwiftData · iOS/iPadOS `17+` · WebAuthn · App Lock.
+Deze pagina is uitsluitend van toepassing op **iOS/iPadOS: Instellen** (iOS). De kanaal- en gegevensgrenzen zijn: openbare App Store-versie voor iPhone en iPad; SwiftData; optionele TestFlight-bèta voor prereleasebuilds; SwiftData. Paginaspecifieke controlepunten: SwiftData · iOS/iPadOS `17+` · TestFlight · App Lock.
+
+### Stabiel kanaal
+
+- openbare App Store-versie voor iPhone en iPad
+- SwiftData
 
 ### Bètakanaal
 
-- in broncode geverifieerde bètabuild; geen claim over openbare store
+- optionele TestFlight-bèta voor prereleasebuilds
 - SwiftData
 
 ## Vereisten
 
 - iOS/iPadOS `17+`
-- build uit een geverifieerde distributiebron
+- openbare App Store-versie voor iPhone en iPad · optionele TestFlight-bèta voor prereleasebuilds
 - cameratoestemming
 
 ## Procedure
@@ -44,7 +49,7 @@ Deze pagina is uitsluitend van toepassing op **iOS/iPadOS: Instellen** (iOS). De
 
 ## Verwacht resultaat
 
-Accepteer het resultaat voor **iOS/iPadOS: Instellen** alleen wanneer alle onderstaande resultaten kloppen: Start → Introductie → Lokale bibliotheek maken; de testtitel blijft na een appherstart en offline start aanwezig. Paginaspecifieke controlepunten: SwiftData · iOS/iPadOS `17+` · WebAuthn · App Lock.
+Accepteer het resultaat voor **iOS/iPadOS: Instellen** alleen wanneer alle onderstaande resultaten kloppen: Start → Introductie → Lokale bibliotheek maken; de testtitel blijft na een appherstart en offline start aanwezig. Paginaspecifieke controlepunten: SwiftData · iOS/iPadOS `17+` · TestFlight · App Lock.
 
 - Start → Introductie → Lokale bibliotheek maken
 - de testtitel blijft na een appherstart en offline start aanwezig
@@ -52,9 +57,9 @@ Accepteer het resultaat voor **iOS/iPadOS: Instellen** alleen wanneer alle onder
 ## Veiligheid en terugdraaien
 
 :::caution
-De veilige herstelgrens voor **iOS/iPadOS: Instellen** vereist deze acties voordat iets start of doorgaat: lokale offline-first-bibliotheek · in broncode geverifieerde bètabuild; geen claim over openbare store. Paginaspecifieke controlepunten: SwiftData · iOS/iPadOS `17+` · WebAuthn · App Lock.
+De veilige herstelgrens voor **iOS/iPadOS: Instellen** vereist deze acties voordat iets start of doorgaat: lokale offline-first-bibliotheek. Paginaspecifieke controlepunten: SwiftData · iOS/iPadOS `17+` · TestFlight · App Lock.
 
-- lokale offline-first-bibliotheek · in broncode geverifieerde bètabuild; geen claim over openbare store
+- lokale offline-first-bibliotheek
 :::
 
 ## Volgende stap
@@ -65,5 +70,7 @@ De veilige herstelgrens voor **iOS/iPadOS: Instellen** vereist deze acties voord
 
 - [`helmerzNL/DiscVaultApp@9d15ab2a339c`](https://github.com/helmerzNL/DiscVaultApp/commit/9d15ab2a339cefdb164ec0ab29ad69ddabc511c1)
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Bron en status: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [Download DiscVault on the App Store](https://apps.apple.com/app/discvault/id6788772918)
+- [Join the DiscVault TestFlight beta](https://testflight.apple.com/join/6bJetcyy)
+- Bron en status: `2026-07-22`
+- DiscVault Docs: `0.1.7`
