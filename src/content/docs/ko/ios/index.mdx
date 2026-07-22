@@ -1,36 +1,41 @@
 ---
 title: 'iOS/iPadOS: 설정'
-description: '작업별 안내: iOS/iPadOS: 설정: SwiftData · iOS/iPadOS `17+` · WebAuthn · App Lock.'
+description: '작업별 안내: iOS/iPadOS: 설정: SwiftData · iOS/iPadOS `17+` · TestFlight · App Lock.'
 pageId: 'ios-index'
 products: ['ios']
 platforms: ['ios']
-channels: ['beta']
+channels: ['stable', 'beta']
 minVersion: 'iOS/iPadOS 17+'
 sourceRepos: ['helmerzNL/DiscVaultApp', 'helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+lastVerified: '2026-07-22'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="iOS" version="iOS/iPadOS 17+" source="helmerzNL/DiscVaultApp · helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="iOS" version="iOS/iPadOS 17+" source="helmerzNL/DiscVaultApp · helmerzNL/DiscVault" verified="2026-07-22" />
 
 ## 목표 및 결과
 
-이 페이지 전용 절차를 수행합니다: **iOS/iPadOS: 설정**. 이 절차에서 다루는 항목: SwiftData · iOS/iPadOS `17+` · WebAuthn · App Lock.
+이 페이지 전용 절차를 수행합니다: **iOS/iPadOS: 설정**. 이 절차에서 다루는 항목: SwiftData · iOS/iPadOS `17+` · TestFlight · App Lock.
 
 ## 적용 대상
 
-이 페이지의 적용 범위: **iOS/iPadOS: 설정** (iOS). 채널 및 데이터 경계: 소스에서 확인된 베타 빌드이며 공개 스토어 배포를 주장하지 않음; SwiftData. 이 페이지의 전용 확인 지점: SwiftData · iOS/iPadOS `17+` · WebAuthn · App Lock.
+이 페이지의 적용 범위: **iOS/iPadOS: 설정** (iOS). 채널 및 데이터 경계: iPhone 및 iPad용 App Store 공개 버전; SwiftData; 시험판 빌드를 위한 선택적 TestFlight 베타; SwiftData. 이 페이지의 전용 확인 지점: SwiftData · iOS/iPadOS `17+` · TestFlight · App Lock.
+
+### 안정 채널
+
+- iPhone 및 iPad용 App Store 공개 버전
+- SwiftData
 
 ### 베타 채널
 
-- 소스에서 확인된 베타 빌드이며 공개 스토어 배포를 주장하지 않음
+- 시험판 빌드를 위한 선택적 TestFlight 베타
 - SwiftData
 
 ## 사전 요구 사항
 
 - iOS/iPadOS `17+`
-- 확인된 배포 출처의 빌드
+- iPhone 및 iPad용 App Store 공개 버전 · 시험판 빌드를 위한 선택적 TestFlight 베타
 - 카메라 권한
 
 ## 절차
@@ -44,7 +49,7 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## 예상 결과
 
-다음 결과의 승인 조건: **iOS/iPadOS: 설정** 아래 결과가 모두 충족된 경우에만: 실행 → 시작 안내 → 로컬 라이브러리 생성; 테스트 제목이 앱 재시작 및 오프라인 실행 후에도 유지됨. 이 페이지의 전용 확인 지점: SwiftData · iOS/iPadOS `17+` · WebAuthn · App Lock.
+다음 결과의 승인 조건: **iOS/iPadOS: 설정** 아래 결과가 모두 충족된 경우에만: 실행 → 시작 안내 → 로컬 라이브러리 생성; 테스트 제목이 앱 재시작 및 오프라인 실행 후에도 유지됨. 이 페이지의 전용 확인 지점: SwiftData · iOS/iPadOS `17+` · TestFlight · App Lock.
 
 - 실행 → 시작 안내 → 로컬 라이브러리 생성
 - 테스트 제목이 앱 재시작 및 오프라인 실행 후에도 유지됨
@@ -52,9 +57,9 @@ import PageMeta from '../../../../components/PageMeta.astro';
 ## 안전 및 롤백
 
 :::caution
-안전한 복구 경계: **iOS/iPadOS: 설정** 시작하거나 계속하기 전에 다음 작업이 필요합니다: 오프라인 우선 로컬 라이브러리 · 소스에서 확인된 베타 빌드이며 공개 스토어 배포를 주장하지 않음. 이 페이지의 전용 확인 지점: SwiftData · iOS/iPadOS `17+` · WebAuthn · App Lock.
+안전한 복구 경계: **iOS/iPadOS: 설정** 시작하거나 계속하기 전에 다음 작업이 필요합니다: 오프라인 우선 로컬 라이브러리. 이 페이지의 전용 확인 지점: SwiftData · iOS/iPadOS `17+` · TestFlight · App Lock.
 
-- 오프라인 우선 로컬 라이브러리 · 소스에서 확인된 베타 빌드이며 공개 스토어 배포를 주장하지 않음
+- 오프라인 우선 로컬 라이브러리
 :::
 
 ## 다음 단계
@@ -65,5 +70,7 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 - [`helmerzNL/DiscVaultApp@9d15ab2a339c`](https://github.com/helmerzNL/DiscVaultApp/commit/9d15ab2a339cefdb164ec0ab29ad69ddabc511c1)
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- 출처 및 상태: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [Download DiscVault on the App Store](https://apps.apple.com/app/discvault/id6788772918)
+- [Join the DiscVault TestFlight beta](https://testflight.apple.com/join/6bJetcyy)
+- 출처 및 상태: `2026-07-22`
+- DiscVault Docs: `0.1.7`

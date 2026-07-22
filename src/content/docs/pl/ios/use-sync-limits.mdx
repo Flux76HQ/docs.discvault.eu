@@ -1,31 +1,38 @@
 ---
 title: 'iOS/iPadOS: Codzienne użycie i ograniczenia synchronizacji'
-description: 'Instrukcja właściwa dla zadania: iOS/iPadOS: Codzienne użycie i ograniczenia synchronizacji: SwiftData · App Lock · `/api/v1` · DiscVault.'
+description: 'Instrukcja właściwa dla zadania: iOS/iPadOS: Codzienne użycie i ograniczenia synchronizacji: SwiftData · TestFlight · App Lock · `/api/v1` · DiscVault.'
 pageId: 'ios-use-sync-limits'
 products: ['ios']
 platforms: ['ios']
-channels: ['beta']
+channels: ['stable', 'beta']
 minVersion: 'iOS/iPadOS 17+'
 sourceRepos: ['helmerzNL/DiscVaultApp', 'helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+lastVerified: '2026-07-22'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="iOS" version="iOS/iPadOS 17+" source="helmerzNL/DiscVaultApp · helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="iOS" version="iOS/iPadOS 17+" source="helmerzNL/DiscVaultApp · helmerzNL/DiscVault" verified="2026-07-22" />
 
 ## Cel i rezultat
 
-Wykonaj procedurę właściwą dla strony: **iOS/iPadOS: Codzienne użycie i ograniczenia synchronizacji**. Ta procedura korzysta z SwiftData · App Lock · `/api/v1` · DiscVault.
+Wykonaj procedurę właściwą dla strony: **iOS/iPadOS: Codzienne użycie i ograniczenia synchronizacji**. Ta procedura korzysta z SwiftData · TestFlight · App Lock · `/api/v1` · DiscVault.
 
 ## Dotyczy
 
-Ta strona dotyczy wyłącznie **iOS/iPadOS: Codzienne użycie i ograniczenia synchronizacji** (iOS). Granice kanału i danych: SwiftData · tytuł testowy pozostaje po restarcie i uruchomieniu offline; `/api/v1` · beta zweryfikowana w kodzie; bez deklaracji publikacji w sklepie. Punkty kontrolne tej strony: SwiftData · App Lock · `/api/v1` · DiscVault.
+Ta strona dotyczy wyłącznie **iOS/iPadOS: Codzienne użycie i ograniczenia synchronizacji** (iOS). Granice kanału i danych: publiczna wersja w App Store na iPhone’a i iPada; SwiftData · tytuł testowy pozostaje po restarcie i uruchomieniu offline; `/api/v1` · jeden element jest zgodny lokalnie i na serwerze albo synchronizacja pozostaje wyłączona; opcjonalna beta TestFlight dla wersji przedpremierowych; SwiftData · tytuł testowy pozostaje po restarcie i uruchomieniu offline; `/api/v1` · jeden element jest zgodny lokalnie i na serwerze albo synchronizacja pozostaje wyłączona. Punkty kontrolne tej strony: SwiftData · TestFlight · App Lock · `/api/v1` · DiscVault.
+
+### Kanał stabilny
+
+- publiczna wersja w App Store na iPhone’a i iPada
+- SwiftData · tytuł testowy pozostaje po restarcie i uruchomieniu offline
+- `/api/v1` · jeden element jest zgodny lokalnie i na serwerze albo synchronizacja pozostaje wyłączona
 
 ### Kanał beta
 
+- opcjonalna beta TestFlight dla wersji przedpremierowych
 - SwiftData · tytuł testowy pozostaje po restarcie i uruchomieniu offline
-- `/api/v1` · beta zweryfikowana w kodzie; bez deklaracji publikacji w sklepie
+- `/api/v1` · jeden element jest zgodny lokalnie i na serwerze albo synchronizacja pozostaje wyłączona
 
 ## Wymagania wstępne
 
@@ -43,7 +50,7 @@ Ta strona dotyczy wyłącznie **iOS/iPadOS: Codzienne użycie i ograniczenia syn
 
 ## Oczekiwany rezultat
 
-Zaakceptuj wynik dla **iOS/iPadOS: Codzienne użycie i ograniczenia synchronizacji** tylko gdy wszystkie poniższe wyniki są prawdziwe: tytuł testowy pozostaje po restarcie i uruchomieniu offline; jeden element jest zgodny lokalnie i na serwerze albo synchronizacja pozostaje wyłączona. Punkty kontrolne tej strony: SwiftData · App Lock · `/api/v1` · DiscVault.
+Zaakceptuj wynik dla **iOS/iPadOS: Codzienne użycie i ograniczenia synchronizacji** tylko gdy wszystkie poniższe wyniki są prawdziwe: tytuł testowy pozostaje po restarcie i uruchomieniu offline; jeden element jest zgodny lokalnie i na serwerze albo synchronizacja pozostaje wyłączona. Punkty kontrolne tej strony: SwiftData · TestFlight · App Lock · `/api/v1` · DiscVault.
 
 - tytuł testowy pozostaje po restarcie i uruchomieniu offline
 - jeden element jest zgodny lokalnie i na serwerze albo synchronizacja pozostaje wyłączona
@@ -51,7 +58,7 @@ Zaakceptuj wynik dla **iOS/iPadOS: Codzienne użycie i ograniczenia synchronizac
 ## Bezpieczeństwo i wycofanie
 
 :::caution
-Bezpieczna granica odzyskiwania dla **iOS/iPadOS: Codzienne użycie i ograniczenia synchronizacji** wymaga tych działań przed uruchomieniem lub kontynuacją: jeden element jest zgodny lokalnie i na serwerze albo synchronizacja pozostaje wyłączona · lokalna biblioteka offline-first · `/api/v1`. Punkty kontrolne tej strony: SwiftData · App Lock · `/api/v1` · DiscVault.
+Bezpieczna granica odzyskiwania dla **iOS/iPadOS: Codzienne użycie i ograniczenia synchronizacji** wymaga tych działań przed uruchomieniem lub kontynuacją: jeden element jest zgodny lokalnie i na serwerze albo synchronizacja pozostaje wyłączona · lokalna biblioteka offline-first · `/api/v1`. Punkty kontrolne tej strony: SwiftData · TestFlight · App Lock · `/api/v1` · DiscVault.
 
 - jeden element jest zgodny lokalnie i na serwerze albo synchronizacja pozostaje wyłączona · lokalna biblioteka offline-first · `/api/v1`
 :::
@@ -64,5 +71,7 @@ Bezpieczna granica odzyskiwania dla **iOS/iPadOS: Codzienne użycie i ograniczen
 
 - [`helmerzNL/DiscVaultApp@9d15ab2a339c`](https://github.com/helmerzNL/DiscVaultApp/commit/9d15ab2a339cefdb164ec0ab29ad69ddabc511c1)
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Źródło i stan: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [Download DiscVault on the App Store](https://apps.apple.com/app/discvault/id6788772918)
+- [Join the DiscVault TestFlight beta](https://testflight.apple.com/join/6bJetcyy)
+- Źródło i stan: `2026-07-22`
+- DiscVault Docs: `0.1.7`

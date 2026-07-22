@@ -1,31 +1,38 @@
 ---
 title: 'iOS/iPadOS: Günlük kullanım ve eşitleme sınırları'
-description: 'Göreve özel yönergeler: iOS/iPadOS: Günlük kullanım ve eşitleme sınırları: SwiftData · App Lock · `/api/v1` · DiscVault.'
+description: 'Göreve özel yönergeler: iOS/iPadOS: Günlük kullanım ve eşitleme sınırları: SwiftData · TestFlight · App Lock · `/api/v1` · DiscVault.'
 pageId: 'ios-use-sync-limits'
 products: ['ios']
 platforms: ['ios']
-channels: ['beta']
+channels: ['stable', 'beta']
 minVersion: 'iOS/iPadOS 17+'
 sourceRepos: ['helmerzNL/DiscVaultApp', 'helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+lastVerified: '2026-07-22'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="iOS" version="iOS/iPadOS 17+" source="helmerzNL/DiscVaultApp · helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="iOS" version="iOS/iPadOS 17+" source="helmerzNL/DiscVaultApp · helmerzNL/DiscVault" verified="2026-07-22" />
 
 ## Amaç ve sonuç
 
-Sayfaya özel iş akışını tamamlayın: **iOS/iPadOS: Günlük kullanım ve eşitleme sınırları**. Bu prosedür şunları kullanır: SwiftData · App Lock · `/api/v1` · DiscVault.
+Sayfaya özel iş akışını tamamlayın: **iOS/iPadOS: Günlük kullanım ve eşitleme sınırları**. Bu prosedür şunları kullanır: SwiftData · TestFlight · App Lock · `/api/v1` · DiscVault.
 
 ## Geçerli olduğu alan
 
-Bu sayfa yalnızca şunlar için geçerlidir: **iOS/iPadOS: Günlük kullanım ve eşitleme sınırları** (iOS). Kanal ve veri sınırları: SwiftData · test başlığı yeniden başlatma ve çevrimdışı açılıştan sonra kalır; `/api/v1` · kaynakta doğrulanmış beta derlemesi; genel mağaza kullanılabilirliği iddiası yok. Sayfaya özel denetim noktaları: SwiftData · App Lock · `/api/v1` · DiscVault.
+Bu sayfa yalnızca şunlar için geçerlidir: **iOS/iPadOS: Günlük kullanım ve eşitleme sınırları** (iOS). Kanal ve veri sınırları: iPhone ve iPad için herkese açık App Store sürümü; SwiftData · test başlığı yeniden başlatma ve çevrimdışı açılıştan sonra kalır; `/api/v1` · bir test öğesi yerelde ve sunucuda eşleşir ya da eşitleme kapalı kalır; ön sürüm derlemeleri için isteğe bağlı TestFlight beta; SwiftData · test başlığı yeniden başlatma ve çevrimdışı açılıştan sonra kalır; `/api/v1` · bir test öğesi yerelde ve sunucuda eşleşir ya da eşitleme kapalı kalır. Sayfaya özel denetim noktaları: SwiftData · TestFlight · App Lock · `/api/v1` · DiscVault.
+
+### Kararlı kanal
+
+- iPhone ve iPad için herkese açık App Store sürümü
+- SwiftData · test başlığı yeniden başlatma ve çevrimdışı açılıştan sonra kalır
+- `/api/v1` · bir test öğesi yerelde ve sunucuda eşleşir ya da eşitleme kapalı kalır
 
 ### Beta kanalı
 
+- ön sürüm derlemeleri için isteğe bağlı TestFlight beta
 - SwiftData · test başlığı yeniden başlatma ve çevrimdışı açılıştan sonra kalır
-- `/api/v1` · kaynakta doğrulanmış beta derlemesi; genel mağaza kullanılabilirliği iddiası yok
+- `/api/v1` · bir test öğesi yerelde ve sunucuda eşleşir ya da eşitleme kapalı kalır
 
 ## Ön koşullar
 
@@ -43,7 +50,7 @@ Bu sayfa yalnızca şunlar için geçerlidir: **iOS/iPadOS: Günlük kullanım v
 
 ## Beklenen sonuç
 
-Şunun sonucunu kabul edin: **iOS/iPadOS: Günlük kullanım ve eşitleme sınırları** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: test başlığı yeniden başlatma ve çevrimdışı açılıştan sonra kalır; bir test öğesi yerelde ve sunucuda eşleşir ya da eşitleme kapalı kalır. Sayfaya özel denetim noktaları: SwiftData · App Lock · `/api/v1` · DiscVault.
+Şunun sonucunu kabul edin: **iOS/iPadOS: Günlük kullanım ve eşitleme sınırları** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: test başlığı yeniden başlatma ve çevrimdışı açılıştan sonra kalır; bir test öğesi yerelde ve sunucuda eşleşir ya da eşitleme kapalı kalır. Sayfaya özel denetim noktaları: SwiftData · TestFlight · App Lock · `/api/v1` · DiscVault.
 
 - test başlığı yeniden başlatma ve çevrimdışı açılıştan sonra kalır
 - bir test öğesi yerelde ve sunucuda eşleşir ya da eşitleme kapalı kalır
@@ -51,7 +58,7 @@ Bu sayfa yalnızca şunlar için geçerlidir: **iOS/iPadOS: Günlük kullanım v
 ## Güvenlik ve geri alma
 
 :::caution
-Şunun güvenli kurtarma sınırı: **iOS/iPadOS: Günlük kullanım ve eşitleme sınırları** başlatmadan veya devam etmeden önce şu işlemleri gerektirir: bir test öğesi yerelde ve sunucuda eşleşir ya da eşitleme kapalı kalır · yerel çevrimdışı öncelikli kitaplık · `/api/v1`. Sayfaya özel denetim noktaları: SwiftData · App Lock · `/api/v1` · DiscVault.
+Şunun güvenli kurtarma sınırı: **iOS/iPadOS: Günlük kullanım ve eşitleme sınırları** başlatmadan veya devam etmeden önce şu işlemleri gerektirir: bir test öğesi yerelde ve sunucuda eşleşir ya da eşitleme kapalı kalır · yerel çevrimdışı öncelikli kitaplık · `/api/v1`. Sayfaya özel denetim noktaları: SwiftData · TestFlight · App Lock · `/api/v1` · DiscVault.
 
 - bir test öğesi yerelde ve sunucuda eşleşir ya da eşitleme kapalı kalır · yerel çevrimdışı öncelikli kitaplık · `/api/v1`
 :::
@@ -64,5 +71,7 @@ Bu sayfa yalnızca şunlar için geçerlidir: **iOS/iPadOS: Günlük kullanım v
 
 - [`helmerzNL/DiscVaultApp@9d15ab2a339c`](https://github.com/helmerzNL/DiscVaultApp/commit/9d15ab2a339cefdb164ec0ab29ad69ddabc511c1)
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Kaynak ve durum: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [Download DiscVault on the App Store](https://apps.apple.com/app/discvault/id6788772918)
+- [Join the DiscVault TestFlight beta](https://testflight.apple.com/join/6bJetcyy)
+- Kaynak ve durum: `2026-07-22`
+- DiscVault Docs: `0.1.7`
