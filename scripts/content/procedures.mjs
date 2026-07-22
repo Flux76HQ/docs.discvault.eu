@@ -1133,14 +1133,15 @@ curl --fail http://localhost:6080/api/next/metadata/plugins`,
     safety: [item(term('cacheBoundary'), 'DiscVault origin')],
   },
   'ios/index': {
-    markers: ['SwiftData', 'iOS/iPadOS `17+`', 'WebAuthn', 'App Lock'],
+    markers: ['SwiftData', 'iOS/iPadOS `17+`', 'App Store', 'TestFlight', 'App Lock'],
     prerequisites: [
       item('iOS/iPadOS `17+`'),
-      item(term('verifiedBuild')),
+      item(term('appStoreRelease'), term('testFlightBeta')),
       item(term('cameraPermission')),
     ],
     channels: {
-      beta: [item(term('noStoreClaim')), item('SwiftData', 'offline-first')],
+      stable: [item(term('appStoreRelease')), item('SwiftData', 'offline-first')],
+      beta: [item(term('testFlightBeta')), item('SwiftData', 'offline-first')],
     },
     steps: [
       step('open', ui('iosOnboarding')),
@@ -1150,13 +1151,22 @@ curl --fail http://localhost:6080/api/next/metadata/plugins`,
     ],
     blocks: [],
     outcomes: [item(ui('iosOnboarding')), item(term('localPersistence'))],
-    safety: [item(term('localLibrary'), term('noStoreClaim'))],
+    safety: [item(term('localLibrary'))],
   },
   'ios/use-sync-limits': {
-    markers: ['SwiftData', 'App Lock', '`/api/v1`', 'DiscVault'],
+    markers: ['SwiftData', 'App Store', 'TestFlight', 'App Lock', '`/api/v1`', 'DiscVault'],
     prerequisites: [item('completed onboarding'), item(term('testLibrary'))],
     channels: {
-      beta: [item('SwiftData', term('localPersistence')), item('`/api/v1`', term('noStoreClaim'))],
+      stable: [
+        item(term('appStoreRelease')),
+        item('SwiftData', term('localPersistence')),
+        item('`/api/v1`', term('syncOutcome')),
+      ],
+      beta: [
+        item(term('testFlightBeta')),
+        item('SwiftData', term('localPersistence')),
+        item('`/api/v1`', term('syncOutcome')),
+      ],
     },
     steps: [
       step('test', ui('librarySearch'), ui('iosAdd'), term('airplaneMode')),

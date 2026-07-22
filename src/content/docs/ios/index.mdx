@@ -1,36 +1,41 @@
 ---
 title: 'iOS/iPadOS: Setup'
-description: 'Set up the native offline-first iOS/iPadOS app from a verified distribution source.'
+description: 'Install the native offline-first iOS/iPadOS app from the App Store, or use TestFlight for beta builds.'
 pageId: 'ios-index'
 products: ['ios']
 platforms: ['ios']
-channels: ['beta']
+channels: ['stable', 'beta']
 minVersion: 'iOS/iPadOS 17+'
 sourceRepos: ['helmerzNL/DiscVaultApp', 'helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+lastVerified: '2026-07-22'
 ---
 
 import PageMeta from '../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="iOS" version="iOS/iPadOS 17+" source="helmerzNL/DiscVaultApp · helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="iOS" version="iOS/iPadOS 17+" source="helmerzNL/DiscVaultApp · helmerzNL/DiscVault" verified="2026-07-22" />
 
 ## Goal and result
 
-Set up the native offline-first iOS/iPadOS app from a verified distribution source.
+Install the native offline-first iOS/iPadOS app from the App Store, or use TestFlight for beta builds.
 
 ## Applies to
 
-Beta source implementation. Local SwiftData library, scanning, lists, details, notifications, and app lock are verified in source; public App Store availability is not assumed.
+DiscVault is publicly available for iPhone and iPad through the App Store. An optional TestFlight channel provides prerelease beta builds. The local SwiftData library, scanning, lists, details, and app lock are available without a DiscVault server.
+
+### Stable channel
+
+- public App Store release for iPhone and iPad
+- SwiftData · offline-first
 
 ### Beta channel
 
-- source-verified beta build; no public store availability claim
+- optional TestFlight beta for prerelease builds
 - SwiftData · offline-first
 
 ## Prerequisites
 
 - iOS/iPadOS `17+`
-- build from a verified distribution source
+- public App Store release for iPhone and iPad · optional TestFlight beta for prerelease builds
 - camera permission
 
 ## Procedure
@@ -54,7 +59,7 @@ Onboarding completes and a manually added or scanned title remains after restart
 :::caution
 Delete only a test item first. Before reinstalling the app, export or otherwise preserve any local library data available in the build.
 
-- local offline-first library · source-verified beta build; no public store availability claim
+- local offline-first library
 :::
 
 ## Next step
@@ -65,5 +70,7 @@ Delete only a test item first. Before reinstalling the app, export or otherwise 
 
 - [`helmerzNL/DiscVaultApp@9d15ab2a339c`](https://github.com/helmerzNL/DiscVaultApp/commit/9d15ab2a339cefdb164ec0ab29ad69ddabc511c1)
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Verified: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [Download DiscVault on the App Store](https://apps.apple.com/app/discvault/id6788772918)
+- [Join the DiscVault TestFlight beta](https://testflight.apple.com/join/6bJetcyy)
+- Verified: `2026-07-22`
+- DiscVault Docs: `0.1.7`

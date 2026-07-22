@@ -1,36 +1,41 @@
 ---
 title: 'iOS/iPadOS: 设置'
-description: '任务专用说明： iOS/iPadOS: 设置: SwiftData · iOS/iPadOS `17+` · WebAuthn · App Lock.'
+description: '任务专用说明： iOS/iPadOS: 设置: SwiftData · iOS/iPadOS `17+` · TestFlight · App Lock.'
 pageId: 'ios-index'
 products: ['ios']
 platforms: ['ios']
-channels: ['beta']
+channels: ['stable', 'beta']
 minVersion: 'iOS/iPadOS 17+'
 sourceRepos: ['helmerzNL/DiscVaultApp', 'helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+lastVerified: '2026-07-22'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="iOS" version="iOS/iPadOS 17+" source="helmerzNL/DiscVaultApp · helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="iOS" version="iOS/iPadOS 17+" source="helmerzNL/DiscVaultApp · helmerzNL/DiscVault" verified="2026-07-22" />
 
 ## 目标和结果
 
-完成此页面专用的流程： **iOS/iPadOS: 设置**. 此流程使用 SwiftData · iOS/iPadOS `17+` · WebAuthn · App Lock.
+完成此页面专用的流程： **iOS/iPadOS: 设置**. 此流程使用 SwiftData · iOS/iPadOS `17+` · TestFlight · App Lock.
 
 ## 适用范围
 
-本页面仅适用于 **iOS/iPadOS: 设置** (iOS). 通道与数据边界为： 经源码验证的测试版构建；不宣称已在公共商店发布; SwiftData. 本页面专用检查点： SwiftData · iOS/iPadOS `17+` · WebAuthn · App Lock.
+本页面仅适用于 **iOS/iPadOS: 设置** (iOS). 通道与数据边界为： 面向 iPhone 和 iPad 的 App Store 公开版本; SwiftData; 用于预发布构建的可选 TestFlight 测试版; SwiftData. 本页面专用检查点： SwiftData · iOS/iPadOS `17+` · TestFlight · App Lock.
+
+### 稳定版通道
+
+- 面向 iPhone 和 iPad 的 App Store 公开版本
+- SwiftData
 
 ### 测试版通道
 
-- 经源码验证的测试版构建；不宣称已在公共商店发布
+- 用于预发布构建的可选 TestFlight 测试版
 - SwiftData
 
 ## 前提条件
 
 - iOS/iPadOS `17+`
-- 来自可信分发源的构建
+- 面向 iPhone 和 iPad 的 App Store 公开版本 · 用于预发布构建的可选 TestFlight 测试版
 - 相机权限
 
 ## 操作步骤
@@ -44,7 +49,7 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## 预期结果
 
-仅在以下条件下接受结果： **iOS/iPadOS: 设置** 必须确认以下所有结果： 启动 → 新手引导 → 创建本地媒体库; 测试条目在应用重启及离线启动后仍然存在. 本页面专用检查点： SwiftData · iOS/iPadOS `17+` · WebAuthn · App Lock.
+仅在以下条件下接受结果： **iOS/iPadOS: 设置** 必须确认以下所有结果： 启动 → 新手引导 → 创建本地媒体库; 测试条目在应用重启及离线启动后仍然存在. 本页面专用检查点： SwiftData · iOS/iPadOS `17+` · TestFlight · App Lock.
 
 - 启动 → 新手引导 → 创建本地媒体库
 - 测试条目在应用重启及离线启动后仍然存在
@@ -52,9 +57,9 @@ import PageMeta from '../../../../components/PageMeta.astro';
 ## 安全与回滚
 
 :::caution
-安全恢复边界： **iOS/iPadOS: 设置** 在启动或继续任何操作前必须执行： 离线优先的本地媒体库 · 经源码验证的测试版构建；不宣称已在公共商店发布. 本页面专用检查点： SwiftData · iOS/iPadOS `17+` · WebAuthn · App Lock.
+安全恢复边界： **iOS/iPadOS: 设置** 在启动或继续任何操作前必须执行： 离线优先的本地媒体库. 本页面专用检查点： SwiftData · iOS/iPadOS `17+` · TestFlight · App Lock.
 
-- 离线优先的本地媒体库 · 经源码验证的测试版构建；不宣称已在公共商店发布
+- 离线优先的本地媒体库
 :::
 
 ## 下一步
@@ -65,5 +70,7 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 - [`helmerzNL/DiscVaultApp@9d15ab2a339c`](https://github.com/helmerzNL/DiscVaultApp/commit/9d15ab2a339cefdb164ec0ab29ad69ddabc511c1)
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- 来源和状态: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [Download DiscVault on the App Store](https://apps.apple.com/app/discvault/id6788772918)
+- [Join the DiscVault TestFlight beta](https://testflight.apple.com/join/6bJetcyy)
+- 来源和状态: `2026-07-22`
+- DiscVault Docs: `0.1.7`

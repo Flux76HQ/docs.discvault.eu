@@ -1,31 +1,38 @@
 ---
 title: 'iOS/iPadOS: Běžné používání a omezení synchronizace'
-description: 'Pokyny pro konkrétní úlohu: iOS/iPadOS: Běžné používání a omezení synchronizace: SwiftData · App Lock · `/api/v1` · DiscVault.'
+description: 'Pokyny pro konkrétní úlohu: iOS/iPadOS: Běžné používání a omezení synchronizace: SwiftData · TestFlight · App Lock · `/api/v1` · DiscVault.'
 pageId: 'ios-use-sync-limits'
 products: ['ios']
 platforms: ['ios']
-channels: ['beta']
+channels: ['stable', 'beta']
 minVersion: 'iOS/iPadOS 17+'
 sourceRepos: ['helmerzNL/DiscVaultApp', 'helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+lastVerified: '2026-07-22'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="iOS" version="iOS/iPadOS 17+" source="helmerzNL/DiscVaultApp · helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="iOS" version="iOS/iPadOS 17+" source="helmerzNL/DiscVaultApp · helmerzNL/DiscVault" verified="2026-07-22" />
 
 ## Cíl a výsledek
 
-Dokončete postup určený pro **iOS/iPadOS: Běžné používání a omezení synchronizace**. Tento postup pracuje s SwiftData · App Lock · `/api/v1` · DiscVault.
+Dokončete postup určený pro **iOS/iPadOS: Běžné používání a omezení synchronizace**. Tento postup pracuje s SwiftData · TestFlight · App Lock · `/api/v1` · DiscVault.
 
 ## Platí pro
 
-Tato stránka platí pouze pro **iOS/iPadOS: Běžné používání a omezení synchronizace** (iOS). Hranice kanálu a dat jsou: SwiftData · testovací titul zůstane po restartu aplikace a spuštění offline; `/api/v1` · beta sestavení ověřené ve zdroji; bez tvrzení o dostupnosti v obchodě. Kontrolní body této stránky: SwiftData · App Lock · `/api/v1` · DiscVault.
+Tato stránka platí pouze pro **iOS/iPadOS: Běžné používání a omezení synchronizace** (iOS). Hranice kanálu a dat jsou: veřejná verze v App Storu pro iPhone a iPad; SwiftData · testovací titul zůstane po restartu aplikace a spuštění offline; `/api/v1` · jedna testovací položka odpovídá místně i na serveru, nebo synchronizace zůstane vypnutá; volitelná beta TestFlight pro předběžná sestavení; SwiftData · testovací titul zůstane po restartu aplikace a spuštění offline; `/api/v1` · jedna testovací položka odpovídá místně i na serveru, nebo synchronizace zůstane vypnutá. Kontrolní body této stránky: SwiftData · TestFlight · App Lock · `/api/v1` · DiscVault.
+
+### Stabilní kanál
+
+- veřejná verze v App Storu pro iPhone a iPad
+- SwiftData · testovací titul zůstane po restartu aplikace a spuštění offline
+- `/api/v1` · jedna testovací položka odpovídá místně i na serveru, nebo synchronizace zůstane vypnutá
 
 ### Beta kanál
 
+- volitelná beta TestFlight pro předběžná sestavení
 - SwiftData · testovací titul zůstane po restartu aplikace a spuštění offline
-- `/api/v1` · beta sestavení ověřené ve zdroji; bez tvrzení o dostupnosti v obchodě
+- `/api/v1` · jedna testovací položka odpovídá místně i na serveru, nebo synchronizace zůstane vypnutá
 
 ## Požadavky
 
@@ -43,7 +50,7 @@ Tato stránka platí pouze pro **iOS/iPadOS: Běžné používání a omezení s
 
 ## Očekávaný výsledek
 
-Výsledek přijměte pro **iOS/iPadOS: Běžné používání a omezení synchronizace** pouze pokud platí všechny následující výsledky: testovací titul zůstane po restartu aplikace a spuštění offline; jedna testovací položka odpovídá místně i na serveru, nebo synchronizace zůstane vypnutá. Kontrolní body této stránky: SwiftData · App Lock · `/api/v1` · DiscVault.
+Výsledek přijměte pro **iOS/iPadOS: Běžné používání a omezení synchronizace** pouze pokud platí všechny následující výsledky: testovací titul zůstane po restartu aplikace a spuštění offline; jedna testovací položka odpovídá místně i na serveru, nebo synchronizace zůstane vypnutá. Kontrolní body této stránky: SwiftData · TestFlight · App Lock · `/api/v1` · DiscVault.
 
 - testovací titul zůstane po restartu aplikace a spuštění offline
 - jedna testovací položka odpovídá místně i na serveru, nebo synchronizace zůstane vypnutá
@@ -51,7 +58,7 @@ Výsledek přijměte pro **iOS/iPadOS: Běžné používání a omezení synchro
 ## Bezpečnost a návrat
 
 :::caution
-Bezpečná hranice obnovy pro **iOS/iPadOS: Běžné používání a omezení synchronizace** vyžaduje před spuštěním nebo pokračováním tyto kroky: jedna testovací položka odpovídá místně i na serveru, nebo synchronizace zůstane vypnutá · místní offline knihovna · `/api/v1`. Kontrolní body této stránky: SwiftData · App Lock · `/api/v1` · DiscVault.
+Bezpečná hranice obnovy pro **iOS/iPadOS: Běžné používání a omezení synchronizace** vyžaduje před spuštěním nebo pokračováním tyto kroky: jedna testovací položka odpovídá místně i na serveru, nebo synchronizace zůstane vypnutá · místní offline knihovna · `/api/v1`. Kontrolní body této stránky: SwiftData · TestFlight · App Lock · `/api/v1` · DiscVault.
 
 - jedna testovací položka odpovídá místně i na serveru, nebo synchronizace zůstane vypnutá · místní offline knihovna · `/api/v1`
 :::
@@ -64,5 +71,7 @@ Bezpečná hranice obnovy pro **iOS/iPadOS: Běžné používání a omezení sy
 
 - [`helmerzNL/DiscVaultApp@9d15ab2a339c`](https://github.com/helmerzNL/DiscVaultApp/commit/9d15ab2a339cefdb164ec0ab29ad69ddabc511c1)
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Zdroj a stav: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [Download DiscVault on the App Store](https://apps.apple.com/app/discvault/id6788772918)
+- [Join the DiscVault TestFlight beta](https://testflight.apple.com/join/6bJetcyy)
+- Zdroj a stav: `2026-07-22`
+- DiscVault Docs: `0.1.7`

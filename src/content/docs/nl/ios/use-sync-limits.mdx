@@ -1,31 +1,38 @@
 ---
 title: 'iOS/iPadOS: Dagelijks gebruik en synchronisatiebeperkingen'
-description: 'Taakspecifieke instructies voor iOS/iPadOS: Dagelijks gebruik en synchronisatiebeperkingen: SwiftData · App Lock · `/api/v1` · DiscVault.'
+description: 'Taakspecifieke instructies voor iOS/iPadOS: Dagelijks gebruik en synchronisatiebeperkingen: SwiftData · TestFlight · App Lock · `/api/v1` · DiscVault.'
 pageId: 'ios-use-sync-limits'
 products: ['ios']
 platforms: ['ios']
-channels: ['beta']
+channels: ['stable', 'beta']
 minVersion: 'iOS/iPadOS 17+'
 sourceRepos: ['helmerzNL/DiscVaultApp', 'helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+lastVerified: '2026-07-22'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="iOS" version="iOS/iPadOS 17+" source="helmerzNL/DiscVaultApp · helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="iOS" version="iOS/iPadOS 17+" source="helmerzNL/DiscVaultApp · helmerzNL/DiscVault" verified="2026-07-22" />
 
 ## Doel en resultaat
 
-Voer de paginaspecifieke werkwijze uit voor **iOS/iPadOS: Dagelijks gebruik en synchronisatiebeperkingen**. Deze werkwijze gebruikt SwiftData · App Lock · `/api/v1` · DiscVault.
+Voer de paginaspecifieke werkwijze uit voor **iOS/iPadOS: Dagelijks gebruik en synchronisatiebeperkingen**. Deze werkwijze gebruikt SwiftData · TestFlight · App Lock · `/api/v1` · DiscVault.
 
 ## Van toepassing op
 
-Deze pagina is uitsluitend van toepassing op **iOS/iPadOS: Dagelijks gebruik en synchronisatiebeperkingen** (iOS). De kanaal- en gegevensgrenzen zijn: SwiftData · de testtitel blijft na een appherstart en offline start aanwezig; `/api/v1` · in broncode geverifieerde bètabuild; geen claim over openbare store. Paginaspecifieke controlepunten: SwiftData · App Lock · `/api/v1` · DiscVault.
+Deze pagina is uitsluitend van toepassing op **iOS/iPadOS: Dagelijks gebruik en synchronisatiebeperkingen** (iOS). De kanaal- en gegevensgrenzen zijn: openbare App Store-versie voor iPhone en iPad; SwiftData · de testtitel blijft na een appherstart en offline start aanwezig; `/api/v1` · één testitem komt lokaal en op de server overeen, anders blijft synchronisatie uitgeschakeld; optionele TestFlight-bèta voor prereleasebuilds; SwiftData · de testtitel blijft na een appherstart en offline start aanwezig; `/api/v1` · één testitem komt lokaal en op de server overeen, anders blijft synchronisatie uitgeschakeld. Paginaspecifieke controlepunten: SwiftData · TestFlight · App Lock · `/api/v1` · DiscVault.
+
+### Stabiel kanaal
+
+- openbare App Store-versie voor iPhone en iPad
+- SwiftData · de testtitel blijft na een appherstart en offline start aanwezig
+- `/api/v1` · één testitem komt lokaal en op de server overeen, anders blijft synchronisatie uitgeschakeld
 
 ### Bètakanaal
 
+- optionele TestFlight-bèta voor prereleasebuilds
 - SwiftData · de testtitel blijft na een appherstart en offline start aanwezig
-- `/api/v1` · in broncode geverifieerde bètabuild; geen claim over openbare store
+- `/api/v1` · één testitem komt lokaal en op de server overeen, anders blijft synchronisatie uitgeschakeld
 
 ## Vereisten
 
@@ -43,7 +50,7 @@ Deze pagina is uitsluitend van toepassing op **iOS/iPadOS: Dagelijks gebruik en 
 
 ## Verwacht resultaat
 
-Accepteer het resultaat voor **iOS/iPadOS: Dagelijks gebruik en synchronisatiebeperkingen** alleen wanneer alle onderstaande resultaten kloppen: de testtitel blijft na een appherstart en offline start aanwezig; één testitem komt lokaal en op de server overeen, anders blijft synchronisatie uitgeschakeld. Paginaspecifieke controlepunten: SwiftData · App Lock · `/api/v1` · DiscVault.
+Accepteer het resultaat voor **iOS/iPadOS: Dagelijks gebruik en synchronisatiebeperkingen** alleen wanneer alle onderstaande resultaten kloppen: de testtitel blijft na een appherstart en offline start aanwezig; één testitem komt lokaal en op de server overeen, anders blijft synchronisatie uitgeschakeld. Paginaspecifieke controlepunten: SwiftData · TestFlight · App Lock · `/api/v1` · DiscVault.
 
 - de testtitel blijft na een appherstart en offline start aanwezig
 - één testitem komt lokaal en op de server overeen, anders blijft synchronisatie uitgeschakeld
@@ -51,7 +58,7 @@ Accepteer het resultaat voor **iOS/iPadOS: Dagelijks gebruik en synchronisatiebe
 ## Veiligheid en terugdraaien
 
 :::caution
-De veilige herstelgrens voor **iOS/iPadOS: Dagelijks gebruik en synchronisatiebeperkingen** vereist deze acties voordat iets start of doorgaat: één testitem komt lokaal en op de server overeen, anders blijft synchronisatie uitgeschakeld · lokale offline-first-bibliotheek · `/api/v1`. Paginaspecifieke controlepunten: SwiftData · App Lock · `/api/v1` · DiscVault.
+De veilige herstelgrens voor **iOS/iPadOS: Dagelijks gebruik en synchronisatiebeperkingen** vereist deze acties voordat iets start of doorgaat: één testitem komt lokaal en op de server overeen, anders blijft synchronisatie uitgeschakeld · lokale offline-first-bibliotheek · `/api/v1`. Paginaspecifieke controlepunten: SwiftData · TestFlight · App Lock · `/api/v1` · DiscVault.
 
 - één testitem komt lokaal en op de server overeen, anders blijft synchronisatie uitgeschakeld · lokale offline-first-bibliotheek · `/api/v1`
 :::
@@ -64,5 +71,7 @@ De veilige herstelgrens voor **iOS/iPadOS: Dagelijks gebruik en synchronisatiebe
 
 - [`helmerzNL/DiscVaultApp@9d15ab2a339c`](https://github.com/helmerzNL/DiscVaultApp/commit/9d15ab2a339cefdb164ec0ab29ad69ddabc511c1)
 - [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Bron en status: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [Download DiscVault on the App Store](https://apps.apple.com/app/discvault/id6788772918)
+- [Join the DiscVault TestFlight beta](https://testflight.apple.com/join/6bJetcyy)
+- Bron en status: `2026-07-22`
+- DiscVault Docs: `0.1.7`
