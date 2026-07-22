@@ -1,0 +1,31 @@
+---
+const appStoreUrl = 'https://apps.apple.com/app/discvault/id6788772918';
+---
+
+<div class="app-store-badge">
+  <a href={appStoreUrl} aria-label="Download DiscVault on the App Store">
+    <img src="/brand/download-on-the-app-store.svg" width="180" height="60" alt="" loading="lazy" />
+  </a>
+</div>
+
+<style>
+  .app-store-badge {
+    margin-block: 1.5rem;
+  }
+
+  .app-store-badge a,
+  .app-store-badge img {
+    display: block;
+    max-width: 100%;
+    width: 11.25rem;
+  }
+
+  .app-store-badge a {
+    border-radius: 0.55rem;
+    width: fit-content;
+  }
+
+  .app-store-badge img {
+    height: auto;
+  }
+</style>

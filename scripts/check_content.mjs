@@ -166,6 +166,7 @@ const requiredMarkers = {
     'iOS/iPadOS',
     'App Store',
     'https://apps.apple.com/app/discvault/id6788772918',
+    '<AppStoreBadge />',
     'TestFlight',
     'https://testflight.apple.com/join/6bJetcyy',
     'App Lock',
