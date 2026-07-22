@@ -304,7 +304,7 @@ export default defineConfig({
       sidebar: groups.map(([label, directory, labels]) => ({
         label,
         translations: translated(labels),
-        autogenerate: { directory },
+        items: [{ autogenerate: { directory } }],
       })),
     }),
   ],
