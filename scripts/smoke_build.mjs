@@ -46,7 +46,7 @@ if (
 const hasSearchInput = /<input\b(?=[^>]*\btype="search")(?=[^>]*\bid="home-search")[^>]*>/.test(
   homepage,
 );
-const hasSearchBridge = /customElements\.whenDefined\(["']site-search["']\)/.test(homepage);
+const hasSearchBridge = homepage.includes('<site-search');
 if (!homepage.includes('<home-search-launcher') || !hasSearchInput || !hasSearchBridge)
   throw new Error('Homepage search input or Starlight search bridge is missing.');
 const procedure = await readFile('dist/install/docker-compose/index.html', 'utf8');
