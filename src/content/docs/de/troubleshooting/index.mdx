@@ -1,26 +1,26 @@
 ---
 title: 'Fehlerbehebung'
-description: 'Aufgabenspezifische Anleitung für Fehlerbehebung: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.'
+description: 'Aufgabenspezifische Anleitung für Fehlerbehebung: `docker compose` · `/api/next/health` · `postgres` · `RP_ID` · OIDC · `auth.oidc_failed`.'
 pageId: 'troubleshooting-index'
 products: ['server', 'pwa', 'ios', 'android']
 platforms: ['all']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVaultApp', 'Flux76HQ/DiscVault-AndroidApp']
-lastVerified: '2026-07-14'
+lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="alle Plattformen" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVaultApp · Flux76HQ/DiscVault-AndroidApp" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="alle Plattformen" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVaultApp · Flux76HQ/DiscVault-AndroidApp" verified="2026-09-20" />
 
 ## Ziel und Ergebnis
 
-Führe den seitenspezifischen Ablauf aus für **Fehlerbehebung**. Dieses Verfahren arbeitet mit `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+Führe den seitenspezifischen Ablauf aus für **Fehlerbehebung**. Dieses Verfahren arbeitet mit `docker compose` · `/api/next/health` · `postgres` · `RP_ID` · OIDC · `auth.oidc_failed`.
 
 ## Gültig für
 
-Diese Seite gilt ausschließlich für **Fehlerbehebung** (alle Plattformen). Kanal- und Datengrenzen sind: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/api/next/health`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/api/next/health`. Seitenspezifische Kontrollpunkte: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+Diese Seite gilt ausschließlich für **Fehlerbehebung** (alle Plattformen). Kanal- und Datengrenzen sind: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/api/next/health`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/api/next/health`. Seitenspezifische Kontrollpunkte: `docker compose` · `/api/next/health` · `postgres` · `RP_ID` · OIDC · `auth.oidc_failed`.
 
 ### DiscVault v26 – stabil
 
@@ -42,8 +42,9 @@ Diese Seite gilt ausschließlich für **Fehlerbehebung** (alle Plattformen). Kan
 
 1. **Festhalten:** `docker compose`
 2. **Isolieren:** Container → Reverse-Proxy → Browser/App → Anbieter → Daten
-3. **Prüfen:** zeitgestempelte, bereinigte Protokolle
-4. **Bewahren:** PostgreSQL `/data`
+3. **Prüfen:** [Konfiguration: Anmeldung mit OpenID Connect (OIDC)](/de/configure/oidc/) · `auth.oidc_failed`
+4. **Prüfen:** zeitgestempelte, bereinigte Protokolle
+5. **Bewahren:** PostgreSQL `/data`
 
 ### Befehle und Einstellungen
 
@@ -57,14 +58,14 @@ docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/com
 
 ## Erwartetes Ergebnis
 
-Akzeptiere das Ergebnis für **Fehlerbehebung** nur wenn alle folgenden Ergebnisse erfüllt sind: eine fehlerhafte Schicht ist mit Zeitstempel, Status, Image-Digest und bereinigtem Fehler isoliert. Seitenspezifische Kontrollpunkte: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+Akzeptiere das Ergebnis für **Fehlerbehebung** nur wenn alle folgenden Ergebnisse erfüllt sind: eine fehlerhafte Schicht ist mit Zeitstempel, Status, Image-Digest und bereinigtem Fehler isoliert. Seitenspezifische Kontrollpunkte: `docker compose` · `/api/next/health` · `postgres` · `RP_ID` · OIDC · `auth.oidc_failed`.
 
 - eine fehlerhafte Schicht ist mit Zeitstempel, Status, Image-Digest und bereinigtem Fehler isoliert
 
 ## Sicherheit und Rollback
 
 :::caution
-Die sichere Wiederherstellungsgrenze für **Fehlerbehebung** verlangt vor jedem Start oder Fortsetzen diese Maßnahmen: Volumes, `/data`, Browser-Zugangsdaten oder App-Speicher nicht zuerst löschen; bereinigte Protokolle sichern und nur passende Sicherung wiederherstellen. Seitenspezifische Kontrollpunkte: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+Die sichere Wiederherstellungsgrenze für **Fehlerbehebung** verlangt vor jedem Start oder Fortsetzen diese Maßnahmen: Volumes, `/data`, Browser-Zugangsdaten oder App-Speicher nicht zuerst löschen; bereinigte Protokolle sichern und nur passende Sicherung wiederherstellen. Seitenspezifische Kontrollpunkte: `docker compose` · `/api/next/health` · `postgres` · `RP_ID` · OIDC · `auth.oidc_failed`.
 
 - Volumes, `/data`, Browser-Zugangsdaten oder App-Speicher nicht zuerst löschen; bereinigte Protokolle sichern und nur passende Sicherung wiederherstellen
 :::
@@ -75,8 +76,8 @@ Die sichere Wiederherstellungsgrenze für **Fehlerbehebung** verlangt vor jedem 
 
 ## Quelle und Status
 
-- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
 - [`helmerzNL/DiscVaultApp@9d15ab2a339c`](https://github.com/helmerzNL/DiscVaultApp/commit/9d15ab2a339cefdb164ec0ab29ad69ddabc511c1)
 - [`Flux76HQ/DiscVault-AndroidApp@a13ef4bdbb23`](https://github.com/Flux76HQ/DiscVault-AndroidApp/commit/a13ef4bdbb23b6a7e52e01cdf532fa222c1b67de)
-- Quelle und Status: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- Quelle und Status: `2026-09-20`
+- DiscVault Docs: `0.1.14`

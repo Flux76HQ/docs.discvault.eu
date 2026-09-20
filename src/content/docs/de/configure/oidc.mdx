@@ -1,0 +1,108 @@
+---
+title: 'Konfiguration: Anmeldung mit OpenID Connect (OIDC)'
+description: 'Aufgabenspezifische Anleitung für Konfiguration: Anmeldung mit OpenID Connect (OIDC): OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.'
+pageId: 'configure-oidc'
+products: ['server', 'pwa']
+platforms: ['docker', 'web']
+channels: ['beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault', 'Flux76HQ/App-Guidance']
+lastVerified: '2026-09-20'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="beta" platform="Docker · Web" version="DiscVault v26" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-09-20" />
+
+## Ziel und Ergebnis
+
+Führe den seitenspezifischen Ablauf aus für **Konfiguration: Anmeldung mit OpenID Connect (OIDC)**. Dieses Verfahren arbeitet mit OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+## Gültig für
+
+Diese Seite gilt ausschließlich für **Konfiguration: Anmeldung mit OpenID Connect (OIDC)** (Docker · Web). Kanal- und Datengrenzen sind: DiscVault · `26.9.117+`; OIDC ergänzt eine optionale Browser-Anmeldung; lokale Passkeys, optionale Passwörter, Wiederherstellungscodes, API-Tokens und MCP-Bearer-Tokens behalten ihre bisherigen Rollen; eine Identität ist das exakte Paar aus Issuer und Subject; E-Mail wird nie automatisch verknüpft, das Verknüpfen erfordert die angemeldete Browsersitzung und das Trennen eine weitere nutzbare Anmeldemethode. Seitenspezifische Kontrollpunkte: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+### DiscVault v26 – Beta
+
+- DiscVault · `26.9.117+`
+- OIDC ergänzt eine optionale Browser-Anmeldung; lokale Passkeys, optionale Passwörter, Wiederherstellungscodes, API-Tokens und MCP-Bearer-Tokens behalten ihre bisherigen Rollen
+- eine Identität ist das exakte Paar aus Issuer und Subject; E-Mail wird nie automatisch verknüpft, das Verknüpfen erfordert die angemeldete Browsersitzung und das Trennen eine weitere nutzbare Anmeldemethode
+
+## Voraussetzungen
+
+- Owner-Zugriff · zweite Wiederherstellungsmethode
+- [Installation: Reverse-Proxy und Passkeys](/de/install/reverse-proxy-passkeys/) · außerhalb der localhost-Ausnahme benötigen Passkeys einen stabilen vollqualifizierten Domainnamen über vertrauenswürdiges HTTPS; eine reine IP-Adresse oder unverschlüsseltes HTTP wird nicht unterstützt
+- ein vertraulicher OIDC-Client beim Identitätsanbieter mit der exakten DiscVault-Callback-URI
+
+### Privater Provider-Backchannel
+
+:::note[In Beta verfügbar]
+exakte private HTTP-Origins nur für Token- und JWKS-Endpunkte erlauben; Issuer und Browser-Autorisierung bleiben HTTPS-only, die TLS-Prüfung bleibt aktiv und Discovery-, Token- sowie JWKS-Weiterleitungen werden abgelehnt
+:::
+
+## Vorgehen
+
+1. **Erstellen:** ein vertraulicher OIDC-Client beim Identitätsanbieter mit der exakten DiscVault-Callback-URI · `openid profile email` · `https://discvault.example.com/api/next/auth/oidc/callback`
+2. **Konfigurieren:** `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · Issuer, Client-ID und Client-Secret gemeinsam setzen oder alle drei leer lassen; eine Teilkonfiguration verhindert den Start
+3. **Konfigurieren:** `DISCVAULT_OIDC_PROVIDER_NAME` · `OIDC`
+4. **Auswählen:** `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · `localhost` · Kubernetes DNS · `.internal` · exakte private HTTP-Origins nur für Token- und JWKS-Endpunkte erlauben; Issuer und Browser-Autorisierung bleiben HTTPS-only, die TLS-Prüfung bleibt aktiv und Discovery-, Token- sowie JWKS-Weiterleitungen werden abgelehnt
+5. **Starten:** `next-api` · `--force-recreate`
+6. **Testen:** OIDC ergänzt eine optionale Browser-Anmeldung; lokale Passkeys, optionale Passwörter, Wiederherstellungscodes, API-Tokens und MCP-Bearer-Tokens behalten ihre bisherigen Rollen · eine Identität ist das exakte Paar aus Issuer und Subject; E-Mail wird nie automatisch verknüpft, das Verknüpfen erfordert die angemeldete Browsersitzung und das Trennen eine weitere nutzbare Anmeldemethode
+7. **Prüfen:** `auth.oidc_failed` · Fehler protokollieren nur den konfigurierten Anzeigenamen des Providers, einen sicheren `auth.oidc_failed`-Code und den Ablaufmodus; Secrets, Tokens, Autorisierungscodes, State, Nonce, Endpoint-URLs und PKCE-Werte werden nie protokolliert
+
+### Befehle und Einstellungen
+
+#### DiscVault v26 – Beta
+
+```text
+RP_ORIGINS=https://discvault.example.com
+DISCVAULT_OIDC_ISSUER=https://id.example.com
+DISCVAULT_OIDC_CLIENT_ID=<client-id>
+DISCVAULT_OIDC_CLIENT_SECRET=<client-secret>
+DISCVAULT_OIDC_PROVIDER_NAME=Pocket ID
+DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS=
+```
+
+```text
+DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS=http://pocket-id.pocket-id.svc.cluster.local:1411
+```
+
+```bash
+cd /opt/discvault-next
+docker compose -p discvault_next_deploy config --quiet
+docker compose -p discvault_next_deploy up -d --force-recreate next-api
+curl --fail https://discvault.example.com/api/next/auth/status
+```
+
+## Erwartetes Ergebnis
+
+Akzeptiere das Ergebnis für **Konfiguration: Anmeldung mit OpenID Connect (OIDC)** nur wenn alle folgenden Ergebnisse erfüllt sind: OIDC ergänzt eine optionale Browser-Anmeldung; lokale Passkeys, optionale Passwörter, Wiederherstellungscodes, API-Tokens und MCP-Bearer-Tokens behalten ihre bisherigen Rollen; eine Identität ist das exakte Paar aus Issuer und Subject; E-Mail wird nie automatisch verknüpft, das Verknüpfen erfordert die angemeldete Browsersitzung und das Trennen eine weitere nutzbare Anmeldemethode; Fehler protokollieren nur den konfigurierten Anzeigenamen des Providers, einen sicheren `auth.oidc_failed`-Code und den Ablaufmodus; Secrets, Tokens, Autorisierungscodes, State, Nonce, Endpoint-URLs und PKCE-Werte werden nie protokolliert. Seitenspezifische Kontrollpunkte: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+- OIDC ergänzt eine optionale Browser-Anmeldung; lokale Passkeys, optionale Passwörter, Wiederherstellungscodes, API-Tokens und MCP-Bearer-Tokens behalten ihre bisherigen Rollen
+- eine Identität ist das exakte Paar aus Issuer und Subject; E-Mail wird nie automatisch verknüpft, das Verknüpfen erfordert die angemeldete Browsersitzung und das Trennen eine weitere nutzbare Anmeldemethode
+- Fehler protokollieren nur den konfigurierten Anzeigenamen des Providers, einen sicheren `auth.oidc_failed`-Code und den Ablaufmodus; Secrets, Tokens, Autorisierungscodes, State, Nonce, Endpoint-URLs und PKCE-Werte werden nie protokolliert
+
+## Sicherheit und Rollback
+
+:::caution
+Die sichere Wiederherstellungsgrenze für **Konfiguration: Anmeldung mit OpenID Connect (OIDC)** verlangt vor jedem Start oder Fortsetzen diese Maßnahmen: das Client-Secret nur in der nicht versionierten Laufzeitumgebung oder einem Secret Manager speichern und bei Offenlegung rotieren; vor dem Deaktivieren von OIDC jedem reinen OIDC-Benutzer eine andere nutzbare Anmeldemethode geben; exakte private HTTP-Origins nur für Token- und JWKS-Endpunkte erlauben; Issuer und Browser-Autorisierung bleiben HTTPS-only, die TLS-Prüfung bleibt aktiv und Discovery-, Token- sowie JWKS-Weiterleitungen werden abgelehnt; eine Identität ist das exakte Paar aus Issuer und Subject; E-Mail wird nie automatisch verknüpft, das Verknüpfen erfordert die angemeldete Browsersitzung und das Trennen eine weitere nutzbare Anmeldemethode. Seitenspezifische Kontrollpunkte: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+- das Client-Secret nur in der nicht versionierten Laufzeitumgebung oder einem Secret Manager speichern und bei Offenlegung rotieren; vor dem Deaktivieren von OIDC jedem reinen OIDC-Benutzer eine andere nutzbare Anmeldemethode geben
+- exakte private HTTP-Origins nur für Token- und JWKS-Endpunkte erlauben; Issuer und Browser-Autorisierung bleiben HTTPS-only, die TLS-Prüfung bleibt aktiv und Discovery-, Token- sowie JWKS-Weiterleitungen werden abgelehnt
+- eine Identität ist das exakte Paar aus Issuer und Subject; E-Mail wird nie automatisch verknüpft, das Verknüpfen erfordert die angemeldete Browsersitzung und das Trennen eine weitere nutzbare Anmeldemethode
+:::
+
+## Nächster Schritt
+
+[Konfiguration: Plugins und Metadaten](/de/configure/plugins-metadata/)
+
+## Quelle und Status
+
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
+- [`Flux76HQ/App-Guidance@41bfca3bfa39`](https://github.com/Flux76HQ/App-Guidance/commit/41bfca3bfa39f0b43924190d384e2d96be756020)
+- [Moving beta source: OIDC deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: OIDC environment template](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/.env.example)
+- [Pinned verification: OIDC implementation](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/backend/next_oidc.py)
+- [Authoritative OIDC authentication contract](https://github.com/Flux76HQ/App-Guidance/blob/41bfca3bfa39f0b43924190d384e2d96be756020/projects/discvault/specs/oidc-authentication.md)
+- Quelle und Status: `2026-09-20`
+- DiscVault Docs: `0.1.14`

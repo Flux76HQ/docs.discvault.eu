@@ -7,12 +7,12 @@ platforms: ['docker', 'unraid']
 channels: ['beta']
 minVersion: 'DiscVault v26'
 sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-20'
+lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-20" />
+<PageMeta channels="beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-09-20" />
 
 ## Goal and result
 
@@ -39,8 +39,9 @@ This page applies to the official DiscVault 26 beta deployment. Generate `POSTGR
 1. **Create:** `/opt/discvault-next/.env` · owner-only file permissions (0600)
 2. **Configure:** `DISCVAULT_NEXT_IMAGE` · random secrets · `RP_ORIGINS`
 3. **Choose:** with a valid FQDN, keep `RP_ID` and `RP_ORIGINS` aligned and use trusted HTTPS · for a direct private or loopback IP without an FQDN, leave `RP_ID` and `RP_ORIGINS` empty
-4. **Verify:** `chmod 0600` · `docker compose -p discvault_next_deploy config --quiet`
-5. **Start:** keep JWT and PostgreSQL secrets unchanged during ordinary configuration edits · beta services
+4. **Choose:** [Configure: OpenID Connect (OIDC) sign-in](/configure/oidc/) · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · set issuer, client ID, and client secret together, or leave all three empty; a partial configuration prevents startup
+5. **Verify:** `chmod 0600` · `docker compose -p discvault_next_deploy config --quiet`
+6. **Start:** keep JWT and PostgreSQL secrets unchanged during ordinary configuration edits · beta services
 
 ### Commands and settings
 
@@ -172,21 +173,22 @@ On failure, keep services stopped, restore the prior private `.env`, validate it
 - the documentation repository environment file is never a DiscVault runtime file · `.env.example`
 - keep JWT and PostgreSQL secrets unchanged during ordinary configuration edits · `JWT_SECRET` · `POSTGRES_PASSWORD`
 - the downloaded `.env.example` still defaults to `:dev`; the runtime `.env` must be changed to `:beta` before pull or startup
+- store the client secret only in the untracked runtime environment or a secret manager and rotate it if exposed; before disabling OIDC, give every OIDC-only user another usable login method
 - on failure, keep services stopped, restore and validate the previous private environment file, then recreate the same image without rotating secrets
 :::
 
 ## Next step
 
-[Configure: Authentication and RBAC](/configure/auth-rbac/)
+[Configure: OpenID Connect (OIDC) sign-in](/configure/oidc/)
 
 ## Source and status
 
-- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
 - [Moving beta source: `docker-compose.yml`](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/docker-compose.yml)
 - [Raw beta download: `docker-compose.yml`](https://raw.githubusercontent.com/helmerzNL/DiscVault/release/v26-beta/app/deploy/next/docker-compose.yml)
-- [Pinned verification: `docker-compose.yml`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/deploy/next/docker-compose.yml)
+- [Pinned verification: `docker-compose.yml`](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/docker-compose.yml)
 - [Moving beta source: `.env.example`](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/.env.example)
 - [Raw beta download: `.env.example`](https://raw.githubusercontent.com/helmerzNL/DiscVault/release/v26-beta/app/deploy/next/.env.example)
-- [Pinned verification: `.env.example`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/deploy/next/.env.example)
-- Verified: `2026-07-20`
-- DiscVault Docs: `0.1.6`
+- [Pinned verification: `.env.example`](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/.env.example)
+- Verified: `2026-09-20`
+- DiscVault Docs: `0.1.14`

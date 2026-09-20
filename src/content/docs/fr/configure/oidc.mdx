@@ -1,0 +1,108 @@
+---
+title: 'Configuration: Connexion avec OpenID Connect (OIDC)'
+description: 'Instructions propres à la tâche : Configuration: Connexion avec OpenID Connect (OIDC): OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.'
+pageId: 'configure-oidc'
+products: ['server', 'pwa']
+platforms: ['docker', 'web']
+channels: ['beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault', 'Flux76HQ/App-Guidance']
+lastVerified: '2026-09-20'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-09-20" />
+
+## Objectif et résultat
+
+Suivez le déroulement propre à cette page pour **Configuration: Connexion avec OpenID Connect (OIDC)**. Cette procédure utilise OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+## S’applique à
+
+Cette page s’applique uniquement à **Configuration: Connexion avec OpenID Connect (OIDC)** (Docker · web). Les limites de canal et de données sont : DiscVault · `26.9.117+`; OIDC ajoute une connexion facultative dans le navigateur ; les passkeys locales, mots de passe facultatifs, codes de récupération, jetons API et jetons bearer MCP conservent leurs rôles; une identité est la paire exacte issuer et subject ; un e-mail ne crée jamais de liaison automatique, la liaison exige la session de navigateur connectée et la dissociation une autre méthode de connexion utilisable. Points de contrôle propres à la page : OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+### DiscVault v26 bêta
+
+- DiscVault · `26.9.117+`
+- OIDC ajoute une connexion facultative dans le navigateur ; les passkeys locales, mots de passe facultatifs, codes de récupération, jetons API et jetons bearer MCP conservent leurs rôles
+- une identité est la paire exacte issuer et subject ; un e-mail ne crée jamais de liaison automatique, la liaison exige la session de navigateur connectée et la dissociation une autre méthode de connexion utilisable
+
+## Prérequis
+
+- accès propriétaire · seconde méthode de récupération
+- [Installation: Proxy inverse et clés d’accès](/fr/install/reverse-proxy-passkeys/) · hors de l’exception localhost, les passkeys exigent un nom de domaine complet stable via un HTTPS fiable ; une adresse IP seule ou HTTP simple n’est pas pris en charge
+- un client OIDC confidentiel chez le fournisseur d’identité avec l’URI de rappel DiscVault exacte
+
+### Canal privé du fournisseur
+
+:::note[Disponible en bêta]
+autorisez des origines HTTP privées exactes uniquement pour les endpoints de jeton et JWKS ; l’émetteur et l’autorisation du navigateur restent exclusivement en HTTPS, la vérification TLS reste active et les redirections discovery, jeton et JWKS sont refusées
+:::
+
+## Procédure
+
+1. **Créer:** un client OIDC confidentiel chez le fournisseur d’identité avec l’URI de rappel DiscVault exacte · `openid profile email` · `https://discvault.example.com/api/next/auth/oidc/callback`
+2. **Configurer:** `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · définissez ensemble l’émetteur, l’identifiant client et le secret client, ou laissez les trois vides ; une configuration partielle empêche le démarrage
+3. **Configurer:** `DISCVAULT_OIDC_PROVIDER_NAME` · `OIDC`
+4. **Choisir:** `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · `localhost` · Kubernetes DNS · `.internal` · autorisez des origines HTTP privées exactes uniquement pour les endpoints de jeton et JWKS ; l’émetteur et l’autorisation du navigateur restent exclusivement en HTTPS, la vérification TLS reste active et les redirections discovery, jeton et JWKS sont refusées
+5. **Démarrer:** `next-api` · `--force-recreate`
+6. **Tester:** OIDC ajoute une connexion facultative dans le navigateur ; les passkeys locales, mots de passe facultatifs, codes de récupération, jetons API et jetons bearer MCP conservent leurs rôles · une identité est la paire exacte issuer et subject ; un e-mail ne crée jamais de liaison automatique, la liaison exige la session de navigateur connectée et la dissociation une autre méthode de connexion utilisable
+7. **Inspecter:** `auth.oidc_failed` · les échecs enregistrent uniquement le nom affiché configuré du fournisseur, un code sûr `auth.oidc_failed` et le mode du flux ; secrets, jetons, codes d’autorisation, state, nonce, URL des endpoints et valeurs PKCE ne sont jamais journalisés
+
+### Commandes et réglages
+
+#### DiscVault v26 bêta
+
+```text
+RP_ORIGINS=https://discvault.example.com
+DISCVAULT_OIDC_ISSUER=https://id.example.com
+DISCVAULT_OIDC_CLIENT_ID=<client-id>
+DISCVAULT_OIDC_CLIENT_SECRET=<client-secret>
+DISCVAULT_OIDC_PROVIDER_NAME=Pocket ID
+DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS=
+```
+
+```text
+DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS=http://pocket-id.pocket-id.svc.cluster.local:1411
+```
+
+```bash
+cd /opt/discvault-next
+docker compose -p discvault_next_deploy config --quiet
+docker compose -p discvault_next_deploy up -d --force-recreate next-api
+curl --fail https://discvault.example.com/api/next/auth/status
+```
+
+## Résultat attendu
+
+Validez le résultat de **Configuration: Connexion avec OpenID Connect (OIDC)** uniquement lorsque tous les résultats suivants sont confirmés : OIDC ajoute une connexion facultative dans le navigateur ; les passkeys locales, mots de passe facultatifs, codes de récupération, jetons API et jetons bearer MCP conservent leurs rôles; une identité est la paire exacte issuer et subject ; un e-mail ne crée jamais de liaison automatique, la liaison exige la session de navigateur connectée et la dissociation une autre méthode de connexion utilisable; les échecs enregistrent uniquement le nom affiché configuré du fournisseur, un code sûr `auth.oidc_failed` et le mode du flux ; secrets, jetons, codes d’autorisation, state, nonce, URL des endpoints et valeurs PKCE ne sont jamais journalisés. Points de contrôle propres à la page : OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+- OIDC ajoute une connexion facultative dans le navigateur ; les passkeys locales, mots de passe facultatifs, codes de récupération, jetons API et jetons bearer MCP conservent leurs rôles
+- une identité est la paire exacte issuer et subject ; un e-mail ne crée jamais de liaison automatique, la liaison exige la session de navigateur connectée et la dissociation une autre méthode de connexion utilisable
+- les échecs enregistrent uniquement le nom affiché configuré du fournisseur, un code sûr `auth.oidc_failed` et le mode du flux ; secrets, jetons, codes d’autorisation, state, nonce, URL des endpoints et valeurs PKCE ne sont jamais journalisés
+
+## Sécurité et retour arrière
+
+:::caution
+La limite de récupération sûre pour **Configuration: Connexion avec OpenID Connect (OIDC)** impose ces actions avant tout démarrage ou toute poursuite : stockez le secret client uniquement dans l’environnement d’exécution non suivi ou un gestionnaire de secrets et renouvelez-le en cas d’exposition ; avant de désactiver OIDC, donnez une autre méthode de connexion utilisable à chaque utilisateur dépendant uniquement d’OIDC; autorisez des origines HTTP privées exactes uniquement pour les endpoints de jeton et JWKS ; l’émetteur et l’autorisation du navigateur restent exclusivement en HTTPS, la vérification TLS reste active et les redirections discovery, jeton et JWKS sont refusées; une identité est la paire exacte issuer et subject ; un e-mail ne crée jamais de liaison automatique, la liaison exige la session de navigateur connectée et la dissociation une autre méthode de connexion utilisable. Points de contrôle propres à la page : OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+- stockez le secret client uniquement dans l’environnement d’exécution non suivi ou un gestionnaire de secrets et renouvelez-le en cas d’exposition ; avant de désactiver OIDC, donnez une autre méthode de connexion utilisable à chaque utilisateur dépendant uniquement d’OIDC
+- autorisez des origines HTTP privées exactes uniquement pour les endpoints de jeton et JWKS ; l’émetteur et l’autorisation du navigateur restent exclusivement en HTTPS, la vérification TLS reste active et les redirections discovery, jeton et JWKS sont refusées
+- une identité est la paire exacte issuer et subject ; un e-mail ne crée jamais de liaison automatique, la liaison exige la session de navigateur connectée et la dissociation une autre méthode de connexion utilisable
+:::
+
+## Étape suivante
+
+[Configuration: Extensions et métadonnées](/fr/configure/plugins-metadata/)
+
+## Source et état
+
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
+- [`Flux76HQ/App-Guidance@41bfca3bfa39`](https://github.com/Flux76HQ/App-Guidance/commit/41bfca3bfa39f0b43924190d384e2d96be756020)
+- [Moving beta source: OIDC deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: OIDC environment template](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/.env.example)
+- [Pinned verification: OIDC implementation](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/backend/next_oidc.py)
+- [Authoritative OIDC authentication contract](https://github.com/Flux76HQ/App-Guidance/blob/41bfca3bfa39f0b43924190d384e2d96be756020/projects/discvault/specs/oidc-authentication.md)
+- Source et état: `2026-09-20`
+- DiscVault Docs: `0.1.14`

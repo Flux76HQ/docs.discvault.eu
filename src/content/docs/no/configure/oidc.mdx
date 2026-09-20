@@ -1,0 +1,108 @@
+---
+title: 'Konfigurasjon: Pålogging med OpenID Connect (OIDC)'
+description: 'Oppgavespesifikk veiledning for Konfigurasjon: Pålogging med OpenID Connect (OIDC): OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.'
+pageId: 'configure-oidc'
+products: ['server', 'pwa']
+platforms: ['docker', 'web']
+channels: ['beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault', 'Flux76HQ/App-Guidance']
+lastVerified: '2026-09-20'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="beta" platform="Docker · nett" version="DiscVault v26" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-09-20" />
+
+## Mål og resultat
+
+Fullfør den sidespesifikke arbeidsflyten for **Konfigurasjon: Pålogging med OpenID Connect (OIDC)**. Denne fremgangsmåten bruker OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+## Gjelder for
+
+Denne siden gjelder bare **Konfigurasjon: Pålogging med OpenID Connect (OIDC)** (Docker · nett). Kanal- og datagrensene er: DiscVault · `26.9.117+`; OIDC legger til en valgfri pålogging i nettleseren; lokale passkeys, valgfrie passord, gjenopprettingskoder, API-tokener og MCP bearer-tokener beholder rollene sine; en identitet er det eksakte paret issuer og subject; e-post kobles aldri automatisk, kobling krever den påloggede nettleserøkten, og frakobling krever en annen brukbar påloggingsmetode. Sidespesifikke kontrollpunkter: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+### DiscVault v26 – beta
+
+- DiscVault · `26.9.117+`
+- OIDC legger til en valgfri pålogging i nettleseren; lokale passkeys, valgfrie passord, gjenopprettingskoder, API-tokener og MCP bearer-tokener beholder rollene sine
+- en identitet er det eksakte paret issuer og subject; e-post kobles aldri automatisk, kobling krever den påloggede nettleserøkten, og frakobling krever en annen brukbar påloggingsmetode
+
+## Forutsetninger
+
+- eiertilgang · annen gjenopprettingsmetode
+- [Installasjon: Omvendt proxy og tilgangsnøkler](/no/install/reverse-proxy-passkeys/) · utenfor localhost-unntaket trenger passkeys et stabilt fullstendig domenenavn over klarert HTTPS; en ren IP-adresse eller vanlig HTTP støttes ikke
+- en konfidensiell OIDC-klient hos identitetsleverandøren med nøyaktig DiscVault-tilbakekallings-URI
+
+### Privat bakkanal til leverandøren
+
+:::note[Tilgjengelig i beta]
+tillat bare eksakte private HTTP-opprinnelser for token- og JWKS-endepunkter; utsteder og nettleserautorisasjon forblir HTTPS-only, TLS-kontroll forblir aktiv, og discovery-, token- og JWKS-omdirigeringer avvises
+:::
+
+## Fremgangsmåte
+
+1. **Opprett:** en konfidensiell OIDC-klient hos identitetsleverandøren med nøyaktig DiscVault-tilbakekallings-URI · `openid profile email` · `https://discvault.example.com/api/next/auth/oidc/callback`
+2. **Konfigurer:** `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · angi utsteder, klient-ID og klienthemmelighet samlet, eller la alle tre stå tomme; en delvis konfigurasjon hindrer oppstart
+3. **Konfigurer:** `DISCVAULT_OIDC_PROVIDER_NAME` · `OIDC`
+4. **Velg:** `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · `localhost` · Kubernetes DNS · `.internal` · tillat bare eksakte private HTTP-opprinnelser for token- og JWKS-endepunkter; utsteder og nettleserautorisasjon forblir HTTPS-only, TLS-kontroll forblir aktiv, og discovery-, token- og JWKS-omdirigeringer avvises
+5. **Start:** `next-api` · `--force-recreate`
+6. **Test:** OIDC legger til en valgfri pålogging i nettleseren; lokale passkeys, valgfrie passord, gjenopprettingskoder, API-tokener og MCP bearer-tokener beholder rollene sine · en identitet er det eksakte paret issuer og subject; e-post kobles aldri automatisk, kobling krever den påloggede nettleserøkten, og frakobling krever en annen brukbar påloggingsmetode
+7. **Kontroller:** `auth.oidc_failed` · feil registrerer bare leverandørens konfigurerte visningsnavn, en trygg `auth.oidc_failed`-kode og flytmodus; hemmeligheter, tokener, autorisasjonskoder, state, nonce, endepunkt-URL-er og PKCE-verdier logges aldri
+
+### Kommandoer og innstillinger
+
+#### DiscVault v26 – beta
+
+```text
+RP_ORIGINS=https://discvault.example.com
+DISCVAULT_OIDC_ISSUER=https://id.example.com
+DISCVAULT_OIDC_CLIENT_ID=<client-id>
+DISCVAULT_OIDC_CLIENT_SECRET=<client-secret>
+DISCVAULT_OIDC_PROVIDER_NAME=Pocket ID
+DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS=
+```
+
+```text
+DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS=http://pocket-id.pocket-id.svc.cluster.local:1411
+```
+
+```bash
+cd /opt/discvault-next
+docker compose -p discvault_next_deploy config --quiet
+docker compose -p discvault_next_deploy up -d --force-recreate next-api
+curl --fail https://discvault.example.com/api/next/auth/status
+```
+
+## Forventet resultat
+
+Godta resultatet for **Konfigurasjon: Pålogging med OpenID Connect (OIDC)** bare når alle resultatene nedenfor er oppfylt: OIDC legger til en valgfri pålogging i nettleseren; lokale passkeys, valgfrie passord, gjenopprettingskoder, API-tokener og MCP bearer-tokener beholder rollene sine; en identitet er det eksakte paret issuer og subject; e-post kobles aldri automatisk, kobling krever den påloggede nettleserøkten, og frakobling krever en annen brukbar påloggingsmetode; feil registrerer bare leverandørens konfigurerte visningsnavn, en trygg `auth.oidc_failed`-kode og flytmodus; hemmeligheter, tokener, autorisasjonskoder, state, nonce, endepunkt-URL-er og PKCE-verdier logges aldri. Sidespesifikke kontrollpunkter: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+- OIDC legger til en valgfri pålogging i nettleseren; lokale passkeys, valgfrie passord, gjenopprettingskoder, API-tokener og MCP bearer-tokener beholder rollene sine
+- en identitet er det eksakte paret issuer og subject; e-post kobles aldri automatisk, kobling krever den påloggede nettleserøkten, og frakobling krever en annen brukbar påloggingsmetode
+- feil registrerer bare leverandørens konfigurerte visningsnavn, en trygg `auth.oidc_failed`-kode og flytmodus; hemmeligheter, tokener, autorisasjonskoder, state, nonce, endepunkt-URL-er og PKCE-verdier logges aldri
+
+## Sikkerhet og tilbakerulling
+
+:::caution
+Den sikre gjenopprettingsgrensen for **Konfigurasjon: Pålogging med OpenID Connect (OIDC)** krever disse handlingene før noe startes eller fortsetter: lagre klienthemmeligheten bare i det usporede kjøremiljøet eller en hemmelighetsbehandler og roter den ved eksponering; gi alle brukere som bare har OIDC en annen brukbar påloggingsmetode før OIDC deaktiveres; tillat bare eksakte private HTTP-opprinnelser for token- og JWKS-endepunkter; utsteder og nettleserautorisasjon forblir HTTPS-only, TLS-kontroll forblir aktiv, og discovery-, token- og JWKS-omdirigeringer avvises; en identitet er det eksakte paret issuer og subject; e-post kobles aldri automatisk, kobling krever den påloggede nettleserøkten, og frakobling krever en annen brukbar påloggingsmetode. Sidespesifikke kontrollpunkter: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+- lagre klienthemmeligheten bare i det usporede kjøremiljøet eller en hemmelighetsbehandler og roter den ved eksponering; gi alle brukere som bare har OIDC en annen brukbar påloggingsmetode før OIDC deaktiveres
+- tillat bare eksakte private HTTP-opprinnelser for token- og JWKS-endepunkter; utsteder og nettleserautorisasjon forblir HTTPS-only, TLS-kontroll forblir aktiv, og discovery-, token- og JWKS-omdirigeringer avvises
+- en identitet er det eksakte paret issuer og subject; e-post kobles aldri automatisk, kobling krever den påloggede nettleserøkten, og frakobling krever en annen brukbar påloggingsmetode
+:::
+
+## Neste trinn
+
+[Konfigurasjon: Programtillegg og metadata](/no/configure/plugins-metadata/)
+
+## Kilde og status
+
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
+- [`Flux76HQ/App-Guidance@41bfca3bfa39`](https://github.com/Flux76HQ/App-Guidance/commit/41bfca3bfa39f0b43924190d384e2d96be756020)
+- [Moving beta source: OIDC deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: OIDC environment template](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/.env.example)
+- [Pinned verification: OIDC implementation](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/backend/next_oidc.py)
+- [Authoritative OIDC authentication contract](https://github.com/Flux76HQ/App-Guidance/blob/41bfca3bfa39f0b43924190d384e2d96be756020/projects/discvault/specs/oidc-authentication.md)
+- Kilde og status: `2026-09-20`
+- DiscVault Docs: `0.1.14`

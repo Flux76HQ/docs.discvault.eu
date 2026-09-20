@@ -56,6 +56,7 @@ const betaOnlyPageIds = new Set([
   'install-docker-compose',
   'install-legacy-authentication',
   'configure-environment',
+  'configure-oidc',
 ]);
 const channelVariantPageIds = new Set([
   'install-index',
@@ -88,6 +89,8 @@ const requiredMarkers = {
     'FQDN',
     'RP_ORIGINS',
     'RP_ID',
+    'OIDC',
+    '/api/next/auth/oidc/callback',
     'LEGACY_AUTH_ENABLED',
     '/install/legacy-authentication/',
     '/api/next/health',
@@ -109,6 +112,17 @@ const requiredMarkers = {
     'localhost:6180',
     'Legacy Authentication',
   ],
+  'configure-oidc': [
+    'OIDC',
+    '/api/next/auth/oidc/callback',
+    'DISCVAULT_OIDC_ISSUER',
+    'DISCVAULT_OIDC_CLIENT_ID',
+    'DISCVAULT_OIDC_CLIENT_SECRET',
+    'DISCVAULT_OIDC_PROVIDER_NAME',
+    'DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS',
+    'Pocket ID',
+    'auth.oidc_failed',
+  ],
   'update-index': ['/update/backup/', '/update/update/', '/update/rollback/'],
   'update-backup': ['pg_dump -Fc', 'PREVIOUS_IMAGE', 'next-api'],
   'update-restore': ['pg_restore --exit-on-error', 'discvault.failed-', 'next-worker', 'next-api'],
@@ -125,6 +139,7 @@ const requiredMarkers = {
   'configure-index': [
     '/configure/environment/',
     '/configure/auth-rbac/',
+    '/configure/oidc/',
     '/configure/plugins-metadata/',
   ],
   'configure-environment': [
@@ -135,6 +150,10 @@ const requiredMarkers = {
     'openssl rand -base64 48',
     'RP_ORIGINS',
     'LEGACY_AUTH_ENABLED',
+    'DISCVAULT_OIDC_ISSUER',
+    'DISCVAULT_OIDC_CLIENT_ID',
+    'DISCVAULT_OIDC_CLIENT_SECRET',
+    'DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS',
   ],
   'configure-auth-rbac': [
     '/api/next/auth/status',
@@ -178,8 +197,13 @@ const requiredMarkers = {
   'integrations-index': ['MCP', 'REST', 'Plex', 'Jellyfin'],
   'integrations-mcp-api': ['streamable-http', '/mcp', 'Authorization'],
   'integrations-plex-jellyfin': ['Plex', 'Jellyfin', 'dryRun'],
-  'troubleshooting-index': ['docker compose', '/api/next/health', 'postgres'],
-  'reference-index': [':latest', ':beta', ':dev', '6080:5000'],
+  'troubleshooting-index': [
+    'docker compose',
+    '/api/next/health',
+    'postgres',
+    'auth.oidc_failed',
+  ],
+  'reference-index': [':latest', ':beta', ':dev', '6080:5000', 'DISCVAULT_OIDC_ISSUER'],
 };
 const errors = [];
 

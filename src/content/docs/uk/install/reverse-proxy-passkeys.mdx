@@ -1,26 +1,26 @@
 ---
 title: 'Встановлення: Зворотний проксі та ключі доступу'
-description: 'Спеціальні інструкції для завдання: Встановлення: Зворотний проксі та ключі доступу: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.'
+description: 'Спеціальні інструкції для завдання: Встановлення: Зворотний проксі та ключі доступу: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.'
 pageId: 'install-reverse-proxy-passkeys'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
-lastVerified: '2026-07-20'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU', 'Flux76HQ/App-Guidance']
+lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · веб" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
+<PageMeta channels="stable,beta" platform="Docker · веб" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## Мета й результат
 
-Виконайте спеціальну процедуру сторінки для **Встановлення: Зворотний проксі та ключі доступу**. У цій процедурі використовуються FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+Виконайте спеціальну процедуру сторінки для **Встановлення: Зворотний проксі та ключі доступу**. У цій процедурі використовуються FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 ## Застосовується до
 
-Ця сторінка стосується лише **Встановлення: Зворотний проксі та ключі доступу** (Docker · веб). Межі каналу й даних: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6080`; поза винятком localhost passkeys потребують стабільного повного доменного імені через довірений HTTPS; окрема IP-адреса чи звичайний HTTP не підтримуються; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; `LEGACY_AUTH_ENABLED=true`. Контрольні точки цієї сторінки: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+Ця сторінка стосується лише **Встановлення: Зворотний проксі та ключі доступу** (Docker · веб). Межі каналу й даних: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6080`; поза винятком localhost passkeys потребують стабільного повного доменного імені через довірений HTTPS; окрема IP-адреса чи звичайний HTTP не підтримуються; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; OIDC · `/api/next/auth/oidc/callback` · [Налаштування: Вхід через OpenID Connect (OIDC)](/uk/configure/oidc/); `LEGACY_AUTH_ENABLED=true`. Контрольні точки цієї сторінки: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 ### DiscVault v26 – стабільний
 
@@ -32,6 +32,7 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `RP_ID` `RP_ORIGINS` · `6180`
+- OIDC · `/api/next/auth/oidc/callback` · [Налаштування: Вхід через OpenID Connect (OIDC)](/uk/configure/oidc/)
 - `LEGACY_AUTH_ENABLED=true`
 
 ## Передумови
@@ -54,9 +55,10 @@ Legacy Authentication з іменем користувача, паролем і 
 2. **Виберіть:** [Встановлення: Legacy Authentication](/uk/install/legacy-authentication/) · для прямої приватної або loopback-IP без FQDN залиште `RP_ID` і `RP_ORIGINS` порожніми
 3. **Налаштуйте:** `RP_ID`
 4. **Налаштуйте:** `RP_ORIGINS` · HTTPS
-5. **Налаштуйте:** `6080` `6180`
-6. **Перевірте:** `GET /api/next/health`
-7. **Запишіть:** виберіть ім’я хоста до реєстрації passkeys; подальша зміна потребує повторної реєстрації, а localhost лишається лише винятком локального налаштування
+5. **Налаштуйте:** [Налаштування: Вхід через OpenID Connect (OIDC)](/uk/configure/oidc/) · `/api/next/auth/oidc/callback`
+6. **Налаштуйте:** `6080` `6180`
+7. **Перевірте:** `GET /api/next/health`
+8. **Запишіть:** виберіть ім’я хоста до реєстрації passkeys; подальша зміна потребує повторної реєстрації, а localhost лишається лише винятком локального налаштування
 
 ### Команди й налаштування
 
@@ -81,16 +83,17 @@ curl --fail http://localhost:6180/api/next/health
 
 ## Очікуваний результат
 
-Приймайте результат для **Встановлення: Зворотний проксі та ключі доступу** лише коли підтверджено всі наведені нижче результати: HTTPS · HTTP `2xx`; `RP_ID`; `RP_ID` — це ім’я хоста без схеми й порту, а `RP_ORIGINS` — точний повний HTTPS origin; обидва мають відповідати адресі, відкритій у браузері. Контрольні точки цієї сторінки: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+Приймайте результат для **Встановлення: Зворотний проксі та ключі доступу** лише коли підтверджено всі наведені нижче результати: HTTPS · HTTP `2xx`; `RP_ID`; OIDC · `/api/next/auth/oidc/callback`; `RP_ID` — це ім’я хоста без схеми й порту, а `RP_ORIGINS` — точний повний HTTPS origin; обидва мають відповідати адресі, відкритій у браузері. Контрольні точки цієї сторінки: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 - HTTPS · HTTP `2xx`
 - `RP_ID`
+- OIDC · `/api/next/auth/oidc/callback`
 - `RP_ID` — це ім’я хоста без схеми й порту, а `RP_ORIGINS` — точний повний HTTPS origin; обидва мають відповідати адресі, відкритій у браузері
 
 ## Безпека й відкочування
 
 :::caution
-Безпечна межа відновлення для **Встановлення: Зворотний проксі та ключі доступу** вимагає цих дій до будь-якого запуску чи продовження: виберіть ім’я хоста до реєстрації passkeys; подальша зміна потребує повторної реєстрації, а localhost лишається лише винятком локального налаштування; лише прямий приватний або loopback-запит із недійсними чи порожніми RP-параметрами може запропонувати bootstrap без TOTP; для імені користувача, пароля та 2FA залиште TOTP; відновіть разом proxy та значення RP і збережіть спосіб відновлення власника. Контрольні точки цієї сторінки: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+Безпечна межа відновлення для **Встановлення: Зворотний проксі та ключі доступу** вимагає цих дій до будь-якого запуску чи продовження: виберіть ім’я хоста до реєстрації passkeys; подальша зміна потребує повторної реєстрації, а localhost лишається лише винятком локального налаштування; лише прямий приватний або loopback-запит із недійсними чи порожніми RP-параметрами може запропонувати bootstrap без TOTP; для імені користувача, пароля та 2FA залиште TOTP; відновіть разом proxy та значення RP і збережіть спосіб відновлення власника. Контрольні точки цієї сторінки: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 - виберіть ім’я хоста до реєстрації passkeys; подальша зміна потребує повторної реєстрації, а localhost лишається лише винятком локального налаштування
 - лише прямий приватний або loopback-запит із недійсними чи порожніми RP-параметрами може запропонувати bootstrap без TOTP; для імені користувача, пароля та 2FA залиште TOTP
@@ -103,12 +106,12 @@ curl --fail http://localhost:6180/api/next/health
 
 ## Джерело й стан
 
-- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
-- [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
-- [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
-- [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
-- [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
-- [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
-- Джерело й стан: `2026-07-20`
-- DiscVault Docs: `0.1.6`
+- [`Flux76HQ/App-Guidance@41bfca3bfa39`](https://github.com/Flux76HQ/App-Guidance/commit/41bfca3bfa39f0b43924190d384e2d96be756020)
+- [Moving beta source: OIDC deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: OIDC environment template](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/.env.example)
+- [Pinned verification: OIDC implementation](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/backend/next_oidc.py)
+- [Authoritative OIDC authentication contract](https://github.com/Flux76HQ/App-Guidance/blob/41bfca3bfa39f0b43924190d384e2d96be756020/projects/discvault/specs/oidc-authentication.md)
+- Джерело й стан: `2026-09-20`
+- DiscVault Docs: `0.1.14`

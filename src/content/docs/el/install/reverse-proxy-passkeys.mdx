@@ -1,26 +1,26 @@
 ---
 title: 'Εγκατάσταση: Αντίστροφος διακομιστής μεσολάβησης και κλειδιά πρόσβασης'
-description: 'Οδηγίες ειδικά για την εργασία: Εγκατάσταση: Αντίστροφος διακομιστής μεσολάβησης και κλειδιά πρόσβασης: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.'
+description: 'Οδηγίες ειδικά για την εργασία: Εγκατάσταση: Αντίστροφος διακομιστής μεσολάβησης και κλειδιά πρόσβασης: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.'
 pageId: 'install-reverse-proxy-passkeys'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
-lastVerified: '2026-07-20'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU', 'Flux76HQ/App-Guidance']
+lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · ιστός" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
+<PageMeta channels="stable,beta" platform="Docker · ιστός" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## Στόχος και αποτέλεσμα
 
-Ολοκληρώστε τη ροή εργασίας της σελίδας για **Εγκατάσταση: Αντίστροφος διακομιστής μεσολάβησης και κλειδιά πρόσβασης**. Η διαδικασία χρησιμοποιεί FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+Ολοκληρώστε τη ροή εργασίας της σελίδας για **Εγκατάσταση: Αντίστροφος διακομιστής μεσολάβησης και κλειδιά πρόσβασης**. Η διαδικασία χρησιμοποιεί FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 ## Ισχύει για
 
-Αυτή η σελίδα ισχύει μόνο για **Εγκατάσταση: Αντίστροφος διακομιστής μεσολάβησης και κλειδιά πρόσβασης** (Docker · ιστός). Τα όρια καναλιού και δεδομένων είναι: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6080`; εκτός της εξαίρεσης ρύθμισης localhost, τα passkeys απαιτούν σταθερό πλήρως προσδιορισμένο όνομα τομέα μέσω αξιόπιστου HTTPS· γυμνή διεύθυνση IP ή απλό HTTP δεν υποστηρίζονται; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; `LEGACY_AUTH_ENABLED=true`. Σημεία ελέγχου της σελίδας: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+Αυτή η σελίδα ισχύει μόνο για **Εγκατάσταση: Αντίστροφος διακομιστής μεσολάβησης και κλειδιά πρόσβασης** (Docker · ιστός). Τα όρια καναλιού και δεδομένων είναι: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6080`; εκτός της εξαίρεσης ρύθμισης localhost, τα passkeys απαιτούν σταθερό πλήρως προσδιορισμένο όνομα τομέα μέσω αξιόπιστου HTTPS· γυμνή διεύθυνση IP ή απλό HTTP δεν υποστηρίζονται; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; OIDC · `/api/next/auth/oidc/callback` · [Ρύθμιση: Σύνδεση με OpenID Connect (OIDC)](/el/configure/oidc/); `LEGACY_AUTH_ENABLED=true`. Σημεία ελέγχου της σελίδας: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 ### DiscVault v26 – σταθερό
 
@@ -32,6 +32,7 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `RP_ID` `RP_ORIGINS` · `6180`
+- OIDC · `/api/next/auth/oidc/callback` · [Ρύθμιση: Σύνδεση με OpenID Connect (OIDC)](/el/configure/oidc/)
 - `LEGACY_AUTH_ENABLED=true`
 
 ## Προϋποθέσεις
@@ -54,9 +55,10 @@ import PageMeta from '../../../../components/PageMeta.astro';
 2. **Επιλέξτε:** [Εγκατάσταση: Legacy Authentication](/el/install/legacy-authentication/) · για άμεση ιδιωτική ή loopback IP χωρίς FQDN αφήστε κενά τα `RP_ID` και `RP_ORIGINS`
 3. **Ρυθμίστε:** `RP_ID`
 4. **Ρυθμίστε:** `RP_ORIGINS` · HTTPS
-5. **Ρυθμίστε:** `6080` `6180`
-6. **Δοκιμάστε:** `GET /api/next/health`
-7. **Καταγράψτε:** επιλέξτε το hostname πριν καταχωρίσετε passkeys· μεταγενέστερη αλλαγή απαιτεί νέα καταχώριση, ενώ το localhost παραμένει μόνο εξαίρεση τοπικής ρύθμισης
+5. **Ρυθμίστε:** [Ρύθμιση: Σύνδεση με OpenID Connect (OIDC)](/el/configure/oidc/) · `/api/next/auth/oidc/callback`
+6. **Ρυθμίστε:** `6080` `6180`
+7. **Δοκιμάστε:** `GET /api/next/health`
+8. **Καταγράψτε:** επιλέξτε το hostname πριν καταχωρίσετε passkeys· μεταγενέστερη αλλαγή απαιτεί νέα καταχώριση, ενώ το localhost παραμένει μόνο εξαίρεση τοπικής ρύθμισης
 
 ### Εντολές και ρυθμίσεις
 
@@ -81,16 +83,17 @@ curl --fail http://localhost:6180/api/next/health
 
 ## Αναμενόμενο αποτέλεσμα
 
-Αποδεχθείτε το αποτέλεσμα για **Εγκατάσταση: Αντίστροφος διακομιστής μεσολάβησης και κλειδιά πρόσβασης** μόνο όταν ισχύουν όλα τα παρακάτω αποτελέσματα: HTTPS · HTTP `2xx`; `RP_ID`; το `RP_ID` είναι το hostname χωρίς scheme ή θύρα, ενώ το `RP_ORIGINS` είναι το ακριβές πλήρες HTTPS origin· και τα δύο πρέπει να ταιριάζουν με τη διεύθυνση του προγράμματος περιήγησης. Σημεία ελέγχου της σελίδας: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+Αποδεχθείτε το αποτέλεσμα για **Εγκατάσταση: Αντίστροφος διακομιστής μεσολάβησης και κλειδιά πρόσβασης** μόνο όταν ισχύουν όλα τα παρακάτω αποτελέσματα: HTTPS · HTTP `2xx`; `RP_ID`; OIDC · `/api/next/auth/oidc/callback`; το `RP_ID` είναι το hostname χωρίς scheme ή θύρα, ενώ το `RP_ORIGINS` είναι το ακριβές πλήρες HTTPS origin· και τα δύο πρέπει να ταιριάζουν με τη διεύθυνση του προγράμματος περιήγησης. Σημεία ελέγχου της σελίδας: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 - HTTPS · HTTP `2xx`
 - `RP_ID`
+- OIDC · `/api/next/auth/oidc/callback`
 - το `RP_ID` είναι το hostname χωρίς scheme ή θύρα, ενώ το `RP_ORIGINS` είναι το ακριβές πλήρες HTTPS origin· και τα δύο πρέπει να ταιριάζουν με τη διεύθυνση του προγράμματος περιήγησης
 
 ## Ασφάλεια και επαναφορά
 
 :::caution
-Το ασφαλές όριο ανάκτησης για **Εγκατάσταση: Αντίστροφος διακομιστής μεσολάβησης και κλειδιά πρόσβασης** απαιτεί αυτές τις ενέργειες πριν από κάθε εκκίνηση ή συνέχεια: επιλέξτε το hostname πριν καταχωρίσετε passkeys· μεταγενέστερη αλλαγή απαιτεί νέα καταχώριση, ενώ το localhost παραμένει μόνο εξαίρεση τοπικής ρύθμισης; μόνο άμεσο ιδιωτικό ή loopback αίτημα με άκυρες ή κενές ρυθμίσεις RP μπορεί να προσφέρει bootstrap χωρίς TOTP· διατηρήστε το TOTP για όνομα χρήστη, κωδικό και 2FA; επαναφέρετε μαζί τις τιμές proxy και RP και διατηρήστε μέθοδο ανάκτησης κατόχου. Σημεία ελέγχου της σελίδας: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+Το ασφαλές όριο ανάκτησης για **Εγκατάσταση: Αντίστροφος διακομιστής μεσολάβησης και κλειδιά πρόσβασης** απαιτεί αυτές τις ενέργειες πριν από κάθε εκκίνηση ή συνέχεια: επιλέξτε το hostname πριν καταχωρίσετε passkeys· μεταγενέστερη αλλαγή απαιτεί νέα καταχώριση, ενώ το localhost παραμένει μόνο εξαίρεση τοπικής ρύθμισης; μόνο άμεσο ιδιωτικό ή loopback αίτημα με άκυρες ή κενές ρυθμίσεις RP μπορεί να προσφέρει bootstrap χωρίς TOTP· διατηρήστε το TOTP για όνομα χρήστη, κωδικό και 2FA; επαναφέρετε μαζί τις τιμές proxy και RP και διατηρήστε μέθοδο ανάκτησης κατόχου. Σημεία ελέγχου της σελίδας: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 - επιλέξτε το hostname πριν καταχωρίσετε passkeys· μεταγενέστερη αλλαγή απαιτεί νέα καταχώριση, ενώ το localhost παραμένει μόνο εξαίρεση τοπικής ρύθμισης
 - μόνο άμεσο ιδιωτικό ή loopback αίτημα με άκυρες ή κενές ρυθμίσεις RP μπορεί να προσφέρει bootstrap χωρίς TOTP· διατηρήστε το TOTP για όνομα χρήστη, κωδικό και 2FA
@@ -103,12 +106,12 @@ curl --fail http://localhost:6180/api/next/health
 
 ## Πηγή και κατάσταση
 
-- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
-- [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
-- [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
-- [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
-- [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
-- [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
-- Πηγή και κατάσταση: `2026-07-20`
-- DiscVault Docs: `0.1.6`
+- [`Flux76HQ/App-Guidance@41bfca3bfa39`](https://github.com/Flux76HQ/App-Guidance/commit/41bfca3bfa39f0b43924190d384e2d96be756020)
+- [Moving beta source: OIDC deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: OIDC environment template](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/.env.example)
+- [Pinned verification: OIDC implementation](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/backend/next_oidc.py)
+- [Authoritative OIDC authentication contract](https://github.com/Flux76HQ/App-Guidance/blob/41bfca3bfa39f0b43924190d384e2d96be756020/projects/discvault/specs/oidc-authentication.md)
+- Πηγή και κατάσταση: `2026-09-20`
+- DiscVault Docs: `0.1.14`

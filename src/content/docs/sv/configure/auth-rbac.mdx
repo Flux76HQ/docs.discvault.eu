@@ -1,26 +1,26 @@
 ---
 title: 'Konfiguration: Autentisering och RBAC'
-description: 'Uppgiftsspecifik vägledning för Konfiguration: Autentisering och RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.'
+description: 'Uppgiftsspecifik vägledning för Konfiguration: Autentisering och RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · OIDC · Argon2id · TOTP.'
 pageId: 'configure-auth-rbac'
 products: ['server']
 platforms: ['web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
-lastVerified: '2026-07-20'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU', 'Flux76HQ/App-Guidance']
+lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="webb" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
+<PageMeta channels="stable,beta" platform="webb" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## Mål och resultat
 
-Följ det sidspecifika arbetsflödet för **Konfiguration: Autentisering och RBAC**. Den här proceduren använder `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
+Följ det sidspecifika arbetsflödet för **Konfiguration: Autentisering och RBAC**. Den här proceduren använder `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · OIDC · Argon2id · TOTP.
 
 ## Gäller för
 
-Den här sidan gäller endast **Konfiguration: Autentisering och RBAC** (webb). Kanal- och datagränserna är: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; en passkey är ett kryptografiskt nyckelpar: den privata nyckeln stannar på enheten eller i en betrodd uppgiftshanterare och DiscVault lagrar bara den offentliga nyckeln; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn; TOTP. Sidspecifika kontrollpunkter: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
+Den här sidan gäller endast **Konfiguration: Autentisering och RBAC** (webb). Kanal- och datagränserna är: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; en passkey är ett kryptografiskt nyckelpar: den privata nyckeln stannar på enheten eller i en betrodd uppgiftshanterare och DiscVault lagrar bara den offentliga nyckeln; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn OIDC; TOTP. Sidspecifika kontrollpunkter: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · OIDC · Argon2id · TOTP.
 
 ### DiscVault v26 – stabil
 
@@ -31,7 +31,7 @@ Den här sidan gäller endast **Konfiguration: Autentisering och RBAC** (webb). 
 ### DiscVault v26 – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- WebAuthn
+- WebAuthn OIDC
 - TOTP
 
 ## Förutsättningar
@@ -52,8 +52,9 @@ Den här sidan gäller endast **Konfiguration: Autentisering och RBAC** (webb). 
 8. **Skapa:** Administration → Användare → Skapa 48-timmarsinbjudan
 9. **Konfigurera:** Administration → Roller → Grundläggande / Avancerat
 10. **Konfigurera:** på en befintlig installation aktiveras lösenordsinloggning under Användare och roller och godkänns med en ny passkey-bekräftelse från ägare eller administratör · ägare och administratörer kan utfärda tillfälliga lösenord, kräva byte, ange MFA per användare och styra passkey-registrering
-11. **Anteckna:** återställningskoder är hashade, för engångsbruk och delas med passkey-återställning; backup saknar TOTP-hemligheter och återställningsmaterial, så MFA registreras igen · avstängning av Legacy Authentication kräver en aktiv ägar-passkey; en ägare med endast lokal IP måste först upprätta giltigt FQDN och ägar-passkey
-12. **Testa:** `/api/next/auth/rbac`
+11. **Jämför:** [Konfiguration: Inloggning med OpenID Connect (OIDC)](/sv/configure/oidc/) · OIDC lägger till en valfri webbläsarinloggning; lokala passkeys, valfria lösenord, återställningskoder, API-token och MCP bearer-token behåller sina roller
+12. **Anteckna:** återställningskoder är hashade, för engångsbruk och delas med passkey-återställning; backup saknar TOTP-hemligheter och återställningsmaterial, så MFA registreras igen · avstängning av Legacy Authentication kräver en aktiv ägar-passkey; en ägare med endast lokal IP måste först upprätta giltigt FQDN och ägar-passkey
+13. **Testa:** `/api/next/auth/rbac`
 
 ### Kommandon och inställningar
 
@@ -73,7 +74,7 @@ curl --fail http://localhost:6180/api/next/auth/rbac
 
 ## Förväntat resultat
 
-Godkänn resultatet för **Konfiguration: Autentisering och RBAC** endast när alla resultat nedan stämmer: ägarens passkey-inloggning fungerar, inbjudningsregistrering följer inställningen och testanvändaren har endast tilldelade behörigheter; passkeys är nätfiskeresistenta och unika för webbplatsen; inloggning använder enhetens upplåsning i stället för ett återanvändbart kontolösenord; en tidsbegränsad inbjudningskod startar registreringen men är inte ett återanvändbart kontolösenord; vanlig inloggning använder en passkey. Sidspecifika kontrollpunkter: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
+Godkänn resultatet för **Konfiguration: Autentisering och RBAC** endast när alla resultat nedan stämmer: ägarens passkey-inloggning fungerar, inbjudningsregistrering följer inställningen och testanvändaren har endast tilldelade behörigheter; passkeys är nätfiskeresistenta och unika för webbplatsen; inloggning använder enhetens upplåsning i stället för ett återanvändbart kontolösenord; en tidsbegränsad inbjudningskod startar registreringen men är inte ett återanvändbart kontolösenord; vanlig inloggning använder en passkey. Sidspecifika kontrollpunkter: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · OIDC · Argon2id · TOTP.
 
 - ägarens passkey-inloggning fungerar, inbjudningsregistrering följer inställningen och testanvändaren har endast tilldelade behörigheter
 - passkeys är nätfiskeresistenta och unika för webbplatsen; inloggning använder enhetens upplåsning i stället för ett återanvändbart kontolösenord
@@ -82,27 +83,28 @@ Godkänn resultatet för **Konfiguration: Autentisering och RBAC** endast när a
 ## Säkerhet och återställning
 
 :::caution
-Den säkra återställningsgränsen för **Konfiguration: Autentisering och RBAC** kräver dessa åtgärder innan något startas eller fortsätter: registrera mer än en passkey, exempelvis på telefon och dator, och behåll en oberoende återställningsväg för ägaren innan en enhet byts ut eller tappas bort; lösenord kräver minst 15 tecken, får inte vara användarnamnet eller ett nekat vanligt lösenord och hashas med Argon2id; fem fel på 15 minuter låser i 15 minuter; återställningskoder är hashade, för engångsbruk och delas med passkey-återställning; backup saknar TOTP-hemligheter och återställningsmaterial, så MFA registreras igen; avstängning av Legacy Authentication kräver en aktiv ägar-passkey; en ägare med endast lokal IP måste först upprätta giltigt FQDN och ägar-passkey; behåll ägarsessionen och en andra återställningsmetod; ta aldrig bort ägarens sista passkey. Sidspecifika kontrollpunkter: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
+Den säkra återställningsgränsen för **Konfiguration: Autentisering och RBAC** kräver dessa åtgärder innan något startas eller fortsätter: registrera mer än en passkey, exempelvis på telefon och dator, och behåll en oberoende återställningsväg för ägaren innan en enhet byts ut eller tappas bort; lösenord kräver minst 15 tecken, får inte vara användarnamnet eller ett nekat vanligt lösenord och hashas med Argon2id; fem fel på 15 minuter låser i 15 minuter; återställningskoder är hashade, för engångsbruk och delas med passkey-återställning; backup saknar TOTP-hemligheter och återställningsmaterial, så MFA registreras igen; avstängning av Legacy Authentication kräver en aktiv ägar-passkey; en ägare med endast lokal IP måste först upprätta giltigt FQDN och ägar-passkey; en identitet är det exakta paret issuer och subject; e-post länkas aldrig automatiskt, länkning kräver den inloggade webbläsarsessionen och bortkoppling kräver en annan användbar inloggningsmetod; behåll ägarsessionen och en andra återställningsmetod; ta aldrig bort ägarens sista passkey. Sidspecifika kontrollpunkter: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · OIDC · Argon2id · TOTP.
 
 - registrera mer än en passkey, exempelvis på telefon och dator, och behåll en oberoende återställningsväg för ägaren innan en enhet byts ut eller tappas bort
 - lösenord kräver minst 15 tecken, får inte vara användarnamnet eller ett nekat vanligt lösenord och hashas med Argon2id; fem fel på 15 minuter låser i 15 minuter
 - återställningskoder är hashade, för engångsbruk och delas med passkey-återställning; backup saknar TOTP-hemligheter och återställningsmaterial, så MFA registreras igen
 - avstängning av Legacy Authentication kräver en aktiv ägar-passkey; en ägare med endast lokal IP måste först upprätta giltigt FQDN och ägar-passkey
+- en identitet är det exakta paret issuer och subject; e-post länkas aldrig automatiskt, länkning kräver den inloggade webbläsarsessionen och bortkoppling kräver en annan användbar inloggningsmetod
 - behåll ägarsessionen och en andra återställningsmetod; ta aldrig bort ägarens sista passkey
 :::
 
 ## Nästa steg
 
-[Konfiguration: Insticksprogram och metadata](/sv/configure/plugins-metadata/)
+[Konfiguration: Inloggning med OpenID Connect (OIDC)](/sv/configure/oidc/)
 
 ## Källa och status
 
-- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
-- [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
-- [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
-- [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
-- [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
-- [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
-- Källa och status: `2026-07-20`
-- DiscVault Docs: `0.1.6`
+- [`Flux76HQ/App-Guidance@41bfca3bfa39`](https://github.com/Flux76HQ/App-Guidance/commit/41bfca3bfa39f0b43924190d384e2d96be756020)
+- [Moving beta source: OIDC deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: OIDC environment template](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/.env.example)
+- [Pinned verification: OIDC implementation](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/backend/next_oidc.py)
+- [Authoritative OIDC authentication contract](https://github.com/Flux76HQ/App-Guidance/blob/41bfca3bfa39f0b43924190d384e2d96be756020/projects/discvault/specs/oidc-authentication.md)
+- Källa och status: `2026-09-20`
+- DiscVault Docs: `0.1.14`

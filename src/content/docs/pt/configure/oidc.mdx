@@ -1,0 +1,108 @@
+---
+title: 'Configuração: Início de sessão com OpenID Connect (OIDC)'
+description: 'Instruções específicas para Configuração: Início de sessão com OpenID Connect (OIDC): OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.'
+pageId: 'configure-oidc'
+products: ['server', 'pwa']
+platforms: ['docker', 'web']
+channels: ['beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault', 'Flux76HQ/App-Guidance']
+lastVerified: '2026-09-20'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-09-20" />
+
+## Objetivo e resultado
+
+Conclua o procedimento específico da página para **Configuração: Início de sessão com OpenID Connect (OIDC)**. Este procedimento utiliza OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+## Aplicável a
+
+Esta página aplica-se apenas a **Configuração: Início de sessão com OpenID Connect (OIDC)** (Docker · web). Os limites de canal e dados são: DiscVault · `26.9.117+`; OIDC adiciona um método opcional de início de sessão no navegador; passkeys locais, palavras-passe opcionais, códigos de recuperação, tokens de API e tokens bearer MCP mantêm as suas funções; uma identidade é o par exato issuer e subject; o e-mail nunca associa automaticamente, a associação requer a sessão autenticada do navegador e a remoção requer outro método de início de sessão utilizável. Pontos de controlo desta página: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+### DiscVault v26 beta
+
+- DiscVault · `26.9.117+`
+- OIDC adiciona um método opcional de início de sessão no navegador; passkeys locais, palavras-passe opcionais, códigos de recuperação, tokens de API e tokens bearer MCP mantêm as suas funções
+- uma identidade é o par exato issuer e subject; o e-mail nunca associa automaticamente, a associação requer a sessão autenticada do navegador e a remoção requer outro método de início de sessão utilizável
+
+## Pré-requisitos
+
+- acesso de proprietário · segundo método de recuperação
+- [Instalação: Proxy inverso e chaves de acesso](/pt/install/reverse-proxy-passkeys/) · fora da exceção localhost, as passkeys requerem um nome de domínio completo e estável por HTTPS fidedigno; um endereço IP isolado ou HTTP simples não são suportados
+- um cliente OIDC confidencial no fornecedor de identidade com o URI de retorno exato do DiscVault
+
+### Canal privado do fornecedor
+
+:::note[Disponível em beta]
+permita origens HTTP privadas exatas apenas para endpoints de token e JWKS; o emissor e a autorização no navegador continuam apenas em HTTPS, a verificação TLS permanece ativa e os redirecionamentos de discovery, token e JWKS são recusados
+:::
+
+## Procedimento
+
+1. **Criar:** um cliente OIDC confidencial no fornecedor de identidade com o URI de retorno exato do DiscVault · `openid profile email` · `https://discvault.example.com/api/next/auth/oidc/callback`
+2. **Configurar:** `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · defina em conjunto o emissor, o ID de cliente e o segredo de cliente, ou deixe os três vazios; uma configuração parcial impede o arranque
+3. **Configurar:** `DISCVAULT_OIDC_PROVIDER_NAME` · `OIDC`
+4. **Escolher:** `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · `localhost` · Kubernetes DNS · `.internal` · permita origens HTTP privadas exatas apenas para endpoints de token e JWKS; o emissor e a autorização no navegador continuam apenas em HTTPS, a verificação TLS permanece ativa e os redirecionamentos de discovery, token e JWKS são recusados
+5. **Iniciar:** `next-api` · `--force-recreate`
+6. **Testar:** OIDC adiciona um método opcional de início de sessão no navegador; passkeys locais, palavras-passe opcionais, códigos de recuperação, tokens de API e tokens bearer MCP mantêm as suas funções · uma identidade é o par exato issuer e subject; o e-mail nunca associa automaticamente, a associação requer a sessão autenticada do navegador e a remoção requer outro método de início de sessão utilizável
+7. **Inspecionar:** `auth.oidc_failed` · as falhas registam apenas o nome de apresentação configurado do fornecedor, um código seguro `auth.oidc_failed` e o modo do fluxo; segredos, tokens, códigos de autorização, state, nonce, URLs de endpoints e valores PKCE nunca são registados
+
+### Comandos e definições
+
+#### DiscVault v26 beta
+
+```text
+RP_ORIGINS=https://discvault.example.com
+DISCVAULT_OIDC_ISSUER=https://id.example.com
+DISCVAULT_OIDC_CLIENT_ID=<client-id>
+DISCVAULT_OIDC_CLIENT_SECRET=<client-secret>
+DISCVAULT_OIDC_PROVIDER_NAME=Pocket ID
+DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS=
+```
+
+```text
+DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS=http://pocket-id.pocket-id.svc.cluster.local:1411
+```
+
+```bash
+cd /opt/discvault-next
+docker compose -p discvault_next_deploy config --quiet
+docker compose -p discvault_next_deploy up -d --force-recreate next-api
+curl --fail https://discvault.example.com/api/next/auth/status
+```
+
+## Resultado esperado
+
+Aceite o resultado de **Configuração: Início de sessão com OpenID Connect (OIDC)** apenas quando todos os resultados abaixo forem confirmados: OIDC adiciona um método opcional de início de sessão no navegador; passkeys locais, palavras-passe opcionais, códigos de recuperação, tokens de API e tokens bearer MCP mantêm as suas funções; uma identidade é o par exato issuer e subject; o e-mail nunca associa automaticamente, a associação requer a sessão autenticada do navegador e a remoção requer outro método de início de sessão utilizável; as falhas registam apenas o nome de apresentação configurado do fornecedor, um código seguro `auth.oidc_failed` e o modo do fluxo; segredos, tokens, códigos de autorização, state, nonce, URLs de endpoints e valores PKCE nunca são registados. Pontos de controlo desta página: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+- OIDC adiciona um método opcional de início de sessão no navegador; passkeys locais, palavras-passe opcionais, códigos de recuperação, tokens de API e tokens bearer MCP mantêm as suas funções
+- uma identidade é o par exato issuer e subject; o e-mail nunca associa automaticamente, a associação requer a sessão autenticada do navegador e a remoção requer outro método de início de sessão utilizável
+- as falhas registam apenas o nome de apresentação configurado do fornecedor, um código seguro `auth.oidc_failed` e o modo do fluxo; segredos, tokens, códigos de autorização, state, nonce, URLs de endpoints e valores PKCE nunca são registados
+
+## Segurança e reversão
+
+:::caution
+O limite de recuperação segura de **Configuração: Início de sessão com OpenID Connect (OIDC)** exige estas ações antes de iniciar ou continuar: guarde o segredo de cliente apenas no ambiente de execução não controlado ou num gestor de segredos e altere-o se for exposto; antes de desativar OIDC dê a cada utilizador exclusivamente OIDC outro método de início de sessão utilizável; permita origens HTTP privadas exatas apenas para endpoints de token e JWKS; o emissor e a autorização no navegador continuam apenas em HTTPS, a verificação TLS permanece ativa e os redirecionamentos de discovery, token e JWKS são recusados; uma identidade é o par exato issuer e subject; o e-mail nunca associa automaticamente, a associação requer a sessão autenticada do navegador e a remoção requer outro método de início de sessão utilizável. Pontos de controlo desta página: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+- guarde o segredo de cliente apenas no ambiente de execução não controlado ou num gestor de segredos e altere-o se for exposto; antes de desativar OIDC dê a cada utilizador exclusivamente OIDC outro método de início de sessão utilizável
+- permita origens HTTP privadas exatas apenas para endpoints de token e JWKS; o emissor e a autorização no navegador continuam apenas em HTTPS, a verificação TLS permanece ativa e os redirecionamentos de discovery, token e JWKS são recusados
+- uma identidade é o par exato issuer e subject; o e-mail nunca associa automaticamente, a associação requer a sessão autenticada do navegador e a remoção requer outro método de início de sessão utilizável
+:::
+
+## Próximo passo
+
+[Configuração: Extensões e metadados](/pt/configure/plugins-metadata/)
+
+## Fonte e estado
+
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
+- [`Flux76HQ/App-Guidance@41bfca3bfa39`](https://github.com/Flux76HQ/App-Guidance/commit/41bfca3bfa39f0b43924190d384e2d96be756020)
+- [Moving beta source: OIDC deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: OIDC environment template](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/.env.example)
+- [Pinned verification: OIDC implementation](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/backend/next_oidc.py)
+- [Authoritative OIDC authentication contract](https://github.com/Flux76HQ/App-Guidance/blob/41bfca3bfa39f0b43924190d384e2d96be756020/projects/discvault/specs/oidc-authentication.md)
+- Fonte e estado: `2026-09-20`
+- DiscVault Docs: `0.1.14`

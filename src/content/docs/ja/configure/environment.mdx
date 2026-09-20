@@ -1,26 +1,26 @@
 ---
 title: '設定: 環境変数'
-description: 'タスク別の手順: 設定: 環境変数: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.'
+description: 'タスク別の手順: 設定: 環境変数: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS`.'
 pageId: 'configure-environment'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['beta']
 minVersion: 'DiscVault v26'
 sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-20'
+lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-20" />
+<PageMeta channels="beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-09-20" />
 
 ## 目的と結果
 
-このページ専用の手順を実行します: **設定: 環境変数**. この手順で扱う項目: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.
+このページ専用の手順を実行します: **設定: 環境変数**. この手順で扱う項目: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS`.
 
 ## 対象
 
-このページの対象は **設定: 環境変数** (Docker · Unraid). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:beta`; `.env.example` `release/v26-beta`; `0600` · `JWT_SECRET` `POSTGRES_PASSWORD`. このページ固有の確認点: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.
+このページの対象は **設定: 環境変数** (Docker · Unraid). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:beta`; `.env.example` `release/v26-beta`; `0600` · `JWT_SECRET` `POSTGRES_PASSWORD`. このページ固有の確認点: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS`.
 
 ### DiscVault v26 ベータ版
 
@@ -39,8 +39,9 @@ import PageMeta from '../../../../components/PageMeta.astro';
 1. **作成:** `/opt/discvault-next/.env` · 所有者のみのファイル権限 (0600)
 2. **設定:** `DISCVAULT_NEXT_IMAGE` · `RP_ORIGINS`
 3. **選択:** 有効な FQDN では `RP_ID` と `RP_ORIGINS` を一致させ、信頼された HTTPS を使用します · FQDN のない直接のプライベートまたはループバック IP では `RP_ID` と `RP_ORIGINS` を空にします
-4. **検証:** `chmod 0600` · `docker compose -p discvault_next_deploy config --quiet`
-5. **開始:** 通常の設定変更では JWT と PostgreSQL のシークレットを変更しない
+4. **選択:** [設定: OpenID Connect（OIDC）ログイン](/ja/configure/oidc/) · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · issuer、クライアント ID、クライアントシークレットはすべて設定するか、3 つとも空にします。一部だけの設定では起動できません
+5. **検証:** `chmod 0600` · `docker compose -p discvault_next_deploy config --quiet`
+6. **開始:** 通常の設定変更では JWT と PostgreSQL のシークレットを変更しない
 
 ### コマンドと設定
 
@@ -159,7 +160,7 @@ curl --fail http://localhost:6180/api/next/health
 
 ## 期待される結果
 
-次の結果を受け入れる条件: **設定: 環境変数** 以下の結果をすべて確認した場合のみ: 所有者のみのファイル権限 (0600); 非公開ファイルがモード 600 で、Compose 検証に成功し、選択したチャンネルが正常になる. このページ固有の確認点: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.
+次の結果を受け入れる条件: **設定: 環境変数** 以下の結果をすべて確認した場合のみ: 所有者のみのファイル権限 (0600); 非公開ファイルがモード 600 で、Compose 検証に成功し、選択したチャンネルが正常になる. このページ固有の確認点: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS`.
 
 - 所有者のみのファイル権限 (0600)
 - 非公開ファイルがモード 600 で、Compose 検証に成功し、選択したチャンネルが正常になる
@@ -167,26 +168,27 @@ curl --fail http://localhost:6180/api/next/health
 ## 安全性とロールバック
 
 :::caution
-安全な復旧境界: **設定: 環境変数** 起動または続行の前に、次の操作が必要です: ドキュメントリポジトリの環境ファイルを DiscVault ランタイム設定として使用しない · `.env.example`; 通常の設定変更では JWT と PostgreSQL のシークレットを変更しない · `JWT_SECRET` · `POSTGRES_PASSWORD`; ダウンロードした `.env.example` はまだ `:dev` が既定です。pull または起動前に実行用 `.env` を `:beta` に変更します; 失敗時はサービスを停止したまま、以前の非公開環境ファイルを復元して検証し、シークレットを変更せず同じイメージを再作成する. このページ固有の確認点: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.
+安全な復旧境界: **設定: 環境変数** 起動または続行の前に、次の操作が必要です: ドキュメントリポジトリの環境ファイルを DiscVault ランタイム設定として使用しない · `.env.example`; 通常の設定変更では JWT と PostgreSQL のシークレットを変更しない · `JWT_SECRET` · `POSTGRES_PASSWORD`; ダウンロードした `.env.example` はまだ `:dev` が既定です。pull または起動前に実行用 `.env` を `:beta` に変更します; クライアントシークレットは追跡対象外の実行環境またはシークレットマネージャーだけに保存し、漏えい時はローテーションします。OIDC を無効にする前に、OIDC のみの各ユーザーへ別の利用可能なログイン方法を用意します; 失敗時はサービスを停止したまま、以前の非公開環境ファイルを復元して検証し、シークレットを変更せず同じイメージを再作成する. このページ固有の確認点: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS`.
 
 - ドキュメントリポジトリの環境ファイルを DiscVault ランタイム設定として使用しない · `.env.example`
 - 通常の設定変更では JWT と PostgreSQL のシークレットを変更しない · `JWT_SECRET` · `POSTGRES_PASSWORD`
 - ダウンロードした `.env.example` はまだ `:dev` が既定です。pull または起動前に実行用 `.env` を `:beta` に変更します
+- クライアントシークレットは追跡対象外の実行環境またはシークレットマネージャーだけに保存し、漏えい時はローテーションします。OIDC を無効にする前に、OIDC のみの各ユーザーへ別の利用可能なログイン方法を用意します
 - 失敗時はサービスを停止したまま、以前の非公開環境ファイルを復元して検証し、シークレットを変更せず同じイメージを再作成する
 :::
 
 ## 次の手順
 
-[設定: 認証と RBAC](/ja/configure/auth-rbac/)
+[設定: OpenID Connect（OIDC）ログイン](/ja/configure/oidc/)
 
 ## 情報源と状態
 
-- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
 - [Moving beta source: `docker-compose.yml`](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/docker-compose.yml)
 - [Raw beta download: `docker-compose.yml`](https://raw.githubusercontent.com/helmerzNL/DiscVault/release/v26-beta/app/deploy/next/docker-compose.yml)
-- [Pinned verification: `docker-compose.yml`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/deploy/next/docker-compose.yml)
+- [Pinned verification: `docker-compose.yml`](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/docker-compose.yml)
 - [Moving beta source: `.env.example`](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/.env.example)
 - [Raw beta download: `.env.example`](https://raw.githubusercontent.com/helmerzNL/DiscVault/release/v26-beta/app/deploy/next/.env.example)
-- [Pinned verification: `.env.example`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/deploy/next/.env.example)
-- 情報源と状態: `2026-07-20`
-- DiscVault Docs: `0.1.6`
+- [Pinned verification: `.env.example`](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/.env.example)
+- 情報源と状態: `2026-09-20`
+- DiscVault Docs: `0.1.14`

@@ -1,26 +1,26 @@
 ---
 title: '구성: 환경 변수'
-description: '작업별 안내: 구성: 환경 변수: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.'
+description: '작업별 안내: 구성: 환경 변수: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS`.'
 pageId: 'configure-environment'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['beta']
 minVersion: 'DiscVault v26'
 sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-20'
+lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-20" />
+<PageMeta channels="beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-09-20" />
 
 ## 목표 및 결과
 
-이 페이지 전용 절차를 수행합니다: **구성: 환경 변수**. 이 절차에서 다루는 항목: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.
+이 페이지 전용 절차를 수행합니다: **구성: 환경 변수**. 이 절차에서 다루는 항목: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS`.
 
 ## 적용 대상
 
-이 페이지의 적용 범위: **구성: 환경 변수** (Docker · Unraid). 채널 및 데이터 경계: DiscVault · `ghcr.io/helmerznl/discvault:beta`; `.env.example` `release/v26-beta`; `0600` · `JWT_SECRET` `POSTGRES_PASSWORD`. 이 페이지의 전용 확인 지점: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.
+이 페이지의 적용 범위: **구성: 환경 변수** (Docker · Unraid). 채널 및 데이터 경계: DiscVault · `ghcr.io/helmerznl/discvault:beta`; `.env.example` `release/v26-beta`; `0600` · `JWT_SECRET` `POSTGRES_PASSWORD`. 이 페이지의 전용 확인 지점: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS`.
 
 ### DiscVault v26 베타
 
@@ -39,8 +39,9 @@ import PageMeta from '../../../../components/PageMeta.astro';
 1. **생성:** `/opt/discvault-next/.env` · 소유자 전용 파일 권한(0600)
 2. **구성:** `DISCVAULT_NEXT_IMAGE` · `RP_ORIGINS`
 3. **선택:** 유효한 FQDN에서는 `RP_ID`와 `RP_ORIGINS`를 일치시키고 신뢰할 수 있는 HTTPS를 사용함 · FQDN 없는 직접 사설 또는 루프백 IP에서는 `RP_ID`와 `RP_ORIGINS`를 비워 둠
-4. **확인:** `chmod 0600` · `docker compose -p discvault_next_deploy config --quiet`
-5. **시작:** 일반 설정 변경 중에는 JWT 및 PostgreSQL 비밀을 바꾸지 않음
+4. **선택:** [구성: OpenID Connect(OIDC) 로그인](/ko/configure/oidc/) · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · issuer, 클라이언트 ID, 클라이언트 암호를 모두 함께 설정하거나 세 값을 모두 비워 두며 일부만 설정하면 시작되지 않음
+5. **확인:** `chmod 0600` · `docker compose -p discvault_next_deploy config --quiet`
+6. **시작:** 일반 설정 변경 중에는 JWT 및 PostgreSQL 비밀을 바꾸지 않음
 
 ### 명령 및 설정
 
@@ -159,7 +160,7 @@ curl --fail http://localhost:6180/api/next/health
 
 ## 예상 결과
 
-다음 결과의 승인 조건: **구성: 환경 변수** 아래 결과가 모두 충족된 경우에만: 소유자 전용 파일 권한(0600); 비공개 파일이 모드 600이고 Compose 검증이 성공하며 선택한 채널이 정상 상태가 됨. 이 페이지의 전용 확인 지점: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.
+다음 결과의 승인 조건: **구성: 환경 변수** 아래 결과가 모두 충족된 경우에만: 소유자 전용 파일 권한(0600); 비공개 파일이 모드 600이고 Compose 검증이 성공하며 선택한 채널이 정상 상태가 됨. 이 페이지의 전용 확인 지점: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS`.
 
 - 소유자 전용 파일 권한(0600)
 - 비공개 파일이 모드 600이고 Compose 검증이 성공하며 선택한 채널이 정상 상태가 됨
@@ -167,26 +168,27 @@ curl --fail http://localhost:6180/api/next/health
 ## 안전 및 롤백
 
 :::caution
-안전한 복구 경계: **구성: 환경 변수** 시작하거나 계속하기 전에 다음 작업이 필요합니다: 문서 저장소의 환경 파일은 DiscVault 런타임 파일이 아님 · `.env.example`; 일반 설정 변경 중에는 JWT 및 PostgreSQL 비밀을 바꾸지 않음 · `JWT_SECRET` · `POSTGRES_PASSWORD`; 다운로드한 `.env.example`의 기본값은 아직 `:dev`이므로 pull 또는 시작 전에 런타임 `.env`를 `:beta`로 변경해야 함; 실패하면 서비스를 중지한 채 이전 비공개 환경 파일을 복원하고 검증한 다음 비밀을 교체하지 않고 동일한 이미지를 다시 생성함. 이 페이지의 전용 확인 지점: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.
+안전한 복구 경계: **구성: 환경 변수** 시작하거나 계속하기 전에 다음 작업이 필요합니다: 문서 저장소의 환경 파일은 DiscVault 런타임 파일이 아님 · `.env.example`; 일반 설정 변경 중에는 JWT 및 PostgreSQL 비밀을 바꾸지 않음 · `JWT_SECRET` · `POSTGRES_PASSWORD`; 다운로드한 `.env.example`의 기본값은 아직 `:dev`이므로 pull 또는 시작 전에 런타임 `.env`를 `:beta`로 변경해야 함; 클라이언트 암호는 추적되지 않는 런타임 환경 또는 암호 관리자에만 저장하고 노출되면 교체하며 OIDC를 비활성화하기 전에 OIDC 전용 사용자마다 다른 사용 가능한 로그인 방법을 제공함; 실패하면 서비스를 중지한 채 이전 비공개 환경 파일을 복원하고 검증한 다음 비밀을 교체하지 않고 동일한 이미지를 다시 생성함. 이 페이지의 전용 확인 지점: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS`.
 
 - 문서 저장소의 환경 파일은 DiscVault 런타임 파일이 아님 · `.env.example`
 - 일반 설정 변경 중에는 JWT 및 PostgreSQL 비밀을 바꾸지 않음 · `JWT_SECRET` · `POSTGRES_PASSWORD`
 - 다운로드한 `.env.example`의 기본값은 아직 `:dev`이므로 pull 또는 시작 전에 런타임 `.env`를 `:beta`로 변경해야 함
+- 클라이언트 암호는 추적되지 않는 런타임 환경 또는 암호 관리자에만 저장하고 노출되면 교체하며 OIDC를 비활성화하기 전에 OIDC 전용 사용자마다 다른 사용 가능한 로그인 방법을 제공함
 - 실패하면 서비스를 중지한 채 이전 비공개 환경 파일을 복원하고 검증한 다음 비밀을 교체하지 않고 동일한 이미지를 다시 생성함
 :::
 
 ## 다음 단계
 
-[구성: 인증 및 RBAC](/ko/configure/auth-rbac/)
+[구성: OpenID Connect(OIDC) 로그인](/ko/configure/oidc/)
 
 ## 출처 및 상태
 
-- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
 - [Moving beta source: `docker-compose.yml`](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/docker-compose.yml)
 - [Raw beta download: `docker-compose.yml`](https://raw.githubusercontent.com/helmerzNL/DiscVault/release/v26-beta/app/deploy/next/docker-compose.yml)
-- [Pinned verification: `docker-compose.yml`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/deploy/next/docker-compose.yml)
+- [Pinned verification: `docker-compose.yml`](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/docker-compose.yml)
 - [Moving beta source: `.env.example`](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/.env.example)
 - [Raw beta download: `.env.example`](https://raw.githubusercontent.com/helmerzNL/DiscVault/release/v26-beta/app/deploy/next/.env.example)
-- [Pinned verification: `.env.example`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/deploy/next/.env.example)
-- 출처 및 상태: `2026-07-20`
-- DiscVault Docs: `0.1.6`
+- [Pinned verification: `.env.example`](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/.env.example)
+- 출처 및 상태: `2026-09-20`
+- DiscVault Docs: `0.1.14`

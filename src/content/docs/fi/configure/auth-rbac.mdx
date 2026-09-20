@@ -1,26 +1,26 @@
 ---
 title: 'Määritys: Todennus ja RBAC'
-description: 'Tehtäväkohtaiset ohjeet: Määritys: Todennus ja RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.'
+description: 'Tehtäväkohtaiset ohjeet: Määritys: Todennus ja RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · OIDC · Argon2id · TOTP.'
 pageId: 'configure-auth-rbac'
 products: ['server']
 platforms: ['web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
-lastVerified: '2026-07-20'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU', 'Flux76HQ/App-Guidance']
+lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="verkko" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
+<PageMeta channels="stable,beta" platform="verkko" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## Tavoite ja tulos
 
-Suorita sivukohtainen työnkulku: **Määritys: Todennus ja RBAC**. Tässä menettelyssä käytetään `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
+Suorita sivukohtainen työnkulku: **Määritys: Todennus ja RBAC**. Tässä menettelyssä käytetään `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · OIDC · Argon2id · TOTP.
 
 ## Koskee
 
-Tämä sivu koskee vain kohdetta **Määritys: Todennus ja RBAC** (verkko). Kanava- ja tietorajat ovat: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; passkey on kryptografinen avainpari: yksityinen avain pysyy laitteessa tai luotetussa tunnusten hallinnassa, ja DiscVault tallentaa vain julkisen avaimen; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn; TOTP. Sivukohtaiset tarkistuspisteet: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
+Tämä sivu koskee vain kohdetta **Määritys: Todennus ja RBAC** (verkko). Kanava- ja tietorajat ovat: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; passkey on kryptografinen avainpari: yksityinen avain pysyy laitteessa tai luotetussa tunnusten hallinnassa, ja DiscVault tallentaa vain julkisen avaimen; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn OIDC; TOTP. Sivukohtaiset tarkistuspisteet: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · OIDC · Argon2id · TOTP.
 
 ### DiscVault v26 – vakaa
 
@@ -31,7 +31,7 @@ Tämä sivu koskee vain kohdetta **Määritys: Todennus ja RBAC** (verkko). Kana
 ### DiscVault v26 – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- WebAuthn
+- WebAuthn OIDC
 - TOTP
 
 ## Edellytykset
@@ -52,8 +52,9 @@ Tämä sivu koskee vain kohdetta **Määritys: Todennus ja RBAC** (verkko). Kana
 8. **Luo:** Ylläpito → Käyttäjät → Luo 48 tunnin kutsu
 9. **Määritä:** Ylläpito → Roolit → Perus / Edistynyt
 10. **Määritä:** olemassa olevassa asennuksessa ota salasanakirjautuminen käyttöön Käyttäjät ja roolit -kohdassa ja hyväksy tuoreella omistajan tai ylläpitäjän passkey-vahvistuksella · omistajat ja ylläpitäjät voivat antaa väliaikaisia salasanoja, vaatia vaihdon, asettaa käyttäjäkohtaisen MFA:n ja hallita passkey-rekisteröintiä
-11. **Kirjaa:** palautuskoodit ovat hajautettuja, kertakäyttöisiä ja yhteisiä passkey-palautuksen kanssa; varmuuskopiot eivät sisällä TOTP-salaisuuksia tai palautusmateriaalia, joten MFA rekisteröidään uudelleen · Legacy Authenticationin poiskytkentä vaatii aktiivisen omistajan passkey-avaimen; vain paikallis-IP:tä käyttävän omistajan on ensin luotava kelvollinen FQDN ja passkey
-12. **Testaa:** `/api/next/auth/rbac`
+11. **Vertaa:** [Määritys: OpenID Connect (OIDC) -kirjautuminen](/fi/configure/oidc/) · OIDC lisää valinnaisen selainkirjautumisen; paikalliset passkey-avaimet, valinnaiset salasanat, palautuskoodit, API-tokenit ja MCP bearer -tokenit säilyttävät nykyiset roolinsa
+12. **Kirjaa:** palautuskoodit ovat hajautettuja, kertakäyttöisiä ja yhteisiä passkey-palautuksen kanssa; varmuuskopiot eivät sisällä TOTP-salaisuuksia tai palautusmateriaalia, joten MFA rekisteröidään uudelleen · Legacy Authenticationin poiskytkentä vaatii aktiivisen omistajan passkey-avaimen; vain paikallis-IP:tä käyttävän omistajan on ensin luotava kelvollinen FQDN ja passkey
+13. **Testaa:** `/api/next/auth/rbac`
 
 ### Komennot ja asetukset
 
@@ -73,7 +74,7 @@ curl --fail http://localhost:6180/api/next/auth/rbac
 
 ## Odotettu tulos
 
-Hyväksy tulos kohteelle **Määritys: Todennus ja RBAC** vain kun kaikki seuraavat tulokset toteutuvat: omistajan passkey-kirjautuminen toimii, kutsurekisteröinti vastaa asetusta ja testikäyttäjällä on vain määritetyt oikeudet; passkey-avaimet kestävät tietojenkalastelua ja ovat sivustokohtaisia; kirjautuminen käyttää laitteen avausta uudelleenkäytettävän salasanan sijaan; määräaikainen kutsukoodi aloittaa rekisteröinnin, mutta se ei ole uudelleenkäytettävä salasana; tavallinen kirjautuminen käyttää passkey-avainta. Sivukohtaiset tarkistuspisteet: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
+Hyväksy tulos kohteelle **Määritys: Todennus ja RBAC** vain kun kaikki seuraavat tulokset toteutuvat: omistajan passkey-kirjautuminen toimii, kutsurekisteröinti vastaa asetusta ja testikäyttäjällä on vain määritetyt oikeudet; passkey-avaimet kestävät tietojenkalastelua ja ovat sivustokohtaisia; kirjautuminen käyttää laitteen avausta uudelleenkäytettävän salasanan sijaan; määräaikainen kutsukoodi aloittaa rekisteröinnin, mutta se ei ole uudelleenkäytettävä salasana; tavallinen kirjautuminen käyttää passkey-avainta. Sivukohtaiset tarkistuspisteet: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · OIDC · Argon2id · TOTP.
 
 - omistajan passkey-kirjautuminen toimii, kutsurekisteröinti vastaa asetusta ja testikäyttäjällä on vain määritetyt oikeudet
 - passkey-avaimet kestävät tietojenkalastelua ja ovat sivustokohtaisia; kirjautuminen käyttää laitteen avausta uudelleenkäytettävän salasanan sijaan
@@ -82,27 +83,28 @@ Hyväksy tulos kohteelle **Määritys: Todennus ja RBAC** vain kun kaikki seuraa
 ## Turvallisuus ja palautus
 
 :::caution
-Turvallinen palautusraja kohteelle **Määritys: Todennus ja RBAC** edellyttää näitä toimia ennen käynnistystä tai jatkamista: rekisteröi useampi passkey, esimerkiksi puhelimeen ja pöytälaitteeseen, ja säilytä riippumaton omistajan palautusreitti ennen laitteen vaihtamista tai katoamista; salasanassa on oltava vähintään 15 merkkiä, se ei saa olla käyttäjätunnus tai estetty yleinen salasana ja se hajautetaan Argon2id:llä; viisi virhettä 15 minuutissa lukitsee 15 minuutiksi; palautuskoodit ovat hajautettuja, kertakäyttöisiä ja yhteisiä passkey-palautuksen kanssa; varmuuskopiot eivät sisällä TOTP-salaisuuksia tai palautusmateriaalia, joten MFA rekisteröidään uudelleen; Legacy Authenticationin poiskytkentä vaatii aktiivisen omistajan passkey-avaimen; vain paikallis-IP:tä käyttävän omistajan on ensin luotava kelvollinen FQDN ja passkey; säilytä omistajan istunto ja toinen palautustapa; älä koskaan poista omistajan viimeistä passkey-avainta. Sivukohtaiset tarkistuspisteet: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
+Turvallinen palautusraja kohteelle **Määritys: Todennus ja RBAC** edellyttää näitä toimia ennen käynnistystä tai jatkamista: rekisteröi useampi passkey, esimerkiksi puhelimeen ja pöytälaitteeseen, ja säilytä riippumaton omistajan palautusreitti ennen laitteen vaihtamista tai katoamista; salasanassa on oltava vähintään 15 merkkiä, se ei saa olla käyttäjätunnus tai estetty yleinen salasana ja se hajautetaan Argon2id:llä; viisi virhettä 15 minuutissa lukitsee 15 minuutiksi; palautuskoodit ovat hajautettuja, kertakäyttöisiä ja yhteisiä passkey-palautuksen kanssa; varmuuskopiot eivät sisällä TOTP-salaisuuksia tai palautusmateriaalia, joten MFA rekisteröidään uudelleen; Legacy Authenticationin poiskytkentä vaatii aktiivisen omistajan passkey-avaimen; vain paikallis-IP:tä käyttävän omistajan on ensin luotava kelvollinen FQDN ja passkey; identiteetti on tarkka issuer- ja subject-pari; sähköpostia ei koskaan linkitetä automaattisesti, linkitys vaatii kirjautuneen selainistunnon ja linkityksen poisto toisen käyttökelpoisen kirjautumistavan; säilytä omistajan istunto ja toinen palautustapa; älä koskaan poista omistajan viimeistä passkey-avainta. Sivukohtaiset tarkistuspisteet: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · OIDC · Argon2id · TOTP.
 
 - rekisteröi useampi passkey, esimerkiksi puhelimeen ja pöytälaitteeseen, ja säilytä riippumaton omistajan palautusreitti ennen laitteen vaihtamista tai katoamista
 - salasanassa on oltava vähintään 15 merkkiä, se ei saa olla käyttäjätunnus tai estetty yleinen salasana ja se hajautetaan Argon2id:llä; viisi virhettä 15 minuutissa lukitsee 15 minuutiksi
 - palautuskoodit ovat hajautettuja, kertakäyttöisiä ja yhteisiä passkey-palautuksen kanssa; varmuuskopiot eivät sisällä TOTP-salaisuuksia tai palautusmateriaalia, joten MFA rekisteröidään uudelleen
 - Legacy Authenticationin poiskytkentä vaatii aktiivisen omistajan passkey-avaimen; vain paikallis-IP:tä käyttävän omistajan on ensin luotava kelvollinen FQDN ja passkey
+- identiteetti on tarkka issuer- ja subject-pari; sähköpostia ei koskaan linkitetä automaattisesti, linkitys vaatii kirjautuneen selainistunnon ja linkityksen poisto toisen käyttökelpoisen kirjautumistavan
 - säilytä omistajan istunto ja toinen palautustapa; älä koskaan poista omistajan viimeistä passkey-avainta
 :::
 
 ## Seuraava vaihe
 
-[Määritys: Liitännäiset ja metatiedot](/fi/configure/plugins-metadata/)
+[Määritys: OpenID Connect (OIDC) -kirjautuminen](/fi/configure/oidc/)
 
 ## Lähde ja tila
 
-- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
-- [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
-- [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
-- [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
-- [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
-- [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
-- Lähde ja tila: `2026-07-20`
-- DiscVault Docs: `0.1.6`
+- [`Flux76HQ/App-Guidance@41bfca3bfa39`](https://github.com/Flux76HQ/App-Guidance/commit/41bfca3bfa39f0b43924190d384e2d96be756020)
+- [Moving beta source: OIDC deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: OIDC environment template](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/.env.example)
+- [Pinned verification: OIDC implementation](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/backend/next_oidc.py)
+- [Authoritative OIDC authentication contract](https://github.com/Flux76HQ/App-Guidance/blob/41bfca3bfa39f0b43924190d384e2d96be756020/projects/discvault/specs/oidc-authentication.md)
+- Lähde ja tila: `2026-09-20`
+- DiscVault Docs: `0.1.14`

@@ -1,26 +1,26 @@
 ---
 title: 'Konfigurasjon: Oversikt'
-description: 'Oppgavespesifikk veiledning for Konfigurasjon: Oversikt: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.'
+description: 'Oppgavespesifikk veiledning for Konfigurasjon: Oversikt: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/oidc/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.'
 pageId: 'configure-index'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
 sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · nett" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · nett" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-09-20" />
 
 ## Mål og resultat
 
-Fullfør den sidespesifikke arbeidsflyten for **Konfigurasjon: Oversikt**. Denne fremgangsmåten bruker `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
+Fullfør den sidespesifikke arbeidsflyten for **Konfigurasjon: Oversikt**. Denne fremgangsmåten bruker `/configure/environment/` · `/configure/auth-rbac/` · `/configure/oidc/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 ## Gjelder for
 
-Denne siden gjelder bare **Konfigurasjon: Oversikt** (Docker · nett). Kanal- og datagrensene er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. Sidespesifikke kontrollpunkter: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
+Denne siden gjelder bare **Konfigurasjon: Oversikt** (Docker · nett). Kanal- og datagrensene er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. Sidespesifikke kontrollpunkter: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/oidc/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 ### DiscVault v26 – stabil
 
@@ -41,20 +41,22 @@ Denne siden gjelder bare **Konfigurasjon: Oversikt** (Docker · nett). Kanal- og
 
 1. **Velg:** [Konfigurasjon: Miljøvariabler](/no/configure/environment/)
 2. **Velg:** [Konfigurasjon: Autentisering og RBAC](/no/configure/auth-rbac/) · RBAC
-3. **Velg:** [Installasjon: Legacy Authentication](/no/install/legacy-authentication/)
-4. **Velg:** [Konfigurasjon: Programtillegg og metadata](/no/configure/plugins-metadata/)
-5. **Registrer:** `/configure/environment/`
+3. **Velg:** [Konfigurasjon: Pålogging med OpenID Connect (OIDC)](/no/configure/oidc/) · OIDC Pocket ID
+4. **Velg:** [Installasjon: Legacy Authentication](/no/install/legacy-authentication/)
+5. **Velg:** [Konfigurasjon: Programtillegg og metadata](/no/configure/plugins-metadata/)
+6. **Registrer:** `/configure/environment/`
 
 ### Oppgaveruter
 
 - [Konfigurasjon: Miljøvariabler](/no/configure/environment/) — DiscVault 26 `.env.example`
 - [Konfigurasjon: Autentisering og RBAC](/no/configure/auth-rbac/) — DiscVault 26 RBAC
+- [Konfigurasjon: Pålogging med OpenID Connect (OIDC)](/no/configure/oidc/) — DiscVault 26.9 117 OIDC Pocket ID
 - [Installasjon: Legacy Authentication](/no/install/legacy-authentication/) — DiscVault 26 TOTP
 - [Konfigurasjon: Programtillegg og metadata](/no/configure/plugins-metadata/) — DiscVault 26
 
 ## Forventet resultat
 
-Godta resultatet for **Konfigurasjon: Oversikt** bare når alle resultatene nedenfor er oppfylt: valgt utgivelseskanal; `/configure/auth-rbac/`. Sidespesifikke kontrollpunkter: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
+Godta resultatet for **Konfigurasjon: Oversikt** bare når alle resultatene nedenfor er oppfylt: valgt utgivelseskanal; `/configure/auth-rbac/`. Sidespesifikke kontrollpunkter: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/oidc/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 - valgt utgivelseskanal
 - `/configure/auth-rbac/`
@@ -62,7 +64,7 @@ Godta resultatet for **Konfigurasjon: Oversikt** bare når alle resultatene nede
 ## Sikkerhet og tilbakerulling
 
 :::caution
-Den sikre gjenopprettingsgrensen for **Konfigurasjon: Oversikt** krever disse handlingene før noe startes eller fortsetter: endre ett delsystem om gangen, behold forrige verdi og sikkerhetskopi, og rull tilbake før neste endring. Sidespesifikke kontrollpunkter: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
+Den sikre gjenopprettingsgrensen for **Konfigurasjon: Oversikt** krever disse handlingene før noe startes eller fortsetter: endre ett delsystem om gangen, behold forrige verdi og sikkerhetskopi, og rull tilbake før neste endring. Sidespesifikke kontrollpunkter: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/oidc/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 - endre ett delsystem om gangen, behold forrige verdi og sikkerhetskopi, og rull tilbake før neste endring
 :::
@@ -73,6 +75,6 @@ Den sikre gjenopprettingsgrensen for **Konfigurasjon: Oversikt** krever disse ha
 
 ## Kilde og status
 
-- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Kilde og status: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
+- Kilde og status: `2026-09-20`
+- DiscVault Docs: `0.1.14`

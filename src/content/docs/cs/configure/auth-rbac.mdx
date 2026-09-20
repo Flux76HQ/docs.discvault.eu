@@ -1,26 +1,26 @@
 ---
 title: 'Konfigurace: Ověřování a RBAC'
-description: 'Pokyny pro konkrétní úlohu: Konfigurace: Ověřování a RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.'
+description: 'Pokyny pro konkrétní úlohu: Konfigurace: Ověřování a RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · OIDC · Argon2id · TOTP.'
 pageId: 'configure-auth-rbac'
 products: ['server']
 platforms: ['web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
-lastVerified: '2026-07-20'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU', 'Flux76HQ/App-Guidance']
+lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
+<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## Cíl a výsledek
 
-Dokončete postup určený pro **Konfigurace: Ověřování a RBAC**. Tento postup pracuje s `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
+Dokončete postup určený pro **Konfigurace: Ověřování a RBAC**. Tento postup pracuje s `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · OIDC · Argon2id · TOTP.
 
 ## Platí pro
 
-Tato stránka platí pouze pro **Konfigurace: Ověřování a RBAC** (web). Hranice kanálu a dat jsou: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; passkey je kryptografický pár klíčů: soukromý klíč zůstává v zařízení nebo důvěryhodném správci přihlašovacích údajů a DiscVault ukládá pouze veřejný klíč; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn; TOTP. Kontrolní body této stránky: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
+Tato stránka platí pouze pro **Konfigurace: Ověřování a RBAC** (web). Hranice kanálu a dat jsou: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; passkey je kryptografický pár klíčů: soukromý klíč zůstává v zařízení nebo důvěryhodném správci přihlašovacích údajů a DiscVault ukládá pouze veřejný klíč; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn OIDC; TOTP. Kontrolní body této stránky: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · OIDC · Argon2id · TOTP.
 
 ### DiscVault v26 – stabilní
 
@@ -31,7 +31,7 @@ Tato stránka platí pouze pro **Konfigurace: Ověřování a RBAC** (web). Hran
 ### DiscVault v26 – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- WebAuthn
+- WebAuthn OIDC
 - TOTP
 
 ## Požadavky
@@ -52,8 +52,9 @@ Tato stránka platí pouze pro **Konfigurace: Ověřování a RBAC** (web). Hran
 8. **Vytvořte:** Správa → Uživatelé → Vytvořit pozvánku na 48 hodin
 9. **Nastavte:** Správa → Role → Základní / Pokročilé
 10. **Nastavte:** ve stávající instalaci zapněte přihlášení heslem v Uživatelé a role a potvrďte aktivaci čerstvým passkey vlastníka nebo správce · vlastníci a správci mohou vydat dočasná hesla, vyžadovat změnu hesla, nastavit MFA pro uživatele a řídit registraci passkeys
-11. **Zaznamenejte:** obnovovací kódy jsou hashované, jednorázové a sdílené s obnovou passkeys; zálohy vynechávají TOTP tajemství a obnovovací materiál, takže uživatelé MFA po obnově registrují znovu · vypnutí Legacy Authentication vyžaduje aktivní passkey vlastníka; vlastník pouze na místní IP musí před bezpečným vypnutím nastavit platný FQDN a passkey
-12. **Otestujte:** `/api/next/auth/rbac`
+11. **Porovnejte:** [Konfigurace: Přihlášení přes OpenID Connect (OIDC)](/cs/configure/oidc/) · OIDC přidává volitelné přihlášení v prohlížeči; místní passkeys, volitelná hesla, obnovovací kódy, API tokeny a MCP bearer tokeny si zachovávají své role
+12. **Zaznamenejte:** obnovovací kódy jsou hashované, jednorázové a sdílené s obnovou passkeys; zálohy vynechávají TOTP tajemství a obnovovací materiál, takže uživatelé MFA po obnově registrují znovu · vypnutí Legacy Authentication vyžaduje aktivní passkey vlastníka; vlastník pouze na místní IP musí před bezpečným vypnutím nastavit platný FQDN a passkey
+13. **Otestujte:** `/api/next/auth/rbac`
 
 ### Příkazy a nastavení
 
@@ -73,7 +74,7 @@ curl --fail http://localhost:6180/api/next/auth/rbac
 
 ## Očekávaný výsledek
 
-Výsledek přijměte pro **Konfigurace: Ověřování a RBAC** pouze pokud platí všechny následující výsledky: přihlášení vlastníka passkey funguje, registrace na pozvánku odpovídá nastavení a testovací uživatel má jen přidělená oprávnění; passkeys odolávají phishingu a jsou jedinečné pro daný web; přihlášení používá odemknutí zařízení místo opakovaně použitelného hesla účtu; časově omezený zvací kód zahájí registraci, ale není opakovaně použitelným heslem účtu; běžné přihlášení používá passkey. Kontrolní body této stránky: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
+Výsledek přijměte pro **Konfigurace: Ověřování a RBAC** pouze pokud platí všechny následující výsledky: přihlášení vlastníka passkey funguje, registrace na pozvánku odpovídá nastavení a testovací uživatel má jen přidělená oprávnění; passkeys odolávají phishingu a jsou jedinečné pro daný web; přihlášení používá odemknutí zařízení místo opakovaně použitelného hesla účtu; časově omezený zvací kód zahájí registraci, ale není opakovaně použitelným heslem účtu; běžné přihlášení používá passkey. Kontrolní body této stránky: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · OIDC · Argon2id · TOTP.
 
 - přihlášení vlastníka passkey funguje, registrace na pozvánku odpovídá nastavení a testovací uživatel má jen přidělená oprávnění
 - passkeys odolávají phishingu a jsou jedinečné pro daný web; přihlášení používá odemknutí zařízení místo opakovaně použitelného hesla účtu
@@ -82,27 +83,28 @@ Výsledek přijměte pro **Konfigurace: Ověřování a RBAC** pouze pokud plat�
 ## Bezpečnost a návrat
 
 :::caution
-Bezpečná hranice obnovy pro **Konfigurace: Ověřování a RBAC** vyžaduje před spuštěním nebo pokračováním tyto kroky: zaregistrujte více než jeden passkey, například telefon a stolní zařízení, a před výměnou nebo ztrátou zařízení zachovejte nezávislou cestu obnovení vlastníka; hesla mají nejméně 15 znaků, nesmí být shodná s uživatelským jménem ani zakázaným běžným heslem a hashují se Argon2id; pět chyb za 15 minut zamkne účet na 15 minut; obnovovací kódy jsou hashované, jednorázové a sdílené s obnovou passkeys; zálohy vynechávají TOTP tajemství a obnovovací materiál, takže uživatelé MFA po obnově registrují znovu; vypnutí Legacy Authentication vyžaduje aktivní passkey vlastníka; vlastník pouze na místní IP musí před bezpečným vypnutím nastavit platný FQDN a passkey; zachovejte relaci vlastníka a druhou metodu obnovení; nikdy neodstraňujte poslední přístupový klíč vlastníka. Kontrolní body této stránky: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
+Bezpečná hranice obnovy pro **Konfigurace: Ověřování a RBAC** vyžaduje před spuštěním nebo pokračováním tyto kroky: zaregistrujte více než jeden passkey, například telefon a stolní zařízení, a před výměnou nebo ztrátou zařízení zachovejte nezávislou cestu obnovení vlastníka; hesla mají nejméně 15 znaků, nesmí být shodná s uživatelským jménem ani zakázaným běžným heslem a hashují se Argon2id; pět chyb za 15 minut zamkne účet na 15 minut; obnovovací kódy jsou hashované, jednorázové a sdílené s obnovou passkeys; zálohy vynechávají TOTP tajemství a obnovovací materiál, takže uživatelé MFA po obnově registrují znovu; vypnutí Legacy Authentication vyžaduje aktivní passkey vlastníka; vlastník pouze na místní IP musí před bezpečným vypnutím nastavit platný FQDN a passkey; identita je přesná dvojice issuer a subject; e-mail se nikdy nepřipojí automaticky, propojení vyžaduje přihlášenou relaci prohlížeče a odpojení vyžaduje jinou použitelnou metodu přihlášení; zachovejte relaci vlastníka a druhou metodu obnovení; nikdy neodstraňujte poslední přístupový klíč vlastníka. Kontrolní body této stránky: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · OIDC · Argon2id · TOTP.
 
 - zaregistrujte více než jeden passkey, například telefon a stolní zařízení, a před výměnou nebo ztrátou zařízení zachovejte nezávislou cestu obnovení vlastníka
 - hesla mají nejméně 15 znaků, nesmí být shodná s uživatelským jménem ani zakázaným běžným heslem a hashují se Argon2id; pět chyb za 15 minut zamkne účet na 15 minut
 - obnovovací kódy jsou hashované, jednorázové a sdílené s obnovou passkeys; zálohy vynechávají TOTP tajemství a obnovovací materiál, takže uživatelé MFA po obnově registrují znovu
 - vypnutí Legacy Authentication vyžaduje aktivní passkey vlastníka; vlastník pouze na místní IP musí před bezpečným vypnutím nastavit platný FQDN a passkey
+- identita je přesná dvojice issuer a subject; e-mail se nikdy nepřipojí automaticky, propojení vyžaduje přihlášenou relaci prohlížeče a odpojení vyžaduje jinou použitelnou metodu přihlášení
 - zachovejte relaci vlastníka a druhou metodu obnovení; nikdy neodstraňujte poslední přístupový klíč vlastníka
 :::
 
 ## Další krok
 
-[Konfigurace: Pluginy a metadata](/cs/configure/plugins-metadata/)
+[Konfigurace: Přihlášení přes OpenID Connect (OIDC)](/cs/configure/oidc/)
 
 ## Zdroj a stav
 
-- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
-- [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
-- [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
-- [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
-- [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
-- [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
-- Zdroj a stav: `2026-07-20`
-- DiscVault Docs: `0.1.6`
+- [`Flux76HQ/App-Guidance@41bfca3bfa39`](https://github.com/Flux76HQ/App-Guidance/commit/41bfca3bfa39f0b43924190d384e2d96be756020)
+- [Moving beta source: OIDC deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: OIDC environment template](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/.env.example)
+- [Pinned verification: OIDC implementation](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/backend/next_oidc.py)
+- [Authoritative OIDC authentication contract](https://github.com/Flux76HQ/App-Guidance/blob/41bfca3bfa39f0b43924190d384e2d96be756020/projects/discvault/specs/oidc-authentication.md)
+- Zdroj a stav: `2026-09-20`
+- DiscVault Docs: `0.1.14`
