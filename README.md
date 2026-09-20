@@ -59,6 +59,20 @@ MDX.
 falls back to this repository’s GitHub Issues form. The docs `.env.example` is build configuration
 only and must never be copied to a DiscVault deployment.
 
+## Search and AI discoverability
+
+The production build publishes canonical URLs, locale alternates, a sitemap, social metadata,
+structured data, `robots.txt`, `llms.txt`, and a generated `llms-index.txt`. The multilingual
+index reads the same frontmatter titles and descriptions as the rendered pages, so it cannot
+silently drift from the documentation.
+
+The crawler policy applies only to the public `docs.discvault.eu` site. It allows traditional
+search, citation crawlers, and user-requested retrieval while blocking verified model-training
+agents. DiscVault Self-hosted keeps its separate default crawler blocking; publishing these docs
+does not make a private installation crawlable. The policy table and first-party verification
+links live in `src/data/crawler-policy.mjs`, and `pnpm discoverability:check` enforces the intended
+allow/deny split.
+
 ## Version and updates
 
 `VERSION` and `package.json` start at `0.1.0`. Markdown-only changes need no bump. Changes to

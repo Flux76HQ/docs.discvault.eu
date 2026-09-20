@@ -2253,10 +2253,7 @@ ${sourceLinks(page, locale)}
 function frontmatter(page, locale) {
   const title = titleFor(page, locale);
   const spec = procedures[page.path];
-  const description =
-    locale === 'en'
-      ? page.intro
-      : `${procedureLocale[locale].descriptionLead} ${title}: ${markersFor(spec, locale).join(' · ')}.`;
+  const description = metadataDescription(page, locale, title, spec);
   return `---
 title: ${quote(title)}
 description: ${quote(description)}
@@ -2269,6 +2266,19 @@ sourceRepos: ${yamlArray(page.source)}
 lastVerified: '${verifiedFor(page)}'
 ---
 `;
+}
+
+function metadataDescription(page, locale, title, spec) {
+  const clean = (value) => value.replaceAll('`', '').replace(/\s+/g, ' ').trim();
+  if (locale === 'en') return clean(page.intro);
+
+  let description = clean(`${procedureLocale[locale].descriptionLead} ${title}.`);
+  for (const marker of markersFor(spec, locale)) {
+    const candidate = `${description} ${clean(marker)}.`;
+    if (candidate.length > 180) break;
+    description = candidate;
+  }
+  return description;
 }
 
 function pageDocument(page, locale) {
@@ -2307,6 +2317,9 @@ hero:
   image:
     file: ${locale === 'en' ? '../../' : '../../../'}assets/discvault-logo.png
   actions: [{ text: ${quote(procedureLocale[locale].startAction)}, link: ${start}, icon: right-arrow, variant: primary }]
+head:
+  - tag: meta
+    attrs: { property: 'og:type', content: 'website' }
 ---
 
 import RouteGrid from '${componentPrefix}components/RouteGrid.astro';
