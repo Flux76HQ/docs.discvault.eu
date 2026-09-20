@@ -1484,13 +1484,7 @@ ${composeCommand} logs --tail=200 next-api next-worker next-mcp postgres`,
     safety: [item(term('troubleshootingRecovery'))],
   },
   'reference/index': {
-    markers: [
-      '`:latest`',
-      '`:beta`',
-      '`:dev`',
-      '`6080:5000`',
-      '`DISCVAULT_OIDC_ISSUER`',
-    ],
+    markers: ['`:latest`', '`:beta`', '`:dev`', '`6080:5000`', '`DISCVAULT_OIDC_ISSUER`'],
     prerequisites: [item(term('selectedChannel'))],
     channels: releaseChannels(
       item('PostgreSQL + `/data`'),

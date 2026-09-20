@@ -197,12 +197,7 @@ const requiredMarkers = {
   'integrations-index': ['MCP', 'REST', 'Plex', 'Jellyfin'],
   'integrations-mcp-api': ['streamable-http', '/mcp', 'Authorization'],
   'integrations-plex-jellyfin': ['Plex', 'Jellyfin', 'dryRun'],
-  'troubleshooting-index': [
-    'docker compose',
-    '/api/next/health',
-    'postgres',
-    'auth.oidc_failed',
-  ],
+  'troubleshooting-index': ['docker compose', '/api/next/health', 'postgres', 'auth.oidc_failed'],
   'reference-index': [':latest', ':beta', ':dev', '6080:5000', 'DISCVAULT_OIDC_ISSUER'],
 };
 const errors = [];
