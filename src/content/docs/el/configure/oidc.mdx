@@ -1,0 +1,108 @@
+---
+title: 'Ρύθμιση: Σύνδεση με OpenID Connect (OIDC)'
+description: 'Οδηγίες ειδικά για την εργασία: Ρύθμιση: Σύνδεση με OpenID Connect (OIDC): OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.'
+pageId: 'configure-oidc'
+products: ['server', 'pwa']
+platforms: ['docker', 'web']
+channels: ['beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault', 'Flux76HQ/App-Guidance']
+lastVerified: '2026-09-20'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="beta" platform="Docker · ιστός" version="DiscVault v26" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-09-20" />
+
+## Στόχος και αποτέλεσμα
+
+Ολοκληρώστε τη ροή εργασίας της σελίδας για **Ρύθμιση: Σύνδεση με OpenID Connect (OIDC)**. Η διαδικασία χρησιμοποιεί OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+## Ισχύει για
+
+Αυτή η σελίδα ισχύει μόνο για **Ρύθμιση: Σύνδεση με OpenID Connect (OIDC)** (Docker · ιστός). Τα όρια καναλιού και δεδομένων είναι: DiscVault · `26.9.117+`; Το OIDC προσθέτει προαιρετική σύνδεση μέσω προγράμματος περιήγησης· τα τοπικά passkeys, οι προαιρετικοί κωδικοί πρόσβασης, οι κωδικοί ανάκτησης, τα API tokens και τα MCP bearer tokens διατηρούν τους ρόλους τους; μια ταυτότητα είναι το ακριβές ζεύγος issuer και subject· το email δεν συνδέεται ποτέ αυτόματα, η σύνδεση απαιτεί την ενεργή συνεδρία του προγράμματος περιήγησης και η αποσύνδεση απαιτεί άλλη χρησιμοποιήσιμη μέθοδο εισόδου. Σημεία ελέγχου της σελίδας: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+### DiscVault v26 – beta
+
+- DiscVault · `26.9.117+`
+- Το OIDC προσθέτει προαιρετική σύνδεση μέσω προγράμματος περιήγησης· τα τοπικά passkeys, οι προαιρετικοί κωδικοί πρόσβασης, οι κωδικοί ανάκτησης, τα API tokens και τα MCP bearer tokens διατηρούν τους ρόλους τους
+- μια ταυτότητα είναι το ακριβές ζεύγος issuer και subject· το email δεν συνδέεται ποτέ αυτόματα, η σύνδεση απαιτεί την ενεργή συνεδρία του προγράμματος περιήγησης και η αποσύνδεση απαιτεί άλλη χρησιμοποιήσιμη μέθοδο εισόδου
+
+## Προϋποθέσεις
+
+- πρόσβαση κατόχου · δεύτερη μέθοδος ανάκτησης
+- [Εγκατάσταση: Αντίστροφος διακομιστής μεσολάβησης και κλειδιά πρόσβασης](/el/install/reverse-proxy-passkeys/) · εκτός της εξαίρεσης ρύθμισης localhost, τα passkeys απαιτούν σταθερό πλήρως προσδιορισμένο όνομα τομέα μέσω αξιόπιστου HTTPS· γυμνή διεύθυνση IP ή απλό HTTP δεν υποστηρίζονται
+- ένας εμπιστευτικός πελάτης OIDC στον πάροχο ταυτότητας με το ακριβές URI επιστροφής του DiscVault
+
+### Ιδιωτικό κανάλι επιστροφής παρόχου
+
+:::note[Διαθέσιμο στην beta]
+επιτρέψτε ακριβή ιδιωτικά HTTP origins μόνο για endpoints token και JWKS· ο issuer και η εξουσιοδότηση του προγράμματος περιήγησης παραμένουν μόνο HTTPS, η επαλήθευση TLS παραμένει ενεργή και οι ανακατευθύνσεις discovery, token και JWKS απορρίπτονται
+:::
+
+## Διαδικασία
+
+1. **Δημιουργήστε:** ένας εμπιστευτικός πελάτης OIDC στον πάροχο ταυτότητας με το ακριβές URI επιστροφής του DiscVault · `openid profile email` · `https://discvault.example.com/api/next/auth/oidc/callback`
+2. **Ρυθμίστε:** `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · ορίστε μαζί εκδότη, αναγνωριστικό πελάτη και μυστικό πελάτη ή αφήστε και τα τρία κενά· η μερική ρύθμιση εμποδίζει την εκκίνηση
+3. **Ρυθμίστε:** `DISCVAULT_OIDC_PROVIDER_NAME` · `OIDC`
+4. **Επιλέξτε:** `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · `localhost` · Kubernetes DNS · `.internal` · επιτρέψτε ακριβή ιδιωτικά HTTP origins μόνο για endpoints token και JWKS· ο issuer και η εξουσιοδότηση του προγράμματος περιήγησης παραμένουν μόνο HTTPS, η επαλήθευση TLS παραμένει ενεργή και οι ανακατευθύνσεις discovery, token και JWKS απορρίπτονται
+5. **Εκκινήστε:** `next-api` · `--force-recreate`
+6. **Δοκιμάστε:** Το OIDC προσθέτει προαιρετική σύνδεση μέσω προγράμματος περιήγησης· τα τοπικά passkeys, οι προαιρετικοί κωδικοί πρόσβασης, οι κωδικοί ανάκτησης, τα API tokens και τα MCP bearer tokens διατηρούν τους ρόλους τους · μια ταυτότητα είναι το ακριβές ζεύγος issuer και subject· το email δεν συνδέεται ποτέ αυτόματα, η σύνδεση απαιτεί την ενεργή συνεδρία του προγράμματος περιήγησης και η αποσύνδεση απαιτεί άλλη χρησιμοποιήσιμη μέθοδο εισόδου
+7. **Ελέγξτε:** `auth.oidc_failed` · οι αποτυχίες καταγράφουν μόνο το ρυθμισμένο εμφανιζόμενο όνομα παρόχου, ασφαλή κωδικό `auth.oidc_failed` και λειτουργία ροής· μυστικά, tokens, κωδικοί εξουσιοδότησης, state, nonce, URL endpoints και τιμές PKCE δεν καταγράφονται ποτέ
+
+### Εντολές και ρυθμίσεις
+
+#### DiscVault v26 – beta
+
+```text
+RP_ORIGINS=https://discvault.example.com
+DISCVAULT_OIDC_ISSUER=https://id.example.com
+DISCVAULT_OIDC_CLIENT_ID=<client-id>
+DISCVAULT_OIDC_CLIENT_SECRET=<client-secret>
+DISCVAULT_OIDC_PROVIDER_NAME=Pocket ID
+DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS=
+```
+
+```text
+DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS=http://pocket-id.pocket-id.svc.cluster.local:1411
+```
+
+```bash
+cd /opt/discvault-next
+docker compose -p discvault_next_deploy config --quiet
+docker compose -p discvault_next_deploy up -d --force-recreate next-api
+curl --fail https://discvault.example.com/api/next/auth/status
+```
+
+## Αναμενόμενο αποτέλεσμα
+
+Αποδεχθείτε το αποτέλεσμα για **Ρύθμιση: Σύνδεση με OpenID Connect (OIDC)** μόνο όταν ισχύουν όλα τα παρακάτω αποτελέσματα: Το OIDC προσθέτει προαιρετική σύνδεση μέσω προγράμματος περιήγησης· τα τοπικά passkeys, οι προαιρετικοί κωδικοί πρόσβασης, οι κωδικοί ανάκτησης, τα API tokens και τα MCP bearer tokens διατηρούν τους ρόλους τους; μια ταυτότητα είναι το ακριβές ζεύγος issuer και subject· το email δεν συνδέεται ποτέ αυτόματα, η σύνδεση απαιτεί την ενεργή συνεδρία του προγράμματος περιήγησης και η αποσύνδεση απαιτεί άλλη χρησιμοποιήσιμη μέθοδο εισόδου; οι αποτυχίες καταγράφουν μόνο το ρυθμισμένο εμφανιζόμενο όνομα παρόχου, ασφαλή κωδικό `auth.oidc_failed` και λειτουργία ροής· μυστικά, tokens, κωδικοί εξουσιοδότησης, state, nonce, URL endpoints και τιμές PKCE δεν καταγράφονται ποτέ. Σημεία ελέγχου της σελίδας: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+- Το OIDC προσθέτει προαιρετική σύνδεση μέσω προγράμματος περιήγησης· τα τοπικά passkeys, οι προαιρετικοί κωδικοί πρόσβασης, οι κωδικοί ανάκτησης, τα API tokens και τα MCP bearer tokens διατηρούν τους ρόλους τους
+- μια ταυτότητα είναι το ακριβές ζεύγος issuer και subject· το email δεν συνδέεται ποτέ αυτόματα, η σύνδεση απαιτεί την ενεργή συνεδρία του προγράμματος περιήγησης και η αποσύνδεση απαιτεί άλλη χρησιμοποιήσιμη μέθοδο εισόδου
+- οι αποτυχίες καταγράφουν μόνο το ρυθμισμένο εμφανιζόμενο όνομα παρόχου, ασφαλή κωδικό `auth.oidc_failed` και λειτουργία ροής· μυστικά, tokens, κωδικοί εξουσιοδότησης, state, nonce, URL endpoints και τιμές PKCE δεν καταγράφονται ποτέ
+
+## Ασφάλεια και επαναφορά
+
+:::caution
+Το ασφαλές όριο ανάκτησης για **Ρύθμιση: Σύνδεση με OpenID Connect (OIDC)** απαιτεί αυτές τις ενέργειες πριν από κάθε εκκίνηση ή συνέχεια: αποθηκεύστε το μυστικό πελάτη μόνο στο μη παρακολουθούμενο περιβάλλον εκτέλεσης ή σε διαχειριστή μυστικών και αλλάξτε το αν εκτεθεί· πριν απενεργοποιήσετε το OIDC δώστε σε κάθε χρήστη μόνο OIDC άλλη χρησιμοποιήσιμη μέθοδο εισόδου; επιτρέψτε ακριβή ιδιωτικά HTTP origins μόνο για endpoints token και JWKS· ο issuer και η εξουσιοδότηση του προγράμματος περιήγησης παραμένουν μόνο HTTPS, η επαλήθευση TLS παραμένει ενεργή και οι ανακατευθύνσεις discovery, token και JWKS απορρίπτονται; μια ταυτότητα είναι το ακριβές ζεύγος issuer και subject· το email δεν συνδέεται ποτέ αυτόματα, η σύνδεση απαιτεί την ενεργή συνεδρία του προγράμματος περιήγησης και η αποσύνδεση απαιτεί άλλη χρησιμοποιήσιμη μέθοδο εισόδου. Σημεία ελέγχου της σελίδας: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+- αποθηκεύστε το μυστικό πελάτη μόνο στο μη παρακολουθούμενο περιβάλλον εκτέλεσης ή σε διαχειριστή μυστικών και αλλάξτε το αν εκτεθεί· πριν απενεργοποιήσετε το OIDC δώστε σε κάθε χρήστη μόνο OIDC άλλη χρησιμοποιήσιμη μέθοδο εισόδου
+- επιτρέψτε ακριβή ιδιωτικά HTTP origins μόνο για endpoints token και JWKS· ο issuer και η εξουσιοδότηση του προγράμματος περιήγησης παραμένουν μόνο HTTPS, η επαλήθευση TLS παραμένει ενεργή και οι ανακατευθύνσεις discovery, token και JWKS απορρίπτονται
+- μια ταυτότητα είναι το ακριβές ζεύγος issuer και subject· το email δεν συνδέεται ποτέ αυτόματα, η σύνδεση απαιτεί την ενεργή συνεδρία του προγράμματος περιήγησης και η αποσύνδεση απαιτεί άλλη χρησιμοποιήσιμη μέθοδο εισόδου
+:::
+
+## Επόμενο βήμα
+
+[Ρύθμιση: Πρόσθετα και μεταδεδομένα](/el/configure/plugins-metadata/)
+
+## Πηγή και κατάσταση
+
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
+- [`Flux76HQ/App-Guidance@41bfca3bfa39`](https://github.com/Flux76HQ/App-Guidance/commit/41bfca3bfa39f0b43924190d384e2d96be756020)
+- [Moving beta source: OIDC deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: OIDC environment template](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/.env.example)
+- [Pinned verification: OIDC implementation](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/backend/next_oidc.py)
+- [Authoritative OIDC authentication contract](https://github.com/Flux76HQ/App-Guidance/blob/41bfca3bfa39f0b43924190d384e2d96be756020/projects/discvault/specs/oidc-authentication.md)
+- Πηγή και κατάσταση: `2026-09-20`
+- DiscVault Docs: `0.1.14`

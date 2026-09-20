@@ -1,26 +1,26 @@
 ---
 title: 'Install: Reverse proxy and passkeys'
-description: 'Choose Passkeys on a stable HTTPS FQDN, or use the beta Legacy Authentication fallback when a valid FQDN is unavailable.'
+description: 'Use one stable public HTTPS origin for Passkeys and the beta OIDC callback, or use the beta Legacy Authentication fallback when a valid FQDN is unavailable.'
 pageId: 'install-reverse-proxy-passkeys'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
-lastVerified: '2026-07-20'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU', 'Flux76HQ/App-Guidance']
+lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## Goal and result
 
-Choose Passkeys on a stable HTTPS FQDN, or use the beta Legacy Authentication fallback when a valid FQDN is unavailable.
+Use one stable public HTTPS origin for Passkeys and the beta OIDC callback, or use the beta Legacy Authentication fallback when a valid FQDN is unavailable.
 
 ## Applies to
 
-Passkeys require a stable fully qualified domain name over trusted HTTPS: `RP_ID` is the hostname without scheme or port and `RP_ORIGINS` is the exact HTTPS origin. The stable deployment uses host port 6080 and the canonical beta Compose deployment uses 6180. DiscVault 26 beta can instead expose optional Legacy Authentication for a direct private or loopback IP by setting `LEGACY_AUTH_ENABLED=true` and leaving `RP_ID` and `RP_ORIGINS` empty.
+Passkeys require a stable fully qualified domain name over trusted HTTPS: `RP_ID` is the hostname without scheme or port and `RP_ORIGINS` is the exact HTTPS origin. OIDC uses the first `RP_ORIGINS` value to derive its callback and remains HTTPS-only outside localhost. The stable deployment uses host port 6080 and the canonical beta Compose deployment uses 6180. DiscVault 26 beta can instead expose optional Legacy Authentication for a direct private or loopback IP by setting `LEGACY_AUTH_ENABLED=true` and leaving `RP_ID` and `RP_ORIGINS` empty.
 
 ### DiscVault v26 stable
 
@@ -32,6 +32,7 @@ Passkeys require a stable fully qualified domain name over trusted HTTPS: `RP_ID
 
 - DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
 - Passkeys · `RP_ID` + `RP_ORIGINS` · proxy host port `6180`
+- OIDC · `/api/next/auth/oidc/callback` · [Configure: OpenID Connect (OIDC) sign-in](/configure/oidc/)
 - Legacy Authentication · `LEGACY_AUTH_ENABLED=true` · direct local IP fallback
 
 ## Prerequisites
@@ -54,9 +55,10 @@ Follow `/install/legacy-authentication/` before enabling the capability or creat
 2. **Choose:** [Install: Legacy Authentication](/install/legacy-authentication/) · for a direct private or loopback IP without an FQDN, leave `RP_ID` and `RP_ORIGINS` empty
 3. **Configure:** `RP_ID` · hostname only
 4. **Configure:** `RP_ORIGINS` · exact public HTTPS origin
-5. **Configure:** proxy upstream · stable `6080` / beta `6180`
-6. **Test:** `GET /api/next/health` · passkey registration · same origin
-7. **Record:** choose the hostname before registering passkeys; changing it later requires passkey registration again, while localhost remains only a local setup exception
+5. **Configure:** [Configure: OpenID Connect (OIDC) sign-in](/configure/oidc/) · `/api/next/auth/oidc/callback`
+6. **Configure:** proxy upstream · stable `6080` / beta `6180`
+7. **Test:** `GET /api/next/health` · passkey registration · same origin
+8. **Record:** choose the hostname before registering passkeys; changing it later requires passkey registration again, while localhost remains only a local setup exception
 
 ### Commands and settings
 
@@ -81,10 +83,11 @@ curl --fail http://localhost:6180/api/next/health
 
 ## Expected result
 
-The chosen origin reports healthy and either a passkey works on the exact HTTPS FQDN or the beta Legacy Authentication route reaches first-owner setup.
+The chosen origin reports healthy, passkeys use the exact HTTPS FQDN, the beta OIDC provider returns to the registered callback, or the beta Legacy Authentication route reaches first-owner setup.
 
 - HTTPS health · HTTP `2xx`
 - passkey · `RP_ID` + public origin
+- OIDC · `/api/next/auth/oidc/callback`
 - `RP_ID` is the hostname without scheme or port, while `RP_ORIGINS` is the exact full HTTPS origin; both must match the address opened in the browser
 
 ## Safety and rollback
@@ -103,12 +106,12 @@ Restore the prior proxy configuration and RP values together. Choose the hostnam
 
 ## Source and status
 
-- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
-- [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
-- [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
-- [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
-- [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
-- [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
-- Verified: `2026-07-20`
-- DiscVault Docs: `0.1.6`
+- [`Flux76HQ/App-Guidance@41bfca3bfa39`](https://github.com/Flux76HQ/App-Guidance/commit/41bfca3bfa39f0b43924190d384e2d96be756020)
+- [Moving beta source: OIDC deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: OIDC environment template](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/.env.example)
+- [Pinned verification: OIDC implementation](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/backend/next_oidc.py)
+- [Authoritative OIDC authentication contract](https://github.com/Flux76HQ/App-Guidance/blob/41bfca3bfa39f0b43924190d384e2d96be756020/projects/discvault/specs/oidc-authentication.md)
+- Verified: `2026-09-20`
+- DiscVault Docs: `0.1.14`

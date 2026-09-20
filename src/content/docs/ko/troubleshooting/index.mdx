@@ -1,26 +1,26 @@
 ---
 title: '문제 해결'
-description: '작업별 안내: 문제 해결: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.'
+description: '작업별 안내: 문제 해결: `docker compose` · `/api/next/health` · `postgres` · `RP_ID` · OIDC · `auth.oidc_failed`.'
 pageId: 'troubleshooting-index'
 products: ['server', 'pwa', 'ios', 'android']
 platforms: ['all']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVaultApp', 'Flux76HQ/DiscVault-AndroidApp']
-lastVerified: '2026-07-14'
+lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="모든 플랫폼" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVaultApp · Flux76HQ/DiscVault-AndroidApp" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="모든 플랫폼" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVaultApp · Flux76HQ/DiscVault-AndroidApp" verified="2026-09-20" />
 
 ## 목표 및 결과
 
-이 페이지 전용 절차를 수행합니다: **문제 해결**. 이 절차에서 다루는 항목: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+이 페이지 전용 절차를 수행합니다: **문제 해결**. 이 절차에서 다루는 항목: `docker compose` · `/api/next/health` · `postgres` · `RP_ID` · OIDC · `auth.oidc_failed`.
 
 ## 적용 대상
 
-이 페이지의 적용 범위: **문제 해결** (모든 플랫폼). 채널 및 데이터 경계: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/api/next/health`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/api/next/health`. 이 페이지의 전용 확인 지점: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+이 페이지의 적용 범위: **문제 해결** (모든 플랫폼). 채널 및 데이터 경계: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/api/next/health`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/api/next/health`. 이 페이지의 전용 확인 지점: `docker compose` · `/api/next/health` · `postgres` · `RP_ID` · OIDC · `auth.oidc_failed`.
 
 ### DiscVault v26 안정판
 
@@ -42,8 +42,9 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 1. **기록:** `docker compose`
 2. **격리:** 컨테이너 → 리버스 프록시 → 브라우저/앱 → 공급자 → 데이터
-3. **검사:** 개인 정보를 가린 타임스탬프 로그
-4. **보존:** PostgreSQL `/data`
+3. **검사:** [구성: OpenID Connect(OIDC) 로그인](/ko/configure/oidc/) · `auth.oidc_failed`
+4. **검사:** 개인 정보를 가린 타임스탬프 로그
+5. **보존:** PostgreSQL `/data`
 
 ### 명령 및 설정
 
@@ -57,14 +58,14 @@ docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/com
 
 ## 예상 결과
 
-다음 결과의 승인 조건: **문제 해결** 아래 결과가 모두 충족된 경우에만: 실패 계층 하나를 격리하고 타임스탬프, 상태, 이미지 다이제스트 및 비공개 처리한 오류를 기록함. 이 페이지의 전용 확인 지점: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+다음 결과의 승인 조건: **문제 해결** 아래 결과가 모두 충족된 경우에만: 실패 계층 하나를 격리하고 타임스탬프, 상태, 이미지 다이제스트 및 비공개 처리한 오류를 기록함. 이 페이지의 전용 확인 지점: `docker compose` · `/api/next/health` · `postgres` · `RP_ID` · OIDC · `auth.oidc_failed`.
 
 - 실패 계층 하나를 격리하고 타임스탬프, 상태, 이미지 다이제스트 및 비공개 처리한 오류를 기록함
 
 ## 안전 및 롤백
 
 :::caution
-안전한 복구 경계: **문제 해결** 시작하거나 계속하기 전에 다음 작업이 필요합니다: 볼륨, `/data`, 브라우저 자격 증명 또는 네이티브 앱 저장소를 먼저 삭제하지 말고 비공개 처리한 로그를 보존하며 일치하는 백업만 복원함. 이 페이지의 전용 확인 지점: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+안전한 복구 경계: **문제 해결** 시작하거나 계속하기 전에 다음 작업이 필요합니다: 볼륨, `/data`, 브라우저 자격 증명 또는 네이티브 앱 저장소를 먼저 삭제하지 말고 비공개 처리한 로그를 보존하며 일치하는 백업만 복원함. 이 페이지의 전용 확인 지점: `docker compose` · `/api/next/health` · `postgres` · `RP_ID` · OIDC · `auth.oidc_failed`.
 
 - 볼륨, `/data`, 브라우저 자격 증명 또는 네이티브 앱 저장소를 먼저 삭제하지 말고 비공개 처리한 로그를 보존하며 일치하는 백업만 복원함
 :::
@@ -75,8 +76,8 @@ docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/com
 
 ## 출처 및 상태
 
-- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
 - [`helmerzNL/DiscVaultApp@9d15ab2a339c`](https://github.com/helmerzNL/DiscVaultApp/commit/9d15ab2a339cefdb164ec0ab29ad69ddabc511c1)
 - [`Flux76HQ/DiscVault-AndroidApp@a13ef4bdbb23`](https://github.com/Flux76HQ/DiscVault-AndroidApp/commit/a13ef4bdbb23b6a7e52e01cdf532fa222c1b67de)
-- 출처 및 상태: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- 출처 및 상태: `2026-09-20`
+- DiscVault Docs: `0.1.14`

@@ -1,0 +1,108 @@
+---
+title: '구성: OpenID Connect(OIDC) 로그인'
+description: '작업별 안내: 구성: OpenID Connect(OIDC) 로그인: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.'
+pageId: 'configure-oidc'
+products: ['server', 'pwa']
+platforms: ['docker', 'web']
+channels: ['beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault', 'Flux76HQ/App-Guidance']
+lastVerified: '2026-09-20'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="beta" platform="Docker · 웹" version="DiscVault v26" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-09-20" />
+
+## 목표 및 결과
+
+이 페이지 전용 절차를 수행합니다: **구성: OpenID Connect(OIDC) 로그인**. 이 절차에서 다루는 항목: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+## 적용 대상
+
+이 페이지의 적용 범위: **구성: OpenID Connect(OIDC) 로그인** (Docker · 웹). 채널 및 데이터 경계: DiscVault · `26.9.117+`; OIDC는 선택적 브라우저 로그인 방법을 추가하며 로컬 패스키, 선택적 비밀번호, 복구 코드, API 토큰 및 MCP bearer 토큰의 기존 역할은 유지됨; ID는 issuer와 subject의 정확한 쌍이며 이메일로 자동 연결되지 않고 연결에는 로그인된 브라우저 세션이, 연결 해제에는 다른 사용 가능한 로그인 방법이 필요함. 이 페이지의 전용 확인 지점: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+### DiscVault v26 베타
+
+- DiscVault · `26.9.117+`
+- OIDC는 선택적 브라우저 로그인 방법을 추가하며 로컬 패스키, 선택적 비밀번호, 복구 코드, API 토큰 및 MCP bearer 토큰의 기존 역할은 유지됨
+- ID는 issuer와 subject의 정확한 쌍이며 이메일로 자동 연결되지 않고 연결에는 로그인된 브라우저 세션이, 연결 해제에는 다른 사용 가능한 로그인 방법이 필요함
+
+## 사전 요구 사항
+
+- 소유자 접근 권한 · 두 번째 복구 방법
+- [설치: 리버스 프록시 및 패스키](/ko/install/reverse-proxy-passkeys/) · localhost 설정 예외를 제외하면 패스키에는 신뢰할 수 있는 HTTPS의 안정적인 정규화된 도메인 이름이 필요하며, IP 주소만 사용하거나 일반 HTTP를 사용하는 것은 지원되지 않음
+- ID 공급자의 기밀 OIDC 클라이언트와 정확한 DiscVault 콜백 URI
+
+### 공급자 비공개 백 채널
+
+:::note[베타에서 사용 가능]
+정확한 비공개 HTTP 오리진은 토큰 및 JWKS 엔드포인트에만 허용하며 issuer와 브라우저 권한 부여는 HTTPS 전용이고 TLS 검증은 유지되며 discovery, 토큰 및 JWKS 리디렉션은 거부됨
+:::
+
+## 절차
+
+1. **생성:** ID 공급자의 기밀 OIDC 클라이언트와 정확한 DiscVault 콜백 URI · `openid profile email` · `https://discvault.example.com/api/next/auth/oidc/callback`
+2. **구성:** `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · issuer, 클라이언트 ID, 클라이언트 암호를 모두 함께 설정하거나 세 값을 모두 비워 두며 일부만 설정하면 시작되지 않음
+3. **구성:** `DISCVAULT_OIDC_PROVIDER_NAME` · `OIDC`
+4. **선택:** `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · `localhost` · Kubernetes DNS · `.internal` · 정확한 비공개 HTTP 오리진은 토큰 및 JWKS 엔드포인트에만 허용하며 issuer와 브라우저 권한 부여는 HTTPS 전용이고 TLS 검증은 유지되며 discovery, 토큰 및 JWKS 리디렉션은 거부됨
+5. **시작:** `next-api` · `--force-recreate`
+6. **테스트:** OIDC는 선택적 브라우저 로그인 방법을 추가하며 로컬 패스키, 선택적 비밀번호, 복구 코드, API 토큰 및 MCP bearer 토큰의 기존 역할은 유지됨 · ID는 issuer와 subject의 정확한 쌍이며 이메일로 자동 연결되지 않고 연결에는 로그인된 브라우저 세션이, 연결 해제에는 다른 사용 가능한 로그인 방법이 필요함
+7. **검사:** `auth.oidc_failed` · 실패 시 설정된 공급자 표시 이름, 안전한 `auth.oidc_failed` 코드 및 흐름 모드만 기록되며 암호, 토큰, 권한 부여 코드, state, nonce, 엔드포인트 URL 및 PKCE 값은 기록되지 않음
+
+### 명령 및 설정
+
+#### DiscVault v26 베타
+
+```text
+RP_ORIGINS=https://discvault.example.com
+DISCVAULT_OIDC_ISSUER=https://id.example.com
+DISCVAULT_OIDC_CLIENT_ID=<client-id>
+DISCVAULT_OIDC_CLIENT_SECRET=<client-secret>
+DISCVAULT_OIDC_PROVIDER_NAME=Pocket ID
+DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS=
+```
+
+```text
+DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS=http://pocket-id.pocket-id.svc.cluster.local:1411
+```
+
+```bash
+cd /opt/discvault-next
+docker compose -p discvault_next_deploy config --quiet
+docker compose -p discvault_next_deploy up -d --force-recreate next-api
+curl --fail https://discvault.example.com/api/next/auth/status
+```
+
+## 예상 결과
+
+다음 결과의 승인 조건: **구성: OpenID Connect(OIDC) 로그인** 아래 결과가 모두 충족된 경우에만: OIDC는 선택적 브라우저 로그인 방법을 추가하며 로컬 패스키, 선택적 비밀번호, 복구 코드, API 토큰 및 MCP bearer 토큰의 기존 역할은 유지됨; ID는 issuer와 subject의 정확한 쌍이며 이메일로 자동 연결되지 않고 연결에는 로그인된 브라우저 세션이, 연결 해제에는 다른 사용 가능한 로그인 방법이 필요함; 실패 시 설정된 공급자 표시 이름, 안전한 `auth.oidc_failed` 코드 및 흐름 모드만 기록되며 암호, 토큰, 권한 부여 코드, state, nonce, 엔드포인트 URL 및 PKCE 값은 기록되지 않음. 이 페이지의 전용 확인 지점: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+- OIDC는 선택적 브라우저 로그인 방법을 추가하며 로컬 패스키, 선택적 비밀번호, 복구 코드, API 토큰 및 MCP bearer 토큰의 기존 역할은 유지됨
+- ID는 issuer와 subject의 정확한 쌍이며 이메일로 자동 연결되지 않고 연결에는 로그인된 브라우저 세션이, 연결 해제에는 다른 사용 가능한 로그인 방법이 필요함
+- 실패 시 설정된 공급자 표시 이름, 안전한 `auth.oidc_failed` 코드 및 흐름 모드만 기록되며 암호, 토큰, 권한 부여 코드, state, nonce, 엔드포인트 URL 및 PKCE 값은 기록되지 않음
+
+## 안전 및 롤백
+
+:::caution
+안전한 복구 경계: **구성: OpenID Connect(OIDC) 로그인** 시작하거나 계속하기 전에 다음 작업이 필요합니다: 클라이언트 암호는 추적되지 않는 런타임 환경 또는 암호 관리자에만 저장하고 노출되면 교체하며 OIDC를 비활성화하기 전에 OIDC 전용 사용자마다 다른 사용 가능한 로그인 방법을 제공함; 정확한 비공개 HTTP 오리진은 토큰 및 JWKS 엔드포인트에만 허용하며 issuer와 브라우저 권한 부여는 HTTPS 전용이고 TLS 검증은 유지되며 discovery, 토큰 및 JWKS 리디렉션은 거부됨; ID는 issuer와 subject의 정확한 쌍이며 이메일로 자동 연결되지 않고 연결에는 로그인된 브라우저 세션이, 연결 해제에는 다른 사용 가능한 로그인 방법이 필요함. 이 페이지의 전용 확인 지점: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+- 클라이언트 암호는 추적되지 않는 런타임 환경 또는 암호 관리자에만 저장하고 노출되면 교체하며 OIDC를 비활성화하기 전에 OIDC 전용 사용자마다 다른 사용 가능한 로그인 방법을 제공함
+- 정확한 비공개 HTTP 오리진은 토큰 및 JWKS 엔드포인트에만 허용하며 issuer와 브라우저 권한 부여는 HTTPS 전용이고 TLS 검증은 유지되며 discovery, 토큰 및 JWKS 리디렉션은 거부됨
+- ID는 issuer와 subject의 정확한 쌍이며 이메일로 자동 연결되지 않고 연결에는 로그인된 브라우저 세션이, 연결 해제에는 다른 사용 가능한 로그인 방법이 필요함
+:::
+
+## 다음 단계
+
+[구성: 플러그인 및 메타데이터](/ko/configure/plugins-metadata/)
+
+## 출처 및 상태
+
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
+- [`Flux76HQ/App-Guidance@41bfca3bfa39`](https://github.com/Flux76HQ/App-Guidance/commit/41bfca3bfa39f0b43924190d384e2d96be756020)
+- [Moving beta source: OIDC deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: OIDC environment template](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/.env.example)
+- [Pinned verification: OIDC implementation](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/backend/next_oidc.py)
+- [Authoritative OIDC authentication contract](https://github.com/Flux76HQ/App-Guidance/blob/41bfca3bfa39f0b43924190d384e2d96be756020/projects/discvault/specs/oidc-authentication.md)
+- 출처 및 상태: `2026-09-20`
+- DiscVault Docs: `0.1.14`

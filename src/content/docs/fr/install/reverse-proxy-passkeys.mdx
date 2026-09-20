@@ -1,26 +1,26 @@
 ---
 title: 'Installation: Proxy inverse et clés d’accès'
-description: 'Instructions propres à la tâche : Installation: Proxy inverse et clés d’accès: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.'
+description: 'Instructions propres à la tâche : Installation: Proxy inverse et clés d’accès: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.'
 pageId: 'install-reverse-proxy-passkeys'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
-lastVerified: '2026-07-20'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU', 'Flux76HQ/App-Guidance']
+lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## Objectif et résultat
 
-Suivez le déroulement propre à cette page pour **Installation: Proxy inverse et clés d’accès**. Cette procédure utilise FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+Suivez le déroulement propre à cette page pour **Installation: Proxy inverse et clés d’accès**. Cette procédure utilise FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 ## S’applique à
 
-Cette page s’applique uniquement à **Installation: Proxy inverse et clés d’accès** (Docker · web). Les limites de canal et de données sont : DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6080`; hors de l’exception localhost, les passkeys exigent un nom de domaine complet stable via un HTTPS fiable ; une adresse IP seule ou HTTP simple n’est pas pris en charge; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; `LEGACY_AUTH_ENABLED=true`. Points de contrôle propres à la page : FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+Cette page s’applique uniquement à **Installation: Proxy inverse et clés d’accès** (Docker · web). Les limites de canal et de données sont : DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6080`; hors de l’exception localhost, les passkeys exigent un nom de domaine complet stable via un HTTPS fiable ; une adresse IP seule ou HTTP simple n’est pas pris en charge; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; OIDC · `/api/next/auth/oidc/callback` · [Configuration: Connexion avec OpenID Connect (OIDC)](/fr/configure/oidc/); `LEGACY_AUTH_ENABLED=true`. Points de contrôle propres à la page : FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 ### DiscVault v26 stable
 
@@ -32,6 +32,7 @@ Cette page s’applique uniquement à **Installation: Proxy inverse et clés d�
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `RP_ID` `RP_ORIGINS` · `6180`
+- OIDC · `/api/next/auth/oidc/callback` · [Configuration: Connexion avec OpenID Connect (OIDC)](/fr/configure/oidc/)
 - `LEGACY_AUTH_ENABLED=true`
 
 ## Prérequis
@@ -54,9 +55,10 @@ Suivez `/install/legacy-authentication/` avant d’activer la fonction ou de cr�
 2. **Choisir:** [Installation: Legacy Authentication](/fr/install/legacy-authentication/) · pour une IP privée ou loopback directe sans FQDN, laissez `RP_ID` et `RP_ORIGINS` vides
 3. **Configurer:** `RP_ID`
 4. **Configurer:** `RP_ORIGINS` · HTTPS
-5. **Configurer:** `6080` `6180`
-6. **Tester:** `GET /api/next/health`
-7. **Consigner:** choisissez le nom d’hôte avant d’enregistrer les passkeys ; le modifier ensuite impose un nouvel enregistrement, localhost restant uniquement une exception locale
+5. **Configurer:** [Configuration: Connexion avec OpenID Connect (OIDC)](/fr/configure/oidc/) · `/api/next/auth/oidc/callback`
+6. **Configurer:** `6080` `6180`
+7. **Tester:** `GET /api/next/health`
+8. **Consigner:** choisissez le nom d’hôte avant d’enregistrer les passkeys ; le modifier ensuite impose un nouvel enregistrement, localhost restant uniquement une exception locale
 
 ### Commandes et réglages
 
@@ -81,16 +83,17 @@ curl --fail http://localhost:6180/api/next/health
 
 ## Résultat attendu
 
-Validez le résultat de **Installation: Proxy inverse et clés d’accès** uniquement lorsque tous les résultats suivants sont confirmés : HTTPS · HTTP `2xx`; `RP_ID`; `RP_ID` est le nom d’hôte sans schéma ni port, tandis que `RP_ORIGINS` est l’origine HTTPS complète exacte ; les deux doivent correspondre à l’adresse ouverte dans le navigateur. Points de contrôle propres à la page : FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+Validez le résultat de **Installation: Proxy inverse et clés d’accès** uniquement lorsque tous les résultats suivants sont confirmés : HTTPS · HTTP `2xx`; `RP_ID`; OIDC · `/api/next/auth/oidc/callback`; `RP_ID` est le nom d’hôte sans schéma ni port, tandis que `RP_ORIGINS` est l’origine HTTPS complète exacte ; les deux doivent correspondre à l’adresse ouverte dans le navigateur. Points de contrôle propres à la page : FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 - HTTPS · HTTP `2xx`
 - `RP_ID`
+- OIDC · `/api/next/auth/oidc/callback`
 - `RP_ID` est le nom d’hôte sans schéma ni port, tandis que `RP_ORIGINS` est l’origine HTTPS complète exacte ; les deux doivent correspondre à l’adresse ouverte dans le navigateur
 
 ## Sécurité et retour arrière
 
 :::caution
-La limite de récupération sûre pour **Installation: Proxy inverse et clés d’accès** impose ces actions avant tout démarrage ou toute poursuite : choisissez le nom d’hôte avant d’enregistrer les passkeys ; le modifier ensuite impose un nouvel enregistrement, localhost restant uniquement une exception locale; seule une requête privée ou loopback directe avec des réglages RP invalides ou vides peut proposer un démarrage sans TOTP ; conservez TOTP pour identifiant, mot de passe et 2FA; restaurez ensemble le proxy et les valeurs RP, et conservez une méthode de récupération propriétaire. Points de contrôle propres à la page : FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+La limite de récupération sûre pour **Installation: Proxy inverse et clés d’accès** impose ces actions avant tout démarrage ou toute poursuite : choisissez le nom d’hôte avant d’enregistrer les passkeys ; le modifier ensuite impose un nouvel enregistrement, localhost restant uniquement une exception locale; seule une requête privée ou loopback directe avec des réglages RP invalides ou vides peut proposer un démarrage sans TOTP ; conservez TOTP pour identifiant, mot de passe et 2FA; restaurez ensemble le proxy et les valeurs RP, et conservez une méthode de récupération propriétaire. Points de contrôle propres à la page : FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 - choisissez le nom d’hôte avant d’enregistrer les passkeys ; le modifier ensuite impose un nouvel enregistrement, localhost restant uniquement une exception locale
 - seule une requête privée ou loopback directe avec des réglages RP invalides ou vides peut proposer un démarrage sans TOTP ; conservez TOTP pour identifiant, mot de passe et 2FA
@@ -103,12 +106,12 @@ La limite de récupération sûre pour **Installation: Proxy inverse et clés d�
 
 ## Source et état
 
-- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
-- [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
-- [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
-- [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
-- [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
-- [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
-- Source et état: `2026-07-20`
-- DiscVault Docs: `0.1.6`
+- [`Flux76HQ/App-Guidance@41bfca3bfa39`](https://github.com/Flux76HQ/App-Guidance/commit/41bfca3bfa39f0b43924190d384e2d96be756020)
+- [Moving beta source: OIDC deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: OIDC environment template](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/.env.example)
+- [Pinned verification: OIDC implementation](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/backend/next_oidc.py)
+- [Authoritative OIDC authentication contract](https://github.com/Flux76HQ/App-Guidance/blob/41bfca3bfa39f0b43924190d384e2d96be756020/projects/discvault/specs/oidc-authentication.md)
+- Source et état: `2026-09-20`
+- DiscVault Docs: `0.1.14`

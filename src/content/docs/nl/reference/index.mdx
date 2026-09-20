@@ -1,26 +1,26 @@
 ---
 title: 'Referentie'
-description: 'Taakspecifieke instructies voor Referentie: `:latest` · `:beta` · `:dev` · `6080:5000`.'
+description: 'Taakspecifieke instructies voor Referentie: `:latest` · `:beta` · `:dev` · `6080:5000` · `DISCVAULT_OIDC_ISSUER`.'
 pageId: 'reference-index'
 products: ['server', 'pwa', 'ios', 'android']
 platforms: ['all']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
 sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="alle platforms" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="alle platforms" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-09-20" />
 
 ## Doel en resultaat
 
-Voer de paginaspecifieke werkwijze uit voor **Referentie**. Deze werkwijze gebruikt `:latest` · `:beta` · `:dev` · `6080:5000`.
+Voer de paginaspecifieke werkwijze uit voor **Referentie**. Deze werkwijze gebruikt `:latest` · `:beta` · `:dev` · `6080:5000` · `DISCVAULT_OIDC_ISSUER`.
 
 ## Van toepassing op
 
-Deze pagina is uitsluitend van toepassing op **Referentie** (alle platforms). De kanaal- en gegevensgrenzen zijn: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`. Paginaspecifieke controlepunten: `:latest` · `:beta` · `:dev` · `6080:5000`.
+Deze pagina is uitsluitend van toepassing op **Referentie** (alle platforms). De kanaal- en gegevensgrenzen zijn: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`. Paginaspecifieke controlepunten: `:latest` · `:beta` · `:dev` · `6080:5000` · `DISCVAULT_OIDC_ISSUER`.
 
 ### DiscVault v26 stabiel
 
@@ -43,13 +43,14 @@ Deze pagina is uitsluitend van toepassing op **Referentie** (alle platforms). De
 1. **Controleren:** `:latest` `:beta`
 2. **Vastleggen:** `:dev` is alleen voor engineering en is geen releasekanaal; DiscVault v26 stabiel gebruikt `:latest` en bèta gebruikt `:beta` · `:dev`
 3. **Vastleggen:** `/api/next/health`
-4. **Vastleggen:** PostgreSQL `/data`
+4. **Vastleggen:** [Configureren: Aanmelden met OpenID Connect (OIDC)](/nl/configure/oidc/) · `DISCVAULT_OIDC_ISSUER`
+5. **Vastleggen:** PostgreSQL `/data`
 
 
 
 ## Verwacht resultaat
 
-Accepteer het resultaat voor **Referentie** alleen wanneer alle onderstaande resultaten kloppen: gekozen releasekanaal · `@sha256:`; `:latest` · `:beta` · `:dev`. Paginaspecifieke controlepunten: `:latest` · `:beta` · `:dev` · `6080:5000`.
+Accepteer het resultaat voor **Referentie** alleen wanneer alle onderstaande resultaten kloppen: gekozen releasekanaal · `@sha256:`; `:latest` · `:beta` · `:dev`. Paginaspecifieke controlepunten: `:latest` · `:beta` · `:dev` · `6080:5000` · `DISCVAULT_OIDC_ISSUER`.
 
 - gekozen releasekanaal · `@sha256:`
 - `:latest` · `:beta` · `:dev`
@@ -57,7 +58,7 @@ Accepteer het resultaat voor **Referentie** alleen wanneer alle onderstaande res
 ## Veiligheid en terugdraaien
 
 :::caution
-De veilige herstelgrens voor **Referentie** vereist deze acties voordat iets start of doorgaat: de referentie is alleen-lezen; gebruik de gerichte procedure voordat je opdrachten uitvoert of gegevens wijzigt; `:dev` is alleen voor engineering en is geen releasekanaal; DiscVault v26 stabiel gebruikt `:latest` en bèta gebruikt `:beta` · `:dev`. Paginaspecifieke controlepunten: `:latest` · `:beta` · `:dev` · `6080:5000`.
+De veilige herstelgrens voor **Referentie** vereist deze acties voordat iets start of doorgaat: de referentie is alleen-lezen; gebruik de gerichte procedure voordat je opdrachten uitvoert of gegevens wijzigt; `:dev` is alleen voor engineering en is geen releasekanaal; DiscVault v26 stabiel gebruikt `:latest` en bèta gebruikt `:beta` · `:dev`. Paginaspecifieke controlepunten: `:latest` · `:beta` · `:dev` · `6080:5000` · `DISCVAULT_OIDC_ISSUER`.
 
 - de referentie is alleen-lezen; gebruik de gerichte procedure voordat je opdrachten uitvoert of gegevens wijzigt
 - `:dev` is alleen voor engineering en is geen releasekanaal; DiscVault v26 stabiel gebruikt `:latest` en bèta gebruikt `:beta` · `:dev`
@@ -69,6 +70,6 @@ De veilige herstelgrens voor **Referentie** vereist deze acties voordat iets sta
 
 ## Bron en status
 
-- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Bron en status: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
+- Bron en status: `2026-09-20`
+- DiscVault Docs: `0.1.14`

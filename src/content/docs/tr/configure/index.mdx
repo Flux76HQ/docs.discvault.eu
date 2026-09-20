@@ -1,26 +1,26 @@
 ---
 title: 'Yapılandırma: Genel bakış'
-description: 'Göreve özel yönergeler: Yapılandırma: Genel bakış: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.'
+description: 'Göreve özel yönergeler: Yapılandırma: Genel bakış: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/oidc/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.'
 pageId: 'configure-index'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
 sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-09-20" />
 
 ## Amaç ve sonuç
 
-Sayfaya özel iş akışını tamamlayın: **Yapılandırma: Genel bakış**. Bu prosedür şunları kullanır: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
+Sayfaya özel iş akışını tamamlayın: **Yapılandırma: Genel bakış**. Bu prosedür şunları kullanır: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/oidc/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 ## Geçerli olduğu alan
 
-Bu sayfa yalnızca şunlar için geçerlidir: **Yapılandırma: Genel bakış** (Docker · web). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. Sayfaya özel denetim noktaları: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
+Bu sayfa yalnızca şunlar için geçerlidir: **Yapılandırma: Genel bakış** (Docker · web). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. Sayfaya özel denetim noktaları: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/oidc/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 ### DiscVault v26 kararlı
 
@@ -41,20 +41,22 @@ Bu sayfa yalnızca şunlar için geçerlidir: **Yapılandırma: Genel bakış** 
 
 1. **Seçin:** [Yapılandırma: Ortam değişkenleri](/tr/configure/environment/)
 2. **Seçin:** [Yapılandırma: Kimlik doğrulama ve RBAC](/tr/configure/auth-rbac/) · RBAC
-3. **Seçin:** [Kurulum: Legacy Authentication](/tr/install/legacy-authentication/)
-4. **Seçin:** [Yapılandırma: Eklentiler ve meta veriler](/tr/configure/plugins-metadata/)
-5. **Kaydedin:** `/configure/environment/`
+3. **Seçin:** [Yapılandırma: OpenID Connect (OIDC) ile oturum açma](/tr/configure/oidc/) · OIDC Pocket ID
+4. **Seçin:** [Kurulum: Legacy Authentication](/tr/install/legacy-authentication/)
+5. **Seçin:** [Yapılandırma: Eklentiler ve meta veriler](/tr/configure/plugins-metadata/)
+6. **Kaydedin:** `/configure/environment/`
 
 ### Görev yolları
 
 - [Yapılandırma: Ortam değişkenleri](/tr/configure/environment/) — DiscVault 26 `.env.example`
 - [Yapılandırma: Kimlik doğrulama ve RBAC](/tr/configure/auth-rbac/) — DiscVault 26 RBAC
+- [Yapılandırma: OpenID Connect (OIDC) ile oturum açma](/tr/configure/oidc/) — DiscVault 26.9 117 OIDC Pocket ID
 - [Kurulum: Legacy Authentication](/tr/install/legacy-authentication/) — DiscVault 26 TOTP
 - [Yapılandırma: Eklentiler ve meta veriler](/tr/configure/plugins-metadata/) — DiscVault 26
 
 ## Beklenen sonuç
 
-Şunun sonucunu kabul edin: **Yapılandırma: Genel bakış** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: seçilen yayın kanalı; `/configure/auth-rbac/`. Sayfaya özel denetim noktaları: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
+Şunun sonucunu kabul edin: **Yapılandırma: Genel bakış** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: seçilen yayın kanalı; `/configure/auth-rbac/`. Sayfaya özel denetim noktaları: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/oidc/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 - seçilen yayın kanalı
 - `/configure/auth-rbac/`
@@ -62,7 +64,7 @@ Bu sayfa yalnızca şunlar için geçerlidir: **Yapılandırma: Genel bakış** 
 ## Güvenlik ve geri alma
 
 :::caution
-Şunun güvenli kurtarma sınırı: **Yapılandırma: Genel bakış** başlatmadan veya devam etmeden önce şu işlemleri gerektirir: her seferinde bir alt sistemi değiştirin, önceki değeri ve yedeği koruyun ve sonraki değişiklikten önce geri alın. Sayfaya özel denetim noktaları: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
+Şunun güvenli kurtarma sınırı: **Yapılandırma: Genel bakış** başlatmadan veya devam etmeden önce şu işlemleri gerektirir: her seferinde bir alt sistemi değiştirin, önceki değeri ve yedeği koruyun ve sonraki değişiklikten önce geri alın. Sayfaya özel denetim noktaları: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/oidc/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 - her seferinde bir alt sistemi değiştirin, önceki değeri ve yedeği koruyun ve sonraki değişiklikten önce geri alın
 :::
@@ -73,6 +75,6 @@ Bu sayfa yalnızca şunlar için geçerlidir: **Yapılandırma: Genel bakış** 
 
 ## Kaynak ve durum
 
-- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Kaynak ve durum: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
+- Kaynak ve durum: `2026-09-20`
+- DiscVault Docs: `0.1.14`

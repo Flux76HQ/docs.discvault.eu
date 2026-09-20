@@ -1,26 +1,26 @@
 ---
 title: 'Configureren: Authenticatie en RBAC'
-description: 'Taakspecifieke instructies voor Configureren: Authenticatie en RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.'
+description: 'Taakspecifieke instructies voor Configureren: Authenticatie en RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · OIDC · Argon2id · TOTP.'
 pageId: 'configure-auth-rbac'
 products: ['server']
 platforms: ['web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
-lastVerified: '2026-07-20'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU', 'Flux76HQ/App-Guidance']
+lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
+<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## Doel en resultaat
 
-Voer de paginaspecifieke werkwijze uit voor **Configureren: Authenticatie en RBAC**. Deze werkwijze gebruikt `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
+Voer de paginaspecifieke werkwijze uit voor **Configureren: Authenticatie en RBAC**. Deze werkwijze gebruikt `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · OIDC · Argon2id · TOTP.
 
 ## Van toepassing op
 
-Deze pagina is uitsluitend van toepassing op **Configureren: Authenticatie en RBAC** (web). De kanaal- en gegevensgrenzen zijn: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; een passkey is een cryptografisch sleutelpaar: de privésleutel blijft op het apparaat of in een vertrouwde referentiebeheerder en DiscVault bewaart alleen de openbare sleutel; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn; TOTP. Paginaspecifieke controlepunten: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
+Deze pagina is uitsluitend van toepassing op **Configureren: Authenticatie en RBAC** (web). De kanaal- en gegevensgrenzen zijn: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; een passkey is een cryptografisch sleutelpaar: de privésleutel blijft op het apparaat of in een vertrouwde referentiebeheerder en DiscVault bewaart alleen de openbare sleutel; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn OIDC; TOTP. Paginaspecifieke controlepunten: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · OIDC · Argon2id · TOTP.
 
 ### DiscVault v26 stabiel
 
@@ -31,7 +31,7 @@ Deze pagina is uitsluitend van toepassing op **Configureren: Authenticatie en RB
 ### DiscVault v26 bèta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- WebAuthn
+- WebAuthn OIDC
 - TOTP
 
 ## Vereisten
@@ -52,8 +52,9 @@ Deze pagina is uitsluitend van toepassing op **Configureren: Authenticatie en RB
 8. **Maken:** Beheer → Gebruikers → Uitnodiging voor 48 uur maken
 9. **Configureren:** Beheer → Rollen → Basis / Geavanceerd
 10. **Configureren:** schakel bij een bestaande installatie wachtwoordlogin in onder Gebruikers en rollen en keur dit goed met een verse passkeybevestiging van eigenaar of beheerder · eigenaren en beheerders kunnen tijdelijke wachtwoorden uitgeven, wijziging verplichten, MFA per gebruiker instellen en passkeyregistratie beheren
-11. **Vastleggen:** herstelcodes zijn gehasht, eenmalig en gedeeld met passkeyherstel; back-ups bevatten geen TOTP-geheimen of herstelmateriaal, dus MFA-gebruikers schrijven opnieuw in na herstel · Legacy Authentication uitschakelen vereist een actieve passkey van de eigenaar; een eigenaar met alleen lokaal IP moet eerst een geldige FQDN en eigenaarspasskey instellen
-12. **Testen:** `/api/next/auth/rbac`
+11. **Vergelijken:** [Configureren: Aanmelden met OpenID Connect (OIDC)](/nl/configure/oidc/) · OIDC voegt een optionele browseraanmelding toe; lokale passkeys, optionele wachtwoorden, herstelcodes, API-tokens en MCP bearer-tokens behouden hun bestaande rol
+12. **Vastleggen:** herstelcodes zijn gehasht, eenmalig en gedeeld met passkeyherstel; back-ups bevatten geen TOTP-geheimen of herstelmateriaal, dus MFA-gebruikers schrijven opnieuw in na herstel · Legacy Authentication uitschakelen vereist een actieve passkey van de eigenaar; een eigenaar met alleen lokaal IP moet eerst een geldige FQDN en eigenaarspasskey instellen
+13. **Testen:** `/api/next/auth/rbac`
 
 ### Opdrachten en instellingen
 
@@ -73,7 +74,7 @@ curl --fail http://localhost:6180/api/next/auth/rbac
 
 ## Verwacht resultaat
 
-Accepteer het resultaat voor **Configureren: Authenticatie en RBAC** alleen wanneer alle onderstaande resultaten kloppen: inloggen met de passkey van de eigenaar werkt, registratie op uitnodiging volgt de instelling en de testgebruiker heeft alleen toegewezen rechten; passkeys zijn phishingbestendig en uniek voor de site; aanmelden gebruikt de apparaatontgrendeling in plaats van een herbruikbaar accountwachtwoord; een tijdelijke uitnodigingscode start de registratie maar is geen herbruikbaar accountwachtwoord; normaal aanmelden gebruikt een passkey. Paginaspecifieke controlepunten: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
+Accepteer het resultaat voor **Configureren: Authenticatie en RBAC** alleen wanneer alle onderstaande resultaten kloppen: inloggen met de passkey van de eigenaar werkt, registratie op uitnodiging volgt de instelling en de testgebruiker heeft alleen toegewezen rechten; passkeys zijn phishingbestendig en uniek voor de site; aanmelden gebruikt de apparaatontgrendeling in plaats van een herbruikbaar accountwachtwoord; een tijdelijke uitnodigingscode start de registratie maar is geen herbruikbaar accountwachtwoord; normaal aanmelden gebruikt een passkey. Paginaspecifieke controlepunten: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · OIDC · Argon2id · TOTP.
 
 - inloggen met de passkey van de eigenaar werkt, registratie op uitnodiging volgt de instelling en de testgebruiker heeft alleen toegewezen rechten
 - passkeys zijn phishingbestendig en uniek voor de site; aanmelden gebruikt de apparaatontgrendeling in plaats van een herbruikbaar accountwachtwoord
@@ -82,27 +83,28 @@ Accepteer het resultaat voor **Configureren: Authenticatie en RBAC** alleen wann
 ## Veiligheid en terugdraaien
 
 :::caution
-De veilige herstelgrens voor **Configureren: Authenticatie en RBAC** vereist deze acties voordat iets start of doorgaat: registreer meer dan één passkey, bijvoorbeeld op een telefoon en desktopapparaat, en behoud een onafhankelijk herstelpad voor de eigenaar voordat een apparaat wordt vervangen of verloren raakt; wachtwoorden zijn minimaal 15 tekens, mogen niet gelijk zijn aan de gebruikersnaam of een geweigerd algemeen wachtwoord en worden gehasht met Argon2id; vijf fouten in 15 minuten blokkeren 15 minuten; herstelcodes zijn gehasht, eenmalig en gedeeld met passkeyherstel; back-ups bevatten geen TOTP-geheimen of herstelmateriaal, dus MFA-gebruikers schrijven opnieuw in na herstel; Legacy Authentication uitschakelen vereist een actieve passkey van de eigenaar; een eigenaar met alleen lokaal IP moet eerst een geldige FQDN en eigenaarspasskey instellen; behoud de eigenaarssessie en een tweede herstelmethode; verwijder nooit de laatste passkey van de eigenaar. Paginaspecifieke controlepunten: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
+De veilige herstelgrens voor **Configureren: Authenticatie en RBAC** vereist deze acties voordat iets start of doorgaat: registreer meer dan één passkey, bijvoorbeeld op een telefoon en desktopapparaat, en behoud een onafhankelijk herstelpad voor de eigenaar voordat een apparaat wordt vervangen of verloren raakt; wachtwoorden zijn minimaal 15 tekens, mogen niet gelijk zijn aan de gebruikersnaam of een geweigerd algemeen wachtwoord en worden gehasht met Argon2id; vijf fouten in 15 minuten blokkeren 15 minuten; herstelcodes zijn gehasht, eenmalig en gedeeld met passkeyherstel; back-ups bevatten geen TOTP-geheimen of herstelmateriaal, dus MFA-gebruikers schrijven opnieuw in na herstel; Legacy Authentication uitschakelen vereist een actieve passkey van de eigenaar; een eigenaar met alleen lokaal IP moet eerst een geldige FQDN en eigenaarspasskey instellen; een identiteit is het exacte paar issuer en subject; e-mail koppelt nooit automatisch, koppelen vereist de aangemelde browsersessie en ontkoppelen vereist een andere bruikbare aanmeldmethode; behoud de eigenaarssessie en een tweede herstelmethode; verwijder nooit de laatste passkey van de eigenaar. Paginaspecifieke controlepunten: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · OIDC · Argon2id · TOTP.
 
 - registreer meer dan één passkey, bijvoorbeeld op een telefoon en desktopapparaat, en behoud een onafhankelijk herstelpad voor de eigenaar voordat een apparaat wordt vervangen of verloren raakt
 - wachtwoorden zijn minimaal 15 tekens, mogen niet gelijk zijn aan de gebruikersnaam of een geweigerd algemeen wachtwoord en worden gehasht met Argon2id; vijf fouten in 15 minuten blokkeren 15 minuten
 - herstelcodes zijn gehasht, eenmalig en gedeeld met passkeyherstel; back-ups bevatten geen TOTP-geheimen of herstelmateriaal, dus MFA-gebruikers schrijven opnieuw in na herstel
 - Legacy Authentication uitschakelen vereist een actieve passkey van de eigenaar; een eigenaar met alleen lokaal IP moet eerst een geldige FQDN en eigenaarspasskey instellen
+- een identiteit is het exacte paar issuer en subject; e-mail koppelt nooit automatisch, koppelen vereist de aangemelde browsersessie en ontkoppelen vereist een andere bruikbare aanmeldmethode
 - behoud de eigenaarssessie en een tweede herstelmethode; verwijder nooit de laatste passkey van de eigenaar
 :::
 
 ## Volgende stap
 
-[Configureren: Plug-ins en metadata](/nl/configure/plugins-metadata/)
+[Configureren: Aanmelden met OpenID Connect (OIDC)](/nl/configure/oidc/)
 
 ## Bron en status
 
-- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
-- [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
-- [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
-- [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
-- [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
-- [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
-- Bron en status: `2026-07-20`
-- DiscVault Docs: `0.1.6`
+- [`Flux76HQ/App-Guidance@41bfca3bfa39`](https://github.com/Flux76HQ/App-Guidance/commit/41bfca3bfa39f0b43924190d384e2d96be756020)
+- [Moving beta source: OIDC deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: OIDC environment template](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/.env.example)
+- [Pinned verification: OIDC implementation](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/backend/next_oidc.py)
+- [Authoritative OIDC authentication contract](https://github.com/Flux76HQ/App-Guidance/blob/41bfca3bfa39f0b43924190d384e2d96be756020/projects/discvault/specs/oidc-authentication.md)
+- Bron en status: `2026-09-20`
+- DiscVault Docs: `0.1.14`

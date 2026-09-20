@@ -1,26 +1,26 @@
 ---
 title: 'Konfiguracja: Uwierzytelnianie i RBAC'
-description: 'Instrukcja właściwa dla zadania: Konfiguracja: Uwierzytelnianie i RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.'
+description: 'Instrukcja właściwa dla zadania: Konfiguracja: Uwierzytelnianie i RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · OIDC · Argon2id · TOTP.'
 pageId: 'configure-auth-rbac'
 products: ['server']
 platforms: ['web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
-lastVerified: '2026-07-20'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU', 'Flux76HQ/App-Guidance']
+lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
+<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## Cel i rezultat
 
-Wykonaj procedurę właściwą dla strony: **Konfiguracja: Uwierzytelnianie i RBAC**. Ta procedura korzysta z `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
+Wykonaj procedurę właściwą dla strony: **Konfiguracja: Uwierzytelnianie i RBAC**. Ta procedura korzysta z `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · OIDC · Argon2id · TOTP.
 
 ## Dotyczy
 
-Ta strona dotyczy wyłącznie **Konfiguracja: Uwierzytelnianie i RBAC** (web). Granice kanału i danych: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; passkey to kryptograficzna para kluczy: klucz prywatny pozostaje na urządzeniu lub w zaufanym menedżerze poświadczeń, a DiscVault przechowuje tylko klucz publiczny; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn; TOTP. Punkty kontrolne tej strony: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
+Ta strona dotyczy wyłącznie **Konfiguracja: Uwierzytelnianie i RBAC** (web). Granice kanału i danych: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; passkey to kryptograficzna para kluczy: klucz prywatny pozostaje na urządzeniu lub w zaufanym menedżerze poświadczeń, a DiscVault przechowuje tylko klucz publiczny; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn OIDC; TOTP. Punkty kontrolne tej strony: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · OIDC · Argon2id · TOTP.
 
 ### DiscVault v26 – stabilny
 
@@ -31,7 +31,7 @@ Ta strona dotyczy wyłącznie **Konfiguracja: Uwierzytelnianie i RBAC** (web). G
 ### DiscVault v26 – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- WebAuthn
+- WebAuthn OIDC
 - TOTP
 
 ## Wymagania wstępne
@@ -52,8 +52,9 @@ Ta strona dotyczy wyłącznie **Konfiguracja: Uwierzytelnianie i RBAC** (web). G
 8. **Utwórz:** Administracja → Użytkownicy → Utwórz zaproszenie na 48 godzin
 9. **Skonfiguruj:** Administracja → Role → Podstawowe / Zaawansowane
 10. **Skonfiguruj:** w istniejącej instalacji włącz logowanie hasłem w Użytkownicy i role i zatwierdź świeżym potwierdzeniem passkey właściciela lub administratora · właściciele i administratorzy mogą wydawać hasła tymczasowe, wymagać zmiany, ustawiać MFA użytkownika i kontrolować rejestrację passkeys
-11. **Zapisz:** kody odzyskiwania są haszowane, jednorazowe i wspólne z odzyskiwaniem passkey; kopie pomijają sekrety TOTP i dane odzyskiwania, więc MFA trzeba zarejestrować ponownie · wyłączenie Legacy Authentication wymaga aktywnego passkey właściciela; właściciel tylko z lokalnym IP musi wcześniej ustanowić prawidłowy FQDN i passkey
-12. **Przetestuj:** `/api/next/auth/rbac`
+11. **Porównaj:** [Konfiguracja: Logowanie przez OpenID Connect (OIDC)](/pl/configure/oidc/) · OIDC dodaje opcjonalne logowanie w przeglądarce; lokalne passkeys, opcjonalne hasła, kody odzyskiwania, tokeny API i tokeny bearer MCP zachowują swoje role
+12. **Zapisz:** kody odzyskiwania są haszowane, jednorazowe i wspólne z odzyskiwaniem passkey; kopie pomijają sekrety TOTP i dane odzyskiwania, więc MFA trzeba zarejestrować ponownie · wyłączenie Legacy Authentication wymaga aktywnego passkey właściciela; właściciel tylko z lokalnym IP musi wcześniej ustanowić prawidłowy FQDN i passkey
+13. **Przetestuj:** `/api/next/auth/rbac`
 
 ### Polecenia i ustawienia
 
@@ -73,7 +74,7 @@ curl --fail http://localhost:6180/api/next/auth/rbac
 
 ## Oczekiwany rezultat
 
-Zaakceptuj wynik dla **Konfiguracja: Uwierzytelnianie i RBAC** tylko gdy wszystkie poniższe wyniki są prawdziwe: logowanie właściciela passkey działa, rejestracja na zaproszenie odpowiada ustawieniu, a użytkownik testowy ma tylko przypisane uprawnienia; passkeys są odporne na phishing i unikalne dla witryny; logowanie używa odblokowania urządzenia zamiast wielokrotnego hasła konta; ograniczony czasowo kod zaproszenia rozpoczyna rejestrację, ale nie jest wielokrotnym hasłem konta; zwykłe logowanie używa passkey. Punkty kontrolne tej strony: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
+Zaakceptuj wynik dla **Konfiguracja: Uwierzytelnianie i RBAC** tylko gdy wszystkie poniższe wyniki są prawdziwe: logowanie właściciela passkey działa, rejestracja na zaproszenie odpowiada ustawieniu, a użytkownik testowy ma tylko przypisane uprawnienia; passkeys są odporne na phishing i unikalne dla witryny; logowanie używa odblokowania urządzenia zamiast wielokrotnego hasła konta; ograniczony czasowo kod zaproszenia rozpoczyna rejestrację, ale nie jest wielokrotnym hasłem konta; zwykłe logowanie używa passkey. Punkty kontrolne tej strony: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · OIDC · Argon2id · TOTP.
 
 - logowanie właściciela passkey działa, rejestracja na zaproszenie odpowiada ustawieniu, a użytkownik testowy ma tylko przypisane uprawnienia
 - passkeys są odporne na phishing i unikalne dla witryny; logowanie używa odblokowania urządzenia zamiast wielokrotnego hasła konta
@@ -82,27 +83,28 @@ Zaakceptuj wynik dla **Konfiguracja: Uwierzytelnianie i RBAC** tylko gdy wszystk
 ## Bezpieczeństwo i wycofanie
 
 :::caution
-Bezpieczna granica odzyskiwania dla **Konfiguracja: Uwierzytelnianie i RBAC** wymaga tych działań przed uruchomieniem lub kontynuacją: zarejestruj więcej niż jeden passkey, na przykład na telefonie i komputerze, i zachowaj niezależną drogę odzyskiwania właściciela przed wymianą lub utratą urządzenia; hasło wymaga co najmniej 15 znaków, nie może być nazwą użytkownika ani odrzuconym popularnym hasłem i jest haszowane Argon2id; pięć błędów w 15 minut blokuje na 15 minut; kody odzyskiwania są haszowane, jednorazowe i wspólne z odzyskiwaniem passkey; kopie pomijają sekrety TOTP i dane odzyskiwania, więc MFA trzeba zarejestrować ponownie; wyłączenie Legacy Authentication wymaga aktywnego passkey właściciela; właściciel tylko z lokalnym IP musi wcześniej ustanowić prawidłowy FQDN i passkey; zachowaj sesję właściciela i drugą metodę odzyskiwania; nigdy nie usuwaj ostatniego klucza właściciela. Punkty kontrolne tej strony: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
+Bezpieczna granica odzyskiwania dla **Konfiguracja: Uwierzytelnianie i RBAC** wymaga tych działań przed uruchomieniem lub kontynuacją: zarejestruj więcej niż jeden passkey, na przykład na telefonie i komputerze, i zachowaj niezależną drogę odzyskiwania właściciela przed wymianą lub utratą urządzenia; hasło wymaga co najmniej 15 znaków, nie może być nazwą użytkownika ani odrzuconym popularnym hasłem i jest haszowane Argon2id; pięć błędów w 15 minut blokuje na 15 minut; kody odzyskiwania są haszowane, jednorazowe i wspólne z odzyskiwaniem passkey; kopie pomijają sekrety TOTP i dane odzyskiwania, więc MFA trzeba zarejestrować ponownie; wyłączenie Legacy Authentication wymaga aktywnego passkey właściciela; właściciel tylko z lokalnym IP musi wcześniej ustanowić prawidłowy FQDN i passkey; tożsamość jest dokładną parą issuer i subject; e-mail nigdy nie łączy automatycznie, łączenie wymaga zalogowanej sesji przeglądarki, a odłączenie innej dostępnej metody logowania; zachowaj sesję właściciela i drugą metodę odzyskiwania; nigdy nie usuwaj ostatniego klucza właściciela. Punkty kontrolne tej strony: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · OIDC · Argon2id · TOTP.
 
 - zarejestruj więcej niż jeden passkey, na przykład na telefonie i komputerze, i zachowaj niezależną drogę odzyskiwania właściciela przed wymianą lub utratą urządzenia
 - hasło wymaga co najmniej 15 znaków, nie może być nazwą użytkownika ani odrzuconym popularnym hasłem i jest haszowane Argon2id; pięć błędów w 15 minut blokuje na 15 minut
 - kody odzyskiwania są haszowane, jednorazowe i wspólne z odzyskiwaniem passkey; kopie pomijają sekrety TOTP i dane odzyskiwania, więc MFA trzeba zarejestrować ponownie
 - wyłączenie Legacy Authentication wymaga aktywnego passkey właściciela; właściciel tylko z lokalnym IP musi wcześniej ustanowić prawidłowy FQDN i passkey
+- tożsamość jest dokładną parą issuer i subject; e-mail nigdy nie łączy automatycznie, łączenie wymaga zalogowanej sesji przeglądarki, a odłączenie innej dostępnej metody logowania
 - zachowaj sesję właściciela i drugą metodę odzyskiwania; nigdy nie usuwaj ostatniego klucza właściciela
 :::
 
 ## Następny krok
 
-[Konfiguracja: Wtyczki i metadane](/pl/configure/plugins-metadata/)
+[Konfiguracja: Logowanie przez OpenID Connect (OIDC)](/pl/configure/oidc/)
 
 ## Źródło i stan
 
-- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
-- [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
-- [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
-- [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
-- [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
-- [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
-- Źródło i stan: `2026-07-20`
-- DiscVault Docs: `0.1.6`
+- [`Flux76HQ/App-Guidance@41bfca3bfa39`](https://github.com/Flux76HQ/App-Guidance/commit/41bfca3bfa39f0b43924190d384e2d96be756020)
+- [Moving beta source: OIDC deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: OIDC environment template](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/.env.example)
+- [Pinned verification: OIDC implementation](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/backend/next_oidc.py)
+- [Authoritative OIDC authentication contract](https://github.com/Flux76HQ/App-Guidance/blob/41bfca3bfa39f0b43924190d384e2d96be756020/projects/discvault/specs/oidc-authentication.md)
+- Źródło i stan: `2026-09-20`
+- DiscVault Docs: `0.1.14`

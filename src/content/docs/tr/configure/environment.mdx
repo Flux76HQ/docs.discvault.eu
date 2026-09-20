@@ -1,26 +1,26 @@
 ---
 title: 'Yapılandırma: Ortam değişkenleri'
-description: 'Göreve özel yönergeler: Yapılandırma: Ortam değişkenleri: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.'
+description: 'Göreve özel yönergeler: Yapılandırma: Ortam değişkenleri: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS`.'
 pageId: 'configure-environment'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['beta']
 minVersion: 'DiscVault v26'
 sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-20'
+lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-20" />
+<PageMeta channels="beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-09-20" />
 
 ## Amaç ve sonuç
 
-Sayfaya özel iş akışını tamamlayın: **Yapılandırma: Ortam değişkenleri**. Bu prosedür şunları kullanır: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.
+Sayfaya özel iş akışını tamamlayın: **Yapılandırma: Ortam değişkenleri**. Bu prosedür şunları kullanır: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS`.
 
 ## Geçerli olduğu alan
 
-Bu sayfa yalnızca şunlar için geçerlidir: **Yapılandırma: Ortam değişkenleri** (Docker · Unraid). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault:beta`; `.env.example` `release/v26-beta`; `0600` · `JWT_SECRET` `POSTGRES_PASSWORD`. Sayfaya özel denetim noktaları: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.
+Bu sayfa yalnızca şunlar için geçerlidir: **Yapılandırma: Ortam değişkenleri** (Docker · Unraid). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault:beta`; `.env.example` `release/v26-beta`; `0600` · `JWT_SECRET` `POSTGRES_PASSWORD`. Sayfaya özel denetim noktaları: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS`.
 
 ### DiscVault v26 beta
 
@@ -39,8 +39,9 @@ Bu sayfa yalnızca şunlar için geçerlidir: **Yapılandırma: Ortam değişken
 1. **Oluşturun:** `/opt/discvault-next/.env` · yalnızca sahip dosya izinleri (0600)
 2. **Yapılandırın:** `DISCVAULT_NEXT_IMAGE` · `RP_ORIGINS`
 3. **Seçin:** geçerli bir FQDN ile `RP_ID` ve `RP_ORIGINS` değerlerini eşleştirin ve güvenilir HTTPS kullanın · FQDN olmadan doğrudan özel veya geri döngü IP için `RP_ID` ve `RP_ORIGINS` değerlerini boş bırakın
-4. **Doğrulayın:** `chmod 0600` · `docker compose -p discvault_next_deploy config --quiet`
-5. **Başlatın:** normal yapılandırma değişikliklerinde JWT ve PostgreSQL gizlerini değiştirmeyin
+4. **Seçin:** [Yapılandırma: OpenID Connect (OIDC) ile oturum açma](/tr/configure/oidc/) · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · issuer, istemci kimliği ve istemci gizlisini birlikte ayarlayın veya üçünü de boş bırakın; kısmi yapılandırma başlatmayı engeller
+5. **Doğrulayın:** `chmod 0600` · `docker compose -p discvault_next_deploy config --quiet`
+6. **Başlatın:** normal yapılandırma değişikliklerinde JWT ve PostgreSQL gizlerini değiştirmeyin
 
 ### Komutlar ve ayarlar
 
@@ -159,7 +160,7 @@ curl --fail http://localhost:6180/api/next/health
 
 ## Beklenen sonuç
 
-Şunun sonucunu kabul edin: **Yapılandırma: Ortam değişkenleri** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: yalnızca sahip dosya izinleri (0600); özel dosyanın modu 600 olur, Compose doğrulaması başarılıdır ve seçilen kanal sağlıklı hale gelir. Sayfaya özel denetim noktaları: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.
+Şunun sonucunu kabul edin: **Yapılandırma: Ortam değişkenleri** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: yalnızca sahip dosya izinleri (0600); özel dosyanın modu 600 olur, Compose doğrulaması başarılıdır ve seçilen kanal sağlıklı hale gelir. Sayfaya özel denetim noktaları: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS`.
 
 - yalnızca sahip dosya izinleri (0600)
 - özel dosyanın modu 600 olur, Compose doğrulaması başarılıdır ve seçilen kanal sağlıklı hale gelir
@@ -167,26 +168,27 @@ curl --fail http://localhost:6180/api/next/health
 ## Güvenlik ve geri alma
 
 :::caution
-Şunun güvenli kurtarma sınırı: **Yapılandırma: Ortam değişkenleri** başlatmadan veya devam etmeden önce şu işlemleri gerektirir: belge deposunun ortam dosyası hiçbir zaman DiscVault çalışma zamanı dosyası değildir · `.env.example`; normal yapılandırma değişikliklerinde JWT ve PostgreSQL gizlerini değiştirmeyin · `JWT_SECRET` · `POSTGRES_PASSWORD`; indirilen `.env.example` hâlâ `:dev` kullanır; pull veya başlangıçtan önce çalışma zamanı `.env` dosyası `:beta` yapılmalıdır; hata durumunda hizmetleri durdurulmuş tutun, önceki özel ortam dosyasını geri yükleyip doğrulayın ve gizleri döndürmeden aynı imajı yeniden oluşturun. Sayfaya özel denetim noktaları: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.
+Şunun güvenli kurtarma sınırı: **Yapılandırma: Ortam değişkenleri** başlatmadan veya devam etmeden önce şu işlemleri gerektirir: belge deposunun ortam dosyası hiçbir zaman DiscVault çalışma zamanı dosyası değildir · `.env.example`; normal yapılandırma değişikliklerinde JWT ve PostgreSQL gizlerini değiştirmeyin · `JWT_SECRET` · `POSTGRES_PASSWORD`; indirilen `.env.example` hâlâ `:dev` kullanır; pull veya başlangıçtan önce çalışma zamanı `.env` dosyası `:beta` yapılmalıdır; istemci gizlisini yalnızca izlenmeyen çalışma zamanı ortamında veya gizli bilgi yöneticisinde saklayın ve açığa çıkarsa değiştirin; OIDC kapatılmadan önce yalnızca OIDC kullanan her kullanıcıya başka bir kullanılabilir giriş yöntemi verin; hata durumunda hizmetleri durdurulmuş tutun, önceki özel ortam dosyasını geri yükleyip doğrulayın ve gizleri döndürmeden aynı imajı yeniden oluşturun. Sayfaya özel denetim noktaları: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS`.
 
 - belge deposunun ortam dosyası hiçbir zaman DiscVault çalışma zamanı dosyası değildir · `.env.example`
 - normal yapılandırma değişikliklerinde JWT ve PostgreSQL gizlerini değiştirmeyin · `JWT_SECRET` · `POSTGRES_PASSWORD`
 - indirilen `.env.example` hâlâ `:dev` kullanır; pull veya başlangıçtan önce çalışma zamanı `.env` dosyası `:beta` yapılmalıdır
+- istemci gizlisini yalnızca izlenmeyen çalışma zamanı ortamında veya gizli bilgi yöneticisinde saklayın ve açığa çıkarsa değiştirin; OIDC kapatılmadan önce yalnızca OIDC kullanan her kullanıcıya başka bir kullanılabilir giriş yöntemi verin
 - hata durumunda hizmetleri durdurulmuş tutun, önceki özel ortam dosyasını geri yükleyip doğrulayın ve gizleri döndürmeden aynı imajı yeniden oluşturun
 :::
 
 ## Sonraki adım
 
-[Yapılandırma: Kimlik doğrulama ve RBAC](/tr/configure/auth-rbac/)
+[Yapılandırma: OpenID Connect (OIDC) ile oturum açma](/tr/configure/oidc/)
 
 ## Kaynak ve durum
 
-- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
 - [Moving beta source: `docker-compose.yml`](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/docker-compose.yml)
 - [Raw beta download: `docker-compose.yml`](https://raw.githubusercontent.com/helmerzNL/DiscVault/release/v26-beta/app/deploy/next/docker-compose.yml)
-- [Pinned verification: `docker-compose.yml`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/deploy/next/docker-compose.yml)
+- [Pinned verification: `docker-compose.yml`](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/docker-compose.yml)
 - [Moving beta source: `.env.example`](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/.env.example)
 - [Raw beta download: `.env.example`](https://raw.githubusercontent.com/helmerzNL/DiscVault/release/v26-beta/app/deploy/next/.env.example)
-- [Pinned verification: `.env.example`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/deploy/next/.env.example)
-- Kaynak ve durum: `2026-07-20`
-- DiscVault Docs: `0.1.6`
+- [Pinned verification: `.env.example`](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/.env.example)
+- Kaynak ve durum: `2026-09-20`
+- DiscVault Docs: `0.1.14`

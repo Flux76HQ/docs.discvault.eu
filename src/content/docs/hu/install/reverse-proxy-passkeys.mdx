@@ -1,26 +1,26 @@
 ---
 title: 'Telepítés: Fordított proxy és hozzáférési kulcsok'
-description: 'Feladatspecifikus útmutató: Telepítés: Fordított proxy és hozzáférési kulcsok: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.'
+description: 'Feladatspecifikus útmutató: Telepítés: Fordított proxy és hozzáférési kulcsok: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.'
 pageId: 'install-reverse-proxy-passkeys'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
-lastVerified: '2026-07-20'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU', 'Flux76HQ/App-Guidance']
+lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## Cél és eredmény
 
-Hajtsa végre az oldalhoz tartozó munkafolyamatot: **Telepítés: Fordított proxy és hozzáférési kulcsok**. Ez az eljárás ezeket használja: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+Hajtsa végre az oldalhoz tartozó munkafolyamatot: **Telepítés: Fordított proxy és hozzáférési kulcsok**. Ez az eljárás ezeket használja: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 ## Érvényesség
 
-Ez az oldal kizárólag erre vonatkozik: **Telepítés: Fordított proxy és hozzáférési kulcsok** (Docker · web). A csatorna- és adathatárok: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6080`; a localhost kivételén kívül a passkey stabil teljes tartománynevet és megbízható HTTPS-t igényel; a puszta IP-cím és a sima HTTP nem támogatott; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; `LEGACY_AUTH_ENABLED=true`. Oldalspecifikus ellenőrzési pontok: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+Ez az oldal kizárólag erre vonatkozik: **Telepítés: Fordított proxy és hozzáférési kulcsok** (Docker · web). A csatorna- és adathatárok: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6080`; a localhost kivételén kívül a passkey stabil teljes tartománynevet és megbízható HTTPS-t igényel; a puszta IP-cím és a sima HTTP nem támogatott; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; OIDC · `/api/next/auth/oidc/callback` · [Konfigurálás: Bejelentkezés OpenID Connecttel (OIDC)](/hu/configure/oidc/); `LEGACY_AUTH_ENABLED=true`. Oldalspecifikus ellenőrzési pontok: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 ### DiscVault v26 – stabil
 
@@ -32,6 +32,7 @@ Ez az oldal kizárólag erre vonatkozik: **Telepítés: Fordított proxy és hoz
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `RP_ID` `RP_ORIGINS` · `6180`
+- OIDC · `/api/next/auth/oidc/callback` · [Konfigurálás: Bejelentkezés OpenID Connecttel (OIDC)](/hu/configure/oidc/)
 - `LEGACY_AUTH_ENABLED=true`
 
 ## Előfeltételek
@@ -54,9 +55,10 @@ A képesség engedélyezése vagy az első tulajdonos létrehozása előtt köve
 2. **Válassza ki:** [Telepítés: Legacy Authentication](/hu/install/legacy-authentication/) · FQDN nélküli közvetlen privát vagy loopback IP esetén hagyja üresen az `RP_ID` és `RP_ORIGINS` értékét
 3. **Állítsa be:** `RP_ID`
 4. **Állítsa be:** `RP_ORIGINS` · HTTPS
-5. **Állítsa be:** `6080` `6180`
-6. **Tesztelje:** `GET /api/next/health`
-7. **Jegyezze fel:** a passkey regisztrálása előtt válassza ki az állomásnevet; későbbi módosítása új regisztrációt igényel, a localhost pedig csak helyi beállítási kivétel
+5. **Állítsa be:** [Konfigurálás: Bejelentkezés OpenID Connecttel (OIDC)](/hu/configure/oidc/) · `/api/next/auth/oidc/callback`
+6. **Állítsa be:** `6080` `6180`
+7. **Tesztelje:** `GET /api/next/health`
+8. **Jegyezze fel:** a passkey regisztrálása előtt válassza ki az állomásnevet; későbbi módosítása új regisztrációt igényel, a localhost pedig csak helyi beállítási kivétel
 
 ### Parancsok és beállítások
 
@@ -81,16 +83,17 @@ curl --fail http://localhost:6180/api/next/health
 
 ## Várt eredmény
 
-Az eredmény csak ennél fogadható el: **Telepítés: Fordított proxy és hozzáférési kulcsok** csak akkor, ha minden alábbi eredmény teljesül: HTTPS · HTTP `2xx`; `RP_ID`; az `RP_ID` a séma és port nélküli állomásnév, a `RP_ORIGINS` pedig a pontos teljes HTTPS origin; mindkettőnek egyeznie kell a böngészőben megnyitott címmel. Oldalspecifikus ellenőrzési pontok: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+Az eredmény csak ennél fogadható el: **Telepítés: Fordított proxy és hozzáférési kulcsok** csak akkor, ha minden alábbi eredmény teljesül: HTTPS · HTTP `2xx`; `RP_ID`; OIDC · `/api/next/auth/oidc/callback`; az `RP_ID` a séma és port nélküli állomásnév, a `RP_ORIGINS` pedig a pontos teljes HTTPS origin; mindkettőnek egyeznie kell a böngészőben megnyitott címmel. Oldalspecifikus ellenőrzési pontok: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 - HTTPS · HTTP `2xx`
 - `RP_ID`
+- OIDC · `/api/next/auth/oidc/callback`
 - az `RP_ID` a séma és port nélküli állomásnév, a `RP_ORIGINS` pedig a pontos teljes HTTPS origin; mindkettőnek egyeznie kell a böngészőben megnyitott címmel
 
 ## Biztonság és visszaállítás
 
 :::caution
-A biztonságos helyreállítás határa ennél: **Telepítés: Fordított proxy és hozzáférési kulcsok** ezeket a műveleteket igényli indítás vagy folytatás előtt: a passkey regisztrálása előtt válassza ki az állomásnevet; későbbi módosítása új regisztrációt igényel, a localhost pedig csak helyi beállítási kivétel; csak közvetlen privát vagy loopback kérés érvénytelen vagy üres RP-beállítással kínálhat TOTP nélküli bootstrapot; a felhasználónév, jelszó és 2FA úton tartsa meg a TOTP-t; a proxy- és RP-értékeket együtt állítsa vissza, és tartson meg tulajdonosi helyreállítási módot. Oldalspecifikus ellenőrzési pontok: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+A biztonságos helyreállítás határa ennél: **Telepítés: Fordított proxy és hozzáférési kulcsok** ezeket a műveleteket igényli indítás vagy folytatás előtt: a passkey regisztrálása előtt válassza ki az állomásnevet; későbbi módosítása új regisztrációt igényel, a localhost pedig csak helyi beállítási kivétel; csak közvetlen privát vagy loopback kérés érvénytelen vagy üres RP-beállítással kínálhat TOTP nélküli bootstrapot; a felhasználónév, jelszó és 2FA úton tartsa meg a TOTP-t; a proxy- és RP-értékeket együtt állítsa vissza, és tartson meg tulajdonosi helyreállítási módot. Oldalspecifikus ellenőrzési pontok: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 - a passkey regisztrálása előtt válassza ki az állomásnevet; későbbi módosítása új regisztrációt igényel, a localhost pedig csak helyi beállítási kivétel
 - csak közvetlen privát vagy loopback kérés érvénytelen vagy üres RP-beállítással kínálhat TOTP nélküli bootstrapot; a felhasználónév, jelszó és 2FA úton tartsa meg a TOTP-t
@@ -103,12 +106,12 @@ A biztonságos helyreállítás határa ennél: **Telepítés: Fordított proxy 
 
 ## Forrás és állapot
 
-- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
-- [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
-- [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
-- [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
-- [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
-- [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
-- Forrás és állapot: `2026-07-20`
-- DiscVault Docs: `0.1.6`
+- [`Flux76HQ/App-Guidance@41bfca3bfa39`](https://github.com/Flux76HQ/App-Guidance/commit/41bfca3bfa39f0b43924190d384e2d96be756020)
+- [Moving beta source: OIDC deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: OIDC environment template](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/.env.example)
+- [Pinned verification: OIDC implementation](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/backend/next_oidc.py)
+- [Authoritative OIDC authentication contract](https://github.com/Flux76HQ/App-Guidance/blob/41bfca3bfa39f0b43924190d384e2d96be756020/projects/discvault/specs/oidc-authentication.md)
+- Forrás és állapot: `2026-09-20`
+- DiscVault Docs: `0.1.14`

@@ -1,26 +1,26 @@
 ---
 title: 'Troubleshooting'
-description: 'Diagnose container startup, reverse proxy/passkeys, PWA cache, native permissions, migration, and data recovery in a safe order.'
+description: 'Diagnose container startup, reverse proxy, Passkeys, OIDC, PWA cache, native permissions, migration, and data recovery in a safe order.'
 pageId: 'troubleshooting-index'
 products: ['server', 'pwa', 'ios', 'android']
 platforms: ['all']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVaultApp', 'Flux76HQ/DiscVault-AndroidApp']
-lastVerified: '2026-07-14'
+lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="all platforms" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVaultApp · Flux76HQ/DiscVault-AndroidApp" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="all platforms" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVaultApp · Flux76HQ/DiscVault-AndroidApp" verified="2026-09-20" />
 
 ## Goal and result
 
-Diagnose container startup, reverse proxy/passkeys, PWA cache, native permissions, migration, and data recovery in a safe order.
+Diagnose container startup, reverse proxy, Passkeys, OIDC, PWA cache, native permissions, migration, and data recovery in a safe order.
 
 ## Applies to
 
-Identify the image tag first, then use the shared v26 service graph. A 502 suggests host port 6080 or internal port 5000 health; passkey errors suggest HTTPS, `RP_ID`, or `RP_ORIGINS` mismatch.
+Identify the image tag first, then use the shared v26 service graph. A 502 suggests host port 6080 or internal port 5000 health; passkey errors suggest HTTPS, `RP_ID`, or `RP_ORIGINS` mismatch. In beta, OIDC failures are separated into browser callback, discovery, token, and JWKS stages by safe `auth.oidc_failed` Audit events.
 
 ### DiscVault v26 stable
 
@@ -42,8 +42,9 @@ Identify the image tag first, then use the shared v26 service graph. A 502 sugge
 
 1. **Record:** channel + image digest + timestamp
 2. **Isolate:** container → reverse proxy → browser/app → provider → data
-3. **Inspect:** timestamped logs with private data redacted · first failing layer
-4. **Preserve:** PostgreSQL + `/data` + app storage · before recovery
+3. **Inspect:** [Configure: OpenID Connect (OIDC) sign-in](/configure/oidc/) · `auth.oidc_failed`
+4. **Inspect:** timestamped logs with private data redacted · first failing layer
+5. **Preserve:** PostgreSQL + `/data` + app storage · before recovery
 
 ### Commands and settings
 
@@ -75,8 +76,8 @@ Do not delete volumes, `/data`, browser credentials, or app storage as a first s
 
 ## Source and status
 
-- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
 - [`helmerzNL/DiscVaultApp@9d15ab2a339c`](https://github.com/helmerzNL/DiscVaultApp/commit/9d15ab2a339cefdb164ec0ab29ad69ddabc511c1)
 - [`Flux76HQ/DiscVault-AndroidApp@a13ef4bdbb23`](https://github.com/Flux76HQ/DiscVault-AndroidApp/commit/a13ef4bdbb23b6a7e52e01cdf532fa222c1b67de)
-- Verified: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- Verified: `2026-09-20`
+- DiscVault Docs: `0.1.14`

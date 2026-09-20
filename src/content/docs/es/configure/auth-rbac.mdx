@@ -1,26 +1,26 @@
 ---
 title: 'Configuración: Autenticación y RBAC'
-description: 'Instrucciones específicas para Configuración: Autenticación y RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.'
+description: 'Instrucciones específicas para Configuración: Autenticación y RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · OIDC · Argon2id · TOTP.'
 pageId: 'configure-auth-rbac'
 products: ['server']
 platforms: ['web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
-lastVerified: '2026-07-20'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU', 'Flux76HQ/App-Guidance']
+lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
+<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## Objetivo y resultado
 
-Completa el flujo específico de la página para **Configuración: Autenticación y RBAC**. Este procedimiento utiliza `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
+Completa el flujo específico de la página para **Configuración: Autenticación y RBAC**. Este procedimiento utiliza `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · OIDC · Argon2id · TOTP.
 
 ## Aplicable a
 
-Esta página se aplica solo a **Configuración: Autenticación y RBAC** (web). Sus límites de canal y datos son: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; una passkey es un par de claves criptográficas: la clave privada permanece en el dispositivo o en un gestor de credenciales de confianza y DiscVault solo guarda la clave pública; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn; TOTP. Puntos de control de esta página: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
+Esta página se aplica solo a **Configuración: Autenticación y RBAC** (web). Sus límites de canal y datos son: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; una passkey es un par de claves criptográficas: la clave privada permanece en el dispositivo o en un gestor de credenciales de confianza y DiscVault solo guarda la clave pública; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn OIDC; TOTP. Puntos de control de esta página: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · OIDC · Argon2id · TOTP.
 
 ### DiscVault v26 estable
 
@@ -31,7 +31,7 @@ Esta página se aplica solo a **Configuración: Autenticación y RBAC** (web). S
 ### DiscVault v26 beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- WebAuthn
+- WebAuthn OIDC
 - TOTP
 
 ## Requisitos previos
@@ -52,8 +52,9 @@ Esta página se aplica solo a **Configuración: Autenticación y RBAC** (web). S
 8. **Crea:** Administración → Usuarios → Crear invitación de 48 horas
 9. **Configura:** Administración → Roles → Básico / Avanzado
 10. **Configura:** en una instalación existente activa el acceso con contraseña en Usuarios y roles y apruébalo con una verificación passkey reciente de propietario o administrador · propietarios y administradores pueden emitir contraseñas temporales, exigir cambio, definir MFA por usuario y controlar el registro de passkeys
-11. **Registra:** los códigos de recuperación se cifran con hash, son de un solo uso y se comparten con la recuperación passkey; las copias omiten secretos TOTP y material de recuperación, por lo que MFA se registra de nuevo · desactivar Legacy Authentication requiere una passkey activa del propietario; un propietario solo por IP local debe establecer FQDN válido y passkey antes de desactivar
-12. **Prueba:** `/api/next/auth/rbac`
+11. **Compara:** [Configuración: Inicio de sesión con OpenID Connect (OIDC)](/es/configure/oidc/) · OIDC añade un método opcional de inicio de sesión en el navegador; las passkeys locales, las contraseñas opcionales, los códigos de recuperación, los tokens de API y los tokens bearer de MCP conservan sus funciones
+12. **Registra:** los códigos de recuperación se cifran con hash, son de un solo uso y se comparten con la recuperación passkey; las copias omiten secretos TOTP y material de recuperación, por lo que MFA se registra de nuevo · desactivar Legacy Authentication requiere una passkey activa del propietario; un propietario solo por IP local debe establecer FQDN válido y passkey antes de desactivar
+13. **Prueba:** `/api/next/auth/rbac`
 
 ### Comandos y ajustes
 
@@ -73,7 +74,7 @@ curl --fail http://localhost:6180/api/next/auth/rbac
 
 ## Resultado esperado
 
-Acepta el resultado de **Configuración: Autenticación y RBAC** solo cuando se cumplan todos estos resultados: el acceso del propietario con passkey funciona, el registro por invitación coincide con el ajuste y el usuario de prueba solo tiene sus permisos; las passkeys resisten el phishing y son únicas para el sitio; el inicio de sesión usa el desbloqueo del dispositivo en vez de una contraseña reutilizable; un código de invitación temporal inicia el registro, pero no es una contraseña reutilizable; el inicio de sesión normal usa una passkey. Puntos de control de esta página: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
+Acepta el resultado de **Configuración: Autenticación y RBAC** solo cuando se cumplan todos estos resultados: el acceso del propietario con passkey funciona, el registro por invitación coincide con el ajuste y el usuario de prueba solo tiene sus permisos; las passkeys resisten el phishing y son únicas para el sitio; el inicio de sesión usa el desbloqueo del dispositivo en vez de una contraseña reutilizable; un código de invitación temporal inicia el registro, pero no es una contraseña reutilizable; el inicio de sesión normal usa una passkey. Puntos de control de esta página: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · OIDC · Argon2id · TOTP.
 
 - el acceso del propietario con passkey funciona, el registro por invitación coincide con el ajuste y el usuario de prueba solo tiene sus permisos
 - las passkeys resisten el phishing y son únicas para el sitio; el inicio de sesión usa el desbloqueo del dispositivo en vez de una contraseña reutilizable
@@ -82,27 +83,28 @@ Acepta el resultado de **Configuración: Autenticación y RBAC** solo cuando se 
 ## Seguridad y reversión
 
 :::caution
-El límite de recuperación segura de **Configuración: Autenticación y RBAC** exige estas acciones antes de iniciar o continuar: registra más de una passkey, por ejemplo en el teléfono y el equipo de escritorio, y conserva una vía independiente de recuperación del propietario antes de sustituir o perder un dispositivo; las contraseñas requieren al menos 15 caracteres, no pueden ser el usuario ni una contraseña común denegada y se procesan con Argon2id; cinco fallos en 15 minutos bloquean durante 15 minutos; los códigos de recuperación se cifran con hash, son de un solo uso y se comparten con la recuperación passkey; las copias omiten secretos TOTP y material de recuperación, por lo que MFA se registra de nuevo; desactivar Legacy Authentication requiere una passkey activa del propietario; un propietario solo por IP local debe establecer FQDN válido y passkey antes de desactivar; mantén la sesión del propietario y un segundo método; no elimines nunca la última passkey del propietario. Puntos de control de esta página: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
+El límite de recuperación segura de **Configuración: Autenticación y RBAC** exige estas acciones antes de iniciar o continuar: registra más de una passkey, por ejemplo en el teléfono y el equipo de escritorio, y conserva una vía independiente de recuperación del propietario antes de sustituir o perder un dispositivo; las contraseñas requieren al menos 15 caracteres, no pueden ser el usuario ni una contraseña común denegada y se procesan con Argon2id; cinco fallos en 15 minutos bloquean durante 15 minutos; los códigos de recuperación se cifran con hash, son de un solo uso y se comparten con la recuperación passkey; las copias omiten secretos TOTP y material de recuperación, por lo que MFA se registra de nuevo; desactivar Legacy Authentication requiere una passkey activa del propietario; un propietario solo por IP local debe establecer FQDN válido y passkey antes de desactivar; una identidad es el par exacto de issuer y subject; el correo nunca se vincula automáticamente, la vinculación requiere la sesión iniciada del navegador y la desvinculación exige otro método de acceso utilizable; mantén la sesión del propietario y un segundo método; no elimines nunca la última passkey del propietario. Puntos de control de esta página: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · OIDC · Argon2id · TOTP.
 
 - registra más de una passkey, por ejemplo en el teléfono y el equipo de escritorio, y conserva una vía independiente de recuperación del propietario antes de sustituir o perder un dispositivo
 - las contraseñas requieren al menos 15 caracteres, no pueden ser el usuario ni una contraseña común denegada y se procesan con Argon2id; cinco fallos en 15 minutos bloquean durante 15 minutos
 - los códigos de recuperación se cifran con hash, son de un solo uso y se comparten con la recuperación passkey; las copias omiten secretos TOTP y material de recuperación, por lo que MFA se registra de nuevo
 - desactivar Legacy Authentication requiere una passkey activa del propietario; un propietario solo por IP local debe establecer FQDN válido y passkey antes de desactivar
+- una identidad es el par exacto de issuer y subject; el correo nunca se vincula automáticamente, la vinculación requiere la sesión iniciada del navegador y la desvinculación exige otro método de acceso utilizable
 - mantén la sesión del propietario y un segundo método; no elimines nunca la última passkey del propietario
 :::
 
 ## Siguiente paso
 
-[Configuración: Complementos y metadatos](/es/configure/plugins-metadata/)
+[Configuración: Inicio de sesión con OpenID Connect (OIDC)](/es/configure/oidc/)
 
 ## Fuente y estado
 
-- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
-- [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
-- [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
-- [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
-- [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
-- [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
-- Fuente y estado: `2026-07-20`
-- DiscVault Docs: `0.1.6`
+- [`Flux76HQ/App-Guidance@41bfca3bfa39`](https://github.com/Flux76HQ/App-Guidance/commit/41bfca3bfa39f0b43924190d384e2d96be756020)
+- [Moving beta source: OIDC deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: OIDC environment template](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/.env.example)
+- [Pinned verification: OIDC implementation](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/backend/next_oidc.py)
+- [Authoritative OIDC authentication contract](https://github.com/Flux76HQ/App-Guidance/blob/41bfca3bfa39f0b43924190d384e2d96be756020/projects/discvault/specs/oidc-authentication.md)
+- Fuente y estado: `2026-09-20`
+- DiscVault Docs: `0.1.14`

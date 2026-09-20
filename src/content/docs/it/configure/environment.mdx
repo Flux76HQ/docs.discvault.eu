@@ -1,26 +1,26 @@
 ---
 title: 'Configurazione: Variabili di ambiente'
-description: 'Istruzioni specifiche per Configurazione: Variabili di ambiente: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.'
+description: 'Istruzioni specifiche per Configurazione: Variabili di ambiente: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS`.'
 pageId: 'configure-environment'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['beta']
 minVersion: 'DiscVault v26'
 sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-20'
+lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-20" />
+<PageMeta channels="beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-09-20" />
 
 ## Obiettivo e risultato
 
-Completa la procedura specifica della pagina per **Configurazione: Variabili di ambiente**. Questa procedura utilizza `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.
+Completa la procedura specifica della pagina per **Configurazione: Variabili di ambiente**. Questa procedura utilizza `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS`.
 
 ## Si applica a
 
-Questa pagina si applica solo a **Configurazione: Variabili di ambiente** (Docker · Unraid). I limiti di canale e dati sono: DiscVault · `ghcr.io/helmerznl/discvault:beta`; `.env.example` `release/v26-beta`; `0600` · `JWT_SECRET` `POSTGRES_PASSWORD`. Punti di controllo della pagina: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.
+Questa pagina si applica solo a **Configurazione: Variabili di ambiente** (Docker · Unraid). I limiti di canale e dati sono: DiscVault · `ghcr.io/helmerznl/discvault:beta`; `.env.example` `release/v26-beta`; `0600` · `JWT_SECRET` `POSTGRES_PASSWORD`. Punti di controllo della pagina: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS`.
 
 ### DiscVault v26 beta
 
@@ -39,8 +39,9 @@ Questa pagina si applica solo a **Configurazione: Variabili di ambiente** (Docke
 1. **Crea:** `/opt/discvault-next/.env` · permessi file solo proprietario (0600)
 2. **Configura:** `DISCVAULT_NEXT_IMAGE` · `RP_ORIGINS`
 3. **Scegli:** con un FQDN valido mantieni allineati `RP_ID` e `RP_ORIGINS` e usa HTTPS attendibile · per un IP privato o loopback diretto senza FQDN lascia vuoti `RP_ID` e `RP_ORIGINS`
-4. **Verifica:** `chmod 0600` · `docker compose -p discvault_next_deploy config --quiet`
-5. **Avvia:** mantieni invariati i segreti JWT e PostgreSQL nelle modifiche ordinarie
+4. **Scegli:** [Configurazione: Accesso con OpenID Connect (OIDC)](/it/configure/oidc/) · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · imposta insieme issuer, ID client e segreto client oppure lascia vuoti tutti e tre; una configurazione parziale impedisce l’avvio
+5. **Verifica:** `chmod 0600` · `docker compose -p discvault_next_deploy config --quiet`
+6. **Avvia:** mantieni invariati i segreti JWT e PostgreSQL nelle modifiche ordinarie
 
 ### Comandi e impostazioni
 
@@ -159,7 +160,7 @@ curl --fail http://localhost:6180/api/next/health
 
 ## Risultato previsto
 
-Accetta il risultato per **Configurazione: Variabili di ambiente** solo quando tutti i risultati seguenti sono veri: permessi file solo proprietario (0600); il file privato ha modalità 600, la convalida Compose riesce e il canale scelto risulta integro. Punti di controllo della pagina: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.
+Accetta il risultato per **Configurazione: Variabili di ambiente** solo quando tutti i risultati seguenti sono veri: permessi file solo proprietario (0600); il file privato ha modalità 600, la convalida Compose riesce e il canale scelto risulta integro. Punti di controllo della pagina: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS`.
 
 - permessi file solo proprietario (0600)
 - il file privato ha modalità 600, la convalida Compose riesce e il canale scelto risulta integro
@@ -167,26 +168,27 @@ Accetta il risultato per **Configurazione: Variabili di ambiente** solo quando t
 ## Sicurezza e ripristino
 
 :::caution
-Il limite di ripristino sicuro per **Configurazione: Variabili di ambiente** richiede queste azioni prima di avviare o continuare: il file di ambiente del repository della documentazione non è mai un file runtime DiscVault · `.env.example`; mantieni invariati i segreti JWT e PostgreSQL nelle modifiche ordinarie · `JWT_SECRET` · `POSTGRES_PASSWORD`; il file `.env.example` scaricato usa ancora `:dev`; il file runtime `.env` deve essere impostato su `:beta` prima del pull o avvio; in caso di errore, lascia i servizi arrestati, ripristina e convalida il file di ambiente privato precedente, quindi ricrea la stessa immagine senza ruotare i segreti. Punti di controllo della pagina: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.
+Il limite di ripristino sicuro per **Configurazione: Variabili di ambiente** richiede queste azioni prima di avviare o continuare: il file di ambiente del repository della documentazione non è mai un file runtime DiscVault · `.env.example`; mantieni invariati i segreti JWT e PostgreSQL nelle modifiche ordinarie · `JWT_SECRET` · `POSTGRES_PASSWORD`; il file `.env.example` scaricato usa ancora `:dev`; il file runtime `.env` deve essere impostato su `:beta` prima del pull o avvio; conserva il segreto client solo nell’ambiente runtime non tracciato o in un gestore di segreti e ruotalo se esposto; prima di disabilitare OIDC assegna a ogni utente solo OIDC un altro metodo di accesso utilizzabile; in caso di errore, lascia i servizi arrestati, ripristina e convalida il file di ambiente privato precedente, quindi ricrea la stessa immagine senza ruotare i segreti. Punti di controllo della pagina: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS`.
 
 - il file di ambiente del repository della documentazione non è mai un file runtime DiscVault · `.env.example`
 - mantieni invariati i segreti JWT e PostgreSQL nelle modifiche ordinarie · `JWT_SECRET` · `POSTGRES_PASSWORD`
 - il file `.env.example` scaricato usa ancora `:dev`; il file runtime `.env` deve essere impostato su `:beta` prima del pull o avvio
+- conserva il segreto client solo nell’ambiente runtime non tracciato o in un gestore di segreti e ruotalo se esposto; prima di disabilitare OIDC assegna a ogni utente solo OIDC un altro metodo di accesso utilizzabile
 - in caso di errore, lascia i servizi arrestati, ripristina e convalida il file di ambiente privato precedente, quindi ricrea la stessa immagine senza ruotare i segreti
 :::
 
 ## Passaggio successivo
 
-[Configurazione: Autenticazione e RBAC](/it/configure/auth-rbac/)
+[Configurazione: Accesso con OpenID Connect (OIDC)](/it/configure/oidc/)
 
 ## Fonte e stato
 
-- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
 - [Moving beta source: `docker-compose.yml`](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/docker-compose.yml)
 - [Raw beta download: `docker-compose.yml`](https://raw.githubusercontent.com/helmerzNL/DiscVault/release/v26-beta/app/deploy/next/docker-compose.yml)
-- [Pinned verification: `docker-compose.yml`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/deploy/next/docker-compose.yml)
+- [Pinned verification: `docker-compose.yml`](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/docker-compose.yml)
 - [Moving beta source: `.env.example`](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/.env.example)
 - [Raw beta download: `.env.example`](https://raw.githubusercontent.com/helmerzNL/DiscVault/release/v26-beta/app/deploy/next/.env.example)
-- [Pinned verification: `.env.example`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/deploy/next/.env.example)
-- Fonte e stato: `2026-07-20`
-- DiscVault Docs: `0.1.6`
+- [Pinned verification: `.env.example`](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/.env.example)
+- Fonte e stato: `2026-09-20`
+- DiscVault Docs: `0.1.14`

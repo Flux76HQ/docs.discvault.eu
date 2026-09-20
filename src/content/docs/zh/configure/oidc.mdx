@@ -1,0 +1,108 @@
+---
+title: '配置: 使用 OpenID Connect（OIDC）登录'
+description: '任务专用说明： 配置: 使用 OpenID Connect（OIDC）登录: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.'
+pageId: 'configure-oidc'
+products: ['server', 'pwa']
+platforms: ['docker', 'web']
+channels: ['beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault', 'Flux76HQ/App-Guidance']
+lastVerified: '2026-09-20'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="beta" platform="Docker · 网页" version="DiscVault v26" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-09-20" />
+
+## 目标和结果
+
+完成此页面专用的流程： **配置: 使用 OpenID Connect（OIDC）登录**. 此流程使用 OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+## 适用范围
+
+本页面仅适用于 **配置: 使用 OpenID Connect（OIDC）登录** (Docker · 网页). 通道与数据边界为： DiscVault · `26.9.117+`; OIDC 增加可选的浏览器登录方式；本地通行密钥、可选密码、恢复代码、API 令牌和 MCP bearer 令牌保持原有职责; 身份由准确的 issuer 与 subject 组合确定；电子邮件绝不会自动关联，关联需要已登录的浏览器会话，取消关联前必须还有其他可用登录方式. 本页面专用检查点： OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+### DiscVault v26 测试版
+
+- DiscVault · `26.9.117+`
+- OIDC 增加可选的浏览器登录方式；本地通行密钥、可选密码、恢复代码、API 令牌和 MCP bearer 令牌保持原有职责
+- 身份由准确的 issuer 与 subject 组合确定；电子邮件绝不会自动关联，关联需要已登录的浏览器会话，取消关联前必须还有其他可用登录方式
+
+## 前提条件
+
+- 所有者权限 · 第二种恢复方式
+- [安装: 反向代理和通行密钥](/zh/install/reverse-proxy-passkeys/) · 除 localhost 设置例外外，通行密钥需要通过受信任 HTTPS 使用稳定的完全限定域名；不支持裸 IP 地址或普通 HTTP
+- 身份提供商中的机密 OIDC 客户端，并配置准确的 DiscVault 回调 URI
+
+### 提供商专用后端通道
+
+:::note[测试版可用]
+仅允许令牌和 JWKS 端点使用精确的私有 HTTP 源；颁发者和浏览器授权仍仅限 HTTPS，TLS 验证保持启用，并拒绝 discovery、令牌和 JWKS 重定向
+:::
+
+## 操作步骤
+
+1. **创建:** 身份提供商中的机密 OIDC 客户端，并配置准确的 DiscVault 回调 URI · `openid profile email` · `https://discvault.example.com/api/next/auth/oidc/callback`
+2. **配置:** `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · 同时设置颁发者、客户端 ID 和客户端密钥，或将三者全部留空；部分配置会阻止启动
+3. **配置:** `DISCVAULT_OIDC_PROVIDER_NAME` · `OIDC`
+4. **选择:** `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · `localhost` · Kubernetes DNS · `.internal` · 仅允许令牌和 JWKS 端点使用精确的私有 HTTP 源；颁发者和浏览器授权仍仅限 HTTPS，TLS 验证保持启用，并拒绝 discovery、令牌和 JWKS 重定向
+5. **启动:** `next-api` · `--force-recreate`
+6. **测试:** OIDC 增加可选的浏览器登录方式；本地通行密钥、可选密码、恢复代码、API 令牌和 MCP bearer 令牌保持原有职责 · 身份由准确的 issuer 与 subject 组合确定；电子邮件绝不会自动关联，关联需要已登录的浏览器会话，取消关联前必须还有其他可用登录方式
+7. **检查:** `auth.oidc_failed` · 失败时仅记录已配置的提供商显示名称、安全的 `auth.oidc_failed` 代码和流程模式；绝不记录密钥、令牌、授权代码、state、nonce、端点 URL 或 PKCE 值
+
+### 命令和设置
+
+#### DiscVault v26 测试版
+
+```text
+RP_ORIGINS=https://discvault.example.com
+DISCVAULT_OIDC_ISSUER=https://id.example.com
+DISCVAULT_OIDC_CLIENT_ID=<client-id>
+DISCVAULT_OIDC_CLIENT_SECRET=<client-secret>
+DISCVAULT_OIDC_PROVIDER_NAME=Pocket ID
+DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS=
+```
+
+```text
+DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS=http://pocket-id.pocket-id.svc.cluster.local:1411
+```
+
+```bash
+cd /opt/discvault-next
+docker compose -p discvault_next_deploy config --quiet
+docker compose -p discvault_next_deploy up -d --force-recreate next-api
+curl --fail https://discvault.example.com/api/next/auth/status
+```
+
+## 预期结果
+
+仅在以下条件下接受结果： **配置: 使用 OpenID Connect（OIDC）登录** 必须确认以下所有结果： OIDC 增加可选的浏览器登录方式；本地通行密钥、可选密码、恢复代码、API 令牌和 MCP bearer 令牌保持原有职责; 身份由准确的 issuer 与 subject 组合确定；电子邮件绝不会自动关联，关联需要已登录的浏览器会话，取消关联前必须还有其他可用登录方式; 失败时仅记录已配置的提供商显示名称、安全的 `auth.oidc_failed` 代码和流程模式；绝不记录密钥、令牌、授权代码、state、nonce、端点 URL 或 PKCE 值. 本页面专用检查点： OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+- OIDC 增加可选的浏览器登录方式；本地通行密钥、可选密码、恢复代码、API 令牌和 MCP bearer 令牌保持原有职责
+- 身份由准确的 issuer 与 subject 组合确定；电子邮件绝不会自动关联，关联需要已登录的浏览器会话，取消关联前必须还有其他可用登录方式
+- 失败时仅记录已配置的提供商显示名称、安全的 `auth.oidc_failed` 代码和流程模式；绝不记录密钥、令牌、授权代码、state、nonce、端点 URL 或 PKCE 值
+
+## 安全与回滚
+
+:::caution
+安全恢复边界： **配置: 使用 OpenID Connect（OIDC）登录** 在启动或继续任何操作前必须执行： 仅将客户端密钥保存在未跟踪的运行时环境或密钥管理器中，泄露后立即轮换；禁用 OIDC 前，为每个仅使用 OIDC 的用户提供其他可用登录方式; 仅允许令牌和 JWKS 端点使用精确的私有 HTTP 源；颁发者和浏览器授权仍仅限 HTTPS，TLS 验证保持启用，并拒绝 discovery、令牌和 JWKS 重定向; 身份由准确的 issuer 与 subject 组合确定；电子邮件绝不会自动关联，关联需要已登录的浏览器会话，取消关联前必须还有其他可用登录方式. 本页面专用检查点： OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+- 仅将客户端密钥保存在未跟踪的运行时环境或密钥管理器中，泄露后立即轮换；禁用 OIDC 前，为每个仅使用 OIDC 的用户提供其他可用登录方式
+- 仅允许令牌和 JWKS 端点使用精确的私有 HTTP 源；颁发者和浏览器授权仍仅限 HTTPS，TLS 验证保持启用，并拒绝 discovery、令牌和 JWKS 重定向
+- 身份由准确的 issuer 与 subject 组合确定；电子邮件绝不会自动关联，关联需要已登录的浏览器会话，取消关联前必须还有其他可用登录方式
+:::
+
+## 下一步
+
+[配置: 插件和元数据](/zh/configure/plugins-metadata/)
+
+## 来源和状态
+
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
+- [`Flux76HQ/App-Guidance@41bfca3bfa39`](https://github.com/Flux76HQ/App-Guidance/commit/41bfca3bfa39f0b43924190d384e2d96be756020)
+- [Moving beta source: OIDC deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: OIDC environment template](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/.env.example)
+- [Pinned verification: OIDC implementation](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/backend/next_oidc.py)
+- [Authoritative OIDC authentication contract](https://github.com/Flux76HQ/App-Guidance/blob/41bfca3bfa39f0b43924190d384e2d96be756020/projects/discvault/specs/oidc-authentication.md)
+- 来源和状态: `2026-09-20`
+- DiscVault Docs: `0.1.14`

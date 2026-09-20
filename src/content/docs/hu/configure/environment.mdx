@@ -1,26 +1,26 @@
 ---
 title: 'Konfigurálás: Környezeti változók'
-description: 'Feladatspecifikus útmutató: Konfigurálás: Környezeti változók: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.'
+description: 'Feladatspecifikus útmutató: Konfigurálás: Környezeti változók: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS`.'
 pageId: 'configure-environment'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['beta']
 minVersion: 'DiscVault v26'
 sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-20'
+lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-20" />
+<PageMeta channels="beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-09-20" />
 
 ## Cél és eredmény
 
-Hajtsa végre az oldalhoz tartozó munkafolyamatot: **Konfigurálás: Környezeti változók**. Ez az eljárás ezeket használja: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.
+Hajtsa végre az oldalhoz tartozó munkafolyamatot: **Konfigurálás: Környezeti változók**. Ez az eljárás ezeket használja: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS`.
 
 ## Érvényesség
 
-Ez az oldal kizárólag erre vonatkozik: **Konfigurálás: Környezeti változók** (Docker · Unraid). A csatorna- és adathatárok: DiscVault · `ghcr.io/helmerznl/discvault:beta`; `.env.example` `release/v26-beta`; `0600` · `JWT_SECRET` `POSTGRES_PASSWORD`. Oldalspecifikus ellenőrzési pontok: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.
+Ez az oldal kizárólag erre vonatkozik: **Konfigurálás: Környezeti változók** (Docker · Unraid). A csatorna- és adathatárok: DiscVault · `ghcr.io/helmerznl/discvault:beta`; `.env.example` `release/v26-beta`; `0600` · `JWT_SECRET` `POSTGRES_PASSWORD`. Oldalspecifikus ellenőrzési pontok: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS`.
 
 ### DiscVault v26 – béta
 
@@ -39,8 +39,9 @@ Ez az oldal kizárólag erre vonatkozik: **Konfigurálás: Környezeti változó
 1. **Hozza létre:** `/opt/discvault-next/.env` · csak tulajdonosi fájljogosultság (0600)
 2. **Állítsa be:** `DISCVAULT_NEXT_IMAGE` · `RP_ORIGINS`
 3. **Válassza ki:** érvényes FQDN esetén hangolja össze az `RP_ID` és `RP_ORIGINS` értékét, és használjon megbízható HTTPS-t · FQDN nélküli közvetlen privát vagy loopback IP esetén hagyja üresen az `RP_ID` és `RP_ORIGINS` értékét
-4. **Ellenőrizze:** `chmod 0600` · `docker compose -p discvault_next_deploy config --quiet`
-5. **Indítsa el:** a JWT- és PostgreSQL-titkokat ne módosítsa szokásos beállításkor
+4. **Válassza ki:** [Konfigurálás: Bejelentkezés OpenID Connecttel (OIDC)](/hu/configure/oidc/) · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · a kibocsátót, ügyfélazonosítót és ügyféltitkot együtt állítsa be, vagy mindhármat hagyja üresen; a részleges beállítás megakadályozza az indulást
+5. **Ellenőrizze:** `chmod 0600` · `docker compose -p discvault_next_deploy config --quiet`
+6. **Indítsa el:** a JWT- és PostgreSQL-titkokat ne módosítsa szokásos beállításkor
 
 ### Parancsok és beállítások
 
@@ -159,7 +160,7 @@ curl --fail http://localhost:6180/api/next/health
 
 ## Várt eredmény
 
-Az eredmény csak ennél fogadható el: **Konfigurálás: Környezeti változók** csak akkor, ha minden alábbi eredmény teljesül: csak tulajdonosi fájljogosultság (0600); a privát fájl módja 600, a Compose-ellenőrzés sikeres, és a kiválasztott csatorna egészséges. Oldalspecifikus ellenőrzési pontok: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.
+Az eredmény csak ennél fogadható el: **Konfigurálás: Környezeti változók** csak akkor, ha minden alábbi eredmény teljesül: csak tulajdonosi fájljogosultság (0600); a privát fájl módja 600, a Compose-ellenőrzés sikeres, és a kiválasztott csatorna egészséges. Oldalspecifikus ellenőrzési pontok: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS`.
 
 - csak tulajdonosi fájljogosultság (0600)
 - a privát fájl módja 600, a Compose-ellenőrzés sikeres, és a kiválasztott csatorna egészséges
@@ -167,26 +168,27 @@ Az eredmény csak ennél fogadható el: **Konfigurálás: Környezeti változók
 ## Biztonság és visszaállítás
 
 :::caution
-A biztonságos helyreállítás határa ennél: **Konfigurálás: Környezeti változók** ezeket a műveleteket igényli indítás vagy folytatás előtt: a dokumentációs tároló környezeti fájlja soha nem DiscVault futásidejű fájl · `.env.example`; a JWT- és PostgreSQL-titkokat ne módosítsa szokásos beállításkor · `JWT_SECRET` · `POSTGRES_PASSWORD`; a letöltött `.env.example` még `:dev` értéket használ; a futásidejű `.env` értéke pull vagy indítás előtt `:beta` legyen; hiba esetén tartsa leállítva a szolgáltatásokat, állítsa vissza és ellenőrizze az előző privát környezeti fájlt, majd ugyanazt az image-et hozza létre a titkok cseréje nélkül. Oldalspecifikus ellenőrzési pontok: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.
+A biztonságos helyreállítás határa ennél: **Konfigurálás: Környezeti változók** ezeket a műveleteket igényli indítás vagy folytatás előtt: a dokumentációs tároló környezeti fájlja soha nem DiscVault futásidejű fájl · `.env.example`; a JWT- és PostgreSQL-titkokat ne módosítsa szokásos beállításkor · `JWT_SECRET` · `POSTGRES_PASSWORD`; a letöltött `.env.example` még `:dev` értéket használ; a futásidejű `.env` értéke pull vagy indítás előtt `:beta` legyen; az ügyféltitkot csak a verziókezelésen kívüli futási környezetben vagy titokkezelőben tárolja, és kitettség esetén cserélje; az OIDC kikapcsolása előtt minden csak OIDC-t használó felhasználónak adjon másik használható bejelentkezési módot; hiba esetén tartsa leállítva a szolgáltatásokat, állítsa vissza és ellenőrizze az előző privát környezeti fájlt, majd ugyanazt az image-et hozza létre a titkok cseréje nélkül. Oldalspecifikus ellenőrzési pontok: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS`.
 
 - a dokumentációs tároló környezeti fájlja soha nem DiscVault futásidejű fájl · `.env.example`
 - a JWT- és PostgreSQL-titkokat ne módosítsa szokásos beállításkor · `JWT_SECRET` · `POSTGRES_PASSWORD`
 - a letöltött `.env.example` még `:dev` értéket használ; a futásidejű `.env` értéke pull vagy indítás előtt `:beta` legyen
+- az ügyféltitkot csak a verziókezelésen kívüli futási környezetben vagy titokkezelőben tárolja, és kitettség esetén cserélje; az OIDC kikapcsolása előtt minden csak OIDC-t használó felhasználónak adjon másik használható bejelentkezési módot
 - hiba esetén tartsa leállítva a szolgáltatásokat, állítsa vissza és ellenőrizze az előző privát környezeti fájlt, majd ugyanazt az image-et hozza létre a titkok cseréje nélkül
 :::
 
 ## Következő lépés
 
-[Konfigurálás: Hitelesítés és RBAC](/hu/configure/auth-rbac/)
+[Konfigurálás: Bejelentkezés OpenID Connecttel (OIDC)](/hu/configure/oidc/)
 
 ## Forrás és állapot
 
-- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
 - [Moving beta source: `docker-compose.yml`](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/docker-compose.yml)
 - [Raw beta download: `docker-compose.yml`](https://raw.githubusercontent.com/helmerzNL/DiscVault/release/v26-beta/app/deploy/next/docker-compose.yml)
-- [Pinned verification: `docker-compose.yml`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/deploy/next/docker-compose.yml)
+- [Pinned verification: `docker-compose.yml`](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/docker-compose.yml)
 - [Moving beta source: `.env.example`](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/.env.example)
 - [Raw beta download: `.env.example`](https://raw.githubusercontent.com/helmerzNL/DiscVault/release/v26-beta/app/deploy/next/.env.example)
-- [Pinned verification: `.env.example`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/deploy/next/.env.example)
-- Forrás és állapot: `2026-07-20`
-- DiscVault Docs: `0.1.6`
+- [Pinned verification: `.env.example`](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/.env.example)
+- Forrás és állapot: `2026-09-20`
+- DiscVault Docs: `0.1.14`

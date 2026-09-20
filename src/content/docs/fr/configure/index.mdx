@@ -1,26 +1,26 @@
 ---
 title: 'Configuration: Vue d’ensemble'
-description: 'Instructions propres à la tâche : Configuration: Vue d’ensemble: `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.'
+description: 'Instructions propres à la tâche : Configuration: Vue d’ensemble: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/oidc/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.'
 pageId: 'configure-index'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
 sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-09-20" />
 
 ## Objectif et résultat
 
-Suivez le déroulement propre à cette page pour **Configuration: Vue d’ensemble**. Cette procédure utilise `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
+Suivez le déroulement propre à cette page pour **Configuration: Vue d’ensemble**. Cette procédure utilise `/configure/environment/` · `/configure/auth-rbac/` · `/configure/oidc/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 ## S’applique à
 
-Cette page s’applique uniquement à **Configuration: Vue d’ensemble** (Docker · web). Les limites de canal et de données sont : DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. Points de contrôle propres à la page : `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
+Cette page s’applique uniquement à **Configuration: Vue d’ensemble** (Docker · web). Les limites de canal et de données sont : DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. Points de contrôle propres à la page : `/configure/environment/` · `/configure/auth-rbac/` · `/configure/oidc/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 ### DiscVault v26 stable
 
@@ -41,20 +41,22 @@ Cette page s’applique uniquement à **Configuration: Vue d’ensemble** (Docke
 
 1. **Choisir:** [Configuration: Variables d’environnement](/fr/configure/environment/)
 2. **Choisir:** [Configuration: Authentification et RBAC](/fr/configure/auth-rbac/) · RBAC
-3. **Choisir:** [Installation: Legacy Authentication](/fr/install/legacy-authentication/)
-4. **Choisir:** [Configuration: Extensions et métadonnées](/fr/configure/plugins-metadata/)
-5. **Consigner:** `/configure/environment/`
+3. **Choisir:** [Configuration: Connexion avec OpenID Connect (OIDC)](/fr/configure/oidc/) · OIDC Pocket ID
+4. **Choisir:** [Installation: Legacy Authentication](/fr/install/legacy-authentication/)
+5. **Choisir:** [Configuration: Extensions et métadonnées](/fr/configure/plugins-metadata/)
+6. **Consigner:** `/configure/environment/`
 
 ### Parcours par tâche
 
 - [Configuration: Variables d’environnement](/fr/configure/environment/) — DiscVault 26 `.env.example`
 - [Configuration: Authentification et RBAC](/fr/configure/auth-rbac/) — DiscVault 26 RBAC
+- [Configuration: Connexion avec OpenID Connect (OIDC)](/fr/configure/oidc/) — DiscVault 26.9 117 OIDC Pocket ID
 - [Installation: Legacy Authentication](/fr/install/legacy-authentication/) — DiscVault 26 TOTP
 - [Configuration: Extensions et métadonnées](/fr/configure/plugins-metadata/) — DiscVault 26
 
 ## Résultat attendu
 
-Validez le résultat de **Configuration: Vue d’ensemble** uniquement lorsque tous les résultats suivants sont confirmés : canal de publication choisi; `/configure/auth-rbac/`. Points de contrôle propres à la page : `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
+Validez le résultat de **Configuration: Vue d’ensemble** uniquement lorsque tous les résultats suivants sont confirmés : canal de publication choisi; `/configure/auth-rbac/`. Points de contrôle propres à la page : `/configure/environment/` · `/configure/auth-rbac/` · `/configure/oidc/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 - canal de publication choisi
 - `/configure/auth-rbac/`
@@ -62,7 +64,7 @@ Validez le résultat de **Configuration: Vue d’ensemble** uniquement lorsque t
 ## Sécurité et retour arrière
 
 :::caution
-La limite de récupération sûre pour **Configuration: Vue d’ensemble** impose ces actions avant tout démarrage ou toute poursuite : modifiez un seul sous-système à la fois, conservez sa valeur et sa sauvegarde, puis annulez avant le changement suivant. Points de contrôle propres à la page : `/configure/environment/` · `/configure/auth-rbac/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
+La limite de récupération sûre pour **Configuration: Vue d’ensemble** impose ces actions avant tout démarrage ou toute poursuite : modifiez un seul sous-système à la fois, conservez sa valeur et sa sauvegarde, puis annulez avant le changement suivant. Points de contrôle propres à la page : `/configure/environment/` · `/configure/auth-rbac/` · `/configure/oidc/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
 - modifiez un seul sous-système à la fois, conservez sa valeur et sa sauvegarde, puis annulez avant le changement suivant
 :::
@@ -73,6 +75,6 @@ La limite de récupération sûre pour **Configuration: Vue d’ensemble** impos
 
 ## Source et état
 
-- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Source et état: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
+- Source et état: `2026-09-20`
+- DiscVault Docs: `0.1.14`
