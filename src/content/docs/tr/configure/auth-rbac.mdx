@@ -1,26 +1,26 @@
 ---
 title: 'Yapılandırma: Kimlik doğrulama ve RBAC'
-description: 'Göreve özel yönergeler: Yapılandırma: Kimlik doğrulama ve RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.'
+description: 'Göreve özel yönergeler: Yapılandırma: Kimlik doğrulama ve RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · OIDC · Argon2id · TOTP.'
 pageId: 'configure-auth-rbac'
 products: ['server']
 platforms: ['web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
-lastVerified: '2026-07-20'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU', 'Flux76HQ/App-Guidance']
+lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
+<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## Amaç ve sonuç
 
-Sayfaya özel iş akışını tamamlayın: **Yapılandırma: Kimlik doğrulama ve RBAC**. Bu prosedür şunları kullanır: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
+Sayfaya özel iş akışını tamamlayın: **Yapılandırma: Kimlik doğrulama ve RBAC**. Bu prosedür şunları kullanır: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · OIDC · Argon2id · TOTP.
 
 ## Geçerli olduğu alan
 
-Bu sayfa yalnızca şunlar için geçerlidir: **Yapılandırma: Kimlik doğrulama ve RBAC** (web). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; passkey bir şifreleme anahtarı çiftidir: özel anahtar cihazda veya güvenilir kimlik bilgisi yöneticisinde kalır, DiscVault yalnızca açık anahtarı saklar; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn; TOTP. Sayfaya özel denetim noktaları: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
+Bu sayfa yalnızca şunlar için geçerlidir: **Yapılandırma: Kimlik doğrulama ve RBAC** (web). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; passkey bir şifreleme anahtarı çiftidir: özel anahtar cihazda veya güvenilir kimlik bilgisi yöneticisinde kalır, DiscVault yalnızca açık anahtarı saklar; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn OIDC; TOTP. Sayfaya özel denetim noktaları: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · OIDC · Argon2id · TOTP.
 
 ### DiscVault v26 kararlı
 
@@ -31,7 +31,7 @@ Bu sayfa yalnızca şunlar için geçerlidir: **Yapılandırma: Kimlik doğrulam
 ### DiscVault v26 beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- WebAuthn
+- WebAuthn OIDC
 - TOTP
 
 ## Ön koşullar
@@ -52,8 +52,9 @@ Bu sayfa yalnızca şunlar için geçerlidir: **Yapılandırma: Kimlik doğrulam
 8. **Oluşturun:** Yönetim → Kullanıcılar → 48 saatlik davet oluştur
 9. **Yapılandırın:** Yönetim → Roller → Temel / Gelişmiş
 10. **Yapılandırın:** mevcut kurulumda Kullanıcılar ve roller bölümünde parola girişini etkinleştirin ve yeni sahip veya yönetici passkey doğrulamasıyla onaylayın · sahipler ve yöneticiler geçici parola verebilir, değişiklik zorunluluğu koyabilir, kullanıcı başına MFA ayarlayabilir ve passkey kaydını denetleyebilir
-11. **Kaydedin:** kurtarma kodları özetlenmiş, tek kullanımlık ve passkey kurtarmayla ortaktır; yedekler TOTP gizlerini ve kurtarma malzemesini içermez, bu yüzden MFA yeniden kaydedilir · Legacy Authentication kapatmak etkin bir sahip passkey gerektirir; yalnızca yerel IP kullanan sahip önce geçerli FQDN ve sahip passkey oluşturmalıdır
-12. **Test edin:** `/api/next/auth/rbac`
+11. **Karşılaştırın:** [Yapılandırma: OpenID Connect (OIDC) ile oturum açma](/tr/configure/oidc/) · OIDC isteğe bağlı bir tarayıcı oturum açma yöntemi ekler; yerel passkey, isteğe bağlı parolalar, kurtarma kodları, API belirteçleri ve MCP bearer belirteçleri mevcut rollerini korur
+12. **Kaydedin:** kurtarma kodları özetlenmiş, tek kullanımlık ve passkey kurtarmayla ortaktır; yedekler TOTP gizlerini ve kurtarma malzemesini içermez, bu yüzden MFA yeniden kaydedilir · Legacy Authentication kapatmak etkin bir sahip passkey gerektirir; yalnızca yerel IP kullanan sahip önce geçerli FQDN ve sahip passkey oluşturmalıdır
+13. **Test edin:** `/api/next/auth/rbac`
 
 ### Komutlar ve ayarlar
 
@@ -73,7 +74,7 @@ curl --fail http://localhost:6180/api/next/auth/rbac
 
 ## Beklenen sonuç
 
-Şunun sonucunu kabul edin: **Yapılandırma: Kimlik doğrulama ve RBAC** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: sahip passkey girişi çalışır, davetli kayıt ayarla eşleşir ve test kullanıcısında yalnız atanmış izinler bulunur; passkey anahtarları kimlik avına dayanıklıdır ve siteye özeldir; oturum açma yeniden kullanılabilir hesap parolası yerine cihaz kilidini açmayı kullanır; süreli davet kodu kaydı başlatır ancak yeniden kullanılabilir hesap parolası değildir; normal oturum açma passkey kullanır. Sayfaya özel denetim noktaları: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
+Şunun sonucunu kabul edin: **Yapılandırma: Kimlik doğrulama ve RBAC** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: sahip passkey girişi çalışır, davetli kayıt ayarla eşleşir ve test kullanıcısında yalnız atanmış izinler bulunur; passkey anahtarları kimlik avına dayanıklıdır ve siteye özeldir; oturum açma yeniden kullanılabilir hesap parolası yerine cihaz kilidini açmayı kullanır; süreli davet kodu kaydı başlatır ancak yeniden kullanılabilir hesap parolası değildir; normal oturum açma passkey kullanır. Sayfaya özel denetim noktaları: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · OIDC · Argon2id · TOTP.
 
 - sahip passkey girişi çalışır, davetli kayıt ayarla eşleşir ve test kullanıcısında yalnız atanmış izinler bulunur
 - passkey anahtarları kimlik avına dayanıklıdır ve siteye özeldir; oturum açma yeniden kullanılabilir hesap parolası yerine cihaz kilidini açmayı kullanır
@@ -82,27 +83,28 @@ curl --fail http://localhost:6180/api/next/auth/rbac
 ## Güvenlik ve geri alma
 
 :::caution
-Şunun güvenli kurtarma sınırı: **Yapılandırma: Kimlik doğrulama ve RBAC** başlatmadan veya devam etmeden önce şu işlemleri gerektirir: telefon ve masaüstü cihazı gibi birden fazla passkey kaydedin ve cihazı değiştirmeden veya kaybetmeden önce bağımsız sahip kurtarma yolunu koruyun; parolalar en az 15 karakter olmalı, kullanıcı adına veya reddedilen yaygın bir parolaya eşit olamaz ve Argon2id ile özetlenir; 15 dakikada beş hata 15 dakika kilitler; kurtarma kodları özetlenmiş, tek kullanımlık ve passkey kurtarmayla ortaktır; yedekler TOTP gizlerini ve kurtarma malzemesini içermez, bu yüzden MFA yeniden kaydedilir; Legacy Authentication kapatmak etkin bir sahip passkey gerektirir; yalnızca yerel IP kullanan sahip önce geçerli FQDN ve sahip passkey oluşturmalıdır; sahip oturumunu ve ikinci bir kurtarma yöntemini koruyun; son sahip geçiş anahtarını asla kaldırmayın. Sayfaya özel denetim noktaları: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
+Şunun güvenli kurtarma sınırı: **Yapılandırma: Kimlik doğrulama ve RBAC** başlatmadan veya devam etmeden önce şu işlemleri gerektirir: telefon ve masaüstü cihazı gibi birden fazla passkey kaydedin ve cihazı değiştirmeden veya kaybetmeden önce bağımsız sahip kurtarma yolunu koruyun; parolalar en az 15 karakter olmalı, kullanıcı adına veya reddedilen yaygın bir parolaya eşit olamaz ve Argon2id ile özetlenir; 15 dakikada beş hata 15 dakika kilitler; kurtarma kodları özetlenmiş, tek kullanımlık ve passkey kurtarmayla ortaktır; yedekler TOTP gizlerini ve kurtarma malzemesini içermez, bu yüzden MFA yeniden kaydedilir; Legacy Authentication kapatmak etkin bir sahip passkey gerektirir; yalnızca yerel IP kullanan sahip önce geçerli FQDN ve sahip passkey oluşturmalıdır; bir kimlik tam issuer ve subject çiftidir; e-posta hiçbir zaman otomatik bağlanmaz, bağlama oturum açılmış tarayıcı oturumu gerektirir ve bağlantıyı kaldırmak için başka bir kullanılabilir giriş yöntemi gerekir; sahip oturumunu ve ikinci bir kurtarma yöntemini koruyun; son sahip geçiş anahtarını asla kaldırmayın. Sayfaya özel denetim noktaları: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · OIDC · Argon2id · TOTP.
 
 - telefon ve masaüstü cihazı gibi birden fazla passkey kaydedin ve cihazı değiştirmeden veya kaybetmeden önce bağımsız sahip kurtarma yolunu koruyun
 - parolalar en az 15 karakter olmalı, kullanıcı adına veya reddedilen yaygın bir parolaya eşit olamaz ve Argon2id ile özetlenir; 15 dakikada beş hata 15 dakika kilitler
 - kurtarma kodları özetlenmiş, tek kullanımlık ve passkey kurtarmayla ortaktır; yedekler TOTP gizlerini ve kurtarma malzemesini içermez, bu yüzden MFA yeniden kaydedilir
 - Legacy Authentication kapatmak etkin bir sahip passkey gerektirir; yalnızca yerel IP kullanan sahip önce geçerli FQDN ve sahip passkey oluşturmalıdır
+- bir kimlik tam issuer ve subject çiftidir; e-posta hiçbir zaman otomatik bağlanmaz, bağlama oturum açılmış tarayıcı oturumu gerektirir ve bağlantıyı kaldırmak için başka bir kullanılabilir giriş yöntemi gerekir
 - sahip oturumunu ve ikinci bir kurtarma yöntemini koruyun; son sahip geçiş anahtarını asla kaldırmayın
 :::
 
 ## Sonraki adım
 
-[Yapılandırma: Eklentiler ve meta veriler](/tr/configure/plugins-metadata/)
+[Yapılandırma: OpenID Connect (OIDC) ile oturum açma](/tr/configure/oidc/)
 
 ## Kaynak ve durum
 
-- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
-- [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
-- [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
-- [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
-- [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
-- [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
-- Kaynak ve durum: `2026-07-20`
-- DiscVault Docs: `0.1.6`
+- [`Flux76HQ/App-Guidance@41bfca3bfa39`](https://github.com/Flux76HQ/App-Guidance/commit/41bfca3bfa39f0b43924190d384e2d96be756020)
+- [Moving beta source: OIDC deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: OIDC environment template](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/.env.example)
+- [Pinned verification: OIDC implementation](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/backend/next_oidc.py)
+- [Authoritative OIDC authentication contract](https://github.com/Flux76HQ/App-Guidance/blob/41bfca3bfa39f0b43924190d384e2d96be756020/projects/discvault/specs/oidc-authentication.md)
+- Kaynak ve durum: `2026-09-20`
+- DiscVault Docs: `0.1.14`

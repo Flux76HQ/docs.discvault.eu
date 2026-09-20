@@ -1,26 +1,26 @@
 ---
 title: '설치: 리버스 프록시 및 패스키'
-description: '작업별 안내: 설치: 리버스 프록시 및 패스키: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.'
+description: '작업별 안내: 설치: 리버스 프록시 및 패스키: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.'
 pageId: 'install-reverse-proxy-passkeys'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
-lastVerified: '2026-07-20'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU', 'Flux76HQ/App-Guidance']
+lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · 웹" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
+<PageMeta channels="stable,beta" platform="Docker · 웹" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## 목표 및 결과
 
-이 페이지 전용 절차를 수행합니다: **설치: 리버스 프록시 및 패스키**. 이 절차에서 다루는 항목: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+이 페이지 전용 절차를 수행합니다: **설치: 리버스 프록시 및 패스키**. 이 절차에서 다루는 항목: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 ## 적용 대상
 
-이 페이지의 적용 범위: **설치: 리버스 프록시 및 패스키** (Docker · 웹). 채널 및 데이터 경계: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6080`; localhost 설정 예외를 제외하면 패스키에는 신뢰할 수 있는 HTTPS의 안정적인 정규화된 도메인 이름이 필요하며, IP 주소만 사용하거나 일반 HTTP를 사용하는 것은 지원되지 않음; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; `LEGACY_AUTH_ENABLED=true`. 이 페이지의 전용 확인 지점: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+이 페이지의 적용 범위: **설치: 리버스 프록시 및 패스키** (Docker · 웹). 채널 및 데이터 경계: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6080`; localhost 설정 예외를 제외하면 패스키에는 신뢰할 수 있는 HTTPS의 안정적인 정규화된 도메인 이름이 필요하며, IP 주소만 사용하거나 일반 HTTP를 사용하는 것은 지원되지 않음; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; OIDC · `/api/next/auth/oidc/callback` · [구성: OpenID Connect(OIDC) 로그인](/ko/configure/oidc/); `LEGACY_AUTH_ENABLED=true`. 이 페이지의 전용 확인 지점: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 ### DiscVault v26 안정판
 
@@ -32,6 +32,7 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `RP_ID` `RP_ORIGINS` · `6180`
+- OIDC · `/api/next/auth/oidc/callback` · [구성: OpenID Connect(OIDC) 로그인](/ko/configure/oidc/)
 - `LEGACY_AUTH_ENABLED=true`
 
 ## 사전 요구 사항
@@ -54,9 +55,10 @@ import PageMeta from '../../../../components/PageMeta.astro';
 2. **선택:** [설치: Legacy Authentication](/ko/install/legacy-authentication/) · FQDN 없는 직접 사설 또는 루프백 IP에서는 `RP_ID`와 `RP_ORIGINS`를 비워 둠
 3. **구성:** `RP_ID`
 4. **구성:** `RP_ORIGINS` · HTTPS
-5. **구성:** `6080` `6180`
-6. **테스트:** `GET /api/next/health`
-7. **기록:** 패스키를 등록하기 전에 호스트 이름을 선택하고 나중에 변경하면 다시 등록해야 하며 localhost는 로컬 설정 예외로만 유지됨
+5. **구성:** [구성: OpenID Connect(OIDC) 로그인](/ko/configure/oidc/) · `/api/next/auth/oidc/callback`
+6. **구성:** `6080` `6180`
+7. **테스트:** `GET /api/next/health`
+8. **기록:** 패스키를 등록하기 전에 호스트 이름을 선택하고 나중에 변경하면 다시 등록해야 하며 localhost는 로컬 설정 예외로만 유지됨
 
 ### 명령 및 설정
 
@@ -81,16 +83,17 @@ curl --fail http://localhost:6180/api/next/health
 
 ## 예상 결과
 
-다음 결과의 승인 조건: **설치: 리버스 프록시 및 패스키** 아래 결과가 모두 충족된 경우에만: HTTPS · HTTP `2xx`; `RP_ID`; `RP_ID`는 스킴과 포트가 없는 호스트 이름이고 `RP_ORIGINS`는 정확한 전체 HTTPS 오리진이며, 둘 다 브라우저에서 연 주소와 일치해야 함. 이 페이지의 전용 확인 지점: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+다음 결과의 승인 조건: **설치: 리버스 프록시 및 패스키** 아래 결과가 모두 충족된 경우에만: HTTPS · HTTP `2xx`; `RP_ID`; OIDC · `/api/next/auth/oidc/callback`; `RP_ID`는 스킴과 포트가 없는 호스트 이름이고 `RP_ORIGINS`는 정확한 전체 HTTPS 오리진이며, 둘 다 브라우저에서 연 주소와 일치해야 함. 이 페이지의 전용 확인 지점: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 - HTTPS · HTTP `2xx`
 - `RP_ID`
+- OIDC · `/api/next/auth/oidc/callback`
 - `RP_ID`는 스킴과 포트가 없는 호스트 이름이고 `RP_ORIGINS`는 정확한 전체 HTTPS 오리진이며, 둘 다 브라우저에서 연 주소와 일치해야 함
 
 ## 안전 및 롤백
 
 :::caution
-안전한 복구 경계: **설치: 리버스 프록시 및 패스키** 시작하거나 계속하기 전에 다음 작업이 필요합니다: 패스키를 등록하기 전에 호스트 이름을 선택하고 나중에 변경하면 다시 등록해야 하며 localhost는 로컬 설정 예외로만 유지됨; 유효하지 않거나 빈 RP 설정을 사용하는 직접 사설 또는 루프백 요청만 TOTP 없는 부트스트랩을 제공할 수 있으며 사용자 이름, 비밀번호 및 2FA 경로에서는 TOTP를 유지함; 프록시와 RP 값을 함께 복원하고 소유자 복구 수단을 유지함. 이 페이지의 전용 확인 지점: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+안전한 복구 경계: **설치: 리버스 프록시 및 패스키** 시작하거나 계속하기 전에 다음 작업이 필요합니다: 패스키를 등록하기 전에 호스트 이름을 선택하고 나중에 변경하면 다시 등록해야 하며 localhost는 로컬 설정 예외로만 유지됨; 유효하지 않거나 빈 RP 설정을 사용하는 직접 사설 또는 루프백 요청만 TOTP 없는 부트스트랩을 제공할 수 있으며 사용자 이름, 비밀번호 및 2FA 경로에서는 TOTP를 유지함; 프록시와 RP 값을 함께 복원하고 소유자 복구 수단을 유지함. 이 페이지의 전용 확인 지점: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 - 패스키를 등록하기 전에 호스트 이름을 선택하고 나중에 변경하면 다시 등록해야 하며 localhost는 로컬 설정 예외로만 유지됨
 - 유효하지 않거나 빈 RP 설정을 사용하는 직접 사설 또는 루프백 요청만 TOTP 없는 부트스트랩을 제공할 수 있으며 사용자 이름, 비밀번호 및 2FA 경로에서는 TOTP를 유지함
@@ -103,12 +106,12 @@ curl --fail http://localhost:6180/api/next/health
 
 ## 출처 및 상태
 
-- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
-- [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
-- [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
-- [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
-- [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
-- [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
-- 출처 및 상태: `2026-07-20`
-- DiscVault Docs: `0.1.6`
+- [`Flux76HQ/App-Guidance@41bfca3bfa39`](https://github.com/Flux76HQ/App-Guidance/commit/41bfca3bfa39f0b43924190d384e2d96be756020)
+- [Moving beta source: OIDC deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: OIDC environment template](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/.env.example)
+- [Pinned verification: OIDC implementation](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/backend/next_oidc.py)
+- [Authoritative OIDC authentication contract](https://github.com/Flux76HQ/App-Guidance/blob/41bfca3bfa39f0b43924190d384e2d96be756020/projects/discvault/specs/oidc-authentication.md)
+- 출처 및 상태: `2026-09-20`
+- DiscVault Docs: `0.1.14`

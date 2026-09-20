@@ -1,26 +1,26 @@
 ---
 title: '配置: 环境变量'
-description: '任务专用说明： 配置: 环境变量: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.'
+description: '任务专用说明： 配置: 环境变量: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS`.'
 pageId: 'configure-environment'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['beta']
 minVersion: 'DiscVault v26'
 sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-20'
+lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-20" />
+<PageMeta channels="beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-09-20" />
 
 ## 目标和结果
 
-完成此页面专用的流程： **配置: 环境变量**. 此流程使用 `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.
+完成此页面专用的流程： **配置: 环境变量**. 此流程使用 `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS`.
 
 ## 适用范围
 
-本页面仅适用于 **配置: 环境变量** (Docker · Unraid). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:beta`; `.env.example` `release/v26-beta`; `0600` · `JWT_SECRET` `POSTGRES_PASSWORD`. 本页面专用检查点： `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.
+本页面仅适用于 **配置: 环境变量** (Docker · Unraid). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:beta`; `.env.example` `release/v26-beta`; `0600` · `JWT_SECRET` `POSTGRES_PASSWORD`. 本页面专用检查点： `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS`.
 
 ### DiscVault v26 测试版
 
@@ -39,8 +39,9 @@ import PageMeta from '../../../../components/PageMeta.astro';
 1. **创建:** `/opt/discvault-next/.env` · 仅所有者可访问的文件权限 (0600)
 2. **配置:** `DISCVAULT_NEXT_IMAGE` · `RP_ORIGINS`
 3. **选择:** 使用有效 FQDN 时，应保持 `RP_ID` 与 `RP_ORIGINS` 一致并使用受信任的 HTTPS · 对于没有 FQDN 的直连私有或回环 IP，请将 `RP_ID` 和 `RP_ORIGINS` 留空
-4. **验证:** `chmod 0600` · `docker compose -p discvault_next_deploy config --quiet`
-5. **启动:** 常规配置修改期间不要更改 JWT 和 PostgreSQL 机密
+4. **选择:** [配置: 使用 OpenID Connect（OIDC）登录](/zh/configure/oidc/) · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · 同时设置颁发者、客户端 ID 和客户端密钥，或将三者全部留空；部分配置会阻止启动
+5. **验证:** `chmod 0600` · `docker compose -p discvault_next_deploy config --quiet`
+6. **启动:** 常规配置修改期间不要更改 JWT 和 PostgreSQL 机密
 
 ### 命令和设置
 
@@ -159,7 +160,7 @@ curl --fail http://localhost:6180/api/next/health
 
 ## 预期结果
 
-仅在以下条件下接受结果： **配置: 环境变量** 必须确认以下所有结果： 仅所有者可访问的文件权限 (0600); 私有文件权限为 600，Compose 验证成功，且所选通道进入健康状态. 本页面专用检查点： `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.
+仅在以下条件下接受结果： **配置: 环境变量** 必须确认以下所有结果： 仅所有者可访问的文件权限 (0600); 私有文件权限为 600，Compose 验证成功，且所选通道进入健康状态. 本页面专用检查点： `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS`.
 
 - 仅所有者可访问的文件权限 (0600)
 - 私有文件权限为 600，Compose 验证成功，且所选通道进入健康状态
@@ -167,26 +168,27 @@ curl --fail http://localhost:6180/api/next/health
 ## 安全与回滚
 
 :::caution
-安全恢复边界： **配置: 环境变量** 在启动或继续任何操作前必须执行： 文档仓库的环境文件绝不能作为 DiscVault 运行时文件 · `.env.example`; 常规配置修改期间不要更改 JWT 和 PostgreSQL 机密 · `JWT_SECRET` · `POSTGRES_PASSWORD`; 下载的 `.env.example` 仍默认使用 `:dev`；拉取或启动前必须将运行时 `.env` 改为 `:beta`; 失败时保持服务停止，恢复并验证之前的私有环境文件，然后使用同一镜像重新创建服务且不轮换机密. 本页面专用检查点： `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.
+安全恢复边界： **配置: 环境变量** 在启动或继续任何操作前必须执行： 文档仓库的环境文件绝不能作为 DiscVault 运行时文件 · `.env.example`; 常规配置修改期间不要更改 JWT 和 PostgreSQL 机密 · `JWT_SECRET` · `POSTGRES_PASSWORD`; 下载的 `.env.example` 仍默认使用 `:dev`；拉取或启动前必须将运行时 `.env` 改为 `:beta`; 仅将客户端密钥保存在未跟踪的运行时环境或密钥管理器中，泄露后立即轮换；禁用 OIDC 前，为每个仅使用 OIDC 的用户提供其他可用登录方式; 失败时保持服务停止，恢复并验证之前的私有环境文件，然后使用同一镜像重新创建服务且不轮换机密. 本页面专用检查点： `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS`.
 
 - 文档仓库的环境文件绝不能作为 DiscVault 运行时文件 · `.env.example`
 - 常规配置修改期间不要更改 JWT 和 PostgreSQL 机密 · `JWT_SECRET` · `POSTGRES_PASSWORD`
 - 下载的 `.env.example` 仍默认使用 `:dev`；拉取或启动前必须将运行时 `.env` 改为 `:beta`
+- 仅将客户端密钥保存在未跟踪的运行时环境或密钥管理器中，泄露后立即轮换；禁用 OIDC 前，为每个仅使用 OIDC 的用户提供其他可用登录方式
 - 失败时保持服务停止，恢复并验证之前的私有环境文件，然后使用同一镜像重新创建服务且不轮换机密
 :::
 
 ## 下一步
 
-[配置: 身份验证和 RBAC](/zh/configure/auth-rbac/)
+[配置: 使用 OpenID Connect（OIDC）登录](/zh/configure/oidc/)
 
 ## 来源和状态
 
-- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
 - [Moving beta source: `docker-compose.yml`](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/docker-compose.yml)
 - [Raw beta download: `docker-compose.yml`](https://raw.githubusercontent.com/helmerzNL/DiscVault/release/v26-beta/app/deploy/next/docker-compose.yml)
-- [Pinned verification: `docker-compose.yml`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/deploy/next/docker-compose.yml)
+- [Pinned verification: `docker-compose.yml`](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/docker-compose.yml)
 - [Moving beta source: `.env.example`](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/.env.example)
 - [Raw beta download: `.env.example`](https://raw.githubusercontent.com/helmerzNL/DiscVault/release/v26-beta/app/deploy/next/.env.example)
-- [Pinned verification: `.env.example`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/deploy/next/.env.example)
-- 来源和状态: `2026-07-20`
-- DiscVault Docs: `0.1.6`
+- [Pinned verification: `.env.example`](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/.env.example)
+- 来源和状态: `2026-09-20`
+- DiscVault Docs: `0.1.14`

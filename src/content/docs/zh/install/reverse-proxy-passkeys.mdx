@@ -1,26 +1,26 @@
 ---
 title: '安装: 反向代理和通行密钥'
-description: '任务专用说明： 安装: 反向代理和通行密钥: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.'
+description: '任务专用说明： 安装: 反向代理和通行密钥: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.'
 pageId: 'install-reverse-proxy-passkeys'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
-lastVerified: '2026-07-20'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU', 'Flux76HQ/App-Guidance']
+lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · 网页" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
+<PageMeta channels="stable,beta" platform="Docker · 网页" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## 目标和结果
 
-完成此页面专用的流程： **安装: 反向代理和通行密钥**. 此流程使用 FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+完成此页面专用的流程： **安装: 反向代理和通行密钥**. 此流程使用 FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 ## 适用范围
 
-本页面仅适用于 **安装: 反向代理和通行密钥** (Docker · 网页). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6080`; 除 localhost 设置例外外，通行密钥需要通过受信任 HTTPS 使用稳定的完全限定域名；不支持裸 IP 地址或普通 HTTP; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; `LEGACY_AUTH_ENABLED=true`. 本页面专用检查点： FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+本页面仅适用于 **安装: 反向代理和通行密钥** (Docker · 网页). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6080`; 除 localhost 设置例外外，通行密钥需要通过受信任 HTTPS 使用稳定的完全限定域名；不支持裸 IP 地址或普通 HTTP; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; OIDC · `/api/next/auth/oidc/callback` · [配置: 使用 OpenID Connect（OIDC）登录](/zh/configure/oidc/); `LEGACY_AUTH_ENABLED=true`. 本页面专用检查点： FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 ### DiscVault v26 稳定版
 
@@ -32,6 +32,7 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `RP_ID` `RP_ORIGINS` · `6180`
+- OIDC · `/api/next/auth/oidc/callback` · [配置: 使用 OpenID Connect（OIDC）登录](/zh/configure/oidc/)
 - `LEGACY_AUTH_ENABLED=true`
 
 ## 前提条件
@@ -54,9 +55,10 @@ import PageMeta from '../../../../components/PageMeta.astro';
 2. **选择:** [安装: Legacy Authentication](/zh/install/legacy-authentication/) · 对于没有 FQDN 的直连私有或回环 IP，请将 `RP_ID` 和 `RP_ORIGINS` 留空
 3. **配置:** `RP_ID`
 4. **配置:** `RP_ORIGINS` · HTTPS
-5. **配置:** `6080` `6180`
-6. **测试:** `GET /api/next/health`
-7. **记录:** 注册通行密钥前先确定主机名；之后更改主机名需要重新注册，而 localhost 仅作为本地设置例外
+5. **配置:** [配置: 使用 OpenID Connect（OIDC）登录](/zh/configure/oidc/) · `/api/next/auth/oidc/callback`
+6. **配置:** `6080` `6180`
+7. **测试:** `GET /api/next/health`
+8. **记录:** 注册通行密钥前先确定主机名；之后更改主机名需要重新注册，而 localhost 仅作为本地设置例外
 
 ### 命令和设置
 
@@ -81,16 +83,17 @@ curl --fail http://localhost:6180/api/next/health
 
 ## 预期结果
 
-仅在以下条件下接受结果： **安装: 反向代理和通行密钥** 必须确认以下所有结果： HTTPS · HTTP `2xx`; `RP_ID`; `RP_ID` 是不含方案和端口的主机名，`RP_ORIGINS` 是精确完整的 HTTPS 来源；两者都必须与浏览器中打开的地址一致. 本页面专用检查点： FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+仅在以下条件下接受结果： **安装: 反向代理和通行密钥** 必须确认以下所有结果： HTTPS · HTTP `2xx`; `RP_ID`; OIDC · `/api/next/auth/oidc/callback`; `RP_ID` 是不含方案和端口的主机名，`RP_ORIGINS` 是精确完整的 HTTPS 来源；两者都必须与浏览器中打开的地址一致. 本页面专用检查点： FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 - HTTPS · HTTP `2xx`
 - `RP_ID`
+- OIDC · `/api/next/auth/oidc/callback`
 - `RP_ID` 是不含方案和端口的主机名，`RP_ORIGINS` 是精确完整的 HTTPS 来源；两者都必须与浏览器中打开的地址一致
 
 ## 安全与回滚
 
 :::caution
-安全恢复边界： **安装: 反向代理和通行密钥** 在启动或继续任何操作前必须执行： 注册通行密钥前先确定主机名；之后更改主机名需要重新注册，而 localhost 仅作为本地设置例外; 仅当请求直接来自私有或回环地址且 RP 设置无效或为空时，才可能提供无 TOTP 引导；用户名、密码和 2FA 路径应保持启用 TOTP; 必须同时恢复代理与 RP 值，并保留所有者恢复方式. 本页面专用检查点： FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+安全恢复边界： **安装: 反向代理和通行密钥** 在启动或继续任何操作前必须执行： 注册通行密钥前先确定主机名；之后更改主机名需要重新注册，而 localhost 仅作为本地设置例外; 仅当请求直接来自私有或回环地址且 RP 设置无效或为空时，才可能提供无 TOTP 引导；用户名、密码和 2FA 路径应保持启用 TOTP; 必须同时恢复代理与 RP 值，并保留所有者恢复方式. 本页面专用检查点： FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 - 注册通行密钥前先确定主机名；之后更改主机名需要重新注册，而 localhost 仅作为本地设置例外
 - 仅当请求直接来自私有或回环地址且 RP 设置无效或为空时，才可能提供无 TOTP 引导；用户名、密码和 2FA 路径应保持启用 TOTP
@@ -103,12 +106,12 @@ curl --fail http://localhost:6180/api/next/health
 
 ## 来源和状态
 
-- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
-- [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
-- [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
-- [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
-- [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
-- [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
-- 来源和状态: `2026-07-20`
-- DiscVault Docs: `0.1.6`
+- [`Flux76HQ/App-Guidance@41bfca3bfa39`](https://github.com/Flux76HQ/App-Guidance/commit/41bfca3bfa39f0b43924190d384e2d96be756020)
+- [Moving beta source: OIDC deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: OIDC environment template](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/.env.example)
+- [Pinned verification: OIDC implementation](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/backend/next_oidc.py)
+- [Authoritative OIDC authentication contract](https://github.com/Flux76HQ/App-Guidance/blob/41bfca3bfa39f0b43924190d384e2d96be756020/projects/discvault/specs/oidc-authentication.md)
+- 来源和状态: `2026-09-20`
+- DiscVault Docs: `0.1.14`

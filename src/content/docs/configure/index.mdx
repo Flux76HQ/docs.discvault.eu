@@ -1,26 +1,26 @@
 ---
 title: 'Configure: Overview'
-description: 'Configure runtime values, Passkeys, beta Legacy Authentication, roles, and providers without exposing secrets.'
+description: 'Configure runtime values, Passkeys, beta OIDC and Legacy Authentication, roles, and providers without exposing secrets.'
 pageId: 'configure-index'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
 sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-09-20" />
 
 ## Goal and result
 
-Configure runtime values, Passkeys, beta Legacy Authentication, roles, and providers without exposing secrets.
+Configure runtime values, Passkeys, beta OIDC and Legacy Authentication, roles, and providers without exposing secrets.
 
 ## Applies to
 
-Passkeys, RBAC, and plugins apply to stable and beta. The official `release/v26-beta` Compose environment and Legacy Authentication procedures are beta-only and use the `DISCVAULT_NEXT_*` variable names.
+Passkeys, RBAC, and plugins apply to stable and beta. The official `release/v26-beta` Compose environment, OIDC, and Legacy Authentication procedures are beta-only and use the current deployment variables.
 
 ### DiscVault v26 stable
 
@@ -41,14 +41,16 @@ Passkeys, RBAC, and plugins apply to stable and beta. The official `release/v26-
 
 1. **Choose:** [Configure: Environment variables](/configure/environment/) · official beta runtime assignments
 2. **Choose:** [Configure: Authentication and RBAC](/configure/auth-rbac/) · Passkeys + Legacy Authentication + RBAC
-3. **Choose:** [Install: Legacy Authentication](/install/legacy-authentication/) · beta onboarding and recovery
-4. **Choose:** [Configure: Plugins and metadata](/configure/plugins-metadata/) · provider registry
-5. **Record:** one subsystem change · previous value · acceptance result
+3. **Choose:** [Configure: OpenID Connect (OIDC) sign-in](/configure/oidc/) · OIDC + Pocket ID
+4. **Choose:** [Install: Legacy Authentication](/install/legacy-authentication/) · beta onboarding and recovery
+5. **Choose:** [Configure: Plugins and metadata](/configure/plugins-metadata/) · provider registry
+6. **Record:** one subsystem change · previous value · acceptance result
 
 ### Task routes
 
 - [Configure: Environment variables](/configure/environment/) — DiscVault 26 beta · official `.env.example` · secrets
 - [Configure: Authentication and RBAC](/configure/auth-rbac/) — DiscVault 26 · Passkeys · beta Legacy Authentication · invites · RBAC
+- [Configure: OpenID Connect (OIDC) sign-in](/configure/oidc/) — DiscVault 26.9.117 beta · OIDC · Pocket ID · account linking
 - [Install: Legacy Authentication](/install/legacy-authentication/) — DiscVault 26 beta · password + TOTP · recovery
 - [Configure: Plugins and metadata](/configure/plugins-metadata/) — DiscVault 26 · plugins · metadata
 
@@ -73,6 +75,6 @@ Change one subsystem at a time and retain the previous value.
 
 ## Source and status
 
-- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Verified: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
+- Verified: `2026-09-20`
+- DiscVault Docs: `0.1.14`

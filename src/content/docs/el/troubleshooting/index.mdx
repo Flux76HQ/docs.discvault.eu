@@ -1,26 +1,26 @@
 ---
 title: 'Αντιμετώπιση προβλημάτων'
-description: 'Οδηγίες ειδικά για την εργασία: Αντιμετώπιση προβλημάτων: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.'
+description: 'Οδηγίες ειδικά για την εργασία: Αντιμετώπιση προβλημάτων: `docker compose` · `/api/next/health` · `postgres` · `RP_ID` · OIDC · `auth.oidc_failed`.'
 pageId: 'troubleshooting-index'
 products: ['server', 'pwa', 'ios', 'android']
 platforms: ['all']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVaultApp', 'Flux76HQ/DiscVault-AndroidApp']
-lastVerified: '2026-07-14'
+lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="όλες οι πλατφόρμες" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVaultApp · Flux76HQ/DiscVault-AndroidApp" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="όλες οι πλατφόρμες" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVaultApp · Flux76HQ/DiscVault-AndroidApp" verified="2026-09-20" />
 
 ## Στόχος και αποτέλεσμα
 
-Ολοκληρώστε τη ροή εργασίας της σελίδας για **Αντιμετώπιση προβλημάτων**. Η διαδικασία χρησιμοποιεί `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+Ολοκληρώστε τη ροή εργασίας της σελίδας για **Αντιμετώπιση προβλημάτων**. Η διαδικασία χρησιμοποιεί `docker compose` · `/api/next/health` · `postgres` · `RP_ID` · OIDC · `auth.oidc_failed`.
 
 ## Ισχύει για
 
-Αυτή η σελίδα ισχύει μόνο για **Αντιμετώπιση προβλημάτων** (όλες οι πλατφόρμες). Τα όρια καναλιού και δεδομένων είναι: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/api/next/health`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/api/next/health`. Σημεία ελέγχου της σελίδας: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+Αυτή η σελίδα ισχύει μόνο για **Αντιμετώπιση προβλημάτων** (όλες οι πλατφόρμες). Τα όρια καναλιού και δεδομένων είναι: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/api/next/health`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/api/next/health`. Σημεία ελέγχου της σελίδας: `docker compose` · `/api/next/health` · `postgres` · `RP_ID` · OIDC · `auth.oidc_failed`.
 
 ### DiscVault v26 – σταθερό
 
@@ -42,8 +42,9 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 1. **Καταγράψτε:** `docker compose`
 2. **Απομονώστε:** περιέκτης → αντίστροφος διακομιστής μεσολάβησης → πρόγραμμα περιήγησης/εφαρμογή → πάροχος → δεδομένα
-3. **Ελέγξτε:** αρχεία καταγραφής με χρόνο και απόκρυψη ιδιωτικών δεδομένων
-4. **Διατηρήστε:** PostgreSQL `/data`
+3. **Ελέγξτε:** [Ρύθμιση: Σύνδεση με OpenID Connect (OIDC)](/el/configure/oidc/) · `auth.oidc_failed`
+4. **Ελέγξτε:** αρχεία καταγραφής με χρόνο και απόκρυψη ιδιωτικών δεδομένων
+5. **Διατηρήστε:** PostgreSQL `/data`
 
 ### Εντολές και ρυθμίσεις
 
@@ -57,14 +58,14 @@ docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/com
 
 ## Αναμενόμενο αποτέλεσμα
 
-Αποδεχθείτε το αποτέλεσμα για **Αντιμετώπιση προβλημάτων** μόνο όταν ισχύουν όλα τα παρακάτω αποτελέσματα: ένα προβληματικό επίπεδο απομονώνεται με χρόνο, κατάσταση, digest εικόνας και αποκρυμμένο σφάλμα. Σημεία ελέγχου της σελίδας: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+Αποδεχθείτε το αποτέλεσμα για **Αντιμετώπιση προβλημάτων** μόνο όταν ισχύουν όλα τα παρακάτω αποτελέσματα: ένα προβληματικό επίπεδο απομονώνεται με χρόνο, κατάσταση, digest εικόνας και αποκρυμμένο σφάλμα. Σημεία ελέγχου της σελίδας: `docker compose` · `/api/next/health` · `postgres` · `RP_ID` · OIDC · `auth.oidc_failed`.
 
 - ένα προβληματικό επίπεδο απομονώνεται με χρόνο, κατάσταση, digest εικόνας και αποκρυμμένο σφάλμα
 
 ## Ασφάλεια και επαναφορά
 
 :::caution
-Το ασφαλές όριο ανάκτησης για **Αντιμετώπιση προβλημάτων** απαιτεί αυτές τις ενέργειες πριν από κάθε εκκίνηση ή συνέχεια: μη διαγράψετε πρώτα volumes, `/data`, διαπιστευτήρια browser ή αποθήκευση εφαρμογής· κρατήστε αποκρυμμένα logs και επαναφέρετε μόνο αντίστοιχο αντίγραφο. Σημεία ελέγχου της σελίδας: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+Το ασφαλές όριο ανάκτησης για **Αντιμετώπιση προβλημάτων** απαιτεί αυτές τις ενέργειες πριν από κάθε εκκίνηση ή συνέχεια: μη διαγράψετε πρώτα volumes, `/data`, διαπιστευτήρια browser ή αποθήκευση εφαρμογής· κρατήστε αποκρυμμένα logs και επαναφέρετε μόνο αντίστοιχο αντίγραφο. Σημεία ελέγχου της σελίδας: `docker compose` · `/api/next/health` · `postgres` · `RP_ID` · OIDC · `auth.oidc_failed`.
 
 - μη διαγράψετε πρώτα volumes, `/data`, διαπιστευτήρια browser ή αποθήκευση εφαρμογής· κρατήστε αποκρυμμένα logs και επαναφέρετε μόνο αντίστοιχο αντίγραφο
 :::
@@ -75,8 +76,8 @@ docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/com
 
 ## Πηγή και κατάσταση
 
-- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
 - [`helmerzNL/DiscVaultApp@9d15ab2a339c`](https://github.com/helmerzNL/DiscVaultApp/commit/9d15ab2a339cefdb164ec0ab29ad69ddabc511c1)
 - [`Flux76HQ/DiscVault-AndroidApp@a13ef4bdbb23`](https://github.com/Flux76HQ/DiscVault-AndroidApp/commit/a13ef4bdbb23b6a7e52e01cdf532fa222c1b67de)
-- Πηγή και κατάσταση: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- Πηγή και κατάσταση: `2026-09-20`
+- DiscVault Docs: `0.1.14`

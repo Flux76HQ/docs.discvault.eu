@@ -1,26 +1,26 @@
 ---
 title: 'Problemen oplossen'
-description: 'Taakspecifieke instructies voor Problemen oplossen: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.'
+description: 'Taakspecifieke instructies voor Problemen oplossen: `docker compose` · `/api/next/health` · `postgres` · `RP_ID` · OIDC · `auth.oidc_failed`.'
 pageId: 'troubleshooting-index'
 products: ['server', 'pwa', 'ios', 'android']
 platforms: ['all']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVaultApp', 'Flux76HQ/DiscVault-AndroidApp']
-lastVerified: '2026-07-14'
+lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="alle platforms" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVaultApp · Flux76HQ/DiscVault-AndroidApp" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="alle platforms" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVaultApp · Flux76HQ/DiscVault-AndroidApp" verified="2026-09-20" />
 
 ## Doel en resultaat
 
-Voer de paginaspecifieke werkwijze uit voor **Problemen oplossen**. Deze werkwijze gebruikt `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+Voer de paginaspecifieke werkwijze uit voor **Problemen oplossen**. Deze werkwijze gebruikt `docker compose` · `/api/next/health` · `postgres` · `RP_ID` · OIDC · `auth.oidc_failed`.
 
 ## Van toepassing op
 
-Deze pagina is uitsluitend van toepassing op **Problemen oplossen** (alle platforms). De kanaal- en gegevensgrenzen zijn: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/api/next/health`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/api/next/health`. Paginaspecifieke controlepunten: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+Deze pagina is uitsluitend van toepassing op **Problemen oplossen** (alle platforms). De kanaal- en gegevensgrenzen zijn: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/api/next/health`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/api/next/health`. Paginaspecifieke controlepunten: `docker compose` · `/api/next/health` · `postgres` · `RP_ID` · OIDC · `auth.oidc_failed`.
 
 ### DiscVault v26 stabiel
 
@@ -42,8 +42,9 @@ Deze pagina is uitsluitend van toepassing op **Problemen oplossen** (alle platfo
 
 1. **Vastleggen:** `docker compose`
 2. **Isoleren:** container → reverse proxy → browser/app → provider → gegevens
-3. **Controleren:** logboeken met tijdstip en afgeschermde privégegevens
-4. **Bewaren:** PostgreSQL `/data`
+3. **Controleren:** [Configureren: Aanmelden met OpenID Connect (OIDC)](/nl/configure/oidc/) · `auth.oidc_failed`
+4. **Controleren:** logboeken met tijdstip en afgeschermde privégegevens
+5. **Bewaren:** PostgreSQL `/data`
 
 ### Opdrachten en instellingen
 
@@ -57,14 +58,14 @@ docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/com
 
 ## Verwacht resultaat
 
-Accepteer het resultaat voor **Problemen oplossen** alleen wanneer alle onderstaande resultaten kloppen: één falende laag is geïsoleerd met tijdstip, status, image-digest en geredigeerde fout. Paginaspecifieke controlepunten: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+Accepteer het resultaat voor **Problemen oplossen** alleen wanneer alle onderstaande resultaten kloppen: één falende laag is geïsoleerd met tijdstip, status, image-digest en geredigeerde fout. Paginaspecifieke controlepunten: `docker compose` · `/api/next/health` · `postgres` · `RP_ID` · OIDC · `auth.oidc_failed`.
 
 - één falende laag is geïsoleerd met tijdstip, status, image-digest en geredigeerde fout
 
 ## Veiligheid en terugdraaien
 
 :::caution
-De veilige herstelgrens voor **Problemen oplossen** vereist deze acties voordat iets start of doorgaat: verwijder niet eerst volumes, `/data`, browserreferenties of native appopslag; bewaar geredigeerde logs en herstel alleen een bijpassende back-up. Paginaspecifieke controlepunten: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+De veilige herstelgrens voor **Problemen oplossen** vereist deze acties voordat iets start of doorgaat: verwijder niet eerst volumes, `/data`, browserreferenties of native appopslag; bewaar geredigeerde logs en herstel alleen een bijpassende back-up. Paginaspecifieke controlepunten: `docker compose` · `/api/next/health` · `postgres` · `RP_ID` · OIDC · `auth.oidc_failed`.
 
 - verwijder niet eerst volumes, `/data`, browserreferenties of native appopslag; bewaar geredigeerde logs en herstel alleen een bijpassende back-up
 :::
@@ -75,8 +76,8 @@ De veilige herstelgrens voor **Problemen oplossen** vereist deze acties voordat 
 
 ## Bron en status
 
-- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
 - [`helmerzNL/DiscVaultApp@9d15ab2a339c`](https://github.com/helmerzNL/DiscVaultApp/commit/9d15ab2a339cefdb164ec0ab29ad69ddabc511c1)
 - [`Flux76HQ/DiscVault-AndroidApp@a13ef4bdbb23`](https://github.com/Flux76HQ/DiscVault-AndroidApp/commit/a13ef4bdbb23b6a7e52e01cdf532fa222c1b67de)
-- Bron en status: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- Bron en status: `2026-09-20`
+- DiscVault Docs: `0.1.14`

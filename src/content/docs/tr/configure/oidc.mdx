@@ -1,0 +1,108 @@
+---
+title: 'Yapılandırma: OpenID Connect (OIDC) ile oturum açma'
+description: 'Göreve özel yönergeler: Yapılandırma: OpenID Connect (OIDC) ile oturum açma: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.'
+pageId: 'configure-oidc'
+products: ['server', 'pwa']
+platforms: ['docker', 'web']
+channels: ['beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault', 'Flux76HQ/App-Guidance']
+lastVerified: '2026-09-20'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-09-20" />
+
+## Amaç ve sonuç
+
+Sayfaya özel iş akışını tamamlayın: **Yapılandırma: OpenID Connect (OIDC) ile oturum açma**. Bu prosedür şunları kullanır: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+## Geçerli olduğu alan
+
+Bu sayfa yalnızca şunlar için geçerlidir: **Yapılandırma: OpenID Connect (OIDC) ile oturum açma** (Docker · web). Kanal ve veri sınırları: DiscVault · `26.9.117+`; OIDC isteğe bağlı bir tarayıcı oturum açma yöntemi ekler; yerel passkey, isteğe bağlı parolalar, kurtarma kodları, API belirteçleri ve MCP bearer belirteçleri mevcut rollerini korur; bir kimlik tam issuer ve subject çiftidir; e-posta hiçbir zaman otomatik bağlanmaz, bağlama oturum açılmış tarayıcı oturumu gerektirir ve bağlantıyı kaldırmak için başka bir kullanılabilir giriş yöntemi gerekir. Sayfaya özel denetim noktaları: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+### DiscVault v26 beta
+
+- DiscVault · `26.9.117+`
+- OIDC isteğe bağlı bir tarayıcı oturum açma yöntemi ekler; yerel passkey, isteğe bağlı parolalar, kurtarma kodları, API belirteçleri ve MCP bearer belirteçleri mevcut rollerini korur
+- bir kimlik tam issuer ve subject çiftidir; e-posta hiçbir zaman otomatik bağlanmaz, bağlama oturum açılmış tarayıcı oturumu gerektirir ve bağlantıyı kaldırmak için başka bir kullanılabilir giriş yöntemi gerekir
+
+## Ön koşullar
+
+- sahip erişimi · ikinci kurtarma yöntemi
+- [Kurulum: Ters vekil ve geçiş anahtarları](/tr/install/reverse-proxy-passkeys/) · localhost kurulum istisnası dışında passkey için güvenilir HTTPS üzerinden kararlı tam etki alanı adı gerekir; yalnız IP adresi veya düz HTTP desteklenmez
+- kimlik sağlayıcısında tam DiscVault geri çağırma URI değerine sahip gizli bir OIDC istemcisi
+
+### Sağlayıcının özel arka kanalı
+
+:::note[Betada kullanılabilir]
+tam özel HTTP originlerine yalnızca token ve JWKS uç noktaları için izin verin; issuer ve tarayıcı yetkilendirmesi yalnızca HTTPS olarak kalır, TLS doğrulaması etkin kalır ve discovery, token ve JWKS yönlendirmeleri reddedilir
+:::
+
+## Prosedür
+
+1. **Oluşturun:** kimlik sağlayıcısında tam DiscVault geri çağırma URI değerine sahip gizli bir OIDC istemcisi · `openid profile email` · `https://discvault.example.com/api/next/auth/oidc/callback`
+2. **Yapılandırın:** `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · issuer, istemci kimliği ve istemci gizlisini birlikte ayarlayın veya üçünü de boş bırakın; kısmi yapılandırma başlatmayı engeller
+3. **Yapılandırın:** `DISCVAULT_OIDC_PROVIDER_NAME` · `OIDC`
+4. **Seçin:** `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · `localhost` · Kubernetes DNS · `.internal` · tam özel HTTP originlerine yalnızca token ve JWKS uç noktaları için izin verin; issuer ve tarayıcı yetkilendirmesi yalnızca HTTPS olarak kalır, TLS doğrulaması etkin kalır ve discovery, token ve JWKS yönlendirmeleri reddedilir
+5. **Başlatın:** `next-api` · `--force-recreate`
+6. **Test edin:** OIDC isteğe bağlı bir tarayıcı oturum açma yöntemi ekler; yerel passkey, isteğe bağlı parolalar, kurtarma kodları, API belirteçleri ve MCP bearer belirteçleri mevcut rollerini korur · bir kimlik tam issuer ve subject çiftidir; e-posta hiçbir zaman otomatik bağlanmaz, bağlama oturum açılmış tarayıcı oturumu gerektirir ve bağlantıyı kaldırmak için başka bir kullanılabilir giriş yöntemi gerekir
+7. **İnceleyin:** `auth.oidc_failed` · hatalar yalnızca sağlayıcının yapılandırılmış görünen adını, güvenli bir `auth.oidc_failed` kodunu ve akış modunu kaydeder; gizli bilgiler, belirteçler, yetkilendirme kodları, state, nonce, uç nokta URL’leri ve PKCE değerleri asla günlüğe yazılmaz
+
+### Komutlar ve ayarlar
+
+#### DiscVault v26 beta
+
+```text
+RP_ORIGINS=https://discvault.example.com
+DISCVAULT_OIDC_ISSUER=https://id.example.com
+DISCVAULT_OIDC_CLIENT_ID=<client-id>
+DISCVAULT_OIDC_CLIENT_SECRET=<client-secret>
+DISCVAULT_OIDC_PROVIDER_NAME=Pocket ID
+DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS=
+```
+
+```text
+DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS=http://pocket-id.pocket-id.svc.cluster.local:1411
+```
+
+```bash
+cd /opt/discvault-next
+docker compose -p discvault_next_deploy config --quiet
+docker compose -p discvault_next_deploy up -d --force-recreate next-api
+curl --fail https://discvault.example.com/api/next/auth/status
+```
+
+## Beklenen sonuç
+
+Şunun sonucunu kabul edin: **Yapılandırma: OpenID Connect (OIDC) ile oturum açma** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: OIDC isteğe bağlı bir tarayıcı oturum açma yöntemi ekler; yerel passkey, isteğe bağlı parolalar, kurtarma kodları, API belirteçleri ve MCP bearer belirteçleri mevcut rollerini korur; bir kimlik tam issuer ve subject çiftidir; e-posta hiçbir zaman otomatik bağlanmaz, bağlama oturum açılmış tarayıcı oturumu gerektirir ve bağlantıyı kaldırmak için başka bir kullanılabilir giriş yöntemi gerekir; hatalar yalnızca sağlayıcının yapılandırılmış görünen adını, güvenli bir `auth.oidc_failed` kodunu ve akış modunu kaydeder; gizli bilgiler, belirteçler, yetkilendirme kodları, state, nonce, uç nokta URL’leri ve PKCE değerleri asla günlüğe yazılmaz. Sayfaya özel denetim noktaları: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+- OIDC isteğe bağlı bir tarayıcı oturum açma yöntemi ekler; yerel passkey, isteğe bağlı parolalar, kurtarma kodları, API belirteçleri ve MCP bearer belirteçleri mevcut rollerini korur
+- bir kimlik tam issuer ve subject çiftidir; e-posta hiçbir zaman otomatik bağlanmaz, bağlama oturum açılmış tarayıcı oturumu gerektirir ve bağlantıyı kaldırmak için başka bir kullanılabilir giriş yöntemi gerekir
+- hatalar yalnızca sağlayıcının yapılandırılmış görünen adını, güvenli bir `auth.oidc_failed` kodunu ve akış modunu kaydeder; gizli bilgiler, belirteçler, yetkilendirme kodları, state, nonce, uç nokta URL’leri ve PKCE değerleri asla günlüğe yazılmaz
+
+## Güvenlik ve geri alma
+
+:::caution
+Şunun güvenli kurtarma sınırı: **Yapılandırma: OpenID Connect (OIDC) ile oturum açma** başlatmadan veya devam etmeden önce şu işlemleri gerektirir: istemci gizlisini yalnızca izlenmeyen çalışma zamanı ortamında veya gizli bilgi yöneticisinde saklayın ve açığa çıkarsa değiştirin; OIDC kapatılmadan önce yalnızca OIDC kullanan her kullanıcıya başka bir kullanılabilir giriş yöntemi verin; tam özel HTTP originlerine yalnızca token ve JWKS uç noktaları için izin verin; issuer ve tarayıcı yetkilendirmesi yalnızca HTTPS olarak kalır, TLS doğrulaması etkin kalır ve discovery, token ve JWKS yönlendirmeleri reddedilir; bir kimlik tam issuer ve subject çiftidir; e-posta hiçbir zaman otomatik bağlanmaz, bağlama oturum açılmış tarayıcı oturumu gerektirir ve bağlantıyı kaldırmak için başka bir kullanılabilir giriş yöntemi gerekir. Sayfaya özel denetim noktaları: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+- istemci gizlisini yalnızca izlenmeyen çalışma zamanı ortamında veya gizli bilgi yöneticisinde saklayın ve açığa çıkarsa değiştirin; OIDC kapatılmadan önce yalnızca OIDC kullanan her kullanıcıya başka bir kullanılabilir giriş yöntemi verin
+- tam özel HTTP originlerine yalnızca token ve JWKS uç noktaları için izin verin; issuer ve tarayıcı yetkilendirmesi yalnızca HTTPS olarak kalır, TLS doğrulaması etkin kalır ve discovery, token ve JWKS yönlendirmeleri reddedilir
+- bir kimlik tam issuer ve subject çiftidir; e-posta hiçbir zaman otomatik bağlanmaz, bağlama oturum açılmış tarayıcı oturumu gerektirir ve bağlantıyı kaldırmak için başka bir kullanılabilir giriş yöntemi gerekir
+:::
+
+## Sonraki adım
+
+[Yapılandırma: Eklentiler ve meta veriler](/tr/configure/plugins-metadata/)
+
+## Kaynak ve durum
+
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
+- [`Flux76HQ/App-Guidance@41bfca3bfa39`](https://github.com/Flux76HQ/App-Guidance/commit/41bfca3bfa39f0b43924190d384e2d96be756020)
+- [Moving beta source: OIDC deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: OIDC environment template](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/.env.example)
+- [Pinned verification: OIDC implementation](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/backend/next_oidc.py)
+- [Authoritative OIDC authentication contract](https://github.com/Flux76HQ/App-Guidance/blob/41bfca3bfa39f0b43924190d384e2d96be756020/projects/discvault/specs/oidc-authentication.md)
+- Kaynak ve durum: `2026-09-20`
+- DiscVault Docs: `0.1.14`

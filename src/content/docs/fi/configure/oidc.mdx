@@ -1,0 +1,108 @@
+---
+title: 'Määritys: OpenID Connect (OIDC) -kirjautuminen'
+description: 'Tehtäväkohtaiset ohjeet: Määritys: OpenID Connect (OIDC) -kirjautuminen: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.'
+pageId: 'configure-oidc'
+products: ['server', 'pwa']
+platforms: ['docker', 'web']
+channels: ['beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault', 'Flux76HQ/App-Guidance']
+lastVerified: '2026-09-20'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="beta" platform="Docker · verkko" version="DiscVault v26" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-09-20" />
+
+## Tavoite ja tulos
+
+Suorita sivukohtainen työnkulku: **Määritys: OpenID Connect (OIDC) -kirjautuminen**. Tässä menettelyssä käytetään OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+## Koskee
+
+Tämä sivu koskee vain kohdetta **Määritys: OpenID Connect (OIDC) -kirjautuminen** (Docker · verkko). Kanava- ja tietorajat ovat: DiscVault · `26.9.117+`; OIDC lisää valinnaisen selainkirjautumisen; paikalliset passkey-avaimet, valinnaiset salasanat, palautuskoodit, API-tokenit ja MCP bearer -tokenit säilyttävät nykyiset roolinsa; identiteetti on tarkka issuer- ja subject-pari; sähköpostia ei koskaan linkitetä automaattisesti, linkitys vaatii kirjautuneen selainistunnon ja linkityksen poisto toisen käyttökelpoisen kirjautumistavan. Sivukohtaiset tarkistuspisteet: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+### DiscVault v26 – beta
+
+- DiscVault · `26.9.117+`
+- OIDC lisää valinnaisen selainkirjautumisen; paikalliset passkey-avaimet, valinnaiset salasanat, palautuskoodit, API-tokenit ja MCP bearer -tokenit säilyttävät nykyiset roolinsa
+- identiteetti on tarkka issuer- ja subject-pari; sähköpostia ei koskaan linkitetä automaattisesti, linkitys vaatii kirjautuneen selainistunnon ja linkityksen poisto toisen käyttökelpoisen kirjautumistavan
+
+## Edellytykset
+
+- omistajan käyttöoikeus · toinen palautustapa
+- [Asennus: Käänteinen välityspalvelin ja pääsyavaimet](/fi/install/reverse-proxy-passkeys/) · localhost-poikkeuksen ulkopuolella passkey-avaimet vaativat vakaan täydellisen toimialuenimen luotetulla HTTPS-yhteydellä; pelkkää IP-osoitetta tai HTTP-yhteyttä ei tueta
+- luottamuksellinen OIDC-asiakas identiteetintarjoajalla ja täsmällinen DiscVault-paluuosoite
+
+### Palveluntarjoajan yksityinen taustakanava
+
+:::note[Saatavilla betassa]
+salli tarkat yksityiset HTTP-origin-osoitteet vain token- ja JWKS-päätepisteille; issuer ja selainvaltuutus pysyvät vain HTTPS-yhteydessä, TLS-tarkistus säilyy käytössä ja discovery-, token- ja JWKS-uudelleenohjaukset estetään
+:::
+
+## Toimenpiteet
+
+1. **Luo:** luottamuksellinen OIDC-asiakas identiteetintarjoajalla ja täsmällinen DiscVault-paluuosoite · `openid profile email` · `https://discvault.example.com/api/next/auth/oidc/callback`
+2. **Määritä:** `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · aseta myöntäjä, asiakastunnus ja asiakassalaisuus yhdessä tai jätä kaikki kolme tyhjiksi; osittainen määritys estää käynnistyksen
+3. **Määritä:** `DISCVAULT_OIDC_PROVIDER_NAME` · `OIDC`
+4. **Valitse:** `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · `localhost` · Kubernetes DNS · `.internal` · salli tarkat yksityiset HTTP-origin-osoitteet vain token- ja JWKS-päätepisteille; issuer ja selainvaltuutus pysyvät vain HTTPS-yhteydessä, TLS-tarkistus säilyy käytössä ja discovery-, token- ja JWKS-uudelleenohjaukset estetään
+5. **Käynnistä:** `next-api` · `--force-recreate`
+6. **Testaa:** OIDC lisää valinnaisen selainkirjautumisen; paikalliset passkey-avaimet, valinnaiset salasanat, palautuskoodit, API-tokenit ja MCP bearer -tokenit säilyttävät nykyiset roolinsa · identiteetti on tarkka issuer- ja subject-pari; sähköpostia ei koskaan linkitetä automaattisesti, linkitys vaatii kirjautuneen selainistunnon ja linkityksen poisto toisen käyttökelpoisen kirjautumistavan
+7. **Tarkista:** `auth.oidc_failed` · virheistä tallennetaan vain palveluntarjoajan määritetty näyttönimi, turvallinen `auth.oidc_failed`-koodi ja työnkulun tila; salaisuuksia, tokeneita, valtuutuskoodeja, state- tai nonce-arvoja, päätepisteiden URL-osoitteita ja PKCE-arvoja ei koskaan kirjata
+
+### Komennot ja asetukset
+
+#### DiscVault v26 – beta
+
+```text
+RP_ORIGINS=https://discvault.example.com
+DISCVAULT_OIDC_ISSUER=https://id.example.com
+DISCVAULT_OIDC_CLIENT_ID=<client-id>
+DISCVAULT_OIDC_CLIENT_SECRET=<client-secret>
+DISCVAULT_OIDC_PROVIDER_NAME=Pocket ID
+DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS=
+```
+
+```text
+DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS=http://pocket-id.pocket-id.svc.cluster.local:1411
+```
+
+```bash
+cd /opt/discvault-next
+docker compose -p discvault_next_deploy config --quiet
+docker compose -p discvault_next_deploy up -d --force-recreate next-api
+curl --fail https://discvault.example.com/api/next/auth/status
+```
+
+## Odotettu tulos
+
+Hyväksy tulos kohteelle **Määritys: OpenID Connect (OIDC) -kirjautuminen** vain kun kaikki seuraavat tulokset toteutuvat: OIDC lisää valinnaisen selainkirjautumisen; paikalliset passkey-avaimet, valinnaiset salasanat, palautuskoodit, API-tokenit ja MCP bearer -tokenit säilyttävät nykyiset roolinsa; identiteetti on tarkka issuer- ja subject-pari; sähköpostia ei koskaan linkitetä automaattisesti, linkitys vaatii kirjautuneen selainistunnon ja linkityksen poisto toisen käyttökelpoisen kirjautumistavan; virheistä tallennetaan vain palveluntarjoajan määritetty näyttönimi, turvallinen `auth.oidc_failed`-koodi ja työnkulun tila; salaisuuksia, tokeneita, valtuutuskoodeja, state- tai nonce-arvoja, päätepisteiden URL-osoitteita ja PKCE-arvoja ei koskaan kirjata. Sivukohtaiset tarkistuspisteet: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+- OIDC lisää valinnaisen selainkirjautumisen; paikalliset passkey-avaimet, valinnaiset salasanat, palautuskoodit, API-tokenit ja MCP bearer -tokenit säilyttävät nykyiset roolinsa
+- identiteetti on tarkka issuer- ja subject-pari; sähköpostia ei koskaan linkitetä automaattisesti, linkitys vaatii kirjautuneen selainistunnon ja linkityksen poisto toisen käyttökelpoisen kirjautumistavan
+- virheistä tallennetaan vain palveluntarjoajan määritetty näyttönimi, turvallinen `auth.oidc_failed`-koodi ja työnkulun tila; salaisuuksia, tokeneita, valtuutuskoodeja, state- tai nonce-arvoja, päätepisteiden URL-osoitteita ja PKCE-arvoja ei koskaan kirjata
+
+## Turvallisuus ja palautus
+
+:::caution
+Turvallinen palautusraja kohteelle **Määritys: OpenID Connect (OIDC) -kirjautuminen** edellyttää näitä toimia ennen käynnistystä tai jatkamista: säilytä asiakassalaisuus vain versionhallinnan ulkopuolisessa ajoympäristössä tai salaisuuksien hallinnassa ja vaihda se paljastuessa; anna jokaiselle vain OIDC:tä käyttävälle toinen kirjautumistapa ennen OIDC:n poistamista käytöstä; salli tarkat yksityiset HTTP-origin-osoitteet vain token- ja JWKS-päätepisteille; issuer ja selainvaltuutus pysyvät vain HTTPS-yhteydessä, TLS-tarkistus säilyy käytössä ja discovery-, token- ja JWKS-uudelleenohjaukset estetään; identiteetti on tarkka issuer- ja subject-pari; sähköpostia ei koskaan linkitetä automaattisesti, linkitys vaatii kirjautuneen selainistunnon ja linkityksen poisto toisen käyttökelpoisen kirjautumistavan. Sivukohtaiset tarkistuspisteet: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+- säilytä asiakassalaisuus vain versionhallinnan ulkopuolisessa ajoympäristössä tai salaisuuksien hallinnassa ja vaihda se paljastuessa; anna jokaiselle vain OIDC:tä käyttävälle toinen kirjautumistapa ennen OIDC:n poistamista käytöstä
+- salli tarkat yksityiset HTTP-origin-osoitteet vain token- ja JWKS-päätepisteille; issuer ja selainvaltuutus pysyvät vain HTTPS-yhteydessä, TLS-tarkistus säilyy käytössä ja discovery-, token- ja JWKS-uudelleenohjaukset estetään
+- identiteetti on tarkka issuer- ja subject-pari; sähköpostia ei koskaan linkitetä automaattisesti, linkitys vaatii kirjautuneen selainistunnon ja linkityksen poisto toisen käyttökelpoisen kirjautumistavan
+:::
+
+## Seuraava vaihe
+
+[Määritys: Liitännäiset ja metatiedot](/fi/configure/plugins-metadata/)
+
+## Lähde ja tila
+
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
+- [`Flux76HQ/App-Guidance@41bfca3bfa39`](https://github.com/Flux76HQ/App-Guidance/commit/41bfca3bfa39f0b43924190d384e2d96be756020)
+- [Moving beta source: OIDC deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: OIDC environment template](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/.env.example)
+- [Pinned verification: OIDC implementation](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/backend/next_oidc.py)
+- [Authoritative OIDC authentication contract](https://github.com/Flux76HQ/App-Guidance/blob/41bfca3bfa39f0b43924190d384e2d96be756020/projects/discvault/specs/oidc-authentication.md)
+- Lähde ja tila: `2026-09-20`
+- DiscVault Docs: `0.1.14`

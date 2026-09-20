@@ -1,26 +1,26 @@
 ---
 title: 'Installation: Reverse-Proxy und Passkeys'
-description: 'Aufgabenspezifische Anleitung für Installation: Reverse-Proxy und Passkeys: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.'
+description: 'Aufgabenspezifische Anleitung für Installation: Reverse-Proxy und Passkeys: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.'
 pageId: 'install-reverse-proxy-passkeys'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
-lastVerified: '2026-07-20'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU', 'Flux76HQ/App-Guidance']
+lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
+<PageMeta channels="stable,beta" platform="Docker · Web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## Ziel und Ergebnis
 
-Führe den seitenspezifischen Ablauf aus für **Installation: Reverse-Proxy und Passkeys**. Dieses Verfahren arbeitet mit FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+Führe den seitenspezifischen Ablauf aus für **Installation: Reverse-Proxy und Passkeys**. Dieses Verfahren arbeitet mit FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 ## Gültig für
 
-Diese Seite gilt ausschließlich für **Installation: Reverse-Proxy und Passkeys** (Docker · Web). Kanal- und Datengrenzen sind: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6080`; außerhalb der localhost-Ausnahme benötigen Passkeys einen stabilen vollqualifizierten Domainnamen über vertrauenswürdiges HTTPS; eine reine IP-Adresse oder unverschlüsseltes HTTP wird nicht unterstützt; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; `LEGACY_AUTH_ENABLED=true`. Seitenspezifische Kontrollpunkte: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+Diese Seite gilt ausschließlich für **Installation: Reverse-Proxy und Passkeys** (Docker · Web). Kanal- und Datengrenzen sind: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6080`; außerhalb der localhost-Ausnahme benötigen Passkeys einen stabilen vollqualifizierten Domainnamen über vertrauenswürdiges HTTPS; eine reine IP-Adresse oder unverschlüsseltes HTTP wird nicht unterstützt; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; OIDC · `/api/next/auth/oidc/callback` · [Konfiguration: Anmeldung mit OpenID Connect (OIDC)](/de/configure/oidc/); `LEGACY_AUTH_ENABLED=true`. Seitenspezifische Kontrollpunkte: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 ### DiscVault v26 – stabil
 
@@ -32,6 +32,7 @@ Diese Seite gilt ausschließlich für **Installation: Reverse-Proxy und Passkeys
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `RP_ID` `RP_ORIGINS` · `6180`
+- OIDC · `/api/next/auth/oidc/callback` · [Konfiguration: Anmeldung mit OpenID Connect (OIDC)](/de/configure/oidc/)
 - `LEGACY_AUTH_ENABLED=true`
 
 ## Voraussetzungen
@@ -54,9 +55,10 @@ Vor Aktivierung der Funktion oder Erstellung des ersten Owners `/install/legacy-
 2. **Auswählen:** [Installation: Legacy Authentication](/de/install/legacy-authentication/) · bei direkter privater oder Loopback-IP ohne FQDN `RP_ID` und `RP_ORIGINS` leer lassen
 3. **Konfigurieren:** `RP_ID`
 4. **Konfigurieren:** `RP_ORIGINS` · HTTPS
-5. **Konfigurieren:** `6080` `6180`
-6. **Testen:** `GET /api/next/health`
-7. **Festhalten:** Hostname vor der Passkey-Registrierung wählen; eine spätere Änderung erfordert eine erneute Registrierung, localhost bleibt nur eine lokale Setup-Ausnahme
+5. **Konfigurieren:** [Konfiguration: Anmeldung mit OpenID Connect (OIDC)](/de/configure/oidc/) · `/api/next/auth/oidc/callback`
+6. **Konfigurieren:** `6080` `6180`
+7. **Testen:** `GET /api/next/health`
+8. **Festhalten:** Hostname vor der Passkey-Registrierung wählen; eine spätere Änderung erfordert eine erneute Registrierung, localhost bleibt nur eine lokale Setup-Ausnahme
 
 ### Befehle und Einstellungen
 
@@ -81,16 +83,17 @@ curl --fail http://localhost:6180/api/next/health
 
 ## Erwartetes Ergebnis
 
-Akzeptiere das Ergebnis für **Installation: Reverse-Proxy und Passkeys** nur wenn alle folgenden Ergebnisse erfüllt sind: HTTPS · HTTP `2xx`; `RP_ID`; `RP_ID` ist der Hostname ohne Schema oder Port, `RP_ORIGINS` die exakte vollständige HTTPS-Origin; beide müssen zur im Browser geöffneten Adresse passen. Seitenspezifische Kontrollpunkte: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+Akzeptiere das Ergebnis für **Installation: Reverse-Proxy und Passkeys** nur wenn alle folgenden Ergebnisse erfüllt sind: HTTPS · HTTP `2xx`; `RP_ID`; OIDC · `/api/next/auth/oidc/callback`; `RP_ID` ist der Hostname ohne Schema oder Port, `RP_ORIGINS` die exakte vollständige HTTPS-Origin; beide müssen zur im Browser geöffneten Adresse passen. Seitenspezifische Kontrollpunkte: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 - HTTPS · HTTP `2xx`
 - `RP_ID`
+- OIDC · `/api/next/auth/oidc/callback`
 - `RP_ID` ist der Hostname ohne Schema oder Port, `RP_ORIGINS` die exakte vollständige HTTPS-Origin; beide müssen zur im Browser geöffneten Adresse passen
 
 ## Sicherheit und Rollback
 
 :::caution
-Die sichere Wiederherstellungsgrenze für **Installation: Reverse-Proxy und Passkeys** verlangt vor jedem Start oder Fortsetzen diese Maßnahmen: Hostname vor der Passkey-Registrierung wählen; eine spätere Änderung erfordert eine erneute Registrierung, localhost bleibt nur eine lokale Setup-Ausnahme; nur eine direkte private oder Loopback-Anfrage mit ungültigen oder leeren Passkey-RP-Werten darf Bootstrap ohne TOTP anbieten; für Benutzername, Passwort und 2FA TOTP aktiviert lassen; Proxy- und RP-Werte gemeinsam wiederherstellen und eine Owner-Wiederherstellung behalten. Seitenspezifische Kontrollpunkte: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+Die sichere Wiederherstellungsgrenze für **Installation: Reverse-Proxy und Passkeys** verlangt vor jedem Start oder Fortsetzen diese Maßnahmen: Hostname vor der Passkey-Registrierung wählen; eine spätere Änderung erfordert eine erneute Registrierung, localhost bleibt nur eine lokale Setup-Ausnahme; nur eine direkte private oder Loopback-Anfrage mit ungültigen oder leeren Passkey-RP-Werten darf Bootstrap ohne TOTP anbieten; für Benutzername, Passwort und 2FA TOTP aktiviert lassen; Proxy- und RP-Werte gemeinsam wiederherstellen und eine Owner-Wiederherstellung behalten. Seitenspezifische Kontrollpunkte: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 - Hostname vor der Passkey-Registrierung wählen; eine spätere Änderung erfordert eine erneute Registrierung, localhost bleibt nur eine lokale Setup-Ausnahme
 - nur eine direkte private oder Loopback-Anfrage mit ungültigen oder leeren Passkey-RP-Werten darf Bootstrap ohne TOTP anbieten; für Benutzername, Passwort und 2FA TOTP aktiviert lassen
@@ -103,12 +106,12 @@ Die sichere Wiederherstellungsgrenze für **Installation: Reverse-Proxy und Pass
 
 ## Quelle und Status
 
-- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
-- [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
-- [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
-- [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
-- [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
-- [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
-- Quelle und Status: `2026-07-20`
-- DiscVault Docs: `0.1.6`
+- [`Flux76HQ/App-Guidance@41bfca3bfa39`](https://github.com/Flux76HQ/App-Guidance/commit/41bfca3bfa39f0b43924190d384e2d96be756020)
+- [Moving beta source: OIDC deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: OIDC environment template](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/.env.example)
+- [Pinned verification: OIDC implementation](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/backend/next_oidc.py)
+- [Authoritative OIDC authentication contract](https://github.com/Flux76HQ/App-Guidance/blob/41bfca3bfa39f0b43924190d384e2d96be756020/projects/discvault/specs/oidc-authentication.md)
+- Quelle und Status: `2026-09-20`
+- DiscVault Docs: `0.1.14`

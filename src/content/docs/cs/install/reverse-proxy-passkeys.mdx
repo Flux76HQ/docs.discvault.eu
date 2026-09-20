@@ -1,26 +1,26 @@
 ---
 title: 'Instalace: Reverzní proxy a přístupové klíče'
-description: 'Pokyny pro konkrétní úlohu: Instalace: Reverzní proxy a přístupové klíče: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.'
+description: 'Pokyny pro konkrétní úlohu: Instalace: Reverzní proxy a přístupové klíče: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.'
 pageId: 'install-reverse-proxy-passkeys'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
-lastVerified: '2026-07-20'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU', 'Flux76HQ/App-Guidance']
+lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## Cíl a výsledek
 
-Dokončete postup určený pro **Instalace: Reverzní proxy a přístupové klíče**. Tento postup pracuje s FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+Dokončete postup určený pro **Instalace: Reverzní proxy a přístupové klíče**. Tento postup pracuje s FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 ## Platí pro
 
-Tato stránka platí pouze pro **Instalace: Reverzní proxy a přístupové klíče** (Docker · web). Hranice kanálu a dat jsou: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6080`; mimo výjimku pro nastavení na localhost vyžadují passkeys stabilní plně kvalifikovaný název domény přes důvěryhodné HTTPS; holá IP adresa ani prosté HTTP nejsou podporovány; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; `LEGACY_AUTH_ENABLED=true`. Kontrolní body této stránky: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+Tato stránka platí pouze pro **Instalace: Reverzní proxy a přístupové klíče** (Docker · web). Hranice kanálu a dat jsou: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6080`; mimo výjimku pro nastavení na localhost vyžadují passkeys stabilní plně kvalifikovaný název domény přes důvěryhodné HTTPS; holá IP adresa ani prosté HTTP nejsou podporovány; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; OIDC · `/api/next/auth/oidc/callback` · [Konfigurace: Přihlášení přes OpenID Connect (OIDC)](/cs/configure/oidc/); `LEGACY_AUTH_ENABLED=true`. Kontrolní body této stránky: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 ### DiscVault v26 – stabilní
 
@@ -32,6 +32,7 @@ Tato stránka platí pouze pro **Instalace: Reverzní proxy a přístupové klí
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `RP_ID` `RP_ORIGINS` · `6180`
+- OIDC · `/api/next/auth/oidc/callback` · [Konfigurace: Přihlášení přes OpenID Connect (OIDC)](/cs/configure/oidc/)
 - `LEGACY_AUTH_ENABLED=true`
 
 ## Požadavky
@@ -54,9 +55,10 @@ Před zapnutím této možnosti nebo vytvořením prvního vlastníka postupujte
 2. **Vyberte:** [Instalace: Legacy Authentication](/cs/install/legacy-authentication/) · pro přímou privátní nebo loopback IP bez FQDN ponechte `RP_ID` a `RP_ORIGINS` prázdné
 3. **Nastavte:** `RP_ID`
 4. **Nastavte:** `RP_ORIGINS` · HTTPS
-5. **Nastavte:** `6080` `6180`
-6. **Otestujte:** `GET /api/next/health`
-7. **Zaznamenejte:** zvolte název hostitele před registrací passkeys; pozdější změna vyžaduje novou registraci a localhost zůstává pouze výjimkou pro místní nastavení
+5. **Nastavte:** [Konfigurace: Přihlášení přes OpenID Connect (OIDC)](/cs/configure/oidc/) · `/api/next/auth/oidc/callback`
+6. **Nastavte:** `6080` `6180`
+7. **Otestujte:** `GET /api/next/health`
+8. **Zaznamenejte:** zvolte název hostitele před registrací passkeys; pozdější změna vyžaduje novou registraci a localhost zůstává pouze výjimkou pro místní nastavení
 
 ### Příkazy a nastavení
 
@@ -81,16 +83,17 @@ curl --fail http://localhost:6180/api/next/health
 
 ## Očekávaný výsledek
 
-Výsledek přijměte pro **Instalace: Reverzní proxy a přístupové klíče** pouze pokud platí všechny následující výsledky: HTTPS · HTTP `2xx`; `RP_ID`; `RP_ID` je název hostitele bez schématu a portu, zatímco `RP_ORIGINS` je přesný úplný origin HTTPS; obě hodnoty musí odpovídat adrese otevřené v prohlížeči. Kontrolní body této stránky: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+Výsledek přijměte pro **Instalace: Reverzní proxy a přístupové klíče** pouze pokud platí všechny následující výsledky: HTTPS · HTTP `2xx`; `RP_ID`; OIDC · `/api/next/auth/oidc/callback`; `RP_ID` je název hostitele bez schématu a portu, zatímco `RP_ORIGINS` je přesný úplný origin HTTPS; obě hodnoty musí odpovídat adrese otevřené v prohlížeči. Kontrolní body této stránky: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 - HTTPS · HTTP `2xx`
 - `RP_ID`
+- OIDC · `/api/next/auth/oidc/callback`
 - `RP_ID` je název hostitele bez schématu a portu, zatímco `RP_ORIGINS` je přesný úplný origin HTTPS; obě hodnoty musí odpovídat adrese otevřené v prohlížeči
 
 ## Bezpečnost a návrat
 
 :::caution
-Bezpečná hranice obnovy pro **Instalace: Reverzní proxy a přístupové klíče** vyžaduje před spuštěním nebo pokračováním tyto kroky: zvolte název hostitele před registrací passkeys; pozdější změna vyžaduje novou registraci a localhost zůstává pouze výjimkou pro místní nastavení; pouze přímý privátní nebo loopback požadavek s neplatným či prázdným RP pro passkeys může nabídnout bootstrap bez TOTP; pro uživatelské jméno, heslo a 2FA ponechte TOTP zapnuté; obnovte proxy a hodnoty RP společně a zachovejte metodu obnovení vlastníka. Kontrolní body této stránky: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+Bezpečná hranice obnovy pro **Instalace: Reverzní proxy a přístupové klíče** vyžaduje před spuštěním nebo pokračováním tyto kroky: zvolte název hostitele před registrací passkeys; pozdější změna vyžaduje novou registraci a localhost zůstává pouze výjimkou pro místní nastavení; pouze přímý privátní nebo loopback požadavek s neplatným či prázdným RP pro passkeys může nabídnout bootstrap bez TOTP; pro uživatelské jméno, heslo a 2FA ponechte TOTP zapnuté; obnovte proxy a hodnoty RP společně a zachovejte metodu obnovení vlastníka. Kontrolní body této stránky: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 - zvolte název hostitele před registrací passkeys; pozdější změna vyžaduje novou registraci a localhost zůstává pouze výjimkou pro místní nastavení
 - pouze přímý privátní nebo loopback požadavek s neplatným či prázdným RP pro passkeys může nabídnout bootstrap bez TOTP; pro uživatelské jméno, heslo a 2FA ponechte TOTP zapnuté
@@ -103,12 +106,12 @@ Bezpečná hranice obnovy pro **Instalace: Reverzní proxy a přístupové klí�
 
 ## Zdroj a stav
 
-- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
-- [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
-- [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
-- [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
-- [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
-- [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
-- Zdroj a stav: `2026-07-20`
-- DiscVault Docs: `0.1.6`
+- [`Flux76HQ/App-Guidance@41bfca3bfa39`](https://github.com/Flux76HQ/App-Guidance/commit/41bfca3bfa39f0b43924190d384e2d96be756020)
+- [Moving beta source: OIDC deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: OIDC environment template](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/.env.example)
+- [Pinned verification: OIDC implementation](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/backend/next_oidc.py)
+- [Authoritative OIDC authentication contract](https://github.com/Flux76HQ/App-Guidance/blob/41bfca3bfa39f0b43924190d384e2d96be756020/projects/discvault/specs/oidc-authentication.md)
+- Zdroj a stav: `2026-09-20`
+- DiscVault Docs: `0.1.14`

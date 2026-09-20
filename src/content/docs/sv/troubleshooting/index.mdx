@@ -1,26 +1,26 @@
 ---
 title: 'Felsökning'
-description: 'Uppgiftsspecifik vägledning för Felsökning: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.'
+description: 'Uppgiftsspecifik vägledning för Felsökning: `docker compose` · `/api/next/health` · `postgres` · `RP_ID` · OIDC · `auth.oidc_failed`.'
 pageId: 'troubleshooting-index'
 products: ['server', 'pwa', 'ios', 'android']
 platforms: ['all']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVaultApp', 'Flux76HQ/DiscVault-AndroidApp']
-lastVerified: '2026-07-14'
+lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="alla plattformar" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVaultApp · Flux76HQ/DiscVault-AndroidApp" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="alla plattformar" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVaultApp · Flux76HQ/DiscVault-AndroidApp" verified="2026-09-20" />
 
 ## Mål och resultat
 
-Följ det sidspecifika arbetsflödet för **Felsökning**. Den här proceduren använder `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+Följ det sidspecifika arbetsflödet för **Felsökning**. Den här proceduren använder `docker compose` · `/api/next/health` · `postgres` · `RP_ID` · OIDC · `auth.oidc_failed`.
 
 ## Gäller för
 
-Den här sidan gäller endast **Felsökning** (alla plattformar). Kanal- och datagränserna är: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/api/next/health`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/api/next/health`. Sidspecifika kontrollpunkter: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+Den här sidan gäller endast **Felsökning** (alla plattformar). Kanal- och datagränserna är: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `/api/next/health`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/api/next/health`. Sidspecifika kontrollpunkter: `docker compose` · `/api/next/health` · `postgres` · `RP_ID` · OIDC · `auth.oidc_failed`.
 
 ### DiscVault v26 – stabil
 
@@ -42,8 +42,9 @@ Den här sidan gäller endast **Felsökning** (alla plattformar). Kanal- och dat
 
 1. **Anteckna:** `docker compose`
 2. **Isolera:** container → omvänd proxy → webbläsare/app → leverantör → data
-3. **Kontrollera:** tidsstämplade loggar med privata data maskerade
-4. **Bevara:** PostgreSQL `/data`
+3. **Kontrollera:** [Konfiguration: Inloggning med OpenID Connect (OIDC)](/sv/configure/oidc/) · `auth.oidc_failed`
+4. **Kontrollera:** tidsstämplade loggar med privata data maskerade
+5. **Bevara:** PostgreSQL `/data`
 
 ### Kommandon och inställningar
 
@@ -57,14 +58,14 @@ docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/com
 
 ## Förväntat resultat
 
-Godkänn resultatet för **Felsökning** endast när alla resultat nedan stämmer: ett felande lager är isolerat med tid, status, image-digest och maskerat fel. Sidspecifika kontrollpunkter: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+Godkänn resultatet för **Felsökning** endast när alla resultat nedan stämmer: ett felande lager är isolerat med tid, status, image-digest och maskerat fel. Sidspecifika kontrollpunkter: `docker compose` · `/api/next/health` · `postgres` · `RP_ID` · OIDC · `auth.oidc_failed`.
 
 - ett felande lager är isolerat med tid, status, image-digest och maskerat fel
 
 ## Säkerhet och återställning
 
 :::caution
-Den säkra återställningsgränsen för **Felsökning** kräver dessa åtgärder innan något startas eller fortsätter: ta inte först bort volymer, `/data`, webbläsaruppgifter eller app-lagring; bevara maskerade loggar och återställ endast en matchande kopia. Sidspecifika kontrollpunkter: `docker compose` · `/api/next/health` · `postgres` · `RP_ID`.
+Den säkra återställningsgränsen för **Felsökning** kräver dessa åtgärder innan något startas eller fortsätter: ta inte först bort volymer, `/data`, webbläsaruppgifter eller app-lagring; bevara maskerade loggar och återställ endast en matchande kopia. Sidspecifika kontrollpunkter: `docker compose` · `/api/next/health` · `postgres` · `RP_ID` · OIDC · `auth.oidc_failed`.
 
 - ta inte först bort volymer, `/data`, webbläsaruppgifter eller app-lagring; bevara maskerade loggar och återställ endast en matchande kopia
 :::
@@ -75,8 +76,8 @@ Den säkra återställningsgränsen för **Felsökning** kräver dessa åtgärde
 
 ## Källa och status
 
-- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
 - [`helmerzNL/DiscVaultApp@9d15ab2a339c`](https://github.com/helmerzNL/DiscVaultApp/commit/9d15ab2a339cefdb164ec0ab29ad69ddabc511c1)
 - [`Flux76HQ/DiscVault-AndroidApp@a13ef4bdbb23`](https://github.com/Flux76HQ/DiscVault-AndroidApp/commit/a13ef4bdbb23b6a7e52e01cdf532fa222c1b67de)
-- Källa och status: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- Källa och status: `2026-09-20`
+- DiscVault Docs: `0.1.14`

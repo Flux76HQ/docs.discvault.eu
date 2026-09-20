@@ -1,26 +1,26 @@
 ---
 title: 'Configure: Authentication and RBAC'
-description: 'Operate Passkeys and RBAC in both channels, and manage optional Legacy Authentication users and recovery in DiscVault 26 beta.'
+description: 'Operate Passkeys and RBAC in both channels, and manage optional OIDC or Legacy Authentication identities and recovery in DiscVault 26 beta.'
 pageId: 'configure-auth-rbac'
 products: ['server']
 platforms: ['web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
-lastVerified: '2026-07-20'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU', 'Flux76HQ/App-Guidance']
+lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
+<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## Goal and result
 
-Operate Passkeys and RBAC in both channels, and manage optional Legacy Authentication users and recovery in DiscVault 26 beta.
+Operate Passkeys and RBAC in both channels, and manage optional OIDC or Legacy Authentication identities and recovery in DiscVault 26 beta.
 
 ## Applies to
 
-DiscVault v26 provides WebAuthn and RBAC in stable and beta. A passkey keeps its private key on the device or in a trusted credential manager while DiscVault stores the public key. DiscVault 26 beta additionally supports the opt-in Legacy Authentication capability. Owners and Admins can issue temporary passwords, require a password change, set per-user MFA policy, and control passkey registration. TOTP secrets are encrypted and unified recovery codes are hashed and single-use.
+DiscVault v26 provides WebAuthn and RBAC in stable and beta. A passkey keeps its private key on the device or in a trusted credential manager while DiscVault stores the public key. DiscVault 26 beta additionally supports optional OIDC and the opt-in Legacy Authentication capability. Owners and Admins can issue temporary passwords, require a password change, set per-user MFA policy, control passkey registration, and let signed-in users link one identity for the configured OIDC issuer. TOTP secrets are encrypted and unified recovery codes are hashed and single-use.
 
 ### DiscVault v26 stable
 
@@ -31,7 +31,7 @@ DiscVault v26 provides WebAuthn and RBAC in stable and beta. A passkey keeps its
 ### DiscVault v26 beta
 
 - DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
-- WebAuthn + optional Legacy Authentication
+- WebAuthn + optional Legacy Authentication + OIDC
 - temporary passwords · forced password change · TOTP · recovery codes
 
 ## Prerequisites
@@ -52,8 +52,9 @@ DiscVault v26 provides WebAuthn and RBAC in stable and beta. A passkey keeps its
 8. **Create:** Admin → Users → Create 48-hour invite
 9. **Configure:** Admin → Roles → Basic / Advanced
 10. **Configure:** on an existing installation, enable password login in Users & roles and approve activation with a fresh Owner or Admin passkey assertion · Owners and Admins can issue temporary passwords, require a password change, set per-user MFA policy, and control passkey registration
-11. **Record:** recovery codes are hashed, single-use, and shared with passkey recovery; backups omit TOTP secrets and recovery material, so MFA users enroll again after restore · disabling Legacy Authentication requires an active Owner passkey; a local-IP-only Owner must establish a valid FQDN and Owner passkey before safe disablement
-12. **Test:** second user · assigned permission only · owner session remains open
+11. **Compare:** [Configure: OpenID Connect (OIDC) sign-in](/configure/oidc/) · OIDC adds an optional browser sign-in method; local passkeys, optional passwords, recovery codes, API tokens, and MCP bearer tokens keep their existing roles
+12. **Record:** recovery codes are hashed, single-use, and shared with passkey recovery; backups omit TOTP secrets and recovery material, so MFA users enroll again after restore · disabling Legacy Authentication requires an active Owner passkey; a local-IP-only Owner must establish a valid FQDN and Owner passkey before safe disablement
+13. **Test:** second user · assigned permission only · owner session remains open
 
 ### Commands and settings
 
@@ -73,7 +74,7 @@ curl --fail http://localhost:6180/api/next/auth/rbac
 
 ## Expected result
 
-Owner login retains two recovery-capable passkeys, beta password users receive the intended TOTP and password policy, and a test user receives only assigned permissions.
+Owner login retains an independent recovery method, beta OIDC and password users receive the intended identity and MFA policy, and a test user receives only assigned permissions.
 
 - owner passkey login works, invite-only registration matches the setting, and the test user has only assigned permissions
 - passkeys are phishing-resistant and unique to the site; sign-in uses the device unlock method instead of a reusable account password
@@ -88,21 +89,22 @@ Keep an Owner session open, register more than one passkey, and preserve recover
 - passwords require at least 15 characters, cannot equal the username or a denied common password, and are hashed with Argon2id; five failures in 15 minutes lock the account for 15 minutes
 - recovery codes are hashed, single-use, and shared with passkey recovery; backups omit TOTP secrets and recovery material, so MFA users enroll again after restore
 - disabling Legacy Authentication requires an active Owner passkey; a local-IP-only Owner must establish a valid FQDN and Owner passkey before safe disablement
+- an identity is the exact issuer and subject pair; email never links automatically, linking requires the signed-in browser session, and unlinking requires another usable login method
 - keep the owner session and a second recovery method; never remove the last owner passkey
 :::
 
 ## Next step
 
-[Configure: Plugins and metadata](/configure/plugins-metadata/)
+[Configure: OpenID Connect (OIDC) sign-in](/configure/oidc/)
 
 ## Source and status
 
-- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
-- [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
-- [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
-- [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
-- [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
-- [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
-- Verified: `2026-07-20`
-- DiscVault Docs: `0.1.6`
+- [`Flux76HQ/App-Guidance@41bfca3bfa39`](https://github.com/Flux76HQ/App-Guidance/commit/41bfca3bfa39f0b43924190d384e2d96be756020)
+- [Moving beta source: OIDC deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: OIDC environment template](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/.env.example)
+- [Pinned verification: OIDC implementation](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/backend/next_oidc.py)
+- [Authoritative OIDC authentication contract](https://github.com/Flux76HQ/App-Guidance/blob/41bfca3bfa39f0b43924190d384e2d96be756020/projects/discvault/specs/oidc-authentication.md)
+- Verified: `2026-09-20`
+- DiscVault Docs: `0.1.14`

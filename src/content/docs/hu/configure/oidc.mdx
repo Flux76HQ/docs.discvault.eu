@@ -1,0 +1,108 @@
+---
+title: 'Konfigurálás: Bejelentkezés OpenID Connecttel (OIDC)'
+description: 'Feladatspecifikus útmutató: Konfigurálás: Bejelentkezés OpenID Connecttel (OIDC): OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.'
+pageId: 'configure-oidc'
+products: ['server', 'pwa']
+platforms: ['docker', 'web']
+channels: ['beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault', 'Flux76HQ/App-Guidance']
+lastVerified: '2026-09-20'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-09-20" />
+
+## Cél és eredmény
+
+Hajtsa végre az oldalhoz tartozó munkafolyamatot: **Konfigurálás: Bejelentkezés OpenID Connecttel (OIDC)**. Ez az eljárás ezeket használja: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+## Érvényesség
+
+Ez az oldal kizárólag erre vonatkozik: **Konfigurálás: Bejelentkezés OpenID Connecttel (OIDC)** (Docker · web). A csatorna- és adathatárok: DiscVault · `26.9.117+`; Az OIDC választható böngészős bejelentkezést ad; a helyi passkey-k, választható jelszavak, helyreállítási kódok, API-tokenek és MCP bearer tokenek megtartják szerepüket; az identitás az issuer és subject pontos párja; az e-mail soha nem kapcsolódik automatikusan, a kapcsoláshoz bejelentkezett böngészős munkamenet, a leválasztáshoz pedig másik használható bejelentkezési mód kell. Oldalspecifikus ellenőrzési pontok: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+### DiscVault v26 – béta
+
+- DiscVault · `26.9.117+`
+- Az OIDC választható böngészős bejelentkezést ad; a helyi passkey-k, választható jelszavak, helyreállítási kódok, API-tokenek és MCP bearer tokenek megtartják szerepüket
+- az identitás az issuer és subject pontos párja; az e-mail soha nem kapcsolódik automatikusan, a kapcsoláshoz bejelentkezett böngészős munkamenet, a leválasztáshoz pedig másik használható bejelentkezési mód kell
+
+## Előfeltételek
+
+- tulajdonosi hozzáférés · második helyreállítási mód
+- [Telepítés: Fordított proxy és hozzáférési kulcsok](/hu/install/reverse-proxy-passkeys/) · a localhost kivételén kívül a passkey stabil teljes tartománynevet és megbízható HTTPS-t igényel; a puszta IP-cím és a sima HTTP nem támogatott
+- bizalmas OIDC-kliens az identitásszolgáltatónál a pontos DiscVault visszahívási URI-val
+
+### A szolgáltató privát háttércsatornája
+
+:::note[Elérhető a bétában]
+pontos privát HTTP origin csak token- és JWKS-végpontokhoz engedélyezhető; a kibocsátó és a böngészős engedélyezés kizárólag HTTPS marad, a TLS-ellenőrzés aktív, a discovery-, token- és JWKS-átirányítások tiltottak
+:::
+
+## Eljárás
+
+1. **Hozza létre:** bizalmas OIDC-kliens az identitásszolgáltatónál a pontos DiscVault visszahívási URI-val · `openid profile email` · `https://discvault.example.com/api/next/auth/oidc/callback`
+2. **Állítsa be:** `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · a kibocsátót, ügyfélazonosítót és ügyféltitkot együtt állítsa be, vagy mindhármat hagyja üresen; a részleges beállítás megakadályozza az indulást
+3. **Állítsa be:** `DISCVAULT_OIDC_PROVIDER_NAME` · `OIDC`
+4. **Válassza ki:** `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · `localhost` · Kubernetes DNS · `.internal` · pontos privát HTTP origin csak token- és JWKS-végpontokhoz engedélyezhető; a kibocsátó és a böngészős engedélyezés kizárólag HTTPS marad, a TLS-ellenőrzés aktív, a discovery-, token- és JWKS-átirányítások tiltottak
+5. **Indítsa el:** `next-api` · `--force-recreate`
+6. **Tesztelje:** Az OIDC választható böngészős bejelentkezést ad; a helyi passkey-k, választható jelszavak, helyreállítási kódok, API-tokenek és MCP bearer tokenek megtartják szerepüket · az identitás az issuer és subject pontos párja; az e-mail soha nem kapcsolódik automatikusan, a kapcsoláshoz bejelentkezett böngészős munkamenet, a leválasztáshoz pedig másik használható bejelentkezési mód kell
+7. **Ellenőrizze:** `auth.oidc_failed` · a hibák csak a szolgáltató beállított megjelenítési nevét, biztonságos `auth.oidc_failed` kódot és folyamatmódot rögzítenek; titkok, tokenek, engedélyezési kódok, state, nonce, végpont-URL-ek és PKCE-értékek soha nem kerülnek naplóba
+
+### Parancsok és beállítások
+
+#### DiscVault v26 – béta
+
+```text
+RP_ORIGINS=https://discvault.example.com
+DISCVAULT_OIDC_ISSUER=https://id.example.com
+DISCVAULT_OIDC_CLIENT_ID=<client-id>
+DISCVAULT_OIDC_CLIENT_SECRET=<client-secret>
+DISCVAULT_OIDC_PROVIDER_NAME=Pocket ID
+DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS=
+```
+
+```text
+DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS=http://pocket-id.pocket-id.svc.cluster.local:1411
+```
+
+```bash
+cd /opt/discvault-next
+docker compose -p discvault_next_deploy config --quiet
+docker compose -p discvault_next_deploy up -d --force-recreate next-api
+curl --fail https://discvault.example.com/api/next/auth/status
+```
+
+## Várt eredmény
+
+Az eredmény csak ennél fogadható el: **Konfigurálás: Bejelentkezés OpenID Connecttel (OIDC)** csak akkor, ha minden alábbi eredmény teljesül: Az OIDC választható böngészős bejelentkezést ad; a helyi passkey-k, választható jelszavak, helyreállítási kódok, API-tokenek és MCP bearer tokenek megtartják szerepüket; az identitás az issuer és subject pontos párja; az e-mail soha nem kapcsolódik automatikusan, a kapcsoláshoz bejelentkezett böngészős munkamenet, a leválasztáshoz pedig másik használható bejelentkezési mód kell; a hibák csak a szolgáltató beállított megjelenítési nevét, biztonságos `auth.oidc_failed` kódot és folyamatmódot rögzítenek; titkok, tokenek, engedélyezési kódok, state, nonce, végpont-URL-ek és PKCE-értékek soha nem kerülnek naplóba. Oldalspecifikus ellenőrzési pontok: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+- Az OIDC választható böngészős bejelentkezést ad; a helyi passkey-k, választható jelszavak, helyreállítási kódok, API-tokenek és MCP bearer tokenek megtartják szerepüket
+- az identitás az issuer és subject pontos párja; az e-mail soha nem kapcsolódik automatikusan, a kapcsoláshoz bejelentkezett böngészős munkamenet, a leválasztáshoz pedig másik használható bejelentkezési mód kell
+- a hibák csak a szolgáltató beállított megjelenítési nevét, biztonságos `auth.oidc_failed` kódot és folyamatmódot rögzítenek; titkok, tokenek, engedélyezési kódok, state, nonce, végpont-URL-ek és PKCE-értékek soha nem kerülnek naplóba
+
+## Biztonság és visszaállítás
+
+:::caution
+A biztonságos helyreállítás határa ennél: **Konfigurálás: Bejelentkezés OpenID Connecttel (OIDC)** ezeket a műveleteket igényli indítás vagy folytatás előtt: az ügyféltitkot csak a verziókezelésen kívüli futási környezetben vagy titokkezelőben tárolja, és kitettség esetén cserélje; az OIDC kikapcsolása előtt minden csak OIDC-t használó felhasználónak adjon másik használható bejelentkezési módot; pontos privát HTTP origin csak token- és JWKS-végpontokhoz engedélyezhető; a kibocsátó és a böngészős engedélyezés kizárólag HTTPS marad, a TLS-ellenőrzés aktív, a discovery-, token- és JWKS-átirányítások tiltottak; az identitás az issuer és subject pontos párja; az e-mail soha nem kapcsolódik automatikusan, a kapcsoláshoz bejelentkezett böngészős munkamenet, a leválasztáshoz pedig másik használható bejelentkezési mód kell. Oldalspecifikus ellenőrzési pontok: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+- az ügyféltitkot csak a verziókezelésen kívüli futási környezetben vagy titokkezelőben tárolja, és kitettség esetén cserélje; az OIDC kikapcsolása előtt minden csak OIDC-t használó felhasználónak adjon másik használható bejelentkezési módot
+- pontos privát HTTP origin csak token- és JWKS-végpontokhoz engedélyezhető; a kibocsátó és a böngészős engedélyezés kizárólag HTTPS marad, a TLS-ellenőrzés aktív, a discovery-, token- és JWKS-átirányítások tiltottak
+- az identitás az issuer és subject pontos párja; az e-mail soha nem kapcsolódik automatikusan, a kapcsoláshoz bejelentkezett böngészős munkamenet, a leválasztáshoz pedig másik használható bejelentkezési mód kell
+:::
+
+## Következő lépés
+
+[Konfigurálás: Bővítmények és metaadatok](/hu/configure/plugins-metadata/)
+
+## Forrás és állapot
+
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
+- [`Flux76HQ/App-Guidance@41bfca3bfa39`](https://github.com/Flux76HQ/App-Guidance/commit/41bfca3bfa39f0b43924190d384e2d96be756020)
+- [Moving beta source: OIDC deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: OIDC environment template](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/.env.example)
+- [Pinned verification: OIDC implementation](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/backend/next_oidc.py)
+- [Authoritative OIDC authentication contract](https://github.com/Flux76HQ/App-Guidance/blob/41bfca3bfa39f0b43924190d384e2d96be756020/projects/discvault/specs/oidc-authentication.md)
+- Forrás és állapot: `2026-09-20`
+- DiscVault Docs: `0.1.14`

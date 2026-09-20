@@ -1,26 +1,26 @@
 ---
 title: 'Konfigurace: Proměnné prostředí'
-description: 'Pokyny pro konkrétní úlohu: Konfigurace: Proměnné prostředí: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.'
+description: 'Pokyny pro konkrétní úlohu: Konfigurace: Proměnné prostředí: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS`.'
 pageId: 'configure-environment'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['beta']
 minVersion: 'DiscVault v26'
 sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-20'
+lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-20" />
+<PageMeta channels="beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-09-20" />
 
 ## Cíl a výsledek
 
-Dokončete postup určený pro **Konfigurace: Proměnné prostředí**. Tento postup pracuje s `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.
+Dokončete postup určený pro **Konfigurace: Proměnné prostředí**. Tento postup pracuje s `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS`.
 
 ## Platí pro
 
-Tato stránka platí pouze pro **Konfigurace: Proměnné prostředí** (Docker · Unraid). Hranice kanálu a dat jsou: DiscVault · `ghcr.io/helmerznl/discvault:beta`; `.env.example` `release/v26-beta`; `0600` · `JWT_SECRET` `POSTGRES_PASSWORD`. Kontrolní body této stránky: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.
+Tato stránka platí pouze pro **Konfigurace: Proměnné prostředí** (Docker · Unraid). Hranice kanálu a dat jsou: DiscVault · `ghcr.io/helmerznl/discvault:beta`; `.env.example` `release/v26-beta`; `0600` · `JWT_SECRET` `POSTGRES_PASSWORD`. Kontrolní body této stránky: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS`.
 
 ### DiscVault v26 – beta
 
@@ -39,8 +39,9 @@ Tato stránka platí pouze pro **Konfigurace: Proměnné prostředí** (Docker �
 1. **Vytvořte:** `/opt/discvault-next/.env` · oprávnění souboru pouze pro vlastníka (0600)
 2. **Nastavte:** `DISCVAULT_NEXT_IMAGE` · `RP_ORIGINS`
 3. **Vyberte:** s platným FQDN udržujte `RP_ID` a `RP_ORIGINS` shodné a používejte důvěryhodné HTTPS · pro přímou privátní nebo loopback IP bez FQDN ponechte `RP_ID` a `RP_ORIGINS` prázdné
-4. **Ověřte:** `chmod 0600` · `docker compose -p discvault_next_deploy config --quiet`
-5. **Spusťte:** při běžných změnách konfigurace neměňte tajné hodnoty JWT a PostgreSQL
+4. **Vyberte:** [Konfigurace: Přihlášení přes OpenID Connect (OIDC)](/cs/configure/oidc/) · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · nastavte vydavatele, ID klienta a tajemství klienta společně, nebo ponechte všechny tři hodnoty prázdné; neúplná konfigurace zabrání spuštění
+5. **Ověřte:** `chmod 0600` · `docker compose -p discvault_next_deploy config --quiet`
+6. **Spusťte:** při běžných změnách konfigurace neměňte tajné hodnoty JWT a PostgreSQL
 
 ### Příkazy a nastavení
 
@@ -159,7 +160,7 @@ curl --fail http://localhost:6180/api/next/health
 
 ## Očekávaný výsledek
 
-Výsledek přijměte pro **Konfigurace: Proměnné prostředí** pouze pokud platí všechny následující výsledky: oprávnění souboru pouze pro vlastníka (0600); soukromý soubor má režim 600, kontrola Compose projde a vybraný kanál je v pořádku. Kontrolní body této stránky: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.
+Výsledek přijměte pro **Konfigurace: Proměnné prostředí** pouze pokud platí všechny následující výsledky: oprávnění souboru pouze pro vlastníka (0600); soukromý soubor má režim 600, kontrola Compose projde a vybraný kanál je v pořádku. Kontrolní body této stránky: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS`.
 
 - oprávnění souboru pouze pro vlastníka (0600)
 - soukromý soubor má režim 600, kontrola Compose projde a vybraný kanál je v pořádku
@@ -167,26 +168,27 @@ Výsledek přijměte pro **Konfigurace: Proměnné prostředí** pouze pokud pla
 ## Bezpečnost a návrat
 
 :::caution
-Bezpečná hranice obnovy pro **Konfigurace: Proměnné prostředí** vyžaduje před spuštěním nebo pokračováním tyto kroky: soubor prostředí repozitáře dokumentace nikdy není runtime souborem DiscVault · `.env.example`; při běžných změnách konfigurace neměňte tajné hodnoty JWT a PostgreSQL · `JWT_SECRET` · `POSTGRES_PASSWORD`; stažený `.env.example` stále používá `:dev`; runtime `.env` musí být před stažením obrazu nebo startem změněn na `:beta`; při chybě ponechte služby zastavené, obnovte a ověřte předchozí soukromý soubor prostředí a potom znovu vytvořte stejný obraz bez změny tajných hodnot. Kontrolní body této stránky: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED`.
+Bezpečná hranice obnovy pro **Konfigurace: Proměnné prostředí** vyžaduje před spuštěním nebo pokračováním tyto kroky: soubor prostředí repozitáře dokumentace nikdy není runtime souborem DiscVault · `.env.example`; při běžných změnách konfigurace neměňte tajné hodnoty JWT a PostgreSQL · `JWT_SECRET` · `POSTGRES_PASSWORD`; stažený `.env.example` stále používá `:dev`; runtime `.env` musí být před stažením obrazu nebo startem změněn na `:beta`; tajemství klienta ukládejte pouze do nesledovaného běhového prostředí nebo správce tajemství a při odhalení jej změňte; před vypnutím OIDC dejte každému uživateli pouze s OIDC jinou použitelnou metodu přihlášení; při chybě ponechte služby zastavené, obnovte a ověřte předchozí soukromý soubor prostředí a potom znovu vytvořte stejný obraz bez změny tajných hodnot. Kontrolní body této stránky: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS`.
 
 - soubor prostředí repozitáře dokumentace nikdy není runtime souborem DiscVault · `.env.example`
 - při běžných změnách konfigurace neměňte tajné hodnoty JWT a PostgreSQL · `JWT_SECRET` · `POSTGRES_PASSWORD`
 - stažený `.env.example` stále používá `:dev`; runtime `.env` musí být před stažením obrazu nebo startem změněn na `:beta`
+- tajemství klienta ukládejte pouze do nesledovaného běhového prostředí nebo správce tajemství a při odhalení jej změňte; před vypnutím OIDC dejte každému uživateli pouze s OIDC jinou použitelnou metodu přihlášení
 - při chybě ponechte služby zastavené, obnovte a ověřte předchozí soukromý soubor prostředí a potom znovu vytvořte stejný obraz bez změny tajných hodnot
 :::
 
 ## Další krok
 
-[Konfigurace: Ověřování a RBAC](/cs/configure/auth-rbac/)
+[Konfigurace: Přihlášení přes OpenID Connect (OIDC)](/cs/configure/oidc/)
 
 ## Zdroj a stav
 
-- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
 - [Moving beta source: `docker-compose.yml`](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/docker-compose.yml)
 - [Raw beta download: `docker-compose.yml`](https://raw.githubusercontent.com/helmerzNL/DiscVault/release/v26-beta/app/deploy/next/docker-compose.yml)
-- [Pinned verification: `docker-compose.yml`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/deploy/next/docker-compose.yml)
+- [Pinned verification: `docker-compose.yml`](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/docker-compose.yml)
 - [Moving beta source: `.env.example`](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/.env.example)
 - [Raw beta download: `.env.example`](https://raw.githubusercontent.com/helmerzNL/DiscVault/release/v26-beta/app/deploy/next/.env.example)
-- [Pinned verification: `.env.example`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/deploy/next/.env.example)
-- Zdroj a stav: `2026-07-20`
-- DiscVault Docs: `0.1.6`
+- [Pinned verification: `.env.example`](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/.env.example)
+- Zdroj a stav: `2026-09-20`
+- DiscVault Docs: `0.1.14`

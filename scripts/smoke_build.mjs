@@ -5,6 +5,7 @@ const paths = [
   'dist/brand/download-on-the-app-store.svg',
   'dist/ios/index.html',
   'dist/install/docker-compose/index.html',
+  'dist/configure/oidc/index.html',
   'dist/update/restore/index.html',
   'dist/pwa/offline/index.html',
   'dist/el/install/reverse-proxy-passkeys/index.html',

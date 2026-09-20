@@ -1,26 +1,26 @@
 ---
 title: 'Referência'
-description: 'Instruções específicas para Referência: `:latest` · `:beta` · `:dev` · `6080:5000`.'
+description: 'Instruções específicas para Referência: `:latest` · `:beta` · `:dev` · `6080:5000` · `DISCVAULT_OIDC_ISSUER`.'
 pageId: 'reference-index'
 products: ['server', 'pwa', 'ios', 'android']
 platforms: ['all']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
 sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="todas as plataformas" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="todas as plataformas" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-09-20" />
 
 ## Objetivo e resultado
 
-Conclua o procedimento específico da página para **Referência**. Este procedimento utiliza `:latest` · `:beta` · `:dev` · `6080:5000`.
+Conclua o procedimento específico da página para **Referência**. Este procedimento utiliza `:latest` · `:beta` · `:dev` · `6080:5000` · `DISCVAULT_OIDC_ISSUER`.
 
 ## Aplicável a
 
-Esta página aplica-se apenas a **Referência** (todas as plataformas). Os limites de canal e dados são: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`. Pontos de controlo desta página: `:latest` · `:beta` · `:dev` · `6080:5000`.
+Esta página aplica-se apenas a **Referência** (todas as plataformas). Os limites de canal e dados são: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`. Pontos de controlo desta página: `:latest` · `:beta` · `:dev` · `6080:5000` · `DISCVAULT_OIDC_ISSUER`.
 
 ### DiscVault v26 estável
 
@@ -43,13 +43,14 @@ Esta página aplica-se apenas a **Referência** (todas as plataformas). Os limit
 1. **Inspecionar:** `:latest` `:beta`
 2. **Registar:** `:dev` destina-se apenas a engenharia e não é um canal de lançamento; DiscVault v26 estável utiliza `:latest` e beta utiliza `:beta` · `:dev`
 3. **Registar:** `/api/next/health`
-4. **Registar:** PostgreSQL `/data`
+4. **Registar:** [Configuração: Início de sessão com OpenID Connect (OIDC)](/pt/configure/oidc/) · `DISCVAULT_OIDC_ISSUER`
+5. **Registar:** PostgreSQL `/data`
 
 
 
 ## Resultado esperado
 
-Aceite o resultado de **Referência** apenas quando todos os resultados abaixo forem confirmados: canal de lançamento selecionado · `@sha256:`; `:latest` · `:beta` · `:dev`. Pontos de controlo desta página: `:latest` · `:beta` · `:dev` · `6080:5000`.
+Aceite o resultado de **Referência** apenas quando todos os resultados abaixo forem confirmados: canal de lançamento selecionado · `@sha256:`; `:latest` · `:beta` · `:dev`. Pontos de controlo desta página: `:latest` · `:beta` · `:dev` · `6080:5000` · `DISCVAULT_OIDC_ISSUER`.
 
 - canal de lançamento selecionado · `@sha256:`
 - `:latest` · `:beta` · `:dev`
@@ -57,7 +58,7 @@ Aceite o resultado de **Referência** apenas quando todos os resultados abaixo f
 ## Segurança e reversão
 
 :::caution
-O limite de recuperação segura de **Referência** exige estas ações antes de iniciar ou continuar: a referência é só de leitura; use o procedimento específico antes de comandos ou alterações de dados; `:dev` destina-se apenas a engenharia e não é um canal de lançamento; DiscVault v26 estável utiliza `:latest` e beta utiliza `:beta` · `:dev`. Pontos de controlo desta página: `:latest` · `:beta` · `:dev` · `6080:5000`.
+O limite de recuperação segura de **Referência** exige estas ações antes de iniciar ou continuar: a referência é só de leitura; use o procedimento específico antes de comandos ou alterações de dados; `:dev` destina-se apenas a engenharia e não é um canal de lançamento; DiscVault v26 estável utiliza `:latest` e beta utiliza `:beta` · `:dev`. Pontos de controlo desta página: `:latest` · `:beta` · `:dev` · `6080:5000` · `DISCVAULT_OIDC_ISSUER`.
 
 - a referência é só de leitura; use o procedimento específico antes de comandos ou alterações de dados
 - `:dev` destina-se apenas a engenharia e não é um canal de lançamento; DiscVault v26 estável utiliza `:latest` e beta utiliza `:beta` · `:dev`
@@ -69,6 +70,6 @@ O limite de recuperação segura de **Referência** exige estas ações antes de
 
 ## Fonte e estado
 
-- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Fonte e estado: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
+- Fonte e estado: `2026-09-20`
+- DiscVault Docs: `0.1.14`

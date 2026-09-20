@@ -39,7 +39,7 @@ Health-check the built site with `curl --fail --head http://localhost:4321/` or 
 
 ## Content and architecture
 
-- `src/content/docs/`: 34 pages in each of 20 locales; English lives at `/`, translations at
+- `src/content/docs/`: 36 pages in each of 20 locales; English lives at `/`, translations at
   `/<locale>/`.
 - `src/components/`: status, route, feature-matrix, and SEO components.
 - `src/data/feature-status/features.json`: machine-readable PWA/iOS/Android status.

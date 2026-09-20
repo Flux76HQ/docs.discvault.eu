@@ -1,0 +1,108 @@
+---
+title: 'Configure: OpenID Connect (OIDC) sign-in'
+description: 'Add one OpenID Connect provider, including Pocket ID, as an optional browser sign-in method without replacing local recovery or API-token boundaries.'
+pageId: 'configure-oidc'
+products: ['server', 'pwa']
+platforms: ['docker', 'web']
+channels: ['beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault', 'Flux76HQ/App-Guidance']
+lastVerified: '2026-09-20'
+---
+
+import PageMeta from '../../../components/PageMeta.astro';
+
+<PageMeta channels="beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-09-20" />
+
+## Goal and result
+
+Add one OpenID Connect provider, including Pocket ID, as an optional browser sign-in method without replacing local recovery or API-token boundaries.
+
+## Applies to
+
+OIDC is available in DiscVault 26 beta from build 26.9.117. It is disabled when its required variables are empty. It authenticates only the self-hosted browser/PWA; iOS, Android, API tokens, and MCP bearer tokens keep their existing authentication contracts.
+
+### DiscVault v26 beta
+
+- DiscVault v26 beta · `26.9.117+`
+- OIDC adds an optional browser sign-in method; local passkeys, optional passwords, recovery codes, API tokens, and MCP bearer tokens keep their existing roles
+- an identity is the exact issuer and subject pair; email never links automatically, linking requires the signed-in browser session, and unlinking requires another usable login method
+
+## Prerequisites
+
+- owner access · second recovery method
+- [Install: Reverse proxy and passkeys](/install/reverse-proxy-passkeys/) · outside the localhost setup exception, passkeys require a stable fully qualified domain name over trusted HTTPS; a bare IP address or plain HTTP is unsupported
+- a confidential OIDC client at the identity provider with the exact DiscVault callback URI
+
+### Private provider back channel
+
+:::note[Available in beta]
+allow exact private HTTP origins only for token and JWKS endpoints; the issuer and browser authorization stay HTTPS-only, TLS verification stays enabled, and discovery, token, and JWKS redirects are refused
+:::
+
+## Procedure
+
+1. **Create:** a confidential OIDC client at the identity provider with the exact DiscVault callback URI · `openid profile email` · `https://discvault.example.com/api/next/auth/oidc/callback`
+2. **Configure:** `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · set issuer, client ID, and client secret together, or leave all three empty; a partial configuration prevents startup
+3. **Configure:** `DISCVAULT_OIDC_PROVIDER_NAME` · optional label · default `OIDC`
+4. **Choose:** `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · `localhost` · private IP literals · Kubernetes Service DNS · `.internal` · allow exact private HTTP origins only for token and JWKS endpoints; the issuer and browser authorization stay HTTPS-only, TLS verification stays enabled, and discovery, token, and JWKS redirects are refused
+5. **Start:** `next-api` · `--force-recreate`
+6. **Test:** OIDC adds an optional browser sign-in method; local passkeys, optional passwords, recovery codes, API tokens, and MCP bearer tokens keep their existing roles · an identity is the exact issuer and subject pair; email never links automatically, linking requires the signed-in browser session, and unlinking requires another usable login method
+7. **Inspect:** `auth.oidc_failed` · failures record only the configured provider display name, a safe `auth.oidc_failed` code, and flow mode; secrets, tokens, authorization codes, state, nonce, endpoint URLs, and PKCE values are never logged
+
+### Commands and settings
+
+#### DiscVault v26 beta
+
+```text
+RP_ORIGINS=https://discvault.example.com
+DISCVAULT_OIDC_ISSUER=https://id.example.com
+DISCVAULT_OIDC_CLIENT_ID=<client-id>
+DISCVAULT_OIDC_CLIENT_SECRET=<client-secret>
+DISCVAULT_OIDC_PROVIDER_NAME=Pocket ID
+DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS=
+```
+
+```text
+DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS=http://pocket-id.pocket-id.svc.cluster.local:1411
+```
+
+```bash
+cd /opt/discvault-next
+docker compose -p discvault_next_deploy config --quiet
+docker compose -p discvault_next_deploy up -d --force-recreate next-api
+curl --fail https://discvault.example.com/api/next/auth/status
+```
+
+## Expected result
+
+The provider redirects to the exact DiscVault callback, an allowed user can sign in or link the identity, and safe OIDC outcomes appear in the Audit log without secrets or tokens.
+
+- OIDC adds an optional browser sign-in method; local passkeys, optional passwords, recovery codes, API tokens, and MCP bearer tokens keep their existing roles
+- an identity is the exact issuer and subject pair; email never links automatically, linking requires the signed-in browser session, and unlinking requires another usable login method
+- failures record only the configured provider display name, a safe `auth.oidc_failed` code, and flow mode; secrets, tokens, authorization codes, state, nonce, endpoint URLs, and PKCE values are never logged
+
+## Safety and rollback
+
+:::caution
+Keep an independent Owner login method. To disable OIDC, clear every OIDC variable together and recreate `next-api`; first ensure every OIDC-only user who still needs access has another usable login method.
+
+- store the client secret only in the untracked runtime environment or a secret manager and rotate it if exposed; before disabling OIDC, give every OIDC-only user another usable login method
+- allow exact private HTTP origins only for token and JWKS endpoints; the issuer and browser authorization stay HTTPS-only, TLS verification stays enabled, and discovery, token, and JWKS redirects are refused
+- an identity is the exact issuer and subject pair; email never links automatically, linking requires the signed-in browser session, and unlinking requires another usable login method
+:::
+
+## Next step
+
+[Configure: Plugins and metadata](/configure/plugins-metadata/)
+
+## Source and status
+
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
+- [`Flux76HQ/App-Guidance@41bfca3bfa39`](https://github.com/Flux76HQ/App-Guidance/commit/41bfca3bfa39f0b43924190d384e2d96be756020)
+- [Moving beta source: OIDC deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: OIDC environment template](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/.env.example)
+- [Pinned verification: OIDC implementation](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/backend/next_oidc.py)
+- [Authoritative OIDC authentication contract](https://github.com/Flux76HQ/App-Guidance/blob/41bfca3bfa39f0b43924190d384e2d96be756020/projects/discvault/specs/oidc-authentication.md)
+- Verified: `2026-09-20`
+- DiscVault Docs: `0.1.14`

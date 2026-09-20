@@ -1,26 +1,26 @@
 ---
 title: 'インストール: リバースプロキシとパスキー'
-description: 'タスク別の手順: インストール: リバースプロキシとパスキー: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.'
+description: 'タスク別の手順: インストール: リバースプロキシとパスキー: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.'
 pageId: 'install-reverse-proxy-passkeys'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
-lastVerified: '2026-07-20'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU', 'Flux76HQ/App-Guidance']
+lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
+<PageMeta channels="stable,beta" platform="Docker · Web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## 目的と結果
 
-このページ専用の手順を実行します: **インストール: リバースプロキシとパスキー**. この手順で扱う項目: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+このページ専用の手順を実行します: **インストール: リバースプロキシとパスキー**. この手順で扱う項目: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 ## 対象
 
-このページの対象は **インストール: リバースプロキシとパスキー** (Docker · Web). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6080`; localhost のセットアップ例外を除き、パスキーには信頼された HTTPS 上の安定した完全修飾ドメイン名が必要です。IP アドレスだけ、または HTTP には対応しません; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; `LEGACY_AUTH_ENABLED=true`. このページ固有の確認点: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+このページの対象は **インストール: リバースプロキシとパスキー** (Docker · Web). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6080`; localhost のセットアップ例外を除き、パスキーには信頼された HTTPS 上の安定した完全修飾ドメイン名が必要です。IP アドレスだけ、または HTTP には対応しません; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; OIDC · `/api/next/auth/oidc/callback` · [設定: OpenID Connect（OIDC）ログイン](/ja/configure/oidc/); `LEGACY_AUTH_ENABLED=true`. このページ固有の確認点: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 ### DiscVault v26 安定版
 
@@ -32,6 +32,7 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `RP_ID` `RP_ORIGINS` · `6180`
+- OIDC · `/api/next/auth/oidc/callback` · [設定: OpenID Connect（OIDC）ログイン](/ja/configure/oidc/)
 - `LEGACY_AUTH_ENABLED=true`
 
 ## 前提条件
@@ -54,9 +55,10 @@ import PageMeta from '../../../../components/PageMeta.astro';
 2. **選択:** [インストール: Legacy Authentication](/ja/install/legacy-authentication/) · FQDN のない直接のプライベートまたはループバック IP では `RP_ID` と `RP_ORIGINS` を空にします
 3. **設定:** `RP_ID`
 4. **設定:** `RP_ORIGINS` · HTTPS
-5. **設定:** `6080` `6180`
-6. **テスト:** `GET /api/next/health`
-7. **記録:** パスキー登録前にホスト名を決めてください。後から変更すると再登録が必要で、localhost はローカルセットアップ専用の例外です
+5. **設定:** [設定: OpenID Connect（OIDC）ログイン](/ja/configure/oidc/) · `/api/next/auth/oidc/callback`
+6. **設定:** `6080` `6180`
+7. **テスト:** `GET /api/next/health`
+8. **記録:** パスキー登録前にホスト名を決めてください。後から変更すると再登録が必要で、localhost はローカルセットアップ専用の例外です
 
 ### コマンドと設定
 
@@ -81,16 +83,17 @@ curl --fail http://localhost:6180/api/next/health
 
 ## 期待される結果
 
-次の結果を受け入れる条件: **インストール: リバースプロキシとパスキー** 以下の結果をすべて確認した場合のみ: HTTPS · HTTP `2xx`; `RP_ID`; `RP_ID` はスキームとポートを除いたホスト名、`RP_ORIGINS` は完全で正確な HTTPS オリジンです。どちらもブラウザーで開くアドレスと一致する必要があります. このページ固有の確認点: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+次の結果を受け入れる条件: **インストール: リバースプロキシとパスキー** 以下の結果をすべて確認した場合のみ: HTTPS · HTTP `2xx`; `RP_ID`; OIDC · `/api/next/auth/oidc/callback`; `RP_ID` はスキームとポートを除いたホスト名、`RP_ORIGINS` は完全で正確な HTTPS オリジンです。どちらもブラウザーで開くアドレスと一致する必要があります. このページ固有の確認点: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 - HTTPS · HTTP `2xx`
 - `RP_ID`
+- OIDC · `/api/next/auth/oidc/callback`
 - `RP_ID` はスキームとポートを除いたホスト名、`RP_ORIGINS` は完全で正確な HTTPS オリジンです。どちらもブラウザーで開くアドレスと一致する必要があります
 
 ## 安全性とロールバック
 
 :::caution
-安全な復旧境界: **インストール: リバースプロキシとパスキー** 起動または続行の前に、次の操作が必要です: パスキー登録前にホスト名を決めてください。後から変更すると再登録が必要で、localhost はローカルセットアップ専用の例外です; 無効または空の RP 設定を持つ直接のプライベートまたはループバック要求だけが TOTP なしの初期設定を提示できます。ユーザー名、パスワード、2FA では TOTP を有効に保ちます; プロキシと RP 値を一緒に復元し、所有者の復旧手段を保持します. このページ固有の確認点: FQDN · `RP_ORIGINS` · `RP_ID` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+安全な復旧境界: **インストール: リバースプロキシとパスキー** 起動または続行の前に、次の操作が必要です: パスキー登録前にホスト名を決めてください。後から変更すると再登録が必要で、localhost はローカルセットアップ専用の例外です; 無効または空の RP 設定を持つ直接のプライベートまたはループバック要求だけが TOTP なしの初期設定を提示できます。ユーザー名、パスワード、2FA では TOTP を有効に保ちます; プロキシと RP 値を一緒に復元し、所有者の復旧手段を保持します. このページ固有の確認点: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 - パスキー登録前にホスト名を決めてください。後から変更すると再登録が必要で、localhost はローカルセットアップ専用の例外です
 - 無効または空の RP 設定を持つ直接のプライベートまたはループバック要求だけが TOTP なしの初期設定を提示できます。ユーザー名、パスワード、2FA では TOTP を有効に保ちます
@@ -103,12 +106,12 @@ curl --fail http://localhost:6180/api/next/health
 
 ## 情報源と状態
 
-- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
-- [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
-- [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
-- [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
-- [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
-- [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
-- 情報源と状態: `2026-07-20`
-- DiscVault Docs: `0.1.6`
+- [`Flux76HQ/App-Guidance@41bfca3bfa39`](https://github.com/Flux76HQ/App-Guidance/commit/41bfca3bfa39f0b43924190d384e2d96be756020)
+- [Moving beta source: OIDC deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: OIDC environment template](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/.env.example)
+- [Pinned verification: OIDC implementation](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/backend/next_oidc.py)
+- [Authoritative OIDC authentication contract](https://github.com/Flux76HQ/App-Guidance/blob/41bfca3bfa39f0b43924190d384e2d96be756020/projects/discvault/specs/oidc-authentication.md)
+- 情報源と状態: `2026-09-20`
+- DiscVault Docs: `0.1.14`

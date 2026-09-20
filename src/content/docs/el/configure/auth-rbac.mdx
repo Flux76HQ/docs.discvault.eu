@@ -1,26 +1,26 @@
 ---
 title: 'Ρύθμιση: Ταυτοποίηση και RBAC'
-description: 'Οδηγίες ειδικά για την εργασία: Ρύθμιση: Ταυτοποίηση και RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.'
+description: 'Οδηγίες ειδικά για την εργασία: Ρύθμιση: Ταυτοποίηση και RBAC: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · OIDC · Argon2id · TOTP.'
 pageId: 'configure-auth-rbac'
 products: ['server']
 platforms: ['web']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
-lastVerified: '2026-07-20'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU', 'Flux76HQ/App-Guidance']
+lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="ιστός" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
+<PageMeta channels="stable,beta" platform="ιστός" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## Στόχος και αποτέλεσμα
 
-Ολοκληρώστε τη ροή εργασίας της σελίδας για **Ρύθμιση: Ταυτοποίηση και RBAC**. Η διαδικασία χρησιμοποιεί `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
+Ολοκληρώστε τη ροή εργασίας της σελίδας για **Ρύθμιση: Ταυτοποίηση και RBAC**. Η διαδικασία χρησιμοποιεί `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · OIDC · Argon2id · TOTP.
 
 ## Ισχύει για
 
-Αυτή η σελίδα ισχύει μόνο για **Ρύθμιση: Ταυτοποίηση και RBAC** (ιστός). Τα όρια καναλιού και δεδομένων είναι: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; ένα passkey είναι ζεύγος κρυπτογραφικών κλειδιών: το ιδιωτικό κλειδί μένει στη συσκευή ή σε αξιόπιστο διαχειριστή διαπιστευτηρίων και το DiscVault αποθηκεύει μόνο το δημόσιο κλειδί; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn; TOTP. Σημεία ελέγχου της σελίδας: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
+Αυτή η σελίδα ισχύει μόνο για **Ρύθμιση: Ταυτοποίηση και RBAC** (ιστός). Τα όρια καναλιού και δεδομένων είναι: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; ένα passkey είναι ζεύγος κρυπτογραφικών κλειδιών: το ιδιωτικό κλειδί μένει στη συσκευή ή σε αξιόπιστο διαχειριστή διαπιστευτηρίων και το DiscVault αποθηκεύει μόνο το δημόσιο κλειδί; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn OIDC; TOTP. Σημεία ελέγχου της σελίδας: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · OIDC · Argon2id · TOTP.
 
 ### DiscVault v26 – σταθερό
 
@@ -31,7 +31,7 @@ import PageMeta from '../../../../components/PageMeta.astro';
 ### DiscVault v26 – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- WebAuthn
+- WebAuthn OIDC
 - TOTP
 
 ## Προϋποθέσεις
@@ -52,8 +52,9 @@ import PageMeta from '../../../../components/PageMeta.astro';
 8. **Δημιουργήστε:** Διαχείριση → Χρήστες → Δημιουργία πρόσκλησης 48 ωρών
 9. **Ρυθμίστε:** Διαχείριση → Ρόλοι → Βασικό / Προχωρημένο
 10. **Ρυθμίστε:** σε υπάρχουσα εγκατάσταση ενεργοποιήστε τη σύνδεση με κωδικό στους Χρήστες και ρόλους και εγκρίνετε με νέο passkey κατόχου ή διαχειριστή · κάτοχοι και διαχειριστές μπορούν να εκδίδουν προσωρινούς κωδικούς, να απαιτούν αλλαγή, να ορίζουν MFA ανά χρήστη και να ελέγχουν την εγγραφή passkeys
-11. **Καταγράψτε:** οι κωδικοί ανάκτησης είναι κατακερματισμένοι, μίας χρήσης και κοινοί με την ανάκτηση passkey· τα αντίγραφα δεν περιέχουν μυστικά TOTP ή υλικό ανάκτησης, οπότε το MFA εγγράφεται ξανά · η απενεργοποίηση του Legacy Authentication απαιτεί ενεργό passkey κατόχου· κάτοχος μόνο σε τοπική IP πρέπει πρώτα να δημιουργήσει έγκυρο FQDN και passkey
-12. **Δοκιμάστε:** `/api/next/auth/rbac`
+11. **Συγκρίνετε:** [Ρύθμιση: Σύνδεση με OpenID Connect (OIDC)](/el/configure/oidc/) · Το OIDC προσθέτει προαιρετική σύνδεση μέσω προγράμματος περιήγησης· τα τοπικά passkeys, οι προαιρετικοί κωδικοί πρόσβασης, οι κωδικοί ανάκτησης, τα API tokens και τα MCP bearer tokens διατηρούν τους ρόλους τους
+12. **Καταγράψτε:** οι κωδικοί ανάκτησης είναι κατακερματισμένοι, μίας χρήσης και κοινοί με την ανάκτηση passkey· τα αντίγραφα δεν περιέχουν μυστικά TOTP ή υλικό ανάκτησης, οπότε το MFA εγγράφεται ξανά · η απενεργοποίηση του Legacy Authentication απαιτεί ενεργό passkey κατόχου· κάτοχος μόνο σε τοπική IP πρέπει πρώτα να δημιουργήσει έγκυρο FQDN και passkey
+13. **Δοκιμάστε:** `/api/next/auth/rbac`
 
 ### Εντολές και ρυθμίσεις
 
@@ -73,7 +74,7 @@ curl --fail http://localhost:6180/api/next/auth/rbac
 
 ## Αναμενόμενο αποτέλεσμα
 
-Αποδεχθείτε το αποτέλεσμα για **Ρύθμιση: Ταυτοποίηση και RBAC** μόνο όταν ισχύουν όλα τα παρακάτω αποτελέσματα: η σύνδεση κατόχου με passkey λειτουργεί, η εγγραφή με πρόσκληση ακολουθεί τη ρύθμιση και ο δοκιμαστικός χρήστης έχει μόνο τα εκχωρημένα δικαιώματα; τα passkeys αντιστέκονται στο phishing και είναι μοναδικά για τον ιστότοπο· η σύνδεση χρησιμοποιεί το ξεκλείδωμα της συσκευής αντί επαναχρησιμοποιήσιμου κωδικού λογαριασμού; ένας χρονικά περιορισμένος κωδικός πρόσκλησης ξεκινά την εγγραφή αλλά δεν είναι επαναχρησιμοποιήσιμος κωδικός λογαριασμού· η κανονική σύνδεση χρησιμοποιεί passkey. Σημεία ελέγχου της σελίδας: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
+Αποδεχθείτε το αποτέλεσμα για **Ρύθμιση: Ταυτοποίηση και RBAC** μόνο όταν ισχύουν όλα τα παρακάτω αποτελέσματα: η σύνδεση κατόχου με passkey λειτουργεί, η εγγραφή με πρόσκληση ακολουθεί τη ρύθμιση και ο δοκιμαστικός χρήστης έχει μόνο τα εκχωρημένα δικαιώματα; τα passkeys αντιστέκονται στο phishing και είναι μοναδικά για τον ιστότοπο· η σύνδεση χρησιμοποιεί το ξεκλείδωμα της συσκευής αντί επαναχρησιμοποιήσιμου κωδικού λογαριασμού; ένας χρονικά περιορισμένος κωδικός πρόσκλησης ξεκινά την εγγραφή αλλά δεν είναι επαναχρησιμοποιήσιμος κωδικός λογαριασμού· η κανονική σύνδεση χρησιμοποιεί passkey. Σημεία ελέγχου της σελίδας: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · OIDC · Argon2id · TOTP.
 
 - η σύνδεση κατόχου με passkey λειτουργεί, η εγγραφή με πρόσκληση ακολουθεί τη ρύθμιση και ο δοκιμαστικός χρήστης έχει μόνο τα εκχωρημένα δικαιώματα
 - τα passkeys αντιστέκονται στο phishing και είναι μοναδικά για τον ιστότοπο· η σύνδεση χρησιμοποιεί το ξεκλείδωμα της συσκευής αντί επαναχρησιμοποιήσιμου κωδικού λογαριασμού
@@ -82,27 +83,28 @@ curl --fail http://localhost:6180/api/next/auth/rbac
 ## Ασφάλεια και επαναφορά
 
 :::caution
-Το ασφαλές όριο ανάκτησης για **Ρύθμιση: Ταυτοποίηση και RBAC** απαιτεί αυτές τις ενέργειες πριν από κάθε εκκίνηση ή συνέχεια: καταχωρίστε περισσότερα από ένα passkeys, όπως τηλέφωνο και υπολογιστή, και διατηρήστε ανεξάρτητη διαδρομή ανάκτησης κατόχου πριν αντικατασταθεί ή χαθεί συσκευή; οι κωδικοί απαιτούν τουλάχιστον 15 χαρακτήρες, δεν επιτρέπεται να είναι το όνομα χρήστη ή κοινός απαγορευμένος κωδικός και κατακερματίζονται με Argon2id· πέντε αποτυχίες σε 15 λεπτά κλειδώνουν για 15 λεπτά; οι κωδικοί ανάκτησης είναι κατακερματισμένοι, μίας χρήσης και κοινοί με την ανάκτηση passkey· τα αντίγραφα δεν περιέχουν μυστικά TOTP ή υλικό ανάκτησης, οπότε το MFA εγγράφεται ξανά; η απενεργοποίηση του Legacy Authentication απαιτεί ενεργό passkey κατόχου· κάτοχος μόνο σε τοπική IP πρέπει πρώτα να δημιουργήσει έγκυρο FQDN και passkey; κρατήστε τη συνεδρία κατόχου και δεύτερη μέθοδο ανάκτησης· μην αφαιρείτε ποτέ το τελευταίο passkey κατόχου. Σημεία ελέγχου της σελίδας: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · Argon2id · TOTP.
+Το ασφαλές όριο ανάκτησης για **Ρύθμιση: Ταυτοποίηση και RBAC** απαιτεί αυτές τις ενέργειες πριν από κάθε εκκίνηση ή συνέχεια: καταχωρίστε περισσότερα από ένα passkeys, όπως τηλέφωνο και υπολογιστή, και διατηρήστε ανεξάρτητη διαδρομή ανάκτησης κατόχου πριν αντικατασταθεί ή χαθεί συσκευή; οι κωδικοί απαιτούν τουλάχιστον 15 χαρακτήρες, δεν επιτρέπεται να είναι το όνομα χρήστη ή κοινός απαγορευμένος κωδικός και κατακερματίζονται με Argon2id· πέντε αποτυχίες σε 15 λεπτά κλειδώνουν για 15 λεπτά; οι κωδικοί ανάκτησης είναι κατακερματισμένοι, μίας χρήσης και κοινοί με την ανάκτηση passkey· τα αντίγραφα δεν περιέχουν μυστικά TOTP ή υλικό ανάκτησης, οπότε το MFA εγγράφεται ξανά; η απενεργοποίηση του Legacy Authentication απαιτεί ενεργό passkey κατόχου· κάτοχος μόνο σε τοπική IP πρέπει πρώτα να δημιουργήσει έγκυρο FQDN και passkey; μια ταυτότητα είναι το ακριβές ζεύγος issuer και subject· το email δεν συνδέεται ποτέ αυτόματα, η σύνδεση απαιτεί την ενεργή συνεδρία του προγράμματος περιήγησης και η αποσύνδεση απαιτεί άλλη χρησιμοποιήσιμη μέθοδο εισόδου; κρατήστε τη συνεδρία κατόχου και δεύτερη μέθοδο ανάκτησης· μην αφαιρείτε ποτέ το τελευταίο passkey κατόχου. Σημεία ελέγχου της σελίδας: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · OIDC · Argon2id · TOTP.
 
 - καταχωρίστε περισσότερα από ένα passkeys, όπως τηλέφωνο και υπολογιστή, και διατηρήστε ανεξάρτητη διαδρομή ανάκτησης κατόχου πριν αντικατασταθεί ή χαθεί συσκευή
 - οι κωδικοί απαιτούν τουλάχιστον 15 χαρακτήρες, δεν επιτρέπεται να είναι το όνομα χρήστη ή κοινός απαγορευμένος κωδικός και κατακερματίζονται με Argon2id· πέντε αποτυχίες σε 15 λεπτά κλειδώνουν για 15 λεπτά
 - οι κωδικοί ανάκτησης είναι κατακερματισμένοι, μίας χρήσης και κοινοί με την ανάκτηση passkey· τα αντίγραφα δεν περιέχουν μυστικά TOTP ή υλικό ανάκτησης, οπότε το MFA εγγράφεται ξανά
 - η απενεργοποίηση του Legacy Authentication απαιτεί ενεργό passkey κατόχου· κάτοχος μόνο σε τοπική IP πρέπει πρώτα να δημιουργήσει έγκυρο FQDN και passkey
+- μια ταυτότητα είναι το ακριβές ζεύγος issuer και subject· το email δεν συνδέεται ποτέ αυτόματα, η σύνδεση απαιτεί την ενεργή συνεδρία του προγράμματος περιήγησης και η αποσύνδεση απαιτεί άλλη χρησιμοποιήσιμη μέθοδο εισόδου
 - κρατήστε τη συνεδρία κατόχου και δεύτερη μέθοδο ανάκτησης· μην αφαιρείτε ποτέ το τελευταίο passkey κατόχου
 :::
 
 ## Επόμενο βήμα
 
-[Ρύθμιση: Πρόσθετα και μεταδεδομένα](/el/configure/plugins-metadata/)
+[Ρύθμιση: Σύνδεση με OpenID Connect (OIDC)](/el/configure/oidc/)
 
 ## Πηγή και κατάσταση
 
-- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
 - [`helmerzNL/DiscVault.EU@583f85c55dc2`](https://github.com/helmerzNL/DiscVault.EU/commit/583f85c55dc22b63368f997a3b076a093ca0afa1)
-- [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
-- [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
-- [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
-- [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
-- [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
-- Πηγή και κατάσταση: `2026-07-20`
-- DiscVault Docs: `0.1.6`
+- [`Flux76HQ/App-Guidance@41bfca3bfa39`](https://github.com/Flux76HQ/App-Guidance/commit/41bfca3bfa39f0b43924190d384e2d96be756020)
+- [Moving beta source: OIDC deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: OIDC environment template](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/.env.example)
+- [Pinned verification: OIDC implementation](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/backend/next_oidc.py)
+- [Authoritative OIDC authentication contract](https://github.com/Flux76HQ/App-Guidance/blob/41bfca3bfa39f0b43924190d384e2d96be756020/projects/discvault/specs/oidc-authentication.md)
+- Πηγή και κατάσταση: `2026-09-20`
+- DiscVault Docs: `0.1.14`

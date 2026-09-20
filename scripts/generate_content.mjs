@@ -33,6 +33,10 @@ const migratedDocsVersion = '0.1.4';
 const betaVerified = '2026-07-20';
 const betaDocsVersion = '0.1.6';
 const betaSourceCommit = '4352c060ccd6fd625a828f6e20c24f111c9ef743';
+const oidcVerified = '2026-09-20';
+const oidcDocsVersion = '0.1.14';
+const oidcCoreSourceCommit = '409da7b2dc25bbf621cd0a6682136d565cdf5070';
+const oidcGuidanceSourceCommit = '41bfca3bfa39f0b43924190d384e2d96be756020';
 const iosVerified = '2026-07-22';
 const iosDocsVersion = '0.1.9';
 const commits = {
@@ -88,6 +92,50 @@ const betaAuthSourceFiles = [
   {
     label: 'Pinned verification: unified recovery codes',
     url: `https://github.com/helmerzNL/DiscVault/blob/${betaSourceCommit}/app/backend/migrations_next/042_unified_recovery_codes.sql`,
+  },
+];
+const oidcSourceFiles = [
+  {
+    label: 'Moving beta source: OIDC deployment notes',
+    url: 'https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md',
+  },
+  {
+    label: 'Pinned verification: OIDC environment template',
+    url: `https://github.com/helmerzNL/DiscVault/blob/${oidcCoreSourceCommit}/app/deploy/next/.env.example`,
+  },
+  {
+    label: 'Pinned verification: OIDC implementation',
+    url: `https://github.com/helmerzNL/DiscVault/blob/${oidcCoreSourceCommit}/app/backend/next_oidc.py`,
+  },
+  {
+    label: 'Authoritative OIDC authentication contract',
+    url: `https://github.com/Flux76HQ/App-Guidance/blob/${oidcGuidanceSourceCommit}/projects/discvault/specs/oidc-authentication.md`,
+  },
+];
+const currentBetaDeploymentSourceFiles = [
+  {
+    label: 'Moving beta source: `docker-compose.yml`',
+    url: 'https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/docker-compose.yml',
+  },
+  {
+    label: 'Raw beta download: `docker-compose.yml`',
+    url: 'https://raw.githubusercontent.com/helmerzNL/DiscVault/release/v26-beta/app/deploy/next/docker-compose.yml',
+  },
+  {
+    label: 'Pinned verification: `docker-compose.yml`',
+    url: `https://github.com/helmerzNL/DiscVault/blob/${oidcCoreSourceCommit}/app/deploy/next/docker-compose.yml`,
+  },
+  {
+    label: 'Moving beta source: `.env.example`',
+    url: 'https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/.env.example',
+  },
+  {
+    label: 'Raw beta download: `.env.example`',
+    url: 'https://raw.githubusercontent.com/helmerzNL/DiscVault/release/v26-beta/app/deploy/next/.env.example',
+  },
+  {
+    label: 'Pinned verification: `.env.example`',
+    url: `https://github.com/helmerzNL/DiscVault/blob/${oidcCoreSourceCommit}/app/deploy/next/.env.example`,
   },
 ];
 const iosDistributionSourceFiles = [
@@ -1130,6 +1178,7 @@ const categoryNames = {
 
 const S = 'helmerzNL/DiscVault';
 const M = 'helmerzNL/DiscVault.EU';
+const A = 'Flux76HQ/App-Guidance';
 const pages = [
   {
     path: 'start/index',
@@ -1293,20 +1342,20 @@ const pages = [
     products: ['server'],
     platforms: ['docker', 'web'],
     version: 'DiscVault v26',
-    source: [S, M],
-    sourceCommits: { [S]: betaSourceCommit },
-    sourceFiles: betaAuthSourceFiles,
-    verified: betaVerified,
-    docsVersion: betaDocsVersion,
-    pre: ['running deployment', 'chosen Passkey or Legacy Authentication route'],
+    source: [S, M, A],
+    sourceCommits: { [S]: oidcCoreSourceCommit, [A]: oidcGuidanceSourceCommit },
+    sourceFiles: oidcSourceFiles,
+    verified: oidcVerified,
+    docsVersion: oidcDocsVersion,
+    pre: ['running deployment', 'chosen Passkey, OIDC, or Legacy Authentication route'],
     command:
-      'Passkeys: RP_ID=discvault.example.com and RP_ORIGINS=https://discvault.example.com\nBeta fallback: /install/legacy-authentication/\nStable proxy upstream: http://127.0.0.1:6080\nBeta proxy upstream: http://127.0.0.1:6180',
+      'Passkeys: RP_ID=discvault.example.com and RP_ORIGINS=https://discvault.example.com\nBeta OIDC callback: https://discvault.example.com/api/next/auth/oidc/callback\nBeta fallback: /install/legacy-authentication/\nStable proxy upstream: http://127.0.0.1:6080\nBeta proxy upstream: http://127.0.0.1:6180',
     intro:
-      'Choose Passkeys on a stable HTTPS FQDN, or use the beta Legacy Authentication fallback when a valid FQDN is unavailable.',
+      'Use one stable public HTTPS origin for Passkeys and the beta OIDC callback, or use the beta Legacy Authentication fallback when a valid FQDN is unavailable.',
     scope:
-      'Passkeys require a stable fully qualified domain name over trusted HTTPS: `RP_ID` is the hostname without scheme or port and `RP_ORIGINS` is the exact HTTPS origin. The stable deployment uses host port 6080 and the canonical beta Compose deployment uses 6180. DiscVault 26 beta can instead expose optional Legacy Authentication for a direct private or loopback IP by setting `LEGACY_AUTH_ENABLED=true` and leaving `RP_ID` and `RP_ORIGINS` empty.',
+      'Passkeys require a stable fully qualified domain name over trusted HTTPS: `RP_ID` is the hostname without scheme or port and `RP_ORIGINS` is the exact HTTPS origin. OIDC uses the first `RP_ORIGINS` value to derive its callback and remains HTTPS-only outside localhost. The stable deployment uses host port 6080 and the canonical beta Compose deployment uses 6180. DiscVault 26 beta can instead expose optional Legacy Authentication for a direct private or loopback IP by setting `LEGACY_AUTH_ENABLED=true` and leaving `RP_ID` and `RP_ORIGINS` empty.',
     expected:
-      'The chosen origin reports healthy and either a passkey works on the exact HTTPS FQDN or the beta Legacy Authentication route reaches first-owner setup.',
+      'The chosen origin reports healthy, passkeys use the exact HTTPS FQDN, the beta OIDC provider returns to the registered callback, or the beta Legacy Authentication route reaches first-owner setup.',
     rollback:
       'Restore the prior proxy configuration and RP values together. Choose the hostname before registration: changing it later requires passkey registration again, so keep an owner recovery path.',
     next: 'install/first-start-health',
@@ -1503,13 +1552,16 @@ const pages = [
     platforms: ['docker', 'web'],
     version: 'DiscVault v26',
     source: [S],
+    sourceCommits: { [S]: oidcCoreSourceCommit },
+    verified: oidcVerified,
+    docsVersion: oidcDocsVersion,
     pre: ['owner access', 'configuration backup'],
     command:
-      'Official beta environment: /configure/environment/\nAuthentication and RBAC: /configure/auth-rbac/\nLegacy Authentication onboarding: /install/legacy-authentication/\nPlugins: /configure/plugins-metadata/',
+      'Official beta environment: /configure/environment/\nAuthentication and RBAC: /configure/auth-rbac/\nOIDC and Pocket ID: /configure/oidc/\nLegacy Authentication onboarding: /install/legacy-authentication/\nPlugins: /configure/plugins-metadata/',
     intro:
-      'Configure runtime values, Passkeys, beta Legacy Authentication, roles, and providers without exposing secrets.',
+      'Configure runtime values, Passkeys, beta OIDC and Legacy Authentication, roles, and providers without exposing secrets.',
     scope:
-      'Passkeys, RBAC, and plugins apply to stable and beta. The official `release/v26-beta` Compose environment and Legacy Authentication procedures are beta-only and use the `DISCVAULT_NEXT_*` variable names.',
+      'Passkeys, RBAC, and plugins apply to stable and beta. The official `release/v26-beta` Compose environment, OIDC, and Legacy Authentication procedures are beta-only and use the current deployment variables.',
     expected: 'You reach the focused configuration procedure for your channel.',
     rollback: 'Change one subsystem at a time and retain the previous value.',
     next: 'configure/environment',
@@ -1523,13 +1575,13 @@ const pages = [
     platforms: ['docker', 'unraid'],
     version: 'DiscVault v26',
     source: [S],
-    sourceCommits: { [S]: betaSourceCommit },
-    sourceFiles: betaDeploymentSourceFiles,
-    verified: betaVerified,
-    docsVersion: betaDocsVersion,
+    sourceCommits: { [S]: oidcCoreSourceCommit },
+    sourceFiles: currentBetaDeploymentSourceFiles,
+    verified: oidcVerified,
+    docsVersion: oidcDocsVersion,
     pre: ['private environment file', 'restart window'],
     command:
-      'DISCVAULT_NEXT_IMAGE=ghcr.io/helmerznl/discvault:beta\nDISCVAULT_DATA_DIR=/mnt/user/appdata/discvault\nDISCVAULT_NEXT_POSTGRES_DATA=/mnt/user/appdata/discvault-next/postgres\nDISCVAULT_NEXT_API_PORT=6180\nRP_ID=discvault.example.com or empty for direct local IP\nLEGACY_AUTH_ENABLED=true',
+      'DISCVAULT_NEXT_IMAGE=ghcr.io/helmerznl/discvault:beta\nDISCVAULT_DATA_DIR=/mnt/user/appdata/discvault\nDISCVAULT_NEXT_POSTGRES_DATA=/mnt/user/appdata/discvault-next/postgres\nDISCVAULT_NEXT_API_PORT=6180\nRP_ID=discvault.example.com or empty for direct local IP\nLEGACY_AUTH_ENABLED=true\nOptional OIDC: /configure/oidc/',
     intro:
       'Create the private DiscVault 26 beta runtime environment from the canonical moving `.env.example` without retaining its `:dev` image default.',
     scope:
@@ -1538,7 +1590,7 @@ const pages = [
       '`docker compose -p discvault_next_deploy config` resolves the beta environment, no `:dev` tag remains in `.env`, and health succeeds on port 6180.',
     rollback:
       'On failure, keep services stopped, restore the prior private `.env`, validate it with project `discvault_next_deploy`, and recreate the same beta digest. Do not rotate `JWT_SECRET` or `POSTGRES_PASSWORD` during ordinary rollback.',
-    next: 'configure/auth-rbac',
+    next: 'configure/oidc',
   },
   {
     path: 'configure/auth-rbac',
@@ -1548,22 +1600,51 @@ const pages = [
     products: ['server'],
     platforms: ['web'],
     version: 'DiscVault v26',
-    source: [S, M],
-    sourceCommits: { [S]: betaSourceCommit },
-    sourceFiles: betaAuthSourceFiles,
-    verified: betaVerified,
-    docsVersion: betaDocsVersion,
+    source: [S, M, A],
+    sourceCommits: { [S]: oidcCoreSourceCommit, [A]: oidcGuidanceSourceCommit },
+    sourceFiles: oidcSourceFiles,
+    verified: oidcVerified,
+    docsVersion: oidcDocsVersion,
     pre: ['Owner access', 'Passkey recovery', 'offline recovery-code storage'],
     command:
       'Admin → Security → Enable authentication\nAdmin → Users & roles → Legacy Authentication (beta)\nAdmin → Users → Create 48-hour invite\nAdmin → Roles → Basic or Advanced\nGET /api/next/auth/status\nGET /api/next/auth/rbac',
     intro:
-      'Operate Passkeys and RBAC in both channels, and manage optional Legacy Authentication users and recovery in DiscVault 26 beta.',
+      'Operate Passkeys and RBAC in both channels, and manage optional OIDC or Legacy Authentication identities and recovery in DiscVault 26 beta.',
     scope:
-      'DiscVault v26 provides WebAuthn and RBAC in stable and beta. A passkey keeps its private key on the device or in a trusted credential manager while DiscVault stores the public key. DiscVault 26 beta additionally supports the opt-in Legacy Authentication capability. Owners and Admins can issue temporary passwords, require a password change, set per-user MFA policy, and control passkey registration. TOTP secrets are encrypted and unified recovery codes are hashed and single-use.',
+      'DiscVault v26 provides WebAuthn and RBAC in stable and beta. A passkey keeps its private key on the device or in a trusted credential manager while DiscVault stores the public key. DiscVault 26 beta additionally supports optional OIDC and the opt-in Legacy Authentication capability. Owners and Admins can issue temporary passwords, require a password change, set per-user MFA policy, control passkey registration, and let signed-in users link one identity for the configured OIDC issuer. TOTP secrets are encrypted and unified recovery codes are hashed and single-use.',
     expected:
-      'Owner login retains two recovery-capable passkeys, beta password users receive the intended TOTP and password policy, and a test user receives only assigned permissions.',
+      'Owner login retains an independent recovery method, beta OIDC and password users receive the intended identity and MFA policy, and a test user receives only assigned permissions.',
     rollback:
       'Keep an Owner session open, register more than one passkey, and preserve recovery codes offline. Disabling Legacy Authentication requires an active Owner passkey; after restore, users whose TOTP material was intentionally omitted must enroll again.',
+    next: 'configure/oidc',
+  },
+  {
+    path: 'configure/oidc',
+    category: 'configure',
+    topicTerm: 'oidcTitle',
+    channel: ['beta'],
+    products: ['server', 'pwa'],
+    platforms: ['docker', 'web'],
+    version: 'DiscVault v26',
+    source: [S, A],
+    sourceCommits: {
+      [S]: oidcCoreSourceCommit,
+      [A]: oidcGuidanceSourceCommit,
+    },
+    sourceFiles: oidcSourceFiles,
+    verified: oidcVerified,
+    docsVersion: oidcDocsVersion,
+    pre: ['Owner recovery method', 'trusted public HTTPS origin', 'confidential OIDC client'],
+    command:
+      'Register https://discvault.example.com/api/next/auth/oidc/callback at the provider.\nSet DISCVAULT_OIDC_ISSUER, DISCVAULT_OIDC_CLIENT_ID, and DISCVAULT_OIDC_CLIENT_SECRET together.\nOptionally set DISCVAULT_OIDC_PROVIDER_NAME and DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS.\nRecreate next-api and test login, linking, unlinking, and Audit events.',
+    intro:
+      'Add one OpenID Connect provider, including Pocket ID, as an optional browser sign-in method without replacing local recovery or API-token boundaries.',
+    scope:
+      'OIDC is available in DiscVault 26 beta from build 26.9.117. It is disabled when its required variables are empty. It authenticates only the self-hosted browser/PWA; iOS, Android, API tokens, and MCP bearer tokens keep their existing authentication contracts.',
+    expected:
+      'The provider redirects to the exact DiscVault callback, an allowed user can sign in or link the identity, and safe OIDC outcomes appear in the Audit log without secrets or tokens.',
+    rollback:
+      'Keep an independent Owner login method. To disable OIDC, clear every OIDC variable together and recreate `next-api`; first ensure every OIDC-only user who still needs access has another usable login method.',
     next: 'configure/plugins-metadata',
   },
   {
@@ -1857,13 +1938,16 @@ const pages = [
     platforms: ['all'],
     version: 'DiscVault v26',
     source: [S, 'helmerzNL/DiscVaultApp', 'Flux76HQ/DiscVault-AndroidApp'],
+    sourceCommits: { [S]: oidcCoreSourceCommit },
+    verified: oidcVerified,
+    docsVersion: oidcDocsVersion,
     pre: ['deployment channel', 'timestamp', 'redacted logs', 'current image digest'],
     command:
       'docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml ps\ncurl --fail http://localhost:6080/api/next/health\ndocker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml logs --tail=200 next-api next-worker next-mcp postgres',
     intro:
-      'Diagnose container startup, reverse proxy/passkeys, PWA cache, native permissions, migration, and data recovery in a safe order.',
+      'Diagnose container startup, reverse proxy, Passkeys, OIDC, PWA cache, native permissions, migration, and data recovery in a safe order.',
     scope:
-      'Identify the image tag first, then use the shared v26 service graph. A 502 suggests host port 6080 or internal port 5000 health; passkey errors suggest HTTPS, `RP_ID`, or `RP_ORIGINS` mismatch.',
+      'Identify the image tag first, then use the shared v26 service graph. A 502 suggests host port 6080 or internal port 5000 health; passkey errors suggest HTTPS, `RP_ID`, or `RP_ORIGINS` mismatch. In beta, OIDC failures are separated into browser callback, discovery, token, and JWKS stages by safe `auth.oidc_failed` Audit events.',
     expected:
       'The failing layer is isolated to container, proxy, browser/app, provider, or data and the matching health check is recorded.',
     rollback:
@@ -1879,11 +1963,14 @@ const pages = [
     platforms: ['all'],
     version: 'DiscVault v26',
     source: [S],
+    sourceCommits: { [S]: oidcCoreSourceCommit },
+    verified: oidcVerified,
+    docsVersion: oidcDocsVersion,
     pre: ['selected release channel'],
     command:
-      'DiscVault v26 stable: ghcr.io/helmerznl/discvault:latest\nDiscVault v26 beta: ghcr.io/helmerznl/discvault:beta\nEngineering only: ghcr.io/helmerznl/discvault:dev\nBoth release channels: PostgreSQL 17 + /data; postgres + next-api + next-worker + next-mcp; API 6080 → 5000; MCP 6090 → 6090; GET /api/next/health; RP_ID + RP_ORIGINS',
+      'DiscVault v26 stable: ghcr.io/helmerznl/discvault:latest\nDiscVault v26 beta: ghcr.io/helmerznl/discvault:beta\nEngineering only: ghcr.io/helmerznl/discvault:dev\nBoth release channels: PostgreSQL 17 + /data; postgres + next-api + next-worker + next-mcp; API 6080 → 5000; MCP 6090 → 6090; GET /api/next/health; RP_ID + RP_ORIGINS\nBeta OIDC: DISCVAULT_OIDC_ISSUER + DISCVAULT_OIDC_CLIENT_ID + DISCVAULT_OIDC_CLIENT_SECRET; optional DISCVAULT_OIDC_PROVIDER_NAME + DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS',
     intro:
-      'Look up image channels, ports, endpoints, persistent data locations, and channel-specific environment keys.',
+      'Look up image channels, ports, endpoints, persistent data locations, authentication settings, and channel-specific environment keys.',
     scope:
       '`ghcr.io/helmerznl/discvault:latest` is DiscVault v26 stable and `ghcr.io/helmerznl/discvault:beta` is DiscVault v26 beta. They share one PostgreSQL-backed architecture; only the image tag differs. `:dev` is engineering-only.',
     expected:
@@ -1927,7 +2014,7 @@ const sourceLinks = (page, locale) =>
   `\n- ${locale === 'en' ? 'Verified' : l10n[locale][7]}: \`${verifiedFor(page)}\`\n- DiscVault Docs: \`${docsVersionFor(page)}\``;
 
 const visibleTechnicalToken =
-  /`[^`\n]+`|\b(?:DiscVault(?: Docs)?|Docker(?: Compose| Engine| run)?|PostgreSQL|SQLite|PWA|HTTPS|HTTP|TLS|DNS|FQDN|MCP|REST|API|iOS(?:\/iPadOS)?|Android|SwiftData|Room|CameraX|ML Kit|WorkManager|Plex|Jellyfin|OpenSSL|WebSocket|WebAuthn|Unraid|TestFlight|RBAC|JSON|TOTP|Argon2id)\b|App Lock|Service Worker|→|≠|\b\d+(?:\.\d+)?(?:\+| GB| hours?)?\b/gi;
+  /`[^`\n]+`|\b(?:DiscVault(?: Docs)?|Docker(?: Compose| Engine| run)?|PostgreSQL|SQLite|PWA|HTTPS|HTTP|TLS|DNS|FQDN|MCP|REST|API|OIDC|OpenID Connect|PKCE|JWKS|Pocket ID|Kubernetes|iOS(?:\/iPadOS)?|Android|SwiftData|Room|CameraX|ML Kit|WorkManager|Plex|Jellyfin|OpenSSL|WebSocket|WebAuthn|Unraid|TestFlight|RBAC|JSON|TOTP|Argon2id)\b|App Lock|Service Worker|→|≠|\b\d+(?:\.\d+)?(?:\+| GB| hours?)?\b/gi;
 
 function technicalFragment(value, locale) {
   if (locale === 'en') return value;

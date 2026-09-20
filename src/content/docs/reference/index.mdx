@@ -1,22 +1,22 @@
 ---
 title: 'Reference'
-description: 'Look up image channels, ports, endpoints, persistent data locations, and channel-specific environment keys.'
+description: 'Look up image channels, ports, endpoints, persistent data locations, authentication settings, and channel-specific environment keys.'
 pageId: 'reference-index'
 products: ['server', 'pwa', 'ios', 'android']
 platforms: ['all']
 channels: ['stable', 'beta']
 minVersion: 'DiscVault v26'
 sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="all platforms" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="all platforms" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-09-20" />
 
 ## Goal and result
 
-Look up image channels, ports, endpoints, persistent data locations, and channel-specific environment keys.
+Look up image channels, ports, endpoints, persistent data locations, authentication settings, and channel-specific environment keys.
 
 ## Applies to
 
@@ -43,7 +43,8 @@ Look up image channels, ports, endpoints, persistent data locations, and channel
 1. **Inspect:** running image digest · `:latest` / `:beta`
 2. **Record:** `:dev` is engineering-only and not a release channel; DiscVault v26 stable uses `:latest` and DiscVault v26 beta uses `:beta` · `:dev`
 3. **Record:** ports + `/api/next/health` + passkey keys
-4. **Record:** PostgreSQL + `/data` · matched backup method
+4. **Record:** [Configure: OpenID Connect (OIDC) sign-in](/configure/oidc/) · `DISCVAULT_OIDC_ISSUER`
+5. **Record:** PostgreSQL + `/data` · matched backup method
 
 
 
@@ -69,6 +70,6 @@ Reference information makes no changes. Return to the focused procedure for comm
 
 ## Source and status
 
-- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Verified: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
+- Verified: `2026-09-20`
+- DiscVault Docs: `0.1.14`

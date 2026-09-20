@@ -1,0 +1,108 @@
+---
+title: 'Konfigurace: Přihlášení přes OpenID Connect (OIDC)'
+description: 'Pokyny pro konkrétní úlohu: Konfigurace: Přihlášení přes OpenID Connect (OIDC): OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.'
+pageId: 'configure-oidc'
+products: ['server', 'pwa']
+platforms: ['docker', 'web']
+channels: ['beta']
+minVersion: 'DiscVault v26'
+sourceRepos: ['helmerzNL/DiscVault', 'Flux76HQ/App-Guidance']
+lastVerified: '2026-09-20'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-09-20" />
+
+## Cíl a výsledek
+
+Dokončete postup určený pro **Konfigurace: Přihlášení přes OpenID Connect (OIDC)**. Tento postup pracuje s OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+## Platí pro
+
+Tato stránka platí pouze pro **Konfigurace: Přihlášení přes OpenID Connect (OIDC)** (Docker · web). Hranice kanálu a dat jsou: DiscVault · `26.9.117+`; OIDC přidává volitelné přihlášení v prohlížeči; místní passkeys, volitelná hesla, obnovovací kódy, API tokeny a MCP bearer tokeny si zachovávají své role; identita je přesná dvojice issuer a subject; e-mail se nikdy nepřipojí automaticky, propojení vyžaduje přihlášenou relaci prohlížeče a odpojení vyžaduje jinou použitelnou metodu přihlášení. Kontrolní body této stránky: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+### DiscVault v26 – beta
+
+- DiscVault · `26.9.117+`
+- OIDC přidává volitelné přihlášení v prohlížeči; místní passkeys, volitelná hesla, obnovovací kódy, API tokeny a MCP bearer tokeny si zachovávají své role
+- identita je přesná dvojice issuer a subject; e-mail se nikdy nepřipojí automaticky, propojení vyžaduje přihlášenou relaci prohlížeče a odpojení vyžaduje jinou použitelnou metodu přihlášení
+
+## Požadavky
+
+- přístup vlastníka · druhá metoda obnovení
+- [Instalace: Reverzní proxy a přístupové klíče](/cs/install/reverse-proxy-passkeys/) · mimo výjimku pro nastavení na localhost vyžadují passkeys stabilní plně kvalifikovaný název domény přes důvěryhodné HTTPS; holá IP adresa ani prosté HTTP nejsou podporovány
+- důvěrný klient OIDC u poskytovatele identity s přesnou adresou zpětného volání DiscVault
+
+### Privátní zpětný kanál poskytovatele
+
+:::note[Dostupné v beta verzi]
+povolte přesné privátní HTTP originy pouze pro tokenové a JWKS endpointy; issuer a autorizace v prohlížeči zůstávají jen přes HTTPS, ověření TLS zůstává zapnuté a přesměrování discovery, tokenů a JWKS jsou odmítnuta
+:::
+
+## Postup
+
+1. **Vytvořte:** důvěrný klient OIDC u poskytovatele identity s přesnou adresou zpětného volání DiscVault · `openid profile email` · `https://discvault.example.com/api/next/auth/oidc/callback`
+2. **Nastavte:** `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · nastavte vydavatele, ID klienta a tajemství klienta společně, nebo ponechte všechny tři hodnoty prázdné; neúplná konfigurace zabrání spuštění
+3. **Nastavte:** `DISCVAULT_OIDC_PROVIDER_NAME` · `OIDC`
+4. **Vyberte:** `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · `localhost` · Kubernetes DNS · `.internal` · povolte přesné privátní HTTP originy pouze pro tokenové a JWKS endpointy; issuer a autorizace v prohlížeči zůstávají jen přes HTTPS, ověření TLS zůstává zapnuté a přesměrování discovery, tokenů a JWKS jsou odmítnuta
+5. **Spusťte:** `next-api` · `--force-recreate`
+6. **Otestujte:** OIDC přidává volitelné přihlášení v prohlížeči; místní passkeys, volitelná hesla, obnovovací kódy, API tokeny a MCP bearer tokeny si zachovávají své role · identita je přesná dvojice issuer a subject; e-mail se nikdy nepřipojí automaticky, propojení vyžaduje přihlášenou relaci prohlížeče a odpojení vyžaduje jinou použitelnou metodu přihlášení
+7. **Zkontrolujte:** `auth.oidc_failed` · selhání zaznamenají pouze nastavený zobrazovaný název poskytovatele, bezpečný kód `auth.oidc_failed` a režim toku; tajemství, tokeny, autorizační kódy, state, nonce, URL endpointů a hodnoty PKCE se nikdy nelogují
+
+### Příkazy a nastavení
+
+#### DiscVault v26 – beta
+
+```text
+RP_ORIGINS=https://discvault.example.com
+DISCVAULT_OIDC_ISSUER=https://id.example.com
+DISCVAULT_OIDC_CLIENT_ID=<client-id>
+DISCVAULT_OIDC_CLIENT_SECRET=<client-secret>
+DISCVAULT_OIDC_PROVIDER_NAME=Pocket ID
+DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS=
+```
+
+```text
+DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS=http://pocket-id.pocket-id.svc.cluster.local:1411
+```
+
+```bash
+cd /opt/discvault-next
+docker compose -p discvault_next_deploy config --quiet
+docker compose -p discvault_next_deploy up -d --force-recreate next-api
+curl --fail https://discvault.example.com/api/next/auth/status
+```
+
+## Očekávaný výsledek
+
+Výsledek přijměte pro **Konfigurace: Přihlášení přes OpenID Connect (OIDC)** pouze pokud platí všechny následující výsledky: OIDC přidává volitelné přihlášení v prohlížeči; místní passkeys, volitelná hesla, obnovovací kódy, API tokeny a MCP bearer tokeny si zachovávají své role; identita je přesná dvojice issuer a subject; e-mail se nikdy nepřipojí automaticky, propojení vyžaduje přihlášenou relaci prohlížeče a odpojení vyžaduje jinou použitelnou metodu přihlášení; selhání zaznamenají pouze nastavený zobrazovaný název poskytovatele, bezpečný kód `auth.oidc_failed` a režim toku; tajemství, tokeny, autorizační kódy, state, nonce, URL endpointů a hodnoty PKCE se nikdy nelogují. Kontrolní body této stránky: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+- OIDC přidává volitelné přihlášení v prohlížeči; místní passkeys, volitelná hesla, obnovovací kódy, API tokeny a MCP bearer tokeny si zachovávají své role
+- identita je přesná dvojice issuer a subject; e-mail se nikdy nepřipojí automaticky, propojení vyžaduje přihlášenou relaci prohlížeče a odpojení vyžaduje jinou použitelnou metodu přihlášení
+- selhání zaznamenají pouze nastavený zobrazovaný název poskytovatele, bezpečný kód `auth.oidc_failed` a režim toku; tajemství, tokeny, autorizační kódy, state, nonce, URL endpointů a hodnoty PKCE se nikdy nelogují
+
+## Bezpečnost a návrat
+
+:::caution
+Bezpečná hranice obnovy pro **Konfigurace: Přihlášení přes OpenID Connect (OIDC)** vyžaduje před spuštěním nebo pokračováním tyto kroky: tajemství klienta ukládejte pouze do nesledovaného běhového prostředí nebo správce tajemství a při odhalení jej změňte; před vypnutím OIDC dejte každému uživateli pouze s OIDC jinou použitelnou metodu přihlášení; povolte přesné privátní HTTP originy pouze pro tokenové a JWKS endpointy; issuer a autorizace v prohlížeči zůstávají jen přes HTTPS, ověření TLS zůstává zapnuté a přesměrování discovery, tokenů a JWKS jsou odmítnuta; identita je přesná dvojice issuer a subject; e-mail se nikdy nepřipojí automaticky, propojení vyžaduje přihlášenou relaci prohlížeče a odpojení vyžaduje jinou použitelnou metodu přihlášení. Kontrolní body této stránky: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+- tajemství klienta ukládejte pouze do nesledovaného běhového prostředí nebo správce tajemství a při odhalení jej změňte; před vypnutím OIDC dejte každému uživateli pouze s OIDC jinou použitelnou metodu přihlášení
+- povolte přesné privátní HTTP originy pouze pro tokenové a JWKS endpointy; issuer a autorizace v prohlížeči zůstávají jen přes HTTPS, ověření TLS zůstává zapnuté a přesměrování discovery, tokenů a JWKS jsou odmítnuta
+- identita je přesná dvojice issuer a subject; e-mail se nikdy nepřipojí automaticky, propojení vyžaduje přihlášenou relaci prohlížeče a odpojení vyžaduje jinou použitelnou metodu přihlášení
+:::
+
+## Další krok
+
+[Konfigurace: Pluginy a metadata](/cs/configure/plugins-metadata/)
+
+## Zdroj a stav
+
+- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
+- [`Flux76HQ/App-Guidance@41bfca3bfa39`](https://github.com/Flux76HQ/App-Guidance/commit/41bfca3bfa39f0b43924190d384e2d96be756020)
+- [Moving beta source: OIDC deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
+- [Pinned verification: OIDC environment template](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/.env.example)
+- [Pinned verification: OIDC implementation](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/backend/next_oidc.py)
+- [Authoritative OIDC authentication contract](https://github.com/Flux76HQ/App-Guidance/blob/41bfca3bfa39f0b43924190d384e2d96be756020/projects/discvault/specs/oidc-authentication.md)
+- Zdroj a stav: `2026-09-20`
+- DiscVault Docs: `0.1.14`
