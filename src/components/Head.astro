@@ -1,33 +1,98 @@
 ---
-import DefaultHead from '@astrojs/starlight/components/Head.astro';
+import { siteLocales, siteLocaleForPath, siteOrigin, socialImageUrl } from '../data/site-metadata';
 
-const locales = [
-  'cs',
-  'da',
-  'de',
-  'el',
-  'es',
-  'fi',
-  'fr',
-  'hu',
-  'it',
-  'ja',
-  'ko',
-  'nl',
-  'no',
-  'pl',
-  'pt',
-  'sv',
-  'tr',
-  'uk',
-  'zh',
-];
 const segments = Astro.url.pathname.split('/').filter(Boolean);
-if (locales.includes(segments[0] ?? '')) segments.shift();
-const canonicalPath = `/${segments.join('/')}${segments.length ? '/' : ''}`;
+const route = Astro.locals.starlightRoute;
+const data = route.entry.data;
+const locale = siteLocaleForPath(Astro.url.pathname);
+const head = route.head.map((entry) =>
+  entry.tag === 'meta' && entry.attrs?.property === 'og:locale'
+    ? { ...entry, attrs: { ...entry.attrs, content: locale.ogLocale } }
+    : entry,
+);
+const isNotFound = segments.at(-1) === '404';
+const isHome = 'pageId' in data && data.pageId === 'home';
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? siteOrigin).href;
+const description = data.description ?? 'Install, use, and operate DiscVault.';
+const robots = isNotFound
+  ? 'noindex, follow'
+  : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
+const organization = {
+  '@type': 'Organization',
+  '@id': `${siteOrigin}/#organization`,
+  name: 'Flux76',
+  url: 'https://github.com/Flux76HQ',
+  logo: {
+    '@type': 'ImageObject',
+    url: socialImageUrl,
+    width: 392,
+    height: 392,
+  },
+};
+const website = {
+  '@type': 'WebSite',
+  '@id': `${siteOrigin}/#website`,
+  name: 'DiscVault Docs',
+  url: `${siteOrigin}/`,
+  inLanguage: siteLocales.map(({ languageTag }) => languageTag),
+  publisher: { '@id': organization['@id'] },
+};
+const structuredData = isNotFound
+  ? undefined
+  : {
+      '@context': 'https://schema.org',
+      '@graph': [
+        organization,
+        website,
+        ...(isHome
+          ? []
+          : [
+              {
+                '@type': 'TechArticle',
+                '@id': `${canonicalUrl}#article`,
+                headline: data.title,
+                description,
+                url: canonicalUrl,
+                mainEntityOfPage: canonicalUrl,
+                inLanguage: locale.languageTag,
+                isPartOf: { '@id': website['@id'] },
+                publisher: { '@id': organization['@id'] },
+                about: {
+                  '@type': 'SoftwareApplication',
+                  name: 'DiscVault',
+                  url: 'https://discvault.eu',
+                },
+              },
+            ]),
+      ],
+    };
+const structuredDataJson = structuredData
+  ? JSON.stringify(structuredData).replaceAll('<', '\\u003c')
+  : undefined;
 ---
 
-<DefaultHead {...Astro.props} />
-<link rel="alternate" hreflang="x-default" href={new URL(canonicalPath, Astro.site)} />
+{head.map(({ tag: Tag, attrs, content }) => <Tag {...attrs} set:html={content} />)}
+<meta name="robots" content={robots} />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+<meta property="og:image" content={socialImageUrl} />
+<meta property="og:image:alt" content="DiscVault" />
+<meta property="og:image:width" content="392" />
+<meta property="og:image:height" content="392" />
+{
+  siteLocales
+    .filter(({ code }) => code !== locale.code)
+    .map(({ ogLocale }) => <meta property="og:locale:alternate" content={ogLocale} />)
+}
+<meta name="twitter:title" content={data.title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={socialImageUrl} />
+<meta name="twitter:image:alt" content="DiscVault" />
+<link
+  rel="alternate"
+  type="text/plain"
+  title="DiscVault Docs for language models"
+  href="/llms.txt"
+/>
+{structuredData && <script is:inline type="application/ld+json" set:html={structuredDataJson} />}
 <meta name="theme-color" content="#090F1A" media="(prefers-color-scheme: dark)" />
 <meta name="theme-color" content="#F4F7FB" media="(prefers-color-scheme: light)" />
