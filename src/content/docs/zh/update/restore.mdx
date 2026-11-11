@@ -5,14 +5,14 @@ pageId: 'update-restore'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## 目标和结果
 
@@ -22,13 +22,13 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 本页面仅适用于 **更新和迁移: 恢复** (Docker · Unraid). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; 来自同一停止写入时段的 PostgreSQL 转储与文件归档; 必须先恢复匹配数据，再启动之前的镜像; DiscVault · `ghcr.io/helmerznl/discvault:beta`; 来自同一停止写入时段的 PostgreSQL 转储与文件归档; 必须先恢复匹配数据，再启动之前的镜像. 本页面专用检查点： `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.
 
-### DiscVault v26 稳定版
+### DiscVault 稳定版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - 来自同一停止写入时段的 PostgreSQL 转储与文件归档
 - 必须先恢复匹配数据，再启动之前的镜像
 
-### DiscVault v26 测试版
+### DiscVault 测试版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - 来自同一停止写入时段的 PostgreSQL 转储与文件归档

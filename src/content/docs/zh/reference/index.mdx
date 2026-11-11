@@ -5,14 +5,14 @@ pageId: 'reference-index'
 products: ['server', 'pwa', 'ios', 'android']
 platforms: ['all']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="所有平台" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-09-20" />
+<PageMeta channels="stable,beta" platform="所有平台" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-09-20" />
 
 ## 目标和结果
 
@@ -22,13 +22,13 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 本页面仅适用于 **参考** (所有平台). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`. 本页面专用检查点： `:latest` · `:beta` · `:dev` · `6080:5000` · `DISCVAULT_OIDC_ISSUER`.
 
-### DiscVault v26 稳定版
+### DiscVault 稳定版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - PostgreSQL `/data`
 - API `6080:5000` MCP `6090:6090`
 
-### DiscVault v26 测试版
+### DiscVault 测试版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - PostgreSQL `/data`
@@ -41,7 +41,7 @@ import PageMeta from '../../../../components/PageMeta.astro';
 ## 操作步骤
 
 1. **检查:** `:latest` `:beta`
-2. **记录:** `:dev` 仅用于工程工作，并非发布通道；DiscVault v26 稳定版使用 `:latest`，测试版使用 `:beta` · `:dev`
+2. **记录:** `:dev` 仅用于工程工作，并非发布通道；DiscVault 稳定版使用 `:latest`，测试版使用 `:beta` · `:dev`
 3. **记录:** `/api/next/health`
 4. **记录:** [配置: 使用 OpenID Connect（OIDC）登录](/zh/configure/oidc/) · `DISCVAULT_OIDC_ISSUER`
 5. **记录:** PostgreSQL `/data`
@@ -58,10 +58,10 @@ import PageMeta from '../../../../components/PageMeta.astro';
 ## 安全与回滚
 
 :::caution
-安全恢复边界： **参考** 在启动或继续任何操作前必须执行： 参考页为只读；运行命令或更改数据前必须使用对应的专项流程; `:dev` 仅用于工程工作，并非发布通道；DiscVault v26 稳定版使用 `:latest`，测试版使用 `:beta` · `:dev`. 本页面专用检查点： `:latest` · `:beta` · `:dev` · `6080:5000` · `DISCVAULT_OIDC_ISSUER`.
+安全恢复边界： **参考** 在启动或继续任何操作前必须执行： 参考页为只读；运行命令或更改数据前必须使用对应的专项流程; `:dev` 仅用于工程工作，并非发布通道；DiscVault 稳定版使用 `:latest`，测试版使用 `:beta` · `:dev`. 本页面专用检查点： `:latest` · `:beta` · `:dev` · `6080:5000` · `DISCVAULT_OIDC_ISSUER`.
 
 - 参考页为只读；运行命令或更改数据前必须使用对应的专项流程
-- `:dev` 仅用于工程工作，并非发布通道；DiscVault v26 稳定版使用 `:latest`，测试版使用 `:beta` · `:dev`
+- `:dev` 仅用于工程工作，并非发布通道；DiscVault 稳定版使用 `:latest`，测试版使用 `:beta` · `:dev`
 :::
 
 ## 下一步

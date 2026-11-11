@@ -5,14 +5,14 @@ pageId: 'install-first-start-health'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · ιστός" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-20" />
+<PageMeta channels="stable,beta" platform="Docker · ιστός" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-20" />
 
 ## Στόχος και αποτέλεσμα
 
@@ -22,12 +22,12 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 Αυτή η σελίδα ισχύει μόνο για **Εγκατάσταση: Πρώτη εκκίνηση και έλεγχος υγείας** (Docker · ιστός). Τα όρια καναλιού και δεδομένων είναι: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `6080` → API `5000`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/api/next/auth/status`; `6180` → API `5000`. Σημεία ελέγχου της σελίδας: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · `6180:5000` · WebAuthn.
 
-### DiscVault v26 – σταθερό
+### DiscVault – σταθερό
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - `6080` → API `5000`
 
-### DiscVault v26 – beta
+### DiscVault – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `/api/next/auth/status`
@@ -35,7 +35,7 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## Προϋποθέσεις
 
-- `/api/next/health`
+- DiscVault
 - `/api/next/auth/status`
 
 ## Διαδικασία
@@ -48,7 +48,7 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ### Εντολές και ρυθμίσεις
 
-#### DiscVault v26 – σταθερό
+#### DiscVault – σταθερό
 
 ```bash
 docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml ps
@@ -57,7 +57,7 @@ curl --fail http://localhost:6080/api/next/health
 curl --fail http://localhost:6080/api/next/auth/status
 ```
 
-#### DiscVault v26 – beta
+#### DiscVault – beta
 
 ```bash
 docker compose -p discvault_next_deploy -f /opt/discvault-next/docker-compose.yml ps

@@ -5,14 +5,14 @@ pageId: 'pwa-offline'
 products: ['pwa']
 platforms: ['web', 'ios', 'android']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="웹 · iOS · Android" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="웹 · iOS · Android" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## 목표 및 결과
 
@@ -22,12 +22,12 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 이 페이지의 적용 범위: **PWA: 오프라인 동작** (웹 · iOS · Android). 채널 및 데이터 경계: DiscVault · `ghcr.io/helmerznl/discvault:latest`; 캐시된 화면은 열릴 수 있지만 최신 데이터와 쓰기에는 네트워크가 필요함 · `Service Worker` · `CacheStorage`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; 캐시된 화면은 열릴 수 있지만 최신 데이터와 쓰기에는 네트워크가 필요함 · `Service Worker` · `CacheStorage`. 이 페이지의 전용 확인 지점: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
 
-### DiscVault v26 안정판
+### DiscVault 안정판
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - 캐시된 화면은 열릴 수 있지만 최신 데이터와 쓰기에는 네트워크가 필요함 · `Service Worker` · `CacheStorage`
 
-### DiscVault v26 베타
+### DiscVault 베타
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - 캐시된 화면은 열릴 수 있지만 최신 데이터와 쓰기에는 네트워크가 필요함 · `Service Worker` · `CacheStorage`

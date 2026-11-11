@@ -5,14 +5,14 @@ pageId: 'configure-oidc'
 products: ['server', 'pwa']
 platforms: ['docker', 'web']
 channels: ['beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'Flux76HQ/App-Guidance']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="Docker · Web" version="DiscVault v26" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-09-20" />
+<PageMeta channels="beta" platform="Docker · Web" version="DiscVault" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## 目的と結果
 
@@ -22,7 +22,7 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 このページの対象は **設定: OpenID Connect（OIDC）ログイン** (Docker · Web). チャンネルとデータの境界: DiscVault · `26.9.117+`; OIDC は任意のブラウザーログイン方法を追加します。ローカルのパスキー、任意のパスワード、復旧コード、API トークン、MCP bearer トークンの役割は変わりません; ID は issuer と subject の正確な組み合わせです。メールアドレスで自動リンクされず、リンクにはログイン済みブラウザーセッション、解除には別の利用可能なログイン方法が必要です. このページ固有の確認点: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
 
-### DiscVault v26 ベータ版
+### DiscVault ベータ版
 
 - DiscVault · `26.9.117+`
 - OIDC は任意のブラウザーログイン方法を追加します。ローカルのパスキー、任意のパスワード、復旧コード、API トークン、MCP bearer トークンの役割は変わりません
@@ -52,7 +52,7 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ### コマンドと設定
 
-#### DiscVault v26 ベータ版
+#### DiscVault ベータ版
 
 ```text
 RP_ORIGINS=https://discvault.example.com

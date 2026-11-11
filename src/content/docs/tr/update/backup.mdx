@@ -5,14 +5,14 @@ pageId: 'update-backup'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Amaç ve sonuç
 
@@ -22,13 +22,13 @@ Sayfaya özel iş akışını tamamlayın: **Güncelleme ve geçiş: Yedekleme**
 
 Bu sayfa yalnızca şunlar için geçerlidir: **Güncelleme ve geçiş: Yedekleme** (Docker · Unraid). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault:latest`; aynı yazıcıların durdurulduğu aralıktan PostgreSQL dökümü ve dosya arşivi; PostgreSQL `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; aynı yazıcıların durdurulduğu aralıktan PostgreSQL dökümü ve dosya arşivi; PostgreSQL `/data`. Sayfaya özel denetim noktaları: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
 
-### DiscVault v26 kararlı
+### DiscVault kararlı
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - aynı yazıcıların durdurulduğu aralıktan PostgreSQL dökümü ve dosya arşivi
 - PostgreSQL `/data`
 
-### DiscVault v26 beta
+### DiscVault beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - aynı yazıcıların durdurulduğu aralıktan PostgreSQL dökümü ve dosya arşivi

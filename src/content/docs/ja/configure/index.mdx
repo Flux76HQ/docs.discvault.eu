@@ -5,14 +5,14 @@ pageId: 'configure-index'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-09-20" />
+<PageMeta channels="stable,beta" platform="Docker · Web" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-09-20" />
 
 ## 目的と結果
 
@@ -20,17 +20,17 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## 対象
 
-このページの対象は **設定: 概要** (Docker · Web). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. このページ固有の確認点: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/oidc/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
+このページの対象は **設定: 概要** (Docker · Web). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault RBAC. このページ固有の確認点: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/oidc/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
-### DiscVault v26 安定版
+### DiscVault 安定版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- RBAC
+- DiscVault RBAC
 
-### DiscVault v26 ベータ版
+### DiscVault ベータ版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- RBAC
+- DiscVault RBAC
 
 ## 前提条件
 
@@ -48,11 +48,11 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ### タスク別ルート
 
-- [設定: 環境変数](/ja/configure/environment/) — DiscVault 26 `.env.example`
-- [設定: 認証と RBAC](/ja/configure/auth-rbac/) — DiscVault 26 RBAC
+- [設定: 環境変数](/ja/configure/environment/) — DiscVault `.env.example`
+- [設定: 認証と RBAC](/ja/configure/auth-rbac/) — DiscVault RBAC
 - [設定: OpenID Connect（OIDC）ログイン](/ja/configure/oidc/) — DiscVault 26.9 117 OIDC Pocket ID
-- [インストール: Legacy Authentication](/ja/install/legacy-authentication/) — DiscVault 26 TOTP
-- [設定: プラグインとメタデータ](/ja/configure/plugins-metadata/) — DiscVault 26
+- [インストール: Legacy Authentication](/ja/install/legacy-authentication/) — DiscVault TOTP
+- [設定: プラグインとメタデータ](/ja/configure/plugins-metadata/) — DiscVault
 
 ## 期待される結果
 

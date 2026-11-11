@@ -5,14 +5,14 @@ pageId: 'update-restore'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Amaç ve sonuç
 
@@ -22,13 +22,13 @@ Sayfaya özel iş akışını tamamlayın: **Güncelleme ve geçiş: Geri yükle
 
 Bu sayfa yalnızca şunlar için geçerlidir: **Güncelleme ve geçiş: Geri yükleme** (Docker · Unraid). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault:latest`; aynı yazıcıların durdurulduğu aralıktan PostgreSQL dökümü ve dosya arşivi; önceki imajı başlatmadan önce eşleşen verileri geri yükleyin; DiscVault · `ghcr.io/helmerznl/discvault:beta`; aynı yazıcıların durdurulduğu aralıktan PostgreSQL dökümü ve dosya arşivi; önceki imajı başlatmadan önce eşleşen verileri geri yükleyin. Sayfaya özel denetim noktaları: `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.
 
-### DiscVault v26 kararlı
+### DiscVault kararlı
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - aynı yazıcıların durdurulduğu aralıktan PostgreSQL dökümü ve dosya arşivi
 - önceki imajı başlatmadan önce eşleşen verileri geri yükleyin
 
-### DiscVault v26 beta
+### DiscVault beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - aynı yazıcıların durdurulduğu aralıktan PostgreSQL dökümü ve dosya arşivi

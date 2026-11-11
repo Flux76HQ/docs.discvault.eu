@@ -5,14 +5,14 @@ pageId: 'configure-index'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-09-20" />
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-09-20" />
 
 ## Goal and result
 
@@ -22,15 +22,15 @@ Configure runtime values, Passkeys, beta OIDC and Legacy Authentication, roles, 
 
 Passkeys, RBAC, and plugins apply to stable and beta. The official `release/v26-beta` Compose environment, OIDC, and Legacy Authentication procedures are beta-only and use the current deployment variables.
 
-### DiscVault v26 stable
+### DiscVault stable
 
-- DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
-- same v26 environment, RBAC, and plugin interfaces
+- DiscVault stable · `ghcr.io/helmerznl/discvault:latest`
+- same DiscVault environment, RBAC, and plugin interfaces
 
-### DiscVault v26 beta
+### DiscVault beta
 
-- DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
-- same v26 environment, RBAC, and plugin interfaces
+- DiscVault beta · `ghcr.io/helmerznl/discvault:beta`
+- same DiscVault environment, RBAC, and plugin interfaces
 
 ## Prerequisites
 
@@ -48,11 +48,11 @@ Passkeys, RBAC, and plugins apply to stable and beta. The official `release/v26-
 
 ### Task routes
 
-- [Configure: Environment variables](/configure/environment/) — DiscVault 26 beta · official `.env.example` · secrets
-- [Configure: Authentication and RBAC](/configure/auth-rbac/) — DiscVault 26 · Passkeys · beta Legacy Authentication · invites · RBAC
+- [Configure: Environment variables](/configure/environment/) — DiscVault beta · official `.env.example` · secrets
+- [Configure: Authentication and RBAC](/configure/auth-rbac/) — DiscVault · Passkeys · beta Legacy Authentication · invites · RBAC
 - [Configure: OpenID Connect (OIDC) sign-in](/configure/oidc/) — DiscVault 26.9.117 beta · OIDC · Pocket ID · account linking
-- [Install: Legacy Authentication](/install/legacy-authentication/) — DiscVault 26 beta · password + TOTP · recovery
-- [Configure: Plugins and metadata](/configure/plugins-metadata/) — DiscVault 26 · plugins · metadata
+- [Install: Legacy Authentication](/install/legacy-authentication/) — DiscVault beta · password + TOTP · recovery
+- [Configure: Plugins and metadata](/configure/plugins-metadata/) — DiscVault · plugins · metadata
 
 ## Expected result
 

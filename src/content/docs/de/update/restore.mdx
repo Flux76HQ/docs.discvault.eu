@@ -5,14 +5,14 @@ pageId: 'update-restore'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Ziel und Ergebnis
 
@@ -22,13 +22,13 @@ Führe den seitenspezifischen Ablauf aus für **Update und Migration: Wiederhers
 
 Diese Seite gilt ausschließlich für **Update und Migration: Wiederherstellung** (Docker · Unraid). Kanal- und Datengrenzen sind: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL-Dump und Dateisystemarchiv aus demselben schreibfreien Fenster; passende Daten vor dem Start des vorherigen Images wiederherstellen; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL-Dump und Dateisystemarchiv aus demselben schreibfreien Fenster; passende Daten vor dem Start des vorherigen Images wiederherstellen. Seitenspezifische Kontrollpunkte: `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.
 
-### DiscVault v26 – stabil
+### DiscVault – stabil
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - PostgreSQL-Dump und Dateisystemarchiv aus demselben schreibfreien Fenster
 - passende Daten vor dem Start des vorherigen Images wiederherstellen
 
-### DiscVault v26 – Beta
+### DiscVault – Beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - PostgreSQL-Dump und Dateisystemarchiv aus demselben schreibfreien Fenster

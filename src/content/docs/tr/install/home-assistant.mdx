@@ -1,0 +1,108 @@
+---
+title: 'Kurulum: Home Assistant'
+description: 'Göreve özel yönergeler: Kurulum: Home Assistant. 6180. /api/next/health. rp_id. password_login. secrets.json.'
+pageId: 'install-home-assistant'
+products: ['server']
+platforms: ['home-assistant']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/home-assistant-addons']
+lastVerified: '2026-11-11'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Home Assistant" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/home-assistant-addons" verified="2026-11-11" />
+
+## Amaç ve sonuç
+
+DiscVault’u bir Home Assistant uygulaması olarak çalıştırın. Uygulama, worker, MCP uç noktası ve PostgreSQL 17 tek kapsayıcıda çalışır; sakladıkları her şey Home Assistant’ın yedeklerine dahil ettiği veri klasöründedir.
+
+Sayfaya özel iş akışını tamamlayın: **Kurulum: Home Assistant**. Bu prosedür şunları kullanır: `6180` · `/api/next/health` · `rp_id` · `password_login` · `secrets.json`.
+
+## Geçerli olduğu alan
+
+Depo, DiscVault’u 6180, DiscVault (beta) sürümünü 6181 numaralı bağlantı noktasında kendi veri klasörleriyle sunar; ikisi amd64 ve aarch64 üzerinde yan yana çalışır.
+
+Bu sayfa yalnızca şunlar için geçerlidir: **Kurulum: Home Assistant** (Home Assistant). Kanal ve veri sınırları: DiscVault · `6180`; PostgreSQL 17 · `/data`; DiscVault · `6181`; PostgreSQL 17 · `/data`. Sayfaya özel denetim noktaları: `6180` · `/api/next/health` · `rp_id` · `password_login` · `secrets.json`.
+
+### DiscVault kararlı
+
+- DiscVault · `6180`
+- PostgreSQL 17 · `/data`
+
+### DiscVault beta
+
+- DiscVault · `6181`
+- PostgreSQL 17 · `/data`
+
+## Ön koşullar
+
+- `amd64` `aarch64`
+- passkey için uygulama bağlantı noktasının önünde alan adlı bir HTTPS adresi gerekir; yoksa TOTP ile parola girişini kullanın
+- kenar çubuğu (Ingress) girişi yoktur: DiscVault ters proxy üzerinden kendi alan adının kökünden sunulur
+
+## Prosedür
+
+1. **Açın:** Ayarlar → Uygulamalar → Uygulama yükle → ⋮ → Depolar, ardından `https://github.com/helmerzNL/home-assistant-addons` ekleyin
+2. **Kurun:** DiscVault veya DiscVault (beta) seçip kurun; Home Assistant uygulamayı cihazda derler, bu ilk seferde birkaç dakika sürer
+3. **Yapılandırın:** `rp_id`, DiscVault’un açıldığı alan adıdır; passkey’ler buna bağlıdır, sonradan değiştirmek mevcut passkey’leri kullanılamaz hâle getirir · `rp_origins` · `trusted_proxies`
+4. **Yapılandırın:** `password_login`, HTTPS alan adı yokken kullanıcı adı, en az 15 karakterlik parola ve TOTP sunar
+5. **Yapılandırın:** OpenID Connect: `oidc_issuer`, `oidc_client_id` ve `oidc_client_secret` alanlarını birlikte doldurun ya da üçünü de boş bırakın · `/api/next/auth/oidc/callback`
+6. **Başlatın:** ilk kurulum ilk sahibi bir passkey ya da parola ve TOTP ile oluşturur ve kurtarma kodlarını bir kez gösterir
+7. **Doğrulayın:** `/api/next/health` · MCP uç noktası aynı bağlantı noktasında `/mcp` altındadır; asistana kişisel bir API anahtarı verin
+
+### Komutlar ve ayarlar
+
+#### Her iki kanal
+
+```yaml
+rp_id: discvault.example.com
+rp_origins: https://discvault.example.com
+rp_name: DiscVault
+password_login: false
+trusted_proxies: private
+block_crawlers: true
+```
+
+```bash
+curl --fail http://<home-assistant>:6180/api/next/health   # beta: 6181
+```
+
+## Beklenen sonuç
+
+Uygulama başlatılmış görünür, watchdog sağlık adresine ulaşır ve web arayüzü uygulama bağlantı noktasında açılır.
+
+Şunun sonucunu kabul edin: **Kurulum: Home Assistant** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: ilk kurulum ilk sahibi bir passkey ya da parola ve TOTP ile oluşturur ve kurtarma kodlarını bir kez gösterir; MCP uç noktası aynı bağlantı noktasında `/mcp` altındadır; asistana kişisel bir API anahtarı verin; `/api/next/health` · HTTP `200` · `"status": "ok"`. Sayfaya özel denetim noktaları: `6180` · `/api/next/health` · `rp_id` · `password_login` · `secrets.json`.
+
+- ilk kurulum ilk sahibi bir passkey ya da parola ve TOTP ile oluşturur ve kurtarma kodlarını bir kez gösterir
+- MCP uç noktası aynı bağlantı noktasında `/mcp` altındadır; asistana kişisel bir API anahtarı verin
+- `/api/next/health` · HTTP `200` · `"status": "ok"`
+
+## Güvenlik ve geri alma
+
+:::caution
+Her güncellemeden önce Home Assistant’ın uygulamayı yedeklemesine izin verin. Geri almak için bu yedeği Ayarlar → Sistem → Yedeklemeler altından geri yükleyin; veritabanını değiştiren bir sürüm eski sürümde çalışmayabilir.
+
+Şunun güvenli kurtarma sınırı: **Kurulum: Home Assistant** başlatmadan veya devam etmeden önce şu işlemleri gerektirir: çalışan bir veritabanı tutarlı bir kopya olmadığından Home Assistant yedekleme sırasında uygulamayı kısa süre durdurur; imzalama gizli anahtarı ve veritabanı parolası ilk başlatmada `secrets.json` içinde oluşturulur; bu dosyayı asla silmeyin; beta, veritabanını kararlı uygulamanın okuyamayacağı şekilde değiştirebilir; onu asla kararlı sürümün klasörlerine yönlendirmeyin; uygulama içi yedek (Yönetim → Backup, zamanlanmış da olabilir) bir kitaplığı Docker, Unraid ve Home Assistant arasında taşır; yeni bir sürüm, imajı yayımlandığında güncelleme olarak görünür; güncelleme uygulamayı yeniden derler ve başlarken geçişleri çalıştırır. Sayfaya özel denetim noktaları: `6180` · `/api/next/health` · `rp_id` · `password_login` · `secrets.json`.
+
+- çalışan bir veritabanı tutarlı bir kopya olmadığından Home Assistant yedekleme sırasında uygulamayı kısa süre durdurur
+- imzalama gizli anahtarı ve veritabanı parolası ilk başlatmada `secrets.json` içinde oluşturulur; bu dosyayı asla silmeyin
+- beta, veritabanını kararlı uygulamanın okuyamayacağı şekilde değiştirebilir; onu asla kararlı sürümün klasörlerine yönlendirmeyin
+- uygulama içi yedek (Yönetim → Backup, zamanlanmış da olabilir) bir kitaplığı Docker, Unraid ve Home Assistant arasında taşır
+- yeni bir sürüm, imajı yayımlandığında güncelleme olarak görünür; güncelleme uygulamayı yeniden derler ve başlarken geçişleri çalıştırır
+:::
+
+## Sonraki adım
+
+[Kurulum: Ters vekil ve geçiş anahtarları](/tr/install/reverse-proxy-passkeys/)
+
+## Kaynak ve durum
+
+- [`helmerzNL/DiscVault@441f96593219`](https://github.com/helmerzNL/DiscVault/commit/441f96593219c66d45aac99ce5ef9f81f011d449)
+- [`helmerzNL/home-assistant-addons@48d31c321db4`](https://github.com/helmerzNL/home-assistant-addons/commit/48d31c321db48d1c70405c6a7830065debc79460)
+- [Home Assistant app: `discvault/config.yaml`](https://github.com/helmerzNL/home-assistant-addons/blob/main/discvault/config.yaml)
+- [Home Assistant app documentation: `discvault/DOCS.md`](https://github.com/helmerzNL/home-assistant-addons/blob/main/discvault/DOCS.md)
+- [Add the repository to Home Assistant](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FhelmerzNL%2Fhome-assistant-addons)
+- Kaynak ve durum: `2026-11-11`
+- DiscVault Docs: `0.2.0`

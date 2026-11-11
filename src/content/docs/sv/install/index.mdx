@@ -5,14 +5,14 @@ pageId: 'install-index'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
 lastVerified: '2026-07-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
 
 ## Mål och resultat
 
@@ -22,13 +22,13 @@ Följ det sidspecifika arbetsflödet för **Installation: Installationsvägar**.
 
 Den här sidan gäller endast **Installation: Installationsvägar** (Docker · Unraid). Kanal- och datagränserna är: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `:beta`; PostgreSQL `17` `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `:beta`; PostgreSQL `17` `/data`. Sidspecifika kontrollpunkter: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
-### DiscVault v26 – stabil
+### DiscVault – stabil
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - `:beta`
 - PostgreSQL `17` `/data`
 
-### DiscVault v26 – beta
+### DiscVault – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `:beta`
@@ -41,37 +41,39 @@ Den här sidan gäller endast **Installation: Installationsvägar** (Docker · U
 
 ## Procedur
 
-1. **Välj:** [Installation: Docker Compose](/sv/install/docker-compose/) · DiscVault 26
+1. **Välj:** [Installation: Docker Compose](/sv/install/docker-compose/) · DiscVault
 2. **Välj:** [Installation: Docker run](/sv/install/docker-run/)
-3. **Välj:** [Installation: Unraid](/sv/install/unraid/) · Unraid
-4. **Välj:** nya installationer använder DiscVault v26 `:latest` eller `:beta`; den frysta avbildningen `:legacy` är endast för en befintlig installation av föregående generation som ännu inte är redo att migrera
-5. **Bevara:** behåll föregående generations volymer, miljövariabler, portar och datasökväg oförändrade; ersätt aldrig en avbildning i v26 PostgreSQL Compose-topologin med `:legacy`
-6. **Öppna:** [Uppdatering och migrering: Migrering till DiscVault 26](/sv/update/migration/) · → DiscVault 26
-7. **Anteckna:** `DISCVAULT_IMAGE` · endast för en befintlig eller legacy-installation: matchande säkerhetskopieuppsättning
+3. **Välj:** [Installation: Unraid](/sv/install/unraid/) · Unraid DiscVault
+4. **Välj:** [Installation: Home Assistant](/sv/install/home-assistant/) · PostgreSQL 17
+5. **Välj:** nya installationer använder DiscVault `:latest` eller `:beta`; den frysta avbildningen `:legacy` är endast för en befintlig installation av föregående generation som ännu inte är redo att migrera
+6. **Bevara:** behåll föregående generations volymer, miljövariabler, portar och datasökväg oförändrade; ersätt aldrig en avbildning i DiscVault PostgreSQL Compose-topologin med `:legacy`
+7. **Öppna:** [Uppdatering och migrering: Migrering till DiscVault](/sv/update/migration/) · → DiscVault
+8. **Anteckna:** `DISCVAULT_IMAGE` · endast för en befintlig eller legacy-installation: matchande säkerhetskopieuppsättning
 
 ### Uppgiftsvägar
 
-- [Installation: Docker Compose](/sv/install/docker-compose/) — DiscVault 26 `release/v26-beta` `DISCVAULT_NEXT_IMAGE`
-- [Installation: Docker run](/sv/install/docker-run/) — DiscVault 26 Docker run PostgreSQL `/data` `DATABASE_URL`
-- [Installation: Beständiga data och PostgreSQL](/sv/install/storage-postgresql/) — DiscVault 26 PostgreSQL `/data`
-- [Installation: Unraid](/sv/install/unraid/) — DiscVault 26 Unraid PostgreSQL `/data`
-- [Uppdatering och migrering: Migrering till DiscVault 26](/sv/update/migration/) — → DiscVault 26
+- [Installation: Docker Compose](/sv/install/docker-compose/) — DiscVault `release/v26-beta` `DISCVAULT_NEXT_IMAGE`
+- [Installation: Docker run](/sv/install/docker-run/) — DiscVault Docker run PostgreSQL `/data` `DATABASE_URL`
+- [Installation: Beständiga data och PostgreSQL](/sv/install/storage-postgresql/) — DiscVault PostgreSQL `/data`
+- [Installation: Unraid](/sv/install/unraid/) — DiscVault Unraid `discvault-launcher`
+- [Installation: Home Assistant](/sv/install/home-assistant/) — DiscVault PostgreSQL 17 `/data`
+- [Uppdatering och migrering: Migrering till DiscVault](/sv/update/migration/) — → DiscVault
 
 ## Förväntat resultat
 
-Godkänn resultatet för **Installation: Installationsvägar** endast när alla resultat nedan stämmer: vald utgivningskanal; PostgreSQL `/data`; behåll föregående generations volymer, miljövariabler, portar och datasökväg oförändrade; ersätt aldrig en avbildning i v26 PostgreSQL Compose-topologin med `:legacy`. Sidspecifika kontrollpunkter: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
+Godkänn resultatet för **Installation: Installationsvägar** endast när alla resultat nedan stämmer: vald utgivningskanal; PostgreSQL `/data` · DiscVault; behåll föregående generations volymer, miljövariabler, portar och datasökväg oförändrade; ersätt aldrig en avbildning i DiscVault PostgreSQL Compose-topologin med `:legacy`. Sidspecifika kontrollpunkter: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
 - vald utgivningskanal
-- PostgreSQL `/data`
-- behåll föregående generations volymer, miljövariabler, portar och datasökväg oförändrade; ersätt aldrig en avbildning i v26 PostgreSQL Compose-topologin med `:legacy`
+- PostgreSQL `/data` · DiscVault
+- behåll föregående generations volymer, miljövariabler, portar och datasökväg oförändrade; ersätt aldrig en avbildning i DiscVault PostgreSQL Compose-topologin med `:legacy`
 
 ## Säkerhet och återställning
 
 :::caution
-Den säkra återställningsgränsen för **Installation: Installationsvägar** kräver dessa åtgärder innan något startas eller fortsätter: Endast Legacy-grenen: efter säkerhetskopieringen ändrar du bara avbildningstaggen för den befintliga gamla installationen till `:legacy`, hämtar och återskapar den med oförändrad topologi, kontrollerar samlingen och stoppar; växla inte den befintliga installationen till v26-topologin på den här sidan; den frysta avbildningen `:legacy` får inga DiscVault v26-funktioner, migreringsförbättringar eller framtida gränssnittsuppdateringar; endast för en befintlig eller legacy-installation: matchande säkerhetskopieuppsättning; versionsinformation och registrerad oföränderlig image-digest. Sidspecifika kontrollpunkter: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
+Den säkra återställningsgränsen för **Installation: Installationsvägar** kräver dessa åtgärder innan något startas eller fortsätter: Endast Legacy-grenen: efter säkerhetskopieringen ändrar du bara avbildningstaggen för den befintliga gamla installationen till `:legacy`, hämtar och återskapar den med oförändrad topologi, kontrollerar samlingen och stoppar; växla inte den befintliga installationen till DiscVault-topologin på den här sidan; den frysta avbildningen `:legacy` får inga DiscVault-funktioner, migreringsförbättringar eller framtida gränssnittsuppdateringar; endast för en befintlig eller legacy-installation: matchande säkerhetskopieuppsättning; versionsinformation och registrerad oföränderlig image-digest. Sidspecifika kontrollpunkter: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
-- Endast Legacy-grenen: efter säkerhetskopieringen ändrar du bara avbildningstaggen för den befintliga gamla installationen till `:legacy`, hämtar och återskapar den med oförändrad topologi, kontrollerar samlingen och stoppar; växla inte den befintliga installationen till v26-topologin på den här sidan
-- den frysta avbildningen `:legacy` får inga DiscVault v26-funktioner, migreringsförbättringar eller framtida gränssnittsuppdateringar
+- Endast Legacy-grenen: efter säkerhetskopieringen ändrar du bara avbildningstaggen för den befintliga gamla installationen till `:legacy`, hämtar och återskapar den med oförändrad topologi, kontrollerar samlingen och stoppar; växla inte den befintliga installationen till DiscVault-topologin på den här sidan
+- den frysta avbildningen `:legacy` får inga DiscVault-funktioner, migreringsförbättringar eller framtida gränssnittsuppdateringar
 - endast för en befintlig eller legacy-installation: matchande säkerhetskopieuppsättning
 - versionsinformation och registrerad oföränderlig image-digest
 :::

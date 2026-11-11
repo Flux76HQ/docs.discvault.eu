@@ -5,14 +5,14 @@ pageId: 'update-rollback'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Goal and result
 
@@ -22,15 +22,15 @@ Return to the exact previous image and restore matching data whenever a schema o
 
 Use the recorded previous digest with its matching PostgreSQL dump and `/data` archive. A channel switch is allowed only after release-note review and a matched backup.
 
-### DiscVault v26 stable
+### DiscVault stable
 
-- DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault stable · `ghcr.io/helmerznl/discvault:latest`
 - restore the matching data before starting the previous image
 - PostgreSQL + `/data`
 
-### DiscVault v26 beta
+### DiscVault beta
 
-- DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault beta · `ghcr.io/helmerznl/discvault:beta`
 - restore the matching data before starting the previous image
 - PostgreSQL + `/data`
 
@@ -106,7 +106,7 @@ Restore matching data before the previous image starts. If filesystem extraction
 
 ## Next step
 
-[Update and migrate: DiscVault 26 migration](/update/migration/)
+[Update and migrate: DiscVault migration](/update/migration/)
 
 ## Source and status
 

@@ -5,14 +5,14 @@ pageId: 'update-update'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
 lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Mål och resultat
 
@@ -22,13 +22,13 @@ Följ det sidspecifika arbetsflödet för **Uppdatering och migrering: Container
 
 Den här sidan gäller endast **Uppdatering och migrering: Containeruppdatering** (Docker · Unraid). Kanal- och datagränserna är: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · versionsinformation och registrerad oföränderlig image-digest · matchande säkerhetskopieuppsättning; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · versionsinformation och registrerad oföränderlig image-digest · matchande säkerhetskopieuppsättning. Sidspecifika kontrollpunkter: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
-### DiscVault v26 – stabil
+### DiscVault – stabil
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - `DISCVAULT_IMAGE`
 - PostgreSQL `/data` · versionsinformation och registrerad oföränderlig image-digest · matchande säkerhetskopieuppsättning
 
-### DiscVault v26 – beta
+### DiscVault – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `DISCVAULT_IMAGE`
@@ -41,25 +41,25 @@ Den här sidan gäller endast **Uppdatering och migrering: Containeruppdatering*
 
 ## Procedur
 
-1. **Kontrollera:** nya installationer använder DiscVault v26 `:latest` eller `:beta`; den frysta avbildningen `:legacy` är endast för en befintlig installation av föregående generation som ännu inte är redo att migrera
+1. **Kontrollera:** nya installationer använder DiscVault `:latest` eller `:beta`; den frysta avbildningen `:legacy` är endast för en befintlig installation av föregående generation som ännu inte är redo att migrera
 2. **Säkerhetskopiera:** matchande säkerhetskopieuppsättning
-3. **Välj:** Endast Legacy-grenen: efter säkerhetskopieringen ändrar du bara avbildningstaggen för den befintliga gamla installationen till `:legacy`, hämtar och återskapar den med oförändrad topologi, kontrollerar samlingen och stoppar; växla inte den befintliga installationen till v26-topologin på den här sidan
-4. **Öppna:** [Uppdatering och migrering: Migrering till DiscVault 26](/sv/update/migration/) · DiscVault 26
-5. **Bevara:** behåll föregående generations volymer, miljövariabler, portar och datasökväg oförändrade; ersätt aldrig en avbildning i v26 PostgreSQL Compose-topologin med `:legacy`
-6. **Verifiera:** `DiscVault v26` · `PREVIOUS_IMAGE=@sha256:…`
-7. **Välj:** `DiscVault v26` · `DISCVAULT_IMAGE` · `:latest` `:beta`
-8. **Kör:** `DiscVault v26` · `--force-recreate`
-9. **Jämför:** `DiscVault v26` · avsett image-digest körs, hälsan lyckas och ägarinloggning, biblioteksantal och ett medieprov godkänns
+3. **Välj:** Endast Legacy-grenen: efter säkerhetskopieringen ändrar du bara avbildningstaggen för den befintliga gamla installationen till `:legacy`, hämtar och återskapar den med oförändrad topologi, kontrollerar samlingen och stoppar; växla inte den befintliga installationen till DiscVault-topologin på den här sidan
+4. **Öppna:** [Uppdatering och migrering: Migrering till DiscVault](/sv/update/migration/) · DiscVault
+5. **Bevara:** behåll föregående generations volymer, miljövariabler, portar och datasökväg oförändrade; ersätt aldrig en avbildning i DiscVault PostgreSQL Compose-topologin med `:legacy`
+6. **Verifiera:** `DiscVault` · `PREVIOUS_IMAGE=@sha256:…`
+7. **Välj:** `DiscVault` · `DISCVAULT_IMAGE` · `:latest` `:beta`
+8. **Kör:** `DiscVault` · `--force-recreate`
+9. **Jämför:** `DiscVault` · avsett image-digest körs, hälsan lyckas och ägarinloggning, biblioteksantal och ett medieprov godkänns
 
 ### Kommandon och inställningar
 
-#### DiscVault v26 – stabil
+#### DiscVault – stabil
 
 ```bash
 export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
 ```
 
-#### DiscVault v26 – beta
+#### DiscVault – beta
 
 ```bash
 export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
@@ -95,17 +95,17 @@ trap - EXIT
 
 ## Förväntat resultat
 
-Godkänn resultatet för **Uppdatering och migrering: Containeruppdatering** endast när alla resultat nedan stämmer: avsett image-digest körs, hälsan lyckas och ägarinloggning, biblioteksantal och ett medieprov godkänns; behåll föregående generations volymer, miljövariabler, portar och datasökväg oförändrade; ersätt aldrig en avbildning i v26 PostgreSQL Compose-topologin med `:legacy`. Sidspecifika kontrollpunkter: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
+Godkänn resultatet för **Uppdatering och migrering: Containeruppdatering** endast när alla resultat nedan stämmer: avsett image-digest körs, hälsan lyckas och ägarinloggning, biblioteksantal och ett medieprov godkänns; behåll föregående generations volymer, miljövariabler, portar och datasökväg oförändrade; ersätt aldrig en avbildning i DiscVault PostgreSQL Compose-topologin med `:legacy`. Sidspecifika kontrollpunkter: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
 - avsett image-digest körs, hälsan lyckas och ägarinloggning, biblioteksantal och ett medieprov godkänns
-- behåll föregående generations volymer, miljövariabler, portar och datasökväg oförändrade; ersätt aldrig en avbildning i v26 PostgreSQL Compose-topologin med `:legacy`
+- behåll föregående generations volymer, miljövariabler, portar och datasökväg oförändrade; ersätt aldrig en avbildning i DiscVault PostgreSQL Compose-topologin med `:legacy`
 
 ## Säkerhet och återställning
 
 :::caution
-Den säkra återställningsgränsen för **Uppdatering och migrering: Containeruppdatering** kräver dessa åtgärder innan något startas eller fortsätter: den frysta avbildningen `:legacy` får inga DiscVault v26-funktioner, migreringsförbättringar eller framtida gränssnittsuppdateringar; [Uppdatering och migrering: Återställning av image](/sv/update/rollback/) · matchande säkerhetskopieuppsättning; versionsinformation och registrerad oföränderlig image-digest. Sidspecifika kontrollpunkter: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
+Den säkra återställningsgränsen för **Uppdatering och migrering: Containeruppdatering** kräver dessa åtgärder innan något startas eller fortsätter: den frysta avbildningen `:legacy` får inga DiscVault-funktioner, migreringsförbättringar eller framtida gränssnittsuppdateringar; [Uppdatering och migrering: Återställning av image](/sv/update/rollback/) · matchande säkerhetskopieuppsättning; versionsinformation och registrerad oföränderlig image-digest. Sidspecifika kontrollpunkter: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
-- den frysta avbildningen `:legacy` får inga DiscVault v26-funktioner, migreringsförbättringar eller framtida gränssnittsuppdateringar
+- den frysta avbildningen `:legacy` får inga DiscVault-funktioner, migreringsförbättringar eller framtida gränssnittsuppdateringar
 - [Uppdatering och migrering: Återställning av image](/sv/update/rollback/) · matchande säkerhetskopieuppsättning
 - versionsinformation och registrerad oföränderlig image-digest
 :::

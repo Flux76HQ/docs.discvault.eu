@@ -5,14 +5,14 @@ pageId: 'install-legacy-authentication'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-20" />
+<PageMeta channels="beta" platform="Docker · web" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-20" />
 
 ## Objectif et résultat
 
@@ -22,7 +22,7 @@ Suivez le déroulement propre à cette page pour **Installation: Legacy Authenti
 
 Cette page s’applique uniquement à **Installation: Legacy Authentication** (Docker · web). Les limites de canal et de données sont : DiscVault · `ghcr.io/helmerznl/discvault:beta`; TOTP; FQDN HTTPS. Points de contrôle propres à la page : `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.
 
-### DiscVault v26 bêta
+### DiscVault bêta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - TOTP
@@ -30,7 +30,7 @@ Cette page s’applique uniquement à **Installation: Legacy Authentication** (D
 
 ## Prérequis
 
-- Legacy Authentication avec identifiant, mot de passe et authentification à deux facteurs (2FA) est disponible dans DiscVault 26 bêta lorsque les passkeys ne peuvent pas être utilisées.
+- Legacy Authentication avec identifiant, mot de passe et authentification à deux facteurs (2FA) est disponible dans DiscVault bêta lorsque les passkeys ne peuvent pas être utilisées.
 - accès propriétaire · sur une nouvelle instance sans utilisateur ni identifiant, l’assistant crée atomiquement le premier propriétaire après acceptation du risque du mot de passe
 - TOTP · les codes de récupération sont hachés, à usage unique et communs aux passkeys ; les sauvegardes omettent secrets TOTP et éléments de récupération, donc la MFA doit être réinscrite
 
@@ -47,12 +47,12 @@ seule une requête privée ou loopback directe avec des réglages RP invalides o
 3. **Choisir:** sur une nouvelle instance sans utilisateur ni identifiant, l’assistant crée atomiquement le premier propriétaire après acceptation du risque du mot de passe · sur une installation existante, activez le mot de passe dans Utilisateurs et rôles et approuvez avec une assertion passkey récente de propriétaire ou administrateur
 4. **Créer:** les mots de passe exigent au moins 15 caractères, ne peuvent être le nom utilisateur ni un mot courant refusé et sont hachés avec Argon2id ; cinq échecs en 15 minutes verrouillent 15 minutes · TOTP · les codes de récupération sont hachés, à usage unique et communs aux passkeys ; les sauvegardes omettent secrets TOTP et éléments de récupération, donc la MFA doit être réinscrite
 5. **Configurer:** propriétaires et administrateurs peuvent créer des mots de passe temporaires, imposer leur changement, définir la MFA par utilisateur et contrôler les passkeys
-6. **Tester:** Legacy Authentication avec identifiant, mot de passe et authentification à deux facteurs (2FA) est disponible dans DiscVault 26 bêta lorsque les passkeys ne peuvent pas être utilisées. · `GET /api/next/auth/status`
+6. **Tester:** Legacy Authentication avec identifiant, mot de passe et authentification à deux facteurs (2FA) est disponible dans DiscVault bêta lorsque les passkeys ne peuvent pas être utilisées. · `GET /api/next/auth/status`
 7. **Consigner:** les codes de récupération sont hachés, à usage unique et communs aux passkeys ; les sauvegardes omettent secrets TOTP et éléments de récupération, donc la MFA doit être réinscrite
 
 ### Commandes et réglages
 
-#### DiscVault v26 bêta
+#### DiscVault bêta
 
 ```text
 RP_ID=discvault.example.com
@@ -75,9 +75,9 @@ curl --fail http://localhost:6180/api/next/auth/status
 
 ## Résultat attendu
 
-Validez le résultat de **Installation: Legacy Authentication** uniquement lorsque tous les résultats suivants sont confirmés : Legacy Authentication avec identifiant, mot de passe et authentification à deux facteurs (2FA) est disponible dans DiscVault 26 bêta lorsque les passkeys ne peuvent pas être utilisées.; TOTP · les codes de récupération sont hachés, à usage unique et communs aux passkeys ; les sauvegardes omettent secrets TOTP et éléments de récupération, donc la MFA doit être réinscrite; les mots de passe exigent au moins 15 caractères, ne peuvent être le nom utilisateur ni un mot courant refusé et sont hachés avec Argon2id ; cinq échecs en 15 minutes verrouillent 15 minutes. Points de contrôle propres à la page : `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.
+Validez le résultat de **Installation: Legacy Authentication** uniquement lorsque tous les résultats suivants sont confirmés : Legacy Authentication avec identifiant, mot de passe et authentification à deux facteurs (2FA) est disponible dans DiscVault bêta lorsque les passkeys ne peuvent pas être utilisées.; TOTP · les codes de récupération sont hachés, à usage unique et communs aux passkeys ; les sauvegardes omettent secrets TOTP et éléments de récupération, donc la MFA doit être réinscrite; les mots de passe exigent au moins 15 caractères, ne peuvent être le nom utilisateur ni un mot courant refusé et sont hachés avec Argon2id ; cinq échecs en 15 minutes verrouillent 15 minutes. Points de contrôle propres à la page : `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.
 
-- Legacy Authentication avec identifiant, mot de passe et authentification à deux facteurs (2FA) est disponible dans DiscVault 26 bêta lorsque les passkeys ne peuvent pas être utilisées.
+- Legacy Authentication avec identifiant, mot de passe et authentification à deux facteurs (2FA) est disponible dans DiscVault bêta lorsque les passkeys ne peuvent pas être utilisées.
 - TOTP · les codes de récupération sont hachés, à usage unique et communs aux passkeys ; les sauvegardes omettent secrets TOTP et éléments de récupération, donc la MFA doit être réinscrite
 - les mots de passe exigent au moins 15 caractères, ne peuvent être le nom utilisateur ni un mot courant refusé et sont hachés avec Argon2id ; cinq échecs en 15 minutes verrouillent 15 minutes
 

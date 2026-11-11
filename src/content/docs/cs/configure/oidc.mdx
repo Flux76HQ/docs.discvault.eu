@@ -5,14 +5,14 @@ pageId: 'configure-oidc'
 products: ['server', 'pwa']
 platforms: ['docker', 'web']
 channels: ['beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'Flux76HQ/App-Guidance']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-09-20" />
+<PageMeta channels="beta" platform="Docker · web" version="DiscVault" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## Cíl a výsledek
 
@@ -22,7 +22,7 @@ Dokončete postup určený pro **Konfigurace: Přihlášení přes OpenID Connec
 
 Tato stránka platí pouze pro **Konfigurace: Přihlášení přes OpenID Connect (OIDC)** (Docker · web). Hranice kanálu a dat jsou: DiscVault · `26.9.117+`; OIDC přidává volitelné přihlášení v prohlížeči; místní passkeys, volitelná hesla, obnovovací kódy, API tokeny a MCP bearer tokeny si zachovávají své role; identita je přesná dvojice issuer a subject; e-mail se nikdy nepřipojí automaticky, propojení vyžaduje přihlášenou relaci prohlížeče a odpojení vyžaduje jinou použitelnou metodu přihlášení. Kontrolní body této stránky: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
 
-### DiscVault v26 – beta
+### DiscVault – beta
 
 - DiscVault · `26.9.117+`
 - OIDC přidává volitelné přihlášení v prohlížeči; místní passkeys, volitelná hesla, obnovovací kódy, API tokeny a MCP bearer tokeny si zachovávají své role
@@ -52,7 +52,7 @@ povolte přesné privátní HTTP originy pouze pro tokenové a JWKS endpointy; i
 
 ### Příkazy a nastavení
 
-#### DiscVault v26 – beta
+#### DiscVault – beta
 
 ```text
 RP_ORIGINS=https://discvault.example.com

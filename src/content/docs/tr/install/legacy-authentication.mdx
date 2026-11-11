@@ -5,14 +5,14 @@ pageId: 'install-legacy-authentication'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-20" />
+<PageMeta channels="beta" platform="Docker · web" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-20" />
 
 ## Amaç ve sonuç
 
@@ -22,7 +22,7 @@ Sayfaya özel iş akışını tamamlayın: **Kurulum: Legacy Authentication**. B
 
 Bu sayfa yalnızca şunlar için geçerlidir: **Kurulum: Legacy Authentication** (Docker · web). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault:beta`; TOTP; FQDN HTTPS. Sayfaya özel denetim noktaları: `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.
 
-### DiscVault v26 beta
+### DiscVault beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - TOTP
@@ -30,7 +30,7 @@ Bu sayfa yalnızca şunlar için geçerlidir: **Kurulum: Legacy Authentication**
 
 ## Ön koşullar
 
-- Kullanıcı adı, parola ve iki faktörlü kimlik doğrulama (2FA) kullanan Legacy Authentication, passkey kullanılamadığında DiscVault 26 betada sunulur.
+- Kullanıcı adı, parola ve iki faktörlü kimlik doğrulama (2FA) kullanan Legacy Authentication, passkey kullanılamadığında DiscVault betada sunulur.
 - sahip erişimi · kullanıcı veya kimlik bilgisi olmayan yeni bir örnekte sihirbaz parola riski onayından sonra ilk sahibi atomik olarak oluşturur
 - TOTP · kurtarma kodları özetlenmiş, tek kullanımlık ve passkey kurtarmayla ortaktır; yedekler TOTP gizlerini ve kurtarma malzemesini içermez, bu yüzden MFA yeniden kaydedilir
 
@@ -47,12 +47,12 @@ yalnızca geçersiz veya boş RP ayarlarına sahip doğrudan özel ya da geri d�
 3. **Seçin:** kullanıcı veya kimlik bilgisi olmayan yeni bir örnekte sihirbaz parola riski onayından sonra ilk sahibi atomik olarak oluşturur · mevcut kurulumda Kullanıcılar ve roller bölümünde parola girişini etkinleştirin ve yeni sahip veya yönetici passkey doğrulamasıyla onaylayın
 4. **Oluşturun:** parolalar en az 15 karakter olmalı, kullanıcı adına veya reddedilen yaygın bir parolaya eşit olamaz ve Argon2id ile özetlenir; 15 dakikada beş hata 15 dakika kilitler · TOTP · kurtarma kodları özetlenmiş, tek kullanımlık ve passkey kurtarmayla ortaktır; yedekler TOTP gizlerini ve kurtarma malzemesini içermez, bu yüzden MFA yeniden kaydedilir
 5. **Yapılandırın:** sahipler ve yöneticiler geçici parola verebilir, değişiklik zorunluluğu koyabilir, kullanıcı başına MFA ayarlayabilir ve passkey kaydını denetleyebilir
-6. **Test edin:** Kullanıcı adı, parola ve iki faktörlü kimlik doğrulama (2FA) kullanan Legacy Authentication, passkey kullanılamadığında DiscVault 26 betada sunulur. · `GET /api/next/auth/status`
+6. **Test edin:** Kullanıcı adı, parola ve iki faktörlü kimlik doğrulama (2FA) kullanan Legacy Authentication, passkey kullanılamadığında DiscVault betada sunulur. · `GET /api/next/auth/status`
 7. **Kaydedin:** kurtarma kodları özetlenmiş, tek kullanımlık ve passkey kurtarmayla ortaktır; yedekler TOTP gizlerini ve kurtarma malzemesini içermez, bu yüzden MFA yeniden kaydedilir
 
 ### Komutlar ve ayarlar
 
-#### DiscVault v26 beta
+#### DiscVault beta
 
 ```text
 RP_ID=discvault.example.com
@@ -75,9 +75,9 @@ curl --fail http://localhost:6180/api/next/auth/status
 
 ## Beklenen sonuç
 
-Şunun sonucunu kabul edin: **Kurulum: Legacy Authentication** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: Kullanıcı adı, parola ve iki faktörlü kimlik doğrulama (2FA) kullanan Legacy Authentication, passkey kullanılamadığında DiscVault 26 betada sunulur.; TOTP · kurtarma kodları özetlenmiş, tek kullanımlık ve passkey kurtarmayla ortaktır; yedekler TOTP gizlerini ve kurtarma malzemesini içermez, bu yüzden MFA yeniden kaydedilir; parolalar en az 15 karakter olmalı, kullanıcı adına veya reddedilen yaygın bir parolaya eşit olamaz ve Argon2id ile özetlenir; 15 dakikada beş hata 15 dakika kilitler. Sayfaya özel denetim noktaları: `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.
+Şunun sonucunu kabul edin: **Kurulum: Legacy Authentication** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: Kullanıcı adı, parola ve iki faktörlü kimlik doğrulama (2FA) kullanan Legacy Authentication, passkey kullanılamadığında DiscVault betada sunulur.; TOTP · kurtarma kodları özetlenmiş, tek kullanımlık ve passkey kurtarmayla ortaktır; yedekler TOTP gizlerini ve kurtarma malzemesini içermez, bu yüzden MFA yeniden kaydedilir; parolalar en az 15 karakter olmalı, kullanıcı adına veya reddedilen yaygın bir parolaya eşit olamaz ve Argon2id ile özetlenir; 15 dakikada beş hata 15 dakika kilitler. Sayfaya özel denetim noktaları: `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.
 
-- Kullanıcı adı, parola ve iki faktörlü kimlik doğrulama (2FA) kullanan Legacy Authentication, passkey kullanılamadığında DiscVault 26 betada sunulur.
+- Kullanıcı adı, parola ve iki faktörlü kimlik doğrulama (2FA) kullanan Legacy Authentication, passkey kullanılamadığında DiscVault betada sunulur.
 - TOTP · kurtarma kodları özetlenmiş, tek kullanımlık ve passkey kurtarmayla ortaktır; yedekler TOTP gizlerini ve kurtarma malzemesini içermez, bu yüzden MFA yeniden kaydedilir
 - parolalar en az 15 karakter olmalı, kullanıcı adına veya reddedilen yaygın bir parolaya eşit olamaz ve Argon2id ile özetlenir; 15 dakikada beş hata 15 dakika kilitler
 

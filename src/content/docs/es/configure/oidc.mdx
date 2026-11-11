@@ -5,14 +5,14 @@ pageId: 'configure-oidc'
 products: ['server', 'pwa']
 platforms: ['docker', 'web']
 channels: ['beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'Flux76HQ/App-Guidance']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-09-20" />
+<PageMeta channels="beta" platform="Docker · web" version="DiscVault" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## Objetivo y resultado
 
@@ -22,7 +22,7 @@ Completa el flujo específico de la página para **Configuración: Inicio de ses
 
 Esta página se aplica solo a **Configuración: Inicio de sesión con OpenID Connect (OIDC)** (Docker · web). Sus límites de canal y datos son: DiscVault · `26.9.117+`; OIDC añade un método opcional de inicio de sesión en el navegador; las passkeys locales, las contraseñas opcionales, los códigos de recuperación, los tokens de API y los tokens bearer de MCP conservan sus funciones; una identidad es el par exacto de issuer y subject; el correo nunca se vincula automáticamente, la vinculación requiere la sesión iniciada del navegador y la desvinculación exige otro método de acceso utilizable. Puntos de control de esta página: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
 
-### DiscVault v26 beta
+### DiscVault beta
 
 - DiscVault · `26.9.117+`
 - OIDC añade un método opcional de inicio de sesión en el navegador; las passkeys locales, las contraseñas opcionales, los códigos de recuperación, los tokens de API y los tokens bearer de MCP conservan sus funciones
@@ -52,7 +52,7 @@ permite orígenes HTTP privados exactos solo para los endpoints de token y JWKS;
 
 ### Comandos y ajustes
 
-#### DiscVault v26 beta
+#### DiscVault beta
 
 ```text
 RP_ORIGINS=https://discvault.example.com

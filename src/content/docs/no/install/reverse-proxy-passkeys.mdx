@@ -5,14 +5,14 @@ pageId: 'install-reverse-proxy-passkeys'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU', 'Flux76HQ/App-Guidance']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · nett" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
+<PageMeta channels="stable,beta" platform="Docker · nett" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## Mål og resultat
 
@@ -22,13 +22,13 @@ Fullfør den sidespesifikke arbeidsflyten for **Installasjon: Omvendt proxy og t
 
 Denne siden gjelder bare **Installasjon: Omvendt proxy og tilgangsnøkler** (Docker · nett). Kanal- og datagrensene er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6080`; utenfor localhost-unntaket trenger passkeys et stabilt fullstendig domenenavn over klarert HTTPS; en ren IP-adresse eller vanlig HTTP støttes ikke; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; OIDC · `/api/next/auth/oidc/callback` · [Konfigurasjon: Pålogging med OpenID Connect (OIDC)](/no/configure/oidc/); `LEGACY_AUTH_ENABLED=true`. Sidespesifikke kontrollpunkter: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
-### DiscVault v26 – stabil
+### DiscVault – stabil
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - `RP_ID` `RP_ORIGINS` · `6080`
 - utenfor localhost-unntaket trenger passkeys et stabilt fullstendig domenenavn over klarert HTTPS; en ren IP-adresse eller vanlig HTTP støttes ikke
 
-### DiscVault v26 – beta
+### DiscVault – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `RP_ID` `RP_ORIGINS` · `6180`
@@ -44,7 +44,7 @@ Denne siden gjelder bare **Installasjon: Omvendt proxy og tilgangsnøkler** (Doc
 ### Legacy Authentication som reserve
 
 :::note[Tilgjengelig i beta]
-Legacy Authentication med brukernavn, passord og tofaktorautentisering (2FA) er tilgjengelig i DiscVault 26 beta når passkeys ikke kan brukes.
+Legacy Authentication med brukernavn, passord og tofaktorautentisering (2FA) er tilgjengelig i DiscVault beta når passkeys ikke kan brukes.
 
 Følg `/install/legacy-authentication/` før funksjonen aktiveres eller den første eieren opprettes.
 :::
@@ -62,7 +62,7 @@ Følg `/install/legacy-authentication/` før funksjonen aktiveres eller den før
 
 ### Kommandoer og innstillinger
 
-#### DiscVault v26 – stabil
+#### DiscVault – stabil
 
 ```text
 RP_ID=discvault.example.com
@@ -71,7 +71,7 @@ RP_ORIGINS=https://discvault.example.com
 curl --fail https://discvault.example.com/api/next/health
 ```
 
-#### DiscVault v26 – beta
+#### DiscVault – beta
 
 ```text
 RP_ID=discvault.example.com

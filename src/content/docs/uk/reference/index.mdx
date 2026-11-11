@@ -5,14 +5,14 @@ pageId: 'reference-index'
 products: ['server', 'pwa', 'ios', 'android']
 platforms: ['all']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="усі платформи" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-09-20" />
+<PageMeta channels="stable,beta" platform="усі платформи" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-09-20" />
 
 ## Мета й результат
 
@@ -22,13 +22,13 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 Ця сторінка стосується лише **Довідник** (усі платформи). Межі каналу й даних: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`. Контрольні точки цієї сторінки: `:latest` · `:beta` · `:dev` · `6080:5000` · `DISCVAULT_OIDC_ISSUER`.
 
-### DiscVault v26 – стабільний
+### DiscVault – стабільний
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - PostgreSQL `/data`
 - API `6080:5000` MCP `6090:6090`
 
-### DiscVault v26 – бета
+### DiscVault – бета
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - PostgreSQL `/data`
@@ -41,7 +41,7 @@ import PageMeta from '../../../../components/PageMeta.astro';
 ## Процедура
 
 1. **Перевірте:** `:latest` `:beta`
-2. **Запишіть:** `:dev` призначено лише для інженерних робіт і це не канал випуску; стабільний DiscVault v26 використовує `:latest`, а бета використовує `:beta` · `:dev`
+2. **Запишіть:** `:dev` призначено лише для інженерних робіт і це не канал випуску; стабільний DiscVault використовує `:latest`, а бета використовує `:beta` · `:dev`
 3. **Запишіть:** `/api/next/health`
 4. **Запишіть:** [Налаштування: Вхід через OpenID Connect (OIDC)](/uk/configure/oidc/) · `DISCVAULT_OIDC_ISSUER`
 5. **Запишіть:** PostgreSQL `/data`
@@ -58,10 +58,10 @@ import PageMeta from '../../../../components/PageMeta.astro';
 ## Безпека й відкочування
 
 :::caution
-Безпечна межа відновлення для **Довідник** вимагає цих дій до будь-якого запуску чи продовження: довідник лише для читання; перед командами чи зміною даних використовуйте цільову процедуру; `:dev` призначено лише для інженерних робіт і це не канал випуску; стабільний DiscVault v26 використовує `:latest`, а бета використовує `:beta` · `:dev`. Контрольні точки цієї сторінки: `:latest` · `:beta` · `:dev` · `6080:5000` · `DISCVAULT_OIDC_ISSUER`.
+Безпечна межа відновлення для **Довідник** вимагає цих дій до будь-якого запуску чи продовження: довідник лише для читання; перед командами чи зміною даних використовуйте цільову процедуру; `:dev` призначено лише для інженерних робіт і це не канал випуску; стабільний DiscVault використовує `:latest`, а бета використовує `:beta` · `:dev`. Контрольні точки цієї сторінки: `:latest` · `:beta` · `:dev` · `6080:5000` · `DISCVAULT_OIDC_ISSUER`.
 
 - довідник лише для читання; перед командами чи зміною даних використовуйте цільову процедуру
-- `:dev` призначено лише для інженерних робіт і це не канал випуску; стабільний DiscVault v26 використовує `:latest`, а бета використовує `:beta` · `:dev`
+- `:dev` призначено лише для інженерних робіт і це не канал випуску; стабільний DiscVault використовує `:latest`, а бета використовує `:beta` · `:dev`
 :::
 
 ## Наступний крок

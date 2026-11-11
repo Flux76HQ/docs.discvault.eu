@@ -5,14 +5,14 @@ pageId: 'install-docker-compose'
 products: ['server']
 platforms: ['docker']
 channels: ['beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-20" />
+<PageMeta channels="beta" platform="Docker" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-20" />
 
 ## Cél és eredmény
 
@@ -22,7 +22,7 @@ Hajtsa végre az oldalhoz tartozó munkafolyamatot: **Telepítés: Docker Compos
 
 Ez az oldal kizárólag erre vonatkozik: **Telepítés: Docker Compose** (Docker). A csatorna- és adathatárok: DiscVault · `ghcr.io/helmerznl/discvault:beta`; `release/v26-beta`; `discvault_next_deploy`; `6180` → API `5000`. Oldalspecifikus ellenőrzési pontok: `release/v26-beta` · `app/deploy/next/docker-compose.yml` · `app/deploy/next/.env.example` · `DISCVAULT_NEXT_IMAGE` · `ghcr.io/helmerznl/discvault:beta` · `6180:5000` · `LEGACY_AUTH_ENABLED=true`.
 
-### DiscVault v26 – béta
+### DiscVault – béta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `release/v26-beta`
@@ -46,7 +46,7 @@ Ez az oldal kizárólag erre vonatkozik: **Telepítés: Docker Compose** (Docker
 
 ### Parancsok és beállítások
 
-#### DiscVault v26 – béta
+#### DiscVault – béta
 
 ```bash
 set -euo pipefail

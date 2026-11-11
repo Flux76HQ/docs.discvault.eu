@@ -59,6 +59,8 @@ const betaOnlyPageIds = new Set([
   'configure-oidc',
 ]);
 const channelVariantPageIds = new Set([
+  'install-unraid',
+  'install-home-assistant',
   'install-index',
   'install-reverse-proxy-passkeys',
   'install-first-start-health',
@@ -80,9 +82,24 @@ const requiredMarkers = {
     '6180',
   ],
   'install-unraid': [
-    '/mnt/user/appdata/discvault/data',
-    '/mnt/user/appdata/discvault/postgres',
-    'DISCVAULT_IMAGE',
+    'Community Applications',
+    'ghcr.io/helmerznl/discvault-launcher:latest',
+    'ghcr.io/helmerznl/discvault-launcher:beta',
+    '/var/run/docker.sock',
+    '/mnt/user/appdata/discvault-postgres',
+    'DISCVAULT_CHANNEL',
+    'RP_ORIGINS',
+    '/api/next/health',
+  ],
+  'install-home-assistant': [
+    'https://github.com/helmerzNL/home-assistant-addons',
+    'rp_id',
+    'password_login',
+    'oidc_issuer',
+    'secrets.json',
+    '/mcp',
+    '6181',
+    '/api/next/health',
   ],
   'install-storage-postgresql': ['DISCVAULT_POSTGRES_DATA', 'DISCVAULT_DATA_DIR', 'next-api'],
   'install-reverse-proxy-passkeys': [
@@ -357,8 +374,8 @@ for (const file of files) {
   const channelMetadata = frontmatter.match(/^channels:\s*\[([^\]]+)\]/m)?.[1] ?? '';
   const isV26Product = /'(?:server|pwa)'/.test(products);
   if (isV26Product) {
-    if (!/minVersion:\s*'DiscVault v26'/.test(frontmatter)) {
-      errors.push(`${relative}: v26 server/PWA page must use unambiguous DiscVault v26 metadata`);
+    if (!/minVersion:\s*'DiscVault'/.test(frontmatter)) {
+      errors.push(`${relative}: v26 server/PWA page must use unambiguous DiscVault metadata`);
     }
     if (betaOnlyPageIds.has(pageId)) {
       if (/'stable'/.test(channelMetadata) || !/'beta'/.test(channelMetadata)) {
@@ -559,7 +576,7 @@ for (const id of v26ProcedureIds) {
     continue;
   }
   if (!spec.channels.stable || !spec.channels.beta) {
-    errors.push(`${id}: shared DiscVault v26 procedure must cover stable and beta`);
+    errors.push(`${id}: shared DiscVault procedure must cover stable and beta`);
     continue;
   }
   if (channelVariantPageIds.has(pageId)) continue;
@@ -571,7 +588,7 @@ for (const id of v26ProcedureIds) {
 }
 
 const restore = await readFile(path.join(root, 'update/restore.mdx'), 'utf8');
-assertOrder('DiscVault v26 restore', restore, [
+assertOrder('DiscVault restore', restore, [
   'export DISCVAULT_IMAGE="$PREVIOUS_IMAGE"',
   'stop next-worker next-mcp next-api',
   'discvault-data-$BACKUP_ID.tgz',
@@ -584,7 +601,7 @@ assertOrder('DiscVault v26 restore', restore, [
 ]);
 
 const rollback = await readFile(path.join(root, 'update/rollback.mdx'), 'utf8');
-assertOrder('DiscVault v26 rollback', rollback, [
+assertOrder('DiscVault rollback', rollback, [
   'stop next-worker next-mcp next-api',
   'discvault-data-$BACKUP_ID.tgz',
   'pg_restore --exit-on-error',
@@ -767,7 +784,7 @@ if (
   !routeGrid.includes('ui.v26Beta') ||
   !routeGrid.includes('StatusBadge')
 ) {
-  errors.push('Homepage route cards must expose localized DiscVault v26 stable/beta badges.');
+  errors.push('Homepage route cards must expose localized DiscVault stable/beta badges.');
 }
 const footer = await readFile('src/components/Footer.astro', 'utf8');
 if (!footer.includes('PUBLIC_FEEDBACK_URL') || !footer.includes('/issues/new')) {
@@ -824,7 +841,7 @@ for (const channel of ['stable', 'beta', 'engineering']) {
   }
   if (metadata?.productVersion !== productVersion) {
     errors.push(
-      `Feature metadata must mark ${channel} as ${productVersion}; beta cannot be the only v26 channel`,
+      `Feature metadata must mark ${channel} as ${productVersion}; beta cannot be the only release channel`,
     );
   }
   if (metadata?.architecture !== deploymentArchitecture) {
@@ -852,7 +869,7 @@ for (const feature of status.features) {
 for (const id of ['admin', 'rbac', 'plugins', 'mcp']) {
   const feature = status.features.find((candidate) => candidate.id === id);
   if (!feature || feature.pwa !== 'stable') {
-    errors.push(`${id}: implemented DiscVault v26 web feature must not be beta by association`);
+    errors.push(`${id}: implemented DiscVault web feature must not be beta by association`);
   }
 }
 

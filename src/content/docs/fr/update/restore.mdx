@@ -5,14 +5,14 @@ pageId: 'update-restore'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Objectif et résultat
 
@@ -22,13 +22,13 @@ Suivez le déroulement propre à cette page pour **Mise à jour et migration: Re
 
 Cette page s’applique uniquement à **Mise à jour et migration: Restauration** (Docker · Unraid). Les limites de canal et de données sont : DiscVault · `ghcr.io/helmerznl/discvault:latest`; dump PostgreSQL et archive des fichiers de la même fenêtre sans écriture; restaurer les données correspondantes avant de démarrer l’image précédente; DiscVault · `ghcr.io/helmerznl/discvault:beta`; dump PostgreSQL et archive des fichiers de la même fenêtre sans écriture; restaurer les données correspondantes avant de démarrer l’image précédente. Points de contrôle propres à la page : `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.
 
-### DiscVault v26 stable
+### DiscVault stable
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - dump PostgreSQL et archive des fichiers de la même fenêtre sans écriture
 - restaurer les données correspondantes avant de démarrer l’image précédente
 
-### DiscVault v26 bêta
+### DiscVault bêta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - dump PostgreSQL et archive des fichiers de la même fenêtre sans écriture

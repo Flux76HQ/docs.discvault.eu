@@ -1,97 +1,130 @@
 ---
 title: 'Встановлення: Unraid'
-description: 'Спеціальні інструкції для завдання: Встановлення: Unraid. /mnt/user/appdata/discvault/postgres. /mnt/user/appdata/discvault/data. 6080:5000. DISCVAULT_IMAGE.'
+description: 'Спеціальні інструкції для завдання: Встановлення: Unraid. ghcr.io/helmerznl/discvault-launcher:latest. /var/run/docker.sock. /api/next/health.'
 pageId: 'install-unraid'
 products: ['server']
 platforms: ['unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+minVersion: 'DiscVault'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/unraid-community-apps']
+lastVerified: '2026-11-11'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Unraid" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/unraid-community-apps" verified="2026-11-11" />
 
 ## Мета й результат
 
-Виконайте спеціальну процедуру сторінки для **Встановлення: Unraid**. У цій процедурі використовуються `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+Установіть DiscVault з магазину Unraid Community Applications. Шаблон встановлює запускач DiscVault, який створює й оновлює для вас PostgreSQL, API, worker і MCP.
+
+Виконайте спеціальну процедуру сторінки для **Встановлення: Unraid**. У цій процедурі використовуються `ghcr.io/helmerznl/discvault-launcher:latest` · `/var/run/docker.sock` · `/api/next/health`.
 
 ## Застосовується до
 
-Ця сторінка стосується лише **Встановлення: Unraid** (Unraid). Межі каналу й даних: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL API MCP; `:latest` `:beta`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL API MCP; `:latest` `:beta`. Контрольні точки цієї сторінки: `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+Helmer’s Repository пропонує DiscVault і DiscVault (beta) як два шаблони з власними теками appdata, портом, проєктом Compose і мережею, тож вони працюють паралельно.
 
-### DiscVault v26 – стабільний
+Ця сторінка стосується лише **Встановлення: Unraid** (Unraid). Межі каналу й даних: DiscVault · `ghcr.io/helmerznl/discvault-launcher:latest`; `6080` · `/mnt/user/appdata/discvault` · `discvault_stack`; DiscVault · `ghcr.io/helmerznl/discvault-launcher:beta`; `6081` · `/mnt/user/appdata/discvault-beta` · `discvault_beta_stack`. Контрольні точки цієї сторінки: `ghcr.io/helmerznl/discvault-launcher:latest` · `/var/run/docker.sock` · `/api/next/health`.
 
-- DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- PostgreSQL API MCP
-- `:latest` `:beta`
+### DiscVault – стабільний
 
-### DiscVault v26 – бета
+- DiscVault · `ghcr.io/helmerznl/discvault-launcher:latest`
+- `6080` · `/mnt/user/appdata/discvault` · `discvault_stack`
 
-- DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- PostgreSQL API MCP
-- `:latest` `:beta`
+### DiscVault – бета
+
+- DiscVault · `ghcr.io/helmerznl/discvault-launcher:beta`
+- `6081` · `/mnt/user/appdata/discvault-beta` · `discvault_beta_stack`
 
 ## Передумови
 
 - Unraid `6.12+`
-- `/mnt/user/appdata/discvault/data`
-- OpenSSL
+- встановлений плагін Community Applications
+- passkeys потребують HTTPS-адреси з доменним ім’ям перед портом застосунку; без неї використовуйте вхід за паролем із TOTP
 
 ## Процедура
 
-1. **Установіть:** Unraid · [Встановлення: Docker Compose](/uk/install/docker-compose/)
-2. **Налаштуйте:** `DISCVAULT_IMAGE` · `:latest` `:beta`
-3. **Налаштуйте:** `DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data` · `DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres`
-4. **Перевірте:** `postgres` · `next-api` · `next-worker` · `next-mcp` · `6080:5000`
+1. **Відкрийте:** Apps → знайдіть DiscVault → Установити; бета-шаблон має (beta) у назві
+2. **Налаштуйте:** залиште стандартні теки appdata; тека запускача містить згенерований файл Compose і секрети в `/config/stack.env` · `TZ`
+3. **Налаштуйте:** `RP_ID` · `RP_ORIGINS` · passkeys потребують HTTPS-адреси з доменним ім’ям перед портом застосунку; без неї використовуйте вхід за паролем із TOTP · `LEGACY_AUTH_ENABLED=true`
+4. **Запустіть:** перший запуск триває кілька хвилин, поки запускач завантажує образи й створює базу даних · запускач монтує сокет Docker і тому керує Docker на сервері; встановлюйте його, лише якщо довіряєте образу запускача
+5. **Перевірте:** `/api/next/health` · початкове налаштування створює першого власника з passkey або з паролем і TOTP та один раз показує коди відновлення
+6. **Налаштуйте:** вкладка Docker → Перевірити оновлення; під час запуску запускач оновлює й решту стека · `DISCVAULT_CHANNEL=manual` · `DISCVAULT_IMAGE`
 
 ### Команди й налаштування
 
-#### DiscVault v26 – стабільний
+#### DiscVault – стабільний
 
 ```text
-DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
-DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data
-DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres
-DISCVAULT_API_PORT=6080
-DISCVAULT_MCP_PORT=6090
+Repository                         ghcr.io/helmerznl/discvault-launcher:latest
+Web UI port                        6080
+App data (/data)                   /mnt/user/appdata/discvault
+DISCVAULT_DATA_DIR_HOST            /mnt/user/appdata/discvault
+DISCVAULT_POSTGRES_DATA_DIR_HOST   /mnt/user/appdata/discvault-postgres
+Launcher config (/config)          /mnt/user/appdata/discvault-launcher
+Docker socket                      /var/run/docker.sock
+DISCVAULT_CHANNEL                  latest
+TZ                                 Europe/Amsterdam
+RP_ID                              discvault.example.com
+RP_ORIGINS                         https://discvault.example.com
+LEGACY_AUTH_ENABLED                false
 ```
 
-#### DiscVault v26 – бета
+#### DiscVault – бета
 
 ```text
-DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
-DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data
-DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres
-DISCVAULT_API_PORT=6080
-DISCVAULT_MCP_PORT=6090
+Repository                         ghcr.io/helmerznl/discvault-launcher:beta
+Web UI port                        6081
+App data (/data)                   /mnt/user/appdata/discvault-beta
+DISCVAULT_DATA_DIR_HOST            /mnt/user/appdata/discvault-beta
+DISCVAULT_POSTGRES_DATA_DIR_HOST   /mnt/user/appdata/discvault-beta-postgres
+Launcher config (/config)          /mnt/user/appdata/discvault-beta-launcher
+Docker socket                      /var/run/docker.sock
+DISCVAULT_CHANNEL                  beta
+DISCVAULT_PROJECT_NAME             discvault_beta_stack
+DISCVAULT_NETWORK                  discvault-beta-stack
+```
+
+#### Обидва канали
+
+```bash
+curl --fail http://<unraid-server>:6080/api/next/health
+# Roll back: Release channel = manual, DiscVault image = v26.10.17
 ```
 
 ## Очікуваний результат
 
-Приймайте результат для **Встановлення: Unraid** лише коли підтверджено всі наведені нижче результати: PostgreSQL; `/data`; HTTP `2xx`. Контрольні точки цієї сторінки: `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+Запускач завантажив образи й створив стек, вебінтерфейс відповідає на порту шаблону, а адреса стану повідомляє про мігровану базу даних.
 
-- PostgreSQL
-- `/data`
-- HTTP `2xx`
+Приймайте результат для **Встановлення: Unraid** лише коли підтверджено всі наведені нижче результати: початкове налаштування створює першого власника з passkey або з паролем і TOTP та один раз показує коди відновлення; `/api/next/health` · HTTP `200` · `"status": "ok"`. Контрольні точки цієї сторінки: `ghcr.io/helmerznl/discvault-launcher:latest` · `/var/run/docker.sock` · `/api/next/health`.
+
+- початкове налаштування створює першого власника з passkey або з паролем і TOTP та один раз показує коди відновлення
+- `/api/next/health` · HTTP `200` · `"status": "ok"`
 
 ## Безпека й відкочування
 
 :::caution
-Безпечна межа відновлення для **Встановлення: Unraid** вимагає цих дій до будь-якого запуску чи продовження: відповідний комплект резервних копій; `/mnt/user/appdata/discvault/data`. Контрольні точки цієї сторінки: `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+Зупиніть застосунок, перш ніж копіювати три теки appdata. Для відкату встановіть канал випуску manual з тегом попередньої версії та відновіть копію, зроблену перед оновленням.
 
-- відповідний комплект резервних копій
-- `/mnt/user/appdata/discvault/data`
+Безпечна межа відновлення для **Встановлення: Unraid** вимагає цих дій до будь-якого запуску чи продовження: бета може змінити базу даних так, що стабільний застосунок її не прочитає; ніколи не вказуйте їй теки стабільної версії; запускач монтує сокет Docker і тому керує Docker на сервері; встановлюйте його, лише якщо довіряєте образу запускача; резервна копія в застосунку (Адміністрування → Backup, також за розкладом) переносить бібліотеку між Docker, Unraid і Home Assistant; запускач ще не передає змінні OpenID Connect, тому шаблон Unraid входить через passkeys або пароль. Контрольні точки цієї сторінки: `ghcr.io/helmerznl/discvault-launcher:latest` · `/var/run/docker.sock` · `/api/next/health`.
+
+- бета може змінити базу даних так, що стабільний застосунок її не прочитає; ніколи не вказуйте їй теки стабільної версії
+- запускач монтує сокет Docker і тому керує Docker на сервері; встановлюйте його, лише якщо довіряєте образу запускача
+- резервна копія в застосунку (Адміністрування → Backup, також за розкладом) переносить бібліотеку між Docker, Unraid і Home Assistant
+- запускач ще не передає змінні OpenID Connect, тому шаблон Unraid входить через passkeys або пароль
 :::
 
 ## Наступний крок
 
-[Встановлення: Перший запуск і перевірка стану](/uk/install/first-start-health/)
+[Встановлення: Зворотний проксі та ключі доступу](/uk/install/reverse-proxy-passkeys/)
 
 ## Джерело й стан
 
-- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Джерело й стан: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault@441f96593219`](https://github.com/helmerzNL/DiscVault/commit/441f96593219c66d45aac99ce5ef9f81f011d449)
+- [`helmerzNL/unraid-community-apps@988ac954d47b`](https://github.com/helmerzNL/unraid-community-apps/commit/988ac954d47b7c671cab91d5a0ad9b623366f89d)
+- [Unraid template: `templates/discvault.xml`](https://github.com/helmerzNL/unraid-community-apps/blob/main/templates/discvault.xml)
+- [Unraid template: `templates/discvault-beta.xml`](https://github.com/helmerzNL/unraid-community-apps/blob/main/templates/discvault-beta.xml)
+- [DiscVault launcher](https://github.com/helmerzNL/DiscVault-Launcher)
+- [Unraid support thread](https://forums.unraid.net/topic/198808-support-discvault-physical-disc-collection-manager/)
+- Джерело й стан: `2026-11-11`
+- DiscVault Docs: `0.2.0`

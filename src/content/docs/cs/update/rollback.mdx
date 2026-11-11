@@ -5,14 +5,14 @@ pageId: 'update-rollback'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Cíl a výsledek
 
@@ -22,13 +22,13 @@ Dokončete postup určený pro **Aktualizace a migrace: Návrat obrazu**. Tento 
 
 Tato stránka platí pouze pro **Aktualizace a migrace: Návrat obrazu** (Docker · Unraid). Hranice kanálu a dat jsou: DiscVault · `ghcr.io/helmerznl/discvault:latest`; obnovte odpovídající data před spuštěním předchozího obrazu; PostgreSQL `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; obnovte odpovídající data před spuštěním předchozího obrazu; PostgreSQL `/data`. Kontrolní body této stránky: `PREVIOUS_IMAGE` · `pg_restore --exit-on-error` · `discvault.failed-` · `DISCVAULT_IMAGE`.
 
-### DiscVault v26 – stabilní
+### DiscVault – stabilní
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - obnovte odpovídající data před spuštěním předchozího obrazu
 - PostgreSQL `/data`
 
-### DiscVault v26 – beta
+### DiscVault – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - obnovte odpovídající data před spuštěním předchozího obrazu
@@ -106,7 +106,7 @@ Bezpečná hranice obnovy pro **Aktualizace a migrace: Návrat obrazu** vyžaduj
 
 ## Další krok
 
-[Aktualizace a migrace: Migrace na DiscVault 26](/cs/update/migration/)
+[Aktualizace a migrace: Migrace na DiscVault](/cs/update/migration/)
 
 ## Zdroj a stav
 

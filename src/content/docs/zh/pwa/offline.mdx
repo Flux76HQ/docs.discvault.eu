@@ -5,14 +5,14 @@ pageId: 'pwa-offline'
 products: ['pwa']
 platforms: ['web', 'ios', 'android']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="网页 · iOS · Android" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="网页 · iOS · Android" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## 目标和结果
 
@@ -22,12 +22,12 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 本页面仅适用于 **PWA: 离线行为** (网页 · iOS · Android). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; 缓存页面可能可以打开，但新数据及写入操作需要网络 · `Service Worker` · `CacheStorage`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; 缓存页面可能可以打开，但新数据及写入操作需要网络 · `Service Worker` · `CacheStorage`. 本页面专用检查点： `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
 
-### DiscVault v26 稳定版
+### DiscVault 稳定版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - 缓存页面可能可以打开，但新数据及写入操作需要网络 · `Service Worker` · `CacheStorage`
 
-### DiscVault v26 测试版
+### DiscVault 测试版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - 缓存页面可能可以打开，但新数据及写入操作需要网络 · `Service Worker` · `CacheStorage`

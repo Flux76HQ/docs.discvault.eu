@@ -5,14 +5,14 @@ pageId: 'install-legacy-authentication'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-20" />
+<PageMeta channels="beta" platform="Docker · web" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-20" />
 
 ## Mål og resultat
 
@@ -22,7 +22,7 @@ Gennemfør den sidespecifikke arbejdsgang for **Installation: Legacy Authenticat
 
 Denne side gælder kun for **Installation: Legacy Authentication** (Docker · web). Kanal- og datagrænserne er: DiscVault · `ghcr.io/helmerznl/discvault:beta`; TOTP; FQDN HTTPS. Sidespecifikke kontrolpunkter: `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.
 
-### DiscVault v26 – beta
+### DiscVault – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - TOTP
@@ -30,7 +30,7 @@ Denne side gælder kun for **Installation: Legacy Authentication** (Docker · we
 
 ## Forudsætninger
 
-- Legacy Authentication med brugernavn, adgangskode og tofaktorgodkendelse (2FA) er tilgængelig i DiscVault 26 beta som fallback, når passkeys ikke kan bruges.
+- Legacy Authentication med brugernavn, adgangskode og tofaktorgodkendelse (2FA) er tilgængelig i DiscVault beta som fallback, når passkeys ikke kan bruges.
 - ejeraadgang · på en ny instans uden brugere eller legitimationsoplysninger opretter guiden atomisk den første ejer efter accept af adgangskoderisikoen
 - TOTP · gendannelseskoder er hashværdi, engangs og fælles med passkey-gendannelse; backup udelader TOTP-hemmeligheder og gendannelsesmateriale, så MFA tilmeldes igen efter gendannelse
 
@@ -47,12 +47,12 @@ kun en direkte privat eller loopback-anmodning med ugyldige eller tomme RP-indst
 3. **Vælg:** på en ny instans uden brugere eller legitimationsoplysninger opretter guiden atomisk den første ejer efter accept af adgangskoderisikoen · på en eksisterende installation aktiveres adgangskodelogin i Brugere og roller og godkendes med en ny passkey-bekræftelse fra ejer eller administrator
 4. **Opret:** adgangskoder kræver mindst 15 tegn, må ikke være brugernavnet eller en afvist almindelig kode og hashes med Argon2id; fem fejl på 15 minutter låser kontoen i 15 minutter · TOTP · gendannelseskoder er hashværdi, engangs og fælles med passkey-gendannelse; backup udelader TOTP-hemmeligheder og gendannelsesmateriale, så MFA tilmeldes igen efter gendannelse
 5. **Konfigurér:** ejere og administratorer kan udstede midlertidige adgangskoder, kræve ændring, indstille MFA pr. bruger og styre passkey-registrering
-6. **Test:** Legacy Authentication med brugernavn, adgangskode og tofaktorgodkendelse (2FA) er tilgængelig i DiscVault 26 beta som fallback, når passkeys ikke kan bruges. · `GET /api/next/auth/status`
+6. **Test:** Legacy Authentication med brugernavn, adgangskode og tofaktorgodkendelse (2FA) er tilgængelig i DiscVault beta som fallback, når passkeys ikke kan bruges. · `GET /api/next/auth/status`
 7. **Registrér:** gendannelseskoder er hashværdi, engangs og fælles med passkey-gendannelse; backup udelader TOTP-hemmeligheder og gendannelsesmateriale, så MFA tilmeldes igen efter gendannelse
 
 ### Kommandoer og indstillinger
 
-#### DiscVault v26 – beta
+#### DiscVault – beta
 
 ```text
 RP_ID=discvault.example.com
@@ -75,9 +75,9 @@ curl --fail http://localhost:6180/api/next/auth/status
 
 ## Forventet resultat
 
-Godkend resultatet for **Installation: Legacy Authentication** kun når alle resultater nedenfor er opfyldt: Legacy Authentication med brugernavn, adgangskode og tofaktorgodkendelse (2FA) er tilgængelig i DiscVault 26 beta som fallback, når passkeys ikke kan bruges.; TOTP · gendannelseskoder er hashværdi, engangs og fælles med passkey-gendannelse; backup udelader TOTP-hemmeligheder og gendannelsesmateriale, så MFA tilmeldes igen efter gendannelse; adgangskoder kræver mindst 15 tegn, må ikke være brugernavnet eller en afvist almindelig kode og hashes med Argon2id; fem fejl på 15 minutter låser kontoen i 15 minutter. Sidespecifikke kontrolpunkter: `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.
+Godkend resultatet for **Installation: Legacy Authentication** kun når alle resultater nedenfor er opfyldt: Legacy Authentication med brugernavn, adgangskode og tofaktorgodkendelse (2FA) er tilgængelig i DiscVault beta som fallback, når passkeys ikke kan bruges.; TOTP · gendannelseskoder er hashværdi, engangs og fælles med passkey-gendannelse; backup udelader TOTP-hemmeligheder og gendannelsesmateriale, så MFA tilmeldes igen efter gendannelse; adgangskoder kræver mindst 15 tegn, må ikke være brugernavnet eller en afvist almindelig kode og hashes med Argon2id; fem fejl på 15 minutter låser kontoen i 15 minutter. Sidespecifikke kontrolpunkter: `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.
 
-- Legacy Authentication med brugernavn, adgangskode og tofaktorgodkendelse (2FA) er tilgængelig i DiscVault 26 beta som fallback, når passkeys ikke kan bruges.
+- Legacy Authentication med brugernavn, adgangskode og tofaktorgodkendelse (2FA) er tilgængelig i DiscVault beta som fallback, når passkeys ikke kan bruges.
 - TOTP · gendannelseskoder er hashværdi, engangs og fælles med passkey-gendannelse; backup udelader TOTP-hemmeligheder og gendannelsesmateriale, så MFA tilmeldes igen efter gendannelse
 - adgangskoder kræver mindst 15 tegn, må ikke være brugernavnet eller en afvist almindelig kode og hashes med Argon2id; fem fejl på 15 minutter låser kontoen i 15 minutter
 

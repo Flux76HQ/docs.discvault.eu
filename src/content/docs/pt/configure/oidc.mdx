@@ -5,14 +5,14 @@ pageId: 'configure-oidc'
 products: ['server', 'pwa']
 platforms: ['docker', 'web']
 channels: ['beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'Flux76HQ/App-Guidance']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-09-20" />
+<PageMeta channels="beta" platform="Docker · web" version="DiscVault" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## Objetivo e resultado
 
@@ -22,7 +22,7 @@ Conclua o procedimento específico da página para **Configuração: Início de 
 
 Esta página aplica-se apenas a **Configuração: Início de sessão com OpenID Connect (OIDC)** (Docker · web). Os limites de canal e dados são: DiscVault · `26.9.117+`; OIDC adiciona um método opcional de início de sessão no navegador; passkeys locais, palavras-passe opcionais, códigos de recuperação, tokens de API e tokens bearer MCP mantêm as suas funções; uma identidade é o par exato issuer e subject; o e-mail nunca associa automaticamente, a associação requer a sessão autenticada do navegador e a remoção requer outro método de início de sessão utilizável. Pontos de controlo desta página: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
 
-### DiscVault v26 beta
+### DiscVault beta
 
 - DiscVault · `26.9.117+`
 - OIDC adiciona um método opcional de início de sessão no navegador; passkeys locais, palavras-passe opcionais, códigos de recuperação, tokens de API e tokens bearer MCP mantêm as suas funções
@@ -52,7 +52,7 @@ permita origens HTTP privadas exatas apenas para endpoints de token e JWKS; o em
 
 ### Comandos e definições
 
-#### DiscVault v26 beta
+#### DiscVault beta
 
 ```text
 RP_ORIGINS=https://discvault.example.com

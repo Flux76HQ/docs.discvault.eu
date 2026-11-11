@@ -5,14 +5,14 @@ pageId: 'install-index'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
 lastVerified: '2026-07-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
 
 ## Tavoite ja tulos
 
@@ -22,13 +22,13 @@ Suorita sivukohtainen työnkulku: **Asennus: Asennusvaihtoehdot**. Tässä menet
 
 Tämä sivu koskee vain kohdetta **Asennus: Asennusvaihtoehdot** (Docker · Unraid). Kanava- ja tietorajat ovat: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `:beta`; PostgreSQL `17` `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `:beta`; PostgreSQL `17` `/data`. Sivukohtaiset tarkistuspisteet: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
-### DiscVault v26 – vakaa
+### DiscVault – vakaa
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - `:beta`
 - PostgreSQL `17` `/data`
 
-### DiscVault v26 – beta
+### DiscVault – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `:beta`
@@ -41,37 +41,39 @@ Tämä sivu koskee vain kohdetta **Asennus: Asennusvaihtoehdot** (Docker · Unra
 
 ## Toimenpiteet
 
-1. **Valitse:** [Asennus: Docker Compose](/fi/install/docker-compose/) · DiscVault 26
+1. **Valitse:** [Asennus: Docker Compose](/fi/install/docker-compose/) · DiscVault
 2. **Valitse:** [Asennus: Docker run](/fi/install/docker-run/)
-3. **Valitse:** [Asennus: Unraid](/fi/install/unraid/) · Unraid
-4. **Valitse:** uudet asennukset käyttävät DiscVault v26 -tunnistetta `:latest` tai `:beta`; jäädytetty `:legacy`-image on vain olemassa olevalle edellisen sukupolven asennukselle, jota ei vielä siirretä
-5. **Säilytä:** pidä edellisen sukupolven taltiot, ympäristömuuttujat, portit ja datapolku ennallaan; älä koskaan vaihda v26 PostgreSQL Compose -topologian imagea `:legacy`-imageksi
-6. **Avaa:** [Päivitys ja siirto: Siirtyminen DiscVault 26:een](/fi/update/migration/) · → DiscVault 26
-7. **Kirjaa:** `DISCVAULT_IMAGE` · vain olemassa olevalle tai legacy-käyttöönotolle: vastaava varmuuskopiosarja
+3. **Valitse:** [Asennus: Unraid](/fi/install/unraid/) · Unraid DiscVault
+4. **Valitse:** [Asennus: Home Assistant](/fi/install/home-assistant/) · PostgreSQL 17
+5. **Valitse:** uudet asennukset käyttävät DiscVault -tunnistetta `:latest` tai `:beta`; jäädytetty `:legacy`-image on vain olemassa olevalle edellisen sukupolven asennukselle, jota ei vielä siirretä
+6. **Säilytä:** pidä edellisen sukupolven taltiot, ympäristömuuttujat, portit ja datapolku ennallaan; älä koskaan vaihda DiscVault PostgreSQL Compose -topologian imagea `:legacy`-imageksi
+7. **Avaa:** [Päivitys ja siirto: Siirtyminen DiscVault:een](/fi/update/migration/) · → DiscVault
+8. **Kirjaa:** `DISCVAULT_IMAGE` · vain olemassa olevalle tai legacy-käyttöönotolle: vastaava varmuuskopiosarja
 
 ### Tehtäväpolut
 
-- [Asennus: Docker Compose](/fi/install/docker-compose/) — DiscVault 26 `release/v26-beta` `DISCVAULT_NEXT_IMAGE`
-- [Asennus: Docker run](/fi/install/docker-run/) — DiscVault 26 Docker run PostgreSQL `/data` `DATABASE_URL`
-- [Asennus: Pysyvät tiedot ja PostgreSQL](/fi/install/storage-postgresql/) — DiscVault 26 PostgreSQL `/data`
-- [Asennus: Unraid](/fi/install/unraid/) — DiscVault 26 Unraid PostgreSQL `/data`
-- [Päivitys ja siirto: Siirtyminen DiscVault 26:een](/fi/update/migration/) — → DiscVault 26
+- [Asennus: Docker Compose](/fi/install/docker-compose/) — DiscVault `release/v26-beta` `DISCVAULT_NEXT_IMAGE`
+- [Asennus: Docker run](/fi/install/docker-run/) — DiscVault Docker run PostgreSQL `/data` `DATABASE_URL`
+- [Asennus: Pysyvät tiedot ja PostgreSQL](/fi/install/storage-postgresql/) — DiscVault PostgreSQL `/data`
+- [Asennus: Unraid](/fi/install/unraid/) — DiscVault Unraid `discvault-launcher`
+- [Asennus: Home Assistant](/fi/install/home-assistant/) — DiscVault PostgreSQL 17 `/data`
+- [Päivitys ja siirto: Siirtyminen DiscVault:een](/fi/update/migration/) — → DiscVault
 
 ## Odotettu tulos
 
-Hyväksy tulos kohteelle **Asennus: Asennusvaihtoehdot** vain kun kaikki seuraavat tulokset toteutuvat: valittu julkaisukanava; PostgreSQL `/data`; pidä edellisen sukupolven taltiot, ympäristömuuttujat, portit ja datapolku ennallaan; älä koskaan vaihda v26 PostgreSQL Compose -topologian imagea `:legacy`-imageksi. Sivukohtaiset tarkistuspisteet: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
+Hyväksy tulos kohteelle **Asennus: Asennusvaihtoehdot** vain kun kaikki seuraavat tulokset toteutuvat: valittu julkaisukanava; PostgreSQL `/data` · DiscVault; pidä edellisen sukupolven taltiot, ympäristömuuttujat, portit ja datapolku ennallaan; älä koskaan vaihda DiscVault PostgreSQL Compose -topologian imagea `:legacy`-imageksi. Sivukohtaiset tarkistuspisteet: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
 - valittu julkaisukanava
-- PostgreSQL `/data`
-- pidä edellisen sukupolven taltiot, ympäristömuuttujat, portit ja datapolku ennallaan; älä koskaan vaihda v26 PostgreSQL Compose -topologian imagea `:legacy`-imageksi
+- PostgreSQL `/data` · DiscVault
+- pidä edellisen sukupolven taltiot, ympäristömuuttujat, portit ja datapolku ennallaan; älä koskaan vaihda DiscVault PostgreSQL Compose -topologian imagea `:legacy`-imageksi
 
 ## Turvallisuus ja palautus
 
 :::caution
-Turvallinen palautusraja kohteelle **Asennus: Asennusvaihtoehdot** edellyttää näitä toimia ennen käynnistystä tai jatkamista: Vain Legacy-haara: vaihda varmuuskopioinnin jälkeen vain nykyisen vanhan käyttöönoton image-tunnisteeksi `:legacy`, vedä ja luo se uudelleen topologiaa muuttamatta, tarkista kokoelma ja lopeta; älä vaihda tätä olemassa olevaa käyttöönottoa v26-topologiaan tällä sivulla; jäädytetty `:legacy`-image ei saa DiscVault v26 -ominaisuuksia, siirron parannuksia eikä tulevia käyttöliittymäpäivityksiä; vain olemassa olevalle tai legacy-käyttöönotolle: vastaava varmuuskopiosarja; julkaisutiedot ja kirjattu muuttumaton image-tiiviste. Sivukohtaiset tarkistuspisteet: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
+Turvallinen palautusraja kohteelle **Asennus: Asennusvaihtoehdot** edellyttää näitä toimia ennen käynnistystä tai jatkamista: Vain Legacy-haara: vaihda varmuuskopioinnin jälkeen vain nykyisen vanhan käyttöönoton image-tunnisteeksi `:legacy`, vedä ja luo se uudelleen topologiaa muuttamatta, tarkista kokoelma ja lopeta; älä vaihda tätä olemassa olevaa käyttöönottoa DiscVault-topologiaan tällä sivulla; jäädytetty `:legacy`-image ei saa DiscVault -ominaisuuksia, siirron parannuksia eikä tulevia käyttöliittymäpäivityksiä; vain olemassa olevalle tai legacy-käyttöönotolle: vastaava varmuuskopiosarja; julkaisutiedot ja kirjattu muuttumaton image-tiiviste. Sivukohtaiset tarkistuspisteet: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
-- Vain Legacy-haara: vaihda varmuuskopioinnin jälkeen vain nykyisen vanhan käyttöönoton image-tunnisteeksi `:legacy`, vedä ja luo se uudelleen topologiaa muuttamatta, tarkista kokoelma ja lopeta; älä vaihda tätä olemassa olevaa käyttöönottoa v26-topologiaan tällä sivulla
-- jäädytetty `:legacy`-image ei saa DiscVault v26 -ominaisuuksia, siirron parannuksia eikä tulevia käyttöliittymäpäivityksiä
+- Vain Legacy-haara: vaihda varmuuskopioinnin jälkeen vain nykyisen vanhan käyttöönoton image-tunnisteeksi `:legacy`, vedä ja luo se uudelleen topologiaa muuttamatta, tarkista kokoelma ja lopeta; älä vaihda tätä olemassa olevaa käyttöönottoa DiscVault-topologiaan tällä sivulla
+- jäädytetty `:legacy`-image ei saa DiscVault -ominaisuuksia, siirron parannuksia eikä tulevia käyttöliittymäpäivityksiä
 - vain olemassa olevalle tai legacy-käyttöönotolle: vastaava varmuuskopiosarja
 - julkaisutiedot ja kirjattu muuttumaton image-tiiviste
 :::

@@ -5,14 +5,14 @@ pageId: 'update-restore'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## 目的と結果
 
@@ -22,13 +22,13 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 このページの対象は **更新と移行: 復元** (Docker · Unraid). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; 同じ書き込み停止時間帯の PostgreSQL ダンプとファイルアーカイブ; 以前のイメージを起動する前に、一致するデータを復元する; DiscVault · `ghcr.io/helmerznl/discvault:beta`; 同じ書き込み停止時間帯の PostgreSQL ダンプとファイルアーカイブ; 以前のイメージを起動する前に、一致するデータを復元する. このページ固有の確認点: `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.
 
-### DiscVault v26 安定版
+### DiscVault 安定版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - 同じ書き込み停止時間帯の PostgreSQL ダンプとファイルアーカイブ
 - 以前のイメージを起動する前に、一致するデータを復元する
 
-### DiscVault v26 ベータ版
+### DiscVault ベータ版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - 同じ書き込み停止時間帯の PostgreSQL ダンプとファイルアーカイブ

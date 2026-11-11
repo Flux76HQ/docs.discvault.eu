@@ -5,14 +5,14 @@ pageId: 'configure-oidc'
 products: ['server', 'pwa']
 platforms: ['docker', 'web']
 channels: ['beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'Flux76HQ/App-Guidance']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="Docker · nett" version="DiscVault v26" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-09-20" />
+<PageMeta channels="beta" platform="Docker · nett" version="DiscVault" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## Mål og resultat
 
@@ -22,7 +22,7 @@ Fullfør den sidespesifikke arbeidsflyten for **Konfigurasjon: Pålogging med Op
 
 Denne siden gjelder bare **Konfigurasjon: Pålogging med OpenID Connect (OIDC)** (Docker · nett). Kanal- og datagrensene er: DiscVault · `26.9.117+`; OIDC legger til en valgfri pålogging i nettleseren; lokale passkeys, valgfrie passord, gjenopprettingskoder, API-tokener og MCP bearer-tokener beholder rollene sine; en identitet er det eksakte paret issuer og subject; e-post kobles aldri automatisk, kobling krever den påloggede nettleserøkten, og frakobling krever en annen brukbar påloggingsmetode. Sidespesifikke kontrollpunkter: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
 
-### DiscVault v26 – beta
+### DiscVault – beta
 
 - DiscVault · `26.9.117+`
 - OIDC legger til en valgfri pålogging i nettleseren; lokale passkeys, valgfrie passord, gjenopprettingskoder, API-tokener og MCP bearer-tokener beholder rollene sine
@@ -52,7 +52,7 @@ tillat bare eksakte private HTTP-opprinnelser for token- og JWKS-endepunkter; ut
 
 ### Kommandoer og innstillinger
 
-#### DiscVault v26 – beta
+#### DiscVault – beta
 
 ```text
 RP_ORIGINS=https://discvault.example.com

@@ -5,14 +5,14 @@ pageId: 'admin-index'
 products: ['server']
 platforms: ['docker', 'unraid', 'web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid · web" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Doel en resultaat
 
@@ -22,12 +22,12 @@ Voer de paginaspecifieke werkwijze uit voor **Beheer: Logs, taken en beveiliging
 
 Deze pagina is uitsluitend van toepassing op **Beheer: Logs, taken en beveiliging** (Docker · Unraid · web). De kanaal- en gegevensgrenzen zijn: DiscVault · `ghcr.io/helmerznl/discvault:latest`; API MCP PostgreSQL; DiscVault · `ghcr.io/helmerznl/discvault:beta`; API MCP PostgreSQL. Paginaspecifieke controlepunten: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
 
-### DiscVault v26 stabiel
+### DiscVault stabiel
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - API MCP PostgreSQL
 
-### DiscVault v26 bèta
+### DiscVault bèta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - API MCP PostgreSQL

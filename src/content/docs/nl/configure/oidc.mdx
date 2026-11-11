@@ -5,14 +5,14 @@ pageId: 'configure-oidc'
 products: ['server', 'pwa']
 platforms: ['docker', 'web']
 channels: ['beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'Flux76HQ/App-Guidance']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-09-20" />
+<PageMeta channels="beta" platform="Docker · web" version="DiscVault" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## Doel en resultaat
 
@@ -22,7 +22,7 @@ Voer de paginaspecifieke werkwijze uit voor **Configureren: Aanmelden met OpenID
 
 Deze pagina is uitsluitend van toepassing op **Configureren: Aanmelden met OpenID Connect (OIDC)** (Docker · web). De kanaal- en gegevensgrenzen zijn: DiscVault · `26.9.117+`; OIDC voegt een optionele browseraanmelding toe; lokale passkeys, optionele wachtwoorden, herstelcodes, API-tokens en MCP bearer-tokens behouden hun bestaande rol; een identiteit is het exacte paar issuer en subject; e-mail koppelt nooit automatisch, koppelen vereist de aangemelde browsersessie en ontkoppelen vereist een andere bruikbare aanmeldmethode. Paginaspecifieke controlepunten: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
 
-### DiscVault v26 bèta
+### DiscVault bèta
 
 - DiscVault · `26.9.117+`
 - OIDC voegt een optionele browseraanmelding toe; lokale passkeys, optionele wachtwoorden, herstelcodes, API-tokens en MCP bearer-tokens behouden hun bestaande rol
@@ -52,7 +52,7 @@ sta exacte privé-HTTP-origins alleen toe voor token- en JWKS-endpoints; issuer 
 
 ### Opdrachten en instellingen
 
-#### DiscVault v26 bèta
+#### DiscVault bèta
 
 ```text
 RP_ORIGINS=https://discvault.example.com

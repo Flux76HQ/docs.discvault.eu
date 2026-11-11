@@ -5,14 +5,14 @@ pageId: 'configure-oidc'
 products: ['server', 'pwa']
 platforms: ['docker', 'web']
 channels: ['beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'Flux76HQ/App-Guidance']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="Docker · 웹" version="DiscVault v26" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-09-20" />
+<PageMeta channels="beta" platform="Docker · 웹" version="DiscVault" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## 목표 및 결과
 
@@ -22,7 +22,7 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 이 페이지의 적용 범위: **구성: OpenID Connect(OIDC) 로그인** (Docker · 웹). 채널 및 데이터 경계: DiscVault · `26.9.117+`; OIDC는 선택적 브라우저 로그인 방법을 추가하며 로컬 패스키, 선택적 비밀번호, 복구 코드, API 토큰 및 MCP bearer 토큰의 기존 역할은 유지됨; ID는 issuer와 subject의 정확한 쌍이며 이메일로 자동 연결되지 않고 연결에는 로그인된 브라우저 세션이, 연결 해제에는 다른 사용 가능한 로그인 방법이 필요함. 이 페이지의 전용 확인 지점: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
 
-### DiscVault v26 베타
+### DiscVault 베타
 
 - DiscVault · `26.9.117+`
 - OIDC는 선택적 브라우저 로그인 방법을 추가하며 로컬 패스키, 선택적 비밀번호, 복구 코드, API 토큰 및 MCP bearer 토큰의 기존 역할은 유지됨
@@ -52,7 +52,7 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ### 명령 및 설정
 
-#### DiscVault v26 베타
+#### DiscVault 베타
 
 ```text
 RP_ORIGINS=https://discvault.example.com

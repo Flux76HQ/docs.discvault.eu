@@ -39,7 +39,7 @@ Health-check the built site with `curl --fail --head http://localhost:4321/` or 
 
 ## Content and architecture
 
-- `src/content/docs/`: 36 pages in each of 20 locales; English lives at `/`, translations at
+- `src/content/docs/`: 37 pages in each of 20 locales; English lives at `/`, translations at
   `/<locale>/`.
 - `src/components/`: status, route, feature-matrix, and SEO components.
 - `src/data/feature-status/features.json`: machine-readable PWA/iOS/Android status.
@@ -50,7 +50,7 @@ Health-check the built site with `curl --fail --head http://localhost:4321/` or 
 Page metadata lives in `scripts/generate_content.mjs`. Page-specific prerequisites, ordered
 steps, channel facts, checks, recovery notes, and executable blocks live in
 `scripts/content/procedures.mjs`; shared translated action/UI phrases live in
-`scripts/content/procedure-locales.mjs`. The canonical DiscVault v26 image channels and shared
+`scripts/content/procedure-locales.mjs`. The canonical DiscVault image channels and shared
 PostgreSQL deployment architecture live in `scripts/content/product-model.mjs`. Run
 `pnpm content:generate` after changing those sources; it deterministically replaces all generated
 MDX.

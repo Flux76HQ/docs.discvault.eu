@@ -5,14 +5,14 @@ pageId: 'configure-auth-rbac'
 products: ['server']
 platforms: ['web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU', 'Flux76HQ/App-Guidance']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="веб" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
+<PageMeta channels="stable,beta" platform="веб" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## Мета й результат
 
@@ -22,13 +22,13 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 Ця сторінка стосується лише **Налаштування: Автентифікація та RBAC** (веб). Межі каналу й даних: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; passkey — це криптографічна пара ключів: приватний ключ залишається на пристрої або в надійному менеджері облікових даних, а DiscVault зберігає лише відкритий ключ; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn OIDC; TOTP. Контрольні точки цієї сторінки: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · OIDC · Argon2id · TOTP.
 
-### DiscVault v26 – стабільний
+### DiscVault – стабільний
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - WebAuthn
 - passkey — це криптографічна пара ключів: приватний ключ залишається на пристрої або в надійному менеджері облікових даних, а DiscVault зберігає лише відкритий ключ
 
-### DiscVault v26 – бета
+### DiscVault – бета
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - WebAuthn OIDC
@@ -58,14 +58,14 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ### Команди й налаштування
 
-#### DiscVault v26 – стабільний
+#### DiscVault – стабільний
 
 ```bash
 curl --fail http://localhost:6080/api/next/auth/status
 curl --fail http://localhost:6080/api/next/auth/rbac
 ```
 
-#### DiscVault v26 – бета
+#### DiscVault – бета
 
 ```bash
 curl --fail http://localhost:6180/api/next/auth/status

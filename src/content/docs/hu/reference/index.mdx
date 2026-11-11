@@ -5,14 +5,14 @@ pageId: 'reference-index'
 products: ['server', 'pwa', 'ios', 'android']
 platforms: ['all']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="minden platform" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-09-20" />
+<PageMeta channels="stable,beta" platform="minden platform" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-09-20" />
 
 ## Cél és eredmény
 
@@ -22,13 +22,13 @@ Hajtsa végre az oldalhoz tartozó munkafolyamatot: **Referencia**. Ez az eljár
 
 Ez az oldal kizárólag erre vonatkozik: **Referencia** (minden platform). A csatorna- és adathatárok: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`. Oldalspecifikus ellenőrzési pontok: `:latest` · `:beta` · `:dev` · `6080:5000` · `DISCVAULT_OIDC_ISSUER`.
 
-### DiscVault v26 – stabil
+### DiscVault – stabil
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - PostgreSQL `/data`
 - API `6080:5000` MCP `6090:6090`
 
-### DiscVault v26 – béta
+### DiscVault – béta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - PostgreSQL `/data`
@@ -41,7 +41,7 @@ Ez az oldal kizárólag erre vonatkozik: **Referencia** (minden platform). A csa
 ## Eljárás
 
 1. **Ellenőrizze:** `:latest` `:beta`
-2. **Jegyezze fel:** a `:dev` csak fejlesztői munkára szolgál, és nem kiadási csatorna; a stabil DiscVault v26 a `:latest`, a béta a `:beta` taget használja · `:dev`
+2. **Jegyezze fel:** a `:dev` csak fejlesztői munkára szolgál, és nem kiadási csatorna; a stabil DiscVault a `:latest`, a béta a `:beta` taget használja · `:dev`
 3. **Jegyezze fel:** `/api/next/health`
 4. **Jegyezze fel:** [Konfigurálás: Bejelentkezés OpenID Connecttel (OIDC)](/hu/configure/oidc/) · `DISCVAULT_OIDC_ISSUER`
 5. **Jegyezze fel:** PostgreSQL `/data`
@@ -58,10 +58,10 @@ Az eredmény csak ennél fogadható el: **Referencia** csak akkor, ha minden al�
 ## Biztonság és visszaállítás
 
 :::caution
-A biztonságos helyreállítás határa ennél: **Referencia** ezeket a műveleteket igényli indítás vagy folytatás előtt: a referencia csak olvasható; parancsok vagy adatmódosítás előtt használja a célzott eljárást; a `:dev` csak fejlesztői munkára szolgál, és nem kiadási csatorna; a stabil DiscVault v26 a `:latest`, a béta a `:beta` taget használja · `:dev`. Oldalspecifikus ellenőrzési pontok: `:latest` · `:beta` · `:dev` · `6080:5000` · `DISCVAULT_OIDC_ISSUER`.
+A biztonságos helyreállítás határa ennél: **Referencia** ezeket a műveleteket igényli indítás vagy folytatás előtt: a referencia csak olvasható; parancsok vagy adatmódosítás előtt használja a célzott eljárást; a `:dev` csak fejlesztői munkára szolgál, és nem kiadási csatorna; a stabil DiscVault a `:latest`, a béta a `:beta` taget használja · `:dev`. Oldalspecifikus ellenőrzési pontok: `:latest` · `:beta` · `:dev` · `6080:5000` · `DISCVAULT_OIDC_ISSUER`.
 
 - a referencia csak olvasható; parancsok vagy adatmódosítás előtt használja a célzott eljárást
-- a `:dev` csak fejlesztői munkára szolgál, és nem kiadási csatorna; a stabil DiscVault v26 a `:latest`, a béta a `:beta` taget használja · `:dev`
+- a `:dev` csak fejlesztői munkára szolgál, és nem kiadási csatorna; a stabil DiscVault a `:latest`, a béta a `:beta` taget használja · `:dev`
 :::
 
 ## Következő lépés

@@ -5,14 +5,14 @@ pageId: 'configure-oidc'
 products: ['server', 'pwa']
 platforms: ['docker', 'web']
 channels: ['beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'Flux76HQ/App-Guidance']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-09-20" />
+<PageMeta channels="beta" platform="Docker · web" version="DiscVault" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## Objectif et résultat
 
@@ -22,7 +22,7 @@ Suivez le déroulement propre à cette page pour **Configuration: Connexion avec
 
 Cette page s’applique uniquement à **Configuration: Connexion avec OpenID Connect (OIDC)** (Docker · web). Les limites de canal et de données sont : DiscVault · `26.9.117+`; OIDC ajoute une connexion facultative dans le navigateur ; les passkeys locales, mots de passe facultatifs, codes de récupération, jetons API et jetons bearer MCP conservent leurs rôles; une identité est la paire exacte issuer et subject ; un e-mail ne crée jamais de liaison automatique, la liaison exige la session de navigateur connectée et la dissociation une autre méthode de connexion utilisable. Points de contrôle propres à la page : OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
 
-### DiscVault v26 bêta
+### DiscVault bêta
 
 - DiscVault · `26.9.117+`
 - OIDC ajoute une connexion facultative dans le navigateur ; les passkeys locales, mots de passe facultatifs, codes de récupération, jetons API et jetons bearer MCP conservent leurs rôles
@@ -52,7 +52,7 @@ autorisez des origines HTTP privées exactes uniquement pour les endpoints de je
 
 ### Commandes et réglages
 
-#### DiscVault v26 bêta
+#### DiscVault bêta
 
 ```text
 RP_ORIGINS=https://discvault.example.com

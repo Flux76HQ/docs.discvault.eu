@@ -5,14 +5,14 @@ pageId: 'configure-oidc'
 products: ['server', 'pwa']
 platforms: ['docker', 'web']
 channels: ['beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'Flux76HQ/App-Guidance']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-09-20" />
+<PageMeta channels="beta" platform="Docker · web" version="DiscVault" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## Amaç ve sonuç
 
@@ -22,7 +22,7 @@ Sayfaya özel iş akışını tamamlayın: **Yapılandırma: OpenID Connect (OID
 
 Bu sayfa yalnızca şunlar için geçerlidir: **Yapılandırma: OpenID Connect (OIDC) ile oturum açma** (Docker · web). Kanal ve veri sınırları: DiscVault · `26.9.117+`; OIDC isteğe bağlı bir tarayıcı oturum açma yöntemi ekler; yerel passkey, isteğe bağlı parolalar, kurtarma kodları, API belirteçleri ve MCP bearer belirteçleri mevcut rollerini korur; bir kimlik tam issuer ve subject çiftidir; e-posta hiçbir zaman otomatik bağlanmaz, bağlama oturum açılmış tarayıcı oturumu gerektirir ve bağlantıyı kaldırmak için başka bir kullanılabilir giriş yöntemi gerekir. Sayfaya özel denetim noktaları: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
 
-### DiscVault v26 beta
+### DiscVault beta
 
 - DiscVault · `26.9.117+`
 - OIDC isteğe bağlı bir tarayıcı oturum açma yöntemi ekler; yerel passkey, isteğe bağlı parolalar, kurtarma kodları, API belirteçleri ve MCP bearer belirteçleri mevcut rollerini korur
@@ -52,7 +52,7 @@ tam özel HTTP originlerine yalnızca token ve JWKS uç noktaları için izin ve
 
 ### Komutlar ve ayarlar
 
-#### DiscVault v26 beta
+#### DiscVault beta
 
 ```text
 RP_ORIGINS=https://discvault.example.com

@@ -5,14 +5,14 @@ pageId: 'configure-environment'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-09-20" />
+<PageMeta channels="beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-09-20" />
 
 ## Ziel und Ergebnis
 
@@ -22,7 +22,7 @@ Führe den seitenspezifischen Ablauf aus für **Konfiguration: Umgebungsvariable
 
 Diese Seite gilt ausschließlich für **Konfiguration: Umgebungsvariablen** (Docker · Unraid). Kanal- und Datengrenzen sind: DiscVault · `ghcr.io/helmerznl/discvault:beta`; `.env.example` `release/v26-beta`; `0600` · `JWT_SECRET` `POSTGRES_PASSWORD`. Seitenspezifische Kontrollpunkte: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS`.
 
-### DiscVault v26 – Beta
+### DiscVault – Beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `.env.example` `release/v26-beta`
@@ -45,7 +45,7 @@ Diese Seite gilt ausschließlich für **Konfiguration: Umgebungsvariablen** (Doc
 
 ### Befehle und Einstellungen
 
-#### DiscVault v26 – Beta
+#### DiscVault – Beta
 
 ```bash
 set -euo pipefail

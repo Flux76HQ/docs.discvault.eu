@@ -1,30 +1,30 @@
 ---
 title: 'Configure: Environment variables'
-description: 'Create the private DiscVault 26 beta runtime environment from the canonical moving .env.example without retaining its :dev image default.'
+description: 'Create the private DiscVault beta runtime environment from the canonical moving .env.example without retaining its :dev image default.'
 pageId: 'configure-environment'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-09-20" />
+<PageMeta channels="beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-09-20" />
 
 ## Goal and result
 
-Create the private DiscVault 26 beta runtime environment from the canonical moving `.env.example` without retaining its `:dev` image default.
+Create the private DiscVault beta runtime environment from the canonical moving `.env.example` without retaining its `:dev` image default.
 
 ## Applies to
 
-This page applies to the official DiscVault 26 beta deployment. Generate `POSTGRES_PASSWORD` and one stable `JWT_SECRET` with `openssl rand -base64 48` into a mode-600 `.env`. Force `DISCVAULT_NEXT_IMAGE=ghcr.io/helmerznl/discvault:beta`; set the supplied data paths; and choose either aligned FQDN values or empty `RP_ID` and `RP_ORIGINS` for a direct local-IP Legacy Authentication route.
+This page applies to the official DiscVault beta deployment. Generate `POSTGRES_PASSWORD` and one stable `JWT_SECRET` with `openssl rand -base64 48` into a mode-600 `.env`. Force `DISCVAULT_NEXT_IMAGE=ghcr.io/helmerznl/discvault:beta`; set the supplied data paths; and choose either aligned FQDN values or empty `RP_ID` and `RP_ORIGINS` for a direct local-IP Legacy Authentication route.
 
-### DiscVault v26 beta
+### DiscVault beta
 
-- DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault beta · `ghcr.io/helmerznl/discvault:beta`
 - `.env.example` from `release/v26-beta`
 - mode `0600` · stable `JWT_SECRET` and `POSTGRES_PASSWORD`
 
@@ -45,7 +45,7 @@ This page applies to the official DiscVault 26 beta deployment. Generate `POSTGR
 
 ### Commands and settings
 
-#### DiscVault v26 beta
+#### DiscVault beta
 
 ```bash
 set -euo pipefail

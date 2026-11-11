@@ -1,0 +1,108 @@
+---
+title: 'Εγκατάσταση: Home Assistant'
+description: 'Οδηγίες ειδικά για την εργασία: Εγκατάσταση: Home Assistant. 6180. /api/next/health. rp_id. password_login. secrets.json.'
+pageId: 'install-home-assistant'
+products: ['server']
+platforms: ['home-assistant']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/home-assistant-addons']
+lastVerified: '2026-11-11'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Home Assistant" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/home-assistant-addons" verified="2026-11-11" />
+
+## Στόχος και αποτέλεσμα
+
+Εκτελέστε το DiscVault ως εφαρμογή Home Assistant. Η εφαρμογή, ο worker, το endpoint MCP και η PostgreSQL 17 τρέχουν σε ένα κοντέινερ και ό,τι αποθηκεύουν βρίσκεται στον φάκελο δεδομένων που το Home Assistant περιλαμβάνει στα αντίγραφά του.
+
+Ολοκληρώστε τη ροή εργασίας της σελίδας για **Εγκατάσταση: Home Assistant**. Η διαδικασία χρησιμοποιεί `6180` · `/api/next/health` · `rp_id` · `password_login` · `secrets.json`.
+
+## Ισχύει για
+
+Το αποθετήριο προσφέρει το DiscVault στη θύρα 6180 και το DiscVault (beta) στη θύρα 6181, το καθένα με δικό του φάκελο δεδομένων, ώστε να τρέχουν παράλληλα σε amd64 και aarch64.
+
+Αυτή η σελίδα ισχύει μόνο για **Εγκατάσταση: Home Assistant** (Home Assistant). Τα όρια καναλιού και δεδομένων είναι: DiscVault · `6180`; PostgreSQL 17 · `/data`; DiscVault · `6181`; PostgreSQL 17 · `/data`. Σημεία ελέγχου της σελίδας: `6180` · `/api/next/health` · `rp_id` · `password_login` · `secrets.json`.
+
+### DiscVault – σταθερό
+
+- DiscVault · `6180`
+- PostgreSQL 17 · `/data`
+
+### DiscVault – beta
+
+- DiscVault · `6181`
+- PostgreSQL 17 · `/data`
+
+## Προϋποθέσεις
+
+- `amd64` `aarch64`
+- τα passkeys απαιτούν διεύθυνση HTTPS με όνομα τομέα μπροστά από τη θύρα της εφαρμογής· χωρίς αυτήν χρησιμοποιήστε σύνδεση με κωδικό και TOTP
+- δεν υπάρχει καταχώριση στην πλαϊνή μπάρα (Ingress): το DiscVault σερβίρεται από τη ρίζα του δικού του τομέα μέσω reverse proxy
+
+## Διαδικασία
+
+1. **Ανοίξτε:** Ρυθμίσεις → Εφαρμογές → Εγκατάσταση εφαρμογής → ⋮ → Αποθετήρια και προσθέστε `https://github.com/helmerzNL/home-assistant-addons`
+2. **Εγκαταστήστε:** επιλέξτε DiscVault ή DiscVault (beta) και εγκαταστήστε· το Home Assistant χτίζει την εφαρμογή στη συσκευή, κάτι που την πρώτη φορά διαρκεί λίγα λεπτά
+3. **Ρυθμίστε:** το `rp_id` είναι ο τομέας στον οποίο ανοίγει το DiscVault· τα passkeys δεσμεύονται σε αυτόν, οπότε μια μεταγενέστερη αλλαγή τα αχρηστεύει · `rp_origins` · `trusted_proxies`
+4. **Ρυθμίστε:** το `password_login` προσφέρει όνομα χρήστη, κωδικό τουλάχιστον 15 χαρακτήρων και TOTP όταν δεν υπάρχει τομέας HTTPS
+5. **Ρυθμίστε:** OpenID Connect: συμπληρώστε μαζί `oidc_issuer`, `oidc_client_id` και `oidc_client_secret` ή αφήστε και τα τρία κενά · `/api/next/auth/oidc/callback`
+6. **Εκκινήστε:** η αρχική ρύθμιση δημιουργεί τον πρώτο κάτοχο με passkey ή με κωδικό και TOTP και εμφανίζει μία φορά τους κωδικούς ανάκτησης
+7. **Επαληθεύστε:** `/api/next/health` · το endpoint MCP βρίσκεται στην ίδια θύρα κάτω από `/mcp`· δώστε στον βοηθό ένα προσωπικό κλειδί API
+
+### Εντολές και ρυθμίσεις
+
+#### Και τα δύο κανάλια
+
+```yaml
+rp_id: discvault.example.com
+rp_origins: https://discvault.example.com
+rp_name: DiscVault
+password_login: false
+trusted_proxies: private
+block_crawlers: true
+```
+
+```bash
+curl --fail http://<home-assistant>:6180/api/next/health   # beta: 6181
+```
+
+## Αναμενόμενο αποτέλεσμα
+
+Η εφαρμογή εμφανίζεται ως ενεργή, το watchdog φτάνει τη διεύθυνση υγείας και η διεπαφή ανοίγει στη θύρα της εφαρμογής.
+
+Αποδεχθείτε το αποτέλεσμα για **Εγκατάσταση: Home Assistant** μόνο όταν ισχύουν όλα τα παρακάτω αποτελέσματα: η αρχική ρύθμιση δημιουργεί τον πρώτο κάτοχο με passkey ή με κωδικό και TOTP και εμφανίζει μία φορά τους κωδικούς ανάκτησης; το endpoint MCP βρίσκεται στην ίδια θύρα κάτω από `/mcp`· δώστε στον βοηθό ένα προσωπικό κλειδί API; `/api/next/health` · HTTP `200` · `"status": "ok"`. Σημεία ελέγχου της σελίδας: `6180` · `/api/next/health` · `rp_id` · `password_login` · `secrets.json`.
+
+- η αρχική ρύθμιση δημιουργεί τον πρώτο κάτοχο με passkey ή με κωδικό και TOTP και εμφανίζει μία φορά τους κωδικούς ανάκτησης
+- το endpoint MCP βρίσκεται στην ίδια θύρα κάτω από `/mcp`· δώστε στον βοηθό ένα προσωπικό κλειδί API
+- `/api/next/health` · HTTP `200` · `"status": "ok"`
+
+## Ασφάλεια και επαναφορά
+
+:::caution
+Αφήστε το Home Assistant να πάρει αντίγραφο της εφαρμογής πριν από κάθε ενημέρωση. Για επαναφορά, επαναφέρετε το από Ρυθμίσεις → Σύστημα → Αντίγραφα ασφαλείας· μια έκδοση που άλλαξε τη βάση ίσως δεν τρέχει σε παλαιότερη έκδοση.
+
+Το ασφαλές όριο ανάκτησης για **Εγκατάσταση: Home Assistant** απαιτεί αυτές τις ενέργειες πριν από κάθε εκκίνηση ή συνέχεια: το Home Assistant σταματά για λίγο την εφαρμογή κατά τη λήψη αντιγράφου, γιατί μια ενεργή βάση δεν είναι συνεπές αντίγραφο; το μυστικό υπογραφής και ο κωδικός της βάσης δημιουργούνται στην πρώτη εκκίνηση στο `secrets.json`· μην διαγράψετε ποτέ αυτό το αρχείο; η beta μπορεί να αλλάξει τη βάση δεδομένων έτσι ώστε η σταθερή εφαρμογή να μην τη διαβάζει· μην τη στρέφετε ποτέ στους φακέλους της σταθερής; το αντίγραφο ασφαλείας της εφαρμογής (Διαχείριση → Backup, και με χρονοδιάγραμμα) μεταφέρει μια βιβλιοθήκη μεταξύ Docker, Unraid και Home Assistant; μια νέα έκδοση εμφανίζεται ως ενημέρωση μόλις δημοσιευτεί η εικόνα της· η ενημέρωση ξαναχτίζει την εφαρμογή και εκτελεί μεταφορές στην εκκίνηση. Σημεία ελέγχου της σελίδας: `6180` · `/api/next/health` · `rp_id` · `password_login` · `secrets.json`.
+
+- το Home Assistant σταματά για λίγο την εφαρμογή κατά τη λήψη αντιγράφου, γιατί μια ενεργή βάση δεν είναι συνεπές αντίγραφο
+- το μυστικό υπογραφής και ο κωδικός της βάσης δημιουργούνται στην πρώτη εκκίνηση στο `secrets.json`· μην διαγράψετε ποτέ αυτό το αρχείο
+- η beta μπορεί να αλλάξει τη βάση δεδομένων έτσι ώστε η σταθερή εφαρμογή να μην τη διαβάζει· μην τη στρέφετε ποτέ στους φακέλους της σταθερής
+- το αντίγραφο ασφαλείας της εφαρμογής (Διαχείριση → Backup, και με χρονοδιάγραμμα) μεταφέρει μια βιβλιοθήκη μεταξύ Docker, Unraid και Home Assistant
+- μια νέα έκδοση εμφανίζεται ως ενημέρωση μόλις δημοσιευτεί η εικόνα της· η ενημέρωση ξαναχτίζει την εφαρμογή και εκτελεί μεταφορές στην εκκίνηση
+:::
+
+## Επόμενο βήμα
+
+[Εγκατάσταση: Αντίστροφος διακομιστής μεσολάβησης και κλειδιά πρόσβασης](/el/install/reverse-proxy-passkeys/)
+
+## Πηγή και κατάσταση
+
+- [`helmerzNL/DiscVault@441f96593219`](https://github.com/helmerzNL/DiscVault/commit/441f96593219c66d45aac99ce5ef9f81f011d449)
+- [`helmerzNL/home-assistant-addons@48d31c321db4`](https://github.com/helmerzNL/home-assistant-addons/commit/48d31c321db48d1c70405c6a7830065debc79460)
+- [Home Assistant app: `discvault/config.yaml`](https://github.com/helmerzNL/home-assistant-addons/blob/main/discvault/config.yaml)
+- [Home Assistant app documentation: `discvault/DOCS.md`](https://github.com/helmerzNL/home-assistant-addons/blob/main/discvault/DOCS.md)
+- [Add the repository to Home Assistant](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FhelmerzNL%2Fhome-assistant-addons)
+- Πηγή και κατάσταση: `2026-11-11`
+- DiscVault Docs: `0.2.0`

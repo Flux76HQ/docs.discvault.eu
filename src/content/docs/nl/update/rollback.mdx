@@ -5,14 +5,14 @@ pageId: 'update-rollback'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Doel en resultaat
 
@@ -22,13 +22,13 @@ Voer de paginaspecifieke werkwijze uit voor **Bijwerken en migreren: Image terug
 
 Deze pagina is uitsluitend van toepassing op **Bijwerken en migreren: Image terugdraaien** (Docker · Unraid). De kanaal- en gegevensgrenzen zijn: DiscVault · `ghcr.io/helmerznl/discvault:latest`; herstel de bijpassende gegevens voordat de vorige image wordt gestart; PostgreSQL `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; herstel de bijpassende gegevens voordat de vorige image wordt gestart; PostgreSQL `/data`. Paginaspecifieke controlepunten: `PREVIOUS_IMAGE` · `pg_restore --exit-on-error` · `discvault.failed-` · `DISCVAULT_IMAGE`.
 
-### DiscVault v26 stabiel
+### DiscVault stabiel
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - herstel de bijpassende gegevens voordat de vorige image wordt gestart
 - PostgreSQL `/data`
 
-### DiscVault v26 bèta
+### DiscVault bèta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - herstel de bijpassende gegevens voordat de vorige image wordt gestart
@@ -106,7 +106,7 @@ De veilige herstelgrens voor **Bijwerken en migreren: Image terugdraaien** verei
 
 ## Volgende stap
 
-[Bijwerken en migreren: Migratie naar DiscVault 26](/nl/update/migration/)
+[Bijwerken en migreren: Migratie naar DiscVault](/nl/update/migration/)
 
 ## Bron en status
 

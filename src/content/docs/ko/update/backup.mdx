@@ -5,14 +5,14 @@ pageId: 'update-backup'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## 목표 및 결과
 
@@ -22,13 +22,13 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 이 페이지의 적용 범위: **업데이트 및 마이그레이션: 백업** (Docker · Unraid). 채널 및 데이터 경계: DiscVault · `ghcr.io/helmerznl/discvault:latest`; 동일한 쓰기 중지 시간의 PostgreSQL 덤프와 파일 아카이브; PostgreSQL `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; 동일한 쓰기 중지 시간의 PostgreSQL 덤프와 파일 아카이브; PostgreSQL `/data`. 이 페이지의 전용 확인 지점: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
 
-### DiscVault v26 안정판
+### DiscVault 안정판
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - 동일한 쓰기 중지 시간의 PostgreSQL 덤프와 파일 아카이브
 - PostgreSQL `/data`
 
-### DiscVault v26 베타
+### DiscVault 베타
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - 동일한 쓰기 중지 시간의 PostgreSQL 덤프와 파일 아카이브

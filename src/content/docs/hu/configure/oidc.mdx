@@ -5,14 +5,14 @@ pageId: 'configure-oidc'
 products: ['server', 'pwa']
 platforms: ['docker', 'web']
 channels: ['beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'Flux76HQ/App-Guidance']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-09-20" />
+<PageMeta channels="beta" platform="Docker · web" version="DiscVault" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## Cél és eredmény
 
@@ -22,7 +22,7 @@ Hajtsa végre az oldalhoz tartozó munkafolyamatot: **Konfigurálás: Bejelentke
 
 Ez az oldal kizárólag erre vonatkozik: **Konfigurálás: Bejelentkezés OpenID Connecttel (OIDC)** (Docker · web). A csatorna- és adathatárok: DiscVault · `26.9.117+`; Az OIDC választható böngészős bejelentkezést ad; a helyi passkey-k, választható jelszavak, helyreállítási kódok, API-tokenek és MCP bearer tokenek megtartják szerepüket; az identitás az issuer és subject pontos párja; az e-mail soha nem kapcsolódik automatikusan, a kapcsoláshoz bejelentkezett böngészős munkamenet, a leválasztáshoz pedig másik használható bejelentkezési mód kell. Oldalspecifikus ellenőrzési pontok: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
 
-### DiscVault v26 – béta
+### DiscVault – béta
 
 - DiscVault · `26.9.117+`
 - Az OIDC választható böngészős bejelentkezést ad; a helyi passkey-k, választható jelszavak, helyreállítási kódok, API-tokenek és MCP bearer tokenek megtartják szerepüket
@@ -52,7 +52,7 @@ pontos privát HTTP origin csak token- és JWKS-végpontokhoz engedélyezhető; 
 
 ### Parancsok és beállítások
 
-#### DiscVault v26 – béta
+#### DiscVault – béta
 
 ```text
 RP_ORIGINS=https://discvault.example.com

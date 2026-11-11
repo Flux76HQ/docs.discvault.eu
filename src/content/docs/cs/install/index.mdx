@@ -5,14 +5,14 @@ pageId: 'install-index'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
 lastVerified: '2026-07-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
 
 ## Cíl a výsledek
 
@@ -22,13 +22,13 @@ Dokončete postup určený pro **Instalace: Možnosti instalace**. Tento postup 
 
 Tato stránka platí pouze pro **Instalace: Možnosti instalace** (Docker · Unraid). Hranice kanálu a dat jsou: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `:beta`; PostgreSQL `17` `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `:beta`; PostgreSQL `17` `/data`. Kontrolní body této stránky: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
-### DiscVault v26 – stabilní
+### DiscVault – stabilní
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - `:beta`
 - PostgreSQL `17` `/data`
 
-### DiscVault v26 – beta
+### DiscVault – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `:beta`
@@ -41,37 +41,39 @@ Tato stránka platí pouze pro **Instalace: Možnosti instalace** (Docker · Unr
 
 ## Postup
 
-1. **Vyberte:** [Instalace: Docker Compose](/cs/install/docker-compose/) · DiscVault 26
+1. **Vyberte:** [Instalace: Docker Compose](/cs/install/docker-compose/) · DiscVault
 2. **Vyberte:** [Instalace: Docker run](/cs/install/docker-run/)
-3. **Vyberte:** [Instalace: Unraid](/cs/install/unraid/) · Unraid
-4. **Vyberte:** nové instalace používají DiscVault v26 `:latest` nebo `:beta`; zmrazený obraz `:legacy` je pouze pro stávající instalaci předchozí generace, která ještě není připravena k migraci
-5. **Zachovejte:** ponechte svazky, proměnné prostředí, porty a datovou cestu předchozí generace beze změny; nikdy nevkládejte `:legacy` do v26 topologie Compose s PostgreSQL
-6. **Otevřete:** [Aktualizace a migrace: Migrace na DiscVault 26](/cs/update/migration/) · → DiscVault 26
-7. **Zaznamenejte:** `DISCVAULT_IMAGE` · jen u stávajícího nebo legacy nasazení: odpovídající sada záloh
+3. **Vyberte:** [Instalace: Unraid](/cs/install/unraid/) · Unraid DiscVault
+4. **Vyberte:** [Instalace: Home Assistant](/cs/install/home-assistant/) · PostgreSQL 17
+5. **Vyberte:** nové instalace používají DiscVault `:latest` nebo `:beta`; zmrazený obraz `:legacy` je pouze pro stávající instalaci předchozí generace, která ještě není připravena k migraci
+6. **Zachovejte:** ponechte svazky, proměnné prostředí, porty a datovou cestu předchozí generace beze změny; nikdy nevkládejte `:legacy` do DiscVault topologie Compose s PostgreSQL
+7. **Otevřete:** [Aktualizace a migrace: Migrace na DiscVault](/cs/update/migration/) · → DiscVault
+8. **Zaznamenejte:** `DISCVAULT_IMAGE` · jen u stávajícího nebo legacy nasazení: odpovídající sada záloh
 
 ### Cesty k úlohám
 
-- [Instalace: Docker Compose](/cs/install/docker-compose/) — DiscVault 26 `release/v26-beta` `DISCVAULT_NEXT_IMAGE`
-- [Instalace: Docker run](/cs/install/docker-run/) — DiscVault 26 Docker run PostgreSQL `/data` `DATABASE_URL`
-- [Instalace: Trvalá data a PostgreSQL](/cs/install/storage-postgresql/) — DiscVault 26 PostgreSQL `/data`
-- [Instalace: Unraid](/cs/install/unraid/) — DiscVault 26 Unraid PostgreSQL `/data`
-- [Aktualizace a migrace: Migrace na DiscVault 26](/cs/update/migration/) — → DiscVault 26
+- [Instalace: Docker Compose](/cs/install/docker-compose/) — DiscVault `release/v26-beta` `DISCVAULT_NEXT_IMAGE`
+- [Instalace: Docker run](/cs/install/docker-run/) — DiscVault Docker run PostgreSQL `/data` `DATABASE_URL`
+- [Instalace: Trvalá data a PostgreSQL](/cs/install/storage-postgresql/) — DiscVault PostgreSQL `/data`
+- [Instalace: Unraid](/cs/install/unraid/) — DiscVault Unraid `discvault-launcher`
+- [Instalace: Home Assistant](/cs/install/home-assistant/) — DiscVault PostgreSQL 17 `/data`
+- [Aktualizace a migrace: Migrace na DiscVault](/cs/update/migration/) — → DiscVault
 
 ## Očekávaný výsledek
 
-Výsledek přijměte pro **Instalace: Možnosti instalace** pouze pokud platí všechny následující výsledky: vybraný kanál vydání; PostgreSQL `/data`; ponechte svazky, proměnné prostředí, porty a datovou cestu předchozí generace beze změny; nikdy nevkládejte `:legacy` do v26 topologie Compose s PostgreSQL. Kontrolní body této stránky: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
+Výsledek přijměte pro **Instalace: Možnosti instalace** pouze pokud platí všechny následující výsledky: vybraný kanál vydání; PostgreSQL `/data` · DiscVault; ponechte svazky, proměnné prostředí, porty a datovou cestu předchozí generace beze změny; nikdy nevkládejte `:legacy` do DiscVault topologie Compose s PostgreSQL. Kontrolní body této stránky: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
 - vybraný kanál vydání
-- PostgreSQL `/data`
-- ponechte svazky, proměnné prostředí, porty a datovou cestu předchozí generace beze změny; nikdy nevkládejte `:legacy` do v26 topologie Compose s PostgreSQL
+- PostgreSQL `/data` · DiscVault
+- ponechte svazky, proměnné prostředí, porty a datovou cestu předchozí generace beze změny; nikdy nevkládejte `:legacy` do DiscVault topologie Compose s PostgreSQL
 
 ## Bezpečnost a návrat
 
 :::caution
-Bezpečná hranice obnovy pro **Instalace: Možnosti instalace** vyžaduje před spuštěním nebo pokračováním tyto kroky: Pouze větev Legacy: po záloze změňte jen tag obrazu stávajícího nasazení staré generace na `:legacy`, stáhněte a znovu je vytvořte se stejnou topologií, ověřte sbírku a skončete; dané stávající nasazení na této stránce nepřepínejte na topologii v26; zmrazený obraz `:legacy` nedostává funkce DiscVault v26, vylepšení migrace ani budoucí aktualizace rozhraní; jen u stávajícího nebo legacy nasazení: odpovídající sada záloh; poznámky k vydání a zaznamenaný neměnný digest. Kontrolní body této stránky: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
+Bezpečná hranice obnovy pro **Instalace: Možnosti instalace** vyžaduje před spuštěním nebo pokračováním tyto kroky: Pouze větev Legacy: po záloze změňte jen tag obrazu stávajícího nasazení staré generace na `:legacy`, stáhněte a znovu je vytvořte se stejnou topologií, ověřte sbírku a skončete; dané stávající nasazení na této stránce nepřepínejte na topologii DiscVault; zmrazený obraz `:legacy` nedostává funkce DiscVault, vylepšení migrace ani budoucí aktualizace rozhraní; jen u stávajícího nebo legacy nasazení: odpovídající sada záloh; poznámky k vydání a zaznamenaný neměnný digest. Kontrolní body této stránky: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
-- Pouze větev Legacy: po záloze změňte jen tag obrazu stávajícího nasazení staré generace na `:legacy`, stáhněte a znovu je vytvořte se stejnou topologií, ověřte sbírku a skončete; dané stávající nasazení na této stránce nepřepínejte na topologii v26
-- zmrazený obraz `:legacy` nedostává funkce DiscVault v26, vylepšení migrace ani budoucí aktualizace rozhraní
+- Pouze větev Legacy: po záloze změňte jen tag obrazu stávajícího nasazení staré generace na `:legacy`, stáhněte a znovu je vytvořte se stejnou topologií, ověřte sbírku a skončete; dané stávající nasazení na této stránce nepřepínejte na topologii DiscVault
+- zmrazený obraz `:legacy` nedostává funkce DiscVault, vylepšení migrace ani budoucí aktualizace rozhraní
 - jen u stávajícího nebo legacy nasazení: odpovídající sada záloh
 - poznámky k vydání a zaznamenaný neměnný digest
 :::

@@ -5,14 +5,14 @@ pageId: 'install-storage-postgresql'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Cíl a výsledek
 
@@ -22,13 +22,13 @@ Dokončete postup určený pro **Instalace: Trvalá data a PostgreSQL**. Tento p
 
 Tato stránka platí pouze pro **Instalace: Trvalá data a PostgreSQL** (Docker · Unraid). Hranice kanálu a dat jsou: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL; `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL; `/data`. Kontrolní body této stránky: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
 
-### DiscVault v26 – stabilní
+### DiscVault – stabilní
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - PostgreSQL
 - `/data`
 
-### DiscVault v26 – beta
+### DiscVault – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - PostgreSQL
@@ -36,7 +36,7 @@ Tato stránka platí pouze pro **Instalace: Trvalá data a PostgreSQL** (Docker 
 
 ## Požadavky
 
-- `DISCVAULT_POSTGRES_DATA`
+- DiscVault
 - cíl zálohy mimo živá data
 - PostgreSQL `17`
 

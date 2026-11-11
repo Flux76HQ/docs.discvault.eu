@@ -5,14 +5,14 @@ pageId: 'reference-index'
 products: ['server', 'pwa', 'ios', 'android']
 platforms: ['all']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="すべてのプラットフォーム" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-09-20" />
+<PageMeta channels="stable,beta" platform="すべてのプラットフォーム" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-09-20" />
 
 ## 目的と結果
 
@@ -22,13 +22,13 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 このページの対象は **リファレンス** (すべてのプラットフォーム). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`. このページ固有の確認点: `:latest` · `:beta` · `:dev` · `6080:5000` · `DISCVAULT_OIDC_ISSUER`.
 
-### DiscVault v26 安定版
+### DiscVault 安定版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - PostgreSQL `/data`
 - API `6080:5000` MCP `6090:6090`
 
-### DiscVault v26 ベータ版
+### DiscVault ベータ版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - PostgreSQL `/data`
@@ -41,7 +41,7 @@ import PageMeta from '../../../../components/PageMeta.astro';
 ## 手順
 
 1. **確認:** `:latest` `:beta`
-2. **記録:** `:dev` はエンジニアリング専用でリリースチャンネルではありません。DiscVault v26 安定版は `:latest`、ベータ版は `:beta` を使用します · `:dev`
+2. **記録:** `:dev` はエンジニアリング専用でリリースチャンネルではありません。DiscVault 安定版は `:latest`、ベータ版は `:beta` を使用します · `:dev`
 3. **記録:** `/api/next/health`
 4. **記録:** [設定: OpenID Connect（OIDC）ログイン](/ja/configure/oidc/) · `DISCVAULT_OIDC_ISSUER`
 5. **記録:** PostgreSQL `/data`
@@ -58,10 +58,10 @@ import PageMeta from '../../../../components/PageMeta.astro';
 ## 安全性とロールバック
 
 :::caution
-安全な復旧境界: **リファレンス** 起動または続行の前に、次の操作が必要です: リファレンスは読み取り専用です。コマンド実行やデータ変更前に該当する手順を使用します; `:dev` はエンジニアリング専用でリリースチャンネルではありません。DiscVault v26 安定版は `:latest`、ベータ版は `:beta` を使用します · `:dev`. このページ固有の確認点: `:latest` · `:beta` · `:dev` · `6080:5000` · `DISCVAULT_OIDC_ISSUER`.
+安全な復旧境界: **リファレンス** 起動または続行の前に、次の操作が必要です: リファレンスは読み取り専用です。コマンド実行やデータ変更前に該当する手順を使用します; `:dev` はエンジニアリング専用でリリースチャンネルではありません。DiscVault 安定版は `:latest`、ベータ版は `:beta` を使用します · `:dev`. このページ固有の確認点: `:latest` · `:beta` · `:dev` · `6080:5000` · `DISCVAULT_OIDC_ISSUER`.
 
 - リファレンスは読み取り専用です。コマンド実行やデータ変更前に該当する手順を使用します
-- `:dev` はエンジニアリング専用でリリースチャンネルではありません。DiscVault v26 安定版は `:latest`、ベータ版は `:beta` を使用します · `:dev`
+- `:dev` はエンジニアリング専用でリリースチャンネルではありません。DiscVault 安定版は `:latest`、ベータ版は `:beta` を使用します · `:dev`
 :::
 
 ## 次の手順

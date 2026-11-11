@@ -1,0 +1,108 @@
+---
+title: '安装: Home Assistant'
+description: '任务专用说明： 安装: Home Assistant. 6180. /api/next/health. rp_id. password_login. secrets.json.'
+pageId: 'install-home-assistant'
+products: ['server']
+platforms: ['home-assistant']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/home-assistant-addons']
+lastVerified: '2026-11-11'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Home Assistant" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/home-assistant-addons" verified="2026-11-11" />
+
+## 目标和结果
+
+将 DiscVault 作为 Home Assistant 应用运行。应用、worker、MCP 端点和 PostgreSQL 17 运行在同一个容器中，所有数据都保存在应用数据文件夹里，Home Assistant 会将其纳入备份。.
+
+完成此页面专用的流程： **安装: Home Assistant**. 此流程使用 `6180` · `/api/next/health` · `rp_id` · `password_login` · `secrets.json`.
+
+## 适用范围
+
+该仓库在端口 6180 提供 DiscVault，在端口 6181 提供 DiscVault (beta)，各自有独立的数据文件夹，可在 amd64 和 aarch64 上并行运行.
+
+本页面仅适用于 **安装: Home Assistant** (Home Assistant). 通道与数据边界为： DiscVault · `6180`; PostgreSQL 17 · `/data`; DiscVault · `6181`; PostgreSQL 17 · `/data`. 本页面专用检查点： `6180` · `/api/next/health` · `rp_id` · `password_login` · `secrets.json`.
+
+### DiscVault 稳定版
+
+- DiscVault · `6180`
+- PostgreSQL 17 · `/data`
+
+### DiscVault 测试版
+
+- DiscVault · `6181`
+- PostgreSQL 17 · `/data`
+
+## 前提条件
+
+- `amd64` `aarch64`
+- 通行密钥需要在应用端口前提供带域名的 HTTPS 地址；没有时请使用带 TOTP 的密码登录
+- 侧边栏中没有入口（Ingress）：DiscVault 通过反向代理从其自有域名的根路径提供服务
+
+## 操作步骤
+
+1. **打开:** 设置 → 应用 → 安装应用 → ⋮ → 仓库，然后添加 `https://github.com/helmerzNL/home-assistant-addons`
+2. **安装:** 选择 DiscVault 或 DiscVault (beta) 并安装；Home Assistant 会在设备上构建应用，首次需要几分钟
+3. **配置:** `rp_id` 是打开 DiscVault 的域名；通行密钥与其绑定，之后更改会使现有通行密钥失效 · `rp_origins` · `trusted_proxies`
+4. **配置:** 没有 HTTPS 域名时，`password_login` 提供用户名、至少 15 个字符的密码和 TOTP
+5. **配置:** OpenID Connect：同时填写 `oidc_issuer`、`oidc_client_id` 和 `oidc_client_secret`，或三者全部留空 · `/api/next/auth/oidc/callback`
+6. **启动:** 初始设置会用通行密钥或密码加 TOTP 创建第一位所有者，并只显示一次恢复代码
+7. **验证:** `/api/next/health` · MCP 端点位于同一端口的 `/mcp` 下；请为助手提供个人 API 密钥
+
+### 命令和设置
+
+#### 两个通道
+
+```yaml
+rp_id: discvault.example.com
+rp_origins: https://discvault.example.com
+rp_name: DiscVault
+password_login: false
+trusted_proxies: private
+block_crawlers: true
+```
+
+```bash
+curl --fail http://<home-assistant>:6180/api/next/health   # beta: 6181
+```
+
+## 预期结果
+
+应用显示为已启动，看门狗可访问健康地址，Web 界面在应用端口上打开.
+
+仅在以下条件下接受结果： **安装: Home Assistant** 必须确认以下所有结果： 初始设置会用通行密钥或密码加 TOTP 创建第一位所有者，并只显示一次恢复代码; MCP 端点位于同一端口的 `/mcp` 下；请为助手提供个人 API 密钥; `/api/next/health` · HTTP `200` · `"status": "ok"`. 本页面专用检查点： `6180` · `/api/next/health` · `rp_id` · `password_login` · `secrets.json`.
+
+- 初始设置会用通行密钥或密码加 TOTP 创建第一位所有者，并只显示一次恢复代码
+- MCP 端点位于同一端口的 `/mcp` 下；请为助手提供个人 API 密钥
+- `/api/next/health` · HTTP `200` · `"status": "ok"`
+
+## 安全与回滚
+
+:::caution
+每次更新前让 Home Assistant 备份该应用。若要回退，请在 设置 → 系统 → 备份 中恢复该备份；更改过数据库的版本可能无法在旧版本上运行。.
+
+安全恢复边界： **安装: Home Assistant** 在启动或继续任何操作前必须执行： 由于运行中的数据库不是一致的副本，Home Assistant 在备份时会短暂停止该应用; 签名密钥和数据库密码会在首次启动时生成到 `secrets.json`；切勿删除该文件; 测试版可能以稳定版无法读取的方式更改数据库；切勿让它指向稳定版的文件夹; 应用内备份（管理 → Backup，也可按计划运行）可在 Docker、Unraid 与 Home Assistant 之间迁移收藏库; 新版本的镜像发布后会显示为更新；更新会重新构建应用，并在启动时运行迁移. 本页面专用检查点： `6180` · `/api/next/health` · `rp_id` · `password_login` · `secrets.json`.
+
+- 由于运行中的数据库不是一致的副本，Home Assistant 在备份时会短暂停止该应用
+- 签名密钥和数据库密码会在首次启动时生成到 `secrets.json`；切勿删除该文件
+- 测试版可能以稳定版无法读取的方式更改数据库；切勿让它指向稳定版的文件夹
+- 应用内备份（管理 → Backup，也可按计划运行）可在 Docker、Unraid 与 Home Assistant 之间迁移收藏库
+- 新版本的镜像发布后会显示为更新；更新会重新构建应用，并在启动时运行迁移
+:::
+
+## 下一步
+
+[安装: 反向代理和通行密钥](/zh/install/reverse-proxy-passkeys/)
+
+## 来源和状态
+
+- [`helmerzNL/DiscVault@441f96593219`](https://github.com/helmerzNL/DiscVault/commit/441f96593219c66d45aac99ce5ef9f81f011d449)
+- [`helmerzNL/home-assistant-addons@48d31c321db4`](https://github.com/helmerzNL/home-assistant-addons/commit/48d31c321db48d1c70405c6a7830065debc79460)
+- [Home Assistant app: `discvault/config.yaml`](https://github.com/helmerzNL/home-assistant-addons/blob/main/discvault/config.yaml)
+- [Home Assistant app documentation: `discvault/DOCS.md`](https://github.com/helmerzNL/home-assistant-addons/blob/main/discvault/DOCS.md)
+- [Add the repository to Home Assistant](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FhelmerzNL%2Fhome-assistant-addons)
+- 来源和状态: `2026-11-11`
+- DiscVault Docs: `0.2.0`

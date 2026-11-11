@@ -1,30 +1,30 @@
 ---
 title: 'Install: Docker Compose'
-description: 'Deploy DiscVault 26 beta from the canonical moving Compose and environment files.'
+description: 'Deploy DiscVault beta from the canonical moving Compose and environment files.'
 pageId: 'install-docker-compose'
 products: ['server']
 platforms: ['docker']
 channels: ['beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-20'
 ---
 
 import PageMeta from '../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-20" />
+<PageMeta channels="beta" platform="Docker" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-20" />
 
 ## Goal and result
 
-Deploy DiscVault 26 beta from the canonical moving Compose and environment files.
+Deploy DiscVault beta from the canonical moving Compose and environment files.
 
 ## Applies to
 
-This page applies only to DiscVault 26 beta. It downloads the moving `release/v26-beta` files and lists commit-pinned verification links. Because the current source `.env.example` still defaults to the engineering `:dev` image, the procedure rewrites and validates `DISCVAULT_NEXT_IMAGE=ghcr.io/helmerznl/discvault:beta` before pull or startup. It uses project `discvault_next_deploy`, host API port `6180`, persistent `/mnt/user/appdata/discvault`, and PostgreSQL path `/mnt/user/appdata/discvault-next/postgres`.
+This page applies only to DiscVault beta. It downloads the moving `release/v26-beta` files and lists commit-pinned verification links. Because the current source `.env.example` still defaults to the engineering `:dev` image, the procedure rewrites and validates `DISCVAULT_NEXT_IMAGE=ghcr.io/helmerznl/discvault:beta` before pull or startup. It uses project `discvault_next_deploy`, host API port `6180`, persistent `/mnt/user/appdata/discvault`, and PostgreSQL path `/mnt/user/appdata/discvault-next/postgres`.
 
-### DiscVault v26 beta
+### DiscVault beta
 
-- DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault beta · `ghcr.io/helmerznl/discvault:beta`
 - official files from `release/v26-beta`
 - Compose project `discvault_next_deploy`
 - host `6180` → API container `5000`
@@ -46,7 +46,7 @@ This page applies only to DiscVault 26 beta. It downloads the moving `release/v2
 
 ### Commands and settings
 
-#### DiscVault v26 beta
+#### DiscVault beta
 
 ```bash
 set -euo pipefail

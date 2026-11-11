@@ -5,14 +5,14 @@ pageId: 'configure-index'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · 웹" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-09-20" />
+<PageMeta channels="stable,beta" platform="Docker · 웹" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-09-20" />
 
 ## 목표 및 결과
 
@@ -20,17 +20,17 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## 적용 대상
 
-이 페이지의 적용 범위: **구성: 개요** (Docker · 웹). 채널 및 데이터 경계: DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. 이 페이지의 전용 확인 지점: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/oidc/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
+이 페이지의 적용 범위: **구성: 개요** (Docker · 웹). 채널 및 데이터 경계: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault RBAC. 이 페이지의 전용 확인 지점: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/oidc/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
-### DiscVault v26 안정판
+### DiscVault 안정판
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- RBAC
+- DiscVault RBAC
 
-### DiscVault v26 베타
+### DiscVault 베타
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- RBAC
+- DiscVault RBAC
 
 ## 사전 요구 사항
 
@@ -48,11 +48,11 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ### 작업 경로
 
-- [구성: 환경 변수](/ko/configure/environment/) — DiscVault 26 `.env.example`
-- [구성: 인증 및 RBAC](/ko/configure/auth-rbac/) — DiscVault 26 RBAC
+- [구성: 환경 변수](/ko/configure/environment/) — DiscVault `.env.example`
+- [구성: 인증 및 RBAC](/ko/configure/auth-rbac/) — DiscVault RBAC
 - [구성: OpenID Connect(OIDC) 로그인](/ko/configure/oidc/) — DiscVault 26.9 117 OIDC Pocket ID
-- [설치: Legacy Authentication](/ko/install/legacy-authentication/) — DiscVault 26 TOTP
-- [구성: 플러그인 및 메타데이터](/ko/configure/plugins-metadata/) — DiscVault 26
+- [설치: Legacy Authentication](/ko/install/legacy-authentication/) — DiscVault TOTP
+- [구성: 플러그인 및 메타데이터](/ko/configure/plugins-metadata/) — DiscVault
 
 ## 예상 결과
 

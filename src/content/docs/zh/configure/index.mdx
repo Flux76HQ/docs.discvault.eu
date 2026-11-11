@@ -5,14 +5,14 @@ pageId: 'configure-index'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · 网页" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-09-20" />
+<PageMeta channels="stable,beta" platform="Docker · 网页" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-09-20" />
 
 ## 目标和结果
 
@@ -20,17 +20,17 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## 适用范围
 
-本页面仅适用于 **配置: 概览** (Docker · 网页). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. 本页面专用检查点： `/configure/environment/` · `/configure/auth-rbac/` · `/configure/oidc/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
+本页面仅适用于 **配置: 概览** (Docker · 网页). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault RBAC. 本页面专用检查点： `/configure/environment/` · `/configure/auth-rbac/` · `/configure/oidc/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
-### DiscVault v26 稳定版
+### DiscVault 稳定版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- RBAC
+- DiscVault RBAC
 
-### DiscVault v26 测试版
+### DiscVault 测试版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- RBAC
+- DiscVault RBAC
 
 ## 前提条件
 
@@ -48,11 +48,11 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ### 任务路径
 
-- [配置: 环境变量](/zh/configure/environment/) — DiscVault 26 `.env.example`
-- [配置: 身份验证和 RBAC](/zh/configure/auth-rbac/) — DiscVault 26 RBAC
+- [配置: 环境变量](/zh/configure/environment/) — DiscVault `.env.example`
+- [配置: 身份验证和 RBAC](/zh/configure/auth-rbac/) — DiscVault RBAC
 - [配置: 使用 OpenID Connect（OIDC）登录](/zh/configure/oidc/) — DiscVault 26.9 117 OIDC Pocket ID
-- [安装: Legacy Authentication](/zh/install/legacy-authentication/) — DiscVault 26 TOTP
-- [配置: 插件和元数据](/zh/configure/plugins-metadata/) — DiscVault 26
+- [安装: Legacy Authentication](/zh/install/legacy-authentication/) — DiscVault TOTP
+- [配置: 插件和元数据](/zh/configure/plugins-metadata/) — DiscVault
 
 ## 预期结果
 

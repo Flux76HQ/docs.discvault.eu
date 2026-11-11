@@ -5,14 +5,14 @@ pageId: 'install-index'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
 lastVerified: '2026-07-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
 
 ## Objetivo y resultado
 
@@ -22,13 +22,13 @@ Completa el flujo específico de la página para **Instalación: Opciones de ins
 
 Esta página se aplica solo a **Instalación: Opciones de instalación** (Docker · Unraid). Sus límites de canal y datos son: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `:beta`; PostgreSQL `17` `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `:beta`; PostgreSQL `17` `/data`. Puntos de control de esta página: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
-### DiscVault v26 estable
+### DiscVault estable
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - `:beta`
 - PostgreSQL `17` `/data`
 
-### DiscVault v26 beta
+### DiscVault beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `:beta`
@@ -41,37 +41,39 @@ Esta página se aplica solo a **Instalación: Opciones de instalación** (Docker
 
 ## Procedimiento
 
-1. **Elige:** [Instalación: Docker Compose](/es/install/docker-compose/) · DiscVault 26
+1. **Elige:** [Instalación: Docker Compose](/es/install/docker-compose/) · DiscVault
 2. **Elige:** [Instalación: Docker run](/es/install/docker-run/)
-3. **Elige:** [Instalación: Unraid](/es/install/unraid/) · Unraid
-4. **Elige:** las instalaciones nuevas usan DiscVault v26 `:latest` o `:beta`; la imagen congelada `:legacy` es solo para una instalación existente de la generación anterior que aún no esté lista para migrar
-5. **Conserva:** mantén sin cambios los volúmenes, variables de entorno, puertos y ruta de datos de la generación anterior; nunca sustituyas una imagen de la topología Compose v26 con PostgreSQL por `:legacy`
-6. **Abre:** [Actualización y migración: Migración a DiscVault 26](/es/update/migration/) · → DiscVault 26
-7. **Registra:** `DISCVAULT_IMAGE` · solo para un despliegue existente o legacy: juego de copias coincidente
+3. **Elige:** [Instalación: Unraid](/es/install/unraid/) · Unraid DiscVault
+4. **Elige:** [Instalación: Home Assistant](/es/install/home-assistant/) · PostgreSQL 17
+5. **Elige:** las instalaciones nuevas usan DiscVault `:latest` o `:beta`; la imagen congelada `:legacy` es solo para una instalación existente de la generación anterior que aún no esté lista para migrar
+6. **Conserva:** mantén sin cambios los volúmenes, variables de entorno, puertos y ruta de datos de la generación anterior; nunca sustituyas una imagen de la topología Compose DiscVault con PostgreSQL por `:legacy`
+7. **Abre:** [Actualización y migración: Migración a DiscVault](/es/update/migration/) · → DiscVault
+8. **Registra:** `DISCVAULT_IMAGE` · solo para un despliegue existente o legacy: juego de copias coincidente
 
 ### Rutas de tareas
 
-- [Instalación: Docker Compose](/es/install/docker-compose/) — DiscVault 26 `release/v26-beta` `DISCVAULT_NEXT_IMAGE`
-- [Instalación: Docker run](/es/install/docker-run/) — DiscVault 26 Docker run PostgreSQL `/data` `DATABASE_URL`
-- [Instalación: Datos persistentes y PostgreSQL](/es/install/storage-postgresql/) — DiscVault 26 PostgreSQL `/data`
-- [Instalación: Unraid](/es/install/unraid/) — DiscVault 26 Unraid PostgreSQL `/data`
-- [Actualización y migración: Migración a DiscVault 26](/es/update/migration/) — → DiscVault 26
+- [Instalación: Docker Compose](/es/install/docker-compose/) — DiscVault `release/v26-beta` `DISCVAULT_NEXT_IMAGE`
+- [Instalación: Docker run](/es/install/docker-run/) — DiscVault Docker run PostgreSQL `/data` `DATABASE_URL`
+- [Instalación: Datos persistentes y PostgreSQL](/es/install/storage-postgresql/) — DiscVault PostgreSQL `/data`
+- [Instalación: Unraid](/es/install/unraid/) — DiscVault Unraid `discvault-launcher`
+- [Instalación: Home Assistant](/es/install/home-assistant/) — DiscVault PostgreSQL 17 `/data`
+- [Actualización y migración: Migración a DiscVault](/es/update/migration/) — → DiscVault
 
 ## Resultado esperado
 
-Acepta el resultado de **Instalación: Opciones de instalación** solo cuando se cumplan todos estos resultados: canal de publicación elegido; PostgreSQL `/data`; mantén sin cambios los volúmenes, variables de entorno, puertos y ruta de datos de la generación anterior; nunca sustituyas una imagen de la topología Compose v26 con PostgreSQL por `:legacy`. Puntos de control de esta página: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
+Acepta el resultado de **Instalación: Opciones de instalación** solo cuando se cumplan todos estos resultados: canal de publicación elegido; PostgreSQL `/data` · DiscVault; mantén sin cambios los volúmenes, variables de entorno, puertos y ruta de datos de la generación anterior; nunca sustituyas una imagen de la topología Compose DiscVault con PostgreSQL por `:legacy`. Puntos de control de esta página: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
 - canal de publicación elegido
-- PostgreSQL `/data`
-- mantén sin cambios los volúmenes, variables de entorno, puertos y ruta de datos de la generación anterior; nunca sustituyas una imagen de la topología Compose v26 con PostgreSQL por `:legacy`
+- PostgreSQL `/data` · DiscVault
+- mantén sin cambios los volúmenes, variables de entorno, puertos y ruta de datos de la generación anterior; nunca sustituyas una imagen de la topología Compose DiscVault con PostgreSQL por `:legacy`
 
 ## Seguridad y reversión
 
 :::caution
-El límite de recuperación segura de **Instalación: Opciones de instalación** exige estas acciones antes de iniciar o continuar: Solo rama Legacy: después de la copia, cambia únicamente la etiqueta de imagen del despliegue antiguo existente a `:legacy`, descárgalo y recréalo con la topología intacta, verifica la colección y detente; no cambies ese despliegue existente a la topología v26 en esta página; la imagen congelada `:legacy` no recibe funciones de DiscVault v26, mejoras de migración ni futuras actualizaciones de interfaz; solo para un despliegue existente o legacy: juego de copias coincidente; notas de versión y digest inmutable registrado. Puntos de control de esta página: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
+El límite de recuperación segura de **Instalación: Opciones de instalación** exige estas acciones antes de iniciar o continuar: Solo rama Legacy: después de la copia, cambia únicamente la etiqueta de imagen del despliegue antiguo existente a `:legacy`, descárgalo y recréalo con la topología intacta, verifica la colección y detente; no cambies ese despliegue existente a la topología DiscVault en esta página; la imagen congelada `:legacy` no recibe funciones de DiscVault, mejoras de migración ni futuras actualizaciones de interfaz; solo para un despliegue existente o legacy: juego de copias coincidente; notas de versión y digest inmutable registrado. Puntos de control de esta página: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
-- Solo rama Legacy: después de la copia, cambia únicamente la etiqueta de imagen del despliegue antiguo existente a `:legacy`, descárgalo y recréalo con la topología intacta, verifica la colección y detente; no cambies ese despliegue existente a la topología v26 en esta página
-- la imagen congelada `:legacy` no recibe funciones de DiscVault v26, mejoras de migración ni futuras actualizaciones de interfaz
+- Solo rama Legacy: después de la copia, cambia únicamente la etiqueta de imagen del despliegue antiguo existente a `:legacy`, descárgalo y recréalo con la topología intacta, verifica la colección y detente; no cambies ese despliegue existente a la topología DiscVault en esta página
+- la imagen congelada `:legacy` no recibe funciones de DiscVault, mejoras de migración ni futuras actualizaciones de interfaz
 - solo para un despliegue existente o legacy: juego de copias coincidente
 - notas de versión y digest inmutable registrado
 :::

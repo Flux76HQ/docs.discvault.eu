@@ -5,14 +5,14 @@ pageId: 'install-docker-compose'
 products: ['server']
 platforms: ['docker']
 channels: ['beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-20" />
+<PageMeta channels="beta" platform="Docker" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-20" />
 
 ## Doel en resultaat
 
@@ -22,7 +22,7 @@ Voer de paginaspecifieke werkwijze uit voor **Installeren: Docker Compose**. Dez
 
 Deze pagina is uitsluitend van toepassing op **Installeren: Docker Compose** (Docker). De kanaal- en gegevensgrenzen zijn: DiscVault · `ghcr.io/helmerznl/discvault:beta`; `release/v26-beta`; `discvault_next_deploy`; `6180` → API `5000`. Paginaspecifieke controlepunten: `release/v26-beta` · `app/deploy/next/docker-compose.yml` · `app/deploy/next/.env.example` · `DISCVAULT_NEXT_IMAGE` · `ghcr.io/helmerznl/discvault:beta` · `6180:5000` · `LEGACY_AUTH_ENABLED=true`.
 
-### DiscVault v26 bèta
+### DiscVault bèta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `release/v26-beta`
@@ -46,7 +46,7 @@ Deze pagina is uitsluitend van toepassing op **Installeren: Docker Compose** (Do
 
 ### Opdrachten en instellingen
 
-#### DiscVault v26 bèta
+#### DiscVault bèta
 
 ```bash
 set -euo pipefail

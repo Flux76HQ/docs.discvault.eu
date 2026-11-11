@@ -5,14 +5,14 @@ pageId: 'reference-index'
 products: ['server', 'pwa', 'ios', 'android']
 platforms: ['all']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="all platforms" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-09-20" />
+<PageMeta channels="stable,beta" platform="all platforms" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-09-20" />
 
 ## Goal and result
 
@@ -20,17 +20,17 @@ Look up image channels, ports, endpoints, persistent data locations, authenticat
 
 ## Applies to
 
-`ghcr.io/helmerznl/discvault:latest` is DiscVault v26 stable and `ghcr.io/helmerznl/discvault:beta` is DiscVault v26 beta. They share one PostgreSQL-backed architecture; only the image tag differs. `:dev` is engineering-only.
+`ghcr.io/helmerznl/discvault:latest` is DiscVault stable and `ghcr.io/helmerznl/discvault:beta` is DiscVault beta. They share one PostgreSQL-backed architecture; only the image tag differs. `:dev` is engineering-only.
 
-### DiscVault v26 stable
+### DiscVault stable
 
-- DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault stable · `ghcr.io/helmerznl/discvault:latest`
 - PostgreSQL + `/data`
 - API `6080:5000` + MCP `6090:6090`
 
-### DiscVault v26 beta
+### DiscVault beta
 
-- DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault beta · `ghcr.io/helmerznl/discvault:beta`
 - PostgreSQL + `/data`
 - API `6080:5000` + MCP `6090:6090`
 
@@ -41,7 +41,7 @@ Look up image channels, ports, endpoints, persistent data locations, authenticat
 ## Procedure
 
 1. **Inspect:** running image digest · `:latest` / `:beta`
-2. **Record:** `:dev` is engineering-only and not a release channel; DiscVault v26 stable uses `:latest` and DiscVault v26 beta uses `:beta` · `:dev`
+2. **Record:** `:dev` is engineering-only and not a release channel; DiscVault stable uses `:latest` and DiscVault beta uses `:beta` · `:dev`
 3. **Record:** ports + `/api/next/health` + passkey keys
 4. **Record:** [Configure: OpenID Connect (OIDC) sign-in](/configure/oidc/) · `DISCVAULT_OIDC_ISSUER`
 5. **Record:** PostgreSQL + `/data` · matched backup method
@@ -61,7 +61,7 @@ An operator can identify the running channel and all data that must be backed up
 Reference information makes no changes. Return to the focused procedure for commands and checks.
 
 - the reference is read-only; use the focused procedure before running commands or changing data
-- `:dev` is engineering-only and not a release channel; DiscVault v26 stable uses `:latest` and DiscVault v26 beta uses `:beta` · `:dev`
+- `:dev` is engineering-only and not a release channel; DiscVault stable uses `:latest` and DiscVault beta uses `:beta` · `:dev`
 :::
 
 ## Next step

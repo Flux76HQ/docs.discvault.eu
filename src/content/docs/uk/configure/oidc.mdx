@@ -5,14 +5,14 @@ pageId: 'configure-oidc'
 products: ['server', 'pwa']
 platforms: ['docker', 'web']
 channels: ['beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'Flux76HQ/App-Guidance']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="Docker · веб" version="DiscVault v26" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-09-20" />
+<PageMeta channels="beta" platform="Docker · веб" version="DiscVault" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## Мета й результат
 
@@ -22,7 +22,7 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 Ця сторінка стосується лише **Налаштування: Вхід через OpenID Connect (OIDC)** (Docker · веб). Межі каналу й даних: DiscVault · `26.9.117+`; OIDC додає необов’язковий вхід у браузері; локальні passkeys, необов’язкові паролі, коди відновлення, API-токени й MCP bearer-токени зберігають свої ролі; ідентичність є точною парою issuer і subject; електронна пошта ніколи не прив’язується автоматично, прив’язування потребує активної сесії браузера, а від’єднання — іншого придатного способу входу. Контрольні точки цієї сторінки: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
 
-### DiscVault v26 – бета
+### DiscVault – бета
 
 - DiscVault · `26.9.117+`
 - OIDC додає необов’язковий вхід у браузері; локальні passkeys, необов’язкові паролі, коди відновлення, API-токени й MCP bearer-токени зберігають свої ролі
@@ -52,7 +52,7 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ### Команди й налаштування
 
-#### DiscVault v26 – бета
+#### DiscVault – бета
 
 ```text
 RP_ORIGINS=https://discvault.example.com

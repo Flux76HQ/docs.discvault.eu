@@ -5,14 +5,14 @@ pageId: 'configure-index'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · веб" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-09-20" />
+<PageMeta channels="stable,beta" platform="Docker · веб" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-09-20" />
 
 ## Мета й результат
 
@@ -20,17 +20,17 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## Застосовується до
 
-Ця сторінка стосується лише **Налаштування: Огляд** (Docker · веб). Межі каналу й даних: DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. Контрольні точки цієї сторінки: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/oidc/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
+Ця сторінка стосується лише **Налаштування: Огляд** (Docker · веб). Межі каналу й даних: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault RBAC. Контрольні точки цієї сторінки: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/oidc/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
-### DiscVault v26 – стабільний
+### DiscVault – стабільний
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- RBAC
+- DiscVault RBAC
 
-### DiscVault v26 – бета
+### DiscVault – бета
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- RBAC
+- DiscVault RBAC
 
 ## Передумови
 
@@ -48,11 +48,11 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ### Маршрути завдань
 
-- [Налаштування: Змінні середовища](/uk/configure/environment/) — DiscVault 26 `.env.example`
-- [Налаштування: Автентифікація та RBAC](/uk/configure/auth-rbac/) — DiscVault 26 RBAC
+- [Налаштування: Змінні середовища](/uk/configure/environment/) — DiscVault `.env.example`
+- [Налаштування: Автентифікація та RBAC](/uk/configure/auth-rbac/) — DiscVault RBAC
 - [Налаштування: Вхід через OpenID Connect (OIDC)](/uk/configure/oidc/) — DiscVault 26.9 117 OIDC Pocket ID
-- [Встановлення: Legacy Authentication](/uk/install/legacy-authentication/) — DiscVault 26 TOTP
-- [Налаштування: Плагіни й метадані](/uk/configure/plugins-metadata/) — DiscVault 26
+- [Встановлення: Legacy Authentication](/uk/install/legacy-authentication/) — DiscVault TOTP
+- [Налаштування: Плагіни й метадані](/uk/configure/plugins-metadata/) — DiscVault
 
 ## Очікуваний результат
 

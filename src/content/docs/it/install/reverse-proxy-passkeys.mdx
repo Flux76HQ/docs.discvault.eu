@@ -5,14 +5,14 @@ pageId: 'install-reverse-proxy-passkeys'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU', 'Flux76HQ/App-Guidance']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## Obiettivo e risultato
 
@@ -22,13 +22,13 @@ Completa la procedura specifica della pagina per **Installazione: Proxy inverso 
 
 Questa pagina si applica solo a **Installazione: Proxy inverso e chiavi di accesso** (Docker · web). I limiti di canale e dati sono: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6080`; al di fuori dell’eccezione localhost, le passkey richiedono un nome di dominio completo stabile su HTTPS attendibile; un indirizzo IP semplice o HTTP non è supportato; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; OIDC · `/api/next/auth/oidc/callback` · [Configurazione: Accesso con OpenID Connect (OIDC)](/it/configure/oidc/); `LEGACY_AUTH_ENABLED=true`. Punti di controllo della pagina: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
-### DiscVault v26 stabile
+### DiscVault stabile
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - `RP_ID` `RP_ORIGINS` · `6080`
 - al di fuori dell’eccezione localhost, le passkey richiedono un nome di dominio completo stabile su HTTPS attendibile; un indirizzo IP semplice o HTTP non è supportato
 
-### DiscVault v26 beta
+### DiscVault beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `RP_ID` `RP_ORIGINS` · `6180`
@@ -44,7 +44,7 @@ Questa pagina si applica solo a **Installazione: Proxy inverso e chiavi di acces
 ### Fallback Legacy Authentication
 
 :::note[Disponibile in beta]
-Legacy Authentication con nome utente, password e autenticazione a due fattori (2FA) è disponibile in DiscVault 26 beta quando non è possibile usare le passkey.
+Legacy Authentication con nome utente, password e autenticazione a due fattori (2FA) è disponibile in DiscVault beta quando non è possibile usare le passkey.
 
 Segui `/install/legacy-authentication/` prima di abilitare la funzione o creare il primo proprietario.
 :::
@@ -62,7 +62,7 @@ Segui `/install/legacy-authentication/` prima di abilitare la funzione o creare 
 
 ### Comandi e impostazioni
 
-#### DiscVault v26 stabile
+#### DiscVault stabile
 
 ```text
 RP_ID=discvault.example.com
@@ -71,7 +71,7 @@ RP_ORIGINS=https://discvault.example.com
 curl --fail https://discvault.example.com/api/next/health
 ```
 
-#### DiscVault v26 beta
+#### DiscVault beta
 
 ```text
 RP_ID=discvault.example.com

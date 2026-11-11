@@ -5,14 +5,14 @@ pageId: 'configure-oidc'
 products: ['server', 'pwa']
 platforms: ['docker', 'web']
 channels: ['beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'Flux76HQ/App-Guidance']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-09-20" />
+<PageMeta channels="beta" platform="Docker · web" version="DiscVault" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## Goal and result
 
@@ -20,11 +20,11 @@ Add one OpenID Connect provider, including Pocket ID, as an optional browser sig
 
 ## Applies to
 
-OIDC is available in DiscVault 26 beta from build 26.9.117. It is disabled when its required variables are empty. It authenticates only the self-hosted browser/PWA; iOS, Android, API tokens, and MCP bearer tokens keep their existing authentication contracts.
+OIDC is available in DiscVault beta from build 26.9.117. It is disabled when its required variables are empty. It authenticates only the self-hosted browser/PWA; iOS, Android, API tokens, and MCP bearer tokens keep their existing authentication contracts.
 
-### DiscVault v26 beta
+### DiscVault beta
 
-- DiscVault v26 beta · `26.9.117+`
+- DiscVault beta · `26.9.117+`
 - OIDC adds an optional browser sign-in method; local passkeys, optional passwords, recovery codes, API tokens, and MCP bearer tokens keep their existing roles
 - an identity is the exact issuer and subject pair; email never links automatically, linking requires the signed-in browser session, and unlinking requires another usable login method
 
@@ -52,7 +52,7 @@ allow exact private HTTP origins only for token and JWKS endpoints; the issuer a
 
 ### Commands and settings
 
-#### DiscVault v26 beta
+#### DiscVault beta
 
 ```text
 RP_ORIGINS=https://discvault.example.com

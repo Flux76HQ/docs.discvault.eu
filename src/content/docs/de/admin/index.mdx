@@ -5,14 +5,14 @@ pageId: 'admin-index'
 products: ['server']
 platforms: ['docker', 'unraid', 'web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid · Web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid · Web" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Ziel und Ergebnis
 
@@ -22,12 +22,12 @@ Führe den seitenspezifischen Ablauf aus für **Administration: Protokolle, Jobs
 
 Diese Seite gilt ausschließlich für **Administration: Protokolle, Jobs und Sicherheit** (Docker · Unraid · Web). Kanal- und Datengrenzen sind: DiscVault · `ghcr.io/helmerznl/discvault:latest`; API MCP PostgreSQL; DiscVault · `ghcr.io/helmerznl/discvault:beta`; API MCP PostgreSQL. Seitenspezifische Kontrollpunkte: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
 
-### DiscVault v26 – stabil
+### DiscVault – stabil
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - API MCP PostgreSQL
 
-### DiscVault v26 – Beta
+### DiscVault – Beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - API MCP PostgreSQL

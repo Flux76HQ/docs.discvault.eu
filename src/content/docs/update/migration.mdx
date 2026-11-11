@@ -1,37 +1,37 @@
 ---
-title: 'Update and migrate: DiscVault 26 migration'
-description: 'Import an existing SQLite collection into DiscVault 26 through the guarded migration assistant.'
+title: 'Update and migrate: DiscVault migration'
+description: 'Import an existing SQLite collection into DiscVault through the guarded migration assistant.'
 pageId: 'update-migration'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Goal and result
 
-Import an existing SQLite collection into DiscVault 26 through the guarded migration assistant.
+Import an existing SQLite collection into DiscVault through the guarded migration assistant.
 
 ## Applies to
 
-This page is only for importing existing legacy data. In both DiscVault v26 channels, `/data/discvault.db` is a read-only migration source, never the current runtime database; imported records are written to PostgreSQL.
+This page is only for importing existing legacy data. In both DiscVault channels, `/data/discvault.db` is a read-only migration source, never the current runtime database; imported records are written to PostgreSQL.
 
-### DiscVault v26 stable
+### DiscVault stable
 
-- DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
-- DiscVault 26 migration assistant
+- DiscVault stable · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault migration assistant
 - read-only existing-data source; never the current runtime database · SQLite → PostgreSQL
 
-### DiscVault v26 beta
+### DiscVault beta
 
-- DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
-- DiscVault 26 migration assistant
+- DiscVault beta · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault migration assistant
 - read-only existing-data source; never the current runtime database · SQLite → PostgreSQL
 
 ## Prerequisites
@@ -68,7 +68,7 @@ Readiness is confirmed, migration finishes without failed records, and collectio
 ## Safety and rollback
 
 :::caution
-Stop v26 writers, preserve logs, restore the matching PostgreSQL and `/data` backup, and restart the recorded image digest. Never repeat an import into a partially populated database.
+Stop DiscVault writers, preserve logs, restore the matching PostgreSQL and `/data` backup, and restart the recorded image digest. Never repeat an import into a partially populated database.
 
 - stop DiscVault writers, restore matching PostgreSQL and `/data` backups, and never repeat the import into a partially populated database
 :::

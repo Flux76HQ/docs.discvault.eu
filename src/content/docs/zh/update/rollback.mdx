@@ -5,14 +5,14 @@ pageId: 'update-rollback'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## 目标和结果
 
@@ -22,13 +22,13 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 本页面仅适用于 **更新和迁移: 镜像回滚** (Docker · Unraid). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; 必须先恢复匹配数据，再启动之前的镜像; PostgreSQL `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; 必须先恢复匹配数据，再启动之前的镜像; PostgreSQL `/data`. 本页面专用检查点： `PREVIOUS_IMAGE` · `pg_restore --exit-on-error` · `discvault.failed-` · `DISCVAULT_IMAGE`.
 
-### DiscVault v26 稳定版
+### DiscVault 稳定版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - 必须先恢复匹配数据，再启动之前的镜像
 - PostgreSQL `/data`
 
-### DiscVault v26 测试版
+### DiscVault 测试版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - 必须先恢复匹配数据，再启动之前的镜像
@@ -106,7 +106,7 @@ trap - EXIT
 
 ## 下一步
 
-[更新和迁移: 迁移到 DiscVault 26](/zh/update/migration/)
+[更新和迁移: 迁移到 DiscVault](/zh/update/migration/)
 
 ## 来源和状态
 

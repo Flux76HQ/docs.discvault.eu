@@ -5,14 +5,14 @@ pageId: 'update-index'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Goal and result
 
@@ -20,17 +20,17 @@ Use a gated sequence for backup, update, verification, and rollback.
 
 ## Applies to
 
-Stable and beta use the same v26 PostgreSQL-backed topology. Change only `DISCVAULT_IMAGE`; review release notes and keep a matched PostgreSQL and `/data` backup before any update or channel switch.
+Stable and beta use the same DiscVault PostgreSQL-backed topology. Change only `DISCVAULT_IMAGE`; review release notes and keep a matched PostgreSQL and `/data` backup before any update or channel switch.
 
-### DiscVault v26 stable
+### DiscVault stable
 
-- DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
-- one v26 backup/update/restore topology
+- DiscVault stable · `ghcr.io/helmerznl/discvault:latest`
+- one DiscVault backup/update/restore topology
 
-### DiscVault v26 beta
+### DiscVault beta
 
-- DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
-- one v26 backup/update/restore topology
+- DiscVault beta · `ghcr.io/helmerznl/discvault:beta`
+- one DiscVault backup/update/restore topology
 
 ## Prerequisites
 

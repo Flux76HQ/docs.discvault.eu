@@ -195,16 +195,16 @@ export const procedures = {
       item('iOS/iPadOS `17+`'),
       item('Android API `26+`'),
     ],
-    channels: releaseChannels(item('PostgreSQL + `/data`', 'same v26 topology')),
+    channels: releaseChannels(item('PostgreSQL + `/data`', 'same DiscVault topology')),
     steps: [
-      step('choose', route('install/index'), 'Docker Compose', 'DiscVault 26'),
+      step('choose', route('install/index'), 'Docker Compose', 'DiscVault'),
       step('choose', route('pwa/index'), 'HTTPS', 'PWA'),
       step('choose', route('ios/index'), 'iOS/iPadOS `17+`', 'SwiftData'),
       step('choose', route('android/index'), 'Android API `26+`', 'Room'),
     ],
     blocks: [
       routes(
-        ['install/index', 'DiscVault 26 · PostgreSQL · HTTPS'],
+        ['install/index', 'DiscVault · PostgreSQL · HTTPS'],
         ['pwa/index', 'PWA · browser'],
         ['ios/index', 'iOS/iPadOS 17+ · SwiftData'],
         ['android/index', 'Android API 26+ · Room'],
@@ -249,33 +249,35 @@ curl --version`,
       item('PostgreSQL `17` + persistent `/data`'),
     ),
     steps: [
+      step('choose', route('install/docker-compose'), 'official DiscVault beta deployment files'),
+      step('choose', route('install/docker-run'), 'advanced stable or beta equivalent'),
+      step('choose', route('install/unraid'), 'Unraid Community Applications · DiscVault launcher'),
       step(
         'choose',
-        route('install/docker-compose'),
-        'official DiscVault 26 beta deployment files',
+        route('install/home-assistant'),
+        'Home Assistant app · PostgreSQL 17 built in',
       ),
-      step('choose', route('install/docker-run'), 'advanced stable or beta equivalent'),
-      step('choose', route('install/unraid'), 'Unraid Compose Manager'),
       step('choose', term('legacyChannelChoice')),
       step('preserve', term('legacyTopologyBoundary')),
-      step('open', route('update/migration'), 'existing data → DiscVault 26'),
+      step('open', route('update/migration'), 'existing data → DiscVault'),
       step('record', '`DISCVAULT_IMAGE`', 'image digest', term('matchingBackupIfExisting')),
     ],
     blocks: [
       routes(
         [
           'install/docker-compose',
-          'DiscVault 26 beta · official `release/v26-beta` files · `DISCVAULT_NEXT_IMAGE`',
+          'DiscVault beta · official `release/v26-beta` files · `DISCVAULT_NEXT_IMAGE`',
         ],
-        ['install/docker-run', 'DiscVault 26 · Docker run · PostgreSQL + `/data` · `DATABASE_URL`'],
-        ['install/storage-postgresql', 'DiscVault 26 · PostgreSQL + `/data`'],
-        ['install/unraid', 'DiscVault 26 · Unraid · PostgreSQL + `/data`'],
-        ['update/migration', 'previous generation → DiscVault 26 · guarded import'],
+        ['install/docker-run', 'DiscVault · Docker run · PostgreSQL + `/data` · `DATABASE_URL`'],
+        ['install/storage-postgresql', 'DiscVault · PostgreSQL + `/data`'],
+        ['install/unraid', 'DiscVault · Unraid Community Applications · `discvault-launcher`'],
+        ['install/home-assistant', 'DiscVault · Home Assistant app · PostgreSQL 17 + `/data`'],
+        ['update/migration', 'previous generation → DiscVault · guarded import'],
       ),
     ],
     outcomes: [
       item(term('selectedChannel')),
-      item('PostgreSQL + `/data`', 'both v26 channels'),
+      item('PostgreSQL + `/data`', 'both DiscVault channels'),
       item(term('legacyTopologyBoundary')),
     ],
     safety: [
@@ -366,7 +368,7 @@ docker run -d --name discvault-mcp --restart unless-stopped \
 docker ps --filter 'name=discvault-'`,
       ),
     ],
-    outcomes: [item('HTTP `2xx`', '`/api/next/health`'), item('four v26 containers')],
+    outcomes: [item('HTTP `2xx`', '`/api/next/health`'), item('four DiscVault containers')],
     safety: [
       item('Docker Compose', 'recommended operational route'),
       item(term('matchingBackup'), 'PostgreSQL + `/data`'),
@@ -418,56 +420,138 @@ docker ps --filter 'name=discvault-'`,
   },
   'install/unraid': {
     markers: [
-      '`/mnt/user/appdata/discvault/postgres`',
-      '`/mnt/user/appdata/discvault/data`',
-      '`6080:5000`',
-      '`DISCVAULT_IMAGE`',
+      'Community Applications',
+      '`ghcr.io/helmerznl/discvault-launcher:latest`',
+      '`/var/run/docker.sock`',
+      '`/api/next/health`',
     ],
-    prerequisites: [item('Unraid `6.12+`'), item('Compose Manager'), item('OpenSSL')],
-    channels: releaseChannels(
-      item('same PostgreSQL + API + worker + MCP Compose stack'),
-      item('stable default `:latest`; optional beta `:beta`'),
-    ),
+    prerequisites: [
+      item('Unraid `6.12+`'),
+      item(term('unraidCaPlugin')),
+      item(term('passkeyDomain')),
+    ],
+    channels: {
+      stable: [
+        item('DiscVault', '`ghcr.io/helmerznl/discvault-launcher:latest`'),
+        item('`6080`', '`/mnt/user/appdata/discvault`', '`discvault_stack`'),
+      ],
+      beta: [
+        item('DiscVault (beta)', '`ghcr.io/helmerznl/discvault-launcher:beta`'),
+        item('`6081`', '`/mnt/user/appdata/discvault-beta`', '`discvault_beta_stack`'),
+      ],
+    },
     steps: [
-      step('install', 'Unraid Compose Manager', route('install/docker-compose')),
-      step('configure', '`DISCVAULT_IMAGE`', '`:latest` default / `:beta` optional'),
+      step('open', term('unraidStoreStep')),
+      step('configure', term('unraidFolders'), '`TZ`'),
       step(
         'configure',
-        '`DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data`',
-        '`DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres`',
+        '`RP_ID`',
+        '`RP_ORIGINS`',
+        term('passkeyDomain'),
+        '`LEGACY_AUTH_ENABLED=true`',
       ),
-      step('verify', '`postgres`', '`next-api`', '`next-worker`', '`next-mcp`', '`6080:5000`'),
+      step('start', term('unraidFirstStart'), term('unraidSocket')),
+      step('verify', '`/api/next/health`', term('ownerOnboarding')),
+      step('configure', term('unraidUpdates'), '`DISCVAULT_CHANNEL=manual`', '`DISCVAULT_IMAGE`'),
     ],
     blocks: [
       code(
         'stable',
-        `DISCVAULT_IMAGE=${imageChannels.stable.image}
-DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data
-DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres
-DISCVAULT_API_PORT=6080
-DISCVAULT_MCP_PORT=6090`,
+        `Repository                         ghcr.io/helmerznl/discvault-launcher:latest
+Web UI port                        6080
+App data (/data)                   /mnt/user/appdata/discvault
+DISCVAULT_DATA_DIR_HOST            /mnt/user/appdata/discvault
+DISCVAULT_POSTGRES_DATA_DIR_HOST   /mnt/user/appdata/discvault-postgres
+Launcher config (/config)          /mnt/user/appdata/discvault-launcher
+Docker socket                      /var/run/docker.sock
+DISCVAULT_CHANNEL                  latest
+TZ                                 Europe/Amsterdam
+RP_ID                              discvault.example.com
+RP_ORIGINS                         https://discvault.example.com
+LEGACY_AUTH_ENABLED                false`,
         'text',
       ),
       code(
         'beta',
-        `DISCVAULT_IMAGE=${imageChannels.beta.image}
-DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data
-DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres
-DISCVAULT_API_PORT=6080
-DISCVAULT_MCP_PORT=6090`,
+        `Repository                         ghcr.io/helmerznl/discvault-launcher:beta
+Web UI port                        6081
+App data (/data)                   /mnt/user/appdata/discvault-beta
+DISCVAULT_DATA_DIR_HOST            /mnt/user/appdata/discvault-beta
+DISCVAULT_POSTGRES_DATA_DIR_HOST   /mnt/user/appdata/discvault-beta-postgres
+Launcher config (/config)          /mnt/user/appdata/discvault-beta-launcher
+Docker socket                      /var/run/docker.sock
+DISCVAULT_CHANNEL                  beta
+DISCVAULT_PROJECT_NAME             discvault_beta_stack
+DISCVAULT_NETWORK                  discvault-beta-stack`,
         'text',
       ),
+      code(
+        'both',
+        `curl --fail http://<unraid-server>:6080/api/next/health
+# Roll back: Release channel = manual, DiscVault image = v26.10.17`,
+      ),
     ],
-    outcomes: [item('PostgreSQL persistence'), item('persistent `/data`'), item('HTTP `2xx`')],
+    outcomes: [
+      item(term('ownerOnboarding')),
+      item('`/api/next/health`', 'HTTP `200`', '`"status": "ok"`'),
+    ],
     safety: [
-      item(term('matchingBackup')),
-      item('never remove appdata during container recreation'),
+      item(term('separateBetaData')),
+      item(term('unraidSocket')),
+      item(term('moveBetweenInstalls')),
+      item(term('unraidNoOidc')),
+    ],
+  },
+  'install/home-assistant': {
+    markers: ['`6180`', '`/api/next/health`', '`rp_id`', '`password_login`', '`secrets.json`'],
+    prerequisites: [
+      item('Home Assistant OS / Supervised', '`amd64` / `aarch64`'),
+      item(term('passkeyDomain')),
+      item(term('haNoIngress')),
+    ],
+    channels: {
+      stable: [item('DiscVault', '`6180`'), item('PostgreSQL 17', '`/data`')],
+      beta: [item('DiscVault (beta)', '`6181`'), item('PostgreSQL 17', '`/data`')],
+    },
+    steps: [
+      step('open', term('haRepository')),
+      step('install', term('haInstallStep')),
+      step('configure', term('haRpId'), '`rp_origins`', '`trusted_proxies`'),
+      step('configure', term('haPasswordLogin')),
+      step('configure', term('haOidc'), '`/api/next/auth/oidc/callback`'),
+      step('start', term('ownerOnboarding')),
+      step('verify', '`/api/next/health`', term('haMcp')),
+    ],
+    blocks: [
+      code(
+        'both',
+        `rp_id: discvault.example.com
+rp_origins: https://discvault.example.com
+rp_name: DiscVault
+password_login: false
+trusted_proxies: private
+block_crawlers: true`,
+        'yaml',
+      ),
+      code('both', `curl --fail http://<home-assistant>:6180/api/next/health   # beta: 6181`),
+    ],
+    outcomes: [
+      item(term('ownerOnboarding')),
+      item(term('haMcp')),
+      item('`/api/next/health`', 'HTTP `200`', '`"status": "ok"`'),
+    ],
+    safety: [
+      item(term('haColdBackup')),
+      item(term('haSecrets')),
+      item(term('separateBetaData')),
+      item(term('moveBetweenInstalls')),
+      item(term('haUpdates')),
     ],
   },
   'install/storage-postgresql': {
     markers: ['`DISCVAULT_POSTGRES_DATA`', '`DISCVAULT_DATA_DIR`', '`postgres`', '`next-api`'],
     prerequisites: [
-      item('running v26 Compose stack'),
+      item('running DiscVault Compose stack'),
       item(term('backupOutsideData')),
       item('PostgreSQL `17`'),
     ],
@@ -656,7 +740,7 @@ curl --fail http://localhost:6180/api/next/auth/status`,
       'WebAuthn',
       'Legacy Authentication',
     ],
-    prerequisites: [item('running v26 deployment'), item('browser', 'configured origin')],
+    prerequisites: [item('running DiscVault deployment'), item('browser', 'configured origin')],
     channels: {
       stable: [
         item(imageChannels.stable.label, `\`${imageChannels.stable.image}\``),
@@ -702,7 +786,7 @@ curl --fail http://localhost:6180/api/next/auth/status`,
       '`/update/rollback/`',
     ],
     prerequisites: [item(term('matchingBackup')), item(term('releaseNotes'))],
-    channels: releaseChannels(item('one v26 backup/update/restore topology')),
+    channels: releaseChannels(item('one DiscVault backup/update/restore topology')),
     steps: [
       step('backup', route('update/backup'), term('matchingBackup')),
       step('test', route('update/restore'), 'restore rehearsal'),
@@ -770,12 +854,12 @@ curl --fail http://localhost:6180/api/next/auth/status`,
       step('inspect', term('legacyChannelChoice')),
       step('backup', term('matchingBackup'), 'before pull or recreate'),
       step('choose', term('legacyUpdateFlow')),
-      step('open', route('update/migration'), 'when moving to DiscVault 26'),
+      step('open', route('update/migration'), 'when moving to DiscVault'),
       step('preserve', term('legacyTopologyBoundary')),
-      step('verify', '`DiscVault v26`', 'backup manifest', '`PREVIOUS_IMAGE=@sha256:…`'),
-      step('choose', '`DiscVault v26`', '`DISCVAULT_IMAGE`', '`:latest` / `:beta`'),
-      step('run', '`DiscVault v26`', 'Compose pull + `--force-recreate`', 'without deleting data'),
-      step('compare', '`DiscVault v26`', term('updateAccepted')),
+      step('verify', '`DiscVault`', 'backup manifest', '`PREVIOUS_IMAGE=@sha256:…`'),
+      step('choose', '`DiscVault`', '`DISCVAULT_IMAGE`', '`:latest` / `:beta`'),
+      step('run', '`DiscVault`', 'Compose pull + `--force-recreate`', 'without deleting data'),
+      step('compare', '`DiscVault`', term('updateAccepted')),
     ],
     blocks: [
       code('stable', `export DISCVAULT_IMAGE=${imageChannels.stable.image}`),
@@ -850,7 +934,7 @@ trap - EXIT`,
       item(term('ownerAccess')),
     ],
     channels: releaseChannels(
-      item('DiscVault 26 migration assistant'),
+      item('DiscVault migration assistant'),
       item(term('legacyMigrationSource'), 'SQLite → PostgreSQL'),
     ),
     steps: [
@@ -881,7 +965,7 @@ curl --fail http://localhost:6080/api/next/migration/status`,
       '`/configure/plugins-metadata/`',
     ],
     prerequisites: [item(term('ownerAccess')), item('configuration backup')],
-    channels: releaseChannels(item('same v26 environment, RBAC, and plugin interfaces')),
+    channels: releaseChannels(item('same DiscVault environment, RBAC, and plugin interfaces')),
     steps: [
       step('choose', route('configure/environment'), 'official beta runtime assignments'),
       step('choose', route('configure/auth-rbac'), 'Passkeys + Legacy Authentication + RBAC'),
@@ -892,14 +976,14 @@ curl --fail http://localhost:6080/api/next/migration/status`,
     ],
     blocks: [
       routes(
-        ['configure/environment', 'DiscVault 26 beta · official `.env.example` · secrets'],
+        ['configure/environment', 'DiscVault beta · official `.env.example` · secrets'],
         [
           'configure/auth-rbac',
-          'DiscVault 26 · Passkeys · beta Legacy Authentication · invites · RBAC',
+          'DiscVault · Passkeys · beta Legacy Authentication · invites · RBAC',
         ],
         ['configure/oidc', 'DiscVault 26.9.117 beta · OIDC · Pocket ID · account linking'],
-        ['install/legacy-authentication', 'DiscVault 26 beta · password + TOTP · recovery'],
-        ['configure/plugins-metadata', 'DiscVault 26 · plugins · metadata'],
+        ['install/legacy-authentication', 'DiscVault beta · password + TOTP · recovery'],
+        ['configure/plugins-metadata', 'DiscVault · plugins · metadata'],
       ),
     ],
     outcomes: [
@@ -1138,7 +1222,7 @@ curl --fail https://discvault.example.com/api/next/auth/status`,
       '`secret app_settings`',
     ],
     prerequisites: [item(term('adminAccess')), item(term('providerCredentials'))],
-    channels: releaseChannels(item('DiscVault 26 plugin registry', '`/data/plugins` persistent')),
+    channels: releaseChannels(item('DiscVault plugin registry', '`/data/plugins` persistent')),
     steps: [
       step('inspect', '`GET /api/next/plugins/registry`', 'manifest'),
       step('configure', ui('pluginsConfigure'), term('providerCredentials')),
@@ -1157,8 +1241,8 @@ curl --fail http://localhost:6080/api/next/metadata/plugins`,
   },
   'pwa/index': {
     markers: ['PWA', 'HTTPS', '`Service Worker`', '`/pwa/offline/`'],
-    prerequisites: [item('supported browser'), item('healthy HTTPS DiscVault 26 origin')],
-    channels: releaseChannels(item('same v26 PWA shell and server-backed data')),
+    prerequisites: [item('supported browser'), item('healthy HTTPS DiscVault origin')],
+    channels: releaseChannels(item('same DiscVault PWA shell and server-backed data')),
     steps: [
       step('install', route('pwa/install'), 'trusted HTTPS origin'),
       step('open', route('pwa/library-search'), 'library + search + filters'),
@@ -1370,7 +1454,7 @@ curl --fail http://localhost:6080/api/next/health`,
   'integrations/index': {
     markers: ['MCP', 'REST', 'Plex', 'Jellyfin'],
     prerequisites: [item('HTTPS endpoint'), item('personal API key or admin session')],
-    channels: releaseChannels(item('MCP, REST, plugin registry, Plex, and Jellyfin in v26')),
+    channels: releaseChannels(item('MCP, REST, plugin registry, Plex, and Jellyfin in DiscVault')),
     steps: [
       step('choose', route('integrations/mcp-api'), 'personal key'),
       step('choose', route('integrations/plex-jellyfin'), 'provider secret'),
@@ -1379,8 +1463,8 @@ curl --fail http://localhost:6080/api/next/health`,
     ],
     blocks: [
       routes(
-        ['integrations/mcp-api', 'DiscVault 26 · MCP · REST · personal key'],
-        ['integrations/plex-jellyfin', 'DiscVault 26 · provider plugin'],
+        ['integrations/mcp-api', 'DiscVault · MCP · REST · personal key'],
+        ['integrations/plex-jellyfin', 'DiscVault · provider plugin'],
       ),
     ],
     outcomes: [item(term('providerCredentials')), item('HTTPS', 'MCP', 'REST', 'Plex', 'Jellyfin')],
@@ -1429,7 +1513,7 @@ curl --fail http://localhost:6080/api/next/health`,
       item('reachable provider URL'),
       item(term('adminAccess')),
     ],
-    channels: releaseChannels(item('DiscVault 26 digital-media-source plugins')),
+    channels: releaseChannels(item('DiscVault digital-media-source plugins')),
     steps: [
       step('configure', ui('pluginsConfigure'), 'Plex / Jellyfin'),
       step('test', ui('pluginsHealth')),

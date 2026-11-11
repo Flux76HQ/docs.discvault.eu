@@ -5,14 +5,14 @@ pageId: 'configure-environment'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-09-20" />
+<PageMeta channels="beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-09-20" />
 
 ## Tavoite ja tulos
 
@@ -22,7 +22,7 @@ Suorita sivukohtainen työnkulku: **Määritys: Ympäristömuuttujat**. Tässä 
 
 Tämä sivu koskee vain kohdetta **Määritys: Ympäristömuuttujat** (Docker · Unraid). Kanava- ja tietorajat ovat: DiscVault · `ghcr.io/helmerznl/discvault:beta`; `.env.example` `release/v26-beta`; `0600` · `JWT_SECRET` `POSTGRES_PASSWORD`. Sivukohtaiset tarkistuspisteet: `/opt/discvault-next/.env` · `DISCVAULT_NEXT_IMAGE` · `DISCVAULT_NEXT_POSTGRES_DATA` · `chmod 0600` · `openssl rand -base64 48` · `RP_ORIGINS` · `LEGACY_AUTH_ENABLED` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS`.
 
-### DiscVault v26 – beta
+### DiscVault – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `.env.example` `release/v26-beta`
@@ -45,7 +45,7 @@ Tämä sivu koskee vain kohdetta **Määritys: Ympäristömuuttujat** (Docker ·
 
 ### Komennot ja asetukset
 
-#### DiscVault v26 – beta
+#### DiscVault – beta
 
 ```bash
 set -euo pipefail

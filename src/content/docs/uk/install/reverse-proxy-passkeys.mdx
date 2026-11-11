@@ -5,14 +5,14 @@ pageId: 'install-reverse-proxy-passkeys'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU', 'Flux76HQ/App-Guidance']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · веб" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
+<PageMeta channels="stable,beta" platform="Docker · веб" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## Мета й результат
 
@@ -22,13 +22,13 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 Ця сторінка стосується лише **Встановлення: Зворотний проксі та ключі доступу** (Docker · веб). Межі каналу й даних: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6080`; поза винятком localhost passkeys потребують стабільного повного доменного імені через довірений HTTPS; окрема IP-адреса чи звичайний HTTP не підтримуються; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; OIDC · `/api/next/auth/oidc/callback` · [Налаштування: Вхід через OpenID Connect (OIDC)](/uk/configure/oidc/); `LEGACY_AUTH_ENABLED=true`. Контрольні точки цієї сторінки: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
-### DiscVault v26 – стабільний
+### DiscVault – стабільний
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - `RP_ID` `RP_ORIGINS` · `6080`
 - поза винятком localhost passkeys потребують стабільного повного доменного імені через довірений HTTPS; окрема IP-адреса чи звичайний HTTP не підтримуються
 
-### DiscVault v26 – бета
+### DiscVault – бета
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `RP_ID` `RP_ORIGINS` · `6180`
@@ -44,7 +44,7 @@ import PageMeta from '../../../../components/PageMeta.astro';
 ### Резервна Legacy Authentication
 
 :::note[Доступно в бета-версії]
-Legacy Authentication з іменем користувача, паролем і двофакторною автентифікацією (2FA) доступна в DiscVault 26 beta, коли passkeys використовувати неможливо.
+Legacy Authentication з іменем користувача, паролем і двофакторною автентифікацією (2FA) доступна в DiscVault beta, коли passkeys використовувати неможливо.
 
 Дотримуйтеся `/install/legacy-authentication/` перед увімкненням можливості або створенням першого власника.
 :::
@@ -62,7 +62,7 @@ Legacy Authentication з іменем користувача, паролем і 
 
 ### Команди й налаштування
 
-#### DiscVault v26 – стабільний
+#### DiscVault – стабільний
 
 ```text
 RP_ID=discvault.example.com
@@ -71,7 +71,7 @@ RP_ORIGINS=https://discvault.example.com
 curl --fail https://discvault.example.com/api/next/health
 ```
 
-#### DiscVault v26 – бета
+#### DiscVault – бета
 
 ```text
 RP_ID=discvault.example.com

@@ -159,7 +159,7 @@ for (const file of canonical) {
     if (!visible.includes('<PageMeta ') && file !== 'index.mdx') {
       errors.push(`Missing visible channel metadata: ${localizedFile}`);
     }
-    if (source.includes("minVersion: 'DiscVault v26'") && file !== 'index.mdx') {
+    if (source.includes("minVersion: 'DiscVault'") && file !== 'index.mdx') {
       const sourceChannels = source.match(/^channels:\s*\[([^\]]+)\]/m)?.[1] ?? '';
       const expectedChannels = [
         ...(sourceChannels.includes("'stable'") ? ['v26Stable'] : []),
@@ -190,7 +190,7 @@ for (const locale of translatedLocales) {
     errors.push(`Missing locale-specific feedback label for ${locale}.`);
   }
   if (!localeBlock?.includes('v26Stable:') || !localeBlock?.includes('v26Beta:')) {
-    errors.push(`Missing locale-specific DiscVault v26 channel labels for ${locale}.`);
+    errors.push(`Missing locale-specific DiscVault channel labels for ${locale}.`);
   }
   if (
     localeBlock &&

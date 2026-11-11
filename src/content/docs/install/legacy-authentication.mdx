@@ -1,36 +1,36 @@
 ---
 title: 'Install: Legacy Authentication'
-description: 'Configure the implemented DiscVault 26 beta username/password fallback with TOTP, recovery codes, and fail-closed activation.'
+description: 'Configure the implemented DiscVault beta username/password fallback with TOTP, recovery codes, and fail-closed activation.'
 pageId: 'install-legacy-authentication'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-20'
 ---
 
 import PageMeta from '../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-20" />
+<PageMeta channels="beta" platform="Docker · web" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-20" />
 
 ## Goal and result
 
-Configure the implemented DiscVault 26 beta username/password fallback with TOTP, recovery codes, and fail-closed activation.
+Configure the implemented DiscVault beta username/password fallback with TOTP, recovery codes, and fail-closed activation.
 
 ## Applies to
 
-Legacy Authentication is an optional DiscVault 26 beta capability. Fresh instances with no users or credentials can atomically bootstrap the first Owner after password-risk acknowledgement; existing installations activate password login in Users & roles with a fresh Owner or Admin passkey assertion. Passwords require at least 15 characters and Argon2id storage. TOTP and single-use recovery codes are the recommended fallback path. Only a direct private or loopback request with invalid or empty RP settings may explicitly opt out of TOTP during first-owner bootstrap.
+Legacy Authentication is an optional DiscVault beta capability. Fresh instances with no users or credentials can atomically bootstrap the first Owner after password-risk acknowledgement; existing installations activate password login in Users & roles with a fresh Owner or Admin passkey assertion. Passwords require at least 15 characters and Argon2id storage. TOTP and single-use recovery codes are the recommended fallback path. Only a direct private or loopback request with invalid or empty RP settings may explicitly opt out of TOTP during first-owner bootstrap.
 
-### DiscVault v26 beta
+### DiscVault beta
 
-- DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault beta · `ghcr.io/helmerznl/discvault:beta`
 - optional username + password + TOTP capability
 - Passkeys remain preferred when a valid FQDN and trusted HTTPS are available
 
 ## Prerequisites
 
-- Legacy Authentication with a username, password, and two-factor authentication (2FA) is available in DiscVault 26 beta as a fallback when passkeys cannot be used.
+- Legacy Authentication with a username, password, and two-factor authentication (2FA) is available in DiscVault beta as a fallback when passkeys cannot be used.
 - owner access · on a brand-new instance with no users or credentials, the setup wizard atomically creates the first Owner after password-risk acknowledgement
 - TOTP · recovery codes are hashed, single-use, and shared with passkey recovery; backups omit TOTP secrets and recovery material, so MFA users enroll again after restore
 
@@ -47,12 +47,12 @@ only a direct private or loopback request with invalid or empty passkey RP setti
 3. **Choose:** on a brand-new instance with no users or credentials, the setup wizard atomically creates the first Owner after password-risk acknowledgement · on an existing installation, enable password login in Users & roles and approve activation with a fresh Owner or Admin passkey assertion
 4. **Create:** passwords require at least 15 characters, cannot equal the username or a denied common password, and are hashed with Argon2id; five failures in 15 minutes lock the account for 15 minutes · TOTP · recovery codes are hashed, single-use, and shared with passkey recovery; backups omit TOTP secrets and recovery material, so MFA users enroll again after restore
 5. **Configure:** Owners and Admins can issue temporary passwords, require a password change, set per-user MFA policy, and control passkey registration
-6. **Test:** Legacy Authentication with a username, password, and two-factor authentication (2FA) is available in DiscVault 26 beta as a fallback when passkeys cannot be used. · `GET /api/next/auth/status`
+6. **Test:** Legacy Authentication with a username, password, and two-factor authentication (2FA) is available in DiscVault beta as a fallback when passkeys cannot be used. · `GET /api/next/auth/status`
 7. **Record:** recovery codes are hashed, single-use, and shared with passkey recovery; backups omit TOTP secrets and recovery material, so MFA users enroll again after restore
 
 ### Commands and settings
 
-#### DiscVault v26 beta
+#### DiscVault beta
 
 ```text
 RP_ID=discvault.example.com
@@ -77,7 +77,7 @@ curl --fail http://localhost:6180/api/next/auth/status
 
 The first or existing Owner can authenticate with a policy-compliant password and TOTP, recovery codes are acknowledged and stored offline, and account lockout works after repeated failures.
 
-- Legacy Authentication with a username, password, and two-factor authentication (2FA) is available in DiscVault 26 beta as a fallback when passkeys cannot be used.
+- Legacy Authentication with a username, password, and two-factor authentication (2FA) is available in DiscVault beta as a fallback when passkeys cannot be used.
 - TOTP · recovery codes are hashed, single-use, and shared with passkey recovery; backups omit TOTP secrets and recovery material, so MFA users enroll again after restore
 - passwords require at least 15 characters, cannot equal the username or a denied common password, and are hashed with Argon2id; five failures in 15 minutes lock the account for 15 minutes
 

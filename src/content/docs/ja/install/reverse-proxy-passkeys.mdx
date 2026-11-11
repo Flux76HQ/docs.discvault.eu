@@ -5,14 +5,14 @@ pageId: 'install-reverse-proxy-passkeys'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU', 'Flux76HQ/App-Guidance']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
+<PageMeta channels="stable,beta" platform="Docker · Web" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## 目的と結果
 
@@ -22,13 +22,13 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 このページの対象は **インストール: リバースプロキシとパスキー** (Docker · Web). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6080`; localhost のセットアップ例外を除き、パスキーには信頼された HTTPS 上の安定した完全修飾ドメイン名が必要です。IP アドレスだけ、または HTTP には対応しません; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; OIDC · `/api/next/auth/oidc/callback` · [設定: OpenID Connect（OIDC）ログイン](/ja/configure/oidc/); `LEGACY_AUTH_ENABLED=true`. このページ固有の確認点: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
-### DiscVault v26 安定版
+### DiscVault 安定版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - `RP_ID` `RP_ORIGINS` · `6080`
 - localhost のセットアップ例外を除き、パスキーには信頼された HTTPS 上の安定した完全修飾ドメイン名が必要です。IP アドレスだけ、または HTTP には対応しません
 
-### DiscVault v26 ベータ版
+### DiscVault ベータ版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `RP_ID` `RP_ORIGINS` · `6180`
@@ -44,7 +44,7 @@ import PageMeta from '../../../../components/PageMeta.astro';
 ### Legacy Authentication のフォールバック
 
 :::note[ベータで利用可能]
-ユーザー名、パスワード、2 要素認証（2FA）を使用する Legacy Authentication は、パスキーを使用できない場合の代替手段として DiscVault 26 ベータで利用できます。
+ユーザー名、パスワード、2 要素認証（2FA）を使用する Legacy Authentication は、パスキーを使用できない場合の代替手段として DiscVault ベータで利用できます。
 
 機能を有効化または最初の所有者を作成する前に `/install/legacy-authentication/` に従ってください。
 :::
@@ -62,7 +62,7 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ### コマンドと設定
 
-#### DiscVault v26 安定版
+#### DiscVault 安定版
 
 ```text
 RP_ID=discvault.example.com
@@ -71,7 +71,7 @@ RP_ORIGINS=https://discvault.example.com
 curl --fail https://discvault.example.com/api/next/health
 ```
 
-#### DiscVault v26 ベータ版
+#### DiscVault ベータ版
 
 ```text
 RP_ID=discvault.example.com

@@ -5,14 +5,14 @@ pageId: 'install-index'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
 lastVerified: '2026-07-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
 
 ## Mål og resultat
 
@@ -22,13 +22,13 @@ Gennemfør den sidespecifikke arbejdsgang for **Installation: Installationsmulig
 
 Denne side gælder kun for **Installation: Installationsmuligheder** (Docker · Unraid). Kanal- og datagrænserne er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `:beta`; PostgreSQL `17` `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `:beta`; PostgreSQL `17` `/data`. Sidespecifikke kontrolpunkter: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
-### DiscVault v26 – stabil
+### DiscVault – stabil
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - `:beta`
 - PostgreSQL `17` `/data`
 
-### DiscVault v26 – beta
+### DiscVault – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `:beta`
@@ -41,37 +41,39 @@ Denne side gælder kun for **Installation: Installationsmuligheder** (Docker · 
 
 ## Fremgangsmåde
 
-1. **Vælg:** [Installation: Docker Compose](/da/install/docker-compose/) · DiscVault 26
+1. **Vælg:** [Installation: Docker Compose](/da/install/docker-compose/) · DiscVault
 2. **Vælg:** [Installation: Docker run](/da/install/docker-run/)
-3. **Vælg:** [Installation: Unraid](/da/install/unraid/) · Unraid
-4. **Vælg:** nye installationer bruger DiscVault v26 `:latest` eller `:beta`; det frosne `:legacy`-image er kun til en eksisterende installation af den forrige generation, som endnu ikke er klar til migrering
-5. **Bevar:** behold den forrige generations diskenheder, miljøvariabler, porte og datasti uændret; erstat aldrig et v26 PostgreSQL Compose-image med `:legacy`
-6. **Åbn:** [Opdatering og migrering: Migrering til DiscVault 26](/da/update/migration/) · → DiscVault 26
-7. **Registrér:** `DISCVAULT_IMAGE` · kun ved en eksisterende eller legacy-installation: tilsvarende backupsæt
+3. **Vælg:** [Installation: Unraid](/da/install/unraid/) · Unraid DiscVault
+4. **Vælg:** [Installation: Home Assistant](/da/install/home-assistant/) · PostgreSQL 17
+5. **Vælg:** nye installationer bruger DiscVault `:latest` eller `:beta`; det frosne `:legacy`-image er kun til en eksisterende installation af den forrige generation, som endnu ikke er klar til migrering
+6. **Bevar:** behold den forrige generations diskenheder, miljøvariabler, porte og datasti uændret; erstat aldrig et DiscVault PostgreSQL Compose-image med `:legacy`
+7. **Åbn:** [Opdatering og migrering: Migrering til DiscVault](/da/update/migration/) · → DiscVault
+8. **Registrér:** `DISCVAULT_IMAGE` · kun ved en eksisterende eller legacy-installation: tilsvarende backupsæt
 
 ### Opgaveruter
 
-- [Installation: Docker Compose](/da/install/docker-compose/) — DiscVault 26 `release/v26-beta` `DISCVAULT_NEXT_IMAGE`
-- [Installation: Docker run](/da/install/docker-run/) — DiscVault 26 Docker run PostgreSQL `/data` `DATABASE_URL`
-- [Installation: Vedvarende data og PostgreSQL](/da/install/storage-postgresql/) — DiscVault 26 PostgreSQL `/data`
-- [Installation: Unraid](/da/install/unraid/) — DiscVault 26 Unraid PostgreSQL `/data`
-- [Opdatering og migrering: Migrering til DiscVault 26](/da/update/migration/) — → DiscVault 26
+- [Installation: Docker Compose](/da/install/docker-compose/) — DiscVault `release/v26-beta` `DISCVAULT_NEXT_IMAGE`
+- [Installation: Docker run](/da/install/docker-run/) — DiscVault Docker run PostgreSQL `/data` `DATABASE_URL`
+- [Installation: Vedvarende data og PostgreSQL](/da/install/storage-postgresql/) — DiscVault PostgreSQL `/data`
+- [Installation: Unraid](/da/install/unraid/) — DiscVault Unraid `discvault-launcher`
+- [Installation: Home Assistant](/da/install/home-assistant/) — DiscVault PostgreSQL 17 `/data`
+- [Opdatering og migrering: Migrering til DiscVault](/da/update/migration/) — → DiscVault
 
 ## Forventet resultat
 
-Godkend resultatet for **Installation: Installationsmuligheder** kun når alle resultater nedenfor er opfyldt: valgt udgivelseskanal; PostgreSQL `/data`; behold den forrige generations diskenheder, miljøvariabler, porte og datasti uændret; erstat aldrig et v26 PostgreSQL Compose-image med `:legacy`. Sidespecifikke kontrolpunkter: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
+Godkend resultatet for **Installation: Installationsmuligheder** kun når alle resultater nedenfor er opfyldt: valgt udgivelseskanal; PostgreSQL `/data` · DiscVault; behold den forrige generations diskenheder, miljøvariabler, porte og datasti uændret; erstat aldrig et DiscVault PostgreSQL Compose-image med `:legacy`. Sidespecifikke kontrolpunkter: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
 - valgt udgivelseskanal
-- PostgreSQL `/data`
-- behold den forrige generations diskenheder, miljøvariabler, porte og datasti uændret; erstat aldrig et v26 PostgreSQL Compose-image med `:legacy`
+- PostgreSQL `/data` · DiscVault
+- behold den forrige generations diskenheder, miljøvariabler, porte og datasti uændret; erstat aldrig et DiscVault PostgreSQL Compose-image med `:legacy`
 
 ## Sikkerhed og tilbagerulning
 
 :::caution
-Den sikre gendannelsesgrænse for **Installation: Installationsmuligheder** kræver disse handlinger, før noget startes eller fortsættes: Kun Legacy-grenen: efter backup ændres kun image-tagget for den eksisterende gamle installation til `:legacy`; hent og genskab den med uændret topologi, kontrollér samlingen, og stop; skift ikke den eksisterende installation til v26-topologien på denne side; det frosne `:legacy`-image modtager ingen DiscVault v26-funktioner, migreringsforbedringer eller fremtidige grænsefladeopdateringer; kun ved en eksisterende eller legacy-installation: tilsvarende backupsæt; udgivelsesnoter og registreret uforanderligt image-digest. Sidespecifikke kontrolpunkter: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
+Den sikre gendannelsesgrænse for **Installation: Installationsmuligheder** kræver disse handlinger, før noget startes eller fortsættes: Kun Legacy-grenen: efter backup ændres kun image-tagget for den eksisterende gamle installation til `:legacy`; hent og genskab den med uændret topologi, kontrollér samlingen, og stop; skift ikke den eksisterende installation til DiscVault-topologien på denne side; det frosne `:legacy`-image modtager ingen DiscVault-funktioner, migreringsforbedringer eller fremtidige grænsefladeopdateringer; kun ved en eksisterende eller legacy-installation: tilsvarende backupsæt; udgivelsesnoter og registreret uforanderligt image-digest. Sidespecifikke kontrolpunkter: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
-- Kun Legacy-grenen: efter backup ændres kun image-tagget for den eksisterende gamle installation til `:legacy`; hent og genskab den med uændret topologi, kontrollér samlingen, og stop; skift ikke den eksisterende installation til v26-topologien på denne side
-- det frosne `:legacy`-image modtager ingen DiscVault v26-funktioner, migreringsforbedringer eller fremtidige grænsefladeopdateringer
+- Kun Legacy-grenen: efter backup ændres kun image-tagget for den eksisterende gamle installation til `:legacy`; hent og genskab den med uændret topologi, kontrollér samlingen, og stop; skift ikke den eksisterende installation til DiscVault-topologien på denne side
+- det frosne `:legacy`-image modtager ingen DiscVault-funktioner, migreringsforbedringer eller fremtidige grænsefladeopdateringer
 - kun ved en eksisterende eller legacy-installation: tilsvarende backupsæt
 - udgivelsesnoter og registreret uforanderligt image-digest
 :::
