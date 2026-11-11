@@ -5,14 +5,14 @@ pageId: 'install-docker-run'
 products: ['server']
 platforms: ['docker']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## 목표 및 결과
 
@@ -22,13 +22,13 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 이 페이지의 적용 범위: **설치: Docker run** (Docker). 채널 및 데이터 경계: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL API MCP; `6080` → API `5000`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL API MCP; `6080` → API `5000`. 이 페이지의 전용 확인 지점: `DATABASE_URL` · `discvault-postgres` · `6080:5000` · `/api/next/health`.
 
-### DiscVault v26 안정판
+### DiscVault 안정판
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - PostgreSQL API MCP
 - `6080` → API `5000`
 
-### DiscVault v26 베타
+### DiscVault 베타
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - PostgreSQL API MCP
@@ -49,13 +49,13 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ### 명령 및 설정
 
-#### DiscVault v26 안정판
+#### DiscVault 안정판
 
 ```bash
 export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
 ```
 
-#### DiscVault v26 베타
+#### DiscVault 베타
 
 ```bash
 export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
@@ -125,10 +125,10 @@ docker ps --filter 'name=discvault-'
 
 ## 예상 결과
 
-다음 결과의 승인 조건: **설치: Docker run** 아래 결과가 모두 충족된 경우에만: HTTP `2xx` · `/api/next/health`; `discvault-postgres`. 이 페이지의 전용 확인 지점: `DATABASE_URL` · `discvault-postgres` · `6080:5000` · `/api/next/health`.
+다음 결과의 승인 조건: **설치: Docker run** 아래 결과가 모두 충족된 경우에만: HTTP `2xx` · `/api/next/health`; DiscVault. 이 페이지의 전용 확인 지점: `DATABASE_URL` · `discvault-postgres` · `6080:5000` · `/api/next/health`.
 
 - HTTP `2xx` · `/api/next/health`
-- `discvault-postgres`
+- DiscVault
 
 ## 안전 및 롤백
 

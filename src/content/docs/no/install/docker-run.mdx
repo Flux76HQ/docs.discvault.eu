@@ -5,14 +5,14 @@ pageId: 'install-docker-run'
 products: ['server']
 platforms: ['docker']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Mål og resultat
 
@@ -22,13 +22,13 @@ Fullfør den sidespesifikke arbeidsflyten for **Installasjon: Docker run**. Denn
 
 Denne siden gjelder bare **Installasjon: Docker run** (Docker). Kanal- og datagrensene er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL API MCP; `6080` → API `5000`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL API MCP; `6080` → API `5000`. Sidespesifikke kontrollpunkter: `DATABASE_URL` · `discvault-postgres` · `6080:5000` · `/api/next/health`.
 
-### DiscVault v26 – stabil
+### DiscVault – stabil
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - PostgreSQL API MCP
 - `6080` → API `5000`
 
-### DiscVault v26 – beta
+### DiscVault – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - PostgreSQL API MCP
@@ -49,13 +49,13 @@ Denne siden gjelder bare **Installasjon: Docker run** (Docker). Kanal- og datagr
 
 ### Kommandoer og innstillinger
 
-#### DiscVault v26 – stabil
+#### DiscVault – stabil
 
 ```bash
 export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
 ```
 
-#### DiscVault v26 – beta
+#### DiscVault – beta
 
 ```bash
 export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
@@ -125,10 +125,10 @@ docker ps --filter 'name=discvault-'
 
 ## Forventet resultat
 
-Godta resultatet for **Installasjon: Docker run** bare når alle resultatene nedenfor er oppfylt: HTTP `2xx` · `/api/next/health`; `discvault-postgres`. Sidespesifikke kontrollpunkter: `DATABASE_URL` · `discvault-postgres` · `6080:5000` · `/api/next/health`.
+Godta resultatet for **Installasjon: Docker run** bare når alle resultatene nedenfor er oppfylt: HTTP `2xx` · `/api/next/health`; DiscVault. Sidespesifikke kontrollpunkter: `DATABASE_URL` · `discvault-postgres` · `6080:5000` · `/api/next/health`.
 
 - HTTP `2xx` · `/api/next/health`
-- `discvault-postgres`
+- DiscVault
 
 ## Sikkerhet og tilbakerulling
 

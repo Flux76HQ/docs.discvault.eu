@@ -5,14 +5,14 @@ pageId: 'admin-index'
 products: ['server']
 platforms: ['docker', 'unraid', 'web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid · Web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid · Web" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## 目的と結果
 
@@ -22,12 +22,12 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 このページの対象は **管理: ログ、ジョブ、セキュリティ** (Docker · Unraid · Web). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; API MCP PostgreSQL; DiscVault · `ghcr.io/helmerznl/discvault:beta`; API MCP PostgreSQL. このページ固有の確認点: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
 
-### DiscVault v26 安定版
+### DiscVault 安定版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - API MCP PostgreSQL
 
-### DiscVault v26 ベータ版
+### DiscVault ベータ版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - API MCP PostgreSQL

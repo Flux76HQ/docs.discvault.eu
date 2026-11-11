@@ -5,14 +5,14 @@ pageId: 'install-docker-run'
 products: ['server']
 platforms: ['docker']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Objetivo y resultado
 
@@ -22,13 +22,13 @@ Completa el flujo específico de la página para **Instalación: Docker run**. E
 
 Esta página se aplica solo a **Instalación: Docker run** (Docker). Sus límites de canal y datos son: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL API MCP; `6080` → API `5000`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL API MCP; `6080` → API `5000`. Puntos de control de esta página: `DATABASE_URL` · `discvault-postgres` · `6080:5000` · `/api/next/health`.
 
-### DiscVault v26 estable
+### DiscVault estable
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - PostgreSQL API MCP
 - `6080` → API `5000`
 
-### DiscVault v26 beta
+### DiscVault beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - PostgreSQL API MCP
@@ -49,13 +49,13 @@ Esta página se aplica solo a **Instalación: Docker run** (Docker). Sus límite
 
 ### Comandos y ajustes
 
-#### DiscVault v26 estable
+#### DiscVault estable
 
 ```bash
 export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
 ```
 
-#### DiscVault v26 beta
+#### DiscVault beta
 
 ```bash
 export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
@@ -125,10 +125,10 @@ docker ps --filter 'name=discvault-'
 
 ## Resultado esperado
 
-Acepta el resultado de **Instalación: Docker run** solo cuando se cumplan todos estos resultados: HTTP `2xx` · `/api/next/health`; `discvault-postgres`. Puntos de control de esta página: `DATABASE_URL` · `discvault-postgres` · `6080:5000` · `/api/next/health`.
+Acepta el resultado de **Instalación: Docker run** solo cuando se cumplan todos estos resultados: HTTP `2xx` · `/api/next/health`; DiscVault. Puntos de control de esta página: `DATABASE_URL` · `discvault-postgres` · `6080:5000` · `/api/next/health`.
 
 - HTTP `2xx` · `/api/next/health`
-- `discvault-postgres`
+- DiscVault
 
 ## Seguridad y reversión
 

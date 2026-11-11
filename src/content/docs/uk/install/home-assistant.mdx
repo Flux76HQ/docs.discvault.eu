@@ -1,0 +1,108 @@
+---
+title: 'Встановлення: Home Assistant'
+description: 'Спеціальні інструкції для завдання: Встановлення: Home Assistant. 6180. /api/next/health. rp_id. password_login. secrets.json.'
+pageId: 'install-home-assistant'
+products: ['server']
+platforms: ['home-assistant']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/home-assistant-addons']
+lastVerified: '2026-11-11'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Home Assistant" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/home-assistant-addons" verified="2026-11-11" />
+
+## Мета й результат
+
+Запускайте DiscVault як застосунок Home Assistant. Застосунок, його worker, кінцева точка MCP і PostgreSQL 17 працюють в одному контейнері, а все збережене лежить у теці даних, яку Home Assistant включає в резервні копії.
+
+Виконайте спеціальну процедуру сторінки для **Встановлення: Home Assistant**. У цій процедурі використовуються `6180` · `/api/next/health` · `rp_id` · `password_login` · `secrets.json`.
+
+## Застосовується до
+
+Репозиторій пропонує DiscVault на порту 6180 і DiscVault (beta) на порту 6181, кожен із власною текою даних, тож вони працюють паралельно на amd64 і aarch64.
+
+Ця сторінка стосується лише **Встановлення: Home Assistant** (Home Assistant). Межі каналу й даних: DiscVault · `6180`; PostgreSQL 17 · `/data`; DiscVault · `6181`; PostgreSQL 17 · `/data`. Контрольні точки цієї сторінки: `6180` · `/api/next/health` · `rp_id` · `password_login` · `secrets.json`.
+
+### DiscVault – стабільний
+
+- DiscVault · `6180`
+- PostgreSQL 17 · `/data`
+
+### DiscVault – бета
+
+- DiscVault · `6181`
+- PostgreSQL 17 · `/data`
+
+## Передумови
+
+- `amd64` `aarch64`
+- passkeys потребують HTTPS-адреси з доменним ім’ям перед портом застосунку; без неї використовуйте вхід за паролем із TOTP
+- немає пункту на бічній панелі (Ingress): DiscVault обслуговується з кореня власного домену через зворотний проксі
+
+## Процедура
+
+1. **Відкрийте:** Налаштування → Застосунки → Установити застосунок → ⋮ → Репозиторії й додайте `https://github.com/helmerzNL/home-assistant-addons`
+2. **Установіть:** виберіть DiscVault або DiscVault (beta) і встановіть; Home Assistant збирає застосунок на пристрої, уперше це триває кілька хвилин
+3. **Налаштуйте:** `rp_id` — домен, на якому відкривається DiscVault; passkeys прив’язані до нього, тож пізніша зміна робить наявні passkeys непридатними · `rp_origins` · `trusted_proxies`
+4. **Налаштуйте:** `password_login` надає ім’я користувача, пароль щонайменше з 15 символів і TOTP, коли немає HTTPS-домену
+5. **Налаштуйте:** OpenID Connect: заповніть `oidc_issuer`, `oidc_client_id` і `oidc_client_secret` разом або залиште всі три порожніми · `/api/next/auth/oidc/callback`
+6. **Запустіть:** початкове налаштування створює першого власника з passkey або з паролем і TOTP та один раз показує коди відновлення
+7. **Перевірте:** `/api/next/health` · кінцева точка MCP розташована на тому самому порту в `/mcp`; дайте асистенту особистий ключ API
+
+### Команди й налаштування
+
+#### Обидва канали
+
+```yaml
+rp_id: discvault.example.com
+rp_origins: https://discvault.example.com
+rp_name: DiscVault
+password_login: false
+trusted_proxies: private
+block_crawlers: true
+```
+
+```bash
+curl --fail http://<home-assistant>:6180/api/next/health   # beta: 6181
+```
+
+## Очікуваний результат
+
+Застосунок показано як запущений, watchdog досягає адреси стану, а вебінтерфейс відкривається на порту застосунку.
+
+Приймайте результат для **Встановлення: Home Assistant** лише коли підтверджено всі наведені нижче результати: початкове налаштування створює першого власника з passkey або з паролем і TOTP та один раз показує коди відновлення; кінцева точка MCP розташована на тому самому порту в `/mcp`; дайте асистенту особистий ключ API; `/api/next/health` · HTTP `200` · `"status": "ok"`. Контрольні точки цієї сторінки: `6180` · `/api/next/health` · `rp_id` · `password_login` · `secrets.json`.
+
+- початкове налаштування створює першого власника з passkey або з паролем і TOTP та один раз показує коди відновлення
+- кінцева точка MCP розташована на тому самому порту в `/mcp`; дайте асистенту особистий ключ API
+- `/api/next/health` · HTTP `200` · `"status": "ok"`
+
+## Безпека й відкочування
+
+:::caution
+Перед кожним оновленням дозвольте Home Assistant зробити копію застосунку. Для відкату відновіть її в Налаштування → Система → Резервні копії; випуск, що змінив базу даних, може не працювати на старішій версії.
+
+Безпечна межа відновлення для **Встановлення: Home Assistant** вимагає цих дій до будь-якого запуску чи продовження: Home Assistant ненадовго зупиняє застосунок під час резервного копіювання, бо робоча база даних не є узгодженою копією; секрет підпису й пароль бази даних створюються під час першого запуску в `secrets.json`; ніколи не видаляйте цей файл; бета може змінити базу даних так, що стабільний застосунок її не прочитає; ніколи не вказуйте їй теки стабільної версії; резервна копія в застосунку (Адміністрування → Backup, також за розкладом) переносить бібліотеку між Docker, Unraid і Home Assistant; новий випуск з’являється як оновлення, щойно опубліковано його образ; оновлення перебудовує застосунок і виконує міграції під час запуску. Контрольні точки цієї сторінки: `6180` · `/api/next/health` · `rp_id` · `password_login` · `secrets.json`.
+
+- Home Assistant ненадовго зупиняє застосунок під час резервного копіювання, бо робоча база даних не є узгодженою копією
+- секрет підпису й пароль бази даних створюються під час першого запуску в `secrets.json`; ніколи не видаляйте цей файл
+- бета може змінити базу даних так, що стабільний застосунок її не прочитає; ніколи не вказуйте їй теки стабільної версії
+- резервна копія в застосунку (Адміністрування → Backup, також за розкладом) переносить бібліотеку між Docker, Unraid і Home Assistant
+- новий випуск з’являється як оновлення, щойно опубліковано його образ; оновлення перебудовує застосунок і виконує міграції під час запуску
+:::
+
+## Наступний крок
+
+[Встановлення: Зворотний проксі та ключі доступу](/uk/install/reverse-proxy-passkeys/)
+
+## Джерело й стан
+
+- [`helmerzNL/DiscVault@441f96593219`](https://github.com/helmerzNL/DiscVault/commit/441f96593219c66d45aac99ce5ef9f81f011d449)
+- [`helmerzNL/home-assistant-addons@48d31c321db4`](https://github.com/helmerzNL/home-assistant-addons/commit/48d31c321db48d1c70405c6a7830065debc79460)
+- [Home Assistant app: `discvault/config.yaml`](https://github.com/helmerzNL/home-assistant-addons/blob/main/discvault/config.yaml)
+- [Home Assistant app documentation: `discvault/DOCS.md`](https://github.com/helmerzNL/home-assistant-addons/blob/main/discvault/DOCS.md)
+- [Add the repository to Home Assistant](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FhelmerzNL%2Fhome-assistant-addons)
+- Джерело й стан: `2026-11-11`
+- DiscVault Docs: `0.2.0`

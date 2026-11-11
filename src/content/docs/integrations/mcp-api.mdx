@@ -5,14 +5,14 @@ pageId: 'integrations-mcp-api'
 products: ['server']
 platforms: ['web', 'docker']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="web · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="web · Docker" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Goal and result
 
@@ -20,16 +20,16 @@ Connect an MCP client or REST consumer with a personal, user-scoped API key.
 
 ## Applies to
 
-DiscVault v26 stable and beta expose MCP on the web origin or direct port 6090 and use the same API service. Never place a real key in documentation, logs, or source control.
+DiscVault stable and beta expose MCP on the web origin or direct port 6090 and use the same API service. Never place a real key in documentation, logs, or source control.
 
-### DiscVault v26 stable
+### DiscVault stable
 
-- DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault stable · `ghcr.io/helmerznl/discvault:latest`
 - `/mcp` on web origin or direct port `6090` · REST API
 
-### DiscVault v26 beta
+### DiscVault beta
 
-- DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault beta · `ghcr.io/helmerznl/discvault:beta`
 - `/mcp` on web origin or direct port `6090` · REST API
 
 ## Prerequisites

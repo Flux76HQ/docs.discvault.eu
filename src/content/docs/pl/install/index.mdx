@@ -5,14 +5,14 @@ pageId: 'install-index'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
 lastVerified: '2026-07-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
 
 ## Cel i rezultat
 
@@ -22,13 +22,13 @@ Wykonaj procedurę właściwą dla strony: **Instalacja: Sposoby instalacji**. T
 
 Ta strona dotyczy wyłącznie **Instalacja: Sposoby instalacji** (Docker · Unraid). Granice kanału i danych: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `:beta`; PostgreSQL `17` `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `:beta`; PostgreSQL `17` `/data`. Punkty kontrolne tej strony: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
-### DiscVault v26 – stabilny
+### DiscVault – stabilny
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - `:beta`
 - PostgreSQL `17` `/data`
 
-### DiscVault v26 – beta
+### DiscVault – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `:beta`
@@ -41,37 +41,39 @@ Ta strona dotyczy wyłącznie **Instalacja: Sposoby instalacji** (Docker · Unra
 
 ## Procedura
 
-1. **Wybierz:** [Instalacja: Docker Compose](/pl/install/docker-compose/) · DiscVault 26
+1. **Wybierz:** [Instalacja: Docker Compose](/pl/install/docker-compose/) · DiscVault `main` `release/v26-beta`
 2. **Wybierz:** [Instalacja: Docker run](/pl/install/docker-run/)
-3. **Wybierz:** [Instalacja: Unraid](/pl/install/unraid/) · Unraid
-4. **Wybierz:** nowe instalacje używają DiscVault v26 `:latest` lub `:beta`; zamrożony obraz `:legacy` służy tylko istniejącej instalacji poprzedniej generacji, która nie jest jeszcze gotowa do migracji
-5. **Zachowaj:** pozostaw bez zmian woluminy, zmienne środowiskowe, porty i ścieżkę danych poprzedniej generacji; nigdy nie podstawiaj `:legacy` do topologii Compose v26 z PostgreSQL
-6. **Otwórz:** [Aktualizacja i migracja: Migracja do DiscVault 26](/pl/update/migration/) · → DiscVault 26
-7. **Zapisz:** `DISCVAULT_IMAGE` · tylko dla istniejącego lub starszego (legacy) wdrożenia: pasujący zestaw kopii
+3. **Wybierz:** [Instalacja: Unraid](/pl/install/unraid/) · Unraid DiscVault
+4. **Wybierz:** [Instalacja: Home Assistant](/pl/install/home-assistant/) · PostgreSQL 17
+5. **Wybierz:** nowe instalacje używają DiscVault `:latest` lub `:beta`; zamrożony obraz `:legacy` służy tylko istniejącej instalacji poprzedniej generacji, która nie jest jeszcze gotowa do migracji
+6. **Zachowaj:** pozostaw bez zmian woluminy, zmienne środowiskowe, porty i ścieżkę danych poprzedniej generacji; nigdy nie podstawiaj `:legacy` do topologii Compose DiscVault z PostgreSQL
+7. **Otwórz:** [Aktualizacja i migracja: Migracja do DiscVault](/pl/update/migration/) · → DiscVault
+8. **Zapisz:** `DISCVAULT_IMAGE` · tylko dla istniejącego lub starszego (legacy) wdrożenia: pasujący zestaw kopii
 
 ### Ścieżki zadań
 
-- [Instalacja: Docker Compose](/pl/install/docker-compose/) — DiscVault 26 `release/v26-beta` `DISCVAULT_NEXT_IMAGE`
-- [Instalacja: Docker run](/pl/install/docker-run/) — DiscVault 26 Docker run PostgreSQL `/data` `DATABASE_URL`
-- [Instalacja: Trwałe dane i PostgreSQL](/pl/install/storage-postgresql/) — DiscVault 26 PostgreSQL `/data`
-- [Instalacja: Unraid](/pl/install/unraid/) — DiscVault 26 Unraid PostgreSQL `/data`
-- [Aktualizacja i migracja: Migracja do DiscVault 26](/pl/update/migration/) — → DiscVault 26
+- [Instalacja: Docker Compose](/pl/install/docker-compose/) — DiscVault `app/deploy/next` `DISCVAULT_NEXT_IMAGE`
+- [Instalacja: Docker run](/pl/install/docker-run/) — DiscVault Docker run PostgreSQL `/data` `DATABASE_URL`
+- [Instalacja: Trwałe dane i PostgreSQL](/pl/install/storage-postgresql/) — DiscVault PostgreSQL `/data`
+- [Instalacja: Unraid](/pl/install/unraid/) — DiscVault Unraid `discvault-launcher`
+- [Instalacja: Home Assistant](/pl/install/home-assistant/) — DiscVault PostgreSQL 17 `/data`
+- [Aktualizacja i migracja: Migracja do DiscVault](/pl/update/migration/) — → DiscVault
 
 ## Oczekiwany rezultat
 
-Zaakceptuj wynik dla **Instalacja: Sposoby instalacji** tylko gdy wszystkie poniższe wyniki są prawdziwe: wybrany kanał wydań; PostgreSQL `/data`; pozostaw bez zmian woluminy, zmienne środowiskowe, porty i ścieżkę danych poprzedniej generacji; nigdy nie podstawiaj `:legacy` do topologii Compose v26 z PostgreSQL. Punkty kontrolne tej strony: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
+Zaakceptuj wynik dla **Instalacja: Sposoby instalacji** tylko gdy wszystkie poniższe wyniki są prawdziwe: wybrany kanał wydań; PostgreSQL `/data` · DiscVault; pozostaw bez zmian woluminy, zmienne środowiskowe, porty i ścieżkę danych poprzedniej generacji; nigdy nie podstawiaj `:legacy` do topologii Compose DiscVault z PostgreSQL. Punkty kontrolne tej strony: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
 - wybrany kanał wydań
-- PostgreSQL `/data`
-- pozostaw bez zmian woluminy, zmienne środowiskowe, porty i ścieżkę danych poprzedniej generacji; nigdy nie podstawiaj `:legacy` do topologii Compose v26 z PostgreSQL
+- PostgreSQL `/data` · DiscVault
+- pozostaw bez zmian woluminy, zmienne środowiskowe, porty i ścieżkę danych poprzedniej generacji; nigdy nie podstawiaj `:legacy` do topologii Compose DiscVault z PostgreSQL
 
 ## Bezpieczeństwo i wycofanie
 
 :::caution
-Bezpieczna granica odzyskiwania dla **Instalacja: Sposoby instalacji** wymaga tych działań przed uruchomieniem lub kontynuacją: Tylko gałąź Legacy: po wykonaniu kopii zmień wyłącznie tag obrazu istniejącego starego wdrożenia na `:legacy`, pobierz i odtwórz je bez zmiany topologii, sprawdź kolekcję i zakończ; nie przełączaj tego istniejącego wdrożenia na topologię v26 na tej stronie; zamrożony obraz `:legacy` nie otrzymuje funkcji DiscVault v26, ulepszeń migracji ani przyszłych aktualizacji interfejsu; tylko dla istniejącego lub starszego (legacy) wdrożenia: pasujący zestaw kopii; informacje o wydaniu i zapisany niezmienny skrót obrazu. Punkty kontrolne tej strony: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
+Bezpieczna granica odzyskiwania dla **Instalacja: Sposoby instalacji** wymaga tych działań przed uruchomieniem lub kontynuacją: Tylko gałąź Legacy: po wykonaniu kopii zmień wyłącznie tag obrazu istniejącego starego wdrożenia na `:legacy`, pobierz i odtwórz je bez zmiany topologii, sprawdź kolekcję i zakończ; nie przełączaj tego istniejącego wdrożenia na topologię DiscVault na tej stronie; zamrożony obraz `:legacy` nie otrzymuje funkcji DiscVault, ulepszeń migracji ani przyszłych aktualizacji interfejsu; tylko dla istniejącego lub starszego (legacy) wdrożenia: pasujący zestaw kopii; informacje o wydaniu i zapisany niezmienny skrót obrazu. Punkty kontrolne tej strony: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
-- Tylko gałąź Legacy: po wykonaniu kopii zmień wyłącznie tag obrazu istniejącego starego wdrożenia na `:legacy`, pobierz i odtwórz je bez zmiany topologii, sprawdź kolekcję i zakończ; nie przełączaj tego istniejącego wdrożenia na topologię v26 na tej stronie
-- zamrożony obraz `:legacy` nie otrzymuje funkcji DiscVault v26, ulepszeń migracji ani przyszłych aktualizacji interfejsu
+- Tylko gałąź Legacy: po wykonaniu kopii zmień wyłącznie tag obrazu istniejącego starego wdrożenia na `:legacy`, pobierz i odtwórz je bez zmiany topologii, sprawdź kolekcję i zakończ; nie przełączaj tego istniejącego wdrożenia na topologię DiscVault na tej stronie
+- zamrożony obraz `:legacy` nie otrzymuje funkcji DiscVault, ulepszeń migracji ani przyszłych aktualizacji interfejsu
 - tylko dla istniejącego lub starszego (legacy) wdrożenia: pasujący zestaw kopii
 - informacje o wydaniu i zapisany niezmienny skrót obrazu
 :::

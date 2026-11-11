@@ -5,14 +5,14 @@ pageId: 'install-storage-postgresql'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Objectif et résultat
 
@@ -22,13 +22,13 @@ Suivez le déroulement propre à cette page pour **Installation: Données persis
 
 Cette page s’applique uniquement à **Installation: Données persistantes et PostgreSQL** (Docker · Unraid). Les limites de canal et de données sont : DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL; `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL; `/data`. Points de contrôle propres à la page : `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
 
-### DiscVault v26 stable
+### DiscVault stable
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - PostgreSQL
 - `/data`
 
-### DiscVault v26 bêta
+### DiscVault bêta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - PostgreSQL
@@ -36,7 +36,7 @@ Cette page s’applique uniquement à **Installation: Données persistantes et P
 
 ## Prérequis
 
-- `DISCVAULT_POSTGRES_DATA`
+- DiscVault
 - destination hors du chemin de données actif
 - PostgreSQL `17`
 

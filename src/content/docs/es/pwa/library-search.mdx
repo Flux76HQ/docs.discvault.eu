@@ -5,14 +5,14 @@ pageId: 'pwa-library-search'
 products: ['pwa']
 platforms: ['web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
 lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
+<PageMeta channels="stable,beta" platform="web" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Objetivo y resultado
 
@@ -22,14 +22,14 @@ Completa el flujo específico de la página para **PWA: Biblioteca y búsqueda**
 
 Esta página se aplica solo a **PWA: Biblioteca y búsqueda** (web). Sus límites de canal y datos son: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PWA · RBAC; Collectors Mode está desactivado de forma predeterminada y muestra funciones avanzadas de contenedores; `merge_editions_as_title` es una preferencia independiente que también está desactivada; al activar `merge_editions_as_title`, varias versiones físicas aparecen como una sola ficha de biblioteca; abre la ficha para ver todas las ediciones; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PWA · RBAC; Collectors Mode está desactivado de forma predeterminada y muestra funciones avanzadas de contenedores; `merge_editions_as_title` es una preferencia independiente que también está desactivada; al activar `merge_editions_as_title`, varias versiones físicas aparecen como una sola ficha de biblioteca; abre la ficha para ver todas las ediciones. Puntos de control de esta página: PWA · `watchlist` · `history` · RBAC · `merge_editions_as_title` · `box_set` · `vault` · `collection`.
 
-### DiscVault v26 estable
+### DiscVault estable
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - PWA · RBAC
 - Collectors Mode está desactivado de forma predeterminada y muestra funciones avanzadas de contenedores; `merge_editions_as_title` es una preferencia independiente que también está desactivada
 - al activar `merge_editions_as_title`, varias versiones físicas aparecen como una sola ficha de biblioteca; abre la ficha para ver todas las ediciones
 
-### DiscVault v26 beta
+### DiscVault beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - PWA · RBAC
@@ -54,6 +54,9 @@ Esta página se aplica solo a **PWA: Biblioteca y búsqueda** (web). Sus límite
 9. **Compara:** un vault es una agrupación creada por el usuario para una estantería, caja o ubicación, con películas directas y sin significado de producto comercial
 10. **Compara:** una collection es una agrupación temática cuyos elementos ordenados pueden ser películas, box-sets, vaults u otras collections, por lo que admite anidación
 11. **Prueba:** desactivar Collectors Mode oculta la presentación de contenedores, pero no elimina los contenedores ni sus miembros
+12. **Configura:** el panel Avanzado filtra por puntuación externa, número mínimo de votos, películas sin puntuación y varias etiquetas (cualquiera o todas); los filtros inteligentes guardan estas opciones
+13. **Inspecciona:** los campos personalizados se pueden filtrar, ordenar y exportar, aparecen en la página de detalle y se pueden rellenar desde una columna de importación
+14. **Prueba:** una edición de TV de MovieVault se añade como serie con sus temporadas, la siguiente edición del mismo programa se une a esa serie y la pantalla de la serie puede devolver los vínculos de temporada a MovieVault
 
 
 

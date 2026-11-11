@@ -5,14 +5,14 @@ pageId: 'integrations-plex-jellyfin'
 products: ['server']
 platforms: ['web', 'docker']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="webb · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="webb · Docker" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Mål och resultat
 
@@ -20,17 +20,17 @@ Följ det sidspecifika arbetsflödet för **Integrationer: Plex och Jellyfin**. 
 
 ## Gäller för
 
-Den här sidan gäller endast **Integrationer: Plex och Jellyfin** (webb · Docker). Kanal- och datagränserna är: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26. Sidspecifika kontrollpunkter: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+Den här sidan gäller endast **Integrationer: Plex och Jellyfin** (webb · Docker). Kanal- och datagränserna är: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault. Sidspecifika kontrollpunkter: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
 
-### DiscVault v26 – stabil
+### DiscVault – stabil
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- DiscVault 26
+- DiscVault
 
-### DiscVault v26 – beta
+### DiscVault – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- DiscVault 26
+- DiscVault
 
 ## Förutsättningar
 
@@ -44,6 +44,7 @@ Den här sidan gäller endast **Integrationer: Plex och Jellyfin** (webb · Dock
 2. **Testa:** Administration → Insticksprogram → Hälsokontroll
 3. **Kör:** Administration → Insticksprogram → Upptäck utan att spara · `dryRun=true`
 4. **Jämför:** `/api/next/digital-items?limit=200`
+5. **Konfigurera:** Administration → Schemalagda uppgifter synkroniserar Jellyfin- och Plex-biblioteken var N:e timme, valfritt följt av visningshistoriken; avstängt tills en administratör slår på det
 
 ### Kommandon och inställningar
 

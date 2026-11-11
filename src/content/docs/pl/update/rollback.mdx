@@ -5,14 +5,14 @@ pageId: 'update-rollback'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Cel i rezultat
 
@@ -22,13 +22,13 @@ Wykonaj procedurę właściwą dla strony: **Aktualizacja i migracja: Wycofanie 
 
 Ta strona dotyczy wyłącznie **Aktualizacja i migracja: Wycofanie obrazu** (Docker · Unraid). Granice kanału i danych: DiscVault · `ghcr.io/helmerznl/discvault:latest`; przywróć pasujące dane przed uruchomieniem poprzedniego obrazu; PostgreSQL `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; przywróć pasujące dane przed uruchomieniem poprzedniego obrazu; PostgreSQL `/data`. Punkty kontrolne tej strony: `PREVIOUS_IMAGE` · `pg_restore --exit-on-error` · `discvault.failed-` · `DISCVAULT_IMAGE`.
 
-### DiscVault v26 – stabilny
+### DiscVault – stabilny
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - przywróć pasujące dane przed uruchomieniem poprzedniego obrazu
 - PostgreSQL `/data`
 
-### DiscVault v26 – beta
+### DiscVault – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - przywróć pasujące dane przed uruchomieniem poprzedniego obrazu
@@ -106,7 +106,7 @@ Bezpieczna granica odzyskiwania dla **Aktualizacja i migracja: Wycofanie obrazu*
 
 ## Następny krok
 
-[Aktualizacja i migracja: Migracja do DiscVault 26](/pl/update/migration/)
+[Aktualizacja i migracja: Migracja do DiscVault](/pl/update/migration/)
 
 ## Źródło i stan
 

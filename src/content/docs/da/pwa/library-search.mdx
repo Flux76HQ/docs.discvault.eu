@@ -5,14 +5,14 @@ pageId: 'pwa-library-search'
 products: ['pwa']
 platforms: ['web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
 lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
+<PageMeta channels="stable,beta" platform="web" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Mål og resultat
 
@@ -22,14 +22,14 @@ Gennemfør den sidespecifikke arbejdsgang for **PWA: Bibliotek og søgning**. De
 
 Denne side gælder kun for **PWA: Bibliotek og søgning** (web). Kanal- og datagrænserne er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PWA · RBAC; Collectors Mode er slået fra som standard og viser avancerede containerfunktioner; `merge_editions_as_title` er en separat indstilling, som også er slået fra som standard; når `merge_editions_as_title` er aktiveret, vises flere fysiske versioner som én biblioteksflise; åbn flisen for at se alle udgaver; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PWA · RBAC; Collectors Mode er slået fra som standard og viser avancerede containerfunktioner; `merge_editions_as_title` er en separat indstilling, som også er slået fra som standard; når `merge_editions_as_title` er aktiveret, vises flere fysiske versioner som én biblioteksflise; åbn flisen for at se alle udgaver. Sidespecifikke kontrolpunkter: PWA · `watchlist` · `history` · RBAC · `merge_editions_as_title` · `box_set` · `vault` · `collection`.
 
-### DiscVault v26 – stabil
+### DiscVault – stabil
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - PWA · RBAC
 - Collectors Mode er slået fra som standard og viser avancerede containerfunktioner; `merge_editions_as_title` er en separat indstilling, som også er slået fra som standard
 - når `merge_editions_as_title` er aktiveret, vises flere fysiske versioner som én biblioteksflise; åbn flisen for at se alle udgaver
 
-### DiscVault v26 – beta
+### DiscVault – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - PWA · RBAC
@@ -54,6 +54,9 @@ Denne side gælder kun for **PWA: Bibliotek og søgning** (web). Kanal- og datag
 9. **Sammenlign:** en vault er en brugeroprettet hylde-, opbevaringskasse- eller placeringsgruppe med direkte filmmedlemmer og uden betydning som detailprodukt
 10. **Sammenlign:** en collection er en tematisk gruppe, hvis ordnede elementer kan være film, box-sets, vaults eller andre collections, så indlejring understøttes
 11. **Test:** deaktivering af Collectors Mode skjuler containerpræsentationen, men sletter ikke containere eller deres medlemmer
+12. **Konfigurér:** panelet Avanceret filtrerer på ekstern score, et minimum af stemmer, film uden score og flere tags (et vilkårligt eller alle); smarte filtre gemmer valgene
+13. **Kontrollér:** brugerdefinerede felter kan filtreres, sorteres og eksporteres, vises på detaljesiden og kan udfyldes fra en importkolonne
+14. **Test:** en tv-udgivelse fra MovieVault tilføjes som serie med sæsoner, næste udgivelse af samme serie slutter sig til den, og serieskærmen kan sende sæsonkoblinger tilbage til MovieVault
 
 
 

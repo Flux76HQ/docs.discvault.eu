@@ -1,97 +1,130 @@
 ---
 title: 'Installation: Unraid'
-description: 'Opgavespecifik vejledning til Installation: Unraid. /mnt/user/appdata/discvault/postgres. /mnt/user/appdata/discvault/data. 6080:5000. DISCVAULT_IMAGE.'
+description: 'Opgavespecifik vejledning til Installation: Unraid. ghcr.io/helmerznl/discvault-launcher:latest. /var/run/docker.sock. /api/next/health.'
 pageId: 'install-unraid'
 products: ['server']
 platforms: ['unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+minVersion: 'DiscVault'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/unraid-community-apps']
+lastVerified: '2026-11-11'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Unraid" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/unraid-community-apps" verified="2026-11-11" />
 
 ## Mål og resultat
 
-Gennemfør den sidespecifikke arbejdsgang for **Installation: Unraid**. Denne fremgangsmåde arbejder med `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+Installér DiscVault fra Unraid Community Applications. Skabelonen installerer DiscVault-launcheren, som opretter og opdaterer PostgreSQL, API, worker og MCP for dig.
+
+Gennemfør den sidespecifikke arbejdsgang for **Installation: Unraid**. Denne fremgangsmåde arbejder med `ghcr.io/helmerznl/discvault-launcher:latest` · `/var/run/docker.sock` · `/api/next/health`.
 
 ## Gælder for
 
-Denne side gælder kun for **Installation: Unraid** (Unraid). Kanal- og datagrænserne er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL API MCP; `:latest` `:beta`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL API MCP; `:latest` `:beta`. Sidespecifikke kontrolpunkter: `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+Helmer’s Repository tilbyder DiscVault og DiscVault (beta) som to skabeloner med hver deres appdata-mapper, port, Compose-projekt og netværk, så begge kan køre side om side.
 
-### DiscVault v26 – stabil
+Denne side gælder kun for **Installation: Unraid** (Unraid). Kanal- og datagrænserne er: DiscVault · `ghcr.io/helmerznl/discvault-launcher:latest`; `6080` · `/mnt/user/appdata/discvault` · `discvault_stack`; DiscVault · `ghcr.io/helmerznl/discvault-launcher:beta`; `6081` · `/mnt/user/appdata/discvault-beta` · `discvault_beta_stack`. Sidespecifikke kontrolpunkter: `ghcr.io/helmerznl/discvault-launcher:latest` · `/var/run/docker.sock` · `/api/next/health`.
 
-- DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- PostgreSQL API MCP
-- `:latest` `:beta`
+### DiscVault – stabil
 
-### DiscVault v26 – beta
+- DiscVault · `ghcr.io/helmerznl/discvault-launcher:latest`
+- `6080` · `/mnt/user/appdata/discvault` · `discvault_stack`
 
-- DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- PostgreSQL API MCP
-- `:latest` `:beta`
+### DiscVault – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault-launcher:beta`
+- `6081` · `/mnt/user/appdata/discvault-beta` · `discvault_beta_stack`
 
 ## Forudsætninger
 
 - Unraid `6.12+`
-- `/mnt/user/appdata/discvault/data`
-- OpenSSL
+- pluginet Community Applications installeret
+- passkeys kræver en HTTPS-adresse med et domænenavn foran appens port; uden en sådan bruges adgangskodelogin med TOTP
 
 ## Fremgangsmåde
 
-1. **Installér:** Unraid · [Installation: Docker Compose](/da/install/docker-compose/)
-2. **Konfigurér:** `DISCVAULT_IMAGE` · `:latest` `:beta`
-3. **Konfigurér:** `DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data` · `DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres`
-4. **Bekræft:** `postgres` · `next-api` · `next-worker` · `next-mcp` · `6080:5000`
+1. **Åbn:** Apps → søg efter DiscVault → Installér; betaskabelonen har (beta) i navnet
+2. **Konfigurér:** behold standardmapperne i appdata; launcher-mappen indeholder den genererede Compose-fil og hemmeligheder i `/config/stack.env` · `TZ`
+3. **Konfigurér:** `RP_ID` · `RP_ORIGINS` · passkeys kræver en HTTPS-adresse med et domænenavn foran appens port; uden en sådan bruges adgangskodelogin med TOTP · `LEGACY_AUTH_ENABLED=true`
+4. **Start:** første start tager et par minutter, mens launcheren henter images og opretter databasen · launcheren monterer Docker-socket og styrer dermed Docker på serveren; installér den kun, hvis du stoler på launcher-imaget
+5. **Bekræft:** `/api/next/health` · introduktionen opretter den første ejer med en passkey eller med adgangskode og TOTP og viser gendannelseskoderne én gang
+6. **Konfigurér:** fanen Docker → Søg efter opdateringer; ved start opdaterer launcheren også resten af stakken · `DISCVAULT_CHANNEL=manual` · `DISCVAULT_IMAGE`
 
 ### Kommandoer og indstillinger
 
-#### DiscVault v26 – stabil
+#### DiscVault – stabil
 
 ```text
-DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
-DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data
-DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres
-DISCVAULT_API_PORT=6080
-DISCVAULT_MCP_PORT=6090
+Repository                         ghcr.io/helmerznl/discvault-launcher:latest
+Web UI port                        6080
+App data (/data)                   /mnt/user/appdata/discvault
+DISCVAULT_DATA_DIR_HOST            /mnt/user/appdata/discvault
+DISCVAULT_POSTGRES_DATA_DIR_HOST   /mnt/user/appdata/discvault-postgres
+Launcher config (/config)          /mnt/user/appdata/discvault-launcher
+Docker socket                      /var/run/docker.sock
+DISCVAULT_CHANNEL                  latest
+TZ                                 Europe/Amsterdam
+RP_ID                              discvault.example.com
+RP_ORIGINS                         https://discvault.example.com
+LEGACY_AUTH_ENABLED                false
 ```
 
-#### DiscVault v26 – beta
+#### DiscVault – beta
 
 ```text
-DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
-DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data
-DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres
-DISCVAULT_API_PORT=6080
-DISCVAULT_MCP_PORT=6090
+Repository                         ghcr.io/helmerznl/discvault-launcher:beta
+Web UI port                        6081
+App data (/data)                   /mnt/user/appdata/discvault-beta
+DISCVAULT_DATA_DIR_HOST            /mnt/user/appdata/discvault-beta
+DISCVAULT_POSTGRES_DATA_DIR_HOST   /mnt/user/appdata/discvault-beta-postgres
+Launcher config (/config)          /mnt/user/appdata/discvault-beta-launcher
+Docker socket                      /var/run/docker.sock
+DISCVAULT_CHANNEL                  beta
+DISCVAULT_PROJECT_NAME             discvault_beta_stack
+DISCVAULT_NETWORK                  discvault-beta-stack
+```
+
+#### Begge kanaler
+
+```bash
+curl --fail http://<unraid-server>:6080/api/next/health
+# Roll back: Release channel = manual, DiscVault image = v26.10.17
 ```
 
 ## Forventet resultat
 
-Godkend resultatet for **Installation: Unraid** kun når alle resultater nedenfor er opfyldt: PostgreSQL; `/data`; HTTP `2xx`. Sidespecifikke kontrolpunkter: `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+Launcheren har hentet images og oprettet stakken, webgrænsefladen svarer på skabelonens port, og sundhedsadressen melder en migreret database.
 
-- PostgreSQL
-- `/data`
-- HTTP `2xx`
+Godkend resultatet for **Installation: Unraid** kun når alle resultater nedenfor er opfyldt: introduktionen opretter den første ejer med en passkey eller med adgangskode og TOTP og viser gendannelseskoderne én gang; `/api/next/health` · HTTP `200` · `"status": "ok"`. Sidespecifikke kontrolpunkter: `ghcr.io/helmerznl/discvault-launcher:latest` · `/var/run/docker.sock` · `/api/next/health`.
+
+- introduktionen opretter den første ejer med en passkey eller med adgangskode og TOTP og viser gendannelseskoderne én gang
+- `/api/next/health` · HTTP `200` · `"status": "ok"`
 
 ## Sikkerhed og tilbagerulning
 
 :::caution
-Den sikre gendannelsesgrænse for **Installation: Unraid** kræver disse handlinger, før noget startes eller fortsættes: tilsvarende backupsæt; `/mnt/user/appdata/discvault/data`. Sidespecifikke kontrolpunkter: `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+Stop appen, før du kopierer dens tre appdata-mapper. Rul tilbage ved at sætte udgivelseskanalen til manual med det forrige versionstag og gendanne backuppen fra før opdateringen.
 
-- tilsvarende backupsæt
-- `/mnt/user/appdata/discvault/data`
+Den sikre gendannelsesgrænse for **Installation: Unraid** kræver disse handlinger, før noget startes eller fortsættes: betaen kan ændre databasen, så den stabile app ikke kan læse den; peg den aldrig mod den stabile apps mapper; launcheren monterer Docker-socket og styrer dermed Docker på serveren; installér den kun, hvis du stoler på launcher-imaget; backuppen i appen (Administration → Backup, også efter tidsplan) flytter et bibliotek mellem Docker, Unraid og Home Assistant; launcheren videresender endnu ikke OpenID Connect-variablerne, så Unraid-skabelonen logger ind med passkeys eller adgangskode. Sidespecifikke kontrolpunkter: `ghcr.io/helmerznl/discvault-launcher:latest` · `/var/run/docker.sock` · `/api/next/health`.
+
+- betaen kan ændre databasen, så den stabile app ikke kan læse den; peg den aldrig mod den stabile apps mapper
+- launcheren monterer Docker-socket og styrer dermed Docker på serveren; installér den kun, hvis du stoler på launcher-imaget
+- backuppen i appen (Administration → Backup, også efter tidsplan) flytter et bibliotek mellem Docker, Unraid og Home Assistant
+- launcheren videresender endnu ikke OpenID Connect-variablerne, så Unraid-skabelonen logger ind med passkeys eller adgangskode
 :::
 
 ## Næste trin
 
-[Installation: Første start og sundhedskontrol](/da/install/first-start-health/)
+[Installation: Omvendt proxy og adgangsnøgler](/da/install/reverse-proxy-passkeys/)
 
 ## Kilde og status
 
-- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Kilde og status: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault@441f96593219`](https://github.com/helmerzNL/DiscVault/commit/441f96593219c66d45aac99ce5ef9f81f011d449)
+- [`helmerzNL/unraid-community-apps@988ac954d47b`](https://github.com/helmerzNL/unraid-community-apps/commit/988ac954d47b7c671cab91d5a0ad9b623366f89d)
+- [Unraid template: `templates/discvault.xml`](https://github.com/helmerzNL/unraid-community-apps/blob/main/templates/discvault.xml)
+- [Unraid template: `templates/discvault-beta.xml`](https://github.com/helmerzNL/unraid-community-apps/blob/main/templates/discvault-beta.xml)
+- [DiscVault launcher](https://github.com/helmerzNL/DiscVault-Launcher)
+- [Unraid support thread](https://forums.unraid.net/topic/198808-support-discvault-physical-disc-collection-manager/)
+- Kilde og status: `2026-11-11`
+- DiscVault Docs: `0.2.0`

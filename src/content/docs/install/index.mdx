@@ -1,36 +1,36 @@
 ---
 title: 'Install: Installation routes'
-description: 'Choose the DiscVault v26 topology for new installs, or keep an existing previous-generation deployment on the frozen Legacy image until migration.'
+description: 'Choose the DiscVault topology for new installs, or keep an existing previous-generation deployment on the frozen Legacy image until migration.'
 pageId: 'install-index'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
 lastVerified: '2026-07-20'
 ---
 
 import PageMeta from '../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
 
 ## Goal and result
 
-Choose the DiscVault v26 topology for new installs, or keep an existing previous-generation deployment on the frozen Legacy image until migration.
+Choose the DiscVault topology for new installs, or keep an existing previous-generation deployment on the frozen Legacy image until migration.
 
 ## Applies to
 
-`ghcr.io/helmerznl/discvault:latest` is DiscVault v26 stable and `ghcr.io/helmerznl/discvault:beta` is DiscVault v26 beta. The official `app/deploy/next/docker-compose.yml` and `.env.example` procedure is beta-only and uses `DISCVAULT_NEXT_IMAGE`; the advanced Docker-run procedure remains available for both channels. The frozen `ghcr.io/helmerznl/discvault:legacy` image is only for an existing previous-generation installation that is not ready to migrate. Never substitute that deployment image into the v26 beta topology.
+`ghcr.io/helmerznl/discvault:latest` is DiscVault stable and `ghcr.io/helmerznl/discvault:beta` is DiscVault beta. The official `app/deploy/next/docker-compose.yml` and `.env.example` procedure covers both channels and uses `DISCVAULT_NEXT_IMAGE`; the advanced Docker-run procedure remains available as an equivalent. Unraid installs through Community Applications and Home Assistant through its own app. The frozen `ghcr.io/helmerznl/discvault:legacy` image is only for an existing previous-generation installation that is not ready to migrate. Never substitute that deployment image into the DiscVault Compose topology.
 
-### DiscVault v26 stable
+### DiscVault stable
 
-- DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault stable · `ghcr.io/helmerznl/discvault:latest`
 - select the procedure whose channel metadata matches the running image
 - PostgreSQL `17` + persistent `/data`
 
-### DiscVault v26 beta
+### DiscVault beta
 
-- DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault beta · `ghcr.io/helmerznl/discvault:beta`
 - select the procedure whose channel metadata matches the running image
 - PostgreSQL `17` + persistent `/data`
 
@@ -41,37 +41,39 @@ Choose the DiscVault v26 topology for new installs, or keep an existing previous
 
 ## Procedure
 
-1. **Choose:** [Install: Docker Compose](/install/docker-compose/) · official DiscVault 26 beta deployment files
+1. **Choose:** [Install: Docker Compose](/install/docker-compose/) · official DiscVault Compose files · stable `main` · beta `release/v26-beta`
 2. **Choose:** [Install: Docker run](/install/docker-run/) · advanced stable or beta equivalent
-3. **Choose:** [Install: Unraid](/install/unraid/) · Unraid Compose Manager
-4. **Choose:** new installations use DiscVault v26 `:latest` or `:beta`; only an existing previous-generation installation that is not ready to migrate should use the frozen `:legacy` image
-5. **Preserve:** keep the previous generation’s volumes, environment variables, ports, and data path unchanged; never substitute `:legacy` into the v26 PostgreSQL Compose topology
-6. **Open:** [Update and migrate: DiscVault 26 migration](/update/migration/) · existing data → DiscVault 26
-7. **Record:** `DISCVAULT_IMAGE` · image digest · existing or legacy deployment only: matching backup set
+3. **Choose:** [Install: Unraid](/install/unraid/) · Unraid Community Applications · DiscVault launcher
+4. **Choose:** [Install: Home Assistant](/install/home-assistant/) · Home Assistant app · PostgreSQL 17 built in
+5. **Choose:** new installations use DiscVault `:latest` or `:beta`; only an existing previous-generation installation that is not ready to migrate should use the frozen `:legacy` image
+6. **Preserve:** keep the previous generation’s volumes, environment variables, ports, and data path unchanged; never substitute `:legacy` into the DiscVault PostgreSQL Compose topology
+7. **Open:** [Update and migrate: DiscVault migration](/update/migration/) · existing data → DiscVault
+8. **Record:** `DISCVAULT_IMAGE` · image digest · existing or legacy deployment only: matching backup set
 
 ### Task routes
 
-- [Install: Docker Compose](/install/docker-compose/) — DiscVault 26 beta · official `release/v26-beta` files · `DISCVAULT_NEXT_IMAGE`
-- [Install: Docker run](/install/docker-run/) — DiscVault 26 · Docker run · PostgreSQL + `/data` · `DATABASE_URL`
-- [Install: Persistent data and PostgreSQL](/install/storage-postgresql/) — DiscVault 26 · PostgreSQL + `/data`
-- [Install: Unraid](/install/unraid/) — DiscVault 26 · Unraid · PostgreSQL + `/data`
-- [Update and migrate: DiscVault 26 migration](/update/migration/) — previous generation → DiscVault 26 · guarded import
+- [Install: Docker Compose](/install/docker-compose/) — DiscVault stable and beta · official `app/deploy/next` files · `DISCVAULT_NEXT_IMAGE`
+- [Install: Docker run](/install/docker-run/) — DiscVault · Docker run · PostgreSQL + `/data` · `DATABASE_URL`
+- [Install: Persistent data and PostgreSQL](/install/storage-postgresql/) — DiscVault · PostgreSQL + `/data`
+- [Install: Unraid](/install/unraid/) — DiscVault · Unraid Community Applications · `discvault-launcher`
+- [Install: Home Assistant](/install/home-assistant/) — DiscVault · Home Assistant app · PostgreSQL 17 + `/data`
+- [Update and migrate: DiscVault migration](/update/migration/) — previous generation → DiscVault · guarded import
 
 ## Expected result
 
-A new install selects one v26 channel, while an existing previous-generation install either stays on its unchanged Legacy topology or follows the migration procedure.
+A new install selects one DiscVault channel, while an existing previous-generation install either stays on its unchanged Legacy topology or follows the migration procedure.
 
 - selected release channel
-- PostgreSQL + `/data` · both v26 channels
-- keep the previous generation’s volumes, environment variables, ports, and data path unchanged; never substitute `:legacy` into the v26 PostgreSQL Compose topology
+- PostgreSQL + `/data` · both DiscVault channels
+- keep the previous generation’s volumes, environment variables, ports, and data path unchanged; never substitute `:legacy` into the DiscVault PostgreSQL Compose topology
 
 ## Safety and rollback
 
 :::caution
-Back up an existing or legacy deployment before pulling or recreating it; a fresh install has no prior data to back up. The frozen Legacy image receives no v26 features, migration improvements, or future interface updates.
+Back up an existing or legacy deployment before pulling or recreating it; a fresh install has no prior data to back up. The frozen Legacy image receives no DiscVault features, migration improvements, or future interface updates.
 
-- Legacy branch only: after backup, change only the existing old-generation deployment image tag to `:legacy`, pull and recreate it with its topology unchanged, verify the collection, and stop; do not switch that existing deployment to the v26 topology on this page
-- the frozen `:legacy` image receives no DiscVault v26 features, migration improvements, or future interface updates
+- Legacy branch only: after backup, change only the existing old-generation deployment image tag to `:legacy`, pull and recreate it with its topology unchanged, verify the collection, and stop; do not switch that existing deployment to the DiscVault topology on this page
+- the frozen `:legacy` image receives no DiscVault features, migration improvements, or future interface updates
 - existing or legacy deployment only: matching backup set
 - release notes and recorded immutable image digest
 :::

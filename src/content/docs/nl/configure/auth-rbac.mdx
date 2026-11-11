@@ -5,14 +5,14 @@ pageId: 'configure-auth-rbac'
 products: ['server']
 platforms: ['web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU', 'Flux76HQ/App-Guidance']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
+<PageMeta channels="stable,beta" platform="web" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## Doel en resultaat
 
@@ -22,13 +22,13 @@ Voer de paginaspecifieke werkwijze uit voor **Configureren: Authenticatie en RBA
 
 Deze pagina is uitsluitend van toepassing op **Configureren: Authenticatie en RBAC** (web). De kanaal- en gegevensgrenzen zijn: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; een passkey is een cryptografisch sleutelpaar: de privésleutel blijft op het apparaat of in een vertrouwde referentiebeheerder en DiscVault bewaart alleen de openbare sleutel; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn OIDC; TOTP. Paginaspecifieke controlepunten: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · OIDC · Argon2id · TOTP.
 
-### DiscVault v26 stabiel
+### DiscVault stabiel
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - WebAuthn
 - een passkey is een cryptografisch sleutelpaar: de privésleutel blijft op het apparaat of in een vertrouwde referentiebeheerder en DiscVault bewaart alleen de openbare sleutel
 
-### DiscVault v26 bèta
+### DiscVault bèta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - WebAuthn OIDC
@@ -58,14 +58,14 @@ Deze pagina is uitsluitend van toepassing op **Configureren: Authenticatie en RB
 
 ### Opdrachten en instellingen
 
-#### DiscVault v26 stabiel
+#### DiscVault stabiel
 
 ```bash
 curl --fail http://localhost:6080/api/next/auth/status
 curl --fail http://localhost:6080/api/next/auth/rbac
 ```
 
-#### DiscVault v26 bèta
+#### DiscVault bèta
 
 ```bash
 curl --fail http://localhost:6180/api/next/auth/status

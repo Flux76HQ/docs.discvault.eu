@@ -5,14 +5,14 @@ pageId: 'install-reverse-proxy-passkeys'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU', 'Flux76HQ/App-Guidance']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · ιστός" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
+<PageMeta channels="stable,beta" platform="Docker · ιστός" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## Στόχος και αποτέλεσμα
 
@@ -20,15 +20,17 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## Ισχύει για
 
-Αυτή η σελίδα ισχύει μόνο για **Εγκατάσταση: Αντίστροφος διακομιστής μεσολάβησης και κλειδιά πρόσβασης** (Docker · ιστός). Τα όρια καναλιού και δεδομένων είναι: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6080`; εκτός της εξαίρεσης ρύθμισης localhost, τα passkeys απαιτούν σταθερό πλήρως προσδιορισμένο όνομα τομέα μέσω αξιόπιστου HTTPS· γυμνή διεύθυνση IP ή απλό HTTP δεν υποστηρίζονται; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; OIDC · `/api/next/auth/oidc/callback` · [Ρύθμιση: Σύνδεση με OpenID Connect (OIDC)](/el/configure/oidc/); `LEGACY_AUTH_ENABLED=true`. Σημεία ελέγχου της σελίδας: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+Αυτή η σελίδα ισχύει μόνο για **Εγκατάσταση: Αντίστροφος διακομιστής μεσολάβησης και κλειδιά πρόσβασης** (Docker · ιστός). Τα όρια καναλιού και δεδομένων είναι: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6180` `6080` Docker run; εκτός της εξαίρεσης ρύθμισης localhost, τα passkeys απαιτούν σταθερό πλήρως προσδιορισμένο όνομα τομέα μέσω αξιόπιστου HTTPS· γυμνή διεύθυνση IP ή απλό HTTP δεν υποστηρίζονται; OIDC · `/api/next/auth/oidc/callback` · [Ρύθμιση: Σύνδεση με OpenID Connect (OIDC)](/el/configure/oidc/); `LEGACY_AUTH_ENABLED=true`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; OIDC · `/api/next/auth/oidc/callback` · [Ρύθμιση: Σύνδεση με OpenID Connect (OIDC)](/el/configure/oidc/); `LEGACY_AUTH_ENABLED=true`. Σημεία ελέγχου της σελίδας: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
-### DiscVault v26 – σταθερό
+### DiscVault – σταθερό
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- `RP_ID` `RP_ORIGINS` · `6080`
+- `RP_ID` `RP_ORIGINS` · `6180` `6080` Docker run
 - εκτός της εξαίρεσης ρύθμισης localhost, τα passkeys απαιτούν σταθερό πλήρως προσδιορισμένο όνομα τομέα μέσω αξιόπιστου HTTPS· γυμνή διεύθυνση IP ή απλό HTTP δεν υποστηρίζονται
+- OIDC · `/api/next/auth/oidc/callback` · [Ρύθμιση: Σύνδεση με OpenID Connect (OIDC)](/el/configure/oidc/)
+- `LEGACY_AUTH_ENABLED=true`
 
-### DiscVault v26 – beta
+### DiscVault – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `RP_ID` `RP_ORIGINS` · `6180`
@@ -43,8 +45,8 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ### Εναλλακτική Legacy Authentication
 
-:::note[Διαθέσιμο στην beta]
-Το Legacy Authentication με όνομα χρήστη, κωδικό πρόσβασης και έλεγχο δύο παραγόντων (2FA) είναι διαθέσιμο στο DiscVault 26 beta όταν δεν μπορούν να χρησιμοποιηθούν passkeys.
+:::note[Διαθέσιμο σε σταθερή και beta]
+Το Legacy Authentication με όνομα χρήστη, κωδικό πρόσβασης και έλεγχο δύο παραγόντων (2FA) είναι διαθέσιμο στο DiscVault όταν δεν μπορούν να χρησιμοποιηθούν passkeys.
 
 Ακολουθήστε το `/install/legacy-authentication/` πριν ενεργοποιήσετε τη δυνατότητα ή δημιουργήσετε τον πρώτο κάτοχο.
 :::
@@ -56,13 +58,13 @@ import PageMeta from '../../../../components/PageMeta.astro';
 3. **Ρυθμίστε:** `RP_ID`
 4. **Ρυθμίστε:** `RP_ORIGINS` · HTTPS
 5. **Ρυθμίστε:** [Ρύθμιση: Σύνδεση με OpenID Connect (OIDC)](/el/configure/oidc/) · `/api/next/auth/oidc/callback`
-6. **Ρυθμίστε:** `6080` `6180`
+6. **Ρυθμίστε:** Docker Compose `6180` Docker run `6080`
 7. **Δοκιμάστε:** `GET /api/next/health`
 8. **Καταγράψτε:** επιλέξτε το hostname πριν καταχωρίσετε passkeys· μεταγενέστερη αλλαγή απαιτεί νέα καταχώριση, ενώ το localhost παραμένει μόνο εξαίρεση τοπικής ρύθμισης
 
 ### Εντολές και ρυθμίσεις
 
-#### DiscVault v26 – σταθερό
+#### DiscVault – σταθερό
 
 ```text
 RP_ID=discvault.example.com
@@ -71,7 +73,7 @@ RP_ORIGINS=https://discvault.example.com
 curl --fail https://discvault.example.com/api/next/health
 ```
 
-#### DiscVault v26 – beta
+#### DiscVault – beta
 
 ```text
 RP_ID=discvault.example.com

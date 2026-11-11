@@ -5,14 +5,14 @@ pageId: 'pwa-offline'
 products: ['pwa']
 platforms: ['web', 'ios', 'android']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="web · iOS · Android" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="web · iOS · Android" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Objetivo y resultado
 
@@ -22,12 +22,12 @@ Completa el flujo específico de la página para **PWA: Comportamiento sin conex
 
 Esta página se aplica solo a **PWA: Comportamiento sin conexión** (web · iOS · Android). Sus límites de canal y datos son: DiscVault · `ghcr.io/helmerznl/discvault:latest`; las pantallas en caché pueden abrirse, pero los datos nuevos y las escrituras requieren red · `Service Worker` · `CacheStorage`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; las pantallas en caché pueden abrirse, pero los datos nuevos y las escrituras requieren red · `Service Worker` · `CacheStorage`. Puntos de control de esta página: `Service Worker` · `CacheStorage` · `navigator.onLine` · HTTPS.
 
-### DiscVault v26 estable
+### DiscVault estable
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - las pantallas en caché pueden abrirse, pero los datos nuevos y las escrituras requieren red · `Service Worker` · `CacheStorage`
 
-### DiscVault v26 beta
+### DiscVault beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - las pantallas en caché pueden abrirse, pero los datos nuevos y las escrituras requieren red · `Service Worker` · `CacheStorage`

@@ -5,14 +5,14 @@ pageId: 'start-index'
 products: ['server', 'pwa', 'ios', 'android']
 platforms: ['all']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVaultApp', 'Flux76HQ/DiscVault-AndroidApp']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="すべてのプラットフォーム" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVaultApp · Flux76HQ/DiscVault-AndroidApp" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="すべてのプラットフォーム" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/DiscVaultApp · Flux76HQ/DiscVault-AndroidApp" verified="2026-07-14" />
 
 ## 目的と結果
 
@@ -20,17 +20,17 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## 対象
 
-このページの対象は **開始: 概要** (すべてのプラットフォーム). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL `/data`. このページ固有の確認点: `/install/` · `/pwa/` · `/ios/` · `/android/`.
+このページの対象は **開始: 概要** (すべてのプラットフォーム). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL `/data` · DiscVault; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL `/data` · DiscVault. このページ固有の確認点: `/install/` · `/pwa/` · `/ios/` · `/android/`.
 
-### DiscVault v26 安定版
+### DiscVault 安定版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- PostgreSQL `/data`
+- PostgreSQL `/data` · DiscVault
 
-### DiscVault v26 ベータ版
+### DiscVault ベータ版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- PostgreSQL `/data`
+- PostgreSQL `/data` · DiscVault
 
 ## 前提条件
 
@@ -40,14 +40,14 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## 手順
 
-1. **選択:** [インストール: インストール方法](/ja/install/) · Docker Compose · DiscVault 26
+1. **選択:** [インストール: インストール方法](/ja/install/) · Docker Compose · DiscVault
 2. **選択:** [PWA: 概要](/ja/pwa/) · HTTPS · PWA
 3. **選択:** [iOS/iPadOS: 設定](/ja/ios/) · iOS/iPadOS `17+` · SwiftData
 4. **選択:** [Android: 設定](/ja/android/) · Android API `26+` · Room
 
 ### タスク別ルート
 
-- [インストール: インストール方法](/ja/install/) — DiscVault 26 PostgreSQL HTTPS
+- [インストール: インストール方法](/ja/install/) — DiscVault PostgreSQL HTTPS
 - [PWA: 概要](/ja/pwa/) — PWA
 - [iOS/iPadOS: 設定](/ja/ios/) — iOS/iPadOS 17 SwiftData
 - [Android: 設定](/ja/android/) — Android API 26 Room

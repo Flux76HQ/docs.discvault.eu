@@ -5,14 +5,14 @@ pageId: 'install-storage-postgresql'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Cél és eredmény
 
@@ -22,13 +22,13 @@ Hajtsa végre az oldalhoz tartozó munkafolyamatot: **Telepítés: Tartós adato
 
 Ez az oldal kizárólag erre vonatkozik: **Telepítés: Tartós adatok és PostgreSQL** (Docker · Unraid). A csatorna- és adathatárok: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL; `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL; `/data`. Oldalspecifikus ellenőrzési pontok: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
 
-### DiscVault v26 – stabil
+### DiscVault – stabil
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - PostgreSQL
 - `/data`
 
-### DiscVault v26 – béta
+### DiscVault – béta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - PostgreSQL
@@ -36,7 +36,7 @@ Ez az oldal kizárólag erre vonatkozik: **Telepítés: Tartós adatok és Postg
 
 ## Előfeltételek
 
-- `DISCVAULT_POSTGRES_DATA`
+- DiscVault
 - mentési cél az élő adatútvonalon kívül
 - PostgreSQL `17`
 

@@ -5,14 +5,14 @@ pageId: 'install-reverse-proxy-passkeys'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU', 'Flux76HQ/App-Guidance']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · 网页" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
+<PageMeta channels="stable,beta" platform="Docker · 网页" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## 目标和结果
 
@@ -20,15 +20,17 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## 适用范围
 
-本页面仅适用于 **安装: 反向代理和通行密钥** (Docker · 网页). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6080`; 除 localhost 设置例外外，通行密钥需要通过受信任 HTTPS 使用稳定的完全限定域名；不支持裸 IP 地址或普通 HTTP; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; OIDC · `/api/next/auth/oidc/callback` · [配置: 使用 OpenID Connect（OIDC）登录](/zh/configure/oidc/); `LEGACY_AUTH_ENABLED=true`. 本页面专用检查点： FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+本页面仅适用于 **安装: 反向代理和通行密钥** (Docker · 网页). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6180` `6080` Docker run; 除 localhost 设置例外外，通行密钥需要通过受信任 HTTPS 使用稳定的完全限定域名；不支持裸 IP 地址或普通 HTTP; OIDC · `/api/next/auth/oidc/callback` · [配置: 使用 OpenID Connect（OIDC）登录](/zh/configure/oidc/); `LEGACY_AUTH_ENABLED=true`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; OIDC · `/api/next/auth/oidc/callback` · [配置: 使用 OpenID Connect（OIDC）登录](/zh/configure/oidc/); `LEGACY_AUTH_ENABLED=true`. 本页面专用检查点： FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
-### DiscVault v26 稳定版
+### DiscVault 稳定版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- `RP_ID` `RP_ORIGINS` · `6080`
+- `RP_ID` `RP_ORIGINS` · `6180` `6080` Docker run
 - 除 localhost 设置例外外，通行密钥需要通过受信任 HTTPS 使用稳定的完全限定域名；不支持裸 IP 地址或普通 HTTP
+- OIDC · `/api/next/auth/oidc/callback` · [配置: 使用 OpenID Connect（OIDC）登录](/zh/configure/oidc/)
+- `LEGACY_AUTH_ENABLED=true`
 
-### DiscVault v26 测试版
+### DiscVault 测试版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `RP_ID` `RP_ORIGINS` · `6180`
@@ -43,8 +45,8 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ### Legacy Authentication 回退方式
 
-:::note[测试版可用]
-使用用户名、密码和双因素身份验证（2FA）的 Legacy Authentication 已在 DiscVault 26 测试版中提供，可在无法使用通行密钥时作为回退方式。
+:::note[稳定版和测试版均可用]
+使用用户名、密码和双因素身份验证（2FA）的 Legacy Authentication 已在 DiscVault 中提供，可在无法使用通行密钥时作为回退方式。
 
 启用此功能或创建首位所有者前，请按照 `/install/legacy-authentication/` 操作。
 :::
@@ -56,13 +58,13 @@ import PageMeta from '../../../../components/PageMeta.astro';
 3. **配置:** `RP_ID`
 4. **配置:** `RP_ORIGINS` · HTTPS
 5. **配置:** [配置: 使用 OpenID Connect（OIDC）登录](/zh/configure/oidc/) · `/api/next/auth/oidc/callback`
-6. **配置:** `6080` `6180`
+6. **配置:** Docker Compose `6180` Docker run `6080`
 7. **测试:** `GET /api/next/health`
 8. **记录:** 注册通行密钥前先确定主机名；之后更改主机名需要重新注册，而 localhost 仅作为本地设置例外
 
 ### 命令和设置
 
-#### DiscVault v26 稳定版
+#### DiscVault 稳定版
 
 ```text
 RP_ID=discvault.example.com
@@ -71,7 +73,7 @@ RP_ORIGINS=https://discvault.example.com
 curl --fail https://discvault.example.com/api/next/health
 ```
 
-#### DiscVault v26 测试版
+#### DiscVault 测试版
 
 ```text
 RP_ID=discvault.example.com

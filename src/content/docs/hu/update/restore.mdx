@@ -5,14 +5,14 @@ pageId: 'update-restore'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Cél és eredmény
 
@@ -22,13 +22,13 @@ Hajtsa végre az oldalhoz tartozó munkafolyamatot: **Frissítés és migrálás
 
 Ez az oldal kizárólag erre vonatkozik: **Frissítés és migrálás: Visszaállítás** (Docker · Unraid). A csatorna- és adathatárok: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL dump és fájlarchívum ugyanabból a leállított írási ablakból; az illeszkedő adatokat az előző image indítása előtt állítsa vissza; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL dump és fájlarchívum ugyanabból a leállított írási ablakból; az illeszkedő adatokat az előző image indítása előtt állítsa vissza. Oldalspecifikus ellenőrzési pontok: `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.
 
-### DiscVault v26 – stabil
+### DiscVault – stabil
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - PostgreSQL dump és fájlarchívum ugyanabból a leállított írási ablakból
 - az illeszkedő adatokat az előző image indítása előtt állítsa vissza
 
-### DiscVault v26 – béta
+### DiscVault – béta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - PostgreSQL dump és fájlarchívum ugyanabból a leállított írási ablakból

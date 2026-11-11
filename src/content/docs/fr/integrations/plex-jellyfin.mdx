@@ -5,14 +5,14 @@ pageId: 'integrations-plex-jellyfin'
 products: ['server']
 platforms: ['web', 'docker']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="web · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="web · Docker" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Objectif et résultat
 
@@ -20,17 +20,17 @@ Suivez le déroulement propre à cette page pour **Intégrations: Plex et Jellyf
 
 ## S’applique à
 
-Cette page s’applique uniquement à **Intégrations: Plex et Jellyfin** (web · Docker). Les limites de canal et de données sont : DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26. Points de contrôle propres à la page : Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+Cette page s’applique uniquement à **Intégrations: Plex et Jellyfin** (web · Docker). Les limites de canal et de données sont : DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault. Points de contrôle propres à la page : Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
 
-### DiscVault v26 stable
+### DiscVault stable
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- DiscVault 26
+- DiscVault
 
-### DiscVault v26 bêta
+### DiscVault bêta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- DiscVault 26
+- DiscVault
 
 ## Prérequis
 
@@ -44,6 +44,7 @@ Cette page s’applique uniquement à **Intégrations: Plex et Jellyfin** (web �
 2. **Tester:** Administration → Plugins → Contrôle de fonctionnement
 3. **Exécuter:** Administration → Plugins → Découvrir sans enregistrer · `dryRun=true`
 4. **Comparer:** `/api/next/digital-items?limit=200`
+5. **Configurer:** Administration → Tâches planifiées synchronise les bibliothèques Jellyfin et Plex toutes les N heures, éventuellement suivi de l’historique de visionnage ; désactivé tant qu’un administrateur ne l’active pas
 
 ### Commandes et réglages
 

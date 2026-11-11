@@ -5,14 +5,14 @@ pageId: 'install-storage-postgresql'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## 目的と結果
 
@@ -22,13 +22,13 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 このページの対象は **インストール: 永続データと PostgreSQL** (Docker · Unraid). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL; `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL; `/data`. このページ固有の確認点: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
 
-### DiscVault v26 安定版
+### DiscVault 安定版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - PostgreSQL
 - `/data`
 
-### DiscVault v26 ベータ版
+### DiscVault ベータ版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - PostgreSQL
@@ -36,7 +36,7 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## 前提条件
 
-- `DISCVAULT_POSTGRES_DATA`
+- DiscVault
 - 稼働データ外のバックアップ先
 - PostgreSQL `17`
 

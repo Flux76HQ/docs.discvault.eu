@@ -1,97 +1,130 @@
 ---
 title: 'Kurulum: Unraid'
-description: 'Göreve özel yönergeler: Kurulum: Unraid. /mnt/user/appdata/discvault/postgres. /mnt/user/appdata/discvault/data. 6080:5000. DISCVAULT_IMAGE.'
+description: 'Göreve özel yönergeler: Kurulum: Unraid. ghcr.io/helmerznl/discvault-launcher:latest. /var/run/docker.sock. /api/next/health.'
 pageId: 'install-unraid'
 products: ['server']
 platforms: ['unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+minVersion: 'DiscVault'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/unraid-community-apps']
+lastVerified: '2026-11-11'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Unraid" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/unraid-community-apps" verified="2026-11-11" />
 
 ## Amaç ve sonuç
 
-Sayfaya özel iş akışını tamamlayın: **Kurulum: Unraid**. Bu prosedür şunları kullanır: `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+DiscVault’u Unraid Community Applications mağazasından kurun. Şablon, PostgreSQL, API, worker ve MCP’yi sizin için oluşturan ve güncelleyen DiscVault başlatıcısını kurar.
+
+Sayfaya özel iş akışını tamamlayın: **Kurulum: Unraid**. Bu prosedür şunları kullanır: `ghcr.io/helmerznl/discvault-launcher:latest` · `/var/run/docker.sock` · `/api/next/health`.
 
 ## Geçerli olduğu alan
 
-Bu sayfa yalnızca şunlar için geçerlidir: **Kurulum: Unraid** (Unraid). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL API MCP; `:latest` `:beta`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL API MCP; `:latest` `:beta`. Sayfaya özel denetim noktaları: `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+Helmer’s Repository, DiscVault ve DiscVault (beta) için kendi appdata klasörleri, bağlantı noktası, Compose projesi ve ağı olan iki şablon sunar; ikisi yan yana çalışır.
 
-### DiscVault v26 kararlı
+Bu sayfa yalnızca şunlar için geçerlidir: **Kurulum: Unraid** (Unraid). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault-launcher:latest`; `6080` · `/mnt/user/appdata/discvault` · `discvault_stack`; DiscVault · `ghcr.io/helmerznl/discvault-launcher:beta`; `6081` · `/mnt/user/appdata/discvault-beta` · `discvault_beta_stack`. Sayfaya özel denetim noktaları: `ghcr.io/helmerznl/discvault-launcher:latest` · `/var/run/docker.sock` · `/api/next/health`.
 
-- DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- PostgreSQL API MCP
-- `:latest` `:beta`
+### DiscVault kararlı
 
-### DiscVault v26 beta
+- DiscVault · `ghcr.io/helmerznl/discvault-launcher:latest`
+- `6080` · `/mnt/user/appdata/discvault` · `discvault_stack`
 
-- DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- PostgreSQL API MCP
-- `:latest` `:beta`
+### DiscVault beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault-launcher:beta`
+- `6081` · `/mnt/user/appdata/discvault-beta` · `discvault_beta_stack`
 
 ## Ön koşullar
 
 - Unraid `6.12+`
-- `/mnt/user/appdata/discvault/data`
-- OpenSSL
+- Community Applications eklentisi kurulu
+- passkey için uygulama bağlantı noktasının önünde alan adlı bir HTTPS adresi gerekir; yoksa TOTP ile parola girişini kullanın
 
 ## Prosedür
 
-1. **Kurun:** Unraid · [Kurulum: Docker Compose](/tr/install/docker-compose/)
-2. **Yapılandırın:** `DISCVAULT_IMAGE` · `:latest` `:beta`
-3. **Yapılandırın:** `DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data` · `DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres`
-4. **Doğrulayın:** `postgres` · `next-api` · `next-worker` · `next-mcp` · `6080:5000`
+1. **Açın:** Apps → DiscVault arayın → Yükle; beta şablonunun adında (beta) bulunur
+2. **Yapılandırın:** varsayılan appdata klasörlerini koruyun; başlatıcı klasörü oluşturulan Compose dosyasını ve `/config/stack.env` içindeki gizli değerleri tutar · `TZ`
+3. **Yapılandırın:** `RP_ID` · `RP_ORIGINS` · passkey için uygulama bağlantı noktasının önünde alan adlı bir HTTPS adresi gerekir; yoksa TOTP ile parola girişini kullanın · `LEGACY_AUTH_ENABLED=true`
+4. **Başlatın:** ilk başlatma, başlatıcı imajları çekip veritabanını oluştururken birkaç dakika sürer · başlatıcı Docker soketini bağlar ve böylece sunucudaki Docker’ı denetler; yalnızca başlatıcı imajına güveniyorsanız kurun
+5. **Doğrulayın:** `/api/next/health` · ilk kurulum ilk sahibi bir passkey ya da parola ve TOTP ile oluşturur ve kurtarma kodlarını bir kez gösterir
+6. **Yapılandırın:** Docker sekmesi → Güncellemeleri denetle; başlarken başlatıcı yığının geri kalanını da günceller · `DISCVAULT_CHANNEL=manual` · `DISCVAULT_IMAGE`
 
 ### Komutlar ve ayarlar
 
-#### DiscVault v26 kararlı
+#### DiscVault kararlı
 
 ```text
-DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
-DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data
-DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres
-DISCVAULT_API_PORT=6080
-DISCVAULT_MCP_PORT=6090
+Repository                         ghcr.io/helmerznl/discvault-launcher:latest
+Web UI port                        6080
+App data (/data)                   /mnt/user/appdata/discvault
+DISCVAULT_DATA_DIR_HOST            /mnt/user/appdata/discvault
+DISCVAULT_POSTGRES_DATA_DIR_HOST   /mnt/user/appdata/discvault-postgres
+Launcher config (/config)          /mnt/user/appdata/discvault-launcher
+Docker socket                      /var/run/docker.sock
+DISCVAULT_CHANNEL                  latest
+TZ                                 Europe/Amsterdam
+RP_ID                              discvault.example.com
+RP_ORIGINS                         https://discvault.example.com
+LEGACY_AUTH_ENABLED                false
 ```
 
-#### DiscVault v26 beta
+#### DiscVault beta
 
 ```text
-DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
-DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data
-DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres
-DISCVAULT_API_PORT=6080
-DISCVAULT_MCP_PORT=6090
+Repository                         ghcr.io/helmerznl/discvault-launcher:beta
+Web UI port                        6081
+App data (/data)                   /mnt/user/appdata/discvault-beta
+DISCVAULT_DATA_DIR_HOST            /mnt/user/appdata/discvault-beta
+DISCVAULT_POSTGRES_DATA_DIR_HOST   /mnt/user/appdata/discvault-beta-postgres
+Launcher config (/config)          /mnt/user/appdata/discvault-beta-launcher
+Docker socket                      /var/run/docker.sock
+DISCVAULT_CHANNEL                  beta
+DISCVAULT_PROJECT_NAME             discvault_beta_stack
+DISCVAULT_NETWORK                  discvault-beta-stack
+```
+
+#### Her iki kanal
+
+```bash
+curl --fail http://<unraid-server>:6080/api/next/health
+# Roll back: Release channel = manual, DiscVault image = v26.10.17
 ```
 
 ## Beklenen sonuç
 
-Şunun sonucunu kabul edin: **Kurulum: Unraid** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: PostgreSQL; `/data`; HTTP `2xx`. Sayfaya özel denetim noktaları: `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+Başlatıcı imajları çekip yığını oluşturmuştur, web arayüzü şablonun bağlantı noktasında yanıt verir ve sağlık adresi taşınmış bir veritabanı bildirir.
 
-- PostgreSQL
-- `/data`
-- HTTP `2xx`
+Şunun sonucunu kabul edin: **Kurulum: Unraid** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: ilk kurulum ilk sahibi bir passkey ya da parola ve TOTP ile oluşturur ve kurtarma kodlarını bir kez gösterir; `/api/next/health` · HTTP `200` · `"status": "ok"`. Sayfaya özel denetim noktaları: `ghcr.io/helmerznl/discvault-launcher:latest` · `/var/run/docker.sock` · `/api/next/health`.
+
+- ilk kurulum ilk sahibi bir passkey ya da parola ve TOTP ile oluşturur ve kurtarma kodlarını bir kez gösterir
+- `/api/next/health` · HTTP `200` · `"status": "ok"`
 
 ## Güvenlik ve geri alma
 
 :::caution
-Şunun güvenli kurtarma sınırı: **Kurulum: Unraid** başlatmadan veya devam etmeden önce şu işlemleri gerektirir: eşleşen yedek kümesi; `/mnt/user/appdata/discvault/data`. Sayfaya özel denetim noktaları: `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+Üç appdata klasörünü kopyalamadan önce uygulamayı durdurun. Geri almak için sürüm kanalını önceki sürüm etiketiyle manual yapın ve güncellemeden önceki yedeği geri yükleyin.
 
-- eşleşen yedek kümesi
-- `/mnt/user/appdata/discvault/data`
+Şunun güvenli kurtarma sınırı: **Kurulum: Unraid** başlatmadan veya devam etmeden önce şu işlemleri gerektirir: beta, veritabanını kararlı uygulamanın okuyamayacağı şekilde değiştirebilir; onu asla kararlı sürümün klasörlerine yönlendirmeyin; başlatıcı Docker soketini bağlar ve böylece sunucudaki Docker’ı denetler; yalnızca başlatıcı imajına güveniyorsanız kurun; uygulama içi yedek (Yönetim → Backup, zamanlanmış da olabilir) bir kitaplığı Docker, Unraid ve Home Assistant arasında taşır; başlatıcı OpenID Connect değişkenlerini henüz aktarmaz; bu yüzden Unraid şablonu passkey veya parola ile oturum açar. Sayfaya özel denetim noktaları: `ghcr.io/helmerznl/discvault-launcher:latest` · `/var/run/docker.sock` · `/api/next/health`.
+
+- beta, veritabanını kararlı uygulamanın okuyamayacağı şekilde değiştirebilir; onu asla kararlı sürümün klasörlerine yönlendirmeyin
+- başlatıcı Docker soketini bağlar ve böylece sunucudaki Docker’ı denetler; yalnızca başlatıcı imajına güveniyorsanız kurun
+- uygulama içi yedek (Yönetim → Backup, zamanlanmış da olabilir) bir kitaplığı Docker, Unraid ve Home Assistant arasında taşır
+- başlatıcı OpenID Connect değişkenlerini henüz aktarmaz; bu yüzden Unraid şablonu passkey veya parola ile oturum açar
 :::
 
 ## Sonraki adım
 
-[Kurulum: İlk başlatma ve sağlık kontrolü](/tr/install/first-start-health/)
+[Kurulum: Ters vekil ve geçiş anahtarları](/tr/install/reverse-proxy-passkeys/)
 
 ## Kaynak ve durum
 
-- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Kaynak ve durum: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault@441f96593219`](https://github.com/helmerzNL/DiscVault/commit/441f96593219c66d45aac99ce5ef9f81f011d449)
+- [`helmerzNL/unraid-community-apps@988ac954d47b`](https://github.com/helmerzNL/unraid-community-apps/commit/988ac954d47b7c671cab91d5a0ad9b623366f89d)
+- [Unraid template: `templates/discvault.xml`](https://github.com/helmerzNL/unraid-community-apps/blob/main/templates/discvault.xml)
+- [Unraid template: `templates/discvault-beta.xml`](https://github.com/helmerzNL/unraid-community-apps/blob/main/templates/discvault-beta.xml)
+- [DiscVault launcher](https://github.com/helmerzNL/DiscVault-Launcher)
+- [Unraid support thread](https://forums.unraid.net/topic/198808-support-discvault-physical-disc-collection-manager/)
+- Kaynak ve durum: `2026-11-11`
+- DiscVault Docs: `0.2.0`

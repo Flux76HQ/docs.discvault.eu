@@ -5,14 +5,14 @@ pageId: 'install-docker-run'
 products: ['server']
 platforms: ['docker']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Στόχος και αποτέλεσμα
 
@@ -22,13 +22,13 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 Αυτή η σελίδα ισχύει μόνο για **Εγκατάσταση: Docker run** (Docker). Τα όρια καναλιού και δεδομένων είναι: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL API MCP; `6080` → API `5000`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL API MCP; `6080` → API `5000`. Σημεία ελέγχου της σελίδας: `DATABASE_URL` · `discvault-postgres` · `6080:5000` · `/api/next/health`.
 
-### DiscVault v26 – σταθερό
+### DiscVault – σταθερό
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - PostgreSQL API MCP
 - `6080` → API `5000`
 
-### DiscVault v26 – beta
+### DiscVault – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - PostgreSQL API MCP
@@ -49,13 +49,13 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ### Εντολές και ρυθμίσεις
 
-#### DiscVault v26 – σταθερό
+#### DiscVault – σταθερό
 
 ```bash
 export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
 ```
 
-#### DiscVault v26 – beta
+#### DiscVault – beta
 
 ```bash
 export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
@@ -125,10 +125,10 @@ docker ps --filter 'name=discvault-'
 
 ## Αναμενόμενο αποτέλεσμα
 
-Αποδεχθείτε το αποτέλεσμα για **Εγκατάσταση: Docker run** μόνο όταν ισχύουν όλα τα παρακάτω αποτελέσματα: HTTP `2xx` · `/api/next/health`; `discvault-postgres`. Σημεία ελέγχου της σελίδας: `DATABASE_URL` · `discvault-postgres` · `6080:5000` · `/api/next/health`.
+Αποδεχθείτε το αποτέλεσμα για **Εγκατάσταση: Docker run** μόνο όταν ισχύουν όλα τα παρακάτω αποτελέσματα: HTTP `2xx` · `/api/next/health`; DiscVault. Σημεία ελέγχου της σελίδας: `DATABASE_URL` · `discvault-postgres` · `6080:5000` · `/api/next/health`.
 
 - HTTP `2xx` · `/api/next/health`
-- `discvault-postgres`
+- DiscVault
 
 ## Ασφάλεια και επαναφορά
 

@@ -5,14 +5,14 @@ pageId: 'install-storage-postgresql'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Mål og resultat
 
@@ -22,13 +22,13 @@ Fullfør den sidespesifikke arbeidsflyten for **Installasjon: Varige data og Pos
 
 Denne siden gjelder bare **Installasjon: Varige data og PostgreSQL** (Docker · Unraid). Kanal- og datagrensene er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL; `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL; `/data`. Sidespesifikke kontrollpunkter: `DISCVAULT_POSTGRES_DATA` · `DISCVAULT_DATA_DIR` · `postgres` · `next-api`.
 
-### DiscVault v26 – stabil
+### DiscVault – stabil
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - PostgreSQL
 - `/data`
 
-### DiscVault v26 – beta
+### DiscVault – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - PostgreSQL
@@ -36,7 +36,7 @@ Denne siden gjelder bare **Installasjon: Varige data og PostgreSQL** (Docker · 
 
 ## Forutsetninger
 
-- `DISCVAULT_POSTGRES_DATA`
+- DiscVault
 - sikkerhetskopimål utenfor aktiv databane
 - PostgreSQL `17`
 

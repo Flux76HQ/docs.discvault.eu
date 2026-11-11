@@ -5,14 +5,14 @@ pageId: 'reference-index'
 products: ['server', 'pwa', 'ios', 'android']
 platforms: ['all']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="toutes les plateformes" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-09-20" />
+<PageMeta channels="stable,beta" platform="toutes les plateformes" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-09-20" />
 
 ## Objectif et résultat
 
@@ -22,13 +22,13 @@ Suivez le déroulement propre à cette page pour **Référence**. Cette procédu
 
 Cette page s’applique uniquement à **Référence** (toutes les plateformes). Les limites de canal et de données sont : DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL `/data`; API `6080:5000` MCP `6090:6090`. Points de contrôle propres à la page : `:latest` · `:beta` · `:dev` · `6080:5000` · `DISCVAULT_OIDC_ISSUER`.
 
-### DiscVault v26 stable
+### DiscVault stable
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - PostgreSQL `/data`
 - API `6080:5000` MCP `6090:6090`
 
-### DiscVault v26 bêta
+### DiscVault bêta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - PostgreSQL `/data`
@@ -41,7 +41,7 @@ Cette page s’applique uniquement à **Référence** (toutes les plateformes). 
 ## Procédure
 
 1. **Inspecter:** `:latest` `:beta`
-2. **Consigner:** `:dev` est réservé à l’ingénierie et n’est pas un canal de publication ; DiscVault v26 stable utilise `:latest` et la bêta `:beta` · `:dev`
+2. **Consigner:** `:dev` est réservé à l’ingénierie et n’est pas un canal de publication ; DiscVault stable utilise `:latest` et la bêta `:beta` · `:dev`
 3. **Consigner:** `/api/next/health`
 4. **Consigner:** [Configuration: Connexion avec OpenID Connect (OIDC)](/fr/configure/oidc/) · `DISCVAULT_OIDC_ISSUER`
 5. **Consigner:** PostgreSQL `/data`
@@ -58,10 +58,10 @@ Validez le résultat de **Référence** uniquement lorsque tous les résultats s
 ## Sécurité et retour arrière
 
 :::caution
-La limite de récupération sûre pour **Référence** impose ces actions avant tout démarrage ou toute poursuite : la référence est en lecture seule ; utilisez la procédure ciblée avant toute commande ou modification; `:dev` est réservé à l’ingénierie et n’est pas un canal de publication ; DiscVault v26 stable utilise `:latest` et la bêta `:beta` · `:dev`. Points de contrôle propres à la page : `:latest` · `:beta` · `:dev` · `6080:5000` · `DISCVAULT_OIDC_ISSUER`.
+La limite de récupération sûre pour **Référence** impose ces actions avant tout démarrage ou toute poursuite : la référence est en lecture seule ; utilisez la procédure ciblée avant toute commande ou modification; `:dev` est réservé à l’ingénierie et n’est pas un canal de publication ; DiscVault stable utilise `:latest` et la bêta `:beta` · `:dev`. Points de contrôle propres à la page : `:latest` · `:beta` · `:dev` · `6080:5000` · `DISCVAULT_OIDC_ISSUER`.
 
 - la référence est en lecture seule ; utilisez la procédure ciblée avant toute commande ou modification
-- `:dev` est réservé à l’ingénierie et n’est pas un canal de publication ; DiscVault v26 stable utilise `:latest` et la bêta `:beta` · `:dev`
+- `:dev` est réservé à l’ingénierie et n’est pas un canal de publication ; DiscVault stable utilise `:latest` et la bêta `:beta` · `:dev`
 :::
 
 ## Étape suivante

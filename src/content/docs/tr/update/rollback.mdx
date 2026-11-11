@@ -5,14 +5,14 @@ pageId: 'update-rollback'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Amaç ve sonuç
 
@@ -22,13 +22,13 @@ Sayfaya özel iş akışını tamamlayın: **Güncelleme ve geçiş: İmajı ger
 
 Bu sayfa yalnızca şunlar için geçerlidir: **Güncelleme ve geçiş: İmajı geri alma** (Docker · Unraid). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault:latest`; önceki imajı başlatmadan önce eşleşen verileri geri yükleyin; PostgreSQL `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; önceki imajı başlatmadan önce eşleşen verileri geri yükleyin; PostgreSQL `/data`. Sayfaya özel denetim noktaları: `PREVIOUS_IMAGE` · `pg_restore --exit-on-error` · `discvault.failed-` · `DISCVAULT_IMAGE`.
 
-### DiscVault v26 kararlı
+### DiscVault kararlı
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - önceki imajı başlatmadan önce eşleşen verileri geri yükleyin
 - PostgreSQL `/data`
 
-### DiscVault v26 beta
+### DiscVault beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - önceki imajı başlatmadan önce eşleşen verileri geri yükleyin
@@ -106,7 +106,7 @@ trap - EXIT
 
 ## Sonraki adım
 
-[Güncelleme ve geçiş: DiscVault 26 geçişi](/tr/update/migration/)
+[Güncelleme ve geçiş: DiscVault geçişi](/tr/update/migration/)
 
 ## Kaynak ve durum
 

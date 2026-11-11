@@ -5,14 +5,14 @@ pageId: 'admin-index'
 products: ['server']
 platforms: ['docker', 'unraid', 'web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid · web" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Amaç ve sonuç
 
@@ -22,12 +22,12 @@ Sayfaya özel iş akışını tamamlayın: **Yönetim: Günlükler, işler ve g�
 
 Bu sayfa yalnızca şunlar için geçerlidir: **Yönetim: Günlükler, işler ve güvenlik** (Docker · Unraid · web). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault:latest`; API MCP PostgreSQL; DiscVault · `ghcr.io/helmerznl/discvault:beta`; API MCP PostgreSQL. Sayfaya özel denetim noktaları: `docker compose` · `/api/next/jobs` · `next-worker` · `--tail=200`.
 
-### DiscVault v26 kararlı
+### DiscVault kararlı
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - API MCP PostgreSQL
 
-### DiscVault v26 beta
+### DiscVault beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - API MCP PostgreSQL

@@ -1,36 +1,36 @@
 ---
 title: 'Configure: Authentication and RBAC'
-description: 'Operate Passkeys and RBAC in both channels, and manage optional OIDC or Legacy Authentication identities and recovery in DiscVault 26 beta.'
+description: 'Operate Passkeys and RBAC in both channels, and manage optional OIDC or Legacy Authentication identities and recovery in DiscVault beta.'
 pageId: 'configure-auth-rbac'
 products: ['server']
 platforms: ['web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU', 'Flux76HQ/App-Guidance']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
+<PageMeta channels="stable,beta" platform="web" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## Goal and result
 
-Operate Passkeys and RBAC in both channels, and manage optional OIDC or Legacy Authentication identities and recovery in DiscVault 26 beta.
+Operate Passkeys and RBAC in both channels, and manage optional OIDC or Legacy Authentication identities and recovery in DiscVault beta.
 
 ## Applies to
 
-DiscVault v26 provides WebAuthn and RBAC in stable and beta. A passkey keeps its private key on the device or in a trusted credential manager while DiscVault stores the public key. DiscVault 26 beta additionally supports optional OIDC and the opt-in Legacy Authentication capability. Owners and Admins can issue temporary passwords, require a password change, set per-user MFA policy, control passkey registration, and let signed-in users link one identity for the configured OIDC issuer. TOTP secrets are encrypted and unified recovery codes are hashed and single-use.
+DiscVault provides WebAuthn and RBAC in stable and beta. A passkey keeps its private key on the device or in a trusted credential manager while DiscVault stores the public key. DiscVault beta additionally supports optional OIDC and the opt-in Legacy Authentication capability. Owners and Admins can issue temporary passwords, require a password change, set per-user MFA policy, control passkey registration, and let signed-in users link one identity for the configured OIDC issuer. TOTP secrets are encrypted and unified recovery codes are hashed and single-use.
 
-### DiscVault v26 stable
+### DiscVault stable
 
-- DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault stable · `ghcr.io/helmerznl/discvault:latest`
 - WebAuthn · owner / administrator / editor / fan / viewer
 - a passkey is a cryptographic key pair: the private key stays on the device or in a trusted credential manager, and DiscVault stores only the public key
 
-### DiscVault v26 beta
+### DiscVault beta
 
-- DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault beta · `ghcr.io/helmerznl/discvault:beta`
 - WebAuthn + optional Legacy Authentication + OIDC
 - temporary passwords · forced password change · TOTP · recovery codes
 
@@ -58,14 +58,14 @@ DiscVault v26 provides WebAuthn and RBAC in stable and beta. A passkey keeps its
 
 ### Commands and settings
 
-#### DiscVault v26 stable
+#### DiscVault stable
 
 ```bash
 curl --fail http://localhost:6080/api/next/auth/status
 curl --fail http://localhost:6080/api/next/auth/rbac
 ```
 
-#### DiscVault v26 beta
+#### DiscVault beta
 
 ```bash
 curl --fail http://localhost:6180/api/next/auth/status

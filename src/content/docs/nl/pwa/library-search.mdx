@@ -5,14 +5,14 @@ pageId: 'pwa-library-search'
 products: ['pwa']
 platforms: ['web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
 lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
+<PageMeta channels="stable,beta" platform="web" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Doel en resultaat
 
@@ -22,14 +22,14 @@ Voer de paginaspecifieke werkwijze uit voor **PWA: Bibliotheek en zoeken**. Deze
 
 Deze pagina is uitsluitend van toepassing op **PWA: Bibliotheek en zoeken** (web). De kanaal- en gegevensgrenzen zijn: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PWA · RBAC; Collectors Mode staat standaard uit en toont geavanceerde containerfuncties; `merge_editions_as_title` is een afzonderlijke voorkeur die eveneens standaard uitstaat; als `merge_editions_as_title` aanstaat, verschijnen meerdere fysieke versies als één bibliotheektegel; open de tegel om elke editie te zien; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PWA · RBAC; Collectors Mode staat standaard uit en toont geavanceerde containerfuncties; `merge_editions_as_title` is een afzonderlijke voorkeur die eveneens standaard uitstaat; als `merge_editions_as_title` aanstaat, verschijnen meerdere fysieke versies als één bibliotheektegel; open de tegel om elke editie te zien. Paginaspecifieke controlepunten: PWA · `watchlist` · `history` · RBAC · `merge_editions_as_title` · `box_set` · `vault` · `collection`.
 
-### DiscVault v26 stabiel
+### DiscVault stabiel
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - PWA · RBAC
 - Collectors Mode staat standaard uit en toont geavanceerde containerfuncties; `merge_editions_as_title` is een afzonderlijke voorkeur die eveneens standaard uitstaat
 - als `merge_editions_as_title` aanstaat, verschijnen meerdere fysieke versies als één bibliotheektegel; open de tegel om elke editie te zien
 
-### DiscVault v26 bèta
+### DiscVault bèta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - PWA · RBAC
@@ -54,6 +54,9 @@ Deze pagina is uitsluitend van toepassing op **PWA: Bibliotheek en zoeken** (web
 9. **Vergelijken:** een vault is een door de gebruiker gemaakte plank-, opslagdoos- of locatiegroep met directe filmleden en zonder betekenis als winkelproduct
 10. **Vergelijken:** een collection is een thematische groep waarvan de geordende items films, box-sets, vaults of andere collections kunnen zijn, zodat nesten wordt ondersteund
 11. **Testen:** Collectors Mode uitschakelen verbergt de containerweergave maar verwijdert geen containers of leden
+12. **Configureren:** het paneel Geavanceerd filtert op de externe score, een minimum aantal stemmen, films zonder score en meerdere tags (één of alle); slimme filters bewaren die keuzes
+13. **Controleren:** eigen velden zijn te filteren, sorteren en exporteren, staan op de detailpagina en zijn te vullen vanuit een importkolom
+14. **Testen:** een tv-uitgave uit MovieVault wordt toegevoegd als serie met seizoenen, de volgende uitgave van dezelfde show sluit zich bij die serie aan, en het seriescherm kan seizoenkoppelingen terugsturen naar MovieVault
 
 
 

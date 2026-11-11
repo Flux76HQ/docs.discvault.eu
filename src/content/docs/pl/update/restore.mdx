@@ -5,14 +5,14 @@ pageId: 'update-restore'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Cel i rezultat
 
@@ -22,13 +22,13 @@ Wykonaj procedurę właściwą dla strony: **Aktualizacja i migracja: Przywracan
 
 Ta strona dotyczy wyłącznie **Aktualizacja i migracja: Przywracanie** (Docker · Unraid). Granice kanału i danych: DiscVault · `ghcr.io/helmerznl/discvault:latest`; zrzut PostgreSQL i archiwum plików z tego samego okna bez zapisów; przywróć pasujące dane przed uruchomieniem poprzedniego obrazu; DiscVault · `ghcr.io/helmerznl/discvault:beta`; zrzut PostgreSQL i archiwum plików z tego samego okna bez zapisów; przywróć pasujące dane przed uruchomieniem poprzedniego obrazu. Punkty kontrolne tej strony: `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.
 
-### DiscVault v26 – stabilny
+### DiscVault – stabilny
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - zrzut PostgreSQL i archiwum plików z tego samego okna bez zapisów
 - przywróć pasujące dane przed uruchomieniem poprzedniego obrazu
 
-### DiscVault v26 – beta
+### DiscVault – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - zrzut PostgreSQL i archiwum plików z tego samego okna bez zapisów

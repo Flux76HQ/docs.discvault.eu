@@ -5,14 +5,14 @@ pageId: 'update-backup'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## 目标和结果
 
@@ -22,13 +22,13 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 本页面仅适用于 **更新和迁移: 备份** (Docker · Unraid). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; 来自同一停止写入时段的 PostgreSQL 转储与文件归档; PostgreSQL `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; 来自同一停止写入时段的 PostgreSQL 转储与文件归档; PostgreSQL `/data`. 本页面专用检查点： `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
 
-### DiscVault v26 稳定版
+### DiscVault 稳定版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - 来自同一停止写入时段的 PostgreSQL 转储与文件归档
 - PostgreSQL `/data`
 
-### DiscVault v26 测试版
+### DiscVault 测试版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - 来自同一停止写入时段的 PostgreSQL 转储与文件归档
@@ -84,10 +84,11 @@ gzip -t "/srv/backups/discvault-data-$BACKUP_ID.tgz"
 ## 安全与回滚
 
 :::caution
-安全恢复边界： **更新和迁移: 备份** 在启动或继续任何操作前必须执行： 任何备份命令失败时，仅重启未更改的服务并取消更新; 来自同一停止写入时段的 PostgreSQL 转储与文件归档. 本页面专用检查点： `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
+安全恢复边界： **更新和迁移: 备份** 在启动或继续任何操作前必须执行： 任何备份命令失败时，仅重启未更改的服务并取消更新; 来自同一停止写入时段的 PostgreSQL 转储与文件归档; 应用也可按计划备份（管理 → Backup → 计划：间隔、无变化时跳过、保留最新 N 份）；计划生成的归档位于 `DISCVAULT_DATA_DIR` 内的 `backups/`，请同样复制到主机之外. 本页面专用检查点： `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
 
 - 任何备份命令失败时，仅重启未更改的服务并取消更新
 - 来自同一停止写入时段的 PostgreSQL 转储与文件归档
+- 应用也可按计划备份（管理 → Backup → 计划：间隔、无变化时跳过、保留最新 N 份）；计划生成的归档位于 `DISCVAULT_DATA_DIR` 内的 `backups/`，请同样复制到主机之外
 :::
 
 ## 下一步

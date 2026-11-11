@@ -5,14 +5,14 @@ pageId: 'update-update'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
 lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Obiettivo e risultato
 
@@ -22,13 +22,13 @@ Completa la procedura specifica della pagina per **Aggiornamento e migrazione: A
 
 Questa pagina si applica solo a **Aggiornamento e migrazione: Aggiornamento del contenitore** (Docker · Unraid). I limiti di canale e dati sono: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · note di rilascio e digest immutabile registrato · set di backup corrispondente; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · note di rilascio e digest immutabile registrato · set di backup corrispondente. Punti di controllo della pagina: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
-### DiscVault v26 stabile
+### DiscVault stabile
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - `DISCVAULT_IMAGE`
 - PostgreSQL `/data` · note di rilascio e digest immutabile registrato · set di backup corrispondente
 
-### DiscVault v26 beta
+### DiscVault beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `DISCVAULT_IMAGE`
@@ -41,25 +41,25 @@ Questa pagina si applica solo a **Aggiornamento e migrazione: Aggiornamento del 
 
 ## Procedura
 
-1. **Controlla:** le nuove installazioni usano DiscVault v26 `:latest` o `:beta`; l’immagine congelata `:legacy` è solo per un’installazione esistente della generazione precedente non ancora pronta alla migrazione
+1. **Controlla:** le nuove installazioni usano DiscVault `:latest` o `:beta`; l’immagine congelata `:legacy` è solo per un’installazione esistente della generazione precedente non ancora pronta alla migrazione
 2. **Esegui il backup:** set di backup corrispondente
-3. **Scegli:** Solo ramo Legacy: dopo il backup cambia soltanto il tag immagine del deployment esistente della vecchia generazione in `:legacy`, scaricalo e ricrealo senza modificarne la topologia, verifica la collezione e fermati; non passare questo deployment esistente alla topologia v26 in questa pagina
-4. **Apri:** [Aggiornamento e migrazione: Migrazione a DiscVault 26](/it/update/migration/) · DiscVault 26
-5. **Conserva:** mantieni invariati volumi, variabili d’ambiente, porte e percorso dati della generazione precedente; non sostituire mai un’immagine nella topologia Compose v26 PostgreSQL con `:legacy`
-6. **Verifica:** `DiscVault v26` · `PREVIOUS_IMAGE=@sha256:…`
-7. **Scegli:** `DiscVault v26` · `DISCVAULT_IMAGE` · `:latest` `:beta`
-8. **Esegui:** `DiscVault v26` · `--force-recreate`
-9. **Confronta:** `DiscVault v26` · è in esecuzione il digest previsto, lo stato è integro e accesso proprietario, conteggio e campione multimediale riescono
+3. **Scegli:** Solo ramo Legacy: dopo il backup cambia soltanto il tag immagine del deployment esistente della vecchia generazione in `:legacy`, scaricalo e ricrealo senza modificarne la topologia, verifica la collezione e fermati; non passare questo deployment esistente alla topologia DiscVault in questa pagina
+4. **Apri:** [Aggiornamento e migrazione: Migrazione a DiscVault](/it/update/migration/) · DiscVault
+5. **Conserva:** mantieni invariati volumi, variabili d’ambiente, porte e percorso dati della generazione precedente; non sostituire mai un’immagine nella topologia Compose DiscVault PostgreSQL con `:legacy`
+6. **Verifica:** `DiscVault` · `PREVIOUS_IMAGE=@sha256:…`
+7. **Scegli:** `DiscVault` · `DISCVAULT_IMAGE` · `:latest` `:beta`
+8. **Esegui:** `DiscVault` · `--force-recreate`
+9. **Confronta:** `DiscVault` · è in esecuzione il digest previsto, lo stato è integro e accesso proprietario, conteggio e campione multimediale riescono
 
 ### Comandi e impostazioni
 
-#### DiscVault v26 stabile
+#### DiscVault stabile
 
 ```bash
 export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
 ```
 
-#### DiscVault v26 beta
+#### DiscVault beta
 
 ```bash
 export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
@@ -95,17 +95,18 @@ trap - EXIT
 
 ## Risultato previsto
 
-Accetta il risultato per **Aggiornamento e migrazione: Aggiornamento del contenitore** solo quando tutti i risultati seguenti sono veri: è in esecuzione il digest previsto, lo stato è integro e accesso proprietario, conteggio e campione multimediale riescono; mantieni invariati volumi, variabili d’ambiente, porte e percorso dati della generazione precedente; non sostituire mai un’immagine nella topologia Compose v26 PostgreSQL con `:legacy`. Punti di controllo della pagina: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
+Accetta il risultato per **Aggiornamento e migrazione: Aggiornamento del contenitore** solo quando tutti i risultati seguenti sono veri: è in esecuzione il digest previsto, lo stato è integro e accesso proprietario, conteggio e campione multimediale riescono; dopo un aggiornamento, Amministrazione → Plugin mostra le versioni installate; i plugin inclusi vengono sostituiti solo se la copia inclusa è più recente (26.11 richiede MovieVault v2 1.12.0 e TMDb 1.11.0); mantieni invariati volumi, variabili d’ambiente, porte e percorso dati della generazione precedente; non sostituire mai un’immagine nella topologia Compose DiscVault PostgreSQL con `:legacy`. Punti di controllo della pagina: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
 - è in esecuzione il digest previsto, lo stato è integro e accesso proprietario, conteggio e campione multimediale riescono
-- mantieni invariati volumi, variabili d’ambiente, porte e percorso dati della generazione precedente; non sostituire mai un’immagine nella topologia Compose v26 PostgreSQL con `:legacy`
+- dopo un aggiornamento, Amministrazione → Plugin mostra le versioni installate; i plugin inclusi vengono sostituiti solo se la copia inclusa è più recente (26.11 richiede MovieVault v2 1.12.0 e TMDb 1.11.0)
+- mantieni invariati volumi, variabili d’ambiente, porte e percorso dati della generazione precedente; non sostituire mai un’immagine nella topologia Compose DiscVault PostgreSQL con `:legacy`
 
 ## Sicurezza e ripristino
 
 :::caution
-Il limite di ripristino sicuro per **Aggiornamento e migrazione: Aggiornamento del contenitore** richiede queste azioni prima di avviare o continuare: l’immagine congelata `:legacy` non riceve funzioni DiscVault v26, miglioramenti della migrazione o futuri aggiornamenti dell’interfaccia; [Aggiornamento e migrazione: Ripristino dell’immagine](/it/update/rollback/) · set di backup corrispondente; note di rilascio e digest immutabile registrato. Punti di controllo della pagina: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
+Il limite di ripristino sicuro per **Aggiornamento e migrazione: Aggiornamento del contenitore** richiede queste azioni prima di avviare o continuare: l’immagine congelata `:legacy` non riceve funzioni DiscVault, miglioramenti della migrazione o futuri aggiornamenti dell’interfaccia; [Aggiornamento e migrazione: Ripristino dell’immagine](/it/update/rollback/) · set di backup corrispondente; note di rilascio e digest immutabile registrato. Punti di controllo della pagina: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
-- l’immagine congelata `:legacy` non riceve funzioni DiscVault v26, miglioramenti della migrazione o futuri aggiornamenti dell’interfaccia
+- l’immagine congelata `:legacy` non riceve funzioni DiscVault, miglioramenti della migrazione o futuri aggiornamenti dell’interfaccia
 - [Aggiornamento e migrazione: Ripristino dell’immagine](/it/update/rollback/) · set di backup corrispondente
 - note di rilascio e digest immutabile registrato
 :::

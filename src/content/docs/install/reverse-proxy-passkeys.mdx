@@ -5,14 +5,14 @@ pageId: 'install-reverse-proxy-passkeys'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU', 'Flux76HQ/App-Guidance']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## Goal and result
 
@@ -20,17 +20,19 @@ Use one stable public HTTPS origin for Passkeys and the beta OIDC callback, or u
 
 ## Applies to
 
-Passkeys require a stable fully qualified domain name over trusted HTTPS: `RP_ID` is the hostname without scheme or port and `RP_ORIGINS` is the exact HTTPS origin. OIDC uses the first `RP_ORIGINS` value to derive its callback and remains HTTPS-only outside localhost. The stable deployment uses host port 6080 and the canonical beta Compose deployment uses 6180. DiscVault 26 beta can instead expose optional Legacy Authentication for a direct private or loopback IP by setting `LEGACY_AUTH_ENABLED=true` and leaving `RP_ID` and `RP_ORIGINS` empty.
+Passkeys require a stable fully qualified domain name over trusted HTTPS: `RP_ID` is the hostname without scheme or port and `RP_ORIGINS` is the exact HTTPS origin. OIDC uses the first `RP_ORIGINS` value to derive its callback and remains HTTPS-only outside localhost. The stable deployment uses host port 6080 and the canonical beta Compose deployment uses 6180. DiscVault beta can instead expose optional Legacy Authentication for a direct private or loopback IP by setting `LEGACY_AUTH_ENABLED=true` and leaving `RP_ID` and `RP_ORIGINS` empty.
 
-### DiscVault v26 stable
+### DiscVault stable
 
-- DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
-- Passkeys · `RP_ID` + `RP_ORIGINS` · proxy host port `6080`
+- DiscVault stable · `ghcr.io/helmerznl/discvault:latest`
+- Passkeys · `RP_ID` + `RP_ORIGINS` · proxy host port `6180` (Compose) or `6080` (Docker run)
 - outside the localhost setup exception, passkeys require a stable fully qualified domain name over trusted HTTPS; a bare IP address or plain HTTP is unsupported
+- OIDC · `/api/next/auth/oidc/callback` · [Configure: OpenID Connect (OIDC) sign-in](/configure/oidc/)
+- Legacy Authentication · `LEGACY_AUTH_ENABLED=true` · direct local IP fallback
 
-### DiscVault v26 beta
+### DiscVault beta
 
-- DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault beta · `ghcr.io/helmerznl/discvault:beta`
 - Passkeys · `RP_ID` + `RP_ORIGINS` · proxy host port `6180`
 - OIDC · `/api/next/auth/oidc/callback` · [Configure: OpenID Connect (OIDC) sign-in](/configure/oidc/)
 - Legacy Authentication · `LEGACY_AUTH_ENABLED=true` · direct local IP fallback
@@ -43,8 +45,8 @@ Passkeys require a stable fully qualified domain name over trusted HTTPS: `RP_ID
 
 ### Legacy Authentication fallback
 
-:::note[Available in beta]
-Legacy Authentication with a username, password, and two-factor authentication (2FA) is available in DiscVault 26 beta as a fallback when passkeys cannot be used.
+:::note[Available in stable and beta]
+Legacy Authentication with a username, password, and two-factor authentication (2FA) is available in DiscVault as a fallback when passkeys cannot be used.
 
 Follow `/install/legacy-authentication/` before enabling the capability or creating the first Owner.
 :::
@@ -56,13 +58,13 @@ Follow `/install/legacy-authentication/` before enabling the capability or creat
 3. **Configure:** `RP_ID` · hostname only
 4. **Configure:** `RP_ORIGINS` · exact public HTTPS origin
 5. **Configure:** [Configure: OpenID Connect (OIDC) sign-in](/configure/oidc/) · `/api/next/auth/oidc/callback`
-6. **Configure:** proxy upstream · stable `6080` / beta `6180`
+6. **Configure:** proxy upstream · Docker Compose `6180` / Docker run `6080`
 7. **Test:** `GET /api/next/health` · passkey registration · same origin
 8. **Record:** choose the hostname before registering passkeys; changing it later requires passkey registration again, while localhost remains only a local setup exception
 
 ### Commands and settings
 
-#### DiscVault v26 stable
+#### DiscVault stable
 
 ```text
 RP_ID=discvault.example.com
@@ -71,7 +73,7 @@ RP_ORIGINS=https://discvault.example.com
 curl --fail https://discvault.example.com/api/next/health
 ```
 
-#### DiscVault v26 beta
+#### DiscVault beta
 
 ```text
 RP_ID=discvault.example.com

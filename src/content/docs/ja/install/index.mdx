@@ -5,14 +5,14 @@ pageId: 'install-index'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
 lastVerified: '2026-07-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
 
 ## 目的と結果
 
@@ -22,13 +22,13 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 このページの対象は **インストール: インストール方法** (Docker · Unraid). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `:beta`; PostgreSQL `17` `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `:beta`; PostgreSQL `17` `/data`. このページ固有の確認点: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
-### DiscVault v26 安定版
+### DiscVault 安定版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - `:beta`
 - PostgreSQL `17` `/data`
 
-### DiscVault v26 ベータ版
+### DiscVault ベータ版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `:beta`
@@ -41,37 +41,39 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## 手順
 
-1. **選択:** [インストール: Docker Compose](/ja/install/docker-compose/) · DiscVault 26
+1. **選択:** [インストール: Docker Compose](/ja/install/docker-compose/) · DiscVault `main` `release/v26-beta`
 2. **選択:** [インストール: Docker run](/ja/install/docker-run/)
-3. **選択:** [インストール: Unraid](/ja/install/unraid/) · Unraid
-4. **選択:** 新規インストールでは DiscVault v26 の `:latest` または `:beta` を使用します。固定された `:legacy` イメージは、まだ移行しない既存の旧世代インストール専用です
-5. **保持:** 旧世代のボリューム、環境変数、ポート、データパスは変更しません。v26 PostgreSQL Compose 構成のイメージを `:legacy` に置き換えないでください
-6. **開く:** [更新と移行: DiscVault 26 への移行](/ja/update/migration/) · → DiscVault 26
-7. **記録:** `DISCVAULT_IMAGE` · 既存または legacy デプロイの場合のみ: 一致するバックアップ一式
+3. **選択:** [インストール: Unraid](/ja/install/unraid/) · Unraid DiscVault
+4. **選択:** [インストール: Home Assistant](/ja/install/home-assistant/) · PostgreSQL 17
+5. **選択:** 新規インストールでは DiscVault の `:latest` または `:beta` を使用します。固定された `:legacy` イメージは、まだ移行しない既存の旧世代インストール専用です
+6. **保持:** 旧世代のボリューム、環境変数、ポート、データパスは変更しません。DiscVault PostgreSQL Compose 構成のイメージを `:legacy` に置き換えないでください
+7. **開く:** [更新と移行: DiscVault への移行](/ja/update/migration/) · → DiscVault
+8. **記録:** `DISCVAULT_IMAGE` · 既存または legacy デプロイの場合のみ: 一致するバックアップ一式
 
 ### タスク別ルート
 
-- [インストール: Docker Compose](/ja/install/docker-compose/) — DiscVault 26 `release/v26-beta` `DISCVAULT_NEXT_IMAGE`
-- [インストール: Docker run](/ja/install/docker-run/) — DiscVault 26 Docker run PostgreSQL `/data` `DATABASE_URL`
-- [インストール: 永続データと PostgreSQL](/ja/install/storage-postgresql/) — DiscVault 26 PostgreSQL `/data`
-- [インストール: Unraid](/ja/install/unraid/) — DiscVault 26 Unraid PostgreSQL `/data`
-- [更新と移行: DiscVault 26 への移行](/ja/update/migration/) — → DiscVault 26
+- [インストール: Docker Compose](/ja/install/docker-compose/) — DiscVault `app/deploy/next` `DISCVAULT_NEXT_IMAGE`
+- [インストール: Docker run](/ja/install/docker-run/) — DiscVault Docker run PostgreSQL `/data` `DATABASE_URL`
+- [インストール: 永続データと PostgreSQL](/ja/install/storage-postgresql/) — DiscVault PostgreSQL `/data`
+- [インストール: Unraid](/ja/install/unraid/) — DiscVault Unraid `discvault-launcher`
+- [インストール: Home Assistant](/ja/install/home-assistant/) — DiscVault PostgreSQL 17 `/data`
+- [更新と移行: DiscVault への移行](/ja/update/migration/) — → DiscVault
 
 ## 期待される結果
 
-次の結果を受け入れる条件: **インストール: インストール方法** 以下の結果をすべて確認した場合のみ: 選択したリリースチャンネル; PostgreSQL `/data`; 旧世代のボリューム、環境変数、ポート、データパスは変更しません。v26 PostgreSQL Compose 構成のイメージを `:legacy` に置き換えないでください. このページ固有の確認点: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
+次の結果を受け入れる条件: **インストール: インストール方法** 以下の結果をすべて確認した場合のみ: 選択したリリースチャンネル; PostgreSQL `/data` · DiscVault; 旧世代のボリューム、環境変数、ポート、データパスは変更しません。DiscVault PostgreSQL Compose 構成のイメージを `:legacy` に置き換えないでください. このページ固有の確認点: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
 - 選択したリリースチャンネル
-- PostgreSQL `/data`
-- 旧世代のボリューム、環境変数、ポート、データパスは変更しません。v26 PostgreSQL Compose 構成のイメージを `:legacy` に置き換えないでください
+- PostgreSQL `/data` · DiscVault
+- 旧世代のボリューム、環境変数、ポート、データパスは変更しません。DiscVault PostgreSQL Compose 構成のイメージを `:legacy` に置き換えないでください
 
 ## 安全性とロールバック
 
 :::caution
-安全な復旧境界: **インストール: インストール方法** 起動または続行の前に、次の操作が必要です: Legacy 分岐のみ: バックアップ後、既存の旧世代デプロイのイメージタグだけを `:legacy` に変更し、構成を変えずに pull と再作成を行ってコレクションを確認したら終了します。このページで、その既存デプロイを v26 トポロジーに切り替えないでください; 固定された `:legacy` イメージには DiscVault v26 の機能、移行改善、今後のインターフェイス更新は追加されません; 既存または legacy デプロイの場合のみ: 一致するバックアップ一式; リリースノートと記録済みの不変イメージダイジェスト. このページ固有の確認点: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
+安全な復旧境界: **インストール: インストール方法** 起動または続行の前に、次の操作が必要です: Legacy 分岐のみ: バックアップ後、既存の旧世代デプロイのイメージタグだけを `:legacy` に変更し、構成を変えずに pull と再作成を行ってコレクションを確認したら終了します。このページで、その既存デプロイを DiscVault トポロジーに切り替えないでください; 固定された `:legacy` イメージには DiscVault の機能、移行改善、今後のインターフェイス更新は追加されません; 既存または legacy デプロイの場合のみ: 一致するバックアップ一式; リリースノートと記録済みの不変イメージダイジェスト. このページ固有の確認点: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
-- Legacy 分岐のみ: バックアップ後、既存の旧世代デプロイのイメージタグだけを `:legacy` に変更し、構成を変えずに pull と再作成を行ってコレクションを確認したら終了します。このページで、その既存デプロイを v26 トポロジーに切り替えないでください
-- 固定された `:legacy` イメージには DiscVault v26 の機能、移行改善、今後のインターフェイス更新は追加されません
+- Legacy 分岐のみ: バックアップ後、既存の旧世代デプロイのイメージタグだけを `:legacy` に変更し、構成を変えずに pull と再作成を行ってコレクションを確認したら終了します。このページで、その既存デプロイを DiscVault トポロジーに切り替えないでください
+- 固定された `:legacy` イメージには DiscVault の機能、移行改善、今後のインターフェイス更新は追加されません
 - 既存または legacy デプロイの場合のみ: 一致するバックアップ一式
 - リリースノートと記録済みの不変イメージダイジェスト
 :::

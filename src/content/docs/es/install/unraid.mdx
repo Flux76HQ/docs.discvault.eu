@@ -1,97 +1,130 @@
 ---
 title: 'Instalación: Unraid'
-description: 'Instrucciones específicas para Instalación: Unraid. /mnt/user/appdata/discvault/postgres. /mnt/user/appdata/discvault/data. 6080:5000. DISCVAULT_IMAGE.'
+description: 'Instrucciones específicas para Instalación: Unraid. ghcr.io/helmerznl/discvault-launcher:latest. /var/run/docker.sock. /api/next/health.'
 pageId: 'install-unraid'
 products: ['server']
 platforms: ['unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+minVersion: 'DiscVault'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/unraid-community-apps']
+lastVerified: '2026-11-11'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Unraid" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/unraid-community-apps" verified="2026-11-11" />
 
 ## Objetivo y resultado
 
-Completa el flujo específico de la página para **Instalación: Unraid**. Este procedimiento utiliza `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+Instala DiscVault desde la tienda Community Applications de Unraid. La plantilla instala el lanzador de DiscVault, que crea y actualiza por ti PostgreSQL, la API, el worker y MCP.
+
+Completa el flujo específico de la página para **Instalación: Unraid**. Este procedimiento utiliza `ghcr.io/helmerznl/discvault-launcher:latest` · `/var/run/docker.sock` · `/api/next/health`.
 
 ## Aplicable a
 
-Esta página se aplica solo a **Instalación: Unraid** (Unraid). Sus límites de canal y datos son: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL API MCP; `:latest` `:beta`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL API MCP; `:latest` `:beta`. Puntos de control de esta página: `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+Helmer’s Repository ofrece DiscVault y DiscVault (beta) como dos plantillas, cada una con sus carpetas appdata, puerto, proyecto Compose y red, para que funcionen en paralelo.
 
-### DiscVault v26 estable
+Esta página se aplica solo a **Instalación: Unraid** (Unraid). Sus límites de canal y datos son: DiscVault · `ghcr.io/helmerznl/discvault-launcher:latest`; `6080` · `/mnt/user/appdata/discvault` · `discvault_stack`; DiscVault · `ghcr.io/helmerznl/discvault-launcher:beta`; `6081` · `/mnt/user/appdata/discvault-beta` · `discvault_beta_stack`. Puntos de control de esta página: `ghcr.io/helmerznl/discvault-launcher:latest` · `/var/run/docker.sock` · `/api/next/health`.
 
-- DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- PostgreSQL API MCP
-- `:latest` `:beta`
+### DiscVault estable
 
-### DiscVault v26 beta
+- DiscVault · `ghcr.io/helmerznl/discvault-launcher:latest`
+- `6080` · `/mnt/user/appdata/discvault` · `discvault_stack`
 
-- DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- PostgreSQL API MCP
-- `:latest` `:beta`
+### DiscVault beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault-launcher:beta`
+- `6081` · `/mnt/user/appdata/discvault-beta` · `discvault_beta_stack`
 
 ## Requisitos previos
 
 - Unraid `6.12+`
-- `/mnt/user/appdata/discvault/data`
-- OpenSSL
+- complemento Community Applications instalado
+- las passkeys necesitan una dirección HTTPS con nombre de dominio delante del puerto de la app; sin ella, usa el inicio de sesión con contraseña y TOTP
 
 ## Procedimiento
 
-1. **Instala:** Unraid · [Instalación: Docker Compose](/es/install/docker-compose/)
-2. **Configura:** `DISCVAULT_IMAGE` · `:latest` `:beta`
-3. **Configura:** `DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data` · `DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres`
-4. **Verifica:** `postgres` · `next-api` · `next-worker` · `next-mcp` · `6080:5000`
+1. **Abre:** Apps → busca DiscVault → Instalar; la plantilla beta lleva (beta) en el nombre
+2. **Configura:** conserva las carpetas appdata predeterminadas; la carpeta del lanzador guarda el archivo Compose generado y los secretos en `/config/stack.env` · `TZ`
+3. **Configura:** `RP_ID` · `RP_ORIGINS` · las passkeys necesitan una dirección HTTPS con nombre de dominio delante del puerto de la app; sin ella, usa el inicio de sesión con contraseña y TOTP · `LEGACY_AUTH_ENABLED=true`
+4. **Inicia:** el primer arranque tarda unos minutos mientras el lanzador descarga las imágenes y crea la base de datos · el lanzador monta el socket de Docker y por tanto controla Docker en el servidor; instálalo solo si confías en la imagen del lanzador
+5. **Verifica:** `/api/next/health` · la configuración inicial crea el primer propietario con una passkey, o con contraseña y TOTP, y muestra una vez los códigos de recuperación
+6. **Configura:** pestaña Docker → Buscar actualizaciones; al arrancar, el lanzador también actualiza el resto de la pila · `DISCVAULT_CHANNEL=manual` · `DISCVAULT_IMAGE`
 
 ### Comandos y ajustes
 
-#### DiscVault v26 estable
+#### DiscVault estable
 
 ```text
-DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
-DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data
-DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres
-DISCVAULT_API_PORT=6080
-DISCVAULT_MCP_PORT=6090
+Repository                         ghcr.io/helmerznl/discvault-launcher:latest
+Web UI port                        6080
+App data (/data)                   /mnt/user/appdata/discvault
+DISCVAULT_DATA_DIR_HOST            /mnt/user/appdata/discvault
+DISCVAULT_POSTGRES_DATA_DIR_HOST   /mnt/user/appdata/discvault-postgres
+Launcher config (/config)          /mnt/user/appdata/discvault-launcher
+Docker socket                      /var/run/docker.sock
+DISCVAULT_CHANNEL                  latest
+TZ                                 Europe/Amsterdam
+RP_ID                              discvault.example.com
+RP_ORIGINS                         https://discvault.example.com
+LEGACY_AUTH_ENABLED                false
 ```
 
-#### DiscVault v26 beta
+#### DiscVault beta
 
 ```text
-DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
-DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data
-DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres
-DISCVAULT_API_PORT=6080
-DISCVAULT_MCP_PORT=6090
+Repository                         ghcr.io/helmerznl/discvault-launcher:beta
+Web UI port                        6081
+App data (/data)                   /mnt/user/appdata/discvault-beta
+DISCVAULT_DATA_DIR_HOST            /mnt/user/appdata/discvault-beta
+DISCVAULT_POSTGRES_DATA_DIR_HOST   /mnt/user/appdata/discvault-beta-postgres
+Launcher config (/config)          /mnt/user/appdata/discvault-beta-launcher
+Docker socket                      /var/run/docker.sock
+DISCVAULT_CHANNEL                  beta
+DISCVAULT_PROJECT_NAME             discvault_beta_stack
+DISCVAULT_NETWORK                  discvault-beta-stack
+```
+
+#### Ambos canales
+
+```bash
+curl --fail http://<unraid-server>:6080/api/next/health
+# Roll back: Release channel = manual, DiscVault image = v26.10.17
 ```
 
 ## Resultado esperado
 
-Acepta el resultado de **Instalación: Unraid** solo cuando se cumplan todos estos resultados: PostgreSQL; `/data`; HTTP `2xx`. Puntos de control de esta página: `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+El lanzador ha descargado las imágenes y creado la pila, la interfaz web responde en el puerto de la plantilla y la dirección de estado indica una base de datos migrada.
 
-- PostgreSQL
-- `/data`
-- HTTP `2xx`
+Acepta el resultado de **Instalación: Unraid** solo cuando se cumplan todos estos resultados: la configuración inicial crea el primer propietario con una passkey, o con contraseña y TOTP, y muestra una vez los códigos de recuperación; `/api/next/health` · HTTP `200` · `"status": "ok"`. Puntos de control de esta página: `ghcr.io/helmerznl/discvault-launcher:latest` · `/var/run/docker.sock` · `/api/next/health`.
+
+- la configuración inicial crea el primer propietario con una passkey, o con contraseña y TOTP, y muestra una vez los códigos de recuperación
+- `/api/next/health` · HTTP `200` · `"status": "ok"`
 
 ## Seguridad y reversión
 
 :::caution
-El límite de recuperación segura de **Instalación: Unraid** exige estas acciones antes de iniciar o continuar: juego de copias coincidente; `/mnt/user/appdata/discvault/data`. Puntos de control de esta página: `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+Detén la app antes de copiar sus tres carpetas appdata. Para revertir, pon el canal en manual con la etiqueta de la versión anterior y restaura la copia hecha antes de la actualización.
 
-- juego de copias coincidente
-- `/mnt/user/appdata/discvault/data`
+El límite de recuperación segura de **Instalación: Unraid** exige estas acciones antes de iniciar o continuar: la beta puede cambiar la base de datos de forma que la app estable no pueda leerla; nunca la apuntes a las carpetas de la estable; el lanzador monta el socket de Docker y por tanto controla Docker en el servidor; instálalo solo si confías en la imagen del lanzador; la copia de seguridad de la app (Administración → Backup, también programada) traslada una biblioteca entre Docker, Unraid y Home Assistant; el lanzador todavía no transmite las variables de OpenID Connect, así que la plantilla de Unraid inicia sesión con passkeys o contraseña. Puntos de control de esta página: `ghcr.io/helmerznl/discvault-launcher:latest` · `/var/run/docker.sock` · `/api/next/health`.
+
+- la beta puede cambiar la base de datos de forma que la app estable no pueda leerla; nunca la apuntes a las carpetas de la estable
+- el lanzador monta el socket de Docker y por tanto controla Docker en el servidor; instálalo solo si confías en la imagen del lanzador
+- la copia de seguridad de la app (Administración → Backup, también programada) traslada una biblioteca entre Docker, Unraid y Home Assistant
+- el lanzador todavía no transmite las variables de OpenID Connect, así que la plantilla de Unraid inicia sesión con passkeys o contraseña
 :::
 
 ## Siguiente paso
 
-[Instalación: Primer inicio y comprobación de estado](/es/install/first-start-health/)
+[Instalación: Proxy inverso y claves de acceso](/es/install/reverse-proxy-passkeys/)
 
 ## Fuente y estado
 
-- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Fuente y estado: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault@441f96593219`](https://github.com/helmerzNL/DiscVault/commit/441f96593219c66d45aac99ce5ef9f81f011d449)
+- [`helmerzNL/unraid-community-apps@988ac954d47b`](https://github.com/helmerzNL/unraid-community-apps/commit/988ac954d47b7c671cab91d5a0ad9b623366f89d)
+- [Unraid template: `templates/discvault.xml`](https://github.com/helmerzNL/unraid-community-apps/blob/main/templates/discvault.xml)
+- [Unraid template: `templates/discvault-beta.xml`](https://github.com/helmerzNL/unraid-community-apps/blob/main/templates/discvault-beta.xml)
+- [DiscVault launcher](https://github.com/helmerzNL/DiscVault-Launcher)
+- [Unraid support thread](https://forums.unraid.net/topic/198808-support-discvault-physical-disc-collection-manager/)
+- Fuente y estado: `2026-11-11`
+- DiscVault Docs: `0.2.0`

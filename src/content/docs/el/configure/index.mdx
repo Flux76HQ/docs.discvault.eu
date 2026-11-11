@@ -5,14 +5,14 @@ pageId: 'configure-index'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · ιστός" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-09-20" />
+<PageMeta channels="stable,beta" platform="Docker · ιστός" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-09-20" />
 
 ## Στόχος και αποτέλεσμα
 
@@ -20,17 +20,17 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## Ισχύει για
 
-Αυτή η σελίδα ισχύει μόνο για **Ρύθμιση: Επισκόπηση** (Docker · ιστός). Τα όρια καναλιού και δεδομένων είναι: DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. Σημεία ελέγχου της σελίδας: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/oidc/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
+Αυτή η σελίδα ισχύει μόνο για **Ρύθμιση: Επισκόπηση** (Docker · ιστός). Τα όρια καναλιού και δεδομένων είναι: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault RBAC. Σημεία ελέγχου της σελίδας: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/oidc/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
-### DiscVault v26 – σταθερό
+### DiscVault – σταθερό
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- RBAC
+- DiscVault RBAC
 
-### DiscVault v26 – beta
+### DiscVault – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- RBAC
+- DiscVault RBAC
 
 ## Προϋποθέσεις
 
@@ -48,11 +48,11 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ### Διαδρομές εργασιών
 
-- [Ρύθμιση: Μεταβλητές περιβάλλοντος](/el/configure/environment/) — DiscVault 26 `.env.example`
-- [Ρύθμιση: Ταυτοποίηση και RBAC](/el/configure/auth-rbac/) — DiscVault 26 RBAC
-- [Ρύθμιση: Σύνδεση με OpenID Connect (OIDC)](/el/configure/oidc/) — DiscVault 26.9 117 OIDC Pocket ID
-- [Εγκατάσταση: Legacy Authentication](/el/install/legacy-authentication/) — DiscVault 26 TOTP
-- [Ρύθμιση: Πρόσθετα και μεταδεδομένα](/el/configure/plugins-metadata/) — DiscVault 26
+- [Ρύθμιση: Μεταβλητές περιβάλλοντος](/el/configure/environment/) — DiscVault `.env.example`
+- [Ρύθμιση: Ταυτοποίηση και RBAC](/el/configure/auth-rbac/) — DiscVault OIDC RBAC
+- [Ρύθμιση: Σύνδεση με OpenID Connect (OIDC)](/el/configure/oidc/) — DiscVault OIDC Pocket ID
+- [Εγκατάσταση: Legacy Authentication](/el/install/legacy-authentication/) — DiscVault TOTP
+- [Ρύθμιση: Πρόσθετα και μεταδεδομένα](/el/configure/plugins-metadata/) — DiscVault
 
 ## Αναμενόμενο αποτέλεσμα
 

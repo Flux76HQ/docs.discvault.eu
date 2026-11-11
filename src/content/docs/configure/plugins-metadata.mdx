@@ -5,14 +5,14 @@ pageId: 'configure-plugins-metadata'
 products: ['server']
 platforms: ['web', 'docker']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="web · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="web · Docker" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Goal and result
 
@@ -20,17 +20,17 @@ Discover, configure, order, and health-check metadata and digital-source plugins
 
 ## Applies to
 
-DiscVault v26 stable and beta include the same plugin runtime. Bundled plugins are read-only; installed plugins persist under `/data/plugins`.
+DiscVault stable and beta include the same plugin runtime. Bundled plugins are read-only; installed plugins persist under `/data/plugins`.
 
-### DiscVault v26 stable
+### DiscVault stable
 
-- DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
-- DiscVault 26 plugin registry · `/data/plugins` persistent
+- DiscVault stable · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault plugin registry · `/data/plugins` persistent
 
-### DiscVault v26 beta
+### DiscVault beta
 
-- DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
-- DiscVault 26 plugin registry · `/data/plugins` persistent
+- DiscVault beta · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault plugin registry · `/data/plugins` persistent
 
 ## Prerequisites
 

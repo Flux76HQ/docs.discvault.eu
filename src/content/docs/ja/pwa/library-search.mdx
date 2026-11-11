@@ -5,14 +5,14 @@ pageId: 'pwa-library-search'
 products: ['pwa']
 platforms: ['web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
 lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
+<PageMeta channels="stable,beta" platform="Web" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## 目的と結果
 
@@ -22,14 +22,14 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 このページの対象は **PWA: ライブラリと検索** (Web). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PWA · RBAC; Collectors Mode は既定でオフで、高度なコンテナー機能を表示します。`merge_editions_as_title` は別の設定で、これも既定ではオフです; `merge_editions_as_title` を有効にすると複数の物理版が 1 つのライブラリタイルに表示され、タイルを開くとすべての版を確認できます; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PWA · RBAC; Collectors Mode は既定でオフで、高度なコンテナー機能を表示します。`merge_editions_as_title` は別の設定で、これも既定ではオフです; `merge_editions_as_title` を有効にすると複数の物理版が 1 つのライブラリタイルに表示され、タイルを開くとすべての版を確認できます. このページ固有の確認点: PWA · `watchlist` · `history` · RBAC · `merge_editions_as_title` · `box_set` · `vault` · `collection`.
 
-### DiscVault v26 安定版
+### DiscVault 安定版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - PWA · RBAC
 - Collectors Mode は既定でオフで、高度なコンテナー機能を表示します。`merge_editions_as_title` は別の設定で、これも既定ではオフです
 - `merge_editions_as_title` を有効にすると複数の物理版が 1 つのライブラリタイルに表示され、タイルを開くとすべての版を確認できます
 
-### DiscVault v26 ベータ版
+### DiscVault ベータ版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - PWA · RBAC
@@ -54,6 +54,9 @@ import PageMeta from '../../../../components/PageMeta.astro';
 9. **比較:** vault はユーザーが作る棚、収納箱、場所のグループで、映画を直接メンバーに持ち、小売商品の意味はありません
 10. **比較:** collection はテーマ別グループで、順序付き項目として映画、box-set、vault、別の collection を含められるため、入れ子に対応します
 11. **テスト:** Collectors Mode をオフにするとコンテナー表示は隠れますが、コンテナーやメンバーは削除されません
+12. **設定:** 詳細パネルでは外部スコア、最低投票数、スコアのない作品、複数タグ（いずれか／すべて）で絞り込めます。スマートフィルターはこの選択を保存します
+13. **確認:** カスタムフィールドは絞り込み、並べ替え、書き出しができ、詳細ページに表示され、インポート列から入力できます
+14. **テスト:** MovieVault のテレビ版はシーズン付きのシリーズとして追加され、同じ番組の次のリリースも同じシリーズに入り、シリーズ画面からシーズンの関連付けを MovieVault に送り返せます
 
 
 

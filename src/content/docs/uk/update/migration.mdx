@@ -1,37 +1,37 @@
 ---
-title: 'Оновлення й міграція: Міграція до DiscVault 26'
-description: 'Спеціальні інструкції для завдання: Оновлення й міграція: Міграція до DiscVault 26. /migration/readiness. ready_for_confirmation. /data/discvault.db. SQLite.'
+title: 'Оновлення й міграція: Міграція до DiscVault'
+description: 'Спеціальні інструкції для завдання: Оновлення й міграція: Міграція до DiscVault. /migration/readiness. ready_for_confirmation. /data/discvault.db. SQLite.'
 pageId: 'update-migration'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · веб" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · веб" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Мета й результат
 
-Виконайте спеціальну процедуру сторінки для **Оновлення й міграція: Міграція до DiscVault 26**. У цій процедурі використовуються `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+Виконайте спеціальну процедуру сторінки для **Оновлення й міграція: Міграція до DiscVault**. У цій процедурі використовуються `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
 
 ## Застосовується до
 
-Ця сторінка стосується лише **Оновлення й міграція: Міграція до DiscVault 26** (Docker · веб). Межі каналу й даних: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; джерело наявних даних лише для читання; ніколи не поточна runtime-база · SQLite → PostgreSQL; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26; джерело наявних даних лише для читання; ніколи не поточна runtime-база · SQLite → PostgreSQL. Контрольні точки цієї сторінки: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+Ця сторінка стосується лише **Оновлення й міграція: Міграція до DiscVault** (Docker · веб). Межі каналу й даних: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault; джерело наявних даних лише для читання; ніколи не поточна runtime-база · SQLite → PostgreSQL; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault; джерело наявних даних лише для читання; ніколи не поточна runtime-база · SQLite → PostgreSQL. Контрольні точки цієї сторінки: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
 
-### DiscVault v26 – стабільний
+### DiscVault – стабільний
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- DiscVault 26
+- DiscVault
 - джерело наявних даних лише для читання; ніколи не поточна runtime-база · SQLite → PostgreSQL
 
-### DiscVault v26 – бета
+### DiscVault – бета
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- DiscVault 26
+- DiscVault
 - джерело наявних даних лише для читання; ніколи не поточна runtime-база · SQLite → PostgreSQL
 
 ## Передумови
@@ -61,14 +61,14 @@ curl --fail http://localhost:6080/api/next/migration/status
 
 ## Очікуваний результат
 
-Приймайте результат для **Оновлення й міграція: Міграція до DiscVault 26** лише коли підтверджено всі наведені нижче результати: готовність підтверджено, міграція не має невдалих записів, а кількість і зразок медіа збігаються. Контрольні точки цієї сторінки: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+Приймайте результат для **Оновлення й міграція: Міграція до DiscVault** лише коли підтверджено всі наведені нижче результати: готовність підтверджено, міграція не має невдалих записів, а кількість і зразок медіа збігаються. Контрольні точки цієї сторінки: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
 
 - готовність підтверджено, міграція не має невдалих записів, а кількість і зразок медіа збігаються
 
 ## Безпека й відкочування
 
 :::caution
-Безпечна межа відновлення для **Оновлення й міграція: Міграція до DiscVault 26** вимагає цих дій до будь-якого запуску чи продовження: зупиніть процеси запису DiscVault, відновіть відповідні копії PostgreSQL і `/data` та ніколи не повторюйте імпорт у частково заповнену базу. Контрольні точки цієї сторінки: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+Безпечна межа відновлення для **Оновлення й міграція: Міграція до DiscVault** вимагає цих дій до будь-якого запуску чи продовження: зупиніть процеси запису DiscVault, відновіть відповідні копії PostgreSQL і `/data` та ніколи не повторюйте імпорт у частково заповнену базу. Контрольні точки цієї сторінки: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
 
 - зупиніть процеси запису DiscVault, відновіть відповідні копії PostgreSQL і `/data` та ніколи не повторюйте імпорт у частково заповнену базу
 :::

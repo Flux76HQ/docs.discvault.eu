@@ -1,97 +1,130 @@
 ---
 title: 'Telepítés: Unraid'
-description: 'Feladatspecifikus útmutató: Telepítés: Unraid. /mnt/user/appdata/discvault/postgres. /mnt/user/appdata/discvault/data. 6080:5000. DISCVAULT_IMAGE.'
+description: 'Feladatspecifikus útmutató: Telepítés: Unraid. ghcr.io/helmerznl/discvault-launcher:latest. /var/run/docker.sock. /api/next/health.'
 pageId: 'install-unraid'
 products: ['server']
 platforms: ['unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+minVersion: 'DiscVault'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/unraid-community-apps']
+lastVerified: '2026-11-11'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Unraid" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/unraid-community-apps" verified="2026-11-11" />
 
 ## Cél és eredmény
 
-Hajtsa végre az oldalhoz tartozó munkafolyamatot: **Telepítés: Unraid**. Ez az eljárás ezeket használja: `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+Telepítse a DiscVaultot az Unraid Community Applications áruházból. A sablon a DiscVault indítót telepíti, amely létrehozza és frissíti a PostgreSQL-t, az API-t, a workert és az MCP-t.
+
+Hajtsa végre az oldalhoz tartozó munkafolyamatot: **Telepítés: Unraid**. Ez az eljárás ezeket használja: `ghcr.io/helmerznl/discvault-launcher:latest` · `/var/run/docker.sock` · `/api/next/health`.
 
 ## Érvényesség
 
-Ez az oldal kizárólag erre vonatkozik: **Telepítés: Unraid** (Unraid). A csatorna- és adathatárok: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL API MCP; `:latest` `:beta`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL API MCP; `:latest` `:beta`. Oldalspecifikus ellenőrzési pontok: `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+A Helmer’s Repository két sablont kínál, DiscVault és DiscVault (beta), saját appdata-mappákkal, porttal, Compose-projekttel és hálózattal, így egymás mellett futnak.
 
-### DiscVault v26 – stabil
+Ez az oldal kizárólag erre vonatkozik: **Telepítés: Unraid** (Unraid). A csatorna- és adathatárok: DiscVault · `ghcr.io/helmerznl/discvault-launcher:latest`; `6080` · `/mnt/user/appdata/discvault` · `discvault_stack`; DiscVault · `ghcr.io/helmerznl/discvault-launcher:beta`; `6081` · `/mnt/user/appdata/discvault-beta` · `discvault_beta_stack`. Oldalspecifikus ellenőrzési pontok: `ghcr.io/helmerznl/discvault-launcher:latest` · `/var/run/docker.sock` · `/api/next/health`.
 
-- DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- PostgreSQL API MCP
-- `:latest` `:beta`
+### DiscVault – stabil
 
-### DiscVault v26 – béta
+- DiscVault · `ghcr.io/helmerznl/discvault-launcher:latest`
+- `6080` · `/mnt/user/appdata/discvault` · `discvault_stack`
 
-- DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- PostgreSQL API MCP
-- `:latest` `:beta`
+### DiscVault – béta
+
+- DiscVault · `ghcr.io/helmerznl/discvault-launcher:beta`
+- `6081` · `/mnt/user/appdata/discvault-beta` · `discvault_beta_stack`
 
 ## Előfeltételek
 
 - Unraid `6.12+`
-- `/mnt/user/appdata/discvault/data`
-- OpenSSL
+- telepített Community Applications bővítmény
+- a passkeyekhez HTTPS-cím és domainnév kell az alkalmazás portja előtt; enélkül jelszavas bejelentkezést használjon TOTP-vel
 
 ## Eljárás
 
-1. **Telepítse:** Unraid · [Telepítés: Docker Compose](/hu/install/docker-compose/)
-2. **Állítsa be:** `DISCVAULT_IMAGE` · `:latest` `:beta`
-3. **Állítsa be:** `DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data` · `DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres`
-4. **Ellenőrizze:** `postgres` · `next-api` · `next-worker` · `next-mcp` · `6080:5000`
+1. **Nyissa meg:** Apps → keressen rá: DiscVault → Telepítés; a béta sablon nevében szerepel a (beta)
+2. **Állítsa be:** tartsa meg az alapértelmezett appdata-mappákat; az indító mappája tartalmazza a generált Compose-fájlt és a titkokat a `/config/stack.env` fájlban · `TZ`
+3. **Állítsa be:** `RP_ID` · `RP_ORIGINS` · a passkeyekhez HTTPS-cím és domainnév kell az alkalmazás portja előtt; enélkül jelszavas bejelentkezést használjon TOTP-vel · `LEGACY_AUTH_ENABLED=true`
+4. **Indítsa el:** az első indítás néhány percig tart, amíg az indító letölti a képeket és létrehozza az adatbázist · az indító csatolja a Docker socketet, így vezérli a szerver Dockerét; csak akkor telepítse, ha megbízik az indító képében
+5. **Ellenőrizze:** `/api/next/health` · a bevezetés passkeyjel vagy jelszóval és TOTP-vel létrehozza az első tulajdonost, és egyszer megmutatja a helyreállítási kódokat
+6. **Állítsa be:** Docker lap → Frissítések keresése; induláskor az indító a stack többi részét is frissíti · `DISCVAULT_CHANNEL=manual` · `DISCVAULT_IMAGE`
 
 ### Parancsok és beállítások
 
-#### DiscVault v26 – stabil
+#### DiscVault – stabil
 
 ```text
-DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
-DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data
-DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres
-DISCVAULT_API_PORT=6080
-DISCVAULT_MCP_PORT=6090
+Repository                         ghcr.io/helmerznl/discvault-launcher:latest
+Web UI port                        6080
+App data (/data)                   /mnt/user/appdata/discvault
+DISCVAULT_DATA_DIR_HOST            /mnt/user/appdata/discvault
+DISCVAULT_POSTGRES_DATA_DIR_HOST   /mnt/user/appdata/discvault-postgres
+Launcher config (/config)          /mnt/user/appdata/discvault-launcher
+Docker socket                      /var/run/docker.sock
+DISCVAULT_CHANNEL                  latest
+TZ                                 Europe/Amsterdam
+RP_ID                              discvault.example.com
+RP_ORIGINS                         https://discvault.example.com
+LEGACY_AUTH_ENABLED                false
 ```
 
-#### DiscVault v26 – béta
+#### DiscVault – béta
 
 ```text
-DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
-DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data
-DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres
-DISCVAULT_API_PORT=6080
-DISCVAULT_MCP_PORT=6090
+Repository                         ghcr.io/helmerznl/discvault-launcher:beta
+Web UI port                        6081
+App data (/data)                   /mnt/user/appdata/discvault-beta
+DISCVAULT_DATA_DIR_HOST            /mnt/user/appdata/discvault-beta
+DISCVAULT_POSTGRES_DATA_DIR_HOST   /mnt/user/appdata/discvault-beta-postgres
+Launcher config (/config)          /mnt/user/appdata/discvault-beta-launcher
+Docker socket                      /var/run/docker.sock
+DISCVAULT_CHANNEL                  beta
+DISCVAULT_PROJECT_NAME             discvault_beta_stack
+DISCVAULT_NETWORK                  discvault-beta-stack
+```
+
+#### Mindkét csatorna
+
+```bash
+curl --fail http://<unraid-server>:6080/api/next/health
+# Roll back: Release channel = manual, DiscVault image = v26.10.17
 ```
 
 ## Várt eredmény
 
-Az eredmény csak ennél fogadható el: **Telepítés: Unraid** csak akkor, ha minden alábbi eredmény teljesül: PostgreSQL; `/data`; HTTP `2xx`. Oldalspecifikus ellenőrzési pontok: `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+Az indító letöltötte a képeket és létrehozta a stacket, a webes felület válaszol a sablon portján, az állapotcím pedig migrált adatbázist jelez.
 
-- PostgreSQL
-- `/data`
-- HTTP `2xx`
+Az eredmény csak ennél fogadható el: **Telepítés: Unraid** csak akkor, ha minden alábbi eredmény teljesül: a bevezetés passkeyjel vagy jelszóval és TOTP-vel létrehozza az első tulajdonost, és egyszer megmutatja a helyreállítási kódokat; `/api/next/health` · HTTP `200` · `"status": "ok"`. Oldalspecifikus ellenőrzési pontok: `ghcr.io/helmerznl/discvault-launcher:latest` · `/var/run/docker.sock` · `/api/next/health`.
+
+- a bevezetés passkeyjel vagy jelszóval és TOTP-vel létrehozza az első tulajdonost, és egyszer megmutatja a helyreállítási kódokat
+- `/api/next/health` · HTTP `200` · `"status": "ok"`
 
 ## Biztonság és visszaállítás
 
 :::caution
-A biztonságos helyreállítás határa ennél: **Telepítés: Unraid** ezeket a műveleteket igényli indítás vagy folytatás előtt: illeszkedő mentéskészlet; `/mnt/user/appdata/discvault/data`. Oldalspecifikus ellenőrzési pontok: `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+Állítsa le az alkalmazást, mielőtt átmásolja a három appdata-mappát. Visszaállításhoz állítsa a kiadási csatornát manual értékre az előző verziócímkével, és állítsa vissza a frissítés előtti mentést.
 
-- illeszkedő mentéskészlet
-- `/mnt/user/appdata/discvault/data`
+A biztonságos helyreállítás határa ennél: **Telepítés: Unraid** ezeket a műveleteket igényli indítás vagy folytatás előtt: a béta úgy módosíthatja az adatbázist, hogy a stabil alkalmazás ne tudja olvasni; soha ne irányítsa a stabil mappáira; az indító csatolja a Docker socketet, így vezérli a szerver Dockerét; csak akkor telepítse, ha megbízik az indító képében; az alkalmazáson belüli mentés (Adminisztráció → Backup, ütemezve is) költözteti a könyvtárat Docker, Unraid és Home Assistant között; az indító még nem adja tovább az OpenID Connect változókat, ezért az Unraid sablon passkeyjel vagy jelszóval jelentkezik be. Oldalspecifikus ellenőrzési pontok: `ghcr.io/helmerznl/discvault-launcher:latest` · `/var/run/docker.sock` · `/api/next/health`.
+
+- a béta úgy módosíthatja az adatbázist, hogy a stabil alkalmazás ne tudja olvasni; soha ne irányítsa a stabil mappáira
+- az indító csatolja a Docker socketet, így vezérli a szerver Dockerét; csak akkor telepítse, ha megbízik az indító képében
+- az alkalmazáson belüli mentés (Adminisztráció → Backup, ütemezve is) költözteti a könyvtárat Docker, Unraid és Home Assistant között
+- az indító még nem adja tovább az OpenID Connect változókat, ezért az Unraid sablon passkeyjel vagy jelszóval jelentkezik be
 :::
 
 ## Következő lépés
 
-[Telepítés: Első indítás és állapotellenőrzés](/hu/install/first-start-health/)
+[Telepítés: Fordított proxy és hozzáférési kulcsok](/hu/install/reverse-proxy-passkeys/)
 
 ## Forrás és állapot
 
-- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Forrás és állapot: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault@441f96593219`](https://github.com/helmerzNL/DiscVault/commit/441f96593219c66d45aac99ce5ef9f81f011d449)
+- [`helmerzNL/unraid-community-apps@988ac954d47b`](https://github.com/helmerzNL/unraid-community-apps/commit/988ac954d47b7c671cab91d5a0ad9b623366f89d)
+- [Unraid template: `templates/discvault.xml`](https://github.com/helmerzNL/unraid-community-apps/blob/main/templates/discvault.xml)
+- [Unraid template: `templates/discvault-beta.xml`](https://github.com/helmerzNL/unraid-community-apps/blob/main/templates/discvault-beta.xml)
+- [DiscVault launcher](https://github.com/helmerzNL/DiscVault-Launcher)
+- [Unraid support thread](https://forums.unraid.net/topic/198808-support-discvault-physical-disc-collection-manager/)
+- Forrás és állapot: `2026-11-11`
+- DiscVault Docs: `0.2.0`

@@ -5,14 +5,14 @@ pageId: 'install-docker-run'
 products: ['server']
 platforms: ['docker']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Cél és eredmény
 
@@ -22,13 +22,13 @@ Hajtsa végre az oldalhoz tartozó munkafolyamatot: **Telepítés: Docker run**.
 
 Ez az oldal kizárólag erre vonatkozik: **Telepítés: Docker run** (Docker). A csatorna- és adathatárok: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL API MCP; `6080` → API `5000`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL API MCP; `6080` → API `5000`. Oldalspecifikus ellenőrzési pontok: `DATABASE_URL` · `discvault-postgres` · `6080:5000` · `/api/next/health`.
 
-### DiscVault v26 – stabil
+### DiscVault – stabil
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - PostgreSQL API MCP
 - `6080` → API `5000`
 
-### DiscVault v26 – béta
+### DiscVault – béta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - PostgreSQL API MCP
@@ -49,13 +49,13 @@ Ez az oldal kizárólag erre vonatkozik: **Telepítés: Docker run** (Docker). A
 
 ### Parancsok és beállítások
 
-#### DiscVault v26 – stabil
+#### DiscVault – stabil
 
 ```bash
 export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
 ```
 
-#### DiscVault v26 – béta
+#### DiscVault – béta
 
 ```bash
 export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
@@ -125,10 +125,10 @@ docker ps --filter 'name=discvault-'
 
 ## Várt eredmény
 
-Az eredmény csak ennél fogadható el: **Telepítés: Docker run** csak akkor, ha minden alábbi eredmény teljesül: HTTP `2xx` · `/api/next/health`; `discvault-postgres`. Oldalspecifikus ellenőrzési pontok: `DATABASE_URL` · `discvault-postgres` · `6080:5000` · `/api/next/health`.
+Az eredmény csak ennél fogadható el: **Telepítés: Docker run** csak akkor, ha minden alábbi eredmény teljesül: HTTP `2xx` · `/api/next/health`; DiscVault. Oldalspecifikus ellenőrzési pontok: `DATABASE_URL` · `discvault-postgres` · `6080:5000` · `/api/next/health`.
 
 - HTTP `2xx` · `/api/next/health`
-- `discvault-postgres`
+- DiscVault
 
 ## Biztonság és visszaállítás
 

@@ -5,14 +5,14 @@ pageId: 'install-first-start-health'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-20" />
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-20" />
 
 ## Doel en resultaat
 
@@ -22,12 +22,12 @@ Voer de paginaspecifieke werkwijze uit voor **Installeren: Eerste start en statu
 
 Deze pagina is uitsluitend van toepassing op **Installeren: Eerste start en statuscontrole** (Docker · web). De kanaal- en gegevensgrenzen zijn: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `6080` → API `5000`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/api/next/auth/status`; `6180` → API `5000`. Paginaspecifieke controlepunten: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · `6180:5000` · WebAuthn.
 
-### DiscVault v26 stabiel
+### DiscVault stabiel
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - `6080` → API `5000`
 
-### DiscVault v26 bèta
+### DiscVault bèta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `/api/next/auth/status`
@@ -35,7 +35,7 @@ Deze pagina is uitsluitend van toepassing op **Installeren: Eerste start en stat
 
 ## Vereisten
 
-- `/api/next/health`
+- DiscVault
 - `/api/next/auth/status`
 
 ## Procedure
@@ -48,7 +48,7 @@ Deze pagina is uitsluitend van toepassing op **Installeren: Eerste start en stat
 
 ### Opdrachten en instellingen
 
-#### DiscVault v26 stabiel
+#### DiscVault stabiel
 
 ```bash
 docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml ps
@@ -57,7 +57,7 @@ curl --fail http://localhost:6080/api/next/health
 curl --fail http://localhost:6080/api/next/auth/status
 ```
 
-#### DiscVault v26 bèta
+#### DiscVault bèta
 
 ```bash
 docker compose -p discvault_next_deploy -f /opt/discvault-next/docker-compose.yml ps
