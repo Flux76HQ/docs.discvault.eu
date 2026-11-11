@@ -84,10 +84,11 @@ Validez le résultat de **Mise à jour et migration: Sauvegarde** uniquement lor
 ## Sécurité et retour arrière
 
 :::caution
-La limite de récupération sûre pour **Mise à jour et migration: Sauvegarde** impose ces actions avant tout démarrage ou toute poursuite : si une commande de sauvegarde échoue, redémarrez uniquement les services inchangés et annulez la mise à jour; dump PostgreSQL et archive des fichiers de la même fenêtre sans écriture. Points de contrôle propres à la page : `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
+La limite de récupération sûre pour **Mise à jour et migration: Sauvegarde** impose ces actions avant tout démarrage ou toute poursuite : si une commande de sauvegarde échoue, redémarrez uniquement les services inchangés et annulez la mise à jour; dump PostgreSQL et archive des fichiers de la même fenêtre sans écriture; l’app peut aussi sauvegarder selon un planning (Administration → Backup → Planification : intervalle, ignorer sans changement, garder les N plus récentes) ; les archives planifiées sont dans `backups/` de `DISCVAULT_DATA_DIR`, copiez-les donc aussi hors de l’hôte. Points de contrôle propres à la page : `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
 
 - si une commande de sauvegarde échoue, redémarrez uniquement les services inchangés et annulez la mise à jour
 - dump PostgreSQL et archive des fichiers de la même fenêtre sans écriture
+- l’app peut aussi sauvegarder selon un planning (Administration → Backup → Planification : intervalle, ignorer sans changement, garder les N plus récentes) ; les archives planifiées sont dans `backups/` de `DISCVAULT_DATA_DIR`, copiez-les donc aussi hors de l’hôte
 :::
 
 ## Étape suivante

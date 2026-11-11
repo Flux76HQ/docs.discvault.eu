@@ -84,10 +84,11 @@ Výsledek přijměte pro **Aktualizace a migrace: Záloha** pouze pokud platí v
 ## Bezpečnost a návrat
 
 :::caution
-Bezpečná hranice obnovy pro **Aktualizace a migrace: Záloha** vyžaduje před spuštěním nebo pokračováním tyto kroky: pokud selže některý příkaz zálohy, spusťte pouze nezměněné služby a aktualizaci zrušte; dump PostgreSQL a archiv souborů ze stejného okna se zastavenými zápisy. Kontrolní body této stránky: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
+Bezpečná hranice obnovy pro **Aktualizace a migrace: Záloha** vyžaduje před spuštěním nebo pokračováním tyto kroky: pokud selže některý příkaz zálohy, spusťte pouze nezměněné služby a aktualizaci zrušte; dump PostgreSQL a archiv souborů ze stejného okna se zastavenými zápisy; aplikace umí zálohovat i podle plánu (Správa → Backup → Plán: interval, přeskočit beze změn, ponechat N nejnovějších); plánované archivy jsou v `backups/` uvnitř `DISCVAULT_DATA_DIR`, proto je kopírujte i mimo hostitele. Kontrolní body této stránky: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
 
 - pokud selže některý příkaz zálohy, spusťte pouze nezměněné služby a aktualizaci zrušte
 - dump PostgreSQL a archiv souborů ze stejného okna se zastavenými zápisy
+- aplikace umí zálohovat i podle plánu (Správa → Backup → Plán: interval, přeskočit beze změn, ponechat N nejnovějších); plánované archivy jsou v `backups/` uvnitř `DISCVAULT_DATA_DIR`, proto je kopírujte i mimo hostitele
 :::
 
 ## Další krok

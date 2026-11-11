@@ -95,9 +95,10 @@ trap - EXIT
 
 ## Oczekiwany rezultat
 
-Zaakceptuj wynik dla **Aktualizacja i migracja: Aktualizacja kontenera** tylko gdy wszystkie poniższe wyniki są prawdziwe: działa zamierzony digest obrazu, stan jest prawidłowy, a logowanie właściciela, liczba rekordów i próbka przechodzą; pozostaw bez zmian woluminy, zmienne środowiskowe, porty i ścieżkę danych poprzedniej generacji; nigdy nie podstawiaj `:legacy` do topologii Compose DiscVault z PostgreSQL. Punkty kontrolne tej strony: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
+Zaakceptuj wynik dla **Aktualizacja i migracja: Aktualizacja kontenera** tylko gdy wszystkie poniższe wyniki są prawdziwe: działa zamierzony digest obrazu, stan jest prawidłowy, a logowanie właściciela, liczba rekordów i próbka przechodzą; po aktualizacji Administracja → Wtyczki pokazuje zainstalowane wersje; dołączone wtyczki są zastępowane tylko wtedy, gdy dołączona kopia jest nowsza (26.11 wymaga MovieVault v2 1.12.0 i TMDb 1.11.0); pozostaw bez zmian woluminy, zmienne środowiskowe, porty i ścieżkę danych poprzedniej generacji; nigdy nie podstawiaj `:legacy` do topologii Compose DiscVault z PostgreSQL. Punkty kontrolne tej strony: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
 - działa zamierzony digest obrazu, stan jest prawidłowy, a logowanie właściciela, liczba rekordów i próbka przechodzą
+- po aktualizacji Administracja → Wtyczki pokazuje zainstalowane wersje; dołączone wtyczki są zastępowane tylko wtedy, gdy dołączona kopia jest nowsza (26.11 wymaga MovieVault v2 1.12.0 i TMDb 1.11.0)
 - pozostaw bez zmian woluminy, zmienne środowiskowe, porty i ścieżkę danych poprzedniej generacji; nigdy nie podstawiaj `:legacy` do topologii Compose DiscVault z PostgreSQL
 
 ## Bezpieczeństwo i wycofanie

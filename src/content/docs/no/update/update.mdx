@@ -95,9 +95,10 @@ trap - EXIT
 
 ## Forventet resultat
 
-Godta resultatet for **Oppdatering og migrering: Containeroppdatering** bare når alle resultatene nedenfor er oppfylt: tiltenkt image-digest kjører, helsekontrollen lykkes, og eierinnlogging, bibliotektall og ett medieutvalg består; behold forrige generasjons volumer, miljøvariabler, porter og databane uendret; bytt aldri et image i DiscVault PostgreSQL Compose-topologien til `:legacy`. Sidespesifikke kontrollpunkter: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
+Godta resultatet for **Oppdatering og migrering: Containeroppdatering** bare når alle resultatene nedenfor er oppfylt: tiltenkt image-digest kjører, helsekontrollen lykkes, og eierinnlogging, bibliotektall og ett medieutvalg består; etter en oppdatering viser Administrasjon → Programtillegg de installerte versjonene; medfølgende programtillegg erstattes bare når den medfølgende kopien er nyere (26.11 trenger MovieVault v2 1.12.0 og TMDb 1.11.0); behold forrige generasjons volumer, miljøvariabler, porter og databane uendret; bytt aldri et image i DiscVault PostgreSQL Compose-topologien til `:legacy`. Sidespesifikke kontrollpunkter: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
 - tiltenkt image-digest kjører, helsekontrollen lykkes, og eierinnlogging, bibliotektall og ett medieutvalg består
+- etter en oppdatering viser Administrasjon → Programtillegg de installerte versjonene; medfølgende programtillegg erstattes bare når den medfølgende kopien er nyere (26.11 trenger MovieVault v2 1.12.0 og TMDb 1.11.0)
 - behold forrige generasjons volumer, miljøvariabler, porter og databane uendret; bytt aldri et image i DiscVault PostgreSQL Compose-topologien til `:legacy`
 
 ## Sikkerhet og tilbakerulling

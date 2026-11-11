@@ -84,10 +84,11 @@ Godta resultatet for **Oppdatering og migrering: Sikkerhetskopi** bare når alle
 ## Sikkerhet og tilbakerulling
 
 :::caution
-Den sikre gjenopprettingsgrensen for **Oppdatering og migrering: Sikkerhetskopi** krever disse handlingene før noe startes eller fortsetter: hvis en sikkerhetskopikommando mislykkes, start bare uendrede tjenester igjen og avbryt oppdateringen; PostgreSQL-dump og filarkiv fra samme skrivelåste tidsrom. Sidespesifikke kontrollpunkter: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
+Den sikre gjenopprettingsgrensen for **Oppdatering og migrering: Sikkerhetskopi** krever disse handlingene før noe startes eller fortsetter: hvis en sikkerhetskopikommando mislykkes, start bare uendrede tjenester igjen og avbryt oppdateringen; PostgreSQL-dump og filarkiv fra samme skrivelåste tidsrom; appen kan også ta sikkerhetskopi etter tidsplan (Administrasjon → Backup → Tidsplan: intervall, hopp over uten endringer, behold de N nyeste); planlagte arkiver havner i `backups/` i `DISCVAULT_DATA_DIR`, så kopier dem også bort fra verten. Sidespesifikke kontrollpunkter: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
 
 - hvis en sikkerhetskopikommando mislykkes, start bare uendrede tjenester igjen og avbryt oppdateringen
 - PostgreSQL-dump og filarkiv fra samme skrivelåste tidsrom
+- appen kan også ta sikkerhetskopi etter tidsplan (Administrasjon → Backup → Tidsplan: intervall, hopp over uten endringer, behold de N nyeste); planlagte arkiver havner i `backups/` i `DISCVAULT_DATA_DIR`, så kopier dem også bort fra verten
 :::
 
 ## Neste trinn

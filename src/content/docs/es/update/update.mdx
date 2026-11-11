@@ -95,9 +95,10 @@ trap - EXIT
 
 ## Resultado esperado
 
-Acepta el resultado de **Actualización y migración: Actualización del contenedor** solo cuando se cumplan todos estos resultados: se ejecuta el digest previsto, la salud es correcta y pasan el acceso del propietario, el recuento y una muestra multimedia; mantén sin cambios los volúmenes, variables de entorno, puertos y ruta de datos de la generación anterior; nunca sustituyas una imagen de la topología Compose DiscVault con PostgreSQL por `:legacy`. Puntos de control de esta página: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
+Acepta el resultado de **Actualización y migración: Actualización del contenedor** solo cuando se cumplan todos estos resultados: se ejecuta el digest previsto, la salud es correcta y pasan el acceso del propietario, el recuento y una muestra multimedia; tras una actualización, Administración → Complementos muestra las versiones instaladas; los complementos incluidos solo se sustituyen si la copia incluida es más nueva (26.11 necesita MovieVault v2 1.12.0 y TMDb 1.11.0); mantén sin cambios los volúmenes, variables de entorno, puertos y ruta de datos de la generación anterior; nunca sustituyas una imagen de la topología Compose DiscVault con PostgreSQL por `:legacy`. Puntos de control de esta página: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
 - se ejecuta el digest previsto, la salud es correcta y pasan el acceso del propietario, el recuento y una muestra multimedia
+- tras una actualización, Administración → Complementos muestra las versiones instaladas; los complementos incluidos solo se sustituyen si la copia incluida es más nueva (26.11 necesita MovieVault v2 1.12.0 y TMDb 1.11.0)
 - mantén sin cambios los volúmenes, variables de entorno, puertos y ruta de datos de la generación anterior; nunca sustituyas una imagen de la topología Compose DiscVault con PostgreSQL por `:legacy`
 
 ## Seguridad y reversión

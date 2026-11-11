@@ -143,6 +143,24 @@ const currentBetaDeploymentSourceFiles = [
     url: `https://github.com/helmerzNL/DiscVault/blob/${oidcCoreSourceCommit}/app/deploy/next/.env.example`,
   },
 ];
+const currentDeploymentSourceFiles = [
+  {
+    label: 'Stable source: `docker-compose.yml` (`main`)',
+    url: 'https://github.com/helmerzNL/DiscVault/blob/main/app/deploy/next/docker-compose.yml',
+  },
+  {
+    label: 'Stable source: `.env.example` (`main`)',
+    url: 'https://github.com/helmerzNL/DiscVault/blob/main/app/deploy/next/.env.example',
+  },
+  ...betaDeploymentSourceFiles,
+];
+const currentAuthSourceFiles = [
+  {
+    label: 'Stable source: Legacy Authentication deployment notes',
+    url: 'https://github.com/helmerzNL/DiscVault/blob/main/app/deploy/next/README.md',
+  },
+  ...betaAuthSourceFiles,
+];
 const unraidSourceFiles = [
   {
     label: 'Unraid template: `templates/discvault.xml`',
@@ -1272,11 +1290,11 @@ const pages = [
     docsVersion: betaDocsVersion,
     pre: ['Docker Engine 24+', 'Docker Compose v2'],
     command:
-      'Official beta files: /install/docker-compose/\nAdvanced stable or beta equivalent: /install/docker-run/\nPersistence: /install/storage-postgresql/\nUnraid: /install/unraid/\nHome Assistant: /install/home-assistant/',
+      'Official Compose files: /install/docker-compose/\nAdvanced stable or beta equivalent: /install/docker-run/\nPersistence: /install/storage-postgresql/\nUnraid: /install/unraid/\nHome Assistant: /install/home-assistant/',
     intro:
       'Choose the DiscVault topology for new installs, or keep an existing previous-generation deployment on the frozen Legacy image until migration.',
     scope:
-      '`ghcr.io/helmerznl/discvault:latest` is DiscVault stable and `ghcr.io/helmerznl/discvault:beta` is DiscVault beta. The official `app/deploy/next/docker-compose.yml` and `.env.example` procedure is beta-only and uses `DISCVAULT_NEXT_IMAGE`; the advanced Docker-run procedure remains available for both channels. The frozen `ghcr.io/helmerznl/discvault:legacy` image is only for an existing previous-generation installation that is not ready to migrate. Never substitute that deployment image into the DiscVault beta topology.',
+      '`ghcr.io/helmerznl/discvault:latest` is DiscVault stable and `ghcr.io/helmerznl/discvault:beta` is DiscVault beta. The official `app/deploy/next/docker-compose.yml` and `.env.example` procedure covers both channels and uses `DISCVAULT_NEXT_IMAGE`; the advanced Docker-run procedure remains available as an equivalent. Unraid installs through Community Applications and Home Assistant through its own app. The frozen `ghcr.io/helmerznl/discvault:legacy` image is only for an existing previous-generation installation that is not ready to migrate. Never substitute that deployment image into the DiscVault Compose topology.',
     expected:
       'A new install selects one DiscVault channel, while an existing previous-generation install either stays on its unchanged Legacy topology or follows the migration procedure.',
     rollback:
@@ -1309,25 +1327,26 @@ const pages = [
     path: 'install/docker-compose',
     category: 'install',
     topic: 'Docker Compose',
-    channel: ['beta'],
+    channel: ['stable', 'beta'],
     products: ['server'],
     platforms: ['docker'],
     version: 'DiscVault',
     source: [S],
-    sourceCommits: { [S]: betaSourceCommit },
-    sourceFiles: betaDeploymentSourceFiles,
-    verified: betaVerified,
-    docsVersion: betaDocsVersion,
+    sourceCommits: { [S]: currentCoreSourceCommit },
+    sourceFiles: currentDeploymentSourceFiles,
+    verified: applianceVerified,
+    docsVersion: applianceDocsVersion,
     pre: ['Docker Compose v2', 'OpenSSL', 'persistent PostgreSQL and /data paths'],
     command:
-      'Download app/deploy/next/docker-compose.yml and .env.example from release/v26-beta, then force DISCVAULT_NEXT_IMAGE=ghcr.io/helmerznl/discvault:beta before startup.',
-    intro: 'Deploy DiscVault beta from the canonical moving Compose and environment files.',
+      'Download app/deploy/next/docker-compose.yml and .env.example from main (stable) or release/v26-beta (beta), then force DISCVAULT_NEXT_IMAGE to :latest or :beta before startup.',
+    intro:
+      'Deploy DiscVault stable or beta from the official Compose and environment files: the recommended route for a new Docker install.',
     scope:
-      'This page applies only to DiscVault beta. It downloads the moving `release/v26-beta` files and lists commit-pinned verification links. Because the current source `.env.example` still defaults to the engineering `:dev` image, the procedure rewrites and validates `DISCVAULT_NEXT_IMAGE=ghcr.io/helmerznl/discvault:beta` before pull or startup. It uses project `discvault_next_deploy`, host API port `6180`, persistent `/mnt/user/appdata/discvault`, and PostgreSQL path `/mnt/user/appdata/discvault-next/postgres`.',
+      'Stable downloads the files from `main` and runs `DISCVAULT_NEXT_IMAGE=ghcr.io/helmerznl/discvault:latest`; beta downloads them from `release/v26-beta` and runs `DISCVAULT_NEXT_IMAGE=ghcr.io/helmerznl/discvault:beta`. Pick one channel per data folder. Because `.env.example` still defaults to the engineering `:dev` image, the procedure rewrites and validates the image before pull or startup. It uses project `discvault_next_deploy`, host API port `6180`, persistent `/mnt/user/appdata/discvault`, and PostgreSQL path `/mnt/user/appdata/discvault-next/postgres`.',
     expected:
-      'Compose project `discvault_next_deploy` reports PostgreSQL healthy and API, worker, and MCP running from the beta image; the health endpoint succeeds on host port 6180.',
+      'Compose project `discvault_next_deploy` reports PostgreSQL healthy and API, worker, and MCP running from the chosen image; the health endpoint succeeds on host port 6180.',
     rollback:
-      'Run `docker compose -p discvault_next_deploy down` without deleting data, preserve `.env`, and restore the matched PostgreSQL and `/data` backup before recreating the previous beta digest.',
+      'Run `docker compose -p discvault_next_deploy down` without deleting data, preserve `.env`, and restore the matched PostgreSQL and `/data` backup before recreating the previous image digest.',
     next: 'install/first-start-health',
   },
   {
@@ -1428,22 +1447,22 @@ const pages = [
     category: 'install',
     topic: 'Legacy Authentication',
     topicTerm: 'legacyAuthenticationTitle',
-    channel: ['beta'],
+    channel: ['stable', 'beta'],
     products: ['server'],
     platforms: ['docker', 'web'],
     version: 'DiscVault',
     source: [S],
-    sourceCommits: { [S]: betaSourceCommit },
-    sourceFiles: betaAuthSourceFiles,
-    verified: betaVerified,
-    docsVersion: betaDocsVersion,
-    pre: ['DiscVault beta', 'LEGACY_AUTH_ENABLED=true', 'authenticator app'],
+    sourceCommits: { [S]: currentCoreSourceCommit },
+    sourceFiles: currentAuthSourceFiles,
+    verified: applianceVerified,
+    docsVersion: applianceDocsVersion,
+    pre: ['DiscVault', 'LEGACY_AUTH_ENABLED=true', 'authenticator app'],
     command:
       'FQDN: RP_ID=discvault.example.com and RP_ORIGINS=https://discvault.example.com\nLocal IP: RP_ID= and RP_ORIGINS=\nLEGACY_AUTH_ENABLED=true\nHealth and status: http://localhost:6180/api/next/auth/status',
     intro:
-      'Configure the implemented DiscVault beta username/password fallback with TOTP, recovery codes, and fail-closed activation.',
+      'Configure the DiscVault username/password fallback with TOTP, recovery codes, and fail-closed activation.',
     scope:
-      'Legacy Authentication is an optional DiscVault beta capability. Fresh instances with no users or credentials can atomically bootstrap the first Owner after password-risk acknowledgement; existing installations activate password login in Users & roles with a fresh Owner or Admin passkey assertion. Passwords require at least 15 characters and Argon2id storage. TOTP and single-use recovery codes are the recommended fallback path. Only a direct private or loopback request with invalid or empty RP settings may explicitly opt out of TOTP during first-owner bootstrap.',
+      'Legacy Authentication is an optional DiscVault capability in stable and beta. Fresh instances with no users or credentials can atomically bootstrap the first Owner after password-risk acknowledgement; existing installations activate password login in Users & roles with a fresh Owner or Admin passkey assertion. Passwords require at least 15 characters and Argon2id storage. TOTP and single-use recovery codes are the recommended fallback path. Only a direct private or loopback request with invalid or empty RP settings may explicitly opt out of TOTP during first-owner bootstrap.',
     expected:
       'The first or existing Owner can authenticate with a policy-compliant password and TOTP, recovery codes are acknowledged and stored offline, and account lockout works after repeated failures.',
     rollback:
@@ -1633,26 +1652,26 @@ const pages = [
     path: 'configure/environment',
     category: 'configure',
     topic: 25,
-    channel: ['beta'],
+    channel: ['stable', 'beta'],
     products: ['server'],
     platforms: ['docker', 'unraid'],
     version: 'DiscVault',
     source: [S],
-    sourceCommits: { [S]: oidcCoreSourceCommit },
-    sourceFiles: currentBetaDeploymentSourceFiles,
-    verified: oidcVerified,
-    docsVersion: oidcDocsVersion,
+    sourceCommits: { [S]: currentCoreSourceCommit },
+    sourceFiles: currentDeploymentSourceFiles,
+    verified: applianceVerified,
+    docsVersion: applianceDocsVersion,
     pre: ['private environment file', 'restart window'],
     command:
-      'DISCVAULT_NEXT_IMAGE=ghcr.io/helmerznl/discvault:beta\nDISCVAULT_DATA_DIR=/mnt/user/appdata/discvault\nDISCVAULT_NEXT_POSTGRES_DATA=/mnt/user/appdata/discvault-next/postgres\nDISCVAULT_NEXT_API_PORT=6180\nRP_ID=discvault.example.com or empty for direct local IP\nLEGACY_AUTH_ENABLED=true\nOptional OIDC: /configure/oidc/',
+      'DISCVAULT_NEXT_IMAGE=ghcr.io/helmerznl/discvault:latest (stable) or :beta\nDISCVAULT_DATA_DIR=/mnt/user/appdata/discvault\nDISCVAULT_NEXT_POSTGRES_DATA=/mnt/user/appdata/discvault-next/postgres\nDISCVAULT_NEXT_API_PORT=6180\nRP_ID=discvault.example.com or empty for direct local IP\nLEGACY_AUTH_ENABLED=true\nOptional OIDC: /configure/oidc/',
     intro:
-      'Create the private DiscVault beta runtime environment from the canonical moving `.env.example` without retaining its `:dev` image default.',
+      'Create the private DiscVault runtime environment from the official `.env.example` without retaining its `:dev` image default.',
     scope:
-      'This page applies to the official DiscVault beta deployment. Generate `POSTGRES_PASSWORD` and one stable `JWT_SECRET` with `openssl rand -base64 48` into a mode-600 `.env`. Force `DISCVAULT_NEXT_IMAGE=ghcr.io/helmerznl/discvault:beta`; set the supplied data paths; and choose either aligned FQDN values or empty `RP_ID` and `RP_ORIGINS` for a direct local-IP Legacy Authentication route.',
+      'This page applies to the official DiscVault Compose deployment, stable from `main` and beta from `release/v26-beta`. Generate `POSTGRES_PASSWORD` and one stable `JWT_SECRET` with `openssl rand -base64 48` into a mode-600 `.env`. Force `DISCVAULT_NEXT_IMAGE` to `ghcr.io/helmerznl/discvault:latest` or `ghcr.io/helmerznl/discvault:beta`; set the supplied data paths; and choose either aligned FQDN values or empty `RP_ID` and `RP_ORIGINS` for a direct local-IP Legacy Authentication route.',
     expected:
-      '`docker compose -p discvault_next_deploy config` resolves the beta environment, no `:dev` tag remains in `.env`, and health succeeds on port 6180.',
+      '`docker compose -p discvault_next_deploy config` resolves the environment, no `:dev` tag remains in `.env`, and health succeeds on port 6180.',
     rollback:
-      'On failure, keep services stopped, restore the prior private `.env`, validate it with project `discvault_next_deploy`, and recreate the same beta digest. Do not rotate `JWT_SECRET` or `POSTGRES_PASSWORD` during ordinary rollback.',
+      'On failure, keep services stopped, restore the prior private `.env`, validate it with project `discvault_next_deploy`, and recreate the same image digest. Do not rotate `JWT_SECRET` or `POSTGRES_PASSWORD` during ordinary rollback.',
     next: 'configure/oidc',
   },
   {
@@ -1685,25 +1704,25 @@ const pages = [
     path: 'configure/oidc',
     category: 'configure',
     topicTerm: 'oidcTitle',
-    channel: ['beta'],
+    channel: ['stable', 'beta'],
     products: ['server', 'pwa'],
     platforms: ['docker', 'web'],
     version: 'DiscVault',
     source: [S, A],
     sourceCommits: {
-      [S]: oidcCoreSourceCommit,
+      [S]: currentCoreSourceCommit,
       [A]: oidcGuidanceSourceCommit,
     },
     sourceFiles: oidcSourceFiles,
-    verified: oidcVerified,
-    docsVersion: oidcDocsVersion,
+    verified: applianceVerified,
+    docsVersion: applianceDocsVersion,
     pre: ['Owner recovery method', 'trusted public HTTPS origin', 'confidential OIDC client'],
     command:
       'Register https://discvault.example.com/api/next/auth/oidc/callback at the provider.\nSet DISCVAULT_OIDC_ISSUER, DISCVAULT_OIDC_CLIENT_ID, and DISCVAULT_OIDC_CLIENT_SECRET together.\nOptionally set DISCVAULT_OIDC_PROVIDER_NAME and DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS.\nRecreate next-api and test login, linking, unlinking, and Audit events.',
     intro:
       'Add one OpenID Connect provider, including Pocket ID, as an optional browser sign-in method without replacing local recovery or API-token boundaries.',
     scope:
-      'OIDC is available in DiscVault beta from build 26.9.117. It is disabled when its required variables are empty. It authenticates only the self-hosted browser/PWA; iOS, Android, API tokens, and MCP bearer tokens keep their existing authentication contracts.',
+      'OIDC is available in DiscVault stable from release 26.10.17 and in beta from build 26.9.117. Home Assistant offers it through the app options; the Unraid launcher does not pass it on yet. It is disabled when its required variables are empty. It authenticates only the self-hosted browser/PWA; iOS, Android, API tokens, and MCP bearer tokens keep their existing authentication contracts.',
     expected:
       'The provider redirects to the exact DiscVault callback, an allowed user can sign in or link the identity, and safe OIDC outcomes appear in the Audit log without secrets or tokens.',
     rollback:

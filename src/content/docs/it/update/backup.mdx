@@ -84,10 +84,11 @@ Accetta il risultato per **Aggiornamento e migrazione: Backup** solo quando tutt
 ## Sicurezza e ripristino
 
 :::caution
-Il limite di ripristino sicuro per **Aggiornamento e migrazione: Backup** richiede queste azioni prima di avviare o continuare: se un comando di backup non riesce, riavvia solo i servizi invariati e annulla l’aggiornamento; dump PostgreSQL e archivio dei file dalla stessa finestra senza scritture. Punti di controllo della pagina: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
+Il limite di ripristino sicuro per **Aggiornamento e migrazione: Backup** richiede queste azioni prima di avviare o continuare: se un comando di backup non riesce, riavvia solo i servizi invariati e annulla l’aggiornamento; dump PostgreSQL e archivio dei file dalla stessa finestra senza scritture; l’app può anche eseguire backup pianificati (Amministrazione → Backup → Pianificazione: intervallo, salta se nulla è cambiato, conserva gli N più recenti); gli archivi finiscono in `backups/` dentro `DISCVAULT_DATA_DIR`, quindi copiali anche fuori dall’host. Punti di controllo della pagina: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
 
 - se un comando di backup non riesce, riavvia solo i servizi invariati e annulla l’aggiornamento
 - dump PostgreSQL e archivio dei file dalla stessa finestra senza scritture
+- l’app può anche eseguire backup pianificati (Amministrazione → Backup → Pianificazione: intervallo, salta se nulla è cambiato, conserva gli N più recenti); gli archivi finiscono in `backups/` dentro `DISCVAULT_DATA_DIR`, quindi copiali anche fuori dall’host
 :::
 
 ## Passaggio successivo

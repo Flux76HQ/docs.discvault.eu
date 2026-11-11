@@ -95,9 +95,10 @@ trap - EXIT
 
 ## Förväntat resultat
 
-Godkänn resultatet för **Uppdatering och migrering: Containeruppdatering** endast när alla resultat nedan stämmer: avsett image-digest körs, hälsan lyckas och ägarinloggning, biblioteksantal och ett medieprov godkänns; behåll föregående generations volymer, miljövariabler, portar och datasökväg oförändrade; ersätt aldrig en avbildning i DiscVault PostgreSQL Compose-topologin med `:legacy`. Sidspecifika kontrollpunkter: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
+Godkänn resultatet för **Uppdatering och migrering: Containeruppdatering** endast när alla resultat nedan stämmer: avsett image-digest körs, hälsan lyckas och ägarinloggning, biblioteksantal och ett medieprov godkänns; efter en uppdatering visar Administration → Insticksprogram de installerade versionerna; medföljande insticksprogram ersätts bara när den medföljande kopian är nyare (26.11 kräver MovieVault v2 1.12.0 och TMDb 1.11.0); behåll föregående generations volymer, miljövariabler, portar och datasökväg oförändrade; ersätt aldrig en avbildning i DiscVault PostgreSQL Compose-topologin med `:legacy`. Sidspecifika kontrollpunkter: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
 - avsett image-digest körs, hälsan lyckas och ägarinloggning, biblioteksantal och ett medieprov godkänns
+- efter en uppdatering visar Administration → Insticksprogram de installerade versionerna; medföljande insticksprogram ersätts bara när den medföljande kopian är nyare (26.11 kräver MovieVault v2 1.12.0 och TMDb 1.11.0)
 - behåll föregående generations volymer, miljövariabler, portar och datasökväg oförändrade; ersätt aldrig en avbildning i DiscVault PostgreSQL Compose-topologin med `:legacy`
 
 ## Säkerhet och återställning

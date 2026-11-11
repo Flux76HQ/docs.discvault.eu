@@ -84,10 +84,11 @@ Zaakceptuj wynik dla **Aktualizacja i migracja: Kopia zapasowa** tylko gdy wszys
 ## Bezpieczeństwo i wycofanie
 
 :::caution
-Bezpieczna granica odzyskiwania dla **Aktualizacja i migracja: Kopia zapasowa** wymaga tych działań przed uruchomieniem lub kontynuacją: jeśli polecenie kopii nie powiedzie się, uruchom ponownie tylko niezmienione usługi i anuluj aktualizację; zrzut PostgreSQL i archiwum plików z tego samego okna bez zapisów. Punkty kontrolne tej strony: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
+Bezpieczna granica odzyskiwania dla **Aktualizacja i migracja: Kopia zapasowa** wymaga tych działań przed uruchomieniem lub kontynuacją: jeśli polecenie kopii nie powiedzie się, uruchom ponownie tylko niezmienione usługi i anuluj aktualizację; zrzut PostgreSQL i archiwum plików z tego samego okna bez zapisów; aplikacja może też wykonywać kopie według harmonogramu (Administracja → Backup → Harmonogram: odstęp, pomiń bez zmian, zachowaj N najnowszych); archiwa trafiają do `backups/` w `DISCVAULT_DATA_DIR`, więc kopiuj je także poza hosta. Punkty kontrolne tej strony: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
 
 - jeśli polecenie kopii nie powiedzie się, uruchom ponownie tylko niezmienione usługi i anuluj aktualizację
 - zrzut PostgreSQL i archiwum plików z tego samego okna bez zapisów
+- aplikacja może też wykonywać kopie według harmonogramu (Administracja → Backup → Harmonogram: odstęp, pomiń bez zmian, zachowaj N najnowszych); archiwa trafiają do `backups/` w `DISCVAULT_DATA_DIR`, więc kopiuj je także poza hosta
 :::
 
 ## Następny krok

@@ -52,13 +52,14 @@ const operationalHeadings = [
   'Next step',
   'Source and status',
 ];
-const betaOnlyPageIds = new Set([
+// Every server procedure now covers stable and beta: OIDC, Legacy Authentication and the
+// official Compose files reached stable in 26.10.17. Keep the set for future beta-only pages.
+const betaOnlyPageIds = new Set([]);
+const channelVariantPageIds = new Set([
   'install-docker-compose',
   'install-legacy-authentication',
   'configure-environment',
   'configure-oidc',
-]);
-const channelVariantPageIds = new Set([
   'install-unraid',
   'install-home-assistant',
   'install-index',
@@ -73,6 +74,8 @@ const requiredMarkers = {
   'install-index': [':latest', ':beta', ':legacy', 'PostgreSQL', '/data', '/update/migration/'],
   'install-docker-run': ['DATABASE_URL', 'discvault-postgres', '6080:5000', '/api/next/health'],
   'install-docker-compose': [
+    'raw.githubusercontent.com/helmerzNL/DiscVault/main/app/deploy/next/docker-compose.yml',
+    'ghcr.io/helmerznl/discvault:latest',
     'release/v26-beta',
     'app/deploy/next/docker-compose.yml',
     'app/deploy/next/.env.example',
@@ -756,9 +759,9 @@ for (const relative of environmentPages) {
     }
   }
 }
-if (secretFileBlocks.length !== 3) {
+if (secretFileBlocks.length !== 5) {
   errors.push(
-    `Expected three fail-fast secret environment blocks, found ${secretFileBlocks.length}`,
+    `Expected five fail-fast secret environment blocks (Docker run, plus stable and beta on two Compose pages), found ${secretFileBlocks.length}`,
   );
 }
 for (const [relative, body] of secretFileBlocks) {

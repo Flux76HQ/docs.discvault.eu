@@ -25,8 +25,10 @@ Passkeys require a stable fully qualified domain name over trusted HTTPS: `RP_ID
 ### DiscVault stable
 
 - DiscVault stable · `ghcr.io/helmerznl/discvault:latest`
-- Passkeys · `RP_ID` + `RP_ORIGINS` · proxy host port `6080`
+- Passkeys · `RP_ID` + `RP_ORIGINS` · proxy host port `6180` (Compose) or `6080` (Docker run)
 - outside the localhost setup exception, passkeys require a stable fully qualified domain name over trusted HTTPS; a bare IP address or plain HTTP is unsupported
+- OIDC · `/api/next/auth/oidc/callback` · [Configure: OpenID Connect (OIDC) sign-in](/configure/oidc/)
+- Legacy Authentication · `LEGACY_AUTH_ENABLED=true` · direct local IP fallback
 
 ### DiscVault beta
 
@@ -43,8 +45,8 @@ Passkeys require a stable fully qualified domain name over trusted HTTPS: `RP_ID
 
 ### Legacy Authentication fallback
 
-:::note[Available in beta]
-Legacy Authentication with a username, password, and two-factor authentication (2FA) is available in DiscVault beta as a fallback when passkeys cannot be used.
+:::note[Available in stable and beta]
+Legacy Authentication with a username, password, and two-factor authentication (2FA) is available in DiscVault as a fallback when passkeys cannot be used.
 
 Follow `/install/legacy-authentication/` before enabling the capability or creating the first Owner.
 :::
@@ -56,7 +58,7 @@ Follow `/install/legacy-authentication/` before enabling the capability or creat
 3. **Configure:** `RP_ID` · hostname only
 4. **Configure:** `RP_ORIGINS` · exact public HTTPS origin
 5. **Configure:** [Configure: OpenID Connect (OIDC) sign-in](/configure/oidc/) · `/api/next/auth/oidc/callback`
-6. **Configure:** proxy upstream · stable `6080` / beta `6180`
+6. **Configure:** proxy upstream · Docker Compose `6180` / Docker run `6080`
 7. **Test:** `GET /api/next/health` · passkey registration · same origin
 8. **Record:** choose the hostname before registering passkeys; changing it later requires passkey registration again, while localhost remains only a local setup exception
 

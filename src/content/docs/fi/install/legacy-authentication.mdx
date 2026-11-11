@@ -4,15 +4,15 @@ description: 'Tehtäväkohtaiset ohjeet: Asennus: Legacy Authentication. LEGACY_
 pageId: 'install-legacy-authentication'
 products: ['server']
 platforms: ['docker', 'web']
-channels: ['beta']
+channels: ['stable', 'beta']
 minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-20'
+lastVerified: '2026-11-11'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="Docker · verkko" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-20" />
+<PageMeta channels="stable,beta" platform="Docker · verkko" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-11-11" />
 
 ## Tavoite ja tulos
 
@@ -20,7 +20,13 @@ Suorita sivukohtainen työnkulku: **Asennus: Legacy Authentication**. Tässä me
 
 ## Koskee
 
-Tämä sivu koskee vain kohdetta **Asennus: Legacy Authentication** (Docker · verkko). Kanava- ja tietorajat ovat: DiscVault · `ghcr.io/helmerznl/discvault:beta`; TOTP; FQDN HTTPS. Sivukohtaiset tarkistuspisteet: `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.
+Tämä sivu koskee vain kohdetta **Asennus: Legacy Authentication** (Docker · verkko). Kanava- ja tietorajat ovat: DiscVault · `ghcr.io/helmerznl/discvault:latest`; TOTP; FQDN HTTPS; DiscVault · `ghcr.io/helmerznl/discvault:beta`; TOTP; FQDN HTTPS. Sivukohtaiset tarkistuspisteet: `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.
+
+### DiscVault – vakaa
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- TOTP
+- FQDN HTTPS
 
 ### DiscVault – beta
 
@@ -30,13 +36,13 @@ Tämä sivu koskee vain kohdetta **Asennus: Legacy Authentication** (Docker · v
 
 ## Edellytykset
 
-- Legacy Authentication käyttäjätunnuksella, salasanalla ja kaksivaiheisella tunnistautumisella (2FA) on saatavilla DiscVault betassa, kun passkey-avaimia ei voi käyttää.
+- Legacy Authentication käyttäjätunnuksella, salasanalla ja kaksivaiheisella tunnistautumisella (2FA) on saatavilla DiscVaultssa, kun passkey-avaimia ei voi käyttää.
 - omistajan käyttöoikeus · uudessa instanssissa ilman käyttäjiä tai tunnuksia ohjattu toiminto luo ensimmäisen omistajan atomisesti salasanariskin hyväksymisen jälkeen
 - TOTP · palautuskoodit ovat hajautettuja, kertakäyttöisiä ja yhteisiä passkey-palautuksen kanssa; varmuuskopiot eivät sisällä TOTP-salaisuuksia tai palautusmateriaalia, joten MFA rekisteröidään uudelleen
 
 ### Legacy Authentication -varamenetelmä
 
-:::note[Saatavilla betassa]
+:::note[Saatavilla vakaassa ja betassa]
 vain suora yksityinen tai loopback-pyyntö virheellisillä tai tyhjillä RP-asetuksilla voi tarjota käynnistyksen ilman TOTP:tä; pidä TOTP käytössä käyttäjätunnus-, salasana- ja 2FA-polulla
 :::
 
@@ -47,12 +53,12 @@ vain suora yksityinen tai loopback-pyyntö virheellisillä tai tyhjillä RP-aset
 3. **Valitse:** uudessa instanssissa ilman käyttäjiä tai tunnuksia ohjattu toiminto luo ensimmäisen omistajan atomisesti salasanariskin hyväksymisen jälkeen · olemassa olevassa asennuksessa ota salasanakirjautuminen käyttöön Käyttäjät ja roolit -kohdassa ja hyväksy tuoreella omistajan tai ylläpitäjän passkey-vahvistuksella
 4. **Luo:** salasanassa on oltava vähintään 15 merkkiä, se ei saa olla käyttäjätunnus tai estetty yleinen salasana ja se hajautetaan Argon2id:llä; viisi virhettä 15 minuutissa lukitsee 15 minuutiksi · TOTP · palautuskoodit ovat hajautettuja, kertakäyttöisiä ja yhteisiä passkey-palautuksen kanssa; varmuuskopiot eivät sisällä TOTP-salaisuuksia tai palautusmateriaalia, joten MFA rekisteröidään uudelleen
 5. **Määritä:** omistajat ja ylläpitäjät voivat antaa väliaikaisia salasanoja, vaatia vaihdon, asettaa käyttäjäkohtaisen MFA:n ja hallita passkey-rekisteröintiä
-6. **Testaa:** Legacy Authentication käyttäjätunnuksella, salasanalla ja kaksivaiheisella tunnistautumisella (2FA) on saatavilla DiscVault betassa, kun passkey-avaimia ei voi käyttää. · `GET /api/next/auth/status`
+6. **Testaa:** Legacy Authentication käyttäjätunnuksella, salasanalla ja kaksivaiheisella tunnistautumisella (2FA) on saatavilla DiscVaultssa, kun passkey-avaimia ei voi käyttää. · `GET /api/next/auth/status`
 7. **Kirjaa:** palautuskoodit ovat hajautettuja, kertakäyttöisiä ja yhteisiä passkey-palautuksen kanssa; varmuuskopiot eivät sisällä TOTP-salaisuuksia tai palautusmateriaalia, joten MFA rekisteröidään uudelleen
 
 ### Komennot ja asetukset
 
-#### DiscVault – beta
+#### Molemmat kanavat
 
 ```text
 RP_ID=discvault.example.com
@@ -75,9 +81,9 @@ curl --fail http://localhost:6180/api/next/auth/status
 
 ## Odotettu tulos
 
-Hyväksy tulos kohteelle **Asennus: Legacy Authentication** vain kun kaikki seuraavat tulokset toteutuvat: Legacy Authentication käyttäjätunnuksella, salasanalla ja kaksivaiheisella tunnistautumisella (2FA) on saatavilla DiscVault betassa, kun passkey-avaimia ei voi käyttää.; TOTP · palautuskoodit ovat hajautettuja, kertakäyttöisiä ja yhteisiä passkey-palautuksen kanssa; varmuuskopiot eivät sisällä TOTP-salaisuuksia tai palautusmateriaalia, joten MFA rekisteröidään uudelleen; salasanassa on oltava vähintään 15 merkkiä, se ei saa olla käyttäjätunnus tai estetty yleinen salasana ja se hajautetaan Argon2id:llä; viisi virhettä 15 minuutissa lukitsee 15 minuutiksi. Sivukohtaiset tarkistuspisteet: `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.
+Hyväksy tulos kohteelle **Asennus: Legacy Authentication** vain kun kaikki seuraavat tulokset toteutuvat: Legacy Authentication käyttäjätunnuksella, salasanalla ja kaksivaiheisella tunnistautumisella (2FA) on saatavilla DiscVaultssa, kun passkey-avaimia ei voi käyttää.; TOTP · palautuskoodit ovat hajautettuja, kertakäyttöisiä ja yhteisiä passkey-palautuksen kanssa; varmuuskopiot eivät sisällä TOTP-salaisuuksia tai palautusmateriaalia, joten MFA rekisteröidään uudelleen; salasanassa on oltava vähintään 15 merkkiä, se ei saa olla käyttäjätunnus tai estetty yleinen salasana ja se hajautetaan Argon2id:llä; viisi virhettä 15 minuutissa lukitsee 15 minuutiksi. Sivukohtaiset tarkistuspisteet: `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.
 
-- Legacy Authentication käyttäjätunnuksella, salasanalla ja kaksivaiheisella tunnistautumisella (2FA) on saatavilla DiscVault betassa, kun passkey-avaimia ei voi käyttää.
+- Legacy Authentication käyttäjätunnuksella, salasanalla ja kaksivaiheisella tunnistautumisella (2FA) on saatavilla DiscVaultssa, kun passkey-avaimia ei voi käyttää.
 - TOTP · palautuskoodit ovat hajautettuja, kertakäyttöisiä ja yhteisiä passkey-palautuksen kanssa; varmuuskopiot eivät sisällä TOTP-salaisuuksia tai palautusmateriaalia, joten MFA rekisteröidään uudelleen
 - salasanassa on oltava vähintään 15 merkkiä, se ei saa olla käyttäjätunnus tai estetty yleinen salasana ja se hajautetaan Argon2id:llä; viisi virhettä 15 minuutissa lukitsee 15 minuutiksi
 
@@ -97,11 +103,12 @@ Turvallinen palautusraja kohteelle **Asennus: Legacy Authentication** edellyttä
 
 ## Lähde ja tila
 
-- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [`helmerzNL/DiscVault@441f96593219`](https://github.com/helmerzNL/DiscVault/commit/441f96593219c66d45aac99ce5ef9f81f011d449)
+- [Stable source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/main/app/deploy/next/README.md)
 - [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
 - [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
 - [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
 - [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
 - [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
-- Lähde ja tila: `2026-07-20`
-- DiscVault Docs: `0.1.6`
+- Lähde ja tila: `2026-11-11`
+- DiscVault Docs: `0.2.0`

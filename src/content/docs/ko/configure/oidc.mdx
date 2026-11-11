@@ -4,15 +4,15 @@ description: '작업별 안내: 구성: OpenID Connect(OIDC) 로그인. OIDC. /a
 pageId: 'configure-oidc'
 products: ['server', 'pwa']
 platforms: ['docker', 'web']
-channels: ['beta']
+channels: ['stable', 'beta']
 minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'Flux76HQ/App-Guidance']
-lastVerified: '2026-09-20'
+lastVerified: '2026-11-11'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="Docker · 웹" version="DiscVault" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-09-20" />
+<PageMeta channels="stable,beta" platform="Docker · 웹" version="DiscVault" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-11-11" />
 
 ## 목표 및 결과
 
@@ -20,7 +20,13 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## 적용 대상
 
-이 페이지의 적용 범위: **구성: OpenID Connect(OIDC) 로그인** (Docker · 웹). 채널 및 데이터 경계: DiscVault · `26.9.117+`; OIDC는 선택적 브라우저 로그인 방법을 추가하며 로컬 패스키, 선택적 비밀번호, 복구 코드, API 토큰 및 MCP bearer 토큰의 기존 역할은 유지됨; ID는 issuer와 subject의 정확한 쌍이며 이메일로 자동 연결되지 않고 연결에는 로그인된 브라우저 세션이, 연결 해제에는 다른 사용 가능한 로그인 방법이 필요함. 이 페이지의 전용 확인 지점: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+이 페이지의 적용 범위: **구성: OpenID Connect(OIDC) 로그인** (Docker · 웹). 채널 및 데이터 경계: DiscVault · `26.10.17+`; OIDC는 선택적 브라우저 로그인 방법을 추가하며 로컬 패스키, 선택적 비밀번호, 복구 코드, API 토큰 및 MCP bearer 토큰의 기존 역할은 유지됨; ID는 issuer와 subject의 정확한 쌍이며 이메일로 자동 연결되지 않고 연결에는 로그인된 브라우저 세션이, 연결 해제에는 다른 사용 가능한 로그인 방법이 필요함; DiscVault · `26.9.117+`; OIDC는 선택적 브라우저 로그인 방법을 추가하며 로컬 패스키, 선택적 비밀번호, 복구 코드, API 토큰 및 MCP bearer 토큰의 기존 역할은 유지됨; ID는 issuer와 subject의 정확한 쌍이며 이메일로 자동 연결되지 않고 연결에는 로그인된 브라우저 세션이, 연결 해제에는 다른 사용 가능한 로그인 방법이 필요함. 이 페이지의 전용 확인 지점: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+### DiscVault 안정판
+
+- DiscVault · `26.10.17+`
+- OIDC는 선택적 브라우저 로그인 방법을 추가하며 로컬 패스키, 선택적 비밀번호, 복구 코드, API 토큰 및 MCP bearer 토큰의 기존 역할은 유지됨
+- ID는 issuer와 subject의 정확한 쌍이며 이메일로 자동 연결되지 않고 연결에는 로그인된 브라우저 세션이, 연결 해제에는 다른 사용 가능한 로그인 방법이 필요함
 
 ### DiscVault 베타
 
@@ -36,7 +42,7 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ### 공급자 비공개 백 채널
 
-:::note[베타에서 사용 가능]
+:::note[안정판과 베타에서 사용 가능]
 정확한 비공개 HTTP 오리진은 토큰 및 JWKS 엔드포인트에만 허용하며 issuer와 브라우저 권한 부여는 HTTPS 전용이고 TLS 검증은 유지되며 discovery, 토큰 및 JWKS 리디렉션은 거부됨
 :::
 
@@ -52,7 +58,7 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ### 명령 및 설정
 
-#### DiscVault 베타
+#### 두 채널
 
 ```text
 RP_ORIGINS=https://discvault.example.com
@@ -98,11 +104,11 @@ curl --fail https://discvault.example.com/api/next/auth/status
 
 ## 출처 및 상태
 
-- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
+- [`helmerzNL/DiscVault@441f96593219`](https://github.com/helmerzNL/DiscVault/commit/441f96593219c66d45aac99ce5ef9f81f011d449)
 - [`Flux76HQ/App-Guidance@41bfca3bfa39`](https://github.com/Flux76HQ/App-Guidance/commit/41bfca3bfa39f0b43924190d384e2d96be756020)
 - [Moving beta source: OIDC deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
 - [Pinned verification: OIDC environment template](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/.env.example)
 - [Pinned verification: OIDC implementation](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/backend/next_oidc.py)
 - [Authoritative OIDC authentication contract](https://github.com/Flux76HQ/App-Guidance/blob/41bfca3bfa39f0b43924190d384e2d96be756020/projects/discvault/specs/oidc-authentication.md)
-- 출처 및 상태: `2026-09-20`
-- DiscVault Docs: `0.1.14`
+- 출처 및 상태: `2026-11-11`
+- DiscVault Docs: `0.2.0`

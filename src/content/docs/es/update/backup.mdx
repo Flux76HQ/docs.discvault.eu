@@ -84,10 +84,11 @@ Acepta el resultado de **Actualización y migración: Copia de seguridad** solo 
 ## Seguridad y reversión
 
 :::caution
-El límite de recuperación segura de **Actualización y migración: Copia de seguridad** exige estas acciones antes de iniciar o continuar: si falla una orden de copia, reinicia solo los servicios sin cambios y cancela la actualización; volcado PostgreSQL y archivo de datos del mismo periodo sin escrituras. Puntos de control de esta página: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
+El límite de recuperación segura de **Actualización y migración: Copia de seguridad** exige estas acciones antes de iniciar o continuar: si falla una orden de copia, reinicia solo los servicios sin cambios y cancela la actualización; volcado PostgreSQL y archivo de datos del mismo periodo sin escrituras; la app también puede hacer copias programadas (Administración → Backup → Programación: intervalo, omitir si no hay cambios, conservar las N más recientes); los archivos quedan en `backups/` dentro de `DISCVAULT_DATA_DIR`, así que cópialos también fuera del host. Puntos de control de esta página: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
 
 - si falla una orden de copia, reinicia solo los servicios sin cambios y cancela la actualización
 - volcado PostgreSQL y archivo de datos del mismo periodo sin escrituras
+- la app también puede hacer copias programadas (Administración → Backup → Programación: intervalo, omitir si no hay cambios, conservar las N más recientes); los archivos quedan en `backups/` dentro de `DISCVAULT_DATA_DIR`, así que cópialos también fuera del host
 :::
 
 ## Siguiente paso

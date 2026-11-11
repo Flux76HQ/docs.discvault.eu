@@ -98,6 +98,7 @@ trap - EXIT
 The intended image digest is running on its matching topology, health succeeds, and owner login, library count, and one media asset work.
 
 - the intended image digest is running, health is successful, and owner login, library count, and one media sample all pass
+- after an update, Admin → Plugins shows the installed plugin versions; bundled plugins are replaced only when the bundled copy is newer (26.11 needs MovieVault v2 1.12.0 and TMDb 1.11.0)
 - keep the previous generation’s volumes, environment variables, ports, and data path unchanged; never substitute `:legacy` into the DiscVault PostgreSQL Compose topology
 
 ## Safety and rollback

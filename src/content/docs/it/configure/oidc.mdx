@@ -4,15 +4,15 @@ description: 'Istruzioni specifiche per Configurazione: Accesso con OpenID Conne
 pageId: 'configure-oidc'
 products: ['server', 'pwa']
 platforms: ['docker', 'web']
-channels: ['beta']
+channels: ['stable', 'beta']
 minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'Flux76HQ/App-Guidance']
-lastVerified: '2026-09-20'
+lastVerified: '2026-11-11'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="Docker · web" version="DiscVault" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-09-20" />
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-11-11" />
 
 ## Obiettivo e risultato
 
@@ -20,7 +20,13 @@ Completa la procedura specifica della pagina per **Configurazione: Accesso con O
 
 ## Si applica a
 
-Questa pagina si applica solo a **Configurazione: Accesso con OpenID Connect (OIDC)** (Docker · web). I limiti di canale e dati sono: DiscVault · `26.9.117+`; OIDC aggiunge un accesso facoltativo dal browser; passkey locali, password facoltative, codici di recupero, token API e token bearer MCP mantengono i propri ruoli; un’identità è la coppia esatta issuer e subject; l’e-mail non collega mai automaticamente, il collegamento richiede la sessione browser autenticata e la rimozione richiede un altro metodo di accesso utilizzabile. Punti di controllo della pagina: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+Questa pagina si applica solo a **Configurazione: Accesso con OpenID Connect (OIDC)** (Docker · web). I limiti di canale e dati sono: DiscVault · `26.10.17+`; OIDC aggiunge un accesso facoltativo dal browser; passkey locali, password facoltative, codici di recupero, token API e token bearer MCP mantengono i propri ruoli; un’identità è la coppia esatta issuer e subject; l’e-mail non collega mai automaticamente, il collegamento richiede la sessione browser autenticata e la rimozione richiede un altro metodo di accesso utilizzabile; DiscVault · `26.9.117+`; OIDC aggiunge un accesso facoltativo dal browser; passkey locali, password facoltative, codici di recupero, token API e token bearer MCP mantengono i propri ruoli; un’identità è la coppia esatta issuer e subject; l’e-mail non collega mai automaticamente, il collegamento richiede la sessione browser autenticata e la rimozione richiede un altro metodo di accesso utilizzabile. Punti di controllo della pagina: OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+### DiscVault stabile
+
+- DiscVault · `26.10.17+`
+- OIDC aggiunge un accesso facoltativo dal browser; passkey locali, password facoltative, codici di recupero, token API e token bearer MCP mantengono i propri ruoli
+- un’identità è la coppia esatta issuer e subject; l’e-mail non collega mai automaticamente, il collegamento richiede la sessione browser autenticata e la rimozione richiede un altro metodo di accesso utilizzabile
 
 ### DiscVault beta
 
@@ -36,7 +42,7 @@ Questa pagina si applica solo a **Configurazione: Accesso con OpenID Connect (OI
 
 ### Canale privato del provider
 
-:::note[Disponibile in beta]
+:::note[Disponibile in stabile e beta]
 consenti origini HTTP private esatte solo per endpoint token e JWKS; issuer e autorizzazione del browser restano esclusivamente HTTPS, la verifica TLS rimane attiva e i reindirizzamenti discovery, token e JWKS vengono rifiutati
 :::
 
@@ -52,7 +58,7 @@ consenti origini HTTP private esatte solo per endpoint token e JWKS; issuer e au
 
 ### Comandi e impostazioni
 
-#### DiscVault beta
+#### Entrambi i canali
 
 ```text
 RP_ORIGINS=https://discvault.example.com
@@ -98,11 +104,11 @@ Il limite di ripristino sicuro per **Configurazione: Accesso con OpenID Connect 
 
 ## Fonte e stato
 
-- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
+- [`helmerzNL/DiscVault@441f96593219`](https://github.com/helmerzNL/DiscVault/commit/441f96593219c66d45aac99ce5ef9f81f011d449)
 - [`Flux76HQ/App-Guidance@41bfca3bfa39`](https://github.com/Flux76HQ/App-Guidance/commit/41bfca3bfa39f0b43924190d384e2d96be756020)
 - [Moving beta source: OIDC deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
 - [Pinned verification: OIDC environment template](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/.env.example)
 - [Pinned verification: OIDC implementation](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/backend/next_oidc.py)
 - [Authoritative OIDC authentication contract](https://github.com/Flux76HQ/App-Guidance/blob/41bfca3bfa39f0b43924190d384e2d96be756020/projects/discvault/specs/oidc-authentication.md)
-- Fonte e stato: `2026-09-20`
-- DiscVault Docs: `0.1.14`
+- Fonte e stato: `2026-11-11`
+- DiscVault Docs: `0.2.0`

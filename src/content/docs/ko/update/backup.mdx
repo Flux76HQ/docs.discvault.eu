@@ -84,10 +84,11 @@ gzip -t "/srv/backups/discvault-data-$BACKUP_ID.tgz"
 ## 안전 및 롤백
 
 :::caution
-안전한 복구 경계: **업데이트 및 마이그레이션: 백업** 시작하거나 계속하기 전에 다음 작업이 필요합니다: 백업 명령이 실패하면 변경되지 않은 서비스만 다시 시작하고 업데이트를 취소함; 동일한 쓰기 중지 시간의 PostgreSQL 덤프와 파일 아카이브. 이 페이지의 전용 확인 지점: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
+안전한 복구 경계: **업데이트 및 마이그레이션: 백업** 시작하거나 계속하기 전에 다음 작업이 필요합니다: 백업 명령이 실패하면 변경되지 않은 서비스만 다시 시작하고 업데이트를 취소함; 동일한 쓰기 중지 시간의 PostgreSQL 덤프와 파일 아카이브; 앱은 예약 백업도 할 수 있으며(관리 → Backup → 일정: 간격, 변경 없으면 건너뛰기, 최신 N개 보관) 예약 아카이브는 `DISCVAULT_DATA_DIR` 안의 `backups/`에 저장되므로 호스트 밖으로도 복사함. 이 페이지의 전용 확인 지점: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
 
 - 백업 명령이 실패하면 변경되지 않은 서비스만 다시 시작하고 업데이트를 취소함
 - 동일한 쓰기 중지 시간의 PostgreSQL 덤프와 파일 아카이브
+- 앱은 예약 백업도 할 수 있으며(관리 → Backup → 일정: 간격, 변경 없으면 건너뛰기, 최신 N개 보관) 예약 아카이브는 `DISCVAULT_DATA_DIR` 안의 `backups/`에 저장되므로 호스트 밖으로도 복사함
 :::
 
 ## 다음 단계

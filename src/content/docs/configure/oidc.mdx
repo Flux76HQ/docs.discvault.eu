@@ -4,15 +4,15 @@ description: 'Add one OpenID Connect provider, including Pocket ID, as an option
 pageId: 'configure-oidc'
 products: ['server', 'pwa']
 platforms: ['docker', 'web']
-channels: ['beta']
+channels: ['stable', 'beta']
 minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'Flux76HQ/App-Guidance']
-lastVerified: '2026-09-20'
+lastVerified: '2026-11-11'
 ---
 
 import PageMeta from '../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="Docker · web" version="DiscVault" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-09-20" />
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-11-11" />
 
 ## Goal and result
 
@@ -20,7 +20,13 @@ Add one OpenID Connect provider, including Pocket ID, as an optional browser sig
 
 ## Applies to
 
-OIDC is available in DiscVault beta from build 26.9.117. It is disabled when its required variables are empty. It authenticates only the self-hosted browser/PWA; iOS, Android, API tokens, and MCP bearer tokens keep their existing authentication contracts.
+OIDC is available in DiscVault stable from release 26.10.17 and in beta from build 26.9.117. Home Assistant offers it through the app options; the Unraid launcher does not pass it on yet. It is disabled when its required variables are empty. It authenticates only the self-hosted browser/PWA; iOS, Android, API tokens, and MCP bearer tokens keep their existing authentication contracts.
+
+### DiscVault stable
+
+- DiscVault stable · `26.10.17+`
+- OIDC adds an optional browser sign-in method; local passkeys, optional passwords, recovery codes, API tokens, and MCP bearer tokens keep their existing roles
+- an identity is the exact issuer and subject pair; email never links automatically, linking requires the signed-in browser session, and unlinking requires another usable login method
 
 ### DiscVault beta
 
@@ -36,7 +42,7 @@ OIDC is available in DiscVault beta from build 26.9.117. It is disabled when its
 
 ### Private provider back channel
 
-:::note[Available in beta]
+:::note[Available in stable and beta]
 allow exact private HTTP origins only for token and JWKS endpoints; the issuer and browser authorization stay HTTPS-only, TLS verification stays enabled, and discovery, token, and JWKS redirects are refused
 :::
 
@@ -52,7 +58,7 @@ allow exact private HTTP origins only for token and JWKS endpoints; the issuer a
 
 ### Commands and settings
 
-#### DiscVault beta
+#### Both channels
 
 ```text
 RP_ORIGINS=https://discvault.example.com
@@ -98,11 +104,11 @@ Keep an independent Owner login method. To disable OIDC, clear every OIDC variab
 
 ## Source and status
 
-- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
+- [`helmerzNL/DiscVault@441f96593219`](https://github.com/helmerzNL/DiscVault/commit/441f96593219c66d45aac99ce5ef9f81f011d449)
 - [`Flux76HQ/App-Guidance@41bfca3bfa39`](https://github.com/Flux76HQ/App-Guidance/commit/41bfca3bfa39f0b43924190d384e2d96be756020)
 - [Moving beta source: OIDC deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
 - [Pinned verification: OIDC environment template](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/.env.example)
 - [Pinned verification: OIDC implementation](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/backend/next_oidc.py)
 - [Authoritative OIDC authentication contract](https://github.com/Flux76HQ/App-Guidance/blob/41bfca3bfa39f0b43924190d384e2d96be756020/projects/discvault/specs/oidc-authentication.md)
-- Verified: `2026-09-20`
-- DiscVault Docs: `0.1.14`
+- Verified: `2026-11-11`
+- DiscVault Docs: `0.2.0`

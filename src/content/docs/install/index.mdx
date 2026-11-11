@@ -20,7 +20,7 @@ Choose the DiscVault topology for new installs, or keep an existing previous-gen
 
 ## Applies to
 
-`ghcr.io/helmerznl/discvault:latest` is DiscVault stable and `ghcr.io/helmerznl/discvault:beta` is DiscVault beta. The official `app/deploy/next/docker-compose.yml` and `.env.example` procedure is beta-only and uses `DISCVAULT_NEXT_IMAGE`; the advanced Docker-run procedure remains available for both channels. The frozen `ghcr.io/helmerznl/discvault:legacy` image is only for an existing previous-generation installation that is not ready to migrate. Never substitute that deployment image into the DiscVault beta topology.
+`ghcr.io/helmerznl/discvault:latest` is DiscVault stable and `ghcr.io/helmerznl/discvault:beta` is DiscVault beta. The official `app/deploy/next/docker-compose.yml` and `.env.example` procedure covers both channels and uses `DISCVAULT_NEXT_IMAGE`; the advanced Docker-run procedure remains available as an equivalent. Unraid installs through Community Applications and Home Assistant through its own app. The frozen `ghcr.io/helmerznl/discvault:legacy` image is only for an existing previous-generation installation that is not ready to migrate. Never substitute that deployment image into the DiscVault Compose topology.
 
 ### DiscVault stable
 
@@ -41,7 +41,7 @@ Choose the DiscVault topology for new installs, or keep an existing previous-gen
 
 ## Procedure
 
-1. **Choose:** [Install: Docker Compose](/install/docker-compose/) · official DiscVault beta deployment files
+1. **Choose:** [Install: Docker Compose](/install/docker-compose/) · official DiscVault Compose files · stable `main` · beta `release/v26-beta`
 2. **Choose:** [Install: Docker run](/install/docker-run/) · advanced stable or beta equivalent
 3. **Choose:** [Install: Unraid](/install/unraid/) · Unraid Community Applications · DiscVault launcher
 4. **Choose:** [Install: Home Assistant](/install/home-assistant/) · Home Assistant app · PostgreSQL 17 built in
@@ -52,7 +52,7 @@ Choose the DiscVault topology for new installs, or keep an existing previous-gen
 
 ### Task routes
 
-- [Install: Docker Compose](/install/docker-compose/) — DiscVault beta · official `release/v26-beta` files · `DISCVAULT_NEXT_IMAGE`
+- [Install: Docker Compose](/install/docker-compose/) — DiscVault stable and beta · official `app/deploy/next` files · `DISCVAULT_NEXT_IMAGE`
 - [Install: Docker run](/install/docker-run/) — DiscVault · Docker run · PostgreSQL + `/data` · `DATABASE_URL`
 - [Install: Persistent data and PostgreSQL](/install/storage-postgresql/) — DiscVault · PostgreSQL + `/data`
 - [Install: Unraid](/install/unraid/) — DiscVault · Unraid Community Applications · `discvault-launcher`

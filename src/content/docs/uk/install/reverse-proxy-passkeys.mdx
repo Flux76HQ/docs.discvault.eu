@@ -20,13 +20,15 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## Застосовується до
 
-Ця сторінка стосується лише **Встановлення: Зворотний проксі та ключі доступу** (Docker · веб). Межі каналу й даних: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6080`; поза винятком localhost passkeys потребують стабільного повного доменного імені через довірений HTTPS; окрема IP-адреса чи звичайний HTTP не підтримуються; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; OIDC · `/api/next/auth/oidc/callback` · [Налаштування: Вхід через OpenID Connect (OIDC)](/uk/configure/oidc/); `LEGACY_AUTH_ENABLED=true`. Контрольні точки цієї сторінки: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+Ця сторінка стосується лише **Встановлення: Зворотний проксі та ключі доступу** (Docker · веб). Межі каналу й даних: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6180` `6080` Docker run; поза винятком localhost passkeys потребують стабільного повного доменного імені через довірений HTTPS; окрема IP-адреса чи звичайний HTTP не підтримуються; OIDC · `/api/next/auth/oidc/callback` · [Налаштування: Вхід через OpenID Connect (OIDC)](/uk/configure/oidc/); `LEGACY_AUTH_ENABLED=true`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; OIDC · `/api/next/auth/oidc/callback` · [Налаштування: Вхід через OpenID Connect (OIDC)](/uk/configure/oidc/); `LEGACY_AUTH_ENABLED=true`. Контрольні точки цієї сторінки: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 ### DiscVault – стабільний
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- `RP_ID` `RP_ORIGINS` · `6080`
+- `RP_ID` `RP_ORIGINS` · `6180` `6080` Docker run
 - поза винятком localhost passkeys потребують стабільного повного доменного імені через довірений HTTPS; окрема IP-адреса чи звичайний HTTP не підтримуються
+- OIDC · `/api/next/auth/oidc/callback` · [Налаштування: Вхід через OpenID Connect (OIDC)](/uk/configure/oidc/)
+- `LEGACY_AUTH_ENABLED=true`
 
 ### DiscVault – бета
 
@@ -43,8 +45,8 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ### Резервна Legacy Authentication
 
-:::note[Доступно в бета-версії]
-Legacy Authentication з іменем користувача, паролем і двофакторною автентифікацією (2FA) доступна в DiscVault beta, коли passkeys використовувати неможливо.
+:::note[Доступно в стабільній і бета-версії]
+Legacy Authentication з іменем користувача, паролем і двофакторною автентифікацією (2FA) доступна в DiscVault, коли passkeys використовувати неможливо.
 
 Дотримуйтеся `/install/legacy-authentication/` перед увімкненням можливості або створенням першого власника.
 :::
@@ -56,7 +58,7 @@ Legacy Authentication з іменем користувача, паролем і 
 3. **Налаштуйте:** `RP_ID`
 4. **Налаштуйте:** `RP_ORIGINS` · HTTPS
 5. **Налаштуйте:** [Налаштування: Вхід через OpenID Connect (OIDC)](/uk/configure/oidc/) · `/api/next/auth/oidc/callback`
-6. **Налаштуйте:** `6080` `6180`
+6. **Налаштуйте:** Docker Compose `6180` Docker run `6080`
 7. **Перевірте:** `GET /api/next/health`
 8. **Запишіть:** виберіть ім’я хоста до реєстрації passkeys; подальша зміна потребує повторної реєстрації, а localhost лишається лише винятком локального налаштування
 

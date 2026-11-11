@@ -95,9 +95,10 @@ trap - EXIT
 
 ## Verwacht resultaat
 
-Accepteer het resultaat voor **Bijwerken en migreren: Container bijwerken** alleen wanneer alle onderstaande resultaten kloppen: de bedoelde image-digest draait, health slaagt en eigenaarlogin, bibliotheekaantal en één mediavoorbeeld werken; houd volumes, omgevingsvariabelen, poorten en het gegevenspad van de vorige generatie ongewijzigd; vervang in de DiscVault PostgreSQL Compose-topologie nooit een image door `:legacy`. Paginaspecifieke controlepunten: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
+Accepteer het resultaat voor **Bijwerken en migreren: Container bijwerken** alleen wanneer alle onderstaande resultaten kloppen: de bedoelde image-digest draait, health slaagt en eigenaarlogin, bibliotheekaantal en één mediavoorbeeld werken; na een update toont Beheer → Plug-ins de geïnstalleerde pluginversies; meegeleverde plug-ins worden alleen vervangen als de meegeleverde kopie nieuwer is (26.11 heeft MovieVault v2 1.12.0 en TMDb 1.11.0 nodig); houd volumes, omgevingsvariabelen, poorten en het gegevenspad van de vorige generatie ongewijzigd; vervang in de DiscVault PostgreSQL Compose-topologie nooit een image door `:legacy`. Paginaspecifieke controlepunten: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
 - de bedoelde image-digest draait, health slaagt en eigenaarlogin, bibliotheekaantal en één mediavoorbeeld werken
+- na een update toont Beheer → Plug-ins de geïnstalleerde pluginversies; meegeleverde plug-ins worden alleen vervangen als de meegeleverde kopie nieuwer is (26.11 heeft MovieVault v2 1.12.0 en TMDb 1.11.0 nodig)
 - houd volumes, omgevingsvariabelen, poorten en het gegevenspad van de vorige generatie ongewijzigd; vervang in de DiscVault PostgreSQL Compose-topologie nooit een image door `:legacy`
 
 ## Veiligheid en terugdraaien

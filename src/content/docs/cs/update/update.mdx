@@ -95,9 +95,10 @@ trap - EXIT
 
 ## Očekávaný výsledek
 
-Výsledek přijměte pro **Aktualizace a migrace: Aktualizace kontejneru** pouze pokud platí všechny následující výsledky: běží zamýšlený digest obrazu, stav je v pořádku a přihlášení vlastníka, počet knihovny i vzorek média projdou; ponechte svazky, proměnné prostředí, porty a datovou cestu předchozí generace beze změny; nikdy nevkládejte `:legacy` do DiscVault topologie Compose s PostgreSQL. Kontrolní body této stránky: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
+Výsledek přijměte pro **Aktualizace a migrace: Aktualizace kontejneru** pouze pokud platí všechny následující výsledky: běží zamýšlený digest obrazu, stav je v pořádku a přihlášení vlastníka, počet knihovny i vzorek média projdou; po aktualizaci ukazuje Správa → Pluginy nainstalované verze pluginů; přibalené pluginy se nahradí jen tehdy, když je přibalená kopie novější (26.11 vyžaduje MovieVault v2 1.12.0 a TMDb 1.11.0); ponechte svazky, proměnné prostředí, porty a datovou cestu předchozí generace beze změny; nikdy nevkládejte `:legacy` do DiscVault topologie Compose s PostgreSQL. Kontrolní body této stránky: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
 - běží zamýšlený digest obrazu, stav je v pořádku a přihlášení vlastníka, počet knihovny i vzorek média projdou
+- po aktualizaci ukazuje Správa → Pluginy nainstalované verze pluginů; přibalené pluginy se nahradí jen tehdy, když je přibalená kopie novější (26.11 vyžaduje MovieVault v2 1.12.0 a TMDb 1.11.0)
 - ponechte svazky, proměnné prostředí, porty a datovou cestu předchozí generace beze změny; nikdy nevkládejte `:legacy` do DiscVault topologie Compose s PostgreSQL
 
 ## Bezpečnost a návrat

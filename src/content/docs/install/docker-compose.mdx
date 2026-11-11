@@ -1,26 +1,33 @@
 ---
 title: 'Install: Docker Compose'
-description: 'Deploy DiscVault beta from the canonical moving Compose and environment files.'
+description: 'Deploy DiscVault stable or beta from the official Compose and environment files: the recommended route for a new Docker install.'
 pageId: 'install-docker-compose'
 products: ['server']
 platforms: ['docker']
-channels: ['beta']
+channels: ['stable', 'beta']
 minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-20'
+lastVerified: '2026-11-11'
 ---
 
 import PageMeta from '../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="Docker" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-20" />
+<PageMeta channels="stable,beta" platform="Docker" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-11-11" />
 
 ## Goal and result
 
-Deploy DiscVault beta from the canonical moving Compose and environment files.
+Deploy DiscVault stable or beta from the official Compose and environment files: the recommended route for a new Docker install.
 
 ## Applies to
 
-This page applies only to DiscVault beta. It downloads the moving `release/v26-beta` files and lists commit-pinned verification links. Because the current source `.env.example` still defaults to the engineering `:dev` image, the procedure rewrites and validates `DISCVAULT_NEXT_IMAGE=ghcr.io/helmerznl/discvault:beta` before pull or startup. It uses project `discvault_next_deploy`, host API port `6180`, persistent `/mnt/user/appdata/discvault`, and PostgreSQL path `/mnt/user/appdata/discvault-next/postgres`.
+Stable downloads the files from `main` and runs `DISCVAULT_NEXT_IMAGE=ghcr.io/helmerznl/discvault:latest`; beta downloads them from `release/v26-beta` and runs `DISCVAULT_NEXT_IMAGE=ghcr.io/helmerznl/discvault:beta`. Pick one channel per data folder. Because `.env.example` still defaults to the engineering `:dev` image, the procedure rewrites and validates the image before pull or startup. It uses project `discvault_next_deploy`, host API port `6180`, persistent `/mnt/user/appdata/discvault`, and PostgreSQL path `/mnt/user/appdata/discvault-next/postgres`.
+
+### DiscVault stable
+
+- DiscVault stable · `ghcr.io/helmerznl/discvault:latest`
+- official files from `main`
+- Compose project `discvault_next_deploy`
+- host `6180` → API container `5000`
 
 ### DiscVault beta
 
@@ -37,14 +44,57 @@ This page applies only to DiscVault beta. It downloads the moving `release/v26-b
 
 ## Procedure
 
-1. **Install:** `docker-compose.yml` · `.env.example` · `release/v26-beta`
+1. **Install:** `docker-compose.yml` · `.env.example` · stable `main` · beta `release/v26-beta`
 2. **Create:** `/opt/discvault-next/.env` · owner-only file permissions (0600) · random secrets
 3. **Choose:** with a valid FQDN, keep `RP_ID` and `RP_ORIGINS` aligned and use trusted HTTPS · for a direct private or loopback IP without an FQDN, leave `RP_ID` and `RP_ORIGINS` empty
-4. **Verify:** `DISCVAULT_NEXT_IMAGE=ghcr.io/helmerznl/discvault:beta` · no `:dev`
+4. **Verify:** `DISCVAULT_NEXT_IMAGE` · `:latest` / `:beta` · no `:dev`
 5. **Run:** `docker compose -p discvault_next_deploy config --quiet` · pull · up
 6. **Test:** `GET http://localhost:6180/api/next/health`
 
 ### Commands and settings
+
+#### DiscVault stable
+
+```bash
+set -euo pipefail
+install -d -m 0700 /opt/discvault-next
+cd /opt/discvault-next
+curl --fail --location --proto '=https' --tlsv1.2 \
+  --output docker-compose.yml \
+  https://raw.githubusercontent.com/helmerzNL/DiscVault/main/app/deploy/next/docker-compose.yml
+curl --fail --location --proto '=https' --tlsv1.2 \
+  --output .env.example \
+  https://raw.githubusercontent.com/helmerzNL/DiscVault/main/app/deploy/next/.env.example
+
+umask 077
+ENV_FILE=/opt/discvault-next/.env
+test ! -e "$ENV_FILE"
+ENV_TMP="$(mktemp "$ENV_FILE.tmp.XXXXXX")"
+trap 'rm -f "$ENV_TMP"' EXIT
+POSTGRES_PASSWORD="$(openssl rand -hex 32)"
+JWT_SECRET="$(openssl rand -base64 48)"
+awk \
+  -v image='ghcr.io/helmerznl/discvault:latest' \
+  -v postgres_password="$POSTGRES_PASSWORD" \
+  -v jwt_secret="$JWT_SECRET" \
+  -v data_dir='/mnt/user/appdata/discvault' \
+  -v postgres_dir='/mnt/user/appdata/discvault-next/postgres' '
+  /^DISCVAULT_NEXT_IMAGE=/ { print "DISCVAULT_NEXT_IMAGE=" image; next }
+  /^POSTGRES_PASSWORD=/ { print "POSTGRES_PASSWORD=" postgres_password; next }
+  /^JWT_SECRET=/ { print "JWT_SECRET=" jwt_secret; next }
+  /^DISCVAULT_DATA_DIR=/ { print "DISCVAULT_DATA_DIR=" data_dir; next }
+  /^DISCVAULT_NEXT_POSTGRES_DATA=/ {
+    print "DISCVAULT_NEXT_POSTGRES_DATA=" postgres_dir
+    next
+  }
+  /^LEGACY_AUTH_ENABLED=/ { print "LEGACY_AUTH_ENABLED=true"; next }
+  { print }
+' .env.example > "$ENV_TMP"
+chmod 0600 "$ENV_TMP"
+ln "$ENV_TMP" "$ENV_FILE"
+rm -f "$ENV_TMP"
+trap - EXIT
+```
 
 #### DiscVault beta
 
@@ -89,6 +139,8 @@ rm -f "$ENV_TMP"
 trap - EXIT
 ```
 
+#### Both channels
+
 ```bash
 set -euo pipefail
 cd /opt/discvault-next
@@ -126,6 +178,43 @@ mv "$ENV_TMP" "$ENV_FILE"
 trap - EXIT
 ```
 
+#### DiscVault stable
+
+```bash
+set -euo pipefail
+cd /opt/discvault-next
+ENV_FILE=/opt/discvault-next/.env
+test "$(stat -c '%a' "$ENV_FILE")" = 600
+read_env() { sed -n "s/^$1=//p" "$ENV_FILE"; }
+
+test "$(read_env DISCVAULT_NEXT_IMAGE)" = 'ghcr.io/helmerznl/discvault:latest'
+! grep -q ':dev' "$ENV_FILE"
+test "$(read_env LEGACY_AUTH_ENABLED)" = true
+POSTGRES_PASSWORD_VALUE="$(read_env POSTGRES_PASSWORD)"
+JWT_SECRET_VALUE="$(read_env JWT_SECRET)"
+test "${#POSTGRES_PASSWORD_VALUE}" -ge 32
+test "$POSTGRES_PASSWORD_VALUE" != 'change-me-to-a-long-random-password'
+test "${#JWT_SECRET_VALUE}" -ge 48
+grep -qx 'DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault' "$ENV_FILE"
+grep -qx 'DISCVAULT_NEXT_POSTGRES_DATA=/mnt/user/appdata/discvault-next/postgres' "$ENV_FILE"
+
+RP_ID_VALUE="$(read_env RP_ID)"
+RP_ORIGINS_VALUE="$(read_env RP_ORIGINS)"
+if [ -z "$RP_ID_VALUE" ]; then
+  test -z "$RP_ORIGINS_VALUE"
+else
+  test "$RP_ORIGINS_VALUE" = "https://$RP_ID_VALUE"
+fi
+
+docker compose -p discvault_next_deploy config --quiet
+docker compose -p discvault_next_deploy pull
+docker compose -p discvault_next_deploy up -d
+docker compose -p discvault_next_deploy ps
+curl --fail http://localhost:6180/api/next/health
+```
+
+#### DiscVault beta
+
 ```bash
 set -euo pipefail
 cd /opt/discvault-next
@@ -161,7 +250,7 @@ curl --fail http://localhost:6180/api/next/health
 
 ## Expected result
 
-Compose project `discvault_next_deploy` reports PostgreSQL healthy and API, worker, and MCP running from the beta image; the health endpoint succeeds on host port 6180.
+Compose project `discvault_next_deploy` reports PostgreSQL healthy and API, worker, and MCP running from the chosen image; the health endpoint succeeds on host port 6180.
 
 - `postgres` · `next-api` · `next-worker` · `next-mcp`
 - host `6180` → API container `5000`
@@ -170,9 +259,9 @@ Compose project `discvault_next_deploy` reports PostgreSQL healthy and API, work
 ## Safety and rollback
 
 :::caution
-Run `docker compose -p discvault_next_deploy down` without deleting data, preserve `.env`, and restore the matched PostgreSQL and `/data` backup before recreating the previous beta digest.
+Run `docker compose -p discvault_next_deploy down` without deleting data, preserve `.env`, and restore the matched PostgreSQL and `/data` backup before recreating the previous image digest.
 
-- the downloaded `.env.example` still defaults to `:dev`; the runtime `.env` must be changed to `:beta` before pull or startup
+- the downloaded `.env.example` still defaults to `:dev`; the runtime `.env` must be changed to `:latest` / `:beta` before pull or startup
 - keep JWT and PostgreSQL secrets unchanged during ordinary configuration edits · `JWT_SECRET` · `POSTGRES_PASSWORD`
 - PostgreSQL and `/data` are separate stores and require one matching backup set
 :::
@@ -183,12 +272,14 @@ Run `docker compose -p discvault_next_deploy down` without deleting data, preser
 
 ## Source and status
 
-- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [`helmerzNL/DiscVault@441f96593219`](https://github.com/helmerzNL/DiscVault/commit/441f96593219c66d45aac99ce5ef9f81f011d449)
+- [Stable source: `docker-compose.yml` (`main`)](https://github.com/helmerzNL/DiscVault/blob/main/app/deploy/next/docker-compose.yml)
+- [Stable source: `.env.example` (`main`)](https://github.com/helmerzNL/DiscVault/blob/main/app/deploy/next/.env.example)
 - [Moving beta source: `docker-compose.yml`](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/docker-compose.yml)
 - [Raw beta download: `docker-compose.yml`](https://raw.githubusercontent.com/helmerzNL/DiscVault/release/v26-beta/app/deploy/next/docker-compose.yml)
 - [Pinned verification: `docker-compose.yml`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/deploy/next/docker-compose.yml)
 - [Moving beta source: `.env.example`](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/.env.example)
 - [Raw beta download: `.env.example`](https://raw.githubusercontent.com/helmerzNL/DiscVault/release/v26-beta/app/deploy/next/.env.example)
 - [Pinned verification: `.env.example`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/deploy/next/.env.example)
-- Verified: `2026-07-20`
-- DiscVault Docs: `0.1.6`
+- Verified: `2026-11-11`
+- DiscVault Docs: `0.2.0`

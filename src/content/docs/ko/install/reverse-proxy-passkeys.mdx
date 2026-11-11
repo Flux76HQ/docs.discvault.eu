@@ -20,13 +20,15 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## 적용 대상
 
-이 페이지의 적용 범위: **설치: 리버스 프록시 및 패스키** (Docker · 웹). 채널 및 데이터 경계: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6080`; localhost 설정 예외를 제외하면 패스키에는 신뢰할 수 있는 HTTPS의 안정적인 정규화된 도메인 이름이 필요하며, IP 주소만 사용하거나 일반 HTTP를 사용하는 것은 지원되지 않음; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; OIDC · `/api/next/auth/oidc/callback` · [구성: OpenID Connect(OIDC) 로그인](/ko/configure/oidc/); `LEGACY_AUTH_ENABLED=true`. 이 페이지의 전용 확인 지점: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+이 페이지의 적용 범위: **설치: 리버스 프록시 및 패스키** (Docker · 웹). 채널 및 데이터 경계: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6180` `6080` Docker run; localhost 설정 예외를 제외하면 패스키에는 신뢰할 수 있는 HTTPS의 안정적인 정규화된 도메인 이름이 필요하며, IP 주소만 사용하거나 일반 HTTP를 사용하는 것은 지원되지 않음; OIDC · `/api/next/auth/oidc/callback` · [구성: OpenID Connect(OIDC) 로그인](/ko/configure/oidc/); `LEGACY_AUTH_ENABLED=true`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; OIDC · `/api/next/auth/oidc/callback` · [구성: OpenID Connect(OIDC) 로그인](/ko/configure/oidc/); `LEGACY_AUTH_ENABLED=true`. 이 페이지의 전용 확인 지점: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 ### DiscVault 안정판
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- `RP_ID` `RP_ORIGINS` · `6080`
+- `RP_ID` `RP_ORIGINS` · `6180` `6080` Docker run
 - localhost 설정 예외를 제외하면 패스키에는 신뢰할 수 있는 HTTPS의 안정적인 정규화된 도메인 이름이 필요하며, IP 주소만 사용하거나 일반 HTTP를 사용하는 것은 지원되지 않음
+- OIDC · `/api/next/auth/oidc/callback` · [구성: OpenID Connect(OIDC) 로그인](/ko/configure/oidc/)
+- `LEGACY_AUTH_ENABLED=true`
 
 ### DiscVault 베타
 
@@ -43,8 +45,8 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ### Legacy Authentication 대체 방식
 
-:::note[베타에서 사용 가능]
-사용자 이름, 비밀번호 및 2단계 인증(2FA)을 사용하는 Legacy Authentication은 패스키를 사용할 수 없을 때 DiscVault 베타에서 대체 방식으로 제공됩니다.
+:::note[안정판과 베타에서 사용 가능]
+사용자 이름, 비밀번호 및 2단계 인증(2FA)을 사용하는 Legacy Authentication은 패스키를 사용할 수 없을 때 DiscVault에서 대체 방식으로 제공됩니다.
 
 기능을 활성화하거나 첫 번째 소유자를 만들기 전에 `/install/legacy-authentication/` 절차를 따르세요.
 :::
@@ -56,7 +58,7 @@ import PageMeta from '../../../../components/PageMeta.astro';
 3. **구성:** `RP_ID`
 4. **구성:** `RP_ORIGINS` · HTTPS
 5. **구성:** [구성: OpenID Connect(OIDC) 로그인](/ko/configure/oidc/) · `/api/next/auth/oidc/callback`
-6. **구성:** `6080` `6180`
+6. **구성:** Docker Compose `6180` Docker run `6080`
 7. **테스트:** `GET /api/next/health`
 8. **기록:** 패스키를 등록하기 전에 호스트 이름을 선택하고 나중에 변경하면 다시 등록해야 하며 localhost는 로컬 설정 예외로만 유지됨
 

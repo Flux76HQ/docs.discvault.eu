@@ -128,6 +128,18 @@ docker compose -p discvault_next_deploy up -d
 docker compose -p discvault_next_deploy ps
 curl --fail http://localhost:6180/api/next/health`);
 
+// Stable uses the same official files from `main`, where every release is promoted.
+const stableEnvironmentSetup = betaEnvironmentSetup
+  .replaceAll('/release/v26-beta/', '/main/')
+  .replace(
+    "-v image='ghcr.io/helmerznl/discvault:beta'",
+    "-v image='ghcr.io/helmerznl/discvault:latest'",
+  );
+const stableValidateAndStart = betaValidateAndStart.replace(
+  "= 'ghcr.io/helmerznl/discvault:beta'",
+  "= 'ghcr.io/helmerznl/discvault:latest'",
+);
+
 const backupCommands = String.raw`set -euo pipefail
 cd /opt/discvault
 install -d -m 0700 /srv/backups
@@ -249,7 +261,11 @@ curl --version`,
       item('PostgreSQL `17` + persistent `/data`'),
     ),
     steps: [
-      step('choose', route('install/docker-compose'), 'official DiscVault beta deployment files'),
+      step(
+        'choose',
+        route('install/docker-compose'),
+        'official DiscVault Compose files · stable `main` · beta `release/v26-beta`',
+      ),
       step('choose', route('install/docker-run'), 'advanced stable or beta equivalent'),
       step('choose', route('install/unraid'), 'Unraid Community Applications · DiscVault launcher'),
       step(
@@ -266,7 +282,7 @@ curl --version`,
       routes(
         [
           'install/docker-compose',
-          'DiscVault beta · official `release/v26-beta` files · `DISCVAULT_NEXT_IMAGE`',
+          'DiscVault stable and beta · official `app/deploy/next` files · `DISCVAULT_NEXT_IMAGE`',
         ],
         ['install/docker-run', 'DiscVault · Docker run · PostgreSQL + `/data` · `DATABASE_URL`'],
         ['install/storage-postgresql', 'DiscVault · PostgreSQL + `/data`'],
@@ -376,16 +392,24 @@ docker ps --filter 'name=discvault-'`,
   },
   'install/docker-compose': {
     markers: [
+      '`main`',
       '`release/v26-beta`',
       '`app/deploy/next/docker-compose.yml`',
       '`app/deploy/next/.env.example`',
       '`DISCVAULT_NEXT_IMAGE`',
+      '`ghcr.io/helmerznl/discvault:latest`',
       '`ghcr.io/helmerznl/discvault:beta`',
       '`6180:5000`',
       '`LEGACY_AUTH_ENABLED=true`',
     ],
     prerequisites: [item('Docker Compose `v2`'), item('OpenSSL'), item(term('writableStorage'))],
     channels: {
+      stable: [
+        item(imageChannels.stable.label, `\`${imageChannels.stable.image}\``),
+        item('official files from `main`'),
+        item('Compose project `discvault_next_deploy`'),
+        item('host `6180` → API container `5000`'),
+      ],
       beta: [
         item(imageChannels.beta.label, `\`${imageChannels.beta.image}\``),
         item('official files from `release/v26-beta`'),
@@ -394,17 +418,25 @@ docker ps --filter 'name=discvault-'`,
       ],
     },
     steps: [
-      step('install', '`docker-compose.yml`', '`.env.example`', '`release/v26-beta`'),
+      step(
+        'install',
+        '`docker-compose.yml`',
+        '`.env.example`',
+        'stable `main`',
+        'beta `release/v26-beta`',
+      ),
       step('create', '`/opt/discvault-next/.env`', term('permission600'), 'random secrets'),
       step('choose', term('legacyFqdnRoute'), term('legacyLocalIpRoute')),
-      step('verify', '`DISCVAULT_NEXT_IMAGE=ghcr.io/helmerznl/discvault:beta`', 'no `:dev`'),
+      step('verify', '`DISCVAULT_NEXT_IMAGE`', '`:latest` / `:beta`', 'no `:dev`'),
       step('run', '`docker compose -p discvault_next_deploy config --quiet`', 'pull', 'up'),
       step('test', '`GET http://localhost:6180/api/next/health`'),
     ],
     blocks: [
+      code('stable', stableEnvironmentSetup),
       code('beta', betaEnvironmentSetup),
-      code('beta', betaFqdnEnvironment),
-      code('beta', betaLocalIpEnvironment),
+      code('both', betaFqdnEnvironment),
+      code('both', betaLocalIpEnvironment),
+      code('stable', stableValidateAndStart),
       code('beta', betaValidateAndStart),
     ],
     outcomes: [
@@ -607,8 +639,14 @@ docker inspect discvault-next-api-1 --format '{{range .Mounts}}{{.Source}} -> {{
     channels: {
       stable: [
         item(imageChannels.stable.label, `\`${imageChannels.stable.image}\``),
-        item('Passkeys', '`RP_ID` + `RP_ORIGINS`', 'proxy host port `6080`'),
+        item(
+          'Passkeys',
+          '`RP_ID` + `RP_ORIGINS`',
+          'proxy host port `6180` (Compose) or `6080` (Docker run)',
+        ),
         item(term('fqdnSecureContext')),
+        item('OIDC', '`/api/next/auth/oidc/callback`', route('configure/oidc')),
+        item('Legacy Authentication', '`LEGACY_AUTH_ENABLED=true`', 'direct local IP fallback'),
       ],
       beta: [
         item(imageChannels.beta.label, `\`${imageChannels.beta.image}\``),
@@ -623,7 +661,7 @@ docker inspect discvault-next-api-1 --format '{{range .Mounts}}{{.Source}} -> {{
       step('configure', '`RP_ID`', 'hostname only'),
       step('configure', '`RP_ORIGINS`', 'exact public HTTPS origin'),
       step('configure', route('configure/oidc'), '`/api/next/auth/oidc/callback`'),
-      step('configure', 'proxy upstream', 'stable `6080` / beta `6180`'),
+      step('configure', 'proxy upstream', 'Docker Compose `6180` / Docker run `6080`'),
       step('test', '`GET /api/next/health`', 'passkey registration', 'same origin'),
       step('record', term('fqdnChange')),
     ],
@@ -682,6 +720,11 @@ curl --fail http://localhost:6180/api/next/health`,
       },
     ],
     channels: {
+      stable: [
+        item(imageChannels.stable.label, `\`${imageChannels.stable.image}\``),
+        item('optional username + password + TOTP capability'),
+        item('Passkeys remain preferred when a valid FQDN and trusted HTTPS are available'),
+      ],
       beta: [
         item(imageChannels.beta.label, `\`${imageChannels.beta.image}\``),
         item('optional username + password + TOTP capability'),
@@ -699,7 +742,7 @@ curl --fail http://localhost:6180/api/next/health`,
     ],
     blocks: [
       code(
-        'beta',
+        'both',
         `RP_ID=discvault.example.com
 RP_NAME=DiscVault
 RP_ORIGINS=https://discvault.example.com
@@ -707,7 +750,7 @@ LEGACY_AUTH_ENABLED=true`,
         'text',
       ),
       code(
-        'beta',
+        'both',
         `RP_ID=
 RP_NAME=DiscVault
 RP_ORIGINS=
@@ -715,7 +758,7 @@ LEGACY_AUTH_ENABLED=true`,
         'text',
       ),
       code(
-        'beta',
+        'both',
         `curl --fail http://localhost:6180/api/next/health
 curl --fail http://localhost:6180/api/next/auth/status`,
       ),
@@ -816,7 +859,11 @@ curl --fail http://localhost:6180/api/next/auth/status`,
     ],
     blocks: [code('both', backupCommands)],
     outcomes: [item(term('backupAccepted'))],
-    safety: [item(term('backupFailure')), item(term('sameBackupWindow'))],
+    safety: [
+      item(term('backupFailure')),
+      item(term('sameBackupWindow')),
+      item(term('scheduledBackup')),
+    ],
   },
   'update/restore': {
     markers: ['`pg_restore --exit-on-error`', '`discvault.failed-`', '`next-worker`', '`next-api`'],
@@ -891,7 +938,11 @@ mv "$ENV_TMP" "$ENV_FILE"
 trap - EXIT`,
       ),
     ],
-    outcomes: [item(term('updateAccepted')), item(term('legacyTopologyBoundary'))],
+    outcomes: [
+      item(term('updateAccepted')),
+      item(term('pluginVersionsAfterUpdate')),
+      item(term('legacyTopologyBoundary')),
+    ],
     safety: [
       item(term('legacyFrozen')),
       item(route('update/rollback'), term('matchingBackup')),
@@ -967,22 +1018,22 @@ curl --fail http://localhost:6080/api/next/migration/status`,
     prerequisites: [item(term('ownerAccess')), item('configuration backup')],
     channels: releaseChannels(item('same DiscVault environment, RBAC, and plugin interfaces')),
     steps: [
-      step('choose', route('configure/environment'), 'official beta runtime assignments'),
+      step('choose', route('configure/environment'), 'official runtime assignments'),
       step('choose', route('configure/auth-rbac'), 'Passkeys + Legacy Authentication + RBAC'),
       step('choose', route('configure/oidc'), 'OIDC + Pocket ID'),
-      step('choose', route('install/legacy-authentication'), 'beta onboarding and recovery'),
+      step('choose', route('install/legacy-authentication'), 'password onboarding and recovery'),
       step('choose', route('configure/plugins-metadata'), 'provider registry'),
       step('record', 'one subsystem change', 'previous value', 'acceptance result'),
     ],
     blocks: [
       routes(
-        ['configure/environment', 'DiscVault beta · official `.env.example` · secrets'],
+        ['configure/environment', 'DiscVault · official `.env.example` · secrets'],
         [
           'configure/auth-rbac',
-          'DiscVault · Passkeys · beta Legacy Authentication · invites · RBAC',
+          'DiscVault · Passkeys · Legacy Authentication · OIDC · invites · RBAC',
         ],
-        ['configure/oidc', 'DiscVault 26.9.117 beta · OIDC · Pocket ID · account linking'],
-        ['install/legacy-authentication', 'DiscVault beta · password + TOTP · recovery'],
+        ['configure/oidc', 'DiscVault · OIDC · Pocket ID · account linking'],
+        ['install/legacy-authentication', 'DiscVault · password + TOTP · recovery'],
         ['configure/plugins-metadata', 'DiscVault · plugins · metadata'],
       ),
     ],
@@ -1009,6 +1060,11 @@ curl --fail http://localhost:6080/api/next/migration/status`,
     ],
     prerequisites: [item(term('privateRuntimeFile')), item('OpenSSL'), item(term('restartWindow'))],
     channels: {
+      stable: [
+        item(imageChannels.stable.label, `\`${imageChannels.stable.image}\``),
+        item('`.env.example` from `main`'),
+        item('mode `0600`', 'stable `JWT_SECRET` and `POSTGRES_PASSWORD`'),
+      ],
       beta: [
         item(imageChannels.beta.label, `\`${imageChannels.beta.image}\``),
         item('`.env.example` from `release/v26-beta`'),
@@ -1029,12 +1085,14 @@ curl --fail http://localhost:6080/api/next/migration/status`,
         term('oidcConfigUnit'),
       ),
       step('verify', '`chmod 0600`', '`docker compose -p discvault_next_deploy config --quiet`'),
-      step('start', term('keepSecretsStable'), 'beta services'),
+      step('start', term('keepSecretsStable'), 'API, worker, and MCP services'),
     ],
     blocks: [
+      code('stable', stableEnvironmentSetup),
       code('beta', betaEnvironmentSetup),
-      code('beta', betaFqdnEnvironment),
-      code('beta', betaLocalIpEnvironment),
+      code('both', betaFqdnEnvironment),
+      code('both', betaLocalIpEnvironment),
+      code('stable', stableValidateAndStart),
       code('beta', betaValidateAndStart),
     ],
     outcomes: [item(term('permission600')), item(term('environmentValidated'))],
@@ -1145,6 +1203,11 @@ curl --fail http://localhost:6180/api/next/auth/rbac`,
       },
     ],
     channels: {
+      stable: [
+        item(imageChannels.stable.label, '`26.10.17+`'),
+        item(term('oidcPurpose')),
+        item(term('oidcAccountSafety')),
+      ],
       beta: [
         item(imageChannels.beta.label, '`26.9.117+`'),
         item(term('oidcPurpose')),
@@ -1181,7 +1244,7 @@ curl --fail http://localhost:6180/api/next/auth/rbac`,
     ],
     blocks: [
       code(
-        'beta',
+        'both',
         `RP_ORIGINS=https://discvault.example.com
 DISCVAULT_OIDC_ISSUER=https://id.example.com
 DISCVAULT_OIDC_CLIENT_ID=<client-id>
@@ -1191,12 +1254,12 @@ DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS=`,
         'text',
       ),
       code(
-        'beta',
+        'both',
         'DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS=http://pocket-id.pocket-id.svc.cluster.local:1411',
         'text',
       ),
       code(
-        'beta',
+        'both',
         `cd /opt/discvault-next
 docker compose -p discvault_next_deploy config --quiet
 docker compose -p discvault_next_deploy up -d --force-recreate next-api
@@ -1311,6 +1374,9 @@ curl --fail http://localhost:6080/api/next/metadata/plugins`,
       step('compare', term('vaultDefinition')),
       step('compare', term('collectionDefinition')),
       step('test', term('collectorVisibility')),
+      step('configure', term('libraryScoreFilters')),
+      step('inspect', term('customFieldsVisible')),
+      step('test', term('tvSeriesFromMovieVault')),
     ],
     blocks: [],
     outcomes: [
@@ -1519,6 +1585,7 @@ curl --fail http://localhost:6080/api/next/health`,
       step('test', ui('pluginsHealth')),
       step('run', ui('pluginsDryRun'), '`dryRun=true`'),
       step('compare', '`/api/next/digital-items?limit=200`', 'provider library sample'),
+      step('configure', term('scheduledLibrarySync')),
     ],
     blocks: [
       code(

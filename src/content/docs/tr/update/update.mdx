@@ -95,9 +95,10 @@ trap - EXIT
 
 ## Beklenen sonuç
 
-Şunun sonucunu kabul edin: **Güncelleme ve geçiş: Kapsayıcı güncellemesi** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: amaçlanan imaj özeti çalışır, sağlık başarılıdır ve sahip girişi, kitaplık sayısı ile bir medya örneği geçer; önceki neslin birimlerini, ortam değişkenlerini, bağlantı noktalarını ve veri yolunu değiştirmeyin; DiscVault PostgreSQL Compose topolojisindeki imajı asla `:legacy` ile değiştirmeyin. Sayfaya özel denetim noktaları: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
+Şunun sonucunu kabul edin: **Güncelleme ve geçiş: Kapsayıcı güncellemesi** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: amaçlanan imaj özeti çalışır, sağlık başarılıdır ve sahip girişi, kitaplık sayısı ile bir medya örneği geçer; güncellemeden sonra Yönetim → Eklentiler kurulu sürümleri gösterir; paketle gelen eklentiler yalnızca paketteki kopya daha yeniyse değiştirilir (26.11 için MovieVault v2 1.12.0 ve TMDb 1.11.0 gerekir); önceki neslin birimlerini, ortam değişkenlerini, bağlantı noktalarını ve veri yolunu değiştirmeyin; DiscVault PostgreSQL Compose topolojisindeki imajı asla `:legacy` ile değiştirmeyin. Sayfaya özel denetim noktaları: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
 - amaçlanan imaj özeti çalışır, sağlık başarılıdır ve sahip girişi, kitaplık sayısı ile bir medya örneği geçer
+- güncellemeden sonra Yönetim → Eklentiler kurulu sürümleri gösterir; paketle gelen eklentiler yalnızca paketteki kopya daha yeniyse değiştirilir (26.11 için MovieVault v2 1.12.0 ve TMDb 1.11.0 gerekir)
 - önceki neslin birimlerini, ortam değişkenlerini, bağlantı noktalarını ve veri yolunu değiştirmeyin; DiscVault PostgreSQL Compose topolojisindeki imajı asla `:legacy` ile değiştirmeyin
 
 ## Güvenlik ve geri alma

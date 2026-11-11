@@ -1,26 +1,33 @@
 ---
 title: 'Встановлення: Docker Compose'
-description: 'Спеціальні інструкції для завдання: Встановлення: Docker Compose. release/v26-beta. app/deploy/next/docker-compose.yml. app/deploy/next/.env.example. DISCVAULT_NEXT_IMAGE.'
+description: 'Спеціальні інструкції для завдання: Встановлення: Docker Compose. main. release/v26-beta. app/deploy/next/docker-compose.yml. app/deploy/next/.env.example. DISCVAULT_NEXT_IMAGE.'
 pageId: 'install-docker-compose'
 products: ['server']
 platforms: ['docker']
-channels: ['beta']
+channels: ['stable', 'beta']
 minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-20'
+lastVerified: '2026-11-11'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="Docker" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-20" />
+<PageMeta channels="stable,beta" platform="Docker" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-11-11" />
 
 ## Мета й результат
 
-Виконайте спеціальну процедуру сторінки для **Встановлення: Docker Compose**. У цій процедурі використовуються `release/v26-beta` · `app/deploy/next/docker-compose.yml` · `app/deploy/next/.env.example` · `DISCVAULT_NEXT_IMAGE` · `ghcr.io/helmerznl/discvault:beta` · `6180:5000` · `LEGACY_AUTH_ENABLED=true`.
+Виконайте спеціальну процедуру сторінки для **Встановлення: Docker Compose**. У цій процедурі використовуються `main` · `release/v26-beta` · `app/deploy/next/docker-compose.yml` · `app/deploy/next/.env.example` · `DISCVAULT_NEXT_IMAGE` · `ghcr.io/helmerznl/discvault:latest` · `ghcr.io/helmerznl/discvault:beta` · `6180:5000` · `LEGACY_AUTH_ENABLED=true`.
 
 ## Застосовується до
 
-Ця сторінка стосується лише **Встановлення: Docker Compose** (Docker). Межі каналу й даних: DiscVault · `ghcr.io/helmerznl/discvault:beta`; `release/v26-beta`; `discvault_next_deploy`; `6180` → API `5000`. Контрольні точки цієї сторінки: `release/v26-beta` · `app/deploy/next/docker-compose.yml` · `app/deploy/next/.env.example` · `DISCVAULT_NEXT_IMAGE` · `ghcr.io/helmerznl/discvault:beta` · `6180:5000` · `LEGACY_AUTH_ENABLED=true`.
+Ця сторінка стосується лише **Встановлення: Docker Compose** (Docker). Межі каналу й даних: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `main`; `discvault_next_deploy`; `6180` → API `5000`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `release/v26-beta`; `discvault_next_deploy`; `6180` → API `5000`. Контрольні точки цієї сторінки: `main` · `release/v26-beta` · `app/deploy/next/docker-compose.yml` · `app/deploy/next/.env.example` · `DISCVAULT_NEXT_IMAGE` · `ghcr.io/helmerznl/discvault:latest` · `ghcr.io/helmerznl/discvault:beta` · `6180:5000` · `LEGACY_AUTH_ENABLED=true`.
+
+### DiscVault – стабільний
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `main`
+- `discvault_next_deploy`
+- `6180` → API `5000`
 
 ### DiscVault – бета
 
@@ -37,14 +44,57 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## Процедура
 
-1. **Установіть:** `docker-compose.yml` · `.env.example` · `release/v26-beta`
+1. **Установіть:** `docker-compose.yml` · `.env.example` · `main` · `release/v26-beta`
 2. **Створіть:** `/opt/discvault-next/.env` · права на файл лише для власника (0600)
 3. **Виберіть:** з дійсним FQDN узгодьте `RP_ID` і `RP_ORIGINS` та використовуйте довірений HTTPS · для прямої приватної або loopback-IP без FQDN залиште `RP_ID` і `RP_ORIGINS` порожніми
-4. **Перевірте:** `DISCVAULT_NEXT_IMAGE=ghcr.io/helmerznl/discvault:beta` · `:dev`
+4. **Перевірте:** `DISCVAULT_NEXT_IMAGE` · `:latest` `:beta` · `:dev`
 5. **Виконайте:** `docker compose -p discvault_next_deploy config --quiet`
 6. **Перевірте:** `GET http://localhost:6180/api/next/health`
 
 ### Команди й налаштування
+
+#### DiscVault – стабільний
+
+```bash
+set -euo pipefail
+install -d -m 0700 /opt/discvault-next
+cd /opt/discvault-next
+curl --fail --location --proto '=https' --tlsv1.2 \
+  --output docker-compose.yml \
+  https://raw.githubusercontent.com/helmerzNL/DiscVault/main/app/deploy/next/docker-compose.yml
+curl --fail --location --proto '=https' --tlsv1.2 \
+  --output .env.example \
+  https://raw.githubusercontent.com/helmerzNL/DiscVault/main/app/deploy/next/.env.example
+
+umask 077
+ENV_FILE=/opt/discvault-next/.env
+test ! -e "$ENV_FILE"
+ENV_TMP="$(mktemp "$ENV_FILE.tmp.XXXXXX")"
+trap 'rm -f "$ENV_TMP"' EXIT
+POSTGRES_PASSWORD="$(openssl rand -hex 32)"
+JWT_SECRET="$(openssl rand -base64 48)"
+awk \
+  -v image='ghcr.io/helmerznl/discvault:latest' \
+  -v postgres_password="$POSTGRES_PASSWORD" \
+  -v jwt_secret="$JWT_SECRET" \
+  -v data_dir='/mnt/user/appdata/discvault' \
+  -v postgres_dir='/mnt/user/appdata/discvault-next/postgres' '
+  /^DISCVAULT_NEXT_IMAGE=/ { print "DISCVAULT_NEXT_IMAGE=" image; next }
+  /^POSTGRES_PASSWORD=/ { print "POSTGRES_PASSWORD=" postgres_password; next }
+  /^JWT_SECRET=/ { print "JWT_SECRET=" jwt_secret; next }
+  /^DISCVAULT_DATA_DIR=/ { print "DISCVAULT_DATA_DIR=" data_dir; next }
+  /^DISCVAULT_NEXT_POSTGRES_DATA=/ {
+    print "DISCVAULT_NEXT_POSTGRES_DATA=" postgres_dir
+    next
+  }
+  /^LEGACY_AUTH_ENABLED=/ { print "LEGACY_AUTH_ENABLED=true"; next }
+  { print }
+' .env.example > "$ENV_TMP"
+chmod 0600 "$ENV_TMP"
+ln "$ENV_TMP" "$ENV_FILE"
+rm -f "$ENV_TMP"
+trap - EXIT
+```
 
 #### DiscVault – бета
 
@@ -89,6 +139,8 @@ rm -f "$ENV_TMP"
 trap - EXIT
 ```
 
+#### Обидва канали
+
 ```bash
 set -euo pipefail
 cd /opt/discvault-next
@@ -126,6 +178,43 @@ mv "$ENV_TMP" "$ENV_FILE"
 trap - EXIT
 ```
 
+#### DiscVault – стабільний
+
+```bash
+set -euo pipefail
+cd /opt/discvault-next
+ENV_FILE=/opt/discvault-next/.env
+test "$(stat -c '%a' "$ENV_FILE")" = 600
+read_env() { sed -n "s/^$1=//p" "$ENV_FILE"; }
+
+test "$(read_env DISCVAULT_NEXT_IMAGE)" = 'ghcr.io/helmerznl/discvault:latest'
+! grep -q ':dev' "$ENV_FILE"
+test "$(read_env LEGACY_AUTH_ENABLED)" = true
+POSTGRES_PASSWORD_VALUE="$(read_env POSTGRES_PASSWORD)"
+JWT_SECRET_VALUE="$(read_env JWT_SECRET)"
+test "${#POSTGRES_PASSWORD_VALUE}" -ge 32
+test "$POSTGRES_PASSWORD_VALUE" != 'change-me-to-a-long-random-password'
+test "${#JWT_SECRET_VALUE}" -ge 48
+grep -qx 'DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault' "$ENV_FILE"
+grep -qx 'DISCVAULT_NEXT_POSTGRES_DATA=/mnt/user/appdata/discvault-next/postgres' "$ENV_FILE"
+
+RP_ID_VALUE="$(read_env RP_ID)"
+RP_ORIGINS_VALUE="$(read_env RP_ORIGINS)"
+if [ -z "$RP_ID_VALUE" ]; then
+  test -z "$RP_ORIGINS_VALUE"
+else
+  test "$RP_ORIGINS_VALUE" = "https://$RP_ID_VALUE"
+fi
+
+docker compose -p discvault_next_deploy config --quiet
+docker compose -p discvault_next_deploy pull
+docker compose -p discvault_next_deploy up -d
+docker compose -p discvault_next_deploy ps
+curl --fail http://localhost:6180/api/next/health
+```
+
+#### DiscVault – бета
+
 ```bash
 set -euo pipefail
 cd /opt/discvault-next
@@ -161,7 +250,7 @@ curl --fail http://localhost:6180/api/next/health
 
 ## Очікуваний результат
 
-Приймайте результат для **Встановлення: Docker Compose** лише коли підтверджено всі наведені нижче результати: `postgres` · `next-api` · `next-worker` · `next-mcp`; `6180` → API `5000`; HTTP `2xx` · `/api/next/health`. Контрольні точки цієї сторінки: `release/v26-beta` · `app/deploy/next/docker-compose.yml` · `app/deploy/next/.env.example` · `DISCVAULT_NEXT_IMAGE` · `ghcr.io/helmerznl/discvault:beta` · `6180:5000` · `LEGACY_AUTH_ENABLED=true`.
+Приймайте результат для **Встановлення: Docker Compose** лише коли підтверджено всі наведені нижче результати: `postgres` · `next-api` · `next-worker` · `next-mcp`; `6180` → API `5000`; HTTP `2xx` · `/api/next/health`. Контрольні точки цієї сторінки: `main` · `release/v26-beta` · `app/deploy/next/docker-compose.yml` · `app/deploy/next/.env.example` · `DISCVAULT_NEXT_IMAGE` · `ghcr.io/helmerznl/discvault:latest` · `ghcr.io/helmerznl/discvault:beta` · `6180:5000` · `LEGACY_AUTH_ENABLED=true`.
 
 - `postgres` · `next-api` · `next-worker` · `next-mcp`
 - `6180` → API `5000`
@@ -170,9 +259,9 @@ curl --fail http://localhost:6180/api/next/health
 ## Безпека й відкочування
 
 :::caution
-Безпечна межа відновлення для **Встановлення: Docker Compose** вимагає цих дій до будь-якого запуску чи продовження: завантажений `.env.example` досі використовує `:dev`; перед pull або запуском у робочому `.env` має бути `:beta`; не змінюйте секрети JWT і PostgreSQL під час звичайного налаштування · `JWT_SECRET` · `POSTGRES_PASSWORD`; PostgreSQL і `/data` є окремими сховищами та потребують одного відповідного комплекту копій. Контрольні точки цієї сторінки: `release/v26-beta` · `app/deploy/next/docker-compose.yml` · `app/deploy/next/.env.example` · `DISCVAULT_NEXT_IMAGE` · `ghcr.io/helmerznl/discvault:beta` · `6180:5000` · `LEGACY_AUTH_ENABLED=true`.
+Безпечна межа відновлення для **Встановлення: Docker Compose** вимагає цих дій до будь-якого запуску чи продовження: завантажений `.env.example` досі використовує `:dev`; перед pull або запуском у робочому `.env` має бути `:latest` / `:beta`; не змінюйте секрети JWT і PostgreSQL під час звичайного налаштування · `JWT_SECRET` · `POSTGRES_PASSWORD`; PostgreSQL і `/data` є окремими сховищами та потребують одного відповідного комплекту копій. Контрольні точки цієї сторінки: `main` · `release/v26-beta` · `app/deploy/next/docker-compose.yml` · `app/deploy/next/.env.example` · `DISCVAULT_NEXT_IMAGE` · `ghcr.io/helmerznl/discvault:latest` · `ghcr.io/helmerznl/discvault:beta` · `6180:5000` · `LEGACY_AUTH_ENABLED=true`.
 
-- завантажений `.env.example` досі використовує `:dev`; перед pull або запуском у робочому `.env` має бути `:beta`
+- завантажений `.env.example` досі використовує `:dev`; перед pull або запуском у робочому `.env` має бути `:latest` / `:beta`
 - не змінюйте секрети JWT і PostgreSQL під час звичайного налаштування · `JWT_SECRET` · `POSTGRES_PASSWORD`
 - PostgreSQL і `/data` є окремими сховищами та потребують одного відповідного комплекту копій
 :::
@@ -183,12 +272,14 @@ curl --fail http://localhost:6180/api/next/health
 
 ## Джерело й стан
 
-- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [`helmerzNL/DiscVault@441f96593219`](https://github.com/helmerzNL/DiscVault/commit/441f96593219c66d45aac99ce5ef9f81f011d449)
+- [Stable source: `docker-compose.yml` (`main`)](https://github.com/helmerzNL/DiscVault/blob/main/app/deploy/next/docker-compose.yml)
+- [Stable source: `.env.example` (`main`)](https://github.com/helmerzNL/DiscVault/blob/main/app/deploy/next/.env.example)
 - [Moving beta source: `docker-compose.yml`](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/docker-compose.yml)
 - [Raw beta download: `docker-compose.yml`](https://raw.githubusercontent.com/helmerzNL/DiscVault/release/v26-beta/app/deploy/next/docker-compose.yml)
 - [Pinned verification: `docker-compose.yml`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/deploy/next/docker-compose.yml)
 - [Moving beta source: `.env.example`](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/.env.example)
 - [Raw beta download: `.env.example`](https://raw.githubusercontent.com/helmerzNL/DiscVault/release/v26-beta/app/deploy/next/.env.example)
 - [Pinned verification: `.env.example`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/deploy/next/.env.example)
-- Джерело й стан: `2026-07-20`
-- DiscVault Docs: `0.1.6`
+- Джерело й стан: `2026-11-11`
+- DiscVault Docs: `0.2.0`

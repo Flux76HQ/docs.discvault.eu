@@ -20,13 +20,15 @@ Följ det sidspecifika arbetsflödet för **Installation: Omvänd proxy och åtk
 
 ## Gäller för
 
-Den här sidan gäller endast **Installation: Omvänd proxy och åtkomstnycklar** (Docker · webb). Kanal- och datagränserna är: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6080`; utanför localhost-undantaget kräver passkeys ett stabilt fullständigt domännamn över betrodd HTTPS; en ensam IP-adress eller vanlig HTTP stöds inte; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; OIDC · `/api/next/auth/oidc/callback` · [Konfiguration: Inloggning med OpenID Connect (OIDC)](/sv/configure/oidc/); `LEGACY_AUTH_ENABLED=true`. Sidspecifika kontrollpunkter: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+Den här sidan gäller endast **Installation: Omvänd proxy och åtkomstnycklar** (Docker · webb). Kanal- och datagränserna är: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6180` `6080` Docker run; utanför localhost-undantaget kräver passkeys ett stabilt fullständigt domännamn över betrodd HTTPS; en ensam IP-adress eller vanlig HTTP stöds inte; OIDC · `/api/next/auth/oidc/callback` · [Konfiguration: Inloggning med OpenID Connect (OIDC)](/sv/configure/oidc/); `LEGACY_AUTH_ENABLED=true`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; OIDC · `/api/next/auth/oidc/callback` · [Konfiguration: Inloggning med OpenID Connect (OIDC)](/sv/configure/oidc/); `LEGACY_AUTH_ENABLED=true`. Sidspecifika kontrollpunkter: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 ### DiscVault – stabil
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- `RP_ID` `RP_ORIGINS` · `6080`
+- `RP_ID` `RP_ORIGINS` · `6180` `6080` Docker run
 - utanför localhost-undantaget kräver passkeys ett stabilt fullständigt domännamn över betrodd HTTPS; en ensam IP-adress eller vanlig HTTP stöds inte
+- OIDC · `/api/next/auth/oidc/callback` · [Konfiguration: Inloggning med OpenID Connect (OIDC)](/sv/configure/oidc/)
+- `LEGACY_AUTH_ENABLED=true`
 
 ### DiscVault – beta
 
@@ -43,8 +45,8 @@ Den här sidan gäller endast **Installation: Omvänd proxy och åtkomstnycklar*
 
 ### Legacy Authentication som reserv
 
-:::note[Tillgänglig i beta]
-Legacy Authentication med användarnamn, lösenord och tvåfaktorsautentisering (2FA) finns i DiscVault beta när passkeys inte kan användas.
+:::note[Tillgänglig i stabil och beta]
+Legacy Authentication med användarnamn, lösenord och tvåfaktorsautentisering (2FA) finns i DiscVault när passkeys inte kan användas.
 
 Följ `/install/legacy-authentication/` innan funktionen aktiveras eller den första ägaren skapas.
 :::
@@ -56,7 +58,7 @@ Följ `/install/legacy-authentication/` innan funktionen aktiveras eller den fö
 3. **Konfigurera:** `RP_ID`
 4. **Konfigurera:** `RP_ORIGINS` · HTTPS
 5. **Konfigurera:** [Konfiguration: Inloggning med OpenID Connect (OIDC)](/sv/configure/oidc/) · `/api/next/auth/oidc/callback`
-6. **Konfigurera:** `6080` `6180`
+6. **Konfigurera:** Docker Compose `6180` Docker run `6080`
 7. **Testa:** `GET /api/next/health`
 8. **Anteckna:** välj värdnamnet innan passkeys registreras; en senare ändring kräver ny registrering, medan localhost bara är ett lokalt installationsundantag
 

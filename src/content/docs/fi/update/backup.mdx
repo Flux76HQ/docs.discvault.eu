@@ -84,10 +84,11 @@ Hyväksy tulos kohteelle **Päivitys ja siirto: Varmuuskopiointi** vain kun kaik
 ## Turvallisuus ja palautus
 
 :::caution
-Turvallinen palautusraja kohteelle **Päivitys ja siirto: Varmuuskopiointi** edellyttää näitä toimia ennen käynnistystä tai jatkamista: jos varmuuskopiointikomento epäonnistuu, käynnistä vain muuttumattomat palvelut ja peru päivitys; PostgreSQL-vedos ja tiedostoarkisto samasta kirjoittajat pysäyttävästä ikkunasta. Sivukohtaiset tarkistuspisteet: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
+Turvallinen palautusraja kohteelle **Päivitys ja siirto: Varmuuskopiointi** edellyttää näitä toimia ennen käynnistystä tai jatkamista: jos varmuuskopiointikomento epäonnistuu, käynnistä vain muuttumattomat palvelut ja peru päivitys; PostgreSQL-vedos ja tiedostoarkisto samasta kirjoittajat pysäyttävästä ikkunasta; sovellus voi varmuuskopioida myös ajastetusti (Ylläpito → Backup → Ajastus: väli, ohita jos ei muutoksia, säilytä N uusinta); ajastetut arkistot ovat kansiossa `backups/` hakemistossa `DISCVAULT_DATA_DIR`, joten kopioi ne myös pois palvelimelta. Sivukohtaiset tarkistuspisteet: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
 
 - jos varmuuskopiointikomento epäonnistuu, käynnistä vain muuttumattomat palvelut ja peru päivitys
 - PostgreSQL-vedos ja tiedostoarkisto samasta kirjoittajat pysäyttävästä ikkunasta
+- sovellus voi varmuuskopioida myös ajastetusti (Ylläpito → Backup → Ajastus: väli, ohita jos ei muutoksia, säilytä N uusinta); ajastetut arkistot ovat kansiossa `backups/` hakemistossa `DISCVAULT_DATA_DIR`, joten kopioi ne myös pois palvelimelta
 :::
 
 ## Seuraava vaihe

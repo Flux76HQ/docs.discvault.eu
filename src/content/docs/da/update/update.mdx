@@ -95,9 +95,10 @@ trap - EXIT
 
 ## Forventet resultat
 
-Godkend resultatet for **Opdatering og migrering: Containeropdatering** kun når alle resultater nedenfor er opfyldt: det tilsigtede image-digest kører, sundhed lykkes, og ejerlogin, bibliotekstal og én medieprøve består; behold den forrige generations diskenheder, miljøvariabler, porte og datasti uændret; erstat aldrig et DiscVault PostgreSQL Compose-image med `:legacy`. Sidespecifikke kontrolpunkter: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
+Godkend resultatet for **Opdatering og migrering: Containeropdatering** kun når alle resultater nedenfor er opfyldt: det tilsigtede image-digest kører, sundhed lykkes, og ejerlogin, bibliotekstal og én medieprøve består; efter en opdatering viser Administration → Plugins de installerede pluginversioner; medfølgende plugins erstattes kun, når den medfølgende kopi er nyere (26.11 kræver MovieVault v2 1.12.0 og TMDb 1.11.0); behold den forrige generations diskenheder, miljøvariabler, porte og datasti uændret; erstat aldrig et DiscVault PostgreSQL Compose-image med `:legacy`. Sidespecifikke kontrolpunkter: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
 - det tilsigtede image-digest kører, sundhed lykkes, og ejerlogin, bibliotekstal og én medieprøve består
+- efter en opdatering viser Administration → Plugins de installerede pluginversioner; medfølgende plugins erstattes kun, når den medfølgende kopi er nyere (26.11 kræver MovieVault v2 1.12.0 og TMDb 1.11.0)
 - behold den forrige generations diskenheder, miljøvariabler, porte og datasti uændret; erstat aldrig et DiscVault PostgreSQL Compose-image med `:legacy`
 
 ## Sikkerhed og tilbagerulning

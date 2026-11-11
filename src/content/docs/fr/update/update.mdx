@@ -95,9 +95,10 @@ trap - EXIT
 
 ## Résultat attendu
 
-Validez le résultat de **Mise à jour et migration: Mise à jour du conteneur** uniquement lorsque tous les résultats suivants sont confirmés : le digest d’image prévu s’exécute, l’état est sain et la connexion propriétaire, le total et un média test réussissent; conservez les volumes, variables d’environnement, ports et chemin de données de la génération précédente ; ne remplacez jamais une image de la topologie Compose DiscVault PostgreSQL par `:legacy`. Points de contrôle propres à la page : `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
+Validez le résultat de **Mise à jour et migration: Mise à jour du conteneur** uniquement lorsque tous les résultats suivants sont confirmés : le digest d’image prévu s’exécute, l’état est sain et la connexion propriétaire, le total et un média test réussissent; après une mise à jour, Administration → Plugins affiche les versions installées ; les plugins fournis ne sont remplacés que si la copie fournie est plus récente (26.11 requiert MovieVault v2 1.12.0 et TMDb 1.11.0); conservez les volumes, variables d’environnement, ports et chemin de données de la génération précédente ; ne remplacez jamais une image de la topologie Compose DiscVault PostgreSQL par `:legacy`. Points de contrôle propres à la page : `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
 - le digest d’image prévu s’exécute, l’état est sain et la connexion propriétaire, le total et un média test réussissent
+- après une mise à jour, Administration → Plugins affiche les versions installées ; les plugins fournis ne sont remplacés que si la copie fournie est plus récente (26.11 requiert MovieVault v2 1.12.0 et TMDb 1.11.0)
 - conservez les volumes, variables d’environnement, ports et chemin de données de la génération précédente ; ne remplacez jamais une image de la topologie Compose DiscVault PostgreSQL par `:legacy`
 
 ## Sécurité et retour arrière

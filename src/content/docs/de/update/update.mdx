@@ -95,9 +95,10 @@ trap - EXIT
 
 ## Erwartetes Ergebnis
 
-Akzeptiere das Ergebnis für **Update und Migration: Container-Update** nur wenn alle folgenden Ergebnisse erfüllt sind: der vorgesehene Image-Digest läuft, Health ist erfolgreich und Owner-Anmeldung, Bibliothekszahl und Medienprobe bestehen; Volumes, Umgebungsvariablen, Ports und Datenpfad der vorherigen Generation unverändert lassen; `:legacy` niemals in die DiscVault-PostgreSQL-Compose-Topologie einsetzen. Seitenspezifische Kontrollpunkte: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
+Akzeptiere das Ergebnis für **Update und Migration: Container-Update** nur wenn alle folgenden Ergebnisse erfüllt sind: der vorgesehene Image-Digest läuft, Health ist erfolgreich und Owner-Anmeldung, Bibliothekszahl und Medienprobe bestehen; nach einem Update zeigt Administration → Plugins die installierten Plugin-Versionen; mitgelieferte Plugins werden nur ersetzt, wenn die mitgelieferte Kopie neuer ist (26.11 braucht MovieVault v2 1.12.0 und TMDb 1.11.0); Volumes, Umgebungsvariablen, Ports und Datenpfad der vorherigen Generation unverändert lassen; `:legacy` niemals in die DiscVault-PostgreSQL-Compose-Topologie einsetzen. Seitenspezifische Kontrollpunkte: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
 - der vorgesehene Image-Digest läuft, Health ist erfolgreich und Owner-Anmeldung, Bibliothekszahl und Medienprobe bestehen
+- nach einem Update zeigt Administration → Plugins die installierten Plugin-Versionen; mitgelieferte Plugins werden nur ersetzt, wenn die mitgelieferte Kopie neuer ist (26.11 braucht MovieVault v2 1.12.0 und TMDb 1.11.0)
 - Volumes, Umgebungsvariablen, Ports und Datenpfad der vorherigen Generation unverändert lassen; `:legacy` niemals in die DiscVault-PostgreSQL-Compose-Topologie einsetzen
 
 ## Sicherheit und Rollback

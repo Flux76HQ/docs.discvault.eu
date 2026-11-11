@@ -95,9 +95,10 @@ trap - EXIT
 
 ## Várt eredmény
 
-Az eredmény csak ennél fogadható el: **Frissítés és migrálás: Konténerfrissítés** csak akkor, ha minden alábbi eredmény teljesül: a kívánt image-digest fut, az állapot egészséges, és a tulajdonosi bejelentkezés, darabszám és médiaminta sikeres; hagyja változatlanul az előző generáció köteteit, környezeti változóit, portjait és adatútvonalát; a DiscVault PostgreSQL Compose topológiában soha ne használja a `:legacy` képet. Oldalspecifikus ellenőrzési pontok: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
+Az eredmény csak ennél fogadható el: **Frissítés és migrálás: Konténerfrissítés** csak akkor, ha minden alábbi eredmény teljesül: a kívánt image-digest fut, az állapot egészséges, és a tulajdonosi bejelentkezés, darabszám és médiaminta sikeres; frissítés után az Adminisztráció → Bővítmények mutatja a telepített verziókat; a mellékelt bővítmények csak akkor cserélődnek, ha a mellékelt példány újabb (a 26.11-hez MovieVault v2 1.12.0 és TMDb 1.11.0 kell); hagyja változatlanul az előző generáció köteteit, környezeti változóit, portjait és adatútvonalát; a DiscVault PostgreSQL Compose topológiában soha ne használja a `:legacy` képet. Oldalspecifikus ellenőrzési pontok: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
 - a kívánt image-digest fut, az állapot egészséges, és a tulajdonosi bejelentkezés, darabszám és médiaminta sikeres
+- frissítés után az Adminisztráció → Bővítmények mutatja a telepített verziókat; a mellékelt bővítmények csak akkor cserélődnek, ha a mellékelt példány újabb (a 26.11-hez MovieVault v2 1.12.0 és TMDb 1.11.0 kell)
 - hagyja változatlanul az előző generáció köteteit, környezeti változóit, portjait és adatútvonalát; a DiscVault PostgreSQL Compose topológiában soha ne használja a `:legacy` képet
 
 ## Biztonság és visszaállítás

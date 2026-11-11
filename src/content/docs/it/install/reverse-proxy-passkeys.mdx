@@ -20,13 +20,15 @@ Completa la procedura specifica della pagina per **Installazione: Proxy inverso 
 
 ## Si applica a
 
-Questa pagina si applica solo a **Installazione: Proxy inverso e chiavi di accesso** (Docker · web). I limiti di canale e dati sono: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6080`; al di fuori dell’eccezione localhost, le passkey richiedono un nome di dominio completo stabile su HTTPS attendibile; un indirizzo IP semplice o HTTP non è supportato; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; OIDC · `/api/next/auth/oidc/callback` · [Configurazione: Accesso con OpenID Connect (OIDC)](/it/configure/oidc/); `LEGACY_AUTH_ENABLED=true`. Punti di controllo della pagina: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+Questa pagina si applica solo a **Installazione: Proxy inverso e chiavi di accesso** (Docker · web). I limiti di canale e dati sono: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6180` `6080` Docker run; al di fuori dell’eccezione localhost, le passkey richiedono un nome di dominio completo stabile su HTTPS attendibile; un indirizzo IP semplice o HTTP non è supportato; OIDC · `/api/next/auth/oidc/callback` · [Configurazione: Accesso con OpenID Connect (OIDC)](/it/configure/oidc/); `LEGACY_AUTH_ENABLED=true`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; OIDC · `/api/next/auth/oidc/callback` · [Configurazione: Accesso con OpenID Connect (OIDC)](/it/configure/oidc/); `LEGACY_AUTH_ENABLED=true`. Punti di controllo della pagina: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 ### DiscVault stabile
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- `RP_ID` `RP_ORIGINS` · `6080`
+- `RP_ID` `RP_ORIGINS` · `6180` `6080` Docker run
 - al di fuori dell’eccezione localhost, le passkey richiedono un nome di dominio completo stabile su HTTPS attendibile; un indirizzo IP semplice o HTTP non è supportato
+- OIDC · `/api/next/auth/oidc/callback` · [Configurazione: Accesso con OpenID Connect (OIDC)](/it/configure/oidc/)
+- `LEGACY_AUTH_ENABLED=true`
 
 ### DiscVault beta
 
@@ -43,8 +45,8 @@ Questa pagina si applica solo a **Installazione: Proxy inverso e chiavi di acces
 
 ### Fallback Legacy Authentication
 
-:::note[Disponibile in beta]
-Legacy Authentication con nome utente, password e autenticazione a due fattori (2FA) è disponibile in DiscVault beta quando non è possibile usare le passkey.
+:::note[Disponibile in stabile e beta]
+Legacy Authentication con nome utente, password e autenticazione a due fattori (2FA) è disponibile in DiscVault quando non è possibile usare le passkey.
 
 Segui `/install/legacy-authentication/` prima di abilitare la funzione o creare il primo proprietario.
 :::
@@ -56,7 +58,7 @@ Segui `/install/legacy-authentication/` prima di abilitare la funzione o creare 
 3. **Configura:** `RP_ID`
 4. **Configura:** `RP_ORIGINS` · HTTPS
 5. **Configura:** [Configurazione: Accesso con OpenID Connect (OIDC)](/it/configure/oidc/) · `/api/next/auth/oidc/callback`
-6. **Configura:** `6080` `6180`
+6. **Configura:** Docker Compose `6180` Docker run `6080`
 7. **Prova:** `GET /api/next/health`
 8. **Registra:** scegli il nome host prima di registrare le passkey; cambiarlo dopo richiede una nuova registrazione, mentre localhost resta solo un’eccezione locale
 

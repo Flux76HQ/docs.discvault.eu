@@ -4,15 +4,15 @@ description: '任务专用说明： 配置: 使用 OpenID Connect（OIDC）登�
 pageId: 'configure-oidc'
 products: ['server', 'pwa']
 platforms: ['docker', 'web']
-channels: ['beta']
+channels: ['stable', 'beta']
 minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'Flux76HQ/App-Guidance']
-lastVerified: '2026-09-20'
+lastVerified: '2026-11-11'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="Docker · 网页" version="DiscVault" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-09-20" />
+<PageMeta channels="stable,beta" platform="Docker · 网页" version="DiscVault" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-11-11" />
 
 ## 目标和结果
 
@@ -20,7 +20,13 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## 适用范围
 
-本页面仅适用于 **配置: 使用 OpenID Connect（OIDC）登录** (Docker · 网页). 通道与数据边界为： DiscVault · `26.9.117+`; OIDC 增加可选的浏览器登录方式；本地通行密钥、可选密码、恢复代码、API 令牌和 MCP bearer 令牌保持原有职责; 身份由准确的 issuer 与 subject 组合确定；电子邮件绝不会自动关联，关联需要已登录的浏览器会话，取消关联前必须还有其他可用登录方式. 本页面专用检查点： OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+本页面仅适用于 **配置: 使用 OpenID Connect（OIDC）登录** (Docker · 网页). 通道与数据边界为： DiscVault · `26.10.17+`; OIDC 增加可选的浏览器登录方式；本地通行密钥、可选密码、恢复代码、API 令牌和 MCP bearer 令牌保持原有职责; 身份由准确的 issuer 与 subject 组合确定；电子邮件绝不会自动关联，关联需要已登录的浏览器会话，取消关联前必须还有其他可用登录方式; DiscVault · `26.9.117+`; OIDC 增加可选的浏览器登录方式；本地通行密钥、可选密码、恢复代码、API 令牌和 MCP bearer 令牌保持原有职责; 身份由准确的 issuer 与 subject 组合确定；电子邮件绝不会自动关联，关联需要已登录的浏览器会话，取消关联前必须还有其他可用登录方式. 本页面专用检查点： OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+
+### DiscVault 稳定版
+
+- DiscVault · `26.10.17+`
+- OIDC 增加可选的浏览器登录方式；本地通行密钥、可选密码、恢复代码、API 令牌和 MCP bearer 令牌保持原有职责
+- 身份由准确的 issuer 与 subject 组合确定；电子邮件绝不会自动关联，关联需要已登录的浏览器会话，取消关联前必须还有其他可用登录方式
 
 ### DiscVault 测试版
 
@@ -36,7 +42,7 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ### 提供商专用后端通道
 
-:::note[测试版可用]
+:::note[稳定版和测试版均可用]
 仅允许令牌和 JWKS 端点使用精确的私有 HTTP 源；颁发者和浏览器授权仍仅限 HTTPS，TLS 验证保持启用，并拒绝 discovery、令牌和 JWKS 重定向
 :::
 
@@ -52,7 +58,7 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ### 命令和设置
 
-#### DiscVault 测试版
+#### 两个通道
 
 ```text
 RP_ORIGINS=https://discvault.example.com
@@ -98,11 +104,11 @@ curl --fail https://discvault.example.com/api/next/auth/status
 
 ## 来源和状态
 
-- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
+- [`helmerzNL/DiscVault@441f96593219`](https://github.com/helmerzNL/DiscVault/commit/441f96593219c66d45aac99ce5ef9f81f011d449)
 - [`Flux76HQ/App-Guidance@41bfca3bfa39`](https://github.com/Flux76HQ/App-Guidance/commit/41bfca3bfa39f0b43924190d384e2d96be756020)
 - [Moving beta source: OIDC deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
 - [Pinned verification: OIDC environment template](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/.env.example)
 - [Pinned verification: OIDC implementation](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/backend/next_oidc.py)
 - [Authoritative OIDC authentication contract](https://github.com/Flux76HQ/App-Guidance/blob/41bfca3bfa39f0b43924190d384e2d96be756020/projects/discvault/specs/oidc-authentication.md)
-- 来源和状态: `2026-09-20`
-- DiscVault Docs: `0.1.14`
+- 来源和状态: `2026-11-11`
+- DiscVault Docs: `0.2.0`

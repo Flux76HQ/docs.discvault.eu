@@ -84,10 +84,11 @@ Accepteer het resultaat voor **Bijwerken en migreren: Back-up** alleen wanneer a
 ## Veiligheid en terugdraaien
 
 :::caution
-De veilige herstelgrens voor **Bijwerken en migreren: Back-up** vereist deze acties voordat iets start of doorgaat: als een back-upopdracht mislukt, start je alleen de ongewijzigde services opnieuw en annuleer je de update; PostgreSQL-dump en bestandsarchief uit hetzelfde schrijversstopvenster. Paginaspecifieke controlepunten: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
+De veilige herstelgrens voor **Bijwerken en migreren: Back-up** vereist deze acties voordat iets start of doorgaat: als een back-upopdracht mislukt, start je alleen de ongewijzigde services opnieuw en annuleer je de update; PostgreSQL-dump en bestandsarchief uit hetzelfde schrijversstopvenster; de app kan ook volgens schema back-uppen (Beheer → Backup → Planning: interval, overslaan als er niets veranderde, de nieuwste N bewaren); geplande archieven komen in `backups/` binnen `DISCVAULT_DATA_DIR`, kopieer ze dus ook van de host af. Paginaspecifieke controlepunten: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
 
 - als een back-upopdracht mislukt, start je alleen de ongewijzigde services opnieuw en annuleer je de update
 - PostgreSQL-dump en bestandsarchief uit hetzelfde schrijversstopvenster
+- de app kan ook volgens schema back-uppen (Beheer → Backup → Planning: interval, overslaan als er niets veranderde, de nieuwste N bewaren); geplande archieven komen in `backups/` binnen `DISCVAULT_DATA_DIR`, kopieer ze dus ook van de host af
 :::
 
 ## Volgende stap

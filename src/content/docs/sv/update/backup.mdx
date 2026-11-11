@@ -84,10 +84,11 @@ Godkänn resultatet för **Uppdatering och migrering: Säkerhetskopia** endast n
 ## Säkerhet och återställning
 
 :::caution
-Den säkra återställningsgränsen för **Uppdatering och migrering: Säkerhetskopia** kräver dessa åtgärder innan något startas eller fortsätter: om ett säkerhetskopieringskommando misslyckas, starta bara oförändrade tjänster och avbryt uppdateringen; PostgreSQL-dump och filarkiv från samma stoppade skrivfönster. Sidspecifika kontrollpunkter: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
+Den säkra återställningsgränsen för **Uppdatering och migrering: Säkerhetskopia** kräver dessa åtgärder innan något startas eller fortsätter: om ett säkerhetskopieringskommando misslyckas, starta bara oförändrade tjänster och avbryt uppdateringen; PostgreSQL-dump och filarkiv från samma stoppade skrivfönster; appen kan även säkerhetskopiera enligt schema (Administration → Backup → Schema: intervall, hoppa över utan ändringar, behåll de N senaste); schemalagda arkiv hamnar i `backups/` i `DISCVAULT_DATA_DIR`, så kopiera dem även bort från värden. Sidspecifika kontrollpunkter: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
 
 - om ett säkerhetskopieringskommando misslyckas, starta bara oförändrade tjänster och avbryt uppdateringen
 - PostgreSQL-dump och filarkiv från samma stoppade skrivfönster
+- appen kan även säkerhetskopiera enligt schema (Administration → Backup → Schema: intervall, hoppa över utan ändringar, behåll de N senaste); schemalagda arkiv hamnar i `backups/` i `DISCVAULT_DATA_DIR`, så kopiera dem även bort från värden
 :::
 
 ## Nästa steg

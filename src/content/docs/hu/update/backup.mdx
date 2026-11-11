@@ -84,10 +84,11 @@ Az eredmény csak ennél fogadható el: **Frissítés és migrálás: Biztonság
 ## Biztonság és visszaállítás
 
 :::caution
-A biztonságos helyreállítás határa ennél: **Frissítés és migrálás: Biztonsági mentés** ezeket a műveleteket igényli indítás vagy folytatás előtt: ha bármely mentési parancs hibázik, csak a változatlan szolgáltatásokat indítsa újra, és szakítsa meg a frissítést; PostgreSQL dump és fájlarchívum ugyanabból a leállított írási ablakból. Oldalspecifikus ellenőrzési pontok: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
+A biztonságos helyreállítás határa ennél: **Frissítés és migrálás: Biztonsági mentés** ezeket a műveleteket igényli indítás vagy folytatás előtt: ha bármely mentési parancs hibázik, csak a változatlan szolgáltatásokat indítsa újra, és szakítsa meg a frissítést; PostgreSQL dump és fájlarchívum ugyanabból a leállított írási ablakból; az alkalmazás ütemezetten is tud menteni (Adminisztráció → Backup → Ütemezés: időköz, kihagyás változás nélkül, az N legújabb megtartása); az ütemezett archívumok a `DISCVAULT_DATA_DIR` `backups/` mappájába kerülnek, ezért a gépen kívülre is másolja őket. Oldalspecifikus ellenőrzési pontok: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
 
 - ha bármely mentési parancs hibázik, csak a változatlan szolgáltatásokat indítsa újra, és szakítsa meg a frissítést
 - PostgreSQL dump és fájlarchívum ugyanabból a leállított írási ablakból
+- az alkalmazás ütemezetten is tud menteni (Adminisztráció → Backup → Ütemezés: időköz, kihagyás változás nélkül, az N legújabb megtartása); az ütemezett archívumok a `DISCVAULT_DATA_DIR` `backups/` mappájába kerülnek, ezért a gépen kívülre is másolja őket
 :::
 
 ## Következő lépés

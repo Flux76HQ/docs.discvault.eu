@@ -20,13 +20,15 @@ Sayfaya özel iş akışını tamamlayın: **Kurulum: Ters vekil ve geçiş anah
 
 ## Geçerli olduğu alan
 
-Bu sayfa yalnızca şunlar için geçerlidir: **Kurulum: Ters vekil ve geçiş anahtarları** (Docker · web). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6080`; localhost kurulum istisnası dışında passkey için güvenilir HTTPS üzerinden kararlı tam etki alanı adı gerekir; yalnız IP adresi veya düz HTTP desteklenmez; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; OIDC · `/api/next/auth/oidc/callback` · [Yapılandırma: OpenID Connect (OIDC) ile oturum açma](/tr/configure/oidc/); `LEGACY_AUTH_ENABLED=true`. Sayfaya özel denetim noktaları: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+Bu sayfa yalnızca şunlar için geçerlidir: **Kurulum: Ters vekil ve geçiş anahtarları** (Docker · web). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6180` `6080` Docker run; localhost kurulum istisnası dışında passkey için güvenilir HTTPS üzerinden kararlı tam etki alanı adı gerekir; yalnız IP adresi veya düz HTTP desteklenmez; OIDC · `/api/next/auth/oidc/callback` · [Yapılandırma: OpenID Connect (OIDC) ile oturum açma](/tr/configure/oidc/); `LEGACY_AUTH_ENABLED=true`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; OIDC · `/api/next/auth/oidc/callback` · [Yapılandırma: OpenID Connect (OIDC) ile oturum açma](/tr/configure/oidc/); `LEGACY_AUTH_ENABLED=true`. Sayfaya özel denetim noktaları: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 ### DiscVault kararlı
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- `RP_ID` `RP_ORIGINS` · `6080`
+- `RP_ID` `RP_ORIGINS` · `6180` `6080` Docker run
 - localhost kurulum istisnası dışında passkey için güvenilir HTTPS üzerinden kararlı tam etki alanı adı gerekir; yalnız IP adresi veya düz HTTP desteklenmez
+- OIDC · `/api/next/auth/oidc/callback` · [Yapılandırma: OpenID Connect (OIDC) ile oturum açma](/tr/configure/oidc/)
+- `LEGACY_AUTH_ENABLED=true`
 
 ### DiscVault beta
 
@@ -43,8 +45,8 @@ Bu sayfa yalnızca şunlar için geçerlidir: **Kurulum: Ters vekil ve geçiş a
 
 ### Legacy Authentication geri dönüşü
 
-:::note[Betada kullanılabilir]
-Kullanıcı adı, parola ve iki faktörlü kimlik doğrulama (2FA) kullanan Legacy Authentication, passkey kullanılamadığında DiscVault betada sunulur.
+:::note[Kararlı sürümde ve betada kullanılabilir]
+Kullanıcı adı, parola ve iki faktörlü kimlik doğrulama (2FA) kullanan Legacy Authentication, passkey kullanılamadığında DiscVaultda sunulur.
 
 Özelliği etkinleştirmeden veya ilk sahibi oluşturmadan önce `/install/legacy-authentication/` adımlarını izleyin.
 :::
@@ -56,7 +58,7 @@ Kullanıcı adı, parola ve iki faktörlü kimlik doğrulama (2FA) kullanan Lega
 3. **Yapılandırın:** `RP_ID`
 4. **Yapılandırın:** `RP_ORIGINS` · HTTPS
 5. **Yapılandırın:** [Yapılandırma: OpenID Connect (OIDC) ile oturum açma](/tr/configure/oidc/) · `/api/next/auth/oidc/callback`
-6. **Yapılandırın:** `6080` `6180`
+6. **Yapılandırın:** Docker Compose `6180` Docker run `6080`
 7. **Test edin:** `GET /api/next/health`
 8. **Kaydedin:** passkey kaydetmeden önce ana bilgisayar adını seçin; daha sonra değiştirmek yeniden kayıt gerektirir ve localhost yalnızca yerel kurulum istisnasıdır
 

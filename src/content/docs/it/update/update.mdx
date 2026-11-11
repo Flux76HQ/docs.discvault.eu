@@ -95,9 +95,10 @@ trap - EXIT
 
 ## Risultato previsto
 
-Accetta il risultato per **Aggiornamento e migrazione: Aggiornamento del contenitore** solo quando tutti i risultati seguenti sono veri: è in esecuzione il digest previsto, lo stato è integro e accesso proprietario, conteggio e campione multimediale riescono; mantieni invariati volumi, variabili d’ambiente, porte e percorso dati della generazione precedente; non sostituire mai un’immagine nella topologia Compose DiscVault PostgreSQL con `:legacy`. Punti di controllo della pagina: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
+Accetta il risultato per **Aggiornamento e migrazione: Aggiornamento del contenitore** solo quando tutti i risultati seguenti sono veri: è in esecuzione il digest previsto, lo stato è integro e accesso proprietario, conteggio e campione multimediale riescono; dopo un aggiornamento, Amministrazione → Plugin mostra le versioni installate; i plugin inclusi vengono sostituiti solo se la copia inclusa è più recente (26.11 richiede MovieVault v2 1.12.0 e TMDb 1.11.0); mantieni invariati volumi, variabili d’ambiente, porte e percorso dati della generazione precedente; non sostituire mai un’immagine nella topologia Compose DiscVault PostgreSQL con `:legacy`. Punti di controllo della pagina: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
 - è in esecuzione il digest previsto, lo stato è integro e accesso proprietario, conteggio e campione multimediale riescono
+- dopo un aggiornamento, Amministrazione → Plugin mostra le versioni installate; i plugin inclusi vengono sostituiti solo se la copia inclusa è più recente (26.11 richiede MovieVault v2 1.12.0 e TMDb 1.11.0)
 - mantieni invariati volumi, variabili d’ambiente, porte e percorso dati della generazione precedente; non sostituire mai un’immagine nella topologia Compose DiscVault PostgreSQL con `:legacy`
 
 ## Sicurezza e ripristino

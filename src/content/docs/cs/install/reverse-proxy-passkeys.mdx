@@ -20,13 +20,15 @@ Dokončete postup určený pro **Instalace: Reverzní proxy a přístupové klí
 
 ## Platí pro
 
-Tato stránka platí pouze pro **Instalace: Reverzní proxy a přístupové klíče** (Docker · web). Hranice kanálu a dat jsou: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6080`; mimo výjimku pro nastavení na localhost vyžadují passkeys stabilní plně kvalifikovaný název domény přes důvěryhodné HTTPS; holá IP adresa ani prosté HTTP nejsou podporovány; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; OIDC · `/api/next/auth/oidc/callback` · [Konfigurace: Přihlášení přes OpenID Connect (OIDC)](/cs/configure/oidc/); `LEGACY_AUTH_ENABLED=true`. Kontrolní body této stránky: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+Tato stránka platí pouze pro **Instalace: Reverzní proxy a přístupové klíče** (Docker · web). Hranice kanálu a dat jsou: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6180` `6080` Docker run; mimo výjimku pro nastavení na localhost vyžadují passkeys stabilní plně kvalifikovaný název domény přes důvěryhodné HTTPS; holá IP adresa ani prosté HTTP nejsou podporovány; OIDC · `/api/next/auth/oidc/callback` · [Konfigurace: Přihlášení přes OpenID Connect (OIDC)](/cs/configure/oidc/); `LEGACY_AUTH_ENABLED=true`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; OIDC · `/api/next/auth/oidc/callback` · [Konfigurace: Přihlášení přes OpenID Connect (OIDC)](/cs/configure/oidc/); `LEGACY_AUTH_ENABLED=true`. Kontrolní body této stránky: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
 ### DiscVault – stabilní
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- `RP_ID` `RP_ORIGINS` · `6080`
+- `RP_ID` `RP_ORIGINS` · `6180` `6080` Docker run
 - mimo výjimku pro nastavení na localhost vyžadují passkeys stabilní plně kvalifikovaný název domény přes důvěryhodné HTTPS; holá IP adresa ani prosté HTTP nejsou podporovány
+- OIDC · `/api/next/auth/oidc/callback` · [Konfigurace: Přihlášení přes OpenID Connect (OIDC)](/cs/configure/oidc/)
+- `LEGACY_AUTH_ENABLED=true`
 
 ### DiscVault – beta
 
@@ -43,8 +45,8 @@ Tato stránka platí pouze pro **Instalace: Reverzní proxy a přístupové klí
 
 ### Záložní ověřování Legacy Authentication
 
-:::note[Dostupné v beta verzi]
-Legacy Authentication s uživatelským jménem, heslem a dvoufaktorovým ověřením (2FA) je v DiscVault beta k dispozici jako záloha, když nelze použít passkeys.
+:::note[Dostupné ve stabilní i beta verzi]
+Legacy Authentication s uživatelským jménem, heslem a dvoufaktorovým ověřením (2FA) je v DiscVault k dispozici jako záloha, když nelze použít passkeys.
 
 Před zapnutím této možnosti nebo vytvořením prvního vlastníka postupujte podle `/install/legacy-authentication/`.
 :::
@@ -56,7 +58,7 @@ Před zapnutím této možnosti nebo vytvořením prvního vlastníka postupujte
 3. **Nastavte:** `RP_ID`
 4. **Nastavte:** `RP_ORIGINS` · HTTPS
 5. **Nastavte:** [Konfigurace: Přihlášení přes OpenID Connect (OIDC)](/cs/configure/oidc/) · `/api/next/auth/oidc/callback`
-6. **Nastavte:** `6080` `6180`
+6. **Nastavte:** Docker Compose `6180` Docker run `6080`
 7. **Otestujte:** `GET /api/next/health`
 8. **Zaznamenejte:** zvolte název hostitele před registrací passkeys; pozdější změna vyžaduje novou registraci a localhost zůstává pouze výjimkou pro místní nastavení
 

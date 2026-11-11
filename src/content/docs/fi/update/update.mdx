@@ -95,9 +95,10 @@ trap - EXIT
 
 ## Odotettu tulos
 
-Hyväksy tulos kohteelle **Päivitys ja siirto: Säilön päivitys** vain kun kaikki seuraavat tulokset toteutuvat: tarkoitettu image-tiiviste on käytössä, health onnistuu ja omistajan kirjautuminen, kirjastomäärä sekä mediatesti läpäisevät; pidä edellisen sukupolven taltiot, ympäristömuuttujat, portit ja datapolku ennallaan; älä koskaan vaihda DiscVault PostgreSQL Compose -topologian imagea `:legacy`-imageksi. Sivukohtaiset tarkistuspisteet: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
+Hyväksy tulos kohteelle **Päivitys ja siirto: Säilön päivitys** vain kun kaikki seuraavat tulokset toteutuvat: tarkoitettu image-tiiviste on käytössä, health onnistuu ja omistajan kirjautuminen, kirjastomäärä sekä mediatesti läpäisevät; päivityksen jälkeen Ylläpito → Liitännäiset näyttää asennetut versiot; mukana tulevat liitännäiset korvataan vain, jos mukana tuleva kopio on uudempi (26.11 tarvitsee MovieVault v2 1.12.0:n ja TMDb 1.11.0:n); pidä edellisen sukupolven taltiot, ympäristömuuttujat, portit ja datapolku ennallaan; älä koskaan vaihda DiscVault PostgreSQL Compose -topologian imagea `:legacy`-imageksi. Sivukohtaiset tarkistuspisteet: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
 - tarkoitettu image-tiiviste on käytössä, health onnistuu ja omistajan kirjautuminen, kirjastomäärä sekä mediatesti läpäisevät
+- päivityksen jälkeen Ylläpito → Liitännäiset näyttää asennetut versiot; mukana tulevat liitännäiset korvataan vain, jos mukana tuleva kopio on uudempi (26.11 tarvitsee MovieVault v2 1.12.0:n ja TMDb 1.11.0:n)
 - pidä edellisen sukupolven taltiot, ympäristömuuttujat, portit ja datapolku ennallaan; älä koskaan vaihda DiscVault PostgreSQL Compose -topologian imagea `:legacy`-imageksi
 
 ## Turvallisuus ja palautus

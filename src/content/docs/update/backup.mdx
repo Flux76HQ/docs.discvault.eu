@@ -88,6 +88,7 @@ If any backup command fails, restart the unchanged services and cancel the updat
 
 - if any backup command fails, restart only the unchanged services and cancel the update
 - PostgreSQL dump and filesystem archive from the same stopped-writer window
+- the app can also back up on a schedule (Admin → Backup → Schedule: interval, skip when nothing changed, keep the newest N); scheduled archives land in `backups/` inside `DISCVAULT_DATA_DIR`, so copy them off the host as well
 :::
 
 ## Next step

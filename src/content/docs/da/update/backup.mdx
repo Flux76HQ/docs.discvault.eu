@@ -84,10 +84,11 @@ Godkend resultatet for **Opdatering og migrering: Sikkerhedskopi** kun når alle
 ## Sikkerhed og tilbagerulning
 
 :::caution
-Den sikre gendannelsesgrænse for **Opdatering og migrering: Sikkerhedskopi** kræver disse handlinger, før noget startes eller fortsættes: hvis en backupkommando fejler, start kun de uændrede tjenester igen og annuller opdateringen; PostgreSQL-dump og filarkiv fra samme vindue med stoppede skrivere. Sidespecifikke kontrolpunkter: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
+Den sikre gendannelsesgrænse for **Opdatering og migrering: Sikkerhedskopi** kræver disse handlinger, før noget startes eller fortsættes: hvis en backupkommando fejler, start kun de uændrede tjenester igen og annuller opdateringen; PostgreSQL-dump og filarkiv fra samme vindue med stoppede skrivere; appen kan også tage backup efter tidsplan (Administration → Backup → Tidsplan: interval, spring over uden ændringer, behold de N nyeste); planlagte arkiver ligger i `backups/` i `DISCVAULT_DATA_DIR`, så kopiér dem også væk fra værten. Sidespecifikke kontrolpunkter: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
 
 - hvis en backupkommando fejler, start kun de uændrede tjenester igen og annuller opdateringen
 - PostgreSQL-dump og filarkiv fra samme vindue med stoppede skrivere
+- appen kan også tage backup efter tidsplan (Administration → Backup → Tidsplan: interval, spring over uden ændringer, behold de N nyeste); planlagte arkiver ligger i `backups/` i `DISCVAULT_DATA_DIR`, så kopiér dem også væk fra værten
 :::
 
 ## Næste trin
