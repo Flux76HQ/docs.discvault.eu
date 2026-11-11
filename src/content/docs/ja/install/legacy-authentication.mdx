@@ -4,15 +4,15 @@ description: 'タスク別の手順: インストール: Legacy Authentication. 
 pageId: 'install-legacy-authentication'
 products: ['server']
 platforms: ['docker', 'web']
-channels: ['beta']
-minVersion: 'DiscVault v26'
+channels: ['stable', 'beta']
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-20'
+lastVerified: '2026-11-11'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="Docker · Web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-20" />
+<PageMeta channels="stable,beta" platform="Docker · Web" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-11-11" />
 
 ## 目的と結果
 
@@ -20,9 +20,15 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## 対象
 
-このページの対象は **インストール: Legacy Authentication** (Docker · Web). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:beta`; TOTP; FQDN HTTPS. このページ固有の確認点: `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.
+このページの対象は **インストール: Legacy Authentication** (Docker · Web). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; TOTP; FQDN HTTPS; DiscVault · `ghcr.io/helmerznl/discvault:beta`; TOTP; FQDN HTTPS. このページ固有の確認点: `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.
 
-### DiscVault v26 ベータ版
+### DiscVault 安定版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- TOTP
+- FQDN HTTPS
+
+### DiscVault ベータ版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - TOTP
@@ -30,13 +36,13 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## 前提条件
 
-- ユーザー名、パスワード、2 要素認証（2FA）を使用する Legacy Authentication は、パスキーを使用できない場合の代替手段として DiscVault 26 ベータで利用できます。
+- ユーザー名、パスワード、2 要素認証（2FA）を使用する Legacy Authentication は、パスキーを使用できない場合の代替手段として DiscVault で利用できます。
 - 所有者アクセス · ユーザーや認証情報のない新規インスタンスでは、パスワードリスクの確認後にウィザードが最初の所有者をアトミックに作成します
 - TOTP · 復旧コードはハッシュ化された使い捨てでパスキー復旧と共通です。バックアップには TOTP シークレットと復旧情報が含まれないため、復元後に MFA を再登録します
 
 ### Legacy Authentication のフォールバック
 
-:::note[ベータで利用可能]
+:::note[安定版とベータで利用可能]
 無効または空の RP 設定を持つ直接のプライベートまたはループバック要求だけが TOTP なしの初期設定を提示できます。ユーザー名、パスワード、2FA では TOTP を有効に保ちます
 :::
 
@@ -47,12 +53,12 @@ import PageMeta from '../../../../components/PageMeta.astro';
 3. **選択:** ユーザーや認証情報のない新規インスタンスでは、パスワードリスクの確認後にウィザードが最初の所有者をアトミックに作成します · 既存インストールではユーザーとロールでパスワードログインを有効にし、所有者または管理者の新しいパスキー検証で承認します
 4. **作成:** パスワードは 15 文字以上で、ユーザー名や拒否対象の一般的なパスワードは使用できず、Argon2id でハッシュ化されます。15 分間に 5 回失敗すると 15 分間ロックされます · TOTP · 復旧コードはハッシュ化された使い捨てでパスキー復旧と共通です。バックアップには TOTP シークレットと復旧情報が含まれないため、復元後に MFA を再登録します
 5. **設定:** 所有者と管理者は一時パスワードの発行、変更の強制、ユーザー別 MFA ポリシー、パスキー登録の制御を行えます
-6. **テスト:** ユーザー名、パスワード、2 要素認証（2FA）を使用する Legacy Authentication は、パスキーを使用できない場合の代替手段として DiscVault 26 ベータで利用できます。 · `GET /api/next/auth/status`
+6. **テスト:** ユーザー名、パスワード、2 要素認証（2FA）を使用する Legacy Authentication は、パスキーを使用できない場合の代替手段として DiscVault で利用できます。 · `GET /api/next/auth/status`
 7. **記録:** 復旧コードはハッシュ化された使い捨てでパスキー復旧と共通です。バックアップには TOTP シークレットと復旧情報が含まれないため、復元後に MFA を再登録します
 
 ### コマンドと設定
 
-#### DiscVault v26 ベータ版
+#### 両方のチャンネル
 
 ```text
 RP_ID=discvault.example.com
@@ -75,9 +81,9 @@ curl --fail http://localhost:6180/api/next/auth/status
 
 ## 期待される結果
 
-次の結果を受け入れる条件: **インストール: Legacy Authentication** 以下の結果をすべて確認した場合のみ: ユーザー名、パスワード、2 要素認証（2FA）を使用する Legacy Authentication は、パスキーを使用できない場合の代替手段として DiscVault 26 ベータで利用できます。; TOTP · 復旧コードはハッシュ化された使い捨てでパスキー復旧と共通です。バックアップには TOTP シークレットと復旧情報が含まれないため、復元後に MFA を再登録します; パスワードは 15 文字以上で、ユーザー名や拒否対象の一般的なパスワードは使用できず、Argon2id でハッシュ化されます。15 分間に 5 回失敗すると 15 分間ロックされます. このページ固有の確認点: `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.
+次の結果を受け入れる条件: **インストール: Legacy Authentication** 以下の結果をすべて確認した場合のみ: ユーザー名、パスワード、2 要素認証（2FA）を使用する Legacy Authentication は、パスキーを使用できない場合の代替手段として DiscVault で利用できます。; TOTP · 復旧コードはハッシュ化された使い捨てでパスキー復旧と共通です。バックアップには TOTP シークレットと復旧情報が含まれないため、復元後に MFA を再登録します; パスワードは 15 文字以上で、ユーザー名や拒否対象の一般的なパスワードは使用できず、Argon2id でハッシュ化されます。15 分間に 5 回失敗すると 15 分間ロックされます. このページ固有の確認点: `LEGACY_AUTH_ENABLED=true` · `RP_ID=` · `RP_ORIGINS=` · TOTP · Argon2id · `15` · `/api/next/auth/status`.
 
-- ユーザー名、パスワード、2 要素認証（2FA）を使用する Legacy Authentication は、パスキーを使用できない場合の代替手段として DiscVault 26 ベータで利用できます。
+- ユーザー名、パスワード、2 要素認証（2FA）を使用する Legacy Authentication は、パスキーを使用できない場合の代替手段として DiscVault で利用できます。
 - TOTP · 復旧コードはハッシュ化された使い捨てでパスキー復旧と共通です。バックアップには TOTP シークレットと復旧情報が含まれないため、復元後に MFA を再登録します
 - パスワードは 15 文字以上で、ユーザー名や拒否対象の一般的なパスワードは使用できず、Argon2id でハッシュ化されます。15 分間に 5 回失敗すると 15 分間ロックされます
 
@@ -97,11 +103,12 @@ curl --fail http://localhost:6180/api/next/auth/status
 
 ## 情報源と状態
 
-- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [`helmerzNL/DiscVault@441f96593219`](https://github.com/helmerzNL/DiscVault/commit/441f96593219c66d45aac99ce5ef9f81f011d449)
+- [Stable source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/main/app/deploy/next/README.md)
 - [Moving beta source: Legacy Authentication deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
 - [Pinned verification: `next_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_auth.py)
 - [Pinned verification: `next_legacy_auth.py`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/next_legacy_auth.py)
 - [Pinned verification: Legacy Authentication schema](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/041_legacy_auth.sql)
 - [Pinned verification: unified recovery codes](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/backend/migrations_next/042_unified_recovery_codes.sql)
-- 情報源と状態: `2026-07-20`
-- DiscVault Docs: `0.1.6`
+- 情報源と状態: `2026-11-11`
+- DiscVault Docs: `0.2.0`

@@ -4,15 +4,15 @@ description: 'Instructions propres à la tâche : Configuration: Connexion avec 
 pageId: 'configure-oidc'
 products: ['server', 'pwa']
 platforms: ['docker', 'web']
-channels: ['beta']
-minVersion: 'DiscVault v26'
+channels: ['stable', 'beta']
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'Flux76HQ/App-Guidance']
-lastVerified: '2026-09-20'
+lastVerified: '2026-11-11'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-09-20" />
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault" source="helmerzNL/DiscVault · Flux76HQ/App-Guidance" verified="2026-11-11" />
 
 ## Objectif et résultat
 
@@ -20,9 +20,15 @@ Suivez le déroulement propre à cette page pour **Configuration: Connexion avec
 
 ## S’applique à
 
-Cette page s’applique uniquement à **Configuration: Connexion avec OpenID Connect (OIDC)** (Docker · web). Les limites de canal et de données sont : DiscVault · `26.9.117+`; OIDC ajoute une connexion facultative dans le navigateur ; les passkeys locales, mots de passe facultatifs, codes de récupération, jetons API et jetons bearer MCP conservent leurs rôles; une identité est la paire exacte issuer et subject ; un e-mail ne crée jamais de liaison automatique, la liaison exige la session de navigateur connectée et la dissociation une autre méthode de connexion utilisable. Points de contrôle propres à la page : OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
+Cette page s’applique uniquement à **Configuration: Connexion avec OpenID Connect (OIDC)** (Docker · web). Les limites de canal et de données sont : DiscVault · `26.10.17+`; OIDC ajoute une connexion facultative dans le navigateur ; les passkeys locales, mots de passe facultatifs, codes de récupération, jetons API et jetons bearer MCP conservent leurs rôles; une identité est la paire exacte issuer et subject ; un e-mail ne crée jamais de liaison automatique, la liaison exige la session de navigateur connectée et la dissociation une autre méthode de connexion utilisable; DiscVault · `26.9.117+`; OIDC ajoute une connexion facultative dans le navigateur ; les passkeys locales, mots de passe facultatifs, codes de récupération, jetons API et jetons bearer MCP conservent leurs rôles; une identité est la paire exacte issuer et subject ; un e-mail ne crée jamais de liaison automatique, la liaison exige la session de navigateur connectée et la dissociation une autre méthode de connexion utilisable. Points de contrôle propres à la page : OIDC · `/api/next/auth/oidc/callback` · `DISCVAULT_OIDC_ISSUER` · `DISCVAULT_OIDC_CLIENT_ID` · `DISCVAULT_OIDC_CLIENT_SECRET` · `DISCVAULT_OIDC_PROVIDER_NAME` · `DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS` · Pocket ID · PKCE · JWKS · `auth.oidc_failed`.
 
-### DiscVault v26 bêta
+### DiscVault stable
+
+- DiscVault · `26.10.17+`
+- OIDC ajoute une connexion facultative dans le navigateur ; les passkeys locales, mots de passe facultatifs, codes de récupération, jetons API et jetons bearer MCP conservent leurs rôles
+- une identité est la paire exacte issuer et subject ; un e-mail ne crée jamais de liaison automatique, la liaison exige la session de navigateur connectée et la dissociation une autre méthode de connexion utilisable
+
+### DiscVault bêta
 
 - DiscVault · `26.9.117+`
 - OIDC ajoute une connexion facultative dans le navigateur ; les passkeys locales, mots de passe facultatifs, codes de récupération, jetons API et jetons bearer MCP conservent leurs rôles
@@ -36,7 +42,7 @@ Cette page s’applique uniquement à **Configuration: Connexion avec OpenID Con
 
 ### Canal privé du fournisseur
 
-:::note[Disponible en bêta]
+:::note[Disponible en stable et en bêta]
 autorisez des origines HTTP privées exactes uniquement pour les endpoints de jeton et JWKS ; l’émetteur et l’autorisation du navigateur restent exclusivement en HTTPS, la vérification TLS reste active et les redirections discovery, jeton et JWKS sont refusées
 :::
 
@@ -52,7 +58,7 @@ autorisez des origines HTTP privées exactes uniquement pour les endpoints de je
 
 ### Commandes et réglages
 
-#### DiscVault v26 bêta
+#### Les deux canaux
 
 ```text
 RP_ORIGINS=https://discvault.example.com
@@ -98,11 +104,11 @@ La limite de récupération sûre pour **Configuration: Connexion avec OpenID Co
 
 ## Source et état
 
-- [`helmerzNL/DiscVault@409da7b2dc25`](https://github.com/helmerzNL/DiscVault/commit/409da7b2dc25bbf621cd0a6682136d565cdf5070)
+- [`helmerzNL/DiscVault@441f96593219`](https://github.com/helmerzNL/DiscVault/commit/441f96593219c66d45aac99ce5ef9f81f011d449)
 - [`Flux76HQ/App-Guidance@41bfca3bfa39`](https://github.com/Flux76HQ/App-Guidance/commit/41bfca3bfa39f0b43924190d384e2d96be756020)
 - [Moving beta source: OIDC deployment notes](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/README.md)
 - [Pinned verification: OIDC environment template](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/deploy/next/.env.example)
 - [Pinned verification: OIDC implementation](https://github.com/helmerzNL/DiscVault/blob/409da7b2dc25bbf621cd0a6682136d565cdf5070/app/backend/next_oidc.py)
 - [Authoritative OIDC authentication contract](https://github.com/Flux76HQ/App-Guidance/blob/41bfca3bfa39f0b43924190d384e2d96be756020/projects/discvault/specs/oidc-authentication.md)
-- Source et état: `2026-09-20`
-- DiscVault Docs: `0.1.14`
+- Source et état: `2026-11-11`
+- DiscVault Docs: `0.2.0`

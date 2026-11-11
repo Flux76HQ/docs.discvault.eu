@@ -5,14 +5,14 @@ pageId: 'configure-index'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · nett" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-09-20" />
+<PageMeta channels="stable,beta" platform="Docker · nett" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-09-20" />
 
 ## Mål og resultat
 
@@ -20,17 +20,17 @@ Fullfør den sidespesifikke arbeidsflyten for **Konfigurasjon: Oversikt**. Denne
 
 ## Gjelder for
 
-Denne siden gjelder bare **Konfigurasjon: Oversikt** (Docker · nett). Kanal- og datagrensene er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. Sidespesifikke kontrollpunkter: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/oidc/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
+Denne siden gjelder bare **Konfigurasjon: Oversikt** (Docker · nett). Kanal- og datagrensene er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault RBAC. Sidespesifikke kontrollpunkter: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/oidc/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
-### DiscVault v26 – stabil
+### DiscVault – stabil
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- RBAC
+- DiscVault RBAC
 
-### DiscVault v26 – beta
+### DiscVault – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- RBAC
+- DiscVault RBAC
 
 ## Forutsetninger
 
@@ -48,11 +48,11 @@ Denne siden gjelder bare **Konfigurasjon: Oversikt** (Docker · nett). Kanal- og
 
 ### Oppgaveruter
 
-- [Konfigurasjon: Miljøvariabler](/no/configure/environment/) — DiscVault 26 `.env.example`
-- [Konfigurasjon: Autentisering og RBAC](/no/configure/auth-rbac/) — DiscVault 26 RBAC
-- [Konfigurasjon: Pålogging med OpenID Connect (OIDC)](/no/configure/oidc/) — DiscVault 26.9 117 OIDC Pocket ID
-- [Installasjon: Legacy Authentication](/no/install/legacy-authentication/) — DiscVault 26 TOTP
-- [Konfigurasjon: Programtillegg og metadata](/no/configure/plugins-metadata/) — DiscVault 26
+- [Konfigurasjon: Miljøvariabler](/no/configure/environment/) — DiscVault `.env.example`
+- [Konfigurasjon: Autentisering og RBAC](/no/configure/auth-rbac/) — DiscVault OIDC RBAC
+- [Konfigurasjon: Pålogging med OpenID Connect (OIDC)](/no/configure/oidc/) — DiscVault OIDC Pocket ID
+- [Installasjon: Legacy Authentication](/no/install/legacy-authentication/) — DiscVault TOTP
+- [Konfigurasjon: Programtillegg og metadata](/no/configure/plugins-metadata/) — DiscVault
 
 ## Forventet resultat
 

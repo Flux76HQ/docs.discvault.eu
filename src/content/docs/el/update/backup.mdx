@@ -5,14 +5,14 @@ pageId: 'update-backup'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Στόχος και αποτέλεσμα
 
@@ -22,13 +22,13 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 Αυτή η σελίδα ισχύει μόνο για **Ενημέρωση και μετεγκατάσταση: Αντίγραφο ασφαλείας** (Docker · Unraid). Τα όρια καναλιού και δεδομένων είναι: DiscVault · `ghcr.io/helmerznl/discvault:latest`; dump PostgreSQL και αρχείο συστήματος από το ίδιο παράθυρο χωρίς εγγραφές; PostgreSQL `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; dump PostgreSQL και αρχείο συστήματος από το ίδιο παράθυρο χωρίς εγγραφές; PostgreSQL `/data`. Σημεία ελέγχου της σελίδας: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
 
-### DiscVault v26 – σταθερό
+### DiscVault – σταθερό
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - dump PostgreSQL και αρχείο συστήματος από το ίδιο παράθυρο χωρίς εγγραφές
 - PostgreSQL `/data`
 
-### DiscVault v26 – beta
+### DiscVault – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - dump PostgreSQL και αρχείο συστήματος από το ίδιο παράθυρο χωρίς εγγραφές
@@ -84,10 +84,11 @@ gzip -t "/srv/backups/discvault-data-$BACKUP_ID.tgz"
 ## Ασφάλεια και επαναφορά
 
 :::caution
-Το ασφαλές όριο ανάκτησης για **Ενημέρωση και μετεγκατάσταση: Αντίγραφο ασφαλείας** απαιτεί αυτές τις ενέργειες πριν από κάθε εκκίνηση ή συνέχεια: αν αποτύχει εντολή αντιγράφου, επανεκκινήστε μόνο τις αμετάβλητες υπηρεσίες και ακυρώστε την ενημέρωση; dump PostgreSQL και αρχείο συστήματος από το ίδιο παράθυρο χωρίς εγγραφές. Σημεία ελέγχου της σελίδας: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
+Το ασφαλές όριο ανάκτησης για **Ενημέρωση και μετεγκατάσταση: Αντίγραφο ασφαλείας** απαιτεί αυτές τις ενέργειες πριν από κάθε εκκίνηση ή συνέχεια: αν αποτύχει εντολή αντιγράφου, επανεκκινήστε μόνο τις αμετάβλητες υπηρεσίες και ακυρώστε την ενημέρωση; dump PostgreSQL και αρχείο συστήματος από το ίδιο παράθυρο χωρίς εγγραφές; η εφαρμογή μπορεί επίσης να παίρνει αντίγραφα με χρονοδιάγραμμα (Διαχείριση → Backup → Πρόγραμμα: διάστημα, παράλειψη χωρίς αλλαγές, διατήρηση των N νεότερων)· τα αρχεία βρίσκονται στο `backups/` μέσα στο `DISCVAULT_DATA_DIR`, οπότε αντιγράψτε τα και εκτός διακομιστή. Σημεία ελέγχου της σελίδας: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
 
 - αν αποτύχει εντολή αντιγράφου, επανεκκινήστε μόνο τις αμετάβλητες υπηρεσίες και ακυρώστε την ενημέρωση
 - dump PostgreSQL και αρχείο συστήματος από το ίδιο παράθυρο χωρίς εγγραφές
+- η εφαρμογή μπορεί επίσης να παίρνει αντίγραφα με χρονοδιάγραμμα (Διαχείριση → Backup → Πρόγραμμα: διάστημα, παράλειψη χωρίς αλλαγές, διατήρηση των N νεότερων)· τα αρχεία βρίσκονται στο `backups/` μέσα στο `DISCVAULT_DATA_DIR`, οπότε αντιγράψτε τα και εκτός διακομιστή
 :::
 
 ## Επόμενο βήμα

@@ -5,14 +5,14 @@ pageId: 'update-backup'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## 目的と結果
 
@@ -22,13 +22,13 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 このページの対象は **更新と移行: バックアップ** (Docker · Unraid). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; 同じ書き込み停止時間帯の PostgreSQL ダンプとファイルアーカイブ; PostgreSQL `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; 同じ書き込み停止時間帯の PostgreSQL ダンプとファイルアーカイブ; PostgreSQL `/data`. このページ固有の確認点: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
 
-### DiscVault v26 安定版
+### DiscVault 安定版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - 同じ書き込み停止時間帯の PostgreSQL ダンプとファイルアーカイブ
 - PostgreSQL `/data`
 
-### DiscVault v26 ベータ版
+### DiscVault ベータ版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - 同じ書き込み停止時間帯の PostgreSQL ダンプとファイルアーカイブ
@@ -84,10 +84,11 @@ gzip -t "/srv/backups/discvault-data-$BACKUP_ID.tgz"
 ## 安全性とロールバック
 
 :::caution
-安全な復旧境界: **更新と移行: バックアップ** 起動または続行の前に、次の操作が必要です: バックアップコマンドが失敗した場合は、変更していないサービスだけを再起動し、更新を中止します; 同じ書き込み停止時間帯の PostgreSQL ダンプとファイルアーカイブ. このページ固有の確認点: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
+安全な復旧境界: **更新と移行: バックアップ** 起動または続行の前に、次の操作が必要です: バックアップコマンドが失敗した場合は、変更していないサービスだけを再起動し、更新を中止します; 同じ書き込み停止時間帯の PostgreSQL ダンプとファイルアーカイブ; アプリはスケジュールでもバックアップできます（管理 → Backup → スケジュール: 間隔、変更がなければスキップ、最新 N 件を保持）。アーカイブは `DISCVAULT_DATA_DIR` 内の `backups/` に置かれるため、ホスト外にもコピーしてください. このページ固有の確認点: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
 
 - バックアップコマンドが失敗した場合は、変更していないサービスだけを再起動し、更新を中止します
 - 同じ書き込み停止時間帯の PostgreSQL ダンプとファイルアーカイブ
+- アプリはスケジュールでもバックアップできます（管理 → Backup → スケジュール: 間隔、変更がなければスキップ、最新 N 件を保持）。アーカイブは `DISCVAULT_DATA_DIR` 内の `backups/` に置かれるため、ホスト外にもコピーしてください
 :::
 
 ## 次の手順

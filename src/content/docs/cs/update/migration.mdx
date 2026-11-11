@@ -1,37 +1,37 @@
 ---
-title: 'Aktualizace a migrace: Migrace na DiscVault 26'
-description: 'Pokyny pro konkrétní úlohu: Aktualizace a migrace: Migrace na DiscVault 26. /migration/readiness. ready_for_confirmation. /data/discvault.db. SQLite.'
+title: 'Aktualizace a migrace: Migrace na DiscVault'
+description: 'Pokyny pro konkrétní úlohu: Aktualizace a migrace: Migrace na DiscVault. /migration/readiness. ready_for_confirmation. /data/discvault.db. SQLite.'
 pageId: 'update-migration'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Cíl a výsledek
 
-Dokončete postup určený pro **Aktualizace a migrace: Migrace na DiscVault 26**. Tento postup pracuje s `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+Dokončete postup určený pro **Aktualizace a migrace: Migrace na DiscVault**. Tento postup pracuje s `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
 
 ## Platí pro
 
-Tato stránka platí pouze pro **Aktualizace a migrace: Migrace na DiscVault 26** (Docker · web). Hranice kanálu a dat jsou: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; zdroj existujících dat pouze pro čtení; nikdy aktuální běhová databáze · SQLite → PostgreSQL; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26; zdroj existujících dat pouze pro čtení; nikdy aktuální běhová databáze · SQLite → PostgreSQL. Kontrolní body této stránky: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+Tato stránka platí pouze pro **Aktualizace a migrace: Migrace na DiscVault** (Docker · web). Hranice kanálu a dat jsou: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault; zdroj existujících dat pouze pro čtení; nikdy aktuální běhová databáze · SQLite → PostgreSQL; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault; zdroj existujících dat pouze pro čtení; nikdy aktuální běhová databáze · SQLite → PostgreSQL. Kontrolní body této stránky: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
 
-### DiscVault v26 – stabilní
+### DiscVault – stabilní
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- DiscVault 26
+- DiscVault
 - zdroj existujících dat pouze pro čtení; nikdy aktuální běhová databáze · SQLite → PostgreSQL
 
-### DiscVault v26 – beta
+### DiscVault – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- DiscVault 26
+- DiscVault
 - zdroj existujících dat pouze pro čtení; nikdy aktuální běhová databáze · SQLite → PostgreSQL
 
 ## Požadavky
@@ -61,14 +61,14 @@ curl --fail http://localhost:6080/api/next/migration/status
 
 ## Očekávaný výsledek
 
-Výsledek přijměte pro **Aktualizace a migrace: Migrace na DiscVault 26** pouze pokud platí všechny následující výsledky: připravenost je potvrzena, migrace nemá žádné chybné záznamy a počty i vzorek médií odpovídají. Kontrolní body této stránky: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+Výsledek přijměte pro **Aktualizace a migrace: Migrace na DiscVault** pouze pokud platí všechny následující výsledky: připravenost je potvrzena, migrace nemá žádné chybné záznamy a počty i vzorek médií odpovídají. Kontrolní body této stránky: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
 
 - připravenost je potvrzena, migrace nemá žádné chybné záznamy a počty i vzorek médií odpovídají
 
 ## Bezpečnost a návrat
 
 :::caution
-Bezpečná hranice obnovy pro **Aktualizace a migrace: Migrace na DiscVault 26** vyžaduje před spuštěním nebo pokračováním tyto kroky: zastavte zapisující služby DiscVault, obnovte odpovídající zálohy PostgreSQL a `/data` a nikdy neopakujte import do částečně naplněné databáze. Kontrolní body této stránky: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+Bezpečná hranice obnovy pro **Aktualizace a migrace: Migrace na DiscVault** vyžaduje před spuštěním nebo pokračováním tyto kroky: zastavte zapisující služby DiscVault, obnovte odpovídající zálohy PostgreSQL a `/data` a nikdy neopakujte import do částečně naplněné databáze. Kontrolní body této stránky: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
 
 - zastavte zapisující služby DiscVault, obnovte odpovídající zálohy PostgreSQL a `/data` a nikdy neopakujte import do částečně naplněné databáze
 :::

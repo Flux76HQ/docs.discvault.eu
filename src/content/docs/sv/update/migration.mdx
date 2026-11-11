@@ -1,37 +1,37 @@
 ---
-title: 'Uppdatering och migrering: Migrering till DiscVault 26'
-description: 'Uppgiftsspecifik vägledning för Uppdatering och migrering: Migrering till DiscVault 26. /migration/readiness. ready_for_confirmation. /data/discvault.db. SQLite.'
+title: 'Uppdatering och migrering: Migrering till DiscVault'
+description: 'Uppgiftsspecifik vägledning för Uppdatering och migrering: Migrering till DiscVault. /migration/readiness. ready_for_confirmation. /data/discvault.db. SQLite.'
 pageId: 'update-migration'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · webb" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · webb" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Mål och resultat
 
-Följ det sidspecifika arbetsflödet för **Uppdatering och migrering: Migrering till DiscVault 26**. Den här proceduren använder `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+Följ det sidspecifika arbetsflödet för **Uppdatering och migrering: Migrering till DiscVault**. Den här proceduren använder `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
 
 ## Gäller för
 
-Den här sidan gäller endast **Uppdatering och migrering: Migrering till DiscVault 26** (Docker · webb). Kanal- och datagränserna är: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; skrivskyddad källa för befintliga data; aldrig den aktuella kördatabasen · SQLite → PostgreSQL; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26; skrivskyddad källa för befintliga data; aldrig den aktuella kördatabasen · SQLite → PostgreSQL. Sidspecifika kontrollpunkter: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+Den här sidan gäller endast **Uppdatering och migrering: Migrering till DiscVault** (Docker · webb). Kanal- och datagränserna är: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault; skrivskyddad källa för befintliga data; aldrig den aktuella kördatabasen · SQLite → PostgreSQL; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault; skrivskyddad källa för befintliga data; aldrig den aktuella kördatabasen · SQLite → PostgreSQL. Sidspecifika kontrollpunkter: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
 
-### DiscVault v26 – stabil
+### DiscVault – stabil
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- DiscVault 26
+- DiscVault
 - skrivskyddad källa för befintliga data; aldrig den aktuella kördatabasen · SQLite → PostgreSQL
 
-### DiscVault v26 – beta
+### DiscVault – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- DiscVault 26
+- DiscVault
 - skrivskyddad källa för befintliga data; aldrig den aktuella kördatabasen · SQLite → PostgreSQL
 
 ## Förutsättningar
@@ -61,14 +61,14 @@ curl --fail http://localhost:6080/api/next/migration/status
 
 ## Förväntat resultat
 
-Godkänn resultatet för **Uppdatering och migrering: Migrering till DiscVault 26** endast när alla resultat nedan stämmer: beredskap är bekräftad, migreringen har noll misslyckade poster och antal och medieprov stämmer. Sidspecifika kontrollpunkter: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+Godkänn resultatet för **Uppdatering och migrering: Migrering till DiscVault** endast när alla resultat nedan stämmer: beredskap är bekräftad, migreringen har noll misslyckade poster och antal och medieprov stämmer. Sidspecifika kontrollpunkter: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
 
 - beredskap är bekräftad, migreringen har noll misslyckade poster och antal och medieprov stämmer
 
 ## Säkerhet och återställning
 
 :::caution
-Den säkra återställningsgränsen för **Uppdatering och migrering: Migrering till DiscVault 26** kräver dessa åtgärder innan något startas eller fortsätter: stoppa DiscVault-writers, återställ matchande PostgreSQL- och `/data`-kopior och upprepa aldrig importen i en delvis fylld databas. Sidspecifika kontrollpunkter: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+Den säkra återställningsgränsen för **Uppdatering och migrering: Migrering till DiscVault** kräver dessa åtgärder innan något startas eller fortsätter: stoppa DiscVault-writers, återställ matchande PostgreSQL- och `/data`-kopior och upprepa aldrig importen i en delvis fylld databas. Sidspecifika kontrollpunkter: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
 
 - stoppa DiscVault-writers, återställ matchande PostgreSQL- och `/data`-kopior och upprepa aldrig importen i en delvis fylld databas
 :::

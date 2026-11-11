@@ -5,14 +5,14 @@ pageId: 'pwa-library-search'
 products: ['pwa']
 platforms: ['web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
 lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
+<PageMeta channels="stable,beta" platform="web" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Goal and result
 
@@ -20,18 +20,18 @@ Browse, search, and update titles, watchlist, and history, then choose how Colle
 
 ## Applies to
 
-In both DiscVault v26 channels, available actions are permission-scoped; viewers cannot perform editor or administrator changes. Collectors Mode is off by default and exposes the `box_set`, `vault`, and `collection` container types. Merging multiple editions as one title is a separate preference that is also off by default.
+In both DiscVault channels, available actions are permission-scoped; viewers cannot perform editor or administrator changes. Collectors Mode is off by default and exposes the `box_set`, `vault`, and `collection` container types. Merging multiple editions as one title is a separate preference that is also off by default.
 
-### DiscVault v26 stable
+### DiscVault stable
 
-- DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault stable · `ghcr.io/helmerznl/discvault:latest`
 - PWA · RBAC · account permissions
 - Collectors Mode is off by default and exposes advanced container features; `merge_editions_as_title` is a separate preference that is also off by default
 - when `merge_editions_as_title` is enabled, multiple physical versions appear as one library tile; open the tile to see every edition
 
-### DiscVault v26 beta
+### DiscVault beta
 
-- DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault beta · `ghcr.io/helmerznl/discvault:beta`
 - PWA · RBAC · account permissions
 - Collectors Mode is off by default and exposes advanced container features; `merge_editions_as_title` is a separate preference that is also off by default
 - when `merge_editions_as_title` is enabled, multiple physical versions appear as one library tile; open the tile to see every edition
@@ -54,6 +54,9 @@ In both DiscVault v26 channels, available actions are permission-scoped; viewers
 9. **Compare:** a vault is a user-created shelf, storage box, or location grouping with direct movie members and no retail-product meaning
 10. **Compare:** a collection is a thematic grouping whose ordered items may be movies, box-sets, vaults, or other collections, so nesting is supported
 11. **Test:** turning Collectors Mode off hides its container presentation but does not delete containers or their members
+12. **Configure:** the Advanced panel filters on the external score, a minimum number of votes, films without a score, and several tags matching any or all; smart filters keep these choices
+13. **Inspect:** custom fields are filterable, sortable and exportable, show on the detail page, and can be filled from an import column
+14. **Test:** a TV release from MovieVault is added as a series with its seasons, the next release of the same show joins that series, and the series screen can send season links back to MovieVault
 
 
 

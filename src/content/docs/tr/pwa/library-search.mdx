@@ -5,14 +5,14 @@ pageId: 'pwa-library-search'
 products: ['pwa']
 platforms: ['web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
 lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
+<PageMeta channels="stable,beta" platform="web" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Amaç ve sonuç
 
@@ -22,14 +22,14 @@ Sayfaya özel iş akışını tamamlayın: **PWA: Kitaplık ve arama**. Bu prose
 
 Bu sayfa yalnızca şunlar için geçerlidir: **PWA: Kitaplık ve arama** (web). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PWA · RBAC; Collectors Mode varsayılan olarak kapalıdır ve gelişmiş kapsayıcı özelliklerini gösterir; `merge_editions_as_title` yine varsayılan olarak kapalı ayrı bir tercihtir; `merge_editions_as_title` etkinleştirildiğinde birden çok fiziksel sürüm tek kitaplık kutucuğu olarak görünür; tüm sürümleri görmek için kutucuğu açın; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PWA · RBAC; Collectors Mode varsayılan olarak kapalıdır ve gelişmiş kapsayıcı özelliklerini gösterir; `merge_editions_as_title` yine varsayılan olarak kapalı ayrı bir tercihtir; `merge_editions_as_title` etkinleştirildiğinde birden çok fiziksel sürüm tek kitaplık kutucuğu olarak görünür; tüm sürümleri görmek için kutucuğu açın. Sayfaya özel denetim noktaları: PWA · `watchlist` · `history` · RBAC · `merge_editions_as_title` · `box_set` · `vault` · `collection`.
 
-### DiscVault v26 kararlı
+### DiscVault kararlı
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - PWA · RBAC
 - Collectors Mode varsayılan olarak kapalıdır ve gelişmiş kapsayıcı özelliklerini gösterir; `merge_editions_as_title` yine varsayılan olarak kapalı ayrı bir tercihtir
 - `merge_editions_as_title` etkinleştirildiğinde birden çok fiziksel sürüm tek kitaplık kutucuğu olarak görünür; tüm sürümleri görmek için kutucuğu açın
 
-### DiscVault v26 beta
+### DiscVault beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - PWA · RBAC
@@ -54,6 +54,9 @@ Bu sayfa yalnızca şunlar için geçerlidir: **PWA: Kitaplık ve arama** (web).
 9. **Karşılaştırın:** vault kullanıcı tarafından oluşturulan raf, saklama kutusu veya konum grubudur; doğrudan film üyeleri vardır ve perakende ürün anlamı taşımaz
 10. **Karşılaştırın:** collection sıralı öğeleri film, box-set, vault veya başka collection olabilen tematik gruptur; iç içe yerleştirme desteklenir
 11. **Test edin:** Collectors Mode kapatıldığında kapsayıcı sunumu gizlenir ancak kapsayıcılar veya üyeleri silinmez
+12. **Yapılandırın:** Gelişmiş paneli dış puana, en az oy sayısına, puanı olmayan filmlere ve birden çok etikete (herhangi biri veya tümü) göre filtreler; akıllı filtreler bu seçimleri saklar
+13. **İnceleyin:** özel alanlar filtrelenebilir, sıralanabilir ve dışa aktarılabilir, ayrıntı sayfasında görünür ve bir içe aktarma sütunundan doldurulabilir
+14. **Test edin:** MovieVault’tan gelen bir TV sürümü sezonlarıyla birlikte dizi olarak eklenir, aynı dizinin sonraki sürümü o diziye katılır ve dizi ekranı sezon bağlantılarını MovieVault’a geri gönderebilir
 
 
 

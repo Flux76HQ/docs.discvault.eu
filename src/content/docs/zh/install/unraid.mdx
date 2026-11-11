@@ -1,97 +1,130 @@
 ---
 title: '安装: Unraid'
-description: '任务专用说明： 安装: Unraid. /mnt/user/appdata/discvault/postgres. /mnt/user/appdata/discvault/data. 6080:5000. DISCVAULT_IMAGE.'
+description: '任务专用说明： 安装: Unraid. ghcr.io/helmerznl/discvault-launcher:latest. /var/run/docker.sock. /api/next/health.'
 pageId: 'install-unraid'
 products: ['server']
 platforms: ['unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+minVersion: 'DiscVault'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/unraid-community-apps']
+lastVerified: '2026-11-11'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Unraid" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/unraid-community-apps" verified="2026-11-11" />
 
 ## 目标和结果
 
-完成此页面专用的流程： **安装: Unraid**. 此流程使用 `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+从 Unraid Community Applications 商店安装 DiscVault。该模板会安装 DiscVault 启动器，由它为你创建并更新 PostgreSQL、API、worker 和 MCP。.
+
+完成此页面专用的流程： **安装: Unraid**. 此流程使用 `ghcr.io/helmerznl/discvault-launcher:latest` · `/var/run/docker.sock` · `/api/next/health`.
 
 ## 适用范围
 
-本页面仅适用于 **安装: Unraid** (Unraid). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL API MCP; `:latest` `:beta`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL API MCP; `:latest` `:beta`. 本页面专用检查点： `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+Helmer’s Repository 提供 DiscVault 和 DiscVault (beta) 两个模板，各自拥有独立的 appdata 文件夹、端口、Compose 项目和网络，可并行运行.
 
-### DiscVault v26 稳定版
+本页面仅适用于 **安装: Unraid** (Unraid). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault-launcher:latest`; `6080` · `/mnt/user/appdata/discvault` · `discvault_stack`; DiscVault · `ghcr.io/helmerznl/discvault-launcher:beta`; `6081` · `/mnt/user/appdata/discvault-beta` · `discvault_beta_stack`. 本页面专用检查点： `ghcr.io/helmerznl/discvault-launcher:latest` · `/var/run/docker.sock` · `/api/next/health`.
 
-- DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- PostgreSQL API MCP
-- `:latest` `:beta`
+### DiscVault 稳定版
 
-### DiscVault v26 测试版
+- DiscVault · `ghcr.io/helmerznl/discvault-launcher:latest`
+- `6080` · `/mnt/user/appdata/discvault` · `discvault_stack`
 
-- DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- PostgreSQL API MCP
-- `:latest` `:beta`
+### DiscVault 测试版
+
+- DiscVault · `ghcr.io/helmerznl/discvault-launcher:beta`
+- `6081` · `/mnt/user/appdata/discvault-beta` · `discvault_beta_stack`
 
 ## 前提条件
 
 - Unraid `6.12+`
-- `/mnt/user/appdata/discvault/data`
-- OpenSSL
+- 已安装 Community Applications 插件
+- 通行密钥需要在应用端口前提供带域名的 HTTPS 地址；没有时请使用带 TOTP 的密码登录
 
 ## 操作步骤
 
-1. **安装:** Unraid · [安装: Docker Compose](/zh/install/docker-compose/)
-2. **配置:** `DISCVAULT_IMAGE` · `:latest` `:beta`
-3. **配置:** `DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data` · `DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres`
-4. **验证:** `postgres` · `next-api` · `next-worker` · `next-mcp` · `6080:5000`
+1. **打开:** Apps → 搜索 DiscVault → 安装；测试版模板的名称带有 (beta)
+2. **配置:** 保留默认 appdata 文件夹；启动器文件夹保存生成的 Compose 文件和 `/config/stack.env` 中的密钥 · `TZ`
+3. **配置:** `RP_ID` · `RP_ORIGINS` · 通行密钥需要在应用端口前提供带域名的 HTTPS 地址；没有时请使用带 TOTP 的密码登录 · `LEGACY_AUTH_ENABLED=true`
+4. **启动:** 首次启动需要几分钟，启动器会拉取镜像并创建数据库 · 启动器会挂载 Docker socket，因而可以控制服务器上的 Docker；仅在信任启动器镜像时安装
+5. **验证:** `/api/next/health` · 初始设置会用通行密钥或密码加 TOTP 创建第一位所有者，并只显示一次恢复代码
+6. **配置:** Docker 选项卡 → 检查更新；启动时启动器也会更新堆栈的其余部分 · `DISCVAULT_CHANNEL=manual` · `DISCVAULT_IMAGE`
 
 ### 命令和设置
 
-#### DiscVault v26 稳定版
+#### DiscVault 稳定版
 
 ```text
-DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
-DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data
-DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres
-DISCVAULT_API_PORT=6080
-DISCVAULT_MCP_PORT=6090
+Repository                         ghcr.io/helmerznl/discvault-launcher:latest
+Web UI port                        6080
+App data (/data)                   /mnt/user/appdata/discvault
+DISCVAULT_DATA_DIR_HOST            /mnt/user/appdata/discvault
+DISCVAULT_POSTGRES_DATA_DIR_HOST   /mnt/user/appdata/discvault-postgres
+Launcher config (/config)          /mnt/user/appdata/discvault-launcher
+Docker socket                      /var/run/docker.sock
+DISCVAULT_CHANNEL                  latest
+TZ                                 Europe/Amsterdam
+RP_ID                              discvault.example.com
+RP_ORIGINS                         https://discvault.example.com
+LEGACY_AUTH_ENABLED                false
 ```
 
-#### DiscVault v26 测试版
+#### DiscVault 测试版
 
 ```text
-DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
-DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data
-DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres
-DISCVAULT_API_PORT=6080
-DISCVAULT_MCP_PORT=6090
+Repository                         ghcr.io/helmerznl/discvault-launcher:beta
+Web UI port                        6081
+App data (/data)                   /mnt/user/appdata/discvault-beta
+DISCVAULT_DATA_DIR_HOST            /mnt/user/appdata/discvault-beta
+DISCVAULT_POSTGRES_DATA_DIR_HOST   /mnt/user/appdata/discvault-beta-postgres
+Launcher config (/config)          /mnt/user/appdata/discvault-beta-launcher
+Docker socket                      /var/run/docker.sock
+DISCVAULT_CHANNEL                  beta
+DISCVAULT_PROJECT_NAME             discvault_beta_stack
+DISCVAULT_NETWORK                  discvault-beta-stack
+```
+
+#### 两个通道
+
+```bash
+curl --fail http://<unraid-server>:6080/api/next/health
+# Roll back: Release channel = manual, DiscVault image = v26.10.17
 ```
 
 ## 预期结果
 
-仅在以下条件下接受结果： **安装: Unraid** 必须确认以下所有结果： PostgreSQL; `/data`; HTTP `2xx`. 本页面专用检查点： `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+启动器已拉取镜像并创建堆栈，Web 界面在模板端口上响应，健康地址报告数据库已完成迁移.
 
-- PostgreSQL
-- `/data`
-- HTTP `2xx`
+仅在以下条件下接受结果： **安装: Unraid** 必须确认以下所有结果： 初始设置会用通行密钥或密码加 TOTP 创建第一位所有者，并只显示一次恢复代码; `/api/next/health` · HTTP `200` · `"status": "ok"`. 本页面专用检查点： `ghcr.io/helmerznl/discvault-launcher:latest` · `/var/run/docker.sock` · `/api/next/health`.
+
+- 初始设置会用通行密钥或密码加 TOTP 创建第一位所有者，并只显示一次恢复代码
+- `/api/next/health` · HTTP `200` · `"status": "ok"`
 
 ## 安全与回滚
 
 :::caution
-安全恢复边界： **安装: Unraid** 在启动或继续任何操作前必须执行： 匹配的备份集; `/mnt/user/appdata/discvault/data`. 本页面专用检查点： `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+复制三个 appdata 文件夹前先停止应用。若要回退，请将发布通道设为 manual 并填写上一版本标签，然后恢复更新前的备份。.
 
-- 匹配的备份集
-- `/mnt/user/appdata/discvault/data`
+安全恢复边界： **安装: Unraid** 在启动或继续任何操作前必须执行： 测试版可能以稳定版无法读取的方式更改数据库；切勿让它指向稳定版的文件夹; 启动器会挂载 Docker socket，因而可以控制服务器上的 Docker；仅在信任启动器镜像时安装; 应用内备份（管理 → Backup，也可按计划运行）可在 Docker、Unraid 与 Home Assistant 之间迁移收藏库; 启动器尚未传递 OpenID Connect 变量，因此 Unraid 模板使用通行密钥或密码登录. 本页面专用检查点： `ghcr.io/helmerznl/discvault-launcher:latest` · `/var/run/docker.sock` · `/api/next/health`.
+
+- 测试版可能以稳定版无法读取的方式更改数据库；切勿让它指向稳定版的文件夹
+- 启动器会挂载 Docker socket，因而可以控制服务器上的 Docker；仅在信任启动器镜像时安装
+- 应用内备份（管理 → Backup，也可按计划运行）可在 Docker、Unraid 与 Home Assistant 之间迁移收藏库
+- 启动器尚未传递 OpenID Connect 变量，因此 Unraid 模板使用通行密钥或密码登录
 :::
 
 ## 下一步
 
-[安装: 首次启动和健康检查](/zh/install/first-start-health/)
+[安装: 反向代理和通行密钥](/zh/install/reverse-proxy-passkeys/)
 
 ## 来源和状态
 
-- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- 来源和状态: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault@441f96593219`](https://github.com/helmerzNL/DiscVault/commit/441f96593219c66d45aac99ce5ef9f81f011d449)
+- [`helmerzNL/unraid-community-apps@988ac954d47b`](https://github.com/helmerzNL/unraid-community-apps/commit/988ac954d47b7c671cab91d5a0ad9b623366f89d)
+- [Unraid template: `templates/discvault.xml`](https://github.com/helmerzNL/unraid-community-apps/blob/main/templates/discvault.xml)
+- [Unraid template: `templates/discvault-beta.xml`](https://github.com/helmerzNL/unraid-community-apps/blob/main/templates/discvault-beta.xml)
+- [DiscVault launcher](https://github.com/helmerzNL/DiscVault-Launcher)
+- [Unraid support thread](https://forums.unraid.net/topic/198808-support-discvault-physical-disc-collection-manager/)
+- 来源和状态: `2026-11-11`
+- DiscVault Docs: `0.2.0`

@@ -5,14 +5,14 @@ pageId: 'configure-index'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-09-20" />
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-09-20" />
 
 ## Objetivo e resultado
 
@@ -20,17 +20,17 @@ Conclua o procedimento específico da página para **Configuração: Visão gera
 
 ## Aplicável a
 
-Esta página aplica-se apenas a **Configuração: Visão geral** (Docker · web). Os limites de canal e dados são: DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. Pontos de controlo desta página: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/oidc/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
+Esta página aplica-se apenas a **Configuração: Visão geral** (Docker · web). Os limites de canal e dados são: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault RBAC. Pontos de controlo desta página: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/oidc/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
-### DiscVault v26 estável
+### DiscVault estável
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- RBAC
+- DiscVault RBAC
 
-### DiscVault v26 beta
+### DiscVault beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- RBAC
+- DiscVault RBAC
 
 ## Pré-requisitos
 
@@ -48,11 +48,11 @@ Esta página aplica-se apenas a **Configuração: Visão geral** (Docker · web)
 
 ### Percursos de tarefas
 
-- [Configuração: Variáveis de ambiente](/pt/configure/environment/) — DiscVault 26 `.env.example`
-- [Configuração: Autenticação e RBAC](/pt/configure/auth-rbac/) — DiscVault 26 RBAC
-- [Configuração: Início de sessão com OpenID Connect (OIDC)](/pt/configure/oidc/) — DiscVault 26.9 117 OIDC Pocket ID
-- [Instalação: Legacy Authentication](/pt/install/legacy-authentication/) — DiscVault 26 TOTP
-- [Configuração: Extensões e metadados](/pt/configure/plugins-metadata/) — DiscVault 26
+- [Configuração: Variáveis de ambiente](/pt/configure/environment/) — DiscVault `.env.example`
+- [Configuração: Autenticação e RBAC](/pt/configure/auth-rbac/) — DiscVault OIDC RBAC
+- [Configuração: Início de sessão com OpenID Connect (OIDC)](/pt/configure/oidc/) — DiscVault OIDC Pocket ID
+- [Instalação: Legacy Authentication](/pt/install/legacy-authentication/) — DiscVault TOTP
+- [Configuração: Extensões e metadados](/pt/configure/plugins-metadata/) — DiscVault
 
 ## Resultado esperado
 

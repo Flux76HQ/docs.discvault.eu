@@ -5,14 +5,14 @@ pageId: 'integrations-plex-jellyfin'
 products: ['server']
 platforms: ['web', 'docker']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="web · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="web · Docker" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Objetivo y resultado
 
@@ -20,17 +20,17 @@ Completa el flujo específico de la página para **Integraciones: Plex y Jellyfi
 
 ## Aplicable a
 
-Esta página se aplica solo a **Integraciones: Plex y Jellyfin** (web · Docker). Sus límites de canal y datos son: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26. Puntos de control de esta página: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+Esta página se aplica solo a **Integraciones: Plex y Jellyfin** (web · Docker). Sus límites de canal y datos son: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault. Puntos de control de esta página: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
 
-### DiscVault v26 estable
+### DiscVault estable
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- DiscVault 26
+- DiscVault
 
-### DiscVault v26 beta
+### DiscVault beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- DiscVault 26
+- DiscVault
 
 ## Requisitos previos
 
@@ -44,6 +44,7 @@ Esta página se aplica solo a **Integraciones: Plex y Jellyfin** (web · Docker)
 2. **Prueba:** Administración → Complementos → Comprobar estado
 3. **Ejecuta:** Administración → Complementos → Descubrir sin guardar · `dryRun=true`
 4. **Compara:** `/api/next/digital-items?limit=200`
+5. **Configura:** Administración → Tareas programadas sincroniza las bibliotecas de Jellyfin y Plex cada N horas, opcionalmente seguido del historial de visionado; está desactivado hasta que un administrador lo active
 
 ### Comandos y ajustes
 

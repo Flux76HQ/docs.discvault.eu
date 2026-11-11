@@ -1,28 +1,35 @@
 ---
 title: '安装: Docker Compose'
-description: '任务专用说明： 安装: Docker Compose. release/v26-beta. app/deploy/next/docker-compose.yml. app/deploy/next/.env.example. DISCVAULT_NEXT_IMAGE. ghcr.io/helmerznl/discvault:beta. 6180:5000.'
+description: '任务专用说明： 安装: Docker Compose. main. release/v26-beta. app/deploy/next/docker-compose.yml. app/deploy/next/.env.example. DISCVAULT_NEXT_IMAGE. ghcr.io/helmerznl/discvault:latest.'
 pageId: 'install-docker-compose'
 products: ['server']
 platforms: ['docker']
-channels: ['beta']
-minVersion: 'DiscVault v26'
+channels: ['stable', 'beta']
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-20'
+lastVerified: '2026-11-11'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="beta" platform="Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-20" />
+<PageMeta channels="stable,beta" platform="Docker" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-11-11" />
 
 ## 目标和结果
 
-完成此页面专用的流程： **安装: Docker Compose**. 此流程使用 `release/v26-beta` · `app/deploy/next/docker-compose.yml` · `app/deploy/next/.env.example` · `DISCVAULT_NEXT_IMAGE` · `ghcr.io/helmerznl/discvault:beta` · `6180:5000` · `LEGACY_AUTH_ENABLED=true`.
+完成此页面专用的流程： **安装: Docker Compose**. 此流程使用 `main` · `release/v26-beta` · `app/deploy/next/docker-compose.yml` · `app/deploy/next/.env.example` · `DISCVAULT_NEXT_IMAGE` · `ghcr.io/helmerznl/discvault:latest` · `ghcr.io/helmerznl/discvault:beta` · `6180:5000` · `LEGACY_AUTH_ENABLED=true`.
 
 ## 适用范围
 
-本页面仅适用于 **安装: Docker Compose** (Docker). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:beta`; `release/v26-beta`; `discvault_next_deploy`; `6180` → API `5000`. 本页面专用检查点： `release/v26-beta` · `app/deploy/next/docker-compose.yml` · `app/deploy/next/.env.example` · `DISCVAULT_NEXT_IMAGE` · `ghcr.io/helmerznl/discvault:beta` · `6180:5000` · `LEGACY_AUTH_ENABLED=true`.
+本页面仅适用于 **安装: Docker Compose** (Docker). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; `main`; `discvault_next_deploy`; `6180` → API `5000`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `release/v26-beta`; `discvault_next_deploy`; `6180` → API `5000`. 本页面专用检查点： `main` · `release/v26-beta` · `app/deploy/next/docker-compose.yml` · `app/deploy/next/.env.example` · `DISCVAULT_NEXT_IMAGE` · `ghcr.io/helmerznl/discvault:latest` · `ghcr.io/helmerznl/discvault:beta` · `6180:5000` · `LEGACY_AUTH_ENABLED=true`.
 
-### DiscVault v26 测试版
+### DiscVault 稳定版
+
+- DiscVault · `ghcr.io/helmerznl/discvault:latest`
+- `main`
+- `discvault_next_deploy`
+- `6180` → API `5000`
+
+### DiscVault 测试版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `release/v26-beta`
@@ -37,16 +44,59 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## 操作步骤
 
-1. **安装:** `docker-compose.yml` · `.env.example` · `release/v26-beta`
+1. **安装:** `docker-compose.yml` · `.env.example` · `main` · `release/v26-beta`
 2. **创建:** `/opt/discvault-next/.env` · 仅所有者可访问的文件权限 (0600)
 3. **选择:** 使用有效 FQDN 时，应保持 `RP_ID` 与 `RP_ORIGINS` 一致并使用受信任的 HTTPS · 对于没有 FQDN 的直连私有或回环 IP，请将 `RP_ID` 和 `RP_ORIGINS` 留空
-4. **验证:** `DISCVAULT_NEXT_IMAGE=ghcr.io/helmerznl/discvault:beta` · `:dev`
+4. **验证:** `DISCVAULT_NEXT_IMAGE` · `:latest` `:beta` · `:dev`
 5. **运行:** `docker compose -p discvault_next_deploy config --quiet`
 6. **测试:** `GET http://localhost:6180/api/next/health`
 
 ### 命令和设置
 
-#### DiscVault v26 测试版
+#### DiscVault 稳定版
+
+```bash
+set -euo pipefail
+install -d -m 0700 /opt/discvault-next
+cd /opt/discvault-next
+curl --fail --location --proto '=https' --tlsv1.2 \
+  --output docker-compose.yml \
+  https://raw.githubusercontent.com/helmerzNL/DiscVault/main/app/deploy/next/docker-compose.yml
+curl --fail --location --proto '=https' --tlsv1.2 \
+  --output .env.example \
+  https://raw.githubusercontent.com/helmerzNL/DiscVault/main/app/deploy/next/.env.example
+
+umask 077
+ENV_FILE=/opt/discvault-next/.env
+test ! -e "$ENV_FILE"
+ENV_TMP="$(mktemp "$ENV_FILE.tmp.XXXXXX")"
+trap 'rm -f "$ENV_TMP"' EXIT
+POSTGRES_PASSWORD="$(openssl rand -hex 32)"
+JWT_SECRET="$(openssl rand -base64 48)"
+awk \
+  -v image='ghcr.io/helmerznl/discvault:latest' \
+  -v postgres_password="$POSTGRES_PASSWORD" \
+  -v jwt_secret="$JWT_SECRET" \
+  -v data_dir='/mnt/user/appdata/discvault' \
+  -v postgres_dir='/mnt/user/appdata/discvault-next/postgres' '
+  /^DISCVAULT_NEXT_IMAGE=/ { print "DISCVAULT_NEXT_IMAGE=" image; next }
+  /^POSTGRES_PASSWORD=/ { print "POSTGRES_PASSWORD=" postgres_password; next }
+  /^JWT_SECRET=/ { print "JWT_SECRET=" jwt_secret; next }
+  /^DISCVAULT_DATA_DIR=/ { print "DISCVAULT_DATA_DIR=" data_dir; next }
+  /^DISCVAULT_NEXT_POSTGRES_DATA=/ {
+    print "DISCVAULT_NEXT_POSTGRES_DATA=" postgres_dir
+    next
+  }
+  /^LEGACY_AUTH_ENABLED=/ { print "LEGACY_AUTH_ENABLED=true"; next }
+  { print }
+' .env.example > "$ENV_TMP"
+chmod 0600 "$ENV_TMP"
+ln "$ENV_TMP" "$ENV_FILE"
+rm -f "$ENV_TMP"
+trap - EXIT
+```
+
+#### DiscVault 测试版
 
 ```bash
 set -euo pipefail
@@ -89,6 +139,8 @@ rm -f "$ENV_TMP"
 trap - EXIT
 ```
 
+#### 两个通道
+
 ```bash
 set -euo pipefail
 cd /opt/discvault-next
@@ -126,6 +178,43 @@ mv "$ENV_TMP" "$ENV_FILE"
 trap - EXIT
 ```
 
+#### DiscVault 稳定版
+
+```bash
+set -euo pipefail
+cd /opt/discvault-next
+ENV_FILE=/opt/discvault-next/.env
+test "$(stat -c '%a' "$ENV_FILE")" = 600
+read_env() { sed -n "s/^$1=//p" "$ENV_FILE"; }
+
+test "$(read_env DISCVAULT_NEXT_IMAGE)" = 'ghcr.io/helmerznl/discvault:latest'
+! grep -q ':dev' "$ENV_FILE"
+test "$(read_env LEGACY_AUTH_ENABLED)" = true
+POSTGRES_PASSWORD_VALUE="$(read_env POSTGRES_PASSWORD)"
+JWT_SECRET_VALUE="$(read_env JWT_SECRET)"
+test "${#POSTGRES_PASSWORD_VALUE}" -ge 32
+test "$POSTGRES_PASSWORD_VALUE" != 'change-me-to-a-long-random-password'
+test "${#JWT_SECRET_VALUE}" -ge 48
+grep -qx 'DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault' "$ENV_FILE"
+grep -qx 'DISCVAULT_NEXT_POSTGRES_DATA=/mnt/user/appdata/discvault-next/postgres' "$ENV_FILE"
+
+RP_ID_VALUE="$(read_env RP_ID)"
+RP_ORIGINS_VALUE="$(read_env RP_ORIGINS)"
+if [ -z "$RP_ID_VALUE" ]; then
+  test -z "$RP_ORIGINS_VALUE"
+else
+  test "$RP_ORIGINS_VALUE" = "https://$RP_ID_VALUE"
+fi
+
+docker compose -p discvault_next_deploy config --quiet
+docker compose -p discvault_next_deploy pull
+docker compose -p discvault_next_deploy up -d
+docker compose -p discvault_next_deploy ps
+curl --fail http://localhost:6180/api/next/health
+```
+
+#### DiscVault 测试版
+
 ```bash
 set -euo pipefail
 cd /opt/discvault-next
@@ -161,7 +250,7 @@ curl --fail http://localhost:6180/api/next/health
 
 ## 预期结果
 
-仅在以下条件下接受结果： **安装: Docker Compose** 必须确认以下所有结果： `postgres` · `next-api` · `next-worker` · `next-mcp`; `6180` → API `5000`; HTTP `2xx` · `/api/next/health`. 本页面专用检查点： `release/v26-beta` · `app/deploy/next/docker-compose.yml` · `app/deploy/next/.env.example` · `DISCVAULT_NEXT_IMAGE` · `ghcr.io/helmerznl/discvault:beta` · `6180:5000` · `LEGACY_AUTH_ENABLED=true`.
+仅在以下条件下接受结果： **安装: Docker Compose** 必须确认以下所有结果： `postgres` · `next-api` · `next-worker` · `next-mcp`; `6180` → API `5000`; HTTP `2xx` · `/api/next/health`. 本页面专用检查点： `main` · `release/v26-beta` · `app/deploy/next/docker-compose.yml` · `app/deploy/next/.env.example` · `DISCVAULT_NEXT_IMAGE` · `ghcr.io/helmerznl/discvault:latest` · `ghcr.io/helmerznl/discvault:beta` · `6180:5000` · `LEGACY_AUTH_ENABLED=true`.
 
 - `postgres` · `next-api` · `next-worker` · `next-mcp`
 - `6180` → API `5000`
@@ -170,9 +259,9 @@ curl --fail http://localhost:6180/api/next/health
 ## 安全与回滚
 
 :::caution
-安全恢复边界： **安装: Docker Compose** 在启动或继续任何操作前必须执行： 下载的 `.env.example` 仍默认使用 `:dev`；拉取或启动前必须将运行时 `.env` 改为 `:beta`; 常规配置修改期间不要更改 JWT 和 PostgreSQL 机密 · `JWT_SECRET` · `POSTGRES_PASSWORD`; PostgreSQL 与 `/data` 是独立存储，必须使用同一组匹配备份. 本页面专用检查点： `release/v26-beta` · `app/deploy/next/docker-compose.yml` · `app/deploy/next/.env.example` · `DISCVAULT_NEXT_IMAGE` · `ghcr.io/helmerznl/discvault:beta` · `6180:5000` · `LEGACY_AUTH_ENABLED=true`.
+安全恢复边界： **安装: Docker Compose** 在启动或继续任何操作前必须执行： 下载的 `.env.example` 仍默认使用 `:dev`；拉取或启动前必须将运行时 `.env` 改为 `:latest` / `:beta`; 常规配置修改期间不要更改 JWT 和 PostgreSQL 机密 · `JWT_SECRET` · `POSTGRES_PASSWORD`; PostgreSQL 与 `/data` 是独立存储，必须使用同一组匹配备份. 本页面专用检查点： `main` · `release/v26-beta` · `app/deploy/next/docker-compose.yml` · `app/deploy/next/.env.example` · `DISCVAULT_NEXT_IMAGE` · `ghcr.io/helmerznl/discvault:latest` · `ghcr.io/helmerznl/discvault:beta` · `6180:5000` · `LEGACY_AUTH_ENABLED=true`.
 
-- 下载的 `.env.example` 仍默认使用 `:dev`；拉取或启动前必须将运行时 `.env` 改为 `:beta`
+- 下载的 `.env.example` 仍默认使用 `:dev`；拉取或启动前必须将运行时 `.env` 改为 `:latest` / `:beta`
 - 常规配置修改期间不要更改 JWT 和 PostgreSQL 机密 · `JWT_SECRET` · `POSTGRES_PASSWORD`
 - PostgreSQL 与 `/data` 是独立存储，必须使用同一组匹配备份
 :::
@@ -183,12 +272,14 @@ curl --fail http://localhost:6180/api/next/health
 
 ## 来源和状态
 
-- [`helmerzNL/DiscVault@4352c060ccd6`](https://github.com/helmerzNL/DiscVault/commit/4352c060ccd6fd625a828f6e20c24f111c9ef743)
+- [`helmerzNL/DiscVault@441f96593219`](https://github.com/helmerzNL/DiscVault/commit/441f96593219c66d45aac99ce5ef9f81f011d449)
+- [Stable source: `docker-compose.yml` (`main`)](https://github.com/helmerzNL/DiscVault/blob/main/app/deploy/next/docker-compose.yml)
+- [Stable source: `.env.example` (`main`)](https://github.com/helmerzNL/DiscVault/blob/main/app/deploy/next/.env.example)
 - [Moving beta source: `docker-compose.yml`](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/docker-compose.yml)
 - [Raw beta download: `docker-compose.yml`](https://raw.githubusercontent.com/helmerzNL/DiscVault/release/v26-beta/app/deploy/next/docker-compose.yml)
 - [Pinned verification: `docker-compose.yml`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/deploy/next/docker-compose.yml)
 - [Moving beta source: `.env.example`](https://github.com/helmerzNL/DiscVault/blob/release/v26-beta/app/deploy/next/.env.example)
 - [Raw beta download: `.env.example`](https://raw.githubusercontent.com/helmerzNL/DiscVault/release/v26-beta/app/deploy/next/.env.example)
 - [Pinned verification: `.env.example`](https://github.com/helmerzNL/DiscVault/blob/4352c060ccd6fd625a828f6e20c24f111c9ef743/app/deploy/next/.env.example)
-- 来源和状态: `2026-07-20`
-- DiscVault Docs: `0.1.6`
+- 来源和状态: `2026-11-11`
+- DiscVault Docs: `0.2.0`

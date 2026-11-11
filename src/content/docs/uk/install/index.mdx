@@ -5,14 +5,14 @@ pageId: 'install-index'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
 lastVerified: '2026-07-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
 
 ## Мета й результат
 
@@ -22,13 +22,13 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 Ця сторінка стосується лише **Встановлення: Способи встановлення** (Docker · Unraid). Межі каналу й даних: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `:beta`; PostgreSQL `17` `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `:beta`; PostgreSQL `17` `/data`. Контрольні точки цієї сторінки: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
-### DiscVault v26 – стабільний
+### DiscVault – стабільний
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - `:beta`
 - PostgreSQL `17` `/data`
 
-### DiscVault v26 – бета
+### DiscVault – бета
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `:beta`
@@ -41,37 +41,39 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## Процедура
 
-1. **Виберіть:** [Встановлення: Docker Compose](/uk/install/docker-compose/) · DiscVault 26
+1. **Виберіть:** [Встановлення: Docker Compose](/uk/install/docker-compose/) · DiscVault `main` `release/v26-beta`
 2. **Виберіть:** [Встановлення: Docker run](/uk/install/docker-run/)
-3. **Виберіть:** [Встановлення: Unraid](/uk/install/unraid/) · Unraid
-4. **Виберіть:** нові інсталяції використовують DiscVault v26 `:latest` або `:beta`; заморожений образ `:legacy` призначений лише для наявної інсталяції попереднього покоління, яка ще не готова до міграції
-5. **Збережіть:** залиште без змін томи, змінні середовища, порти та шлях даних попереднього покоління; ніколи не підставляйте `:legacy` у топологію v26 PostgreSQL Compose
-6. **Відкрийте:** [Оновлення й міграція: Міграція до DiscVault 26](/uk/update/migration/) · → DiscVault 26
-7. **Запишіть:** `DISCVAULT_IMAGE` · лише для наявного або legacy розгортання: відповідний комплект резервних копій
+3. **Виберіть:** [Встановлення: Unraid](/uk/install/unraid/) · Unraid DiscVault
+4. **Виберіть:** [Встановлення: Home Assistant](/uk/install/home-assistant/) · PostgreSQL 17
+5. **Виберіть:** нові інсталяції використовують DiscVault `:latest` або `:beta`; заморожений образ `:legacy` призначений лише для наявної інсталяції попереднього покоління, яка ще не готова до міграції
+6. **Збережіть:** залиште без змін томи, змінні середовища, порти та шлях даних попереднього покоління; ніколи не підставляйте `:legacy` у топологію DiscVault PostgreSQL Compose
+7. **Відкрийте:** [Оновлення й міграція: Міграція до DiscVault](/uk/update/migration/) · → DiscVault
+8. **Запишіть:** `DISCVAULT_IMAGE` · лише для наявного або legacy розгортання: відповідний комплект резервних копій
 
 ### Маршрути завдань
 
-- [Встановлення: Docker Compose](/uk/install/docker-compose/) — DiscVault 26 `release/v26-beta` `DISCVAULT_NEXT_IMAGE`
-- [Встановлення: Docker run](/uk/install/docker-run/) — DiscVault 26 Docker run PostgreSQL `/data` `DATABASE_URL`
-- [Встановлення: Постійні дані та PostgreSQL](/uk/install/storage-postgresql/) — DiscVault 26 PostgreSQL `/data`
-- [Встановлення: Unraid](/uk/install/unraid/) — DiscVault 26 Unraid PostgreSQL `/data`
-- [Оновлення й міграція: Міграція до DiscVault 26](/uk/update/migration/) — → DiscVault 26
+- [Встановлення: Docker Compose](/uk/install/docker-compose/) — DiscVault `app/deploy/next` `DISCVAULT_NEXT_IMAGE`
+- [Встановлення: Docker run](/uk/install/docker-run/) — DiscVault Docker run PostgreSQL `/data` `DATABASE_URL`
+- [Встановлення: Постійні дані та PostgreSQL](/uk/install/storage-postgresql/) — DiscVault PostgreSQL `/data`
+- [Встановлення: Unraid](/uk/install/unraid/) — DiscVault Unraid `discvault-launcher`
+- [Встановлення: Home Assistant](/uk/install/home-assistant/) — DiscVault PostgreSQL 17 `/data`
+- [Оновлення й міграція: Міграція до DiscVault](/uk/update/migration/) — → DiscVault
 
 ## Очікуваний результат
 
-Приймайте результат для **Встановлення: Способи встановлення** лише коли підтверджено всі наведені нижче результати: вибраний канал випуску; PostgreSQL `/data`; залиште без змін томи, змінні середовища, порти та шлях даних попереднього покоління; ніколи не підставляйте `:legacy` у топологію v26 PostgreSQL Compose. Контрольні точки цієї сторінки: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
+Приймайте результат для **Встановлення: Способи встановлення** лише коли підтверджено всі наведені нижче результати: вибраний канал випуску; PostgreSQL `/data` · DiscVault; залиште без змін томи, змінні середовища, порти та шлях даних попереднього покоління; ніколи не підставляйте `:legacy` у топологію DiscVault PostgreSQL Compose. Контрольні точки цієї сторінки: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
 - вибраний канал випуску
-- PostgreSQL `/data`
-- залиште без змін томи, змінні середовища, порти та шлях даних попереднього покоління; ніколи не підставляйте `:legacy` у топологію v26 PostgreSQL Compose
+- PostgreSQL `/data` · DiscVault
+- залиште без змін томи, змінні середовища, порти та шлях даних попереднього покоління; ніколи не підставляйте `:legacy` у топологію DiscVault PostgreSQL Compose
 
 ## Безпека й відкочування
 
 :::caution
-Безпечна межа відновлення для **Встановлення: Способи встановлення** вимагає цих дій до будь-якого запуску чи продовження: Лише гілка Legacy: після копіювання змініть тільки тег образу наявного старого розгортання на `:legacy`, завантажте й відтворіть його без зміни топології, перевірте колекцію та зупиніться; не переводьте це наявне розгортання на топологію v26 на цій сторінці; заморожений образ `:legacy` не отримує функцій DiscVault v26, поліпшень міграції чи майбутніх оновлень інтерфейсу; лише для наявного або legacy розгортання: відповідний комплект резервних копій; примітки до випуску й записаний незмінний digest образу. Контрольні точки цієї сторінки: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
+Безпечна межа відновлення для **Встановлення: Способи встановлення** вимагає цих дій до будь-якого запуску чи продовження: Лише гілка Legacy: після копіювання змініть тільки тег образу наявного старого розгортання на `:legacy`, завантажте й відтворіть його без зміни топології, перевірте колекцію та зупиніться; не переводьте це наявне розгортання на топологію DiscVault на цій сторінці; заморожений образ `:legacy` не отримує функцій DiscVault, поліпшень міграції чи майбутніх оновлень інтерфейсу; лише для наявного або legacy розгортання: відповідний комплект резервних копій; примітки до випуску й записаний незмінний digest образу. Контрольні точки цієї сторінки: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
-- Лише гілка Legacy: після копіювання змініть тільки тег образу наявного старого розгортання на `:legacy`, завантажте й відтворіть його без зміни топології, перевірте колекцію та зупиніться; не переводьте це наявне розгортання на топологію v26 на цій сторінці
-- заморожений образ `:legacy` не отримує функцій DiscVault v26, поліпшень міграції чи майбутніх оновлень інтерфейсу
+- Лише гілка Legacy: після копіювання змініть тільки тег образу наявного старого розгортання на `:legacy`, завантажте й відтворіть його без зміни топології, перевірте колекцію та зупиніться; не переводьте це наявне розгортання на топологію DiscVault на цій сторінці
+- заморожений образ `:legacy` не отримує функцій DiscVault, поліпшень міграції чи майбутніх оновлень інтерфейсу
 - лише для наявного або legacy розгортання: відповідний комплект резервних копій
 - примітки до випуску й записаний незмінний digest образу
 :::

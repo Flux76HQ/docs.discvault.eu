@@ -1,0 +1,100 @@
+---
+title: 'Install: Home Assistant'
+description: 'Run DiscVault and DiscVault (beta) as Home Assistant apps with PostgreSQL 17 built in and backups included.'
+pageId: 'install-home-assistant'
+products: ['server']
+platforms: ['home-assistant']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/home-assistant-addons']
+lastVerified: '2026-11-11'
+---
+
+import PageMeta from '../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Home Assistant" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/home-assistant-addons" verified="2026-11-11" />
+
+## Goal and result
+
+Run DiscVault as a Home Assistant app. The app, its worker, the MCP endpoint and PostgreSQL 17 run in one container, and everything they store lives in the app data folder that Home Assistant includes in its backups.
+
+## Applies to
+
+The repository offers DiscVault on port 6180 and DiscVault (beta) on port 6181, each with its own data folder, so both run side by side on amd64 and aarch64.
+
+### DiscVault stable
+
+- DiscVault · `6180`
+- PostgreSQL 17 · `/data`
+
+### DiscVault beta
+
+- DiscVault (beta) · `6181`
+- PostgreSQL 17 · `/data`
+
+## Prerequisites
+
+- Home Assistant OS / Supervised · `amd64` / `aarch64`
+- passkeys need an HTTPS address with a domain name in front of the app port; without one, use password sign-in with TOTP
+- there is no sidebar (Ingress) entry: DiscVault is served from the root of its own domain through a reverse proxy
+
+## Procedure
+
+1. **Open:** Settings → Apps → Install app → ⋮ → Repositories, then add `https://github.com/helmerzNL/home-assistant-addons`
+2. **Install:** choose DiscVault or DiscVault (beta) and install it; Home Assistant builds the app on the device, which takes a few minutes the first time
+3. **Configure:** `rp_id` is the domain DiscVault is opened on; passkeys are bound to it, so changing it later makes existing passkeys unusable · `rp_origins` · `trusted_proxies`
+4. **Configure:** `password_login` offers a username, a password of at least 15 characters and TOTP when there is no HTTPS domain
+5. **Configure:** OpenID Connect: fill in `oidc_issuer`, `oidc_client_id` and `oidc_client_secret` together, or leave all three empty · `/api/next/auth/oidc/callback`
+6. **Start:** the onboarding creates the first owner with a passkey, or with a password and TOTP, and shows the recovery codes once
+7. **Verify:** `/api/next/health` · the MCP endpoint is on the same port under `/mcp`; give an assistant a personal API key
+
+### Commands and settings
+
+#### Both channels
+
+```yaml
+rp_id: discvault.example.com
+rp_origins: https://discvault.example.com
+rp_name: DiscVault
+password_login: false
+trusted_proxies: private
+block_crawlers: true
+```
+
+```bash
+curl --fail http://<home-assistant>:6180/api/next/health   # beta: 6181
+```
+
+## Expected result
+
+The app shows as started, the watchdog reaches the health address, and the web interface opens on the app port.
+
+- the onboarding creates the first owner with a passkey, or with a password and TOTP, and shows the recovery codes once
+- the MCP endpoint is on the same port under `/mcp`; give an assistant a personal API key
+- `/api/next/health` · HTTP `200` · `"status": "ok"`
+
+## Safety and rollback
+
+:::caution
+Let Home Assistant back up the app before every update. To roll back, restore that backup under Settings → System → Backups; a release that changed the database may not run on an older version.
+
+- Home Assistant stops the app for a moment during a backup, because a running database is not a consistent copy
+- the signing secret and database password are generated on the first start in `secrets.json`; never delete that file
+- the beta can change the database in ways the stable app cannot read; never point it at the stable folders
+- the in-app backup (Admin → Backup, also on a schedule) moves a library between Docker, Unraid and Home Assistant
+- a new release appears as an update once its image is published; updating rebuilds the app and runs migrations on start
+:::
+
+## Next step
+
+[Install: Reverse proxy and passkeys](/install/reverse-proxy-passkeys/)
+
+## Source and status
+
+- [`helmerzNL/DiscVault@441f96593219`](https://github.com/helmerzNL/DiscVault/commit/441f96593219c66d45aac99ce5ef9f81f011d449)
+- [`helmerzNL/home-assistant-addons@48d31c321db4`](https://github.com/helmerzNL/home-assistant-addons/commit/48d31c321db48d1c70405c6a7830065debc79460)
+- [Home Assistant app: `discvault/config.yaml`](https://github.com/helmerzNL/home-assistant-addons/blob/main/discvault/config.yaml)
+- [Home Assistant app documentation: `discvault/DOCS.md`](https://github.com/helmerzNL/home-assistant-addons/blob/main/discvault/DOCS.md)
+- [Add the repository to Home Assistant](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FhelmerzNL%2Fhome-assistant-addons)
+- Verified: `2026-11-11`
+- DiscVault Docs: `0.2.0`

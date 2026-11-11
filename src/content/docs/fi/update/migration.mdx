@@ -1,37 +1,37 @@
 ---
-title: 'Päivitys ja siirto: Siirtyminen DiscVault 26:een'
-description: 'Tehtäväkohtaiset ohjeet: Päivitys ja siirto: Siirtyminen DiscVault 26:een. /migration/readiness. ready_for_confirmation. /data/discvault.db. SQLite.'
+title: 'Päivitys ja siirto: Siirtyminen DiscVault:een'
+description: 'Tehtäväkohtaiset ohjeet: Päivitys ja siirto: Siirtyminen DiscVault:een. /migration/readiness. ready_for_confirmation. /data/discvault.db. SQLite.'
 pageId: 'update-migration'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · verkko" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · verkko" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Tavoite ja tulos
 
-Suorita sivukohtainen työnkulku: **Päivitys ja siirto: Siirtyminen DiscVault 26:een**. Tässä menettelyssä käytetään `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+Suorita sivukohtainen työnkulku: **Päivitys ja siirto: Siirtyminen DiscVault:een**. Tässä menettelyssä käytetään `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
 
 ## Koskee
 
-Tämä sivu koskee vain kohdetta **Päivitys ja siirto: Siirtyminen DiscVault 26:een** (Docker · verkko). Kanava- ja tietorajat ovat: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; vain luku -tilassa oleva olemassa olevien tietojen lähde; ei koskaan nykyinen ajonaikainen tietokanta · SQLite → PostgreSQL; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26; vain luku -tilassa oleva olemassa olevien tietojen lähde; ei koskaan nykyinen ajonaikainen tietokanta · SQLite → PostgreSQL. Sivukohtaiset tarkistuspisteet: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+Tämä sivu koskee vain kohdetta **Päivitys ja siirto: Siirtyminen DiscVault:een** (Docker · verkko). Kanava- ja tietorajat ovat: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault; vain luku -tilassa oleva olemassa olevien tietojen lähde; ei koskaan nykyinen ajonaikainen tietokanta · SQLite → PostgreSQL; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault; vain luku -tilassa oleva olemassa olevien tietojen lähde; ei koskaan nykyinen ajonaikainen tietokanta · SQLite → PostgreSQL. Sivukohtaiset tarkistuspisteet: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
 
-### DiscVault v26 – vakaa
+### DiscVault – vakaa
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- DiscVault 26
+- DiscVault
 - vain luku -tilassa oleva olemassa olevien tietojen lähde; ei koskaan nykyinen ajonaikainen tietokanta · SQLite → PostgreSQL
 
-### DiscVault v26 – beta
+### DiscVault – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- DiscVault 26
+- DiscVault
 - vain luku -tilassa oleva olemassa olevien tietojen lähde; ei koskaan nykyinen ajonaikainen tietokanta · SQLite → PostgreSQL
 
 ## Edellytykset
@@ -61,14 +61,14 @@ curl --fail http://localhost:6080/api/next/migration/status
 
 ## Odotettu tulos
 
-Hyväksy tulos kohteelle **Päivitys ja siirto: Siirtyminen DiscVault 26:een** vain kun kaikki seuraavat tulokset toteutuvat: valmius on vahvistettu, siirrossa ei ole epäonnistuneita tietueita ja määrät sekä mediatesti täsmäävät. Sivukohtaiset tarkistuspisteet: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+Hyväksy tulos kohteelle **Päivitys ja siirto: Siirtyminen DiscVault:een** vain kun kaikki seuraavat tulokset toteutuvat: valmius on vahvistettu, siirrossa ei ole epäonnistuneita tietueita ja määrät sekä mediatesti täsmäävät. Sivukohtaiset tarkistuspisteet: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
 
 - valmius on vahvistettu, siirrossa ei ole epäonnistuneita tietueita ja määrät sekä mediatesti täsmäävät
 
 ## Turvallisuus ja palautus
 
 :::caution
-Turvallinen palautusraja kohteelle **Päivitys ja siirto: Siirtyminen DiscVault 26:een** edellyttää näitä toimia ennen käynnistystä tai jatkamista: pysäytä DiscVaultin kirjoittajat, palauta vastaavat PostgreSQL- ja `/data`-varmuuskopiot äläkä toista tuontia osittain täytettyyn tietokantaan. Sivukohtaiset tarkistuspisteet: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+Turvallinen palautusraja kohteelle **Päivitys ja siirto: Siirtyminen DiscVault:een** edellyttää näitä toimia ennen käynnistystä tai jatkamista: pysäytä DiscVaultin kirjoittajat, palauta vastaavat PostgreSQL- ja `/data`-varmuuskopiot äläkä toista tuontia osittain täytettyyn tietokantaan. Sivukohtaiset tarkistuspisteet: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
 
 - pysäytä DiscVaultin kirjoittajat, palauta vastaavat PostgreSQL- ja `/data`-varmuuskopiot äläkä toista tuontia osittain täytettyyn tietokantaan
 :::

@@ -5,14 +5,14 @@ pageId: 'update-rollback'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Objectif et résultat
 
@@ -22,13 +22,13 @@ Suivez le déroulement propre à cette page pour **Mise à jour et migration: Re
 
 Cette page s’applique uniquement à **Mise à jour et migration: Retour à une image** (Docker · Unraid). Les limites de canal et de données sont : DiscVault · `ghcr.io/helmerznl/discvault:latest`; restaurer les données correspondantes avant de démarrer l’image précédente; PostgreSQL `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; restaurer les données correspondantes avant de démarrer l’image précédente; PostgreSQL `/data`. Points de contrôle propres à la page : `PREVIOUS_IMAGE` · `pg_restore --exit-on-error` · `discvault.failed-` · `DISCVAULT_IMAGE`.
 
-### DiscVault v26 stable
+### DiscVault stable
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - restaurer les données correspondantes avant de démarrer l’image précédente
 - PostgreSQL `/data`
 
-### DiscVault v26 bêta
+### DiscVault bêta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - restaurer les données correspondantes avant de démarrer l’image précédente
@@ -106,7 +106,7 @@ La limite de récupération sûre pour **Mise à jour et migration: Retour à un
 
 ## Étape suivante
 
-[Mise à jour et migration: Migration vers DiscVault 26](/fr/update/migration/)
+[Mise à jour et migration: Migration vers DiscVault](/fr/update/migration/)
 
 ## Source et état
 

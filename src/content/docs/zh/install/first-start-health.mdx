@@ -5,14 +5,14 @@ pageId: 'install-first-start-health'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · 网页" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-20" />
+<PageMeta channels="stable,beta" platform="Docker · 网页" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-20" />
 
 ## 目标和结果
 
@@ -22,12 +22,12 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 本页面仅适用于 **安装: 首次启动和健康检查** (Docker · 网页). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; `6080` → API `5000`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/api/next/auth/status`; `6180` → API `5000`. 本页面专用检查点： `/api/next/health` · `/api/next/auth/status` · `6080:5000` · `6180:5000` · WebAuthn.
 
-### DiscVault v26 稳定版
+### DiscVault 稳定版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - `6080` → API `5000`
 
-### DiscVault v26 测试版
+### DiscVault 测试版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `/api/next/auth/status`
@@ -35,7 +35,7 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## 前提条件
 
-- `/api/next/health`
+- DiscVault
 - `/api/next/auth/status`
 
 ## 操作步骤
@@ -48,7 +48,7 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ### 命令和设置
 
-#### DiscVault v26 稳定版
+#### DiscVault 稳定版
 
 ```bash
 docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml ps
@@ -57,7 +57,7 @@ curl --fail http://localhost:6080/api/next/health
 curl --fail http://localhost:6080/api/next/auth/status
 ```
 
-#### DiscVault v26 测试版
+#### DiscVault 测试版
 
 ```bash
 docker compose -p discvault_next_deploy -f /opt/discvault-next/docker-compose.yml ps

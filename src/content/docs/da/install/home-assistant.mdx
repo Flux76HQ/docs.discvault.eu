@@ -1,0 +1,108 @@
+---
+title: 'Installation: Home Assistant'
+description: 'Opgavespecifik vejledning til Installation: Home Assistant. 6180. /api/next/health. rp_id. password_login. secrets.json.'
+pageId: 'install-home-assistant'
+products: ['server']
+platforms: ['home-assistant']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/home-assistant-addons']
+lastVerified: '2026-11-11'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Home Assistant" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/home-assistant-addons" verified="2026-11-11" />
+
+## Mål og resultat
+
+Kør DiscVault som en Home Assistant-app. Appen, dens worker, MCP-endpointet og PostgreSQL 17 kører i én container, og alt, hvad de gemmer, ligger i appens datamappe, som Home Assistant tager med i sine backups.
+
+Gennemfør den sidespecifikke arbejdsgang for **Installation: Home Assistant**. Denne fremgangsmåde arbejder med `6180` · `/api/next/health` · `rp_id` · `password_login` · `secrets.json`.
+
+## Gælder for
+
+Repositoriet tilbyder DiscVault på port 6180 og DiscVault (beta) på port 6181 med hver sin datamappe, så begge kører side om side på amd64 og aarch64.
+
+Denne side gælder kun for **Installation: Home Assistant** (Home Assistant). Kanal- og datagrænserne er: DiscVault · `6180`; PostgreSQL 17 · `/data`; DiscVault · `6181`; PostgreSQL 17 · `/data`. Sidespecifikke kontrolpunkter: `6180` · `/api/next/health` · `rp_id` · `password_login` · `secrets.json`.
+
+### DiscVault – stabil
+
+- DiscVault · `6180`
+- PostgreSQL 17 · `/data`
+
+### DiscVault – beta
+
+- DiscVault · `6181`
+- PostgreSQL 17 · `/data`
+
+## Forudsætninger
+
+- `amd64` `aarch64`
+- passkeys kræver en HTTPS-adresse med et domænenavn foran appens port; uden en sådan bruges adgangskodelogin med TOTP
+- der er ingen sidebjælke-post (Ingress): DiscVault serveres fra roden af sit eget domæne via en reverse proxy
+
+## Fremgangsmåde
+
+1. **Åbn:** Indstillinger → Apps → Installér app → ⋮ → Repositories, og tilføj `https://github.com/helmerzNL/home-assistant-addons`
+2. **Installér:** vælg DiscVault eller DiscVault (beta) og installér; Home Assistant bygger appen på enheden, hvilket tager et par minutter første gang
+3. **Konfigurér:** `rp_id` er det domæne, DiscVault åbnes på; passkeys er bundet til det, så en senere ændring gør eksisterende passkeys ubrugelige · `rp_origins` · `trusted_proxies`
+4. **Konfigurér:** `password_login` tilbyder brugernavn, en adgangskode på mindst 15 tegn og TOTP, når der ikke er et HTTPS-domæne
+5. **Konfigurér:** OpenID Connect: udfyld `oidc_issuer`, `oidc_client_id` og `oidc_client_secret` samlet, eller lad alle tre være tomme · `/api/next/auth/oidc/callback`
+6. **Start:** introduktionen opretter den første ejer med en passkey eller med adgangskode og TOTP og viser gendannelseskoderne én gang
+7. **Bekræft:** `/api/next/health` · MCP-endpointet ligger på samme port under `/mcp`; giv en assistent en personlig API-nøgle
+
+### Kommandoer og indstillinger
+
+#### Begge kanaler
+
+```yaml
+rp_id: discvault.example.com
+rp_origins: https://discvault.example.com
+rp_name: DiscVault
+password_login: false
+trusted_proxies: private
+block_crawlers: true
+```
+
+```bash
+curl --fail http://<home-assistant>:6180/api/next/health   # beta: 6181
+```
+
+## Forventet resultat
+
+Appen vises som startet, watchdog når sundhedsadressen, og webgrænsefladen åbner på appens port.
+
+Godkend resultatet for **Installation: Home Assistant** kun når alle resultater nedenfor er opfyldt: introduktionen opretter den første ejer med en passkey eller med adgangskode og TOTP og viser gendannelseskoderne én gang; MCP-endpointet ligger på samme port under `/mcp`; giv en assistent en personlig API-nøgle; `/api/next/health` · HTTP `200` · `"status": "ok"`. Sidespecifikke kontrolpunkter: `6180` · `/api/next/health` · `rp_id` · `password_login` · `secrets.json`.
+
+- introduktionen opretter den første ejer med en passkey eller med adgangskode og TOTP og viser gendannelseskoderne én gang
+- MCP-endpointet ligger på samme port under `/mcp`; giv en assistent en personlig API-nøgle
+- `/api/next/health` · HTTP `200` · `"status": "ok"`
+
+## Sikkerhed og tilbagerulning
+
+:::caution
+Lad Home Assistant tage backup af appen før hver opdatering. Rul tilbage ved at gendanne den backup under Indstillinger → System → Sikkerhedskopier; en udgivelse, der ændrede databasen, kører måske ikke på en ældre version.
+
+Den sikre gendannelsesgrænse for **Installation: Home Assistant** kræver disse handlinger, før noget startes eller fortsættes: Home Assistant stopper appen kortvarigt under en backup, fordi en kørende database ikke er en konsistent kopi; signeringshemmeligheden og databaseadgangskoden oprettes ved første start i `secrets.json`; slet aldrig den fil; betaen kan ændre databasen, så den stabile app ikke kan læse den; peg den aldrig mod den stabile apps mapper; backuppen i appen (Administration → Backup, også efter tidsplan) flytter et bibliotek mellem Docker, Unraid og Home Assistant; en ny udgivelse vises som opdatering, når dens image er udgivet; opdateringen genopbygger appen og kører migreringer ved start. Sidespecifikke kontrolpunkter: `6180` · `/api/next/health` · `rp_id` · `password_login` · `secrets.json`.
+
+- Home Assistant stopper appen kortvarigt under en backup, fordi en kørende database ikke er en konsistent kopi
+- signeringshemmeligheden og databaseadgangskoden oprettes ved første start i `secrets.json`; slet aldrig den fil
+- betaen kan ændre databasen, så den stabile app ikke kan læse den; peg den aldrig mod den stabile apps mapper
+- backuppen i appen (Administration → Backup, også efter tidsplan) flytter et bibliotek mellem Docker, Unraid og Home Assistant
+- en ny udgivelse vises som opdatering, når dens image er udgivet; opdateringen genopbygger appen og kører migreringer ved start
+:::
+
+## Næste trin
+
+[Installation: Omvendt proxy og adgangsnøgler](/da/install/reverse-proxy-passkeys/)
+
+## Kilde og status
+
+- [`helmerzNL/DiscVault@441f96593219`](https://github.com/helmerzNL/DiscVault/commit/441f96593219c66d45aac99ce5ef9f81f011d449)
+- [`helmerzNL/home-assistant-addons@48d31c321db4`](https://github.com/helmerzNL/home-assistant-addons/commit/48d31c321db48d1c70405c6a7830065debc79460)
+- [Home Assistant app: `discvault/config.yaml`](https://github.com/helmerzNL/home-assistant-addons/blob/main/discvault/config.yaml)
+- [Home Assistant app documentation: `discvault/DOCS.md`](https://github.com/helmerzNL/home-assistant-addons/blob/main/discvault/DOCS.md)
+- [Add the repository to Home Assistant](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FhelmerzNL%2Fhome-assistant-addons)
+- Kilde og status: `2026-11-11`
+- DiscVault Docs: `0.2.0`

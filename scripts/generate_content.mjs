@@ -39,8 +39,13 @@ const oidcCoreSourceCommit = '409da7b2dc25bbf621cd0a6682136d565cdf5070';
 const oidcGuidanceSourceCommit = '41bfca3bfa39f0b43924190d384e2d96be756020';
 const iosVerified = '2026-07-22';
 const iosDocsVersion = '0.1.9';
+const applianceVerified = '2026-11-11';
+const applianceDocsVersion = '0.2.0';
+const currentCoreSourceCommit = '441f96593219c66d45aac99ce5ef9f81f011d449';
 const commits = {
   'helmerzNL/DiscVault': '6d27c689ac2166651d2c7c74833c1ee225b37ec3',
+  'helmerzNL/unraid-community-apps': '988ac954d47b7c671cab91d5a0ad9b623366f89d',
+  'helmerzNL/home-assistant-addons': '48d31c321db48d1c70405c6a7830065debc79460',
   'helmerzNL/DiscVault.EU': '583f85c55dc22b63368f997a3b076a093ca0afa1',
   'helmerzNL/DiscVaultApp': '9d15ab2a339cefdb164ec0ab29ad69ddabc511c1',
   'Flux76HQ/DiscVault-AndroidApp': 'a13ef4bdbb23b6a7e52e01cdf532fa222c1b67de',
@@ -138,6 +143,56 @@ const currentBetaDeploymentSourceFiles = [
     url: `https://github.com/helmerzNL/DiscVault/blob/${oidcCoreSourceCommit}/app/deploy/next/.env.example`,
   },
 ];
+const currentDeploymentSourceFiles = [
+  {
+    label: 'Stable source: `docker-compose.yml` (`main`)',
+    url: 'https://github.com/helmerzNL/DiscVault/blob/main/app/deploy/next/docker-compose.yml',
+  },
+  {
+    label: 'Stable source: `.env.example` (`main`)',
+    url: 'https://github.com/helmerzNL/DiscVault/blob/main/app/deploy/next/.env.example',
+  },
+  ...betaDeploymentSourceFiles,
+];
+const currentAuthSourceFiles = [
+  {
+    label: 'Stable source: Legacy Authentication deployment notes',
+    url: 'https://github.com/helmerzNL/DiscVault/blob/main/app/deploy/next/README.md',
+  },
+  ...betaAuthSourceFiles,
+];
+const unraidSourceFiles = [
+  {
+    label: 'Unraid template: `templates/discvault.xml`',
+    url: 'https://github.com/helmerzNL/unraid-community-apps/blob/main/templates/discvault.xml',
+  },
+  {
+    label: 'Unraid template: `templates/discvault-beta.xml`',
+    url: 'https://github.com/helmerzNL/unraid-community-apps/blob/main/templates/discvault-beta.xml',
+  },
+  {
+    label: 'DiscVault launcher',
+    url: 'https://github.com/helmerzNL/DiscVault-Launcher',
+  },
+  {
+    label: 'Unraid support thread',
+    url: 'https://forums.unraid.net/topic/198808-support-discvault-physical-disc-collection-manager/',
+  },
+];
+const homeAssistantSourceFiles = [
+  {
+    label: 'Home Assistant app: `discvault/config.yaml`',
+    url: 'https://github.com/helmerzNL/home-assistant-addons/blob/main/discvault/config.yaml',
+  },
+  {
+    label: 'Home Assistant app documentation: `discvault/DOCS.md`',
+    url: 'https://github.com/helmerzNL/home-assistant-addons/blob/main/discvault/DOCS.md',
+  },
+  {
+    label: 'Add the repository to Home Assistant',
+    url: 'https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FhelmerzNL%2Fhome-assistant-addons',
+  },
+];
 const iosDistributionSourceFiles = [
   {
     label: 'Download DiscVault on the App Store',
@@ -162,7 +217,7 @@ const l10n = {
     'Next step',
     'Source and status',
     'Follow this focused procedure to complete',
-    'The page states the release channel for every command. Stable and beta use the same DiscVault v26 PostgreSQL topology; only the image tag differs.',
+    'The page states the release channel for every command. Stable and beta use the same DiscVault PostgreSQL topology; only the image tag differs.',
     'Record the current image and configuration, and make the required backup before changing anything.',
     'Apply the configuration below exactly, replacing example host paths and domains with your own values.',
     'Run the checks shown below and stop if any check fails.',
@@ -177,7 +232,7 @@ const l10n = {
     'Restore',
     'Container update',
     'Image rollback',
-    'DiscVault 26 migration',
+    'DiscVault migration',
     'Environment variables',
     'Authentication and RBAC',
     'Plugins and metadata',
@@ -204,7 +259,7 @@ const l10n = {
     'Další krok',
     'Zdroj a stav',
     'Použijte tento konkrétní postup pro',
-    'Na stránce je u každého příkazu uveden kanál vydání. Stabilní i beta kanál používají stejnou topologii DiscVault v26 s PostgreSQL; liší se pouze tag obrazu.',
+    'Na stránce je u každého příkazu uveden kanál vydání. Stabilní i beta kanál používají stejnou topologii DiscVault s PostgreSQL; liší se pouze tag obrazu.',
     'Před změnou si poznamenejte aktuální obraz a konfiguraci a vytvořte požadovanou zálohu.',
     'Použijte přesně níže uvedenou konfiguraci a nahraďte ukázkové cesty a domény vlastními hodnotami.',
     'Spusťte uvedené kontroly a při jakékoli chybě se zastavte.',
@@ -219,7 +274,7 @@ const l10n = {
     'Obnovení',
     'Aktualizace kontejneru',
     'Návrat obrazu',
-    'Migrace na DiscVault 26',
+    'Migrace na DiscVault',
     'Proměnné prostředí',
     'Ověřování a RBAC',
     'Pluginy a metadata',
@@ -246,7 +301,7 @@ const l10n = {
     'Næste trin',
     'Kilde og status',
     'Følg denne målrettede vejledning for at fuldføre',
-    'Siden angiver udgivelseskanalen for hver kommando. Stabil og beta bruger samme DiscVault v26-topologi med PostgreSQL; kun image-tagget er forskelligt.',
+    'Siden angiver udgivelseskanalen for hver kommando. Stabil og beta bruger samme DiscVault-topologi med PostgreSQL; kun image-tagget er forskelligt.',
     'Notér det aktuelle image og konfigurationen, og opret den krævede sikkerhedskopi før ændringer.',
     'Anvend konfigurationen nedenfor nøjagtigt, og erstat eksempelstier og domæner med dine egne værdier.',
     'Kør de viste kontroller, og stop hvis en kontrol fejler.',
@@ -261,7 +316,7 @@ const l10n = {
     'Gendannelse',
     'Containeropdatering',
     'Tilbagerulning af image',
-    'Migrering til DiscVault 26',
+    'Migrering til DiscVault',
     'Miljøvariabler',
     'Godkendelse og RBAC',
     'Plugins og metadata',
@@ -288,7 +343,7 @@ const l10n = {
     'Nächster Schritt',
     'Quelle und Status',
     'Führe dieses gezielte Verfahren aus für',
-    'Die Seite kennzeichnet für jeden Befehl den Release-Kanal. Stable und Beta verwenden dieselbe DiscVault-v26-Topologie mit PostgreSQL; nur das Image-Tag unterscheidet sich.',
+    'Die Seite kennzeichnet für jeden Befehl den Release-Kanal. Stable und Beta verwenden dieselbe DiscVault-Topologie mit PostgreSQL; nur das Image-Tag unterscheidet sich.',
     'Notiere vor Änderungen das aktuelle Image und die Konfiguration und erstelle die erforderliche Sicherung.',
     'Wende die folgende Konfiguration exakt an und ersetze Beispielpfade und Domains durch eigene Werte.',
     'Führe die gezeigten Prüfungen aus und stoppe bei jedem Fehler.',
@@ -303,7 +358,7 @@ const l10n = {
     'Wiederherstellung',
     'Container-Update',
     'Image-Rollback',
-    'Migration zu DiscVault 26',
+    'Migration zu DiscVault',
     'Umgebungsvariablen',
     'Authentifizierung und RBAC',
     'Plugins und Metadaten',
@@ -330,7 +385,7 @@ const l10n = {
     'Επόμενο βήμα',
     'Πηγή και κατάσταση',
     'Ακολουθήστε αυτή τη συγκεκριμένη διαδικασία για',
-    'Η σελίδα δηλώνει το κανάλι έκδοσης για κάθε εντολή. Τα κανάλια stable και beta χρησιμοποιούν την ίδια τοπολογία DiscVault v26 με PostgreSQL· διαφέρει μόνο η ετικέτα εικόνας.',
+    'Η σελίδα δηλώνει το κανάλι έκδοσης για κάθε εντολή. Τα κανάλια stable και beta χρησιμοποιούν την ίδια τοπολογία DiscVault με PostgreSQL· διαφέρει μόνο η ετικέτα εικόνας.',
     'Καταγράψτε την τρέχουσα εικόνα και ρύθμιση και δημιουργήστε το απαιτούμενο αντίγραφο πριν από αλλαγές.',
     'Εφαρμόστε ακριβώς την παρακάτω ρύθμιση, αντικαθιστώντας τις ενδεικτικές διαδρομές και τους τομείς με δικές σας τιμές.',
     'Εκτελέστε τους ελέγχους που εμφανίζονται και σταματήστε αν αποτύχει κάποιος.',
@@ -345,7 +400,7 @@ const l10n = {
     'Επαναφορά',
     'Ενημέρωση περιέκτη',
     'Επαναφορά εικόνας',
-    'Μετεγκατάσταση στο DiscVault 26',
+    'Μετεγκατάσταση στο DiscVault',
     'Μεταβλητές περιβάλλοντος',
     'Ταυτοποίηση και RBAC',
     'Πρόσθετα και μεταδεδομένα',
@@ -372,7 +427,7 @@ const l10n = {
     'Siguiente paso',
     'Fuente y estado',
     'Sigue este procedimiento específico para completar',
-    'La página indica el canal de publicación de cada comando. Estable y beta usan la misma topología de DiscVault v26 con PostgreSQL; solo cambia la etiqueta de imagen.',
+    'La página indica el canal de publicación de cada comando. Estable y beta usan la misma topología de DiscVault con PostgreSQL; solo cambia la etiqueta de imagen.',
     'Anota la imagen y la configuración actuales y crea la copia necesaria antes de cambiar nada.',
     'Aplica exactamente la configuración siguiente y sustituye las rutas y dominios de ejemplo por tus valores.',
     'Ejecuta las comprobaciones indicadas y detente si falla alguna.',
@@ -387,7 +442,7 @@ const l10n = {
     'Restauración',
     'Actualización del contenedor',
     'Reversión de imagen',
-    'Migración a DiscVault 26',
+    'Migración a DiscVault',
     'Variables de entorno',
     'Autenticación y RBAC',
     'Complementos y metadatos',
@@ -414,7 +469,7 @@ const l10n = {
     'Seuraava vaihe',
     'Lähde ja tila',
     'Noudata tätä kohdennettua ohjetta suorittaaksesi',
-    'Sivu ilmoittaa jokaisen komennon julkaisukanavan. Vakaa ja beta käyttävät samaa PostgreSQL-pohjaista DiscVault v26 -topologiaa; vain image-tunniste vaihtuu.',
+    'Sivu ilmoittaa jokaisen komennon julkaisukanavan. Vakaa ja beta käyttävät samaa PostgreSQL-pohjaista DiscVault -topologiaa; vain image-tunniste vaihtuu.',
     'Kirjaa nykyinen levykuva ja määritys ja tee vaadittu varmuuskopio ennen muutoksia.',
     'Käytä alla olevaa määritystä täsmälleen ja korvaa esimerkkipolut ja verkkotunnukset omilla arvoillasi.',
     'Suorita näytetyt tarkistukset ja pysähdy, jos jokin niistä epäonnistuu.',
@@ -429,7 +484,7 @@ const l10n = {
     'Palautus',
     'Säilön päivitys',
     'Levykuvan palautus',
-    'Siirtyminen DiscVault 26:een',
+    'Siirtyminen DiscVault:een',
     'Ympäristömuuttujat',
     'Todennus ja RBAC',
     'Liitännäiset ja metatiedot',
@@ -456,7 +511,7 @@ const l10n = {
     'Étape suivante',
     'Source et état',
     'Suivez cette procédure ciblée pour effectuer',
-    'La page indique le canal de publication de chaque commande. Stable et bêta utilisent la même topologie DiscVault v26 avec PostgreSQL ; seul le tag de l’image change.',
+    'La page indique le canal de publication de chaque commande. Stable et bêta utilisent la même topologie DiscVault avec PostgreSQL ; seul le tag de l’image change.',
     'Notez l’image et la configuration actuelles et créez la sauvegarde requise avant toute modification.',
     'Appliquez exactement la configuration ci-dessous en remplaçant les chemins et domaines d’exemple par vos valeurs.',
     'Exécutez les contrôles indiqués et arrêtez-vous si l’un d’eux échoue.',
@@ -471,7 +526,7 @@ const l10n = {
     'Restauration',
     'Mise à jour du conteneur',
     'Retour à une image',
-    'Migration vers DiscVault 26',
+    'Migration vers DiscVault',
     'Variables d’environnement',
     'Authentification et RBAC',
     'Extensions et métadonnées',
@@ -498,7 +553,7 @@ const l10n = {
     'Következő lépés',
     'Forrás és állapot',
     'Kövesse ezt a célzott eljárást a következőhöz:',
-    'Az oldal minden parancsnál megadja a kiadási csatornát. A stabil és a béta ugyanazt a PostgreSQL-alapú DiscVault v26 topológiát használja; csak az image tagje tér el.',
+    'Az oldal minden parancsnál megadja a kiadási csatornát. A stabil és a béta ugyanazt a PostgreSQL-alapú DiscVault topológiát használja; csak az image tagje tér el.',
     'Jegyezze fel a jelenlegi lemezképet és beállítást, majd a módosítás előtt készítse el a szükséges mentést.',
     'Pontosan alkalmazza az alábbi beállítást, és cserélje a mintául szolgáló útvonalakat és tartományokat saját értékeire.',
     'Futtassa a bemutatott ellenőrzéseket, és bármely hiba esetén álljon meg.',
@@ -513,7 +568,7 @@ const l10n = {
     'Visszaállítás',
     'Konténerfrissítés',
     'Lemezkép visszaállítása',
-    'Átállás DiscVault 26-ra',
+    'Átállás DiscVault-ra',
     'Környezeti változók',
     'Hitelesítés és RBAC',
     'Bővítmények és metaadatok',
@@ -540,7 +595,7 @@ const l10n = {
     'Passaggio successivo',
     'Fonte e stato',
     'Segui questa procedura mirata per completare',
-    'La pagina indica il canale di rilascio per ogni comando. Stabile e beta usano la stessa topologia DiscVault v26 con PostgreSQL; cambia solo il tag dell’immagine.',
+    'La pagina indica il canale di rilascio per ogni comando. Stabile e beta usano la stessa topologia DiscVault con PostgreSQL; cambia solo il tag dell’immagine.',
     'Annota l’immagine e la configurazione correnti e crea il backup richiesto prima delle modifiche.',
     'Applica esattamente la configurazione seguente sostituendo percorsi e domini di esempio con i tuoi valori.',
     'Esegui i controlli indicati e fermati se uno di essi non riesce.',
@@ -555,7 +610,7 @@ const l10n = {
     'Ripristino',
     'Aggiornamento del contenitore',
     'Ripristino dell’immagine',
-    'Migrazione a DiscVault 26',
+    'Migrazione a DiscVault',
     'Variabili di ambiente',
     'Autenticazione e RBAC',
     'Plugin e metadati',
@@ -582,7 +637,7 @@ const l10n = {
     '次の手順',
     '情報源と状態',
     '次の作業には、この具体的な手順を使用します：',
-    '各コマンドのリリースチャンネルをページ内に明記しています。stable と beta は同じ PostgreSQL ベースの DiscVault v26 トポロジーを使用し、異なるのはイメージタグだけです。',
+    '各コマンドのリリースチャンネルをページ内に明記しています。stable と beta は同じ PostgreSQL ベースの DiscVault トポロジーを使用し、異なるのはイメージタグだけです。',
     '変更前に現在のイメージと設定を記録し、必要なバックアップを作成します。',
     '以下の設定を正確に適用し、例のパスとドメインを自分の値に置き換えます。',
     '示された確認を実行し、いずれかが失敗したら停止します。',
@@ -597,7 +652,7 @@ const l10n = {
     '復元',
     'コンテナの更新',
     'イメージのロールバック',
-    'DiscVault 26 への移行',
+    'DiscVault への移行',
     '環境変数',
     '認証と RBAC',
     'プラグインとメタデータ',
@@ -624,7 +679,7 @@ const l10n = {
     '다음 단계',
     '출처 및 상태',
     '다음 작업은 이 구체적인 절차를 따르세요:',
-    '페이지는 각 명령의 릴리스 채널을 표시합니다. stable과 beta는 동일한 PostgreSQL 기반 DiscVault v26 토폴로지를 사용하며 이미지 태그만 다릅니다.',
+    '페이지는 각 명령의 릴리스 채널을 표시합니다. stable과 beta는 동일한 PostgreSQL 기반 DiscVault 토폴로지를 사용하며 이미지 태그만 다릅니다.',
     '변경 전에 현재 이미지와 구성을 기록하고 필요한 백업을 만드세요.',
     '아래 구성을 정확히 적용하고 예시 경로와 도메인을 자신의 값으로 바꾸세요.',
     '표시된 검사를 실행하고 하나라도 실패하면 중지하세요.',
@@ -639,7 +694,7 @@ const l10n = {
     '복원',
     '컨테이너 업데이트',
     '이미지 롤백',
-    'DiscVault 26 마이그레이션',
+    'DiscVault 마이그레이션',
     '환경 변수',
     '인증 및 RBAC',
     '플러그인 및 메타데이터',
@@ -666,7 +721,7 @@ const l10n = {
     'Volgende stap',
     'Bron en status',
     'Volg deze gerichte procedure voor',
-    'De pagina vermeldt bij elke opdracht het releasekanaal. Stabiel en bèta gebruiken dezelfde PostgreSQL-topologie van DiscVault v26; alleen de imagetag verschilt.',
+    'De pagina vermeldt bij elke opdracht het releasekanaal. Stabiel en bèta gebruiken dezelfde PostgreSQL-topologie van DiscVault; alleen de imagetag verschilt.',
     'Noteer vóór wijzigingen de huidige image en configuratie en maak de vereiste back-up.',
     'Pas de onderstaande configuratie exact toe en vervang voorbeeldpaden en domeinen door je eigen waarden.',
     'Voer de getoonde controles uit en stop als een controle mislukt.',
@@ -681,7 +736,7 @@ const l10n = {
     'Herstellen',
     'Container bijwerken',
     'Image terugdraaien',
-    'Migratie naar DiscVault 26',
+    'Migratie naar DiscVault',
     'Omgevingsvariabelen',
     'Authenticatie en RBAC',
     'Plug-ins en metadata',
@@ -708,7 +763,7 @@ const l10n = {
     'Neste trinn',
     'Kilde og status',
     'Følg denne målrettede fremgangsmåten for å fullføre',
-    'Siden angir utgivelseskanalen for hver kommando. Stabil og beta bruker samme PostgreSQL-baserte DiscVault v26-topologi; bare image-taggen er forskjellig.',
+    'Siden angir utgivelseskanalen for hver kommando. Stabil og beta bruker samme PostgreSQL-baserte DiscVault-topologi; bare image-taggen er forskjellig.',
     'Noter gjeldende image og konfigurasjon, og lag den nødvendige sikkerhetskopien før endringer.',
     'Bruk konfigurasjonen nedenfor nøyaktig, og erstatt eksempelstier og domener med egne verdier.',
     'Kjør kontrollene som vises, og stopp hvis en kontroll mislykkes.',
@@ -723,7 +778,7 @@ const l10n = {
     'Gjenoppretting',
     'Containeroppdatering',
     'Tilbakerulling av image',
-    'Migrering til DiscVault 26',
+    'Migrering til DiscVault',
     'Miljøvariabler',
     'Autentisering og RBAC',
     'Programtillegg og metadata',
@@ -750,7 +805,7 @@ const l10n = {
     'Następny krok',
     'Źródło i stan',
     'Wykonaj tę ukierunkowaną procedurę, aby ukończyć',
-    'Strona podaje kanał wydania przy każdym poleceniu. Kanały stabilny i beta używają tej samej topologii DiscVault v26 z PostgreSQL; różni się tylko tag obrazu.',
+    'Strona podaje kanał wydania przy każdym poleceniu. Kanały stabilny i beta używają tej samej topologii DiscVault z PostgreSQL; różni się tylko tag obrazu.',
     'Przed zmianami zanotuj bieżący obraz i konfigurację oraz wykonaj wymaganą kopię.',
     'Zastosuj dokładnie poniższą konfigurację, zastępując przykładowe ścieżki i domeny własnymi wartościami.',
     'Uruchom pokazane kontrole i zatrzymaj się, jeśli którakolwiek zakończy się błędem.',
@@ -765,7 +820,7 @@ const l10n = {
     'Przywracanie',
     'Aktualizacja kontenera',
     'Wycofanie obrazu',
-    'Migracja do DiscVault 26',
+    'Migracja do DiscVault',
     'Zmienne środowiskowe',
     'Uwierzytelnianie i RBAC',
     'Wtyczki i metadane',
@@ -792,7 +847,7 @@ const l10n = {
     'Próximo passo',
     'Fonte e estado',
     'Siga este procedimento específico para concluir',
-    'A página indica o canal de lançamento de cada comando. Estável e beta usam a mesma topologia do DiscVault v26 com PostgreSQL; apenas muda a tag da imagem.',
+    'A página indica o canal de lançamento de cada comando. Estável e beta usam a mesma topologia do DiscVault com PostgreSQL; apenas muda a tag da imagem.',
     'Registe a imagem e a configuração atuais e crie a cópia necessária antes de qualquer alteração.',
     'Aplique exatamente a configuração abaixo e substitua os caminhos e domínios de exemplo pelos seus valores.',
     'Execute as verificações apresentadas e pare se alguma falhar.',
@@ -807,7 +862,7 @@ const l10n = {
     'Restauro',
     'Atualização do contentor',
     'Reversão da imagem',
-    'Migração para DiscVault 26',
+    'Migração para DiscVault',
     'Variáveis de ambiente',
     'Autenticação e RBAC',
     'Extensões e metadados',
@@ -834,7 +889,7 @@ const l10n = {
     'Nästa steg',
     'Källa och status',
     'Följ den här riktade proceduren för att slutföra',
-    'Sidan anger utgivningskanalen för varje kommando. Stabil och beta använder samma PostgreSQL-baserade DiscVault v26-topologi; endast image-taggen skiljer sig.',
+    'Sidan anger utgivningskanalen för varje kommando. Stabil och beta använder samma PostgreSQL-baserade DiscVault-topologi; endast image-taggen skiljer sig.',
     'Anteckna aktuell image och konfiguration och skapa den nödvändiga säkerhetskopian före ändringar.',
     'Tillämpa konfigurationen nedan exakt och ersätt exempelvägar och domäner med egna värden.',
     'Kör kontrollerna som visas och stoppa om någon kontroll misslyckas.',
@@ -849,7 +904,7 @@ const l10n = {
     'Återställning',
     'Containeruppdatering',
     'Återställning av image',
-    'Migrering till DiscVault 26',
+    'Migrering till DiscVault',
     'Miljövariabler',
     'Autentisering och RBAC',
     'Insticksprogram och metadata',
@@ -876,7 +931,7 @@ const l10n = {
     'Sonraki adım',
     'Kaynak ve durum',
     'Şunu tamamlamak için bu odaklı prosedürü izleyin:',
-    'Sayfa her komutun yayın kanalını belirtir. Kararlı ve beta aynı PostgreSQL tabanlı DiscVault v26 topolojisini kullanır; yalnızca imaj etiketi farklıdır.',
+    'Sayfa her komutun yayın kanalını belirtir. Kararlı ve beta aynı PostgreSQL tabanlı DiscVault topolojisini kullanır; yalnızca imaj etiketi farklıdır.',
     'Değişiklikten önce mevcut imajı ve yapılandırmayı kaydedin ve gerekli yedeği oluşturun.',
     'Aşağıdaki yapılandırmayı aynen uygulayın; örnek yolları ve alan adlarını kendi değerlerinizle değiştirin.',
     'Gösterilen kontrolleri çalıştırın ve herhangi biri başarısız olursa durun.',
@@ -891,7 +946,7 @@ const l10n = {
     'Geri yükleme',
     'Kapsayıcı güncellemesi',
     'İmajı geri alma',
-    'DiscVault 26 geçişi',
+    'DiscVault geçişi',
     'Ortam değişkenleri',
     'Kimlik doğrulama ve RBAC',
     'Eklentiler ve meta veriler',
@@ -918,7 +973,7 @@ const l10n = {
     'Наступний крок',
     'Джерело й стан',
     'Виконайте цю цільову процедуру, щоб завершити',
-    'На сторінці вказано канал випуску для кожної команди. Стабільний і бета-канали використовують однакову топологію DiscVault v26 з PostgreSQL; відрізняється лише тег образу.',
+    'На сторінці вказано канал випуску для кожної команди. Стабільний і бета-канали використовують однакову топологію DiscVault з PostgreSQL; відрізняється лише тег образу.',
     'Перед змінами запишіть поточний образ і конфігурацію та створіть потрібну резервну копію.',
     'Точно застосуйте наведену конфігурацію, замінивши приклади шляхів і доменів власними значеннями.',
     'Виконайте наведені перевірки й зупиніться, якщо будь-яка з них завершиться помилкою.',
@@ -933,7 +988,7 @@ const l10n = {
     'Відновлення',
     'Оновлення контейнера',
     'Відкочування образу',
-    'Міграція до DiscVault 26',
+    'Міграція до DiscVault',
     'Змінні середовища',
     'Автентифікація та RBAC',
     'Плагіни й метадані',
@@ -960,7 +1015,7 @@ const l10n = {
     '下一步',
     '来源和状态',
     '请按照此专项步骤完成',
-    '页面会为每条命令标明发布通道。稳定版与测试版使用相同的 PostgreSQL 支持的 DiscVault v26 拓扑；只有镜像标签不同。',
+    '页面会为每条命令标明发布通道。稳定版与测试版使用相同的 PostgreSQL 支持的 DiscVault 拓扑；只有镜像标签不同。',
     '更改前请记录当前镜像和配置，并创建所需备份。',
     '请严格应用以下配置，并将示例路径和域名替换为您自己的值。',
     '运行所示检查；任何一项失败都应停止。',
@@ -975,7 +1030,7 @@ const l10n = {
     '恢复',
     '容器更新',
     '镜像回滚',
-    '迁移到 DiscVault 26',
+    '迁移到 DiscVault',
     '环境变量',
     '身份验证和 RBAC',
     '插件和元数据',
@@ -1179,6 +1234,8 @@ const categoryNames = {
 const S = 'helmerzNL/DiscVault';
 const M = 'helmerzNL/DiscVault.EU';
 const A = 'Flux76HQ/App-Guidance';
+const U = 'helmerzNL/unraid-community-apps';
+const H = 'helmerzNL/home-assistant-addons';
 const pages = [
   {
     path: 'start/index',
@@ -1187,14 +1244,14 @@ const pages = [
     channel: ['stable', 'beta'],
     products: ['server', 'pwa', 'ios', 'android'],
     platforms: ['all'],
-    version: 'DiscVault v26',
+    version: 'DiscVault',
     source: [S, 'helmerzNL/DiscVaultApp', 'Flux76HQ/DiscVault-AndroidApp'],
     pre: ['Docker Engine 24+', 'iOS/iPadOS 17+', 'Android API 26+'],
     command: 'Server: /install/\nPWA: /pwa/\niOS/iPadOS: /ios/\nAndroid: /android/',
     intro:
       'Choose the server, PWA, iOS/iPadOS, or Android route without mixing their availability claims.',
     scope:
-      'The DiscVault v26 server and PWA are available through stable `:latest` and beta `:beta`; native app pages carry their own release status.',
+      'The DiscVault server and PWA are available through stable `:latest` and beta `:beta`; native app pages carry their own release status.',
     expected:
       'You reach a platform-specific procedure and know its release channel before changing data.',
     rollback: 'No system change is made on this route page.',
@@ -1207,13 +1264,13 @@ const pages = [
     channel: ['stable', 'beta'],
     products: ['server', 'pwa', 'ios', 'android'],
     platforms: ['all'],
-    version: 'DiscVault v26',
+    version: 'DiscVault',
     source: [S],
     pre: ['Docker Engine 24+', 'Docker Compose v2', '2 GB RAM', 'HTTPS DNS name'],
     command: 'docker version\ndocker compose version\ncurl --version',
     intro: 'Confirm host, browser, storage, and native-platform requirements before installation.',
     scope:
-      'DiscVault v26 stable and beta use the same PostgreSQL-backed service topology and host requirements.',
+      'DiscVault stable and beta use the same PostgreSQL-backed service topology and host requirements.',
     expected:
       'Docker and Compose return versions, the host has a writable backup destination, and HTTPS DNS is planned.',
     rollback: 'This is a read-only check; correct missing prerequisites before continuing.',
@@ -1226,22 +1283,22 @@ const pages = [
     channel: ['stable', 'beta'],
     products: ['server'],
     platforms: ['docker', 'unraid'],
-    version: 'DiscVault v26',
+    version: 'DiscVault',
     source: [S, M],
     sourceCommits: { [S]: betaSourceCommit },
     verified: betaVerified,
     docsVersion: betaDocsVersion,
     pre: ['Docker Engine 24+', 'Docker Compose v2'],
     command:
-      'Official beta files: /install/docker-compose/\nAdvanced stable or beta equivalent: /install/docker-run/\nPersistence: /install/storage-postgresql/\nUnraid: /install/unraid/',
+      'Official Compose files: /install/docker-compose/\nAdvanced stable or beta equivalent: /install/docker-run/\nPersistence: /install/storage-postgresql/\nUnraid: /install/unraid/\nHome Assistant: /install/home-assistant/',
     intro:
-      'Choose the DiscVault v26 topology for new installs, or keep an existing previous-generation deployment on the frozen Legacy image until migration.',
+      'Choose the DiscVault topology for new installs, or keep an existing previous-generation deployment on the frozen Legacy image until migration.',
     scope:
-      '`ghcr.io/helmerznl/discvault:latest` is DiscVault v26 stable and `ghcr.io/helmerznl/discvault:beta` is DiscVault v26 beta. The official `app/deploy/next/docker-compose.yml` and `.env.example` procedure is beta-only and uses `DISCVAULT_NEXT_IMAGE`; the advanced Docker-run procedure remains available for both channels. The frozen `ghcr.io/helmerznl/discvault:legacy` image is only for an existing previous-generation installation that is not ready to migrate. Never substitute that deployment image into the v26 beta topology.',
+      '`ghcr.io/helmerznl/discvault:latest` is DiscVault stable and `ghcr.io/helmerznl/discvault:beta` is DiscVault beta. The official `app/deploy/next/docker-compose.yml` and `.env.example` procedure covers both channels and uses `DISCVAULT_NEXT_IMAGE`; the advanced Docker-run procedure remains available as an equivalent. Unraid installs through Community Applications and Home Assistant through its own app. The frozen `ghcr.io/helmerznl/discvault:legacy` image is only for an existing previous-generation installation that is not ready to migrate. Never substitute that deployment image into the DiscVault Compose topology.',
     expected:
-      'A new install selects one v26 channel, while an existing previous-generation install either stays on its unchanged Legacy topology or follows the migration procedure.',
+      'A new install selects one DiscVault channel, while an existing previous-generation install either stays on its unchanged Legacy topology or follows the migration procedure.',
     rollback:
-      'Back up an existing or legacy deployment before pulling or recreating it; a fresh install has no prior data to back up. The frozen Legacy image receives no v26 features, migration improvements, or future interface updates.',
+      'Back up an existing or legacy deployment before pulling or recreating it; a fresh install has no prior data to back up. The frozen Legacy image receives no DiscVault features, migration improvements, or future interface updates.',
     next: 'install/docker-compose',
   },
   {
@@ -1251,15 +1308,15 @@ const pages = [
     channel: ['stable', 'beta'],
     products: ['server'],
     platforms: ['docker'],
-    version: 'DiscVault v26',
+    version: 'DiscVault',
     source: [S],
     pre: ['Docker Engine 24+', 'OpenSSL', 'advanced multi-container operations'],
     command:
       'Run PostgreSQL 17, API, worker, and MCP on one Docker network. Set DATABASE_URL for API and worker, mount persistent PostgreSQL and /data paths, and map host 6080 to API port 5000.',
     intro:
-      'Use raw Docker commands only as an advanced, complete equivalent of the recommended v26 Compose stack.',
+      'Use raw Docker commands only as an advanced, complete equivalent of the recommended DiscVault Compose stack.',
     scope:
-      'Set `DISCVAULT_IMAGE` to `ghcr.io/helmerznl/discvault:latest` for DiscVault v26 stable or `ghcr.io/helmerznl/discvault:beta` for DiscVault v26 beta. Both require PostgreSQL, `DATABASE_URL`, API, worker, MCP, and persistent `/data`.',
+      'Set `DISCVAULT_IMAGE` to `ghcr.io/helmerznl/discvault:latest` for DiscVault stable or `ghcr.io/helmerznl/discvault:beta` for DiscVault beta. Both require PostgreSQL, `DATABASE_URL`, API, worker, MCP, and persistent `/data`.',
     expected:
       'All four containers are running, PostgreSQL is healthy, and `http://localhost:6080/api/next/health` succeeds through host port 6080 mapped to internal API port 5000.',
     rollback:
@@ -1270,25 +1327,26 @@ const pages = [
     path: 'install/docker-compose',
     category: 'install',
     topic: 'Docker Compose',
-    channel: ['beta'],
+    channel: ['stable', 'beta'],
     products: ['server'],
     platforms: ['docker'],
-    version: 'DiscVault v26',
+    version: 'DiscVault',
     source: [S],
-    sourceCommits: { [S]: betaSourceCommit },
-    sourceFiles: betaDeploymentSourceFiles,
-    verified: betaVerified,
-    docsVersion: betaDocsVersion,
+    sourceCommits: { [S]: currentCoreSourceCommit },
+    sourceFiles: currentDeploymentSourceFiles,
+    verified: applianceVerified,
+    docsVersion: applianceDocsVersion,
     pre: ['Docker Compose v2', 'OpenSSL', 'persistent PostgreSQL and /data paths'],
     command:
-      'Download app/deploy/next/docker-compose.yml and .env.example from release/v26-beta, then force DISCVAULT_NEXT_IMAGE=ghcr.io/helmerznl/discvault:beta before startup.',
-    intro: 'Deploy DiscVault 26 beta from the canonical moving Compose and environment files.',
+      'Download app/deploy/next/docker-compose.yml and .env.example from main (stable) or release/v26-beta (beta), then force DISCVAULT_NEXT_IMAGE to :latest or :beta before startup.',
+    intro:
+      'Deploy DiscVault stable or beta from the official Compose and environment files: the recommended route for a new Docker install.',
     scope:
-      'This page applies only to DiscVault 26 beta. It downloads the moving `release/v26-beta` files and lists commit-pinned verification links. Because the current source `.env.example` still defaults to the engineering `:dev` image, the procedure rewrites and validates `DISCVAULT_NEXT_IMAGE=ghcr.io/helmerznl/discvault:beta` before pull or startup. It uses project `discvault_next_deploy`, host API port `6180`, persistent `/mnt/user/appdata/discvault`, and PostgreSQL path `/mnt/user/appdata/discvault-next/postgres`.',
+      'Stable downloads the files from `main` and runs `DISCVAULT_NEXT_IMAGE=ghcr.io/helmerznl/discvault:latest`; beta downloads them from `release/v26-beta` and runs `DISCVAULT_NEXT_IMAGE=ghcr.io/helmerznl/discvault:beta`. Pick one channel per data folder. Because `.env.example` still defaults to the engineering `:dev` image, the procedure rewrites and validates the image before pull or startup. It uses project `discvault_next_deploy`, host API port `6180`, persistent `/mnt/user/appdata/discvault`, and PostgreSQL path `/mnt/user/appdata/discvault-next/postgres`.',
     expected:
-      'Compose project `discvault_next_deploy` reports PostgreSQL healthy and API, worker, and MCP running from the beta image; the health endpoint succeeds on host port 6180.',
+      'Compose project `discvault_next_deploy` reports PostgreSQL healthy and API, worker, and MCP running from the chosen image; the health endpoint succeeds on host port 6180.',
     rollback:
-      'Run `docker compose -p discvault_next_deploy down` without deleting data, preserve `.env`, and restore the matched PostgreSQL and `/data` backup before recreating the previous beta digest.',
+      'Run `docker compose -p discvault_next_deploy down` without deleting data, preserve `.env`, and restore the matched PostgreSQL and `/data` backup before recreating the previous image digest.',
     next: 'install/first-start-health',
   },
   {
@@ -1298,20 +1356,44 @@ const pages = [
     channel: ['stable', 'beta'],
     products: ['server'],
     platforms: ['unraid'],
-    version: 'DiscVault v26',
-    source: [S],
-    pre: ['Unraid 6.12+', 'Compose Manager', '/mnt/user/appdata/discvault'],
-    command:
-      'Default DISCVAULT_IMAGE: ghcr.io/helmerznl/discvault:latest\nOptional beta: ghcr.io/helmerznl/discvault:beta\nAPI port: 6080 → 5000\nMCP port: 6090 → 6090\nData path: /mnt/user/appdata/discvault/data → /data\nPostgreSQL path: /mnt/user/appdata/discvault/postgres → /var/lib/postgresql/data',
-    intro:
-      'Deploy the same DiscVault v26 Compose topology through Unraid Compose Manager with explicit PostgreSQL and filesystem persistence.',
-    scope:
-      'Use `:latest` for DiscVault v26 stable by default or `:beta` for DiscVault v26 beta. Both channels run PostgreSQL, API, worker, and MCP with the same mounts and internal ports.',
-    expected:
-      'PostgreSQL, API, worker, and MCP start, and both appdata paths remain intact after container recreation.',
-    rollback:
-      'Stop the stack, preserve both appdata paths, restore their matched backup, and recreate the previous image digest.',
-    next: 'install/first-start-health',
+    version: 'DiscVault',
+    source: [S, U],
+    sourceCommits: { [S]: currentCoreSourceCommit, [U]: commits[U] },
+    sourceFiles: unraidSourceFiles,
+    verified: applianceVerified,
+    docsVersion: applianceDocsVersion,
+    description:
+      'Install DiscVault and DiscVault (beta) on Unraid from Community Applications with the DiscVault launcher.',
+    prose: {
+      intro: 'unraidIntro',
+      scope: 'unraidScope',
+      expected: 'unraidExpected',
+      rollback: 'unraidSafety',
+    },
+    next: 'install/reverse-proxy-passkeys',
+  },
+  {
+    path: 'install/home-assistant',
+    category: 'install',
+    topic: 'Home Assistant',
+    channel: ['stable', 'beta'],
+    products: ['server'],
+    platforms: ['home-assistant'],
+    version: 'DiscVault',
+    source: [S, H],
+    sourceCommits: { [S]: currentCoreSourceCommit, [H]: commits[H] },
+    sourceFiles: homeAssistantSourceFiles,
+    verified: applianceVerified,
+    docsVersion: applianceDocsVersion,
+    description:
+      'Run DiscVault and DiscVault (beta) as Home Assistant apps with PostgreSQL 17 built in and backups included.',
+    prose: {
+      intro: 'haIntro',
+      scope: 'haScope',
+      expected: 'haExpected',
+      rollback: 'haSafety',
+    },
+    next: 'install/reverse-proxy-passkeys',
   },
   {
     path: 'install/storage-postgresql',
@@ -1320,16 +1402,16 @@ const pages = [
     channel: ['stable', 'beta'],
     products: ['server'],
     platforms: ['docker', 'unraid'],
-    version: 'DiscVault v26',
+    version: 'DiscVault',
     source: [S],
-    pre: ['running DiscVault v26 Compose stack', 'PostgreSQL 17', 'separate backup destination'],
+    pre: ['running DiscVault Compose stack', 'PostgreSQL 17', 'separate backup destination'],
     command:
       'DISCVAULT_POSTGRES_DATA=/srv/discvault-postgres\nDISCVAULT_DATA_DIR=/srv/discvault\nPostgreSQL mount: /var/lib/postgresql/data\nFilesystem mount: /data',
-    intro: 'Operate the two persistent stores used by every DiscVault v26 release channel.',
+    intro: 'Operate the two persistent stores used by every DiscVault release channel.',
     scope:
       'For both `:latest` and `:beta`, application records live in PostgreSQL at `DISCVAULT_POSTGRES_DATA`; media, profiles, plugins, and file assets live at `DISCVAULT_DATA_DIR`, mounted as `/data`. Back up both in one stopped-writer window.',
     expected:
-      'PostgreSQL is healthy, all v26 services run, and both persistent host paths are verified.',
+      'PostgreSQL is healthy, all DiscVault services run, and both persistent host paths are verified.',
     rollback:
       'Restore the PostgreSQL dump and `/data` archive from the same backup set before starting the matching image digest.',
     next: 'install/reverse-proxy-passkeys',
@@ -1341,7 +1423,7 @@ const pages = [
     channel: ['stable', 'beta'],
     products: ['server'],
     platforms: ['docker', 'web'],
-    version: 'DiscVault v26',
+    version: 'DiscVault',
     source: [S, M, A],
     sourceCommits: { [S]: oidcCoreSourceCommit, [A]: oidcGuidanceSourceCommit },
     sourceFiles: oidcSourceFiles,
@@ -1353,7 +1435,7 @@ const pages = [
     intro:
       'Use one stable public HTTPS origin for Passkeys and the beta OIDC callback, or use the beta Legacy Authentication fallback when a valid FQDN is unavailable.',
     scope:
-      'Passkeys require a stable fully qualified domain name over trusted HTTPS: `RP_ID` is the hostname without scheme or port and `RP_ORIGINS` is the exact HTTPS origin. OIDC uses the first `RP_ORIGINS` value to derive its callback and remains HTTPS-only outside localhost. The stable deployment uses host port 6080 and the canonical beta Compose deployment uses 6180. DiscVault 26 beta can instead expose optional Legacy Authentication for a direct private or loopback IP by setting `LEGACY_AUTH_ENABLED=true` and leaving `RP_ID` and `RP_ORIGINS` empty.',
+      'Passkeys require a stable fully qualified domain name over trusted HTTPS: `RP_ID` is the hostname without scheme or port and `RP_ORIGINS` is the exact HTTPS origin. OIDC uses the first `RP_ORIGINS` value to derive its callback and remains HTTPS-only outside localhost. The stable deployment uses host port 6080 and the canonical beta Compose deployment uses 6180. DiscVault beta can instead expose optional Legacy Authentication for a direct private or loopback IP by setting `LEGACY_AUTH_ENABLED=true` and leaving `RP_ID` and `RP_ORIGINS` empty.',
     expected:
       'The chosen origin reports healthy, passkeys use the exact HTTPS FQDN, the beta OIDC provider returns to the registered callback, or the beta Legacy Authentication route reaches first-owner setup.',
     rollback:
@@ -1365,22 +1447,22 @@ const pages = [
     category: 'install',
     topic: 'Legacy Authentication',
     topicTerm: 'legacyAuthenticationTitle',
-    channel: ['beta'],
+    channel: ['stable', 'beta'],
     products: ['server'],
     platforms: ['docker', 'web'],
-    version: 'DiscVault v26',
+    version: 'DiscVault',
     source: [S],
-    sourceCommits: { [S]: betaSourceCommit },
-    sourceFiles: betaAuthSourceFiles,
-    verified: betaVerified,
-    docsVersion: betaDocsVersion,
-    pre: ['DiscVault 26 beta', 'LEGACY_AUTH_ENABLED=true', 'authenticator app'],
+    sourceCommits: { [S]: currentCoreSourceCommit },
+    sourceFiles: currentAuthSourceFiles,
+    verified: applianceVerified,
+    docsVersion: applianceDocsVersion,
+    pre: ['DiscVault', 'LEGACY_AUTH_ENABLED=true', 'authenticator app'],
     command:
       'FQDN: RP_ID=discvault.example.com and RP_ORIGINS=https://discvault.example.com\nLocal IP: RP_ID= and RP_ORIGINS=\nLEGACY_AUTH_ENABLED=true\nHealth and status: http://localhost:6180/api/next/auth/status',
     intro:
-      'Configure the implemented DiscVault 26 beta username/password fallback with TOTP, recovery codes, and fail-closed activation.',
+      'Configure the DiscVault username/password fallback with TOTP, recovery codes, and fail-closed activation.',
     scope:
-      'Legacy Authentication is an optional DiscVault 26 beta capability. Fresh instances with no users or credentials can atomically bootstrap the first Owner after password-risk acknowledgement; existing installations activate password login in Users & roles with a fresh Owner or Admin passkey assertion. Passwords require at least 15 characters and Argon2id storage. TOTP and single-use recovery codes are the recommended fallback path. Only a direct private or loopback request with invalid or empty RP settings may explicitly opt out of TOTP during first-owner bootstrap.',
+      'Legacy Authentication is an optional DiscVault capability in stable and beta. Fresh instances with no users or credentials can atomically bootstrap the first Owner after password-risk acknowledgement; existing installations activate password login in Users & roles with a fresh Owner or Admin passkey assertion. Passwords require at least 15 characters and Argon2id storage. TOTP and single-use recovery codes are the recommended fallback path. Only a direct private or loopback request with invalid or empty RP settings may explicitly opt out of TOTP during first-owner bootstrap.',
     expected:
       'The first or existing Owner can authenticate with a policy-compliant password and TOTP, recovery codes are acknowledged and stored offline, and account lockout works after repeated failures.',
     rollback:
@@ -1394,7 +1476,7 @@ const pages = [
     channel: ['stable', 'beta'],
     products: ['server'],
     platforms: ['docker', 'web'],
-    version: 'DiscVault v26',
+    version: 'DiscVault',
     source: [S],
     sourceCommits: { [S]: betaSourceCommit },
     sourceFiles: betaAuthSourceFiles,
@@ -1420,14 +1502,14 @@ const pages = [
     channel: ['stable', 'beta'],
     products: ['server'],
     platforms: ['docker', 'unraid'],
-    version: 'DiscVault v26',
+    version: 'DiscVault',
     source: [S],
     pre: ['verified backup', 'recorded image digest'],
     command:
       '1. /update/backup/\n2. /update/restore/\n3. /update/update/\n4. /update/rollback/\nExisting-data import only: /update/migration/',
     intro: 'Use a gated sequence for backup, update, verification, and rollback.',
     scope:
-      'Stable and beta use the same v26 PostgreSQL-backed topology. Change only `DISCVAULT_IMAGE`; review release notes and keep a matched PostgreSQL and `/data` backup before any update or channel switch.',
+      'Stable and beta use the same DiscVault PostgreSQL-backed topology. Change only `DISCVAULT_IMAGE`; review release notes and keep a matched PostgreSQL and `/data` backup before any update or channel switch.',
     expected: 'A backup is tested before pull/recreate, then health and data are verified.',
     rollback:
       'The previous image reference and matching database/filesystem backup are retained until acceptance.',
@@ -1440,14 +1522,14 @@ const pages = [
     channel: ['stable', 'beta'],
     products: ['server'],
     platforms: ['docker', 'unraid'],
-    version: 'DiscVault v26',
+    version: 'DiscVault',
     source: [S],
     pre: ['backup destination outside /data', 'free disk space'],
     command:
       'Stop API, worker, and MCP writers; capture the running image digest; create a PostgreSQL custom-format dump and a /data archive in the same maintenance window.',
     intro: 'Create a consistent backup before update, migration, or configuration changes.',
     scope:
-      'DiscVault v26 stable and beta both require a PostgreSQL dump and the host `/data` directory from the same stopped-writer window.',
+      'DiscVault stable and beta both require a PostgreSQL dump and the host `/data` directory from the same stopped-writer window.',
     expected:
       'Backup files are non-empty, stored outside the live data path, and can be listed or restored in a rehearsal.',
     rollback: 'If any backup command fails, restart the unchanged services and cancel the update.',
@@ -1460,11 +1542,11 @@ const pages = [
     channel: ['stable', 'beta'],
     products: ['server'],
     platforms: ['docker', 'unraid'],
-    version: 'DiscVault v26',
+    version: 'DiscVault',
     source: [S],
     pre: ['matching backup', 'matching image tag', 'maintenance window'],
     command:
-      'The executable v26 restore block is generated from scripts/content/procedures.mjs and applies to both release channels.',
+      'The executable DiscVault restore block is generated from scripts/content/procedures.mjs and applies to both release channels.',
     intro:
       'Restore the complete data set for the selected channel rather than copying only one database file.',
     scope:
@@ -1482,7 +1564,7 @@ const pages = [
     channel: ['stable', 'beta'],
     products: ['server'],
     platforms: ['docker', 'unraid'],
-    version: 'DiscVault v26',
+    version: 'DiscVault',
     source: [S, M],
     verified: migratedVerified,
     docsVersion: migratedDocsVersion,
@@ -1490,9 +1572,9 @@ const pages = [
     command:
       'Set DISCVAULT_IMAGE to ghcr.io/helmerznl/discvault:latest or ghcr.io/helmerznl/discvault:beta, validate the same Compose file, pull the three app services, and recreate without deleting persistent data.',
     intro:
-      'Identify the running generation, then update v26 or safely pin an existing old-generation deployment without crossing their topologies.',
+      'Identify the running generation, then update DiscVault or safely pin an existing old-generation deployment without crossing their topologies.',
     scope:
-      '`ghcr.io/helmerznl/discvault:latest` is DiscVault v26 stable and `ghcr.io/helmerznl/discvault:beta` is DiscVault v26 beta. Both use the same service graph and data schema path; the executable blocks on this page apply only to v26. An existing previous-generation deployment may be pinned to frozen `:legacy` with its old volumes, variables, ports, and data path unchanged. Never place `:legacy` in the v26 PostgreSQL Compose topology; use the migration procedure to move generations.',
+      '`ghcr.io/helmerznl/discvault:latest` is DiscVault stable and `ghcr.io/helmerznl/discvault:beta` is DiscVault beta. Both use the same service graph and data schema path; the executable blocks on this page apply only to the current DiscVault. An existing previous-generation deployment may be pinned to frozen `:legacy` with its old volumes, variables, ports, and data path unchanged. Never place `:legacy` in the DiscVault PostgreSQL Compose topology; use the migration procedure to move generations.',
     expected:
       'The intended image digest is running on its matching topology, health succeeds, and owner login, library count, and one media asset work.',
     rollback:
@@ -1506,11 +1588,11 @@ const pages = [
     channel: ['stable', 'beta'],
     products: ['server'],
     platforms: ['docker', 'unraid'],
-    version: 'DiscVault v26',
+    version: 'DiscVault',
     source: [S],
     pre: ['previous image digest or tag', 'pre-update backup'],
     command:
-      'The executable DiscVault v26 rollback block is generated from scripts/content/procedures.mjs for both channels.',
+      'The executable DiscVault rollback block is generated from scripts/content/procedures.mjs for both channels.',
     intro:
       'Return to the exact previous image and restore matching data whenever a schema or migration ran.',
     scope:
@@ -1528,19 +1610,19 @@ const pages = [
     channel: ['stable', 'beta'],
     products: ['server'],
     platforms: ['docker', 'web'],
-    version: 'DiscVault v26',
+    version: 'DiscVault',
     source: [S],
     pre: ['legacy source backup', 'current PostgreSQL and /data backup', 'owner access'],
     command:
-      'The migration assistant reads an existing legacy /data/discvault.db source and writes imported records to the current PostgreSQL runtime. It is available in DiscVault v26 stable and beta.',
+      'The migration assistant reads an existing legacy /data/discvault.db source and writes imported records to the current PostgreSQL runtime. It is available in DiscVault stable and beta.',
     intro:
-      'Import an existing SQLite collection into DiscVault 26 through the guarded migration assistant.',
+      'Import an existing SQLite collection into DiscVault through the guarded migration assistant.',
     scope:
-      'This page is only for importing existing legacy data. In both DiscVault v26 channels, `/data/discvault.db` is a read-only migration source, never the current runtime database; imported records are written to PostgreSQL.',
+      'This page is only for importing existing legacy data. In both DiscVault channels, `/data/discvault.db` is a read-only migration source, never the current runtime database; imported records are written to PostgreSQL.',
     expected:
       'Readiness is confirmed, migration finishes without failed records, and collection counts and sampled media match.',
     rollback:
-      'Stop v26 writers, preserve logs, restore the matching PostgreSQL and `/data` backup, and restart the recorded image digest. Never repeat an import into a partially populated database.',
+      'Stop DiscVault writers, preserve logs, restore the matching PostgreSQL and `/data` backup, and restart the recorded image digest. Never repeat an import into a partially populated database.',
     next: 'configure/environment',
   },
   {
@@ -1550,7 +1632,7 @@ const pages = [
     channel: ['stable', 'beta'],
     products: ['server'],
     platforms: ['docker', 'web'],
-    version: 'DiscVault v26',
+    version: 'DiscVault',
     source: [S],
     sourceCommits: { [S]: oidcCoreSourceCommit },
     verified: oidcVerified,
@@ -1570,26 +1652,26 @@ const pages = [
     path: 'configure/environment',
     category: 'configure',
     topic: 25,
-    channel: ['beta'],
+    channel: ['stable', 'beta'],
     products: ['server'],
     platforms: ['docker', 'unraid'],
-    version: 'DiscVault v26',
+    version: 'DiscVault',
     source: [S],
-    sourceCommits: { [S]: oidcCoreSourceCommit },
-    sourceFiles: currentBetaDeploymentSourceFiles,
-    verified: oidcVerified,
-    docsVersion: oidcDocsVersion,
+    sourceCommits: { [S]: currentCoreSourceCommit },
+    sourceFiles: currentDeploymentSourceFiles,
+    verified: applianceVerified,
+    docsVersion: applianceDocsVersion,
     pre: ['private environment file', 'restart window'],
     command:
-      'DISCVAULT_NEXT_IMAGE=ghcr.io/helmerznl/discvault:beta\nDISCVAULT_DATA_DIR=/mnt/user/appdata/discvault\nDISCVAULT_NEXT_POSTGRES_DATA=/mnt/user/appdata/discvault-next/postgres\nDISCVAULT_NEXT_API_PORT=6180\nRP_ID=discvault.example.com or empty for direct local IP\nLEGACY_AUTH_ENABLED=true\nOptional OIDC: /configure/oidc/',
+      'DISCVAULT_NEXT_IMAGE=ghcr.io/helmerznl/discvault:latest (stable) or :beta\nDISCVAULT_DATA_DIR=/mnt/user/appdata/discvault\nDISCVAULT_NEXT_POSTGRES_DATA=/mnt/user/appdata/discvault-next/postgres\nDISCVAULT_NEXT_API_PORT=6180\nRP_ID=discvault.example.com or empty for direct local IP\nLEGACY_AUTH_ENABLED=true\nOptional OIDC: /configure/oidc/',
     intro:
-      'Create the private DiscVault 26 beta runtime environment from the canonical moving `.env.example` without retaining its `:dev` image default.',
+      'Create the private DiscVault runtime environment from the official `.env.example` without retaining its `:dev` image default.',
     scope:
-      'This page applies to the official DiscVault 26 beta deployment. Generate `POSTGRES_PASSWORD` and one stable `JWT_SECRET` with `openssl rand -base64 48` into a mode-600 `.env`. Force `DISCVAULT_NEXT_IMAGE=ghcr.io/helmerznl/discvault:beta`; set the supplied data paths; and choose either aligned FQDN values or empty `RP_ID` and `RP_ORIGINS` for a direct local-IP Legacy Authentication route.',
+      'This page applies to the official DiscVault Compose deployment, stable from `main` and beta from `release/v26-beta`. Generate `POSTGRES_PASSWORD` and one stable `JWT_SECRET` with `openssl rand -base64 48` into a mode-600 `.env`. Force `DISCVAULT_NEXT_IMAGE` to `ghcr.io/helmerznl/discvault:latest` or `ghcr.io/helmerznl/discvault:beta`; set the supplied data paths; and choose either aligned FQDN values or empty `RP_ID` and `RP_ORIGINS` for a direct local-IP Legacy Authentication route.',
     expected:
-      '`docker compose -p discvault_next_deploy config` resolves the beta environment, no `:dev` tag remains in `.env`, and health succeeds on port 6180.',
+      '`docker compose -p discvault_next_deploy config` resolves the environment, no `:dev` tag remains in `.env`, and health succeeds on port 6180.',
     rollback:
-      'On failure, keep services stopped, restore the prior private `.env`, validate it with project `discvault_next_deploy`, and recreate the same beta digest. Do not rotate `JWT_SECRET` or `POSTGRES_PASSWORD` during ordinary rollback.',
+      'On failure, keep services stopped, restore the prior private `.env`, validate it with project `discvault_next_deploy`, and recreate the same image digest. Do not rotate `JWT_SECRET` or `POSTGRES_PASSWORD` during ordinary rollback.',
     next: 'configure/oidc',
   },
   {
@@ -1599,7 +1681,7 @@ const pages = [
     channel: ['stable', 'beta'],
     products: ['server'],
     platforms: ['web'],
-    version: 'DiscVault v26',
+    version: 'DiscVault',
     source: [S, M, A],
     sourceCommits: { [S]: oidcCoreSourceCommit, [A]: oidcGuidanceSourceCommit },
     sourceFiles: oidcSourceFiles,
@@ -1609,9 +1691,9 @@ const pages = [
     command:
       'Admin → Security → Enable authentication\nAdmin → Users & roles → Legacy Authentication (beta)\nAdmin → Users → Create 48-hour invite\nAdmin → Roles → Basic or Advanced\nGET /api/next/auth/status\nGET /api/next/auth/rbac',
     intro:
-      'Operate Passkeys and RBAC in both channels, and manage optional OIDC or Legacy Authentication identities and recovery in DiscVault 26 beta.',
+      'Operate Passkeys and RBAC in both channels, and manage optional OIDC or Legacy Authentication identities and recovery in DiscVault beta.',
     scope:
-      'DiscVault v26 provides WebAuthn and RBAC in stable and beta. A passkey keeps its private key on the device or in a trusted credential manager while DiscVault stores the public key. DiscVault 26 beta additionally supports optional OIDC and the opt-in Legacy Authentication capability. Owners and Admins can issue temporary passwords, require a password change, set per-user MFA policy, control passkey registration, and let signed-in users link one identity for the configured OIDC issuer. TOTP secrets are encrypted and unified recovery codes are hashed and single-use.',
+      'DiscVault provides WebAuthn and RBAC in stable and beta. A passkey keeps its private key on the device or in a trusted credential manager while DiscVault stores the public key. DiscVault beta additionally supports optional OIDC and the opt-in Legacy Authentication capability. Owners and Admins can issue temporary passwords, require a password change, set per-user MFA policy, control passkey registration, and let signed-in users link one identity for the configured OIDC issuer. TOTP secrets are encrypted and unified recovery codes are hashed and single-use.',
     expected:
       'Owner login retains an independent recovery method, beta OIDC and password users receive the intended identity and MFA policy, and a test user receives only assigned permissions.',
     rollback:
@@ -1622,25 +1704,25 @@ const pages = [
     path: 'configure/oidc',
     category: 'configure',
     topicTerm: 'oidcTitle',
-    channel: ['beta'],
+    channel: ['stable', 'beta'],
     products: ['server', 'pwa'],
     platforms: ['docker', 'web'],
-    version: 'DiscVault v26',
+    version: 'DiscVault',
     source: [S, A],
     sourceCommits: {
-      [S]: oidcCoreSourceCommit,
+      [S]: currentCoreSourceCommit,
       [A]: oidcGuidanceSourceCommit,
     },
     sourceFiles: oidcSourceFiles,
-    verified: oidcVerified,
-    docsVersion: oidcDocsVersion,
+    verified: applianceVerified,
+    docsVersion: applianceDocsVersion,
     pre: ['Owner recovery method', 'trusted public HTTPS origin', 'confidential OIDC client'],
     command:
       'Register https://discvault.example.com/api/next/auth/oidc/callback at the provider.\nSet DISCVAULT_OIDC_ISSUER, DISCVAULT_OIDC_CLIENT_ID, and DISCVAULT_OIDC_CLIENT_SECRET together.\nOptionally set DISCVAULT_OIDC_PROVIDER_NAME and DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS.\nRecreate next-api and test login, linking, unlinking, and Audit events.',
     intro:
       'Add one OpenID Connect provider, including Pocket ID, as an optional browser sign-in method without replacing local recovery or API-token boundaries.',
     scope:
-      'OIDC is available in DiscVault 26 beta from build 26.9.117. It is disabled when its required variables are empty. It authenticates only the self-hosted browser/PWA; iOS, Android, API tokens, and MCP bearer tokens keep their existing authentication contracts.',
+      'OIDC is available in DiscVault stable from release 26.10.17 and in beta from build 26.9.117. Home Assistant offers it through the app options; the Unraid launcher does not pass it on yet. It is disabled when its required variables are empty. It authenticates only the self-hosted browser/PWA; iOS, Android, API tokens, and MCP bearer tokens keep their existing authentication contracts.',
     expected:
       'The provider redirects to the exact DiscVault callback, an allowed user can sign in or link the identity, and safe OIDC outcomes appear in the Audit log without secrets or tokens.',
     rollback:
@@ -1654,14 +1736,14 @@ const pages = [
     channel: ['stable', 'beta'],
     products: ['server'],
     platforms: ['web', 'docker'],
-    version: 'DiscVault v26',
+    version: 'DiscVault',
     source: [S],
     pre: ['owner or admin session', 'provider credentials'],
     command:
       'curl --fail http://localhost:6080/api/next/plugins/registry\ncurl --fail http://localhost:6080/api/next/metadata/plugins\nInstalled plugins persist under /data/plugins; add credentials through Admin → Plugins.',
     intro: 'Discover, configure, order, and health-check metadata and digital-source plugins.',
     scope:
-      'DiscVault v26 stable and beta include the same plugin runtime. Bundled plugins are read-only; installed plugins persist under `/data/plugins`.',
+      'DiscVault stable and beta include the same plugin runtime. Bundled plugins are read-only; installed plugins persist under `/data/plugins`.',
     expected:
       'The registry lists the provider, its health check succeeds, and a dry-run lookup returns expected metadata.',
     rollback:
@@ -1675,13 +1757,13 @@ const pages = [
     channel: ['stable', 'beta'],
     products: ['pwa'],
     platforms: ['web'],
-    version: 'DiscVault v26',
+    version: 'DiscVault',
     source: [S],
     pre: ['supported Chromium, Safari, or Firefox', 'healthy HTTPS server'],
     command: 'Install: /pwa/install/\nLibrary: /pwa/library-search/\nOffline: /pwa/offline/',
     intro: 'Use the released web application and understand what remains server-dependent.',
     scope:
-      'The same DiscVault v26 PWA is served by stable `:latest` and beta `:beta`; availability is not inferred from the channel name.',
+      'The same DiscVault PWA is served by stable `:latest` and beta `:beta`; availability is not inferred from the channel name.',
     expected: 'The PWA opens from the configured server and routes to focused usage guidance.',
     rollback:
       'Browser installation does not alter server data; remove only the installed shell if needed.',
@@ -1694,14 +1776,14 @@ const pages = [
     channel: ['stable', 'beta'],
     products: ['pwa'],
     platforms: ['web', 'ios', 'android'],
-    version: 'DiscVault v26',
+    version: 'DiscVault',
     source: [S],
     pre: ['HTTPS or localhost', 'successful browser login'],
     command:
       'Desktop Chromium: address bar → Install DiscVault\niOS/iPadOS Safari: Share → Add to Home Screen\nAndroid Chromium: menu → Install app\nOpen the new icon and confirm the same server origin.',
     intro: 'Install the PWA on desktop, iOS/iPadOS, or Android from the trusted server origin.',
     scope:
-      'DiscVault v26 stable and beta use the same PWA installation flow and exact HTTPS origin configured for passkeys.',
+      'DiscVault stable and beta use the same PWA installation flow and exact HTTPS origin configured for passkeys.',
     expected:
       'DiscVault launches in a standalone window and owner login works from the installed icon.',
     rollback:
@@ -1715,7 +1797,7 @@ const pages = [
     channel: ['stable', 'beta'],
     products: ['pwa'],
     platforms: ['web'],
-    version: 'DiscVault v26',
+    version: 'DiscVault',
     source: [S, M],
     verified: migratedVerified,
     docsVersion: migratedDocsVersion,
@@ -1725,7 +1807,7 @@ const pages = [
     intro:
       'Browse, search, and update titles, watchlist, and history, then choose how Collectors Mode, multiple editions, box-sets, vaults, and collections are presented.',
     scope:
-      'In both DiscVault v26 channels, available actions are permission-scoped; viewers cannot perform editor or administrator changes. Collectors Mode is off by default and exposes the `box_set`, `vault`, and `collection` container types. Merging multiple editions as one title is a separate preference that is also off by default.',
+      'In both DiscVault channels, available actions are permission-scoped; viewers cannot perform editor or administrator changes. Collectors Mode is off by default and exposes the `box_set`, `vault`, and `collection` container types. Merging multiple editions as one title is a separate preference that is also off by default.',
     expected:
       'Search and filters return expected records, an allowed watchlist change persists, and collector preferences change presentation without deleting containers, members, or editions.',
     rollback:
@@ -1739,14 +1821,14 @@ const pages = [
     channel: ['stable', 'beta'],
     products: ['pwa'],
     platforms: ['web', 'ios', 'android'],
-    version: 'DiscVault v26',
+    version: 'DiscVault',
     source: [S],
     pre: ['installed PWA', 'one successful online load'],
     command:
       '1. Open the library while online.\n2. Put the device in airplane mode.\n3. Reopen DiscVault and inspect cached views.\n4. Reconnect before relying on writes or recently changed records.',
     intro: 'Understand cached shell behavior, deep links, and the limits of offline data.',
     scope:
-      'DiscVault v26 has limited offline PWA behavior in both channels. Cached screens may open, but server-backed writes, fresh searches, authentication, and synchronization require connectivity.',
+      'DiscVault has limited offline PWA behavior in both channels. Cached screens may open, but server-backed writes, fresh searches, authentication, and synchronization require connectivity.',
     expected:
       'Previously loaded shell content may open offline; after reconnection a reload shows current server data.',
     rollback:
@@ -1853,7 +1935,7 @@ const pages = [
     channel: ['stable', 'beta'],
     products: ['server'],
     platforms: ['docker', 'unraid', 'web'],
-    version: 'DiscVault v26',
+    version: 'DiscVault',
     source: [S],
     pre: ['owner access', 'external backup destination'],
     command:
@@ -1861,7 +1943,7 @@ const pages = [
     intro:
       'Monitor health, logs, operations, background jobs, plugin failures, and account security.',
     scope:
-      'Stable and beta use the same v26 service names and endpoints. Logs can contain titles and user identifiers; redact them before sharing.',
+      'Stable and beta use the same DiscVault service names and endpoints. Logs can contain titles and user identifiers; redact them before sharing.',
     expected:
       'Health succeeds, failed jobs have an actionable error, backups are current, and no default or exposed secret remains.',
     rollback:
@@ -1875,15 +1957,15 @@ const pages = [
     channel: ['stable', 'beta'],
     products: ['server'],
     platforms: ['web', 'docker'],
-    version: 'DiscVault v26',
+    version: 'DiscVault',
     source: [S],
     pre: ['personal API key or admin session', 'HTTPS endpoint'],
     command: 'MCP/API: /integrations/mcp-api/\nDigital sources: /integrations/plex-jellyfin/',
     intro: 'Choose an integration by channel and grant only the permissions it needs.',
     scope:
-      'DiscVault v26 stable and beta both provide MCP/API access, the plugin registry, and digital-source workflows.',
+      'DiscVault stable and beta both provide MCP/API access, the plugin registry, and digital-source workflows.',
     expected:
-      'You reach the matching v26 procedure and grant only the permissions required by that integration.',
+      'You reach the matching DiscVault procedure and grant only the permissions required by that integration.',
     rollback: 'Revoke test credentials and disable the integration before removing configuration.',
     next: 'integrations/mcp-api',
   },
@@ -1894,13 +1976,13 @@ const pages = [
     channel: ['stable', 'beta'],
     products: ['server'],
     platforms: ['web', 'docker'],
-    version: 'DiscVault v26',
+    version: 'DiscVault',
     source: [S],
     pre: ['personal API key', 'HTTPS DiscVault origin', 'MCP streamable HTTP client'],
     command: `{\n  "mcpServers": {\n    "discvault": {\n      "transport": "streamable-http",\n      "url": "https://discvault.example.com/mcp",\n      "headers": { "Authorization": "Bearer <personal-api-key>" }\n    }\n  }\n}\n# Health: curl --fail https://discvault.example.com/api/next/health`,
     intro: 'Connect an MCP client or REST consumer with a personal, user-scoped API key.',
     scope:
-      'DiscVault v26 stable and beta expose MCP on the web origin or direct port 6090 and use the same API service. Never place a real key in documentation, logs, or source control.',
+      'DiscVault stable and beta expose MCP on the web origin or direct port 6090 and use the same API service. Never place a real key in documentation, logs, or source control.',
     expected:
       'The client lists DiscVault tools and returns only the key owner’s collection, groups, watchlist, and history.',
     rollback:
@@ -1914,7 +1996,7 @@ const pages = [
     channel: ['stable', 'beta'],
     products: ['server'],
     platforms: ['web', 'docker'],
-    version: 'DiscVault v26',
+    version: 'DiscVault',
     source: [S],
     pre: ['Plex token or Jellyfin API key', 'reachable server URL', 'admin session'],
     command:
@@ -1922,7 +2004,7 @@ const pages = [
     intro:
       'Connect a digital media source, validate credentials, and dry-run discovery before queuing synchronization.',
     scope:
-      'The DiscVault v26 plugin workflow is available in stable and beta. Provider secrets are stored as secret settings and are not returned by the API.',
+      'The DiscVault plugin workflow is available in stable and beta. Provider secrets are stored as secret settings and are not returned by the API.',
     expected:
       'Health succeeds, dry-run discovery returns expected items, and matched records identify the correct source.',
     rollback:
@@ -1936,7 +2018,7 @@ const pages = [
     channel: ['stable', 'beta'],
     products: ['server', 'pwa', 'ios', 'android'],
     platforms: ['all'],
-    version: 'DiscVault v26',
+    version: 'DiscVault',
     source: [S, 'helmerzNL/DiscVaultApp', 'Flux76HQ/DiscVault-AndroidApp'],
     sourceCommits: { [S]: oidcCoreSourceCommit },
     verified: oidcVerified,
@@ -1947,7 +2029,7 @@ const pages = [
     intro:
       'Diagnose container startup, reverse proxy, Passkeys, OIDC, PWA cache, native permissions, migration, and data recovery in a safe order.',
     scope:
-      'Identify the image tag first, then use the shared v26 service graph. A 502 suggests host port 6080 or internal port 5000 health; passkey errors suggest HTTPS, `RP_ID`, or `RP_ORIGINS` mismatch. In beta, OIDC failures are separated into browser callback, discovery, token, and JWKS stages by safe `auth.oidc_failed` Audit events.',
+      'Identify the image tag first, then use the shared DiscVault service graph. A 502 suggests host port 6080 or internal port 5000 health; passkey errors suggest HTTPS, `RP_ID`, or `RP_ORIGINS` mismatch. In beta, OIDC failures are separated into browser callback, discovery, token, and JWKS stages by safe `auth.oidc_failed` Audit events.',
     expected:
       'The failing layer is isolated to container, proxy, browser/app, provider, or data and the matching health check is recorded.',
     rollback:
@@ -1961,18 +2043,18 @@ const pages = [
     channel: ['stable', 'beta'],
     products: ['server', 'pwa', 'ios', 'android'],
     platforms: ['all'],
-    version: 'DiscVault v26',
+    version: 'DiscVault',
     source: [S],
     sourceCommits: { [S]: oidcCoreSourceCommit },
     verified: oidcVerified,
     docsVersion: oidcDocsVersion,
     pre: ['selected release channel'],
     command:
-      'DiscVault v26 stable: ghcr.io/helmerznl/discvault:latest\nDiscVault v26 beta: ghcr.io/helmerznl/discvault:beta\nEngineering only: ghcr.io/helmerznl/discvault:dev\nBoth release channels: PostgreSQL 17 + /data; postgres + next-api + next-worker + next-mcp; API 6080 → 5000; MCP 6090 → 6090; GET /api/next/health; RP_ID + RP_ORIGINS\nBeta OIDC: DISCVAULT_OIDC_ISSUER + DISCVAULT_OIDC_CLIENT_ID + DISCVAULT_OIDC_CLIENT_SECRET; optional DISCVAULT_OIDC_PROVIDER_NAME + DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS',
+      'DiscVault stable: ghcr.io/helmerznl/discvault:latest\nDiscVault beta: ghcr.io/helmerznl/discvault:beta\nEngineering only: ghcr.io/helmerznl/discvault:dev\nBoth release channels: PostgreSQL 17 + /data; postgres + next-api + next-worker + next-mcp; API 6080 → 5000; MCP 6090 → 6090; GET /api/next/health; RP_ID + RP_ORIGINS\nBeta OIDC: DISCVAULT_OIDC_ISSUER + DISCVAULT_OIDC_CLIENT_ID + DISCVAULT_OIDC_CLIENT_SECRET; optional DISCVAULT_OIDC_PROVIDER_NAME + DISCVAULT_OIDC_INSECURE_BACKCHANNEL_ORIGINS',
     intro:
       'Look up image channels, ports, endpoints, persistent data locations, authentication settings, and channel-specific environment keys.',
     scope:
-      '`ghcr.io/helmerznl/discvault:latest` is DiscVault v26 stable and `ghcr.io/helmerznl/discvault:beta` is DiscVault v26 beta. They share one PostgreSQL-backed architecture; only the image tag differs. `:dev` is engineering-only.',
+      '`ghcr.io/helmerznl/discvault:latest` is DiscVault stable and `ghcr.io/helmerznl/discvault:beta` is DiscVault beta. They share one PostgreSQL-backed architecture; only the image tag differs. `:dev` is engineering-only.',
     expected:
       'An operator can identify the running channel and all data that must be backed up before a change.',
     rollback:
@@ -1980,6 +2062,25 @@ const pages = [
     next: 'start/index',
   },
 ];
+
+const sentence = (value) => {
+  const text = value.charAt(0).toUpperCase() + value.slice(1);
+  return /[.!?]$/.test(text) ? text : `${text}.`;
+};
+for (const page of pages) {
+  if (!page.prose) continue;
+  const en = procedureLocale.en.terms;
+  for (const [field, key] of Object.entries(page.prose)) {
+    if (!en[key]) throw new Error(`Missing English prose term ${key} for ${page.path}.`);
+    page[field] ??= sentence(en[key]);
+  }
+}
+const proseFor = (page, field, locale) =>
+  page.prose?.[field] ? sentence(procedureLocale[locale].terms[page.prose[field]]) : '';
+const withProse = (page, field, locale, body) => {
+  const prose = locale === 'en' ? '' : proseFor(page, field, locale);
+  return prose ? `${prose}\n\n${body}` : body;
+};
 
 const quote = (value) => `'${String(value).replaceAll("'", "''")}'`;
 const yamlArray = (items) => `[${items.map(quote).join(', ')}]`;
@@ -2055,6 +2156,7 @@ function platformFor(page, locale) {
   const platformNames = {
     docker: 'Docker',
     unraid: 'Unraid',
+    'home-assistant': 'Home Assistant',
     web: ui.webPlatform,
     ios: 'iOS',
     android: 'Android',
@@ -2069,8 +2171,8 @@ function versionFor(page) {
 
 function channelLabelFor(page, channel, locale) {
   const ui = procedureLocale[locale];
-  if (page.version === 'DiscVault v26' && channel === 'stable') return ui.v26Stable;
-  if (page.version === 'DiscVault v26' && channel === 'beta') return ui.v26Beta;
+  if (page.version === 'DiscVault' && channel === 'stable') return ui.v26Stable;
+  if (page.version === 'DiscVault' && channel === 'beta') return ui.v26Beta;
   return ui[channel];
 }
 
@@ -2085,7 +2187,7 @@ function renderChannelScope(page, spec, locale) {
     locale === 'en'
       ? page.scope
       : `${ui.scopeFor} **${titleFor(page, locale)}** (${platformFor(page, locale)}). ${ui.scopeFacts} ${channelFacts.join('; ')}. ${ui.semanticBoundary} ${markersFor(spec, locale).join(' · ')}.`;
-  const sections = [summary];
+  const sections = [withProse(page, 'scope', locale, summary)];
   for (const channel of page.channel) {
     sections.push(`### ${channelLabelFor(page, channel, locale)}`);
     const facts = spec.channels[channel] ?? [];
@@ -2214,7 +2316,7 @@ ${spec.safety
 
   return `## ${labels[0]}
 
-${goal}${page.appStoreBadge ? '\n\n<AppStoreBadge />' : ''}
+${withProse(page, 'intro', locale, goal)}${page.appStoreBadge ? '\n\n<AppStoreBadge />' : ''}
 
 ## ${labels[1]}
 
@@ -2232,12 +2334,12 @@ ${blocks}
 
 ## ${labels[4]}
 
-${expected}
+${withProse(page, 'expected', locale, expected)}
 
 ## ${labels[5]}
 
 :::caution
-${safety}
+${withProse(page, 'rollback', locale, safety)}
 :::
 
 ## ${labels[6]}
@@ -2270,7 +2372,7 @@ lastVerified: '${verifiedFor(page)}'
 
 function metadataDescription(page, locale, title, spec) {
   const clean = (value) => value.replaceAll('`', '').replace(/\s+/g, ' ').trim();
-  if (locale === 'en') return clean(page.intro);
+  if (locale === 'en') return clean(page.description ?? page.intro);
 
   let description = clean(`${procedureLocale[locale].descriptionLead} ${title}.`);
   for (const marker of markersFor(spec, locale)) {
@@ -2307,7 +2409,7 @@ pageId: 'home'
 products: ['docs']
 platforms: ['all']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['Flux76HQ/App-Guidance']
 lastVerified: '${verified}'
 template: splash

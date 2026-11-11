@@ -5,14 +5,14 @@ pageId: 'update-rollback'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## 目的と結果
 
@@ -22,13 +22,13 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 このページの対象は **更新と移行: イメージのロールバック** (Docker · Unraid). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; 以前のイメージを起動する前に、一致するデータを復元する; PostgreSQL `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; 以前のイメージを起動する前に、一致するデータを復元する; PostgreSQL `/data`. このページ固有の確認点: `PREVIOUS_IMAGE` · `pg_restore --exit-on-error` · `discvault.failed-` · `DISCVAULT_IMAGE`.
 
-### DiscVault v26 安定版
+### DiscVault 安定版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - 以前のイメージを起動する前に、一致するデータを復元する
 - PostgreSQL `/data`
 
-### DiscVault v26 ベータ版
+### DiscVault ベータ版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - 以前のイメージを起動する前に、一致するデータを復元する
@@ -106,7 +106,7 @@ trap - EXIT
 
 ## 次の手順
 
-[更新と移行: DiscVault 26 への移行](/ja/update/migration/)
+[更新と移行: DiscVault への移行](/ja/update/migration/)
 
 ## 情報源と状態
 

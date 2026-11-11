@@ -5,14 +5,14 @@ pageId: 'install-first-start-health'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · 웹" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-20" />
+<PageMeta channels="stable,beta" platform="Docker · 웹" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-20" />
 
 ## 목표 및 결과
 
@@ -22,12 +22,12 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 이 페이지의 적용 범위: **설치: 첫 시작 및 상태 검사** (Docker · 웹). 채널 및 데이터 경계: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `6080` → API `5000`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `/api/next/auth/status`; `6180` → API `5000`. 이 페이지의 전용 확인 지점: `/api/next/health` · `/api/next/auth/status` · `6080:5000` · `6180:5000` · WebAuthn.
 
-### DiscVault v26 안정판
+### DiscVault 안정판
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - `6080` → API `5000`
 
-### DiscVault v26 베타
+### DiscVault 베타
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `/api/next/auth/status`
@@ -35,7 +35,7 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## 사전 요구 사항
 
-- `/api/next/health`
+- DiscVault
 - `/api/next/auth/status`
 
 ## 절차
@@ -48,7 +48,7 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ### 명령 및 설정
 
-#### DiscVault v26 안정판
+#### DiscVault 안정판
 
 ```bash
 docker compose --env-file /opt/discvault/.env -p discvault -f /opt/discvault/compose.yaml ps
@@ -57,7 +57,7 @@ curl --fail http://localhost:6080/api/next/health
 curl --fail http://localhost:6080/api/next/auth/status
 ```
 
-#### DiscVault v26 베타
+#### DiscVault 베타
 
 ```bash
 docker compose -p discvault_next_deploy -f /opt/discvault-next/docker-compose.yml ps

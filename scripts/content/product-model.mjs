@@ -1,4 +1,4 @@
-export const productVersion = 'DiscVault 26';
+export const productVersion = 'DiscVault';
 
 export const deploymentArchitecture =
   'PostgreSQL 17 + persistent /data; postgres, API, worker, and MCP services';
@@ -6,19 +6,19 @@ export const deploymentArchitecture =
 export const imageChannels = Object.freeze({
   stable: Object.freeze({
     image: 'ghcr.io/helmerznl/discvault:latest',
-    label: 'DiscVault v26 stable',
+    label: 'DiscVault stable',
     productVersion,
     architecture: deploymentArchitecture,
   }),
   beta: Object.freeze({
     image: 'ghcr.io/helmerznl/discvault:beta',
-    label: 'DiscVault v26 beta',
+    label: 'DiscVault beta',
     productVersion,
     architecture: deploymentArchitecture,
   }),
   engineering: Object.freeze({
     image: 'ghcr.io/helmerznl/discvault:dev',
-    label: 'DiscVault v26 engineering',
+    label: 'DiscVault engineering',
     productVersion,
     architecture: deploymentArchitecture,
   }),
@@ -26,7 +26,7 @@ export const imageChannels = Object.freeze({
     image: 'ghcr.io/helmerznl/discvault:legacy',
     label: 'Previous-generation DiscVault (frozen)',
     productVersion: 'Previous DiscVault generation',
-    architecture: 'Existing legacy deployment topology; not the DiscVault v26 Compose topology',
+    architecture: 'Existing legacy deployment topology; not the DiscVault Compose topology',
   }),
 });
 

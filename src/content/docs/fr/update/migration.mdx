@@ -1,37 +1,37 @@
 ---
-title: 'Mise à jour et migration: Migration vers DiscVault 26'
-description: 'Instructions propres à la tâche : Mise à jour et migration: Migration vers DiscVault 26. /migration/readiness. ready_for_confirmation. /data/discvault.db. SQLite.'
+title: 'Mise à jour et migration: Migration vers DiscVault'
+description: 'Instructions propres à la tâche : Mise à jour et migration: Migration vers DiscVault. /migration/readiness. ready_for_confirmation. /data/discvault.db. SQLite.'
 pageId: 'update-migration'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Objectif et résultat
 
-Suivez le déroulement propre à cette page pour **Mise à jour et migration: Migration vers DiscVault 26**. Cette procédure utilise `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+Suivez le déroulement propre à cette page pour **Mise à jour et migration: Migration vers DiscVault**. Cette procédure utilise `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
 
 ## S’applique à
 
-Cette page s’applique uniquement à **Mise à jour et migration: Migration vers DiscVault 26** (Docker · web). Les limites de canal et de données sont : DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; source de données existantes en lecture seule ; jamais la base d’exécution actuelle · SQLite → PostgreSQL; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26; source de données existantes en lecture seule ; jamais la base d’exécution actuelle · SQLite → PostgreSQL. Points de contrôle propres à la page : `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+Cette page s’applique uniquement à **Mise à jour et migration: Migration vers DiscVault** (Docker · web). Les limites de canal et de données sont : DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault; source de données existantes en lecture seule ; jamais la base d’exécution actuelle · SQLite → PostgreSQL; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault; source de données existantes en lecture seule ; jamais la base d’exécution actuelle · SQLite → PostgreSQL. Points de contrôle propres à la page : `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
 
-### DiscVault v26 stable
+### DiscVault stable
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- DiscVault 26
+- DiscVault
 - source de données existantes en lecture seule ; jamais la base d’exécution actuelle · SQLite → PostgreSQL
 
-### DiscVault v26 bêta
+### DiscVault bêta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- DiscVault 26
+- DiscVault
 - source de données existantes en lecture seule ; jamais la base d’exécution actuelle · SQLite → PostgreSQL
 
 ## Prérequis
@@ -61,14 +61,14 @@ curl --fail http://localhost:6080/api/next/migration/status
 
 ## Résultat attendu
 
-Validez le résultat de **Mise à jour et migration: Migration vers DiscVault 26** uniquement lorsque tous les résultats suivants sont confirmés : la préparation est confirmée, la migration ne compte aucun échec et les totaux et médias test correspondent. Points de contrôle propres à la page : `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+Validez le résultat de **Mise à jour et migration: Migration vers DiscVault** uniquement lorsque tous les résultats suivants sont confirmés : la préparation est confirmée, la migration ne compte aucun échec et les totaux et médias test correspondent. Points de contrôle propres à la page : `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
 
 - la préparation est confirmée, la migration ne compte aucun échec et les totaux et médias test correspondent
 
 ## Sécurité et retour arrière
 
 :::caution
-La limite de récupération sûre pour **Mise à jour et migration: Migration vers DiscVault 26** impose ces actions avant tout démarrage ou toute poursuite : arrêtez les écritures DiscVault, restaurez les sauvegardes PostgreSQL et `/data` correspondantes et ne répétez jamais l’import dans une base partiellement remplie. Points de contrôle propres à la page : `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+La limite de récupération sûre pour **Mise à jour et migration: Migration vers DiscVault** impose ces actions avant tout démarrage ou toute poursuite : arrêtez les écritures DiscVault, restaurez les sauvegardes PostgreSQL et `/data` correspondantes et ne répétez jamais l’import dans une base partiellement remplie. Points de contrôle propres à la page : `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
 
 - arrêtez les écritures DiscVault, restaurez les sauvegardes PostgreSQL et `/data` correspondantes et ne répétez jamais l’import dans une base partiellement remplie
 :::

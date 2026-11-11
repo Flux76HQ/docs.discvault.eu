@@ -5,14 +5,14 @@ pageId: 'update-update'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
 lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Ziel und Ergebnis
 
@@ -22,13 +22,13 @@ Führe den seitenspezifischen Ablauf aus für **Update und Migration: Container-
 
 Diese Seite gilt ausschließlich für **Update und Migration: Container-Update** (Docker · Unraid). Kanal- und Datengrenzen sind: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · Versionshinweise und aufgezeichneter unveränderlicher Image-Digest · passender Sicherungssatz; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · Versionshinweise und aufgezeichneter unveränderlicher Image-Digest · passender Sicherungssatz. Seitenspezifische Kontrollpunkte: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
-### DiscVault v26 – stabil
+### DiscVault – stabil
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - `DISCVAULT_IMAGE`
 - PostgreSQL `/data` · Versionshinweise und aufgezeichneter unveränderlicher Image-Digest · passender Sicherungssatz
 
-### DiscVault v26 – Beta
+### DiscVault – Beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `DISCVAULT_IMAGE`
@@ -41,25 +41,25 @@ Diese Seite gilt ausschließlich für **Update und Migration: Container-Update**
 
 ## Vorgehen
 
-1. **Prüfen:** neue Installationen verwenden DiscVault v26 `:latest` oder `:beta`; das eingefrorene `:legacy`-Image ist nur für eine vorhandene Installation der vorherigen Generation gedacht, die noch nicht migrieren kann
+1. **Prüfen:** neue Installationen verwenden DiscVault `:latest` oder `:beta`; das eingefrorene `:legacy`-Image ist nur für eine vorhandene Installation der vorherigen Generation gedacht, die noch nicht migrieren kann
 2. **Sichern:** passender Sicherungssatz
-3. **Auswählen:** Nur Legacy-Zweig: nach der Sicherung nur das Image-Tag des vorhandenen alten Deployments auf `:legacy` ändern, mit unveränderter Topologie abrufen und neu erstellen, die Sammlung prüfen und stoppen; dieses vorhandene Deployment auf dieser Seite nicht auf die v26-Topologie umstellen
-4. **Öffnen:** [Update und Migration: Migration zu DiscVault 26](/de/update/migration/) · DiscVault 26
-5. **Bewahren:** Volumes, Umgebungsvariablen, Ports und Datenpfad der vorherigen Generation unverändert lassen; `:legacy` niemals in die v26-PostgreSQL-Compose-Topologie einsetzen
-6. **Verifizieren:** `DiscVault v26` · `PREVIOUS_IMAGE=@sha256:…`
-7. **Auswählen:** `DiscVault v26` · `DISCVAULT_IMAGE` · `:latest` `:beta`
-8. **Ausführen:** `DiscVault v26` · `--force-recreate`
-9. **Vergleichen:** `DiscVault v26` · der vorgesehene Image-Digest läuft, Health ist erfolgreich und Owner-Anmeldung, Bibliothekszahl und Medienprobe bestehen
+3. **Auswählen:** Nur Legacy-Zweig: nach der Sicherung nur das Image-Tag des vorhandenen alten Deployments auf `:legacy` ändern, mit unveränderter Topologie abrufen und neu erstellen, die Sammlung prüfen und stoppen; dieses vorhandene Deployment auf dieser Seite nicht auf die DiscVault-Topologie umstellen
+4. **Öffnen:** [Update und Migration: Migration zu DiscVault](/de/update/migration/) · DiscVault
+5. **Bewahren:** Volumes, Umgebungsvariablen, Ports und Datenpfad der vorherigen Generation unverändert lassen; `:legacy` niemals in die DiscVault-PostgreSQL-Compose-Topologie einsetzen
+6. **Verifizieren:** `DiscVault` · `PREVIOUS_IMAGE=@sha256:…`
+7. **Auswählen:** `DiscVault` · `DISCVAULT_IMAGE` · `:latest` `:beta`
+8. **Ausführen:** `DiscVault` · `--force-recreate`
+9. **Vergleichen:** `DiscVault` · der vorgesehene Image-Digest läuft, Health ist erfolgreich und Owner-Anmeldung, Bibliothekszahl und Medienprobe bestehen
 
 ### Befehle und Einstellungen
 
-#### DiscVault v26 – stabil
+#### DiscVault – stabil
 
 ```bash
 export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
 ```
 
-#### DiscVault v26 – Beta
+#### DiscVault – Beta
 
 ```bash
 export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
@@ -95,17 +95,18 @@ trap - EXIT
 
 ## Erwartetes Ergebnis
 
-Akzeptiere das Ergebnis für **Update und Migration: Container-Update** nur wenn alle folgenden Ergebnisse erfüllt sind: der vorgesehene Image-Digest läuft, Health ist erfolgreich und Owner-Anmeldung, Bibliothekszahl und Medienprobe bestehen; Volumes, Umgebungsvariablen, Ports und Datenpfad der vorherigen Generation unverändert lassen; `:legacy` niemals in die v26-PostgreSQL-Compose-Topologie einsetzen. Seitenspezifische Kontrollpunkte: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
+Akzeptiere das Ergebnis für **Update und Migration: Container-Update** nur wenn alle folgenden Ergebnisse erfüllt sind: der vorgesehene Image-Digest läuft, Health ist erfolgreich und Owner-Anmeldung, Bibliothekszahl und Medienprobe bestehen; nach einem Update zeigt Administration → Plugins die installierten Plugin-Versionen; mitgelieferte Plugins werden nur ersetzt, wenn die mitgelieferte Kopie neuer ist (26.11 braucht MovieVault v2 1.12.0 und TMDb 1.11.0); Volumes, Umgebungsvariablen, Ports und Datenpfad der vorherigen Generation unverändert lassen; `:legacy` niemals in die DiscVault-PostgreSQL-Compose-Topologie einsetzen. Seitenspezifische Kontrollpunkte: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
 - der vorgesehene Image-Digest läuft, Health ist erfolgreich und Owner-Anmeldung, Bibliothekszahl und Medienprobe bestehen
-- Volumes, Umgebungsvariablen, Ports und Datenpfad der vorherigen Generation unverändert lassen; `:legacy` niemals in die v26-PostgreSQL-Compose-Topologie einsetzen
+- nach einem Update zeigt Administration → Plugins die installierten Plugin-Versionen; mitgelieferte Plugins werden nur ersetzt, wenn die mitgelieferte Kopie neuer ist (26.11 braucht MovieVault v2 1.12.0 und TMDb 1.11.0)
+- Volumes, Umgebungsvariablen, Ports und Datenpfad der vorherigen Generation unverändert lassen; `:legacy` niemals in die DiscVault-PostgreSQL-Compose-Topologie einsetzen
 
 ## Sicherheit und Rollback
 
 :::caution
-Die sichere Wiederherstellungsgrenze für **Update und Migration: Container-Update** verlangt vor jedem Start oder Fortsetzen diese Maßnahmen: das eingefrorene `:legacy`-Image erhält keine DiscVault-v26-Funktionen, Migrationsverbesserungen oder künftigen Oberflächenupdates; [Update und Migration: Image-Rollback](/de/update/rollback/) · passender Sicherungssatz; Versionshinweise und aufgezeichneter unveränderlicher Image-Digest. Seitenspezifische Kontrollpunkte: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
+Die sichere Wiederherstellungsgrenze für **Update und Migration: Container-Update** verlangt vor jedem Start oder Fortsetzen diese Maßnahmen: das eingefrorene `:legacy`-Image erhält keine DiscVault-Funktionen, Migrationsverbesserungen oder künftigen Oberflächenupdates; [Update und Migration: Image-Rollback](/de/update/rollback/) · passender Sicherungssatz; Versionshinweise und aufgezeichneter unveränderlicher Image-Digest. Seitenspezifische Kontrollpunkte: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
-- das eingefrorene `:legacy`-Image erhält keine DiscVault-v26-Funktionen, Migrationsverbesserungen oder künftigen Oberflächenupdates
+- das eingefrorene `:legacy`-Image erhält keine DiscVault-Funktionen, Migrationsverbesserungen oder künftigen Oberflächenupdates
 - [Update und Migration: Image-Rollback](/de/update/rollback/) · passender Sicherungssatz
 - Versionshinweise und aufgezeichneter unveränderlicher Image-Digest
 :::

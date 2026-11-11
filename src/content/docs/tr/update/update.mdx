@@ -5,14 +5,14 @@ pageId: 'update-update'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
 lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Amaç ve sonuç
 
@@ -22,13 +22,13 @@ Sayfaya özel iş akışını tamamlayın: **Güncelleme ve geçiş: Kapsayıcı
 
 Bu sayfa yalnızca şunlar için geçerlidir: **Güncelleme ve geçiş: Kapsayıcı güncellemesi** (Docker · Unraid). Kanal ve veri sınırları: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · sürüm notları ve kaydedilmiş değişmez imaj özeti · eşleşen yedek kümesi; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · sürüm notları ve kaydedilmiş değişmez imaj özeti · eşleşen yedek kümesi. Sayfaya özel denetim noktaları: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
-### DiscVault v26 kararlı
+### DiscVault kararlı
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - `DISCVAULT_IMAGE`
 - PostgreSQL `/data` · sürüm notları ve kaydedilmiş değişmez imaj özeti · eşleşen yedek kümesi
 
-### DiscVault v26 beta
+### DiscVault beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `DISCVAULT_IMAGE`
@@ -41,25 +41,25 @@ Bu sayfa yalnızca şunlar için geçerlidir: **Güncelleme ve geçiş: Kapsayı
 
 ## Prosedür
 
-1. **İnceleyin:** yeni kurulumlar DiscVault v26 `:latest` veya `:beta` kullanır; dondurulmuş `:legacy` imajı yalnızca henüz geçişe hazır olmayan mevcut önceki nesil kurulum içindir
+1. **İnceleyin:** yeni kurulumlar DiscVault `:latest` veya `:beta` kullanır; dondurulmuş `:legacy` imajı yalnızca henüz geçişe hazır olmayan mevcut önceki nesil kurulum içindir
 2. **Yedekleyin:** eşleşen yedek kümesi
-3. **Seçin:** Yalnızca Legacy dalı: yedekten sonra mevcut eski dağıtımın yalnızca imaj etiketini `:legacy` olarak değiştirin, topolojiyi değiştirmeden çekip yeniden oluşturun, koleksiyonu doğrulayıp durun; bu sayfada mevcut o dağıtımı v26 topolojisine geçirmeyin
-4. **Açın:** [Güncelleme ve geçiş: DiscVault 26 geçişi](/tr/update/migration/) · DiscVault 26
-5. **Koruyun:** önceki neslin birimlerini, ortam değişkenlerini, bağlantı noktalarını ve veri yolunu değiştirmeyin; v26 PostgreSQL Compose topolojisindeki imajı asla `:legacy` ile değiştirmeyin
-6. **Doğrulayın:** `DiscVault v26` · `PREVIOUS_IMAGE=@sha256:…`
-7. **Seçin:** `DiscVault v26` · `DISCVAULT_IMAGE` · `:latest` `:beta`
-8. **Çalıştırın:** `DiscVault v26` · `--force-recreate`
-9. **Karşılaştırın:** `DiscVault v26` · amaçlanan imaj özeti çalışır, sağlık başarılıdır ve sahip girişi, kitaplık sayısı ile bir medya örneği geçer
+3. **Seçin:** Yalnızca Legacy dalı: yedekten sonra mevcut eski dağıtımın yalnızca imaj etiketini `:legacy` olarak değiştirin, topolojiyi değiştirmeden çekip yeniden oluşturun, koleksiyonu doğrulayıp durun; bu sayfada mevcut o dağıtımı DiscVault topolojisine geçirmeyin
+4. **Açın:** [Güncelleme ve geçiş: DiscVault geçişi](/tr/update/migration/) · DiscVault
+5. **Koruyun:** önceki neslin birimlerini, ortam değişkenlerini, bağlantı noktalarını ve veri yolunu değiştirmeyin; DiscVault PostgreSQL Compose topolojisindeki imajı asla `:legacy` ile değiştirmeyin
+6. **Doğrulayın:** `DiscVault` · `PREVIOUS_IMAGE=@sha256:…`
+7. **Seçin:** `DiscVault` · `DISCVAULT_IMAGE` · `:latest` `:beta`
+8. **Çalıştırın:** `DiscVault` · `--force-recreate`
+9. **Karşılaştırın:** `DiscVault` · amaçlanan imaj özeti çalışır, sağlık başarılıdır ve sahip girişi, kitaplık sayısı ile bir medya örneği geçer
 
 ### Komutlar ve ayarlar
 
-#### DiscVault v26 kararlı
+#### DiscVault kararlı
 
 ```bash
 export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
 ```
 
-#### DiscVault v26 beta
+#### DiscVault beta
 
 ```bash
 export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
@@ -95,17 +95,18 @@ trap - EXIT
 
 ## Beklenen sonuç
 
-Şunun sonucunu kabul edin: **Güncelleme ve geçiş: Kapsayıcı güncellemesi** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: amaçlanan imaj özeti çalışır, sağlık başarılıdır ve sahip girişi, kitaplık sayısı ile bir medya örneği geçer; önceki neslin birimlerini, ortam değişkenlerini, bağlantı noktalarını ve veri yolunu değiştirmeyin; v26 PostgreSQL Compose topolojisindeki imajı asla `:legacy` ile değiştirmeyin. Sayfaya özel denetim noktaları: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
+Şunun sonucunu kabul edin: **Güncelleme ve geçiş: Kapsayıcı güncellemesi** yalnızca aşağıdaki sonuçların tümü doğru olduğunda: amaçlanan imaj özeti çalışır, sağlık başarılıdır ve sahip girişi, kitaplık sayısı ile bir medya örneği geçer; güncellemeden sonra Yönetim → Eklentiler kurulu sürümleri gösterir; paketle gelen eklentiler yalnızca paketteki kopya daha yeniyse değiştirilir (26.11 için MovieVault v2 1.12.0 ve TMDb 1.11.0 gerekir); önceki neslin birimlerini, ortam değişkenlerini, bağlantı noktalarını ve veri yolunu değiştirmeyin; DiscVault PostgreSQL Compose topolojisindeki imajı asla `:legacy` ile değiştirmeyin. Sayfaya özel denetim noktaları: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
 - amaçlanan imaj özeti çalışır, sağlık başarılıdır ve sahip girişi, kitaplık sayısı ile bir medya örneği geçer
-- önceki neslin birimlerini, ortam değişkenlerini, bağlantı noktalarını ve veri yolunu değiştirmeyin; v26 PostgreSQL Compose topolojisindeki imajı asla `:legacy` ile değiştirmeyin
+- güncellemeden sonra Yönetim → Eklentiler kurulu sürümleri gösterir; paketle gelen eklentiler yalnızca paketteki kopya daha yeniyse değiştirilir (26.11 için MovieVault v2 1.12.0 ve TMDb 1.11.0 gerekir)
+- önceki neslin birimlerini, ortam değişkenlerini, bağlantı noktalarını ve veri yolunu değiştirmeyin; DiscVault PostgreSQL Compose topolojisindeki imajı asla `:legacy` ile değiştirmeyin
 
 ## Güvenlik ve geri alma
 
 :::caution
-Şunun güvenli kurtarma sınırı: **Güncelleme ve geçiş: Kapsayıcı güncellemesi** başlatmadan veya devam etmeden önce şu işlemleri gerektirir: dondurulmuş `:legacy` imajı DiscVault v26 özelliklerini, geçiş iyileştirmelerini veya gelecekteki arayüz güncellemelerini almaz; [Güncelleme ve geçiş: İmajı geri alma](/tr/update/rollback/) · eşleşen yedek kümesi; sürüm notları ve kaydedilmiş değişmez imaj özeti. Sayfaya özel denetim noktaları: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
+Şunun güvenli kurtarma sınırı: **Güncelleme ve geçiş: Kapsayıcı güncellemesi** başlatmadan veya devam etmeden önce şu işlemleri gerektirir: dondurulmuş `:legacy` imajı DiscVault özelliklerini, geçiş iyileştirmelerini veya gelecekteki arayüz güncellemelerini almaz; [Güncelleme ve geçiş: İmajı geri alma](/tr/update/rollback/) · eşleşen yedek kümesi; sürüm notları ve kaydedilmiş değişmez imaj özeti. Sayfaya özel denetim noktaları: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
-- dondurulmuş `:legacy` imajı DiscVault v26 özelliklerini, geçiş iyileştirmelerini veya gelecekteki arayüz güncellemelerini almaz
+- dondurulmuş `:legacy` imajı DiscVault özelliklerini, geçiş iyileştirmelerini veya gelecekteki arayüz güncellemelerini almaz
 - [Güncelleme ve geçiş: İmajı geri alma](/tr/update/rollback/) · eşleşen yedek kümesi
 - sürüm notları ve kaydedilmiş değişmez imaj özeti
 :::

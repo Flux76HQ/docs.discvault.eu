@@ -1,0 +1,108 @@
+---
+title: 'Asennus: Home Assistant'
+description: 'Tehtäväkohtaiset ohjeet: Asennus: Home Assistant. 6180. /api/next/health. rp_id. password_login. secrets.json.'
+pageId: 'install-home-assistant'
+products: ['server']
+platforms: ['home-assistant']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/home-assistant-addons']
+lastVerified: '2026-11-11'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Home Assistant" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/home-assistant-addons" verified="2026-11-11" />
+
+## Tavoite ja tulos
+
+Aja DiscVault Home Assistant -sovelluksena. Sovellus, sen worker, MCP-päätepiste ja PostgreSQL 17 toimivat yhdessä kontissa, ja kaikki tallennettu on sovelluksen datakansiossa, jonka Home Assistant sisällyttää varmuuskopioihin.
+
+Suorita sivukohtainen työnkulku: **Asennus: Home Assistant**. Tässä menettelyssä käytetään `6180` · `/api/next/health` · `rp_id` · `password_login` · `secrets.json`.
+
+## Koskee
+
+Repositorio tarjoaa DiscVaultin portissa 6180 ja DiscVault (beta) -version portissa 6181 omilla datakansioillaan, joten ne toimivat rinnakkain amd64- ja aarch64-laitteilla.
+
+Tämä sivu koskee vain kohdetta **Asennus: Home Assistant** (Home Assistant). Kanava- ja tietorajat ovat: DiscVault · `6180`; PostgreSQL 17 · `/data`; DiscVault · `6181`; PostgreSQL 17 · `/data`. Sivukohtaiset tarkistuspisteet: `6180` · `/api/next/health` · `rp_id` · `password_login` · `secrets.json`.
+
+### DiscVault – vakaa
+
+- DiscVault · `6180`
+- PostgreSQL 17 · `/data`
+
+### DiscVault – beta
+
+- DiscVault · `6181`
+- PostgreSQL 17 · `/data`
+
+## Edellytykset
+
+- `amd64` `aarch64`
+- passkey-avaimet tarvitsevat sovelluksen portin eteen HTTPS-osoitteen ja verkkotunnuksen; ilman sitä käytä salasanakirjautumista ja TOTP:tä
+- sivupalkissa ei ole kohtaa (Ingress): DiscVault tarjoillaan oman verkkotunnuksensa juuresta käänteisvälityspalvelimen kautta
+
+## Toimenpiteet
+
+1. **Avaa:** Asetukset → Sovellukset → Asenna sovellus → ⋮ → Repositoriot ja lisää `https://github.com/helmerzNL/home-assistant-addons`
+2. **Asenna:** valitse DiscVault tai DiscVault (beta) ja asenna; Home Assistant rakentaa sovelluksen laitteella, mikä kestää ensimmäisellä kerralla muutaman minuutin
+3. **Määritä:** `rp_id` on verkkotunnus, jossa DiscVault avataan; passkey-avaimet sidotaan siihen, joten myöhempi muutos tekee nykyiset avaimet käyttökelvottomiksi · `rp_origins` · `trusted_proxies`
+4. **Määritä:** `password_login` tarjoaa käyttäjänimen, vähintään 15 merkin salasanan ja TOTP:n, kun HTTPS-verkkotunnusta ei ole
+5. **Määritä:** OpenID Connect: täytä `oidc_issuer`, `oidc_client_id` ja `oidc_client_secret` yhdessä tai jätä kaikki kolme tyhjiksi · `/api/next/auth/oidc/callback`
+6. **Käynnistä:** käyttöönotto luo ensimmäisen omistajan passkey-avaimella tai salasanalla ja TOTP:llä ja näyttää palautuskoodit kerran
+7. **Vahvista:** `/api/next/health` · MCP-päätepiste on samassa portissa polussa `/mcp`; anna avustajalle henkilökohtainen API-avain
+
+### Komennot ja asetukset
+
+#### Molemmat kanavat
+
+```yaml
+rp_id: discvault.example.com
+rp_origins: https://discvault.example.com
+rp_name: DiscVault
+password_login: false
+trusted_proxies: private
+block_crawlers: true
+```
+
+```bash
+curl --fail http://<home-assistant>:6180/api/next/health   # beta: 6181
+```
+
+## Odotettu tulos
+
+Sovellus näkyy käynnistettynä, watchdog tavoittaa tila-osoitteen ja verkkokäyttöliittymä avautuu sovelluksen portissa.
+
+Hyväksy tulos kohteelle **Asennus: Home Assistant** vain kun kaikki seuraavat tulokset toteutuvat: käyttöönotto luo ensimmäisen omistajan passkey-avaimella tai salasanalla ja TOTP:llä ja näyttää palautuskoodit kerran; MCP-päätepiste on samassa portissa polussa `/mcp`; anna avustajalle henkilökohtainen API-avain; `/api/next/health` · HTTP `200` · `"status": "ok"`. Sivukohtaiset tarkistuspisteet: `6180` · `/api/next/health` · `rp_id` · `password_login` · `secrets.json`.
+
+- käyttöönotto luo ensimmäisen omistajan passkey-avaimella tai salasanalla ja TOTP:llä ja näyttää palautuskoodit kerran
+- MCP-päätepiste on samassa portissa polussa `/mcp`; anna avustajalle henkilökohtainen API-avain
+- `/api/next/health` · HTTP `200` · `"status": "ok"`
+
+## Turvallisuus ja palautus
+
+:::caution
+Anna Home Assistantin varmuuskopioida sovellus ennen jokaista päivitystä. Palauta tarvittaessa se kohdassa Asetukset → Järjestelmä → Varmuuskopiot; tietokantaa muuttanut julkaisu ei välttämättä toimi vanhemmalla versiolla.
+
+Turvallinen palautusraja kohteelle **Asennus: Home Assistant** edellyttää näitä toimia ennen käynnistystä tai jatkamista: Home Assistant pysäyttää sovelluksen hetkeksi varmuuskopioinnin ajaksi, koska käynnissä oleva tietokanta ei ole johdonmukainen kopio; allekirjoitussalaisuus ja tietokannan salasana luodaan ensimmäisellä käynnistyksellä tiedostoon `secrets.json`; älä koskaan poista sitä; beta voi muuttaa tietokantaa niin, ettei vakaa sovellus pysty lukemaan sitä; älä koskaan osoita sitä vakaan sovelluksen kansioihin; sovelluksen varmuuskopio (Ylläpito → Backup, myös ajastettuna) siirtää kirjaston Dockerin, Unraidin ja Home Assistantin välillä; uusi julkaisu näkyy päivityksenä, kun sen image on julkaistu; päivitys rakentaa sovelluksen uudelleen ja ajaa siirrot käynnistyksessä. Sivukohtaiset tarkistuspisteet: `6180` · `/api/next/health` · `rp_id` · `password_login` · `secrets.json`.
+
+- Home Assistant pysäyttää sovelluksen hetkeksi varmuuskopioinnin ajaksi, koska käynnissä oleva tietokanta ei ole johdonmukainen kopio
+- allekirjoitussalaisuus ja tietokannan salasana luodaan ensimmäisellä käynnistyksellä tiedostoon `secrets.json`; älä koskaan poista sitä
+- beta voi muuttaa tietokantaa niin, ettei vakaa sovellus pysty lukemaan sitä; älä koskaan osoita sitä vakaan sovelluksen kansioihin
+- sovelluksen varmuuskopio (Ylläpito → Backup, myös ajastettuna) siirtää kirjaston Dockerin, Unraidin ja Home Assistantin välillä
+- uusi julkaisu näkyy päivityksenä, kun sen image on julkaistu; päivitys rakentaa sovelluksen uudelleen ja ajaa siirrot käynnistyksessä
+:::
+
+## Seuraava vaihe
+
+[Asennus: Käänteinen välityspalvelin ja pääsyavaimet](/fi/install/reverse-proxy-passkeys/)
+
+## Lähde ja tila
+
+- [`helmerzNL/DiscVault@441f96593219`](https://github.com/helmerzNL/DiscVault/commit/441f96593219c66d45aac99ce5ef9f81f011d449)
+- [`helmerzNL/home-assistant-addons@48d31c321db4`](https://github.com/helmerzNL/home-assistant-addons/commit/48d31c321db48d1c70405c6a7830065debc79460)
+- [Home Assistant app: `discvault/config.yaml`](https://github.com/helmerzNL/home-assistant-addons/blob/main/discvault/config.yaml)
+- [Home Assistant app documentation: `discvault/DOCS.md`](https://github.com/helmerzNL/home-assistant-addons/blob/main/discvault/DOCS.md)
+- [Add the repository to Home Assistant](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FhelmerzNL%2Fhome-assistant-addons)
+- Lähde ja tila: `2026-11-11`
+- DiscVault Docs: `0.2.0`

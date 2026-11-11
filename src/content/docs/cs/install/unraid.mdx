@@ -1,97 +1,130 @@
 ---
 title: 'Instalace: Unraid'
-description: 'Pokyny pro konkrétní úlohu: Instalace: Unraid. /mnt/user/appdata/discvault/postgres. /mnt/user/appdata/discvault/data. 6080:5000. DISCVAULT_IMAGE.'
+description: 'Pokyny pro konkrétní úlohu: Instalace: Unraid. ghcr.io/helmerznl/discvault-launcher:latest. /var/run/docker.sock. /api/next/health.'
 pageId: 'install-unraid'
 products: ['server']
 platforms: ['unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+minVersion: 'DiscVault'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/unraid-community-apps']
+lastVerified: '2026-11-11'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Unraid" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/unraid-community-apps" verified="2026-11-11" />
 
 ## Cíl a výsledek
 
-Dokončete postup určený pro **Instalace: Unraid**. Tento postup pracuje s `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+Nainstalujte DiscVault z obchodu Unraid Community Applications. Šablona nainstaluje spouštěč DiscVault, který za vás vytvoří a aktualizuje PostgreSQL, API, worker a MCP.
+
+Dokončete postup určený pro **Instalace: Unraid**. Tento postup pracuje s `ghcr.io/helmerznl/discvault-launcher:latest` · `/var/run/docker.sock` · `/api/next/health`.
 
 ## Platí pro
 
-Tato stránka platí pouze pro **Instalace: Unraid** (Unraid). Hranice kanálu a dat jsou: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL API MCP; `:latest` `:beta`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL API MCP; `:latest` `:beta`. Kontrolní body této stránky: `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+Helmer’s Repository nabízí DiscVault a DiscVault (beta) jako dvě šablony, každou s vlastními složkami appdata, portem, projektem Compose a sítí, takže mohou běžet vedle sebe.
 
-### DiscVault v26 – stabilní
+Tato stránka platí pouze pro **Instalace: Unraid** (Unraid). Hranice kanálu a dat jsou: DiscVault · `ghcr.io/helmerznl/discvault-launcher:latest`; `6080` · `/mnt/user/appdata/discvault` · `discvault_stack`; DiscVault · `ghcr.io/helmerznl/discvault-launcher:beta`; `6081` · `/mnt/user/appdata/discvault-beta` · `discvault_beta_stack`. Kontrolní body této stránky: `ghcr.io/helmerznl/discvault-launcher:latest` · `/var/run/docker.sock` · `/api/next/health`.
 
-- DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- PostgreSQL API MCP
-- `:latest` `:beta`
+### DiscVault – stabilní
 
-### DiscVault v26 – beta
+- DiscVault · `ghcr.io/helmerznl/discvault-launcher:latest`
+- `6080` · `/mnt/user/appdata/discvault` · `discvault_stack`
 
-- DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- PostgreSQL API MCP
-- `:latest` `:beta`
+### DiscVault – beta
+
+- DiscVault · `ghcr.io/helmerznl/discvault-launcher:beta`
+- `6081` · `/mnt/user/appdata/discvault-beta` · `discvault_beta_stack`
 
 ## Požadavky
 
 - Unraid `6.12+`
-- `/mnt/user/appdata/discvault/data`
-- OpenSSL
+- nainstalovaný plugin Community Applications
+- passkeys vyžadují adresu HTTPS s doménovým jménem před portem aplikace; bez ní použijte přihlášení heslem s TOTP
 
 ## Postup
 
-1. **Nainstalujte:** Unraid · [Instalace: Docker Compose](/cs/install/docker-compose/)
-2. **Nastavte:** `DISCVAULT_IMAGE` · `:latest` `:beta`
-3. **Nastavte:** `DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data` · `DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres`
-4. **Ověřte:** `postgres` · `next-api` · `next-worker` · `next-mcp` · `6080:5000`
+1. **Otevřete:** Aplikace → vyhledejte DiscVault → Instalovat; šablona beta má v názvu (beta)
+2. **Nastavte:** ponechte výchozí složky appdata; složka spouštěče obsahuje vygenerovaný soubor Compose a tajné hodnoty v `/config/stack.env` · `TZ`
+3. **Nastavte:** `RP_ID` · `RP_ORIGINS` · passkeys vyžadují adresu HTTPS s doménovým jménem před portem aplikace; bez ní použijte přihlášení heslem s TOTP · `LEGACY_AUTH_ENABLED=true`
+4. **Spusťte:** první spuštění trvá několik minut, než spouštěč stáhne obrazy a vytvoří databázi · spouštěč připojuje Docker socket, a tím ovládá Docker na serveru; instalujte jej jen tehdy, když obrazu spouštěče důvěřujete
+5. **Ověřte:** `/api/next/health` · úvodní nastavení vytvoří prvního vlastníka s passkey nebo s heslem a TOTP a jednou zobrazí obnovovací kódy
+6. **Nastavte:** karta Docker → Zkontrolovat aktualizace; při spuštění spouštěč aktualizuje i zbytek stacku · `DISCVAULT_CHANNEL=manual` · `DISCVAULT_IMAGE`
 
 ### Příkazy a nastavení
 
-#### DiscVault v26 – stabilní
+#### DiscVault – stabilní
 
 ```text
-DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
-DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data
-DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres
-DISCVAULT_API_PORT=6080
-DISCVAULT_MCP_PORT=6090
+Repository                         ghcr.io/helmerznl/discvault-launcher:latest
+Web UI port                        6080
+App data (/data)                   /mnt/user/appdata/discvault
+DISCVAULT_DATA_DIR_HOST            /mnt/user/appdata/discvault
+DISCVAULT_POSTGRES_DATA_DIR_HOST   /mnt/user/appdata/discvault-postgres
+Launcher config (/config)          /mnt/user/appdata/discvault-launcher
+Docker socket                      /var/run/docker.sock
+DISCVAULT_CHANNEL                  latest
+TZ                                 Europe/Amsterdam
+RP_ID                              discvault.example.com
+RP_ORIGINS                         https://discvault.example.com
+LEGACY_AUTH_ENABLED                false
 ```
 
-#### DiscVault v26 – beta
+#### DiscVault – beta
 
 ```text
-DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
-DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data
-DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres
-DISCVAULT_API_PORT=6080
-DISCVAULT_MCP_PORT=6090
+Repository                         ghcr.io/helmerznl/discvault-launcher:beta
+Web UI port                        6081
+App data (/data)                   /mnt/user/appdata/discvault-beta
+DISCVAULT_DATA_DIR_HOST            /mnt/user/appdata/discvault-beta
+DISCVAULT_POSTGRES_DATA_DIR_HOST   /mnt/user/appdata/discvault-beta-postgres
+Launcher config (/config)          /mnt/user/appdata/discvault-beta-launcher
+Docker socket                      /var/run/docker.sock
+DISCVAULT_CHANNEL                  beta
+DISCVAULT_PROJECT_NAME             discvault_beta_stack
+DISCVAULT_NETWORK                  discvault-beta-stack
+```
+
+#### Oba kanály
+
+```bash
+curl --fail http://<unraid-server>:6080/api/next/health
+# Roll back: Release channel = manual, DiscVault image = v26.10.17
 ```
 
 ## Očekávaný výsledek
 
-Výsledek přijměte pro **Instalace: Unraid** pouze pokud platí všechny následující výsledky: PostgreSQL; `/data`; HTTP `2xx`. Kontrolní body této stránky: `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+Spouštěč stáhl obrazy a vytvořil stack, webové rozhraní odpovídá na portu šablony a adresa stavu hlásí migrovanou databázi.
 
-- PostgreSQL
-- `/data`
-- HTTP `2xx`
+Výsledek přijměte pro **Instalace: Unraid** pouze pokud platí všechny následující výsledky: úvodní nastavení vytvoří prvního vlastníka s passkey nebo s heslem a TOTP a jednou zobrazí obnovovací kódy; `/api/next/health` · HTTP `200` · `"status": "ok"`. Kontrolní body této stránky: `ghcr.io/helmerznl/discvault-launcher:latest` · `/var/run/docker.sock` · `/api/next/health`.
+
+- úvodní nastavení vytvoří prvního vlastníka s passkey nebo s heslem a TOTP a jednou zobrazí obnovovací kódy
+- `/api/next/health` · HTTP `200` · `"status": "ok"`
 
 ## Bezpečnost a návrat
 
 :::caution
-Bezpečná hranice obnovy pro **Instalace: Unraid** vyžaduje před spuštěním nebo pokračováním tyto kroky: odpovídající sada záloh; `/mnt/user/appdata/discvault/data`. Kontrolní body této stránky: `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+Před kopírováním tří složek appdata aplikaci zastavte. Pro návrat nastavte kanál vydání na manual s předchozím tagem verze a obnovte zálohu pořízenou před aktualizací.
 
-- odpovídající sada záloh
-- `/mnt/user/appdata/discvault/data`
+Bezpečná hranice obnovy pro **Instalace: Unraid** vyžaduje před spuštěním nebo pokračováním tyto kroky: beta může změnit databázi tak, že ji stabilní aplikace nepřečte; nikdy ji nesměrujte na složky stabilní verze; spouštěč připojuje Docker socket, a tím ovládá Docker na serveru; instalujte jej jen tehdy, když obrazu spouštěče důvěřujete; zálohou v aplikaci (Správa → Záloha, i podle plánu) přesunete knihovnu mezi Dockerem, Unraidem a Home Assistantem; spouštěč zatím nepředává proměnné OpenID Connect, proto se šablona Unraid přihlašuje pomocí passkeys nebo hesla. Kontrolní body této stránky: `ghcr.io/helmerznl/discvault-launcher:latest` · `/var/run/docker.sock` · `/api/next/health`.
+
+- beta může změnit databázi tak, že ji stabilní aplikace nepřečte; nikdy ji nesměrujte na složky stabilní verze
+- spouštěč připojuje Docker socket, a tím ovládá Docker na serveru; instalujte jej jen tehdy, když obrazu spouštěče důvěřujete
+- zálohou v aplikaci (Správa → Záloha, i podle plánu) přesunete knihovnu mezi Dockerem, Unraidem a Home Assistantem
+- spouštěč zatím nepředává proměnné OpenID Connect, proto se šablona Unraid přihlašuje pomocí passkeys nebo hesla
 :::
 
 ## Další krok
 
-[Instalace: První spuštění a kontrola stavu](/cs/install/first-start-health/)
+[Instalace: Reverzní proxy a přístupové klíče](/cs/install/reverse-proxy-passkeys/)
 
 ## Zdroj a stav
 
-- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- Zdroj a stav: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault@441f96593219`](https://github.com/helmerzNL/DiscVault/commit/441f96593219c66d45aac99ce5ef9f81f011d449)
+- [`helmerzNL/unraid-community-apps@988ac954d47b`](https://github.com/helmerzNL/unraid-community-apps/commit/988ac954d47b7c671cab91d5a0ad9b623366f89d)
+- [Unraid template: `templates/discvault.xml`](https://github.com/helmerzNL/unraid-community-apps/blob/main/templates/discvault.xml)
+- [Unraid template: `templates/discvault-beta.xml`](https://github.com/helmerzNL/unraid-community-apps/blob/main/templates/discvault-beta.xml)
+- [DiscVault launcher](https://github.com/helmerzNL/DiscVault-Launcher)
+- [Unraid support thread](https://forums.unraid.net/topic/198808-support-discvault-physical-disc-collection-manager/)
+- Zdroj a stav: `2026-11-11`
+- DiscVault Docs: `0.2.0`

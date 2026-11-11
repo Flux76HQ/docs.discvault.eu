@@ -5,14 +5,14 @@ pageId: 'integrations-plex-jellyfin'
 products: ['server']
 platforms: ['web', 'docker']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="nett · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="nett · Docker" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Mål og resultat
 
@@ -20,17 +20,17 @@ Fullfør den sidespesifikke arbeidsflyten for **Integrasjoner: Plex og Jellyfin*
 
 ## Gjelder for
 
-Denne siden gjelder bare **Integrasjoner: Plex og Jellyfin** (nett · Docker). Kanal- og datagrensene er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26. Sidespesifikke kontrollpunkter: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+Denne siden gjelder bare **Integrasjoner: Plex og Jellyfin** (nett · Docker). Kanal- og datagrensene er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault. Sidespesifikke kontrollpunkter: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
 
-### DiscVault v26 – stabil
+### DiscVault – stabil
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- DiscVault 26
+- DiscVault
 
-### DiscVault v26 – beta
+### DiscVault – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- DiscVault 26
+- DiscVault
 
 ## Forutsetninger
 
@@ -44,6 +44,7 @@ Denne siden gjelder bare **Integrasjoner: Plex og Jellyfin** (nett · Docker). K
 2. **Test:** Administrasjon → Programtillegg → Tilstandskontroll
 3. **Kjør:** Administrasjon → Programtillegg → Oppdag uten å lagre · `dryRun=true`
 4. **Sammenlign:** `/api/next/digital-items?limit=200`
+5. **Konfigurer:** Administrasjon → Planlagte oppgaver synkroniserer Jellyfin- og Plex-bibliotekene hver N. time, eventuelt fulgt av sett-historikken; av til en administrator slår det på
 
 ### Kommandoer og innstillinger
 

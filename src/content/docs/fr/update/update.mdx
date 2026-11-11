@@ -5,14 +5,14 @@ pageId: 'update-update'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
 lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Objectif et résultat
 
@@ -22,13 +22,13 @@ Suivez le déroulement propre à cette page pour **Mise à jour et migration: Mi
 
 Cette page s’applique uniquement à **Mise à jour et migration: Mise à jour du conteneur** (Docker · Unraid). Les limites de canal et de données sont : DiscVault · `ghcr.io/helmerznl/discvault:latest`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · notes de version et digest immuable consigné · jeu de sauvegardes correspondant; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · notes de version et digest immuable consigné · jeu de sauvegardes correspondant. Points de contrôle propres à la page : `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
-### DiscVault v26 stable
+### DiscVault stable
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - `DISCVAULT_IMAGE`
 - PostgreSQL `/data` · notes de version et digest immuable consigné · jeu de sauvegardes correspondant
 
-### DiscVault v26 bêta
+### DiscVault bêta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `DISCVAULT_IMAGE`
@@ -41,25 +41,25 @@ Cette page s’applique uniquement à **Mise à jour et migration: Mise à jour 
 
 ## Procédure
 
-1. **Inspecter:** les nouvelles installations utilisent DiscVault v26 `:latest` ou `:beta` ; l’image figée `:legacy` est réservée à une installation existante de la génération précédente qui n’est pas encore prête à migrer
+1. **Inspecter:** les nouvelles installations utilisent DiscVault `:latest` ou `:beta` ; l’image figée `:legacy` est réservée à une installation existante de la génération précédente qui n’est pas encore prête à migrer
 2. **Sauvegarder:** jeu de sauvegardes correspondant
-3. **Choisir:** Branche Legacy uniquement : après la sauvegarde, remplacez seulement le tag d’image du déploiement existant de l’ancienne génération par `:legacy`, téléchargez et recréez-le sans modifier sa topologie, vérifiez la collection et arrêtez-vous ; ne faites pas basculer ce déploiement existant vers la topologie v26 sur cette page
-4. **Ouvrir:** [Mise à jour et migration: Migration vers DiscVault 26](/fr/update/migration/) · DiscVault 26
-5. **Conserver:** conservez les volumes, variables d’environnement, ports et chemin de données de la génération précédente ; ne remplacez jamais une image de la topologie Compose v26 PostgreSQL par `:legacy`
-6. **Vérifier:** `DiscVault v26` · `PREVIOUS_IMAGE=@sha256:…`
-7. **Choisir:** `DiscVault v26` · `DISCVAULT_IMAGE` · `:latest` `:beta`
-8. **Exécuter:** `DiscVault v26` · `--force-recreate`
-9. **Comparer:** `DiscVault v26` · le digest d’image prévu s’exécute, l’état est sain et la connexion propriétaire, le total et un média test réussissent
+3. **Choisir:** Branche Legacy uniquement : après la sauvegarde, remplacez seulement le tag d’image du déploiement existant de l’ancienne génération par `:legacy`, téléchargez et recréez-le sans modifier sa topologie, vérifiez la collection et arrêtez-vous ; ne faites pas basculer ce déploiement existant vers la topologie DiscVault sur cette page
+4. **Ouvrir:** [Mise à jour et migration: Migration vers DiscVault](/fr/update/migration/) · DiscVault
+5. **Conserver:** conservez les volumes, variables d’environnement, ports et chemin de données de la génération précédente ; ne remplacez jamais une image de la topologie Compose DiscVault PostgreSQL par `:legacy`
+6. **Vérifier:** `DiscVault` · `PREVIOUS_IMAGE=@sha256:…`
+7. **Choisir:** `DiscVault` · `DISCVAULT_IMAGE` · `:latest` `:beta`
+8. **Exécuter:** `DiscVault` · `--force-recreate`
+9. **Comparer:** `DiscVault` · le digest d’image prévu s’exécute, l’état est sain et la connexion propriétaire, le total et un média test réussissent
 
 ### Commandes et réglages
 
-#### DiscVault v26 stable
+#### DiscVault stable
 
 ```bash
 export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
 ```
 
-#### DiscVault v26 bêta
+#### DiscVault bêta
 
 ```bash
 export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
@@ -95,17 +95,18 @@ trap - EXIT
 
 ## Résultat attendu
 
-Validez le résultat de **Mise à jour et migration: Mise à jour du conteneur** uniquement lorsque tous les résultats suivants sont confirmés : le digest d’image prévu s’exécute, l’état est sain et la connexion propriétaire, le total et un média test réussissent; conservez les volumes, variables d’environnement, ports et chemin de données de la génération précédente ; ne remplacez jamais une image de la topologie Compose v26 PostgreSQL par `:legacy`. Points de contrôle propres à la page : `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
+Validez le résultat de **Mise à jour et migration: Mise à jour du conteneur** uniquement lorsque tous les résultats suivants sont confirmés : le digest d’image prévu s’exécute, l’état est sain et la connexion propriétaire, le total et un média test réussissent; après une mise à jour, Administration → Plugins affiche les versions installées ; les plugins fournis ne sont remplacés que si la copie fournie est plus récente (26.11 requiert MovieVault v2 1.12.0 et TMDb 1.11.0); conservez les volumes, variables d’environnement, ports et chemin de données de la génération précédente ; ne remplacez jamais une image de la topologie Compose DiscVault PostgreSQL par `:legacy`. Points de contrôle propres à la page : `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
 - le digest d’image prévu s’exécute, l’état est sain et la connexion propriétaire, le total et un média test réussissent
-- conservez les volumes, variables d’environnement, ports et chemin de données de la génération précédente ; ne remplacez jamais une image de la topologie Compose v26 PostgreSQL par `:legacy`
+- après une mise à jour, Administration → Plugins affiche les versions installées ; les plugins fournis ne sont remplacés que si la copie fournie est plus récente (26.11 requiert MovieVault v2 1.12.0 et TMDb 1.11.0)
+- conservez les volumes, variables d’environnement, ports et chemin de données de la génération précédente ; ne remplacez jamais une image de la topologie Compose DiscVault PostgreSQL par `:legacy`
 
 ## Sécurité et retour arrière
 
 :::caution
-La limite de récupération sûre pour **Mise à jour et migration: Mise à jour du conteneur** impose ces actions avant tout démarrage ou toute poursuite : l’image figée `:legacy` ne reçoit ni fonctions DiscVault v26, ni améliorations de migration, ni futures mises à jour de l’interface; [Mise à jour et migration: Retour à une image](/fr/update/rollback/) · jeu de sauvegardes correspondant; notes de version et digest immuable consigné. Points de contrôle propres à la page : `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
+La limite de récupération sûre pour **Mise à jour et migration: Mise à jour du conteneur** impose ces actions avant tout démarrage ou toute poursuite : l’image figée `:legacy` ne reçoit ni fonctions DiscVault, ni améliorations de migration, ni futures mises à jour de l’interface; [Mise à jour et migration: Retour à une image](/fr/update/rollback/) · jeu de sauvegardes correspondant; notes de version et digest immuable consigné. Points de contrôle propres à la page : `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
-- l’image figée `:legacy` ne reçoit ni fonctions DiscVault v26, ni améliorations de migration, ni futures mises à jour de l’interface
+- l’image figée `:legacy` ne reçoit ni fonctions DiscVault, ni améliorations de migration, ni futures mises à jour de l’interface
 - [Mise à jour et migration: Retour à une image](/fr/update/rollback/) · jeu de sauvegardes correspondant
 - notes de version et digest immuable consigné
 :::

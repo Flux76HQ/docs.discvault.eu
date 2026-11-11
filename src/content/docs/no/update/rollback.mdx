@@ -5,14 +5,14 @@ pageId: 'update-rollback'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Mål og resultat
 
@@ -22,13 +22,13 @@ Fullfør den sidespesifikke arbeidsflyten for **Oppdatering og migrering: Tilbak
 
 Denne siden gjelder bare **Oppdatering og migrering: Tilbakerulling av image** (Docker · Unraid). Kanal- og datagrensene er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; gjenopprett tilhørende data før forrige image startes; PostgreSQL `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; gjenopprett tilhørende data før forrige image startes; PostgreSQL `/data`. Sidespesifikke kontrollpunkter: `PREVIOUS_IMAGE` · `pg_restore --exit-on-error` · `discvault.failed-` · `DISCVAULT_IMAGE`.
 
-### DiscVault v26 – stabil
+### DiscVault – stabil
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - gjenopprett tilhørende data før forrige image startes
 - PostgreSQL `/data`
 
-### DiscVault v26 – beta
+### DiscVault – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - gjenopprett tilhørende data før forrige image startes
@@ -106,7 +106,7 @@ Den sikre gjenopprettingsgrensen for **Oppdatering og migrering: Tilbakerulling 
 
 ## Neste trinn
 
-[Oppdatering og migrering: Migrering til DiscVault 26](/no/update/migration/)
+[Oppdatering og migrering: Migrering til DiscVault](/no/update/migration/)
 
 ## Kilde og status
 

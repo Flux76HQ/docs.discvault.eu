@@ -5,14 +5,14 @@ pageId: 'configure-auth-rbac'
 products: ['server']
 platforms: ['web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU', 'Flux76HQ/App-Guidance']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="网页" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
+<PageMeta channels="stable,beta" platform="网页" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## 目标和结果
 
@@ -22,13 +22,13 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 本页面仅适用于 **配置: 身份验证和 RBAC** (网页). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; 通行密钥是一对加密密钥：私钥保留在设备或可信凭据管理器中，DiscVault 只存储公钥; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn OIDC; TOTP. 本页面专用检查点： `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · OIDC · Argon2id · TOTP.
 
-### DiscVault v26 稳定版
+### DiscVault 稳定版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - WebAuthn
 - 通行密钥是一对加密密钥：私钥保留在设备或可信凭据管理器中，DiscVault 只存储公钥
 
-### DiscVault v26 测试版
+### DiscVault 测试版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - WebAuthn OIDC
@@ -58,14 +58,14 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ### 命令和设置
 
-#### DiscVault v26 稳定版
+#### DiscVault 稳定版
 
 ```bash
 curl --fail http://localhost:6080/api/next/auth/status
 curl --fail http://localhost:6080/api/next/auth/rbac
 ```
 
-#### DiscVault v26 测试版
+#### DiscVault 测试版
 
 ```bash
 curl --fail http://localhost:6180/api/next/auth/status

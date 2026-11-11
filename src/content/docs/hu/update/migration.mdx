@@ -1,37 +1,37 @@
 ---
-title: 'Frissítés és migrálás: Átállás DiscVault 26-ra'
-description: 'Feladatspecifikus útmutató: Frissítés és migrálás: Átállás DiscVault 26-ra. /migration/readiness. ready_for_confirmation. /data/discvault.db. SQLite.'
+title: 'Frissítés és migrálás: Átállás DiscVault-ra'
+description: 'Feladatspecifikus útmutató: Frissítés és migrálás: Átállás DiscVault-ra. /migration/readiness. ready_for_confirmation. /data/discvault.db. SQLite.'
 pageId: 'update-migration'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Cél és eredmény
 
-Hajtsa végre az oldalhoz tartozó munkafolyamatot: **Frissítés és migrálás: Átállás DiscVault 26-ra**. Ez az eljárás ezeket használja: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+Hajtsa végre az oldalhoz tartozó munkafolyamatot: **Frissítés és migrálás: Átállás DiscVault-ra**. Ez az eljárás ezeket használja: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
 
 ## Érvényesség
 
-Ez az oldal kizárólag erre vonatkozik: **Frissítés és migrálás: Átállás DiscVault 26-ra** (Docker · web). A csatorna- és adathatárok: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; meglévő adatok csak olvasható forrása; soha nem az aktuális futásidejű adatbázis · SQLite → PostgreSQL; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26; meglévő adatok csak olvasható forrása; soha nem az aktuális futásidejű adatbázis · SQLite → PostgreSQL. Oldalspecifikus ellenőrzési pontok: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+Ez az oldal kizárólag erre vonatkozik: **Frissítés és migrálás: Átállás DiscVault-ra** (Docker · web). A csatorna- és adathatárok: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault; meglévő adatok csak olvasható forrása; soha nem az aktuális futásidejű adatbázis · SQLite → PostgreSQL; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault; meglévő adatok csak olvasható forrása; soha nem az aktuális futásidejű adatbázis · SQLite → PostgreSQL. Oldalspecifikus ellenőrzési pontok: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
 
-### DiscVault v26 – stabil
+### DiscVault – stabil
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- DiscVault 26
+- DiscVault
 - meglévő adatok csak olvasható forrása; soha nem az aktuális futásidejű adatbázis · SQLite → PostgreSQL
 
-### DiscVault v26 – béta
+### DiscVault – béta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- DiscVault 26
+- DiscVault
 - meglévő adatok csak olvasható forrása; soha nem az aktuális futásidejű adatbázis · SQLite → PostgreSQL
 
 ## Előfeltételek
@@ -61,14 +61,14 @@ curl --fail http://localhost:6080/api/next/migration/status
 
 ## Várt eredmény
 
-Az eredmény csak ennél fogadható el: **Frissítés és migrálás: Átállás DiscVault 26-ra** csak akkor, ha minden alábbi eredmény teljesül: a készenlét igazolt, a migrációban nincs sikertelen rekord, és a darabszámok valamint médiaminta egyeznek. Oldalspecifikus ellenőrzési pontok: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+Az eredmény csak ennél fogadható el: **Frissítés és migrálás: Átállás DiscVault-ra** csak akkor, ha minden alábbi eredmény teljesül: a készenlét igazolt, a migrációban nincs sikertelen rekord, és a darabszámok valamint médiaminta egyeznek. Oldalspecifikus ellenőrzési pontok: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
 
 - a készenlét igazolt, a migrációban nincs sikertelen rekord, és a darabszámok valamint médiaminta egyeznek
 
 ## Biztonság és visszaállítás
 
 :::caution
-A biztonságos helyreállítás határa ennél: **Frissítés és migrálás: Átállás DiscVault 26-ra** ezeket a műveleteket igényli indítás vagy folytatás előtt: állítsa le a DiscVault írófolyamatait, állítsa vissza az illeszkedő PostgreSQL- és `/data`-mentéseket, és ne ismételje az importot részben feltöltött adatbázisba. Oldalspecifikus ellenőrzési pontok: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+A biztonságos helyreállítás határa ennél: **Frissítés és migrálás: Átállás DiscVault-ra** ezeket a műveleteket igényli indítás vagy folytatás előtt: állítsa le a DiscVault írófolyamatait, állítsa vissza az illeszkedő PostgreSQL- és `/data`-mentéseket, és ne ismételje az importot részben feltöltött adatbázisba. Oldalspecifikus ellenőrzési pontok: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
 
 - állítsa le a DiscVault írófolyamatait, állítsa vissza az illeszkedő PostgreSQL- és `/data`-mentéseket, és ne ismételje az importot részben feltöltött adatbázisba
 :::

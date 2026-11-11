@@ -1,0 +1,108 @@
+---
+title: 'Installazione: Home Assistant'
+description: 'Istruzioni specifiche per Installazione: Home Assistant. 6180. /api/next/health. rp_id. password_login. secrets.json.'
+pageId: 'install-home-assistant'
+products: ['server']
+platforms: ['home-assistant']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/home-assistant-addons']
+lastVerified: '2026-11-11'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Home Assistant" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/home-assistant-addons" verified="2026-11-11" />
+
+## Obiettivo e risultato
+
+Esegui DiscVault come app di Home Assistant. L’app, il worker, l’endpoint MCP e PostgreSQL 17 girano in un solo container e tutto ciò che salvano sta nella cartella dati che Home Assistant include nei suoi backup.
+
+Completa la procedura specifica della pagina per **Installazione: Home Assistant**. Questa procedura utilizza `6180` · `/api/next/health` · `rp_id` · `password_login` · `secrets.json`.
+
+## Si applica a
+
+Il repository offre DiscVault sulla porta 6180 e DiscVault (beta) sulla 6181, ciascuno con la propria cartella dati, così funzionano affiancati su amd64 e aarch64.
+
+Questa pagina si applica solo a **Installazione: Home Assistant** (Home Assistant). I limiti di canale e dati sono: DiscVault · `6180`; PostgreSQL 17 · `/data`; DiscVault · `6181`; PostgreSQL 17 · `/data`. Punti di controllo della pagina: `6180` · `/api/next/health` · `rp_id` · `password_login` · `secrets.json`.
+
+### DiscVault stabile
+
+- DiscVault · `6180`
+- PostgreSQL 17 · `/data`
+
+### DiscVault beta
+
+- DiscVault · `6181`
+- PostgreSQL 17 · `/data`
+
+## Prerequisiti
+
+- `amd64` `aarch64`
+- le passkey richiedono un indirizzo HTTPS con nome di dominio davanti alla porta dell’app; senza, usa l’accesso con password e TOTP
+- non c’è una voce nella barra laterale (Ingress): DiscVault è servito dalla radice del proprio dominio tramite un reverse proxy
+
+## Procedura
+
+1. **Apri:** Impostazioni → App → Installa app → ⋮ → Repository, poi aggiungi `https://github.com/helmerzNL/home-assistant-addons`
+2. **Installa:** scegli DiscVault o DiscVault (beta) e installala; Home Assistant compila l’app sul dispositivo, la prima volta in qualche minuto
+3. **Configura:** `rp_id` è il dominio su cui si apre DiscVault; le passkey sono legate a esso, quindi cambiarlo in seguito rende inutilizzabili quelle esistenti · `rp_origins` · `trusted_proxies`
+4. **Configura:** `password_login` offre nome utente, una password di almeno 15 caratteri e TOTP quando non c’è un dominio HTTPS
+5. **Configura:** OpenID Connect: compila insieme `oidc_issuer`, `oidc_client_id` e `oidc_client_secret`, oppure lasciali tutti vuoti · `/api/next/auth/oidc/callback`
+6. **Avvia:** l’onboarding crea il primo proprietario con una passkey, oppure con password e TOTP, e mostra una sola volta i codici di recupero
+7. **Verifica:** `/api/next/health` · l’endpoint MCP è sulla stessa porta sotto `/mcp`; dai all’assistente una chiave API personale
+
+### Comandi e impostazioni
+
+#### Entrambi i canali
+
+```yaml
+rp_id: discvault.example.com
+rp_origins: https://discvault.example.com
+rp_name: DiscVault
+password_login: false
+trusted_proxies: private
+block_crawlers: true
+```
+
+```bash
+curl --fail http://<home-assistant>:6180/api/next/health   # beta: 6181
+```
+
+## Risultato previsto
+
+L’app risulta avviata, il watchdog raggiunge l’indirizzo di stato e l’interfaccia web si apre sulla porta dell’app.
+
+Accetta il risultato per **Installazione: Home Assistant** solo quando tutti i risultati seguenti sono veri: l’onboarding crea il primo proprietario con una passkey, oppure con password e TOTP, e mostra una sola volta i codici di recupero; l’endpoint MCP è sulla stessa porta sotto `/mcp`; dai all’assistente una chiave API personale; `/api/next/health` · HTTP `200` · `"status": "ok"`. Punti di controllo della pagina: `6180` · `/api/next/health` · `rp_id` · `password_login` · `secrets.json`.
+
+- l’onboarding crea il primo proprietario con una passkey, oppure con password e TOTP, e mostra una sola volta i codici di recupero
+- l’endpoint MCP è sulla stessa porta sotto `/mcp`; dai all’assistente una chiave API personale
+- `/api/next/health` · HTTP `200` · `"status": "ok"`
+
+## Sicurezza e ripristino
+
+:::caution
+Lascia che Home Assistant faccia il backup dell’app prima di ogni aggiornamento. Per tornare indietro ripristina quel backup in Impostazioni → Sistema → Backup; una release che ha cambiato il database potrebbe non funzionare su una versione precedente.
+
+Il limite di ripristino sicuro per **Installazione: Home Assistant** richiede queste azioni prima di avviare o continuare: Home Assistant ferma l’app per un momento durante il backup, perché un database in esecuzione non è una copia coerente; il segreto di firma e la password del database vengono generati al primo avvio in `secrets.json`; non eliminare mai quel file; la beta può modificare il database in modo che l’app stabile non riesca a leggerlo; non puntarla mai alle cartelle della stabile; il backup nell’app (Amministrazione → Backup, anche pianificato) sposta una libreria tra Docker, Unraid e Home Assistant; una nuova release appare come aggiornamento appena la sua immagine è pubblicata; l’aggiornamento ricostruisce l’app ed esegue le migrazioni all’avvio. Punti di controllo della pagina: `6180` · `/api/next/health` · `rp_id` · `password_login` · `secrets.json`.
+
+- Home Assistant ferma l’app per un momento durante il backup, perché un database in esecuzione non è una copia coerente
+- il segreto di firma e la password del database vengono generati al primo avvio in `secrets.json`; non eliminare mai quel file
+- la beta può modificare il database in modo che l’app stabile non riesca a leggerlo; non puntarla mai alle cartelle della stabile
+- il backup nell’app (Amministrazione → Backup, anche pianificato) sposta una libreria tra Docker, Unraid e Home Assistant
+- una nuova release appare come aggiornamento appena la sua immagine è pubblicata; l’aggiornamento ricostruisce l’app ed esegue le migrazioni all’avvio
+:::
+
+## Passaggio successivo
+
+[Installazione: Proxy inverso e chiavi di accesso](/it/install/reverse-proxy-passkeys/)
+
+## Fonte e stato
+
+- [`helmerzNL/DiscVault@441f96593219`](https://github.com/helmerzNL/DiscVault/commit/441f96593219c66d45aac99ce5ef9f81f011d449)
+- [`helmerzNL/home-assistant-addons@48d31c321db4`](https://github.com/helmerzNL/home-assistant-addons/commit/48d31c321db48d1c70405c6a7830065debc79460)
+- [Home Assistant app: `discvault/config.yaml`](https://github.com/helmerzNL/home-assistant-addons/blob/main/discvault/config.yaml)
+- [Home Assistant app documentation: `discvault/DOCS.md`](https://github.com/helmerzNL/home-assistant-addons/blob/main/discvault/DOCS.md)
+- [Add the repository to Home Assistant](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FhelmerzNL%2Fhome-assistant-addons)
+- Fonte e stato: `2026-11-11`
+- DiscVault Docs: `0.2.0`

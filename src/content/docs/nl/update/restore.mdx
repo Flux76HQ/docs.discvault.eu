@@ -5,14 +5,14 @@ pageId: 'update-restore'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Doel en resultaat
 
@@ -22,13 +22,13 @@ Voer de paginaspecifieke werkwijze uit voor **Bijwerken en migreren: Herstellen*
 
 Deze pagina is uitsluitend van toepassing op **Bijwerken en migreren: Herstellen** (Docker · Unraid). De kanaal- en gegevensgrenzen zijn: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL-dump en bestandsarchief uit hetzelfde schrijversstopvenster; herstel de bijpassende gegevens voordat de vorige image wordt gestart; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL-dump en bestandsarchief uit hetzelfde schrijversstopvenster; herstel de bijpassende gegevens voordat de vorige image wordt gestart. Paginaspecifieke controlepunten: `pg_restore --exit-on-error` · `discvault.failed-` · `next-worker` · `next-api`.
 
-### DiscVault v26 stabiel
+### DiscVault stabiel
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - PostgreSQL-dump en bestandsarchief uit hetzelfde schrijversstopvenster
 - herstel de bijpassende gegevens voordat de vorige image wordt gestart
 
-### DiscVault v26 bèta
+### DiscVault bèta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - PostgreSQL-dump en bestandsarchief uit hetzelfde schrijversstopvenster

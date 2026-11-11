@@ -1,36 +1,36 @@
 ---
 title: 'Install: Docker run'
-description: 'Use raw Docker commands only as an advanced, complete equivalent of the recommended v26 Compose stack.'
+description: 'Use raw Docker commands only as an advanced, complete equivalent of the recommended DiscVault Compose stack.'
 pageId: 'install-docker-run'
 products: ['server']
 platforms: ['docker']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Goal and result
 
-Use raw Docker commands only as an advanced, complete equivalent of the recommended v26 Compose stack.
+Use raw Docker commands only as an advanced, complete equivalent of the recommended DiscVault Compose stack.
 
 ## Applies to
 
-Set `DISCVAULT_IMAGE` to `ghcr.io/helmerznl/discvault:latest` for DiscVault v26 stable or `ghcr.io/helmerznl/discvault:beta` for DiscVault v26 beta. Both require PostgreSQL, `DATABASE_URL`, API, worker, MCP, and persistent `/data`.
+Set `DISCVAULT_IMAGE` to `ghcr.io/helmerznl/discvault:latest` for DiscVault stable or `ghcr.io/helmerznl/discvault:beta` for DiscVault beta. Both require PostgreSQL, `DATABASE_URL`, API, worker, MCP, and persistent `/data`.
 
-### DiscVault v26 stable
+### DiscVault stable
 
-- DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault stable · `ghcr.io/helmerznl/discvault:latest`
 - PostgreSQL + API + worker + MCP
 - host `6080` → API container `5000`
 
-### DiscVault v26 beta
+### DiscVault beta
 
-- DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault beta · `ghcr.io/helmerznl/discvault:beta`
 - PostgreSQL + API + worker + MCP
 - host `6080` → API container `5000`
 
@@ -49,13 +49,13 @@ Set `DISCVAULT_IMAGE` to `ghcr.io/helmerznl/discvault:latest` for DiscVault v26 
 
 ### Commands and settings
 
-#### DiscVault v26 stable
+#### DiscVault stable
 
 ```bash
 export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
 ```
 
-#### DiscVault v26 beta
+#### DiscVault beta
 
 ```bash
 export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
@@ -128,7 +128,7 @@ docker ps --filter 'name=discvault-'
 All four containers are running, PostgreSQL is healthy, and `http://localhost:6080/api/next/health` succeeds through host port 6080 mapped to internal API port 5000.
 
 - HTTP `2xx` · `/api/next/health`
-- four v26 containers
+- four DiscVault containers
 
 ## Safety and rollback
 

@@ -5,14 +5,14 @@ pageId: 'update-backup'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Objectif et résultat
 
@@ -22,13 +22,13 @@ Suivez le déroulement propre à cette page pour **Mise à jour et migration: Sa
 
 Cette page s’applique uniquement à **Mise à jour et migration: Sauvegarde** (Docker · Unraid). Les limites de canal et de données sont : DiscVault · `ghcr.io/helmerznl/discvault:latest`; dump PostgreSQL et archive des fichiers de la même fenêtre sans écriture; PostgreSQL `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; dump PostgreSQL et archive des fichiers de la même fenêtre sans écriture; PostgreSQL `/data`. Points de contrôle propres à la page : `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
 
-### DiscVault v26 stable
+### DiscVault stable
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - dump PostgreSQL et archive des fichiers de la même fenêtre sans écriture
 - PostgreSQL `/data`
 
-### DiscVault v26 bêta
+### DiscVault bêta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - dump PostgreSQL et archive des fichiers de la même fenêtre sans écriture
@@ -84,10 +84,11 @@ Validez le résultat de **Mise à jour et migration: Sauvegarde** uniquement lor
 ## Sécurité et retour arrière
 
 :::caution
-La limite de récupération sûre pour **Mise à jour et migration: Sauvegarde** impose ces actions avant tout démarrage ou toute poursuite : si une commande de sauvegarde échoue, redémarrez uniquement les services inchangés et annulez la mise à jour; dump PostgreSQL et archive des fichiers de la même fenêtre sans écriture. Points de contrôle propres à la page : `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
+La limite de récupération sûre pour **Mise à jour et migration: Sauvegarde** impose ces actions avant tout démarrage ou toute poursuite : si une commande de sauvegarde échoue, redémarrez uniquement les services inchangés et annulez la mise à jour; dump PostgreSQL et archive des fichiers de la même fenêtre sans écriture; l’app peut aussi sauvegarder selon un planning (Administration → Backup → Planification : intervalle, ignorer sans changement, garder les N plus récentes) ; les archives planifiées sont dans `backups/` de `DISCVAULT_DATA_DIR`, copiez-les donc aussi hors de l’hôte. Points de contrôle propres à la page : `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
 
 - si une commande de sauvegarde échoue, redémarrez uniquement les services inchangés et annulez la mise à jour
 - dump PostgreSQL et archive des fichiers de la même fenêtre sans écriture
+- l’app peut aussi sauvegarder selon un planning (Administration → Backup → Planification : intervalle, ignorer sans changement, garder les N plus récentes) ; les archives planifiées sont dans `backups/` de `DISCVAULT_DATA_DIR`, copiez-les donc aussi hors de l’hôte
 :::
 
 ## Étape suivante

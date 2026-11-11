@@ -1,37 +1,37 @@
 ---
-title: 'Bijwerken en migreren: Migratie naar DiscVault 26'
-description: 'Taakspecifieke instructies voor Bijwerken en migreren: Migratie naar DiscVault 26. /migration/readiness. ready_for_confirmation. /data/discvault.db. SQLite.'
+title: 'Bijwerken en migreren: Migratie naar DiscVault'
+description: 'Taakspecifieke instructies voor Bijwerken en migreren: Migratie naar DiscVault. /migration/readiness. ready_for_confirmation. /data/discvault.db. SQLite.'
 pageId: 'update-migration'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Doel en resultaat
 
-Voer de paginaspecifieke werkwijze uit voor **Bijwerken en migreren: Migratie naar DiscVault 26**. Deze werkwijze gebruikt `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+Voer de paginaspecifieke werkwijze uit voor **Bijwerken en migreren: Migratie naar DiscVault**. Deze werkwijze gebruikt `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
 
 ## Van toepassing op
 
-Deze pagina is uitsluitend van toepassing op **Bijwerken en migreren: Migratie naar DiscVault 26** (Docker · web). De kanaal- en gegevensgrenzen zijn: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; alleen-lezenbron voor bestaande gegevens; nooit de huidige runtimedatabase · SQLite → PostgreSQL; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26; alleen-lezenbron voor bestaande gegevens; nooit de huidige runtimedatabase · SQLite → PostgreSQL. Paginaspecifieke controlepunten: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+Deze pagina is uitsluitend van toepassing op **Bijwerken en migreren: Migratie naar DiscVault** (Docker · web). De kanaal- en gegevensgrenzen zijn: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault; alleen-lezenbron voor bestaande gegevens; nooit de huidige runtimedatabase · SQLite → PostgreSQL; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault; alleen-lezenbron voor bestaande gegevens; nooit de huidige runtimedatabase · SQLite → PostgreSQL. Paginaspecifieke controlepunten: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
 
-### DiscVault v26 stabiel
+### DiscVault stabiel
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- DiscVault 26
+- DiscVault
 - alleen-lezenbron voor bestaande gegevens; nooit de huidige runtimedatabase · SQLite → PostgreSQL
 
-### DiscVault v26 bèta
+### DiscVault bèta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- DiscVault 26
+- DiscVault
 - alleen-lezenbron voor bestaande gegevens; nooit de huidige runtimedatabase · SQLite → PostgreSQL
 
 ## Vereisten
@@ -61,14 +61,14 @@ curl --fail http://localhost:6080/api/next/migration/status
 
 ## Verwacht resultaat
 
-Accepteer het resultaat voor **Bijwerken en migreren: Migratie naar DiscVault 26** alleen wanneer alle onderstaande resultaten kloppen: gereedheid is bevestigd, de migratie heeft nul mislukte records en aantallen en mediavoorbeeld komen overeen. Paginaspecifieke controlepunten: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+Accepteer het resultaat voor **Bijwerken en migreren: Migratie naar DiscVault** alleen wanneer alle onderstaande resultaten kloppen: gereedheid is bevestigd, de migratie heeft nul mislukte records en aantallen en mediavoorbeeld komen overeen. Paginaspecifieke controlepunten: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
 
 - gereedheid is bevestigd, de migratie heeft nul mislukte records en aantallen en mediavoorbeeld komen overeen
 
 ## Veiligheid en terugdraaien
 
 :::caution
-De veilige herstelgrens voor **Bijwerken en migreren: Migratie naar DiscVault 26** vereist deze acties voordat iets start of doorgaat: stop DiscVault-writers, herstel bijpassende PostgreSQL- en `/data`-back-ups en herhaal de import nooit in een gedeeltelijk gevulde database. Paginaspecifieke controlepunten: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+De veilige herstelgrens voor **Bijwerken en migreren: Migratie naar DiscVault** vereist deze acties voordat iets start of doorgaat: stop DiscVault-writers, herstel bijpassende PostgreSQL- en `/data`-back-ups en herhaal de import nooit in een gedeeltelijk gevulde database. Paginaspecifieke controlepunten: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
 
 - stop DiscVault-writers, herstel bijpassende PostgreSQL- en `/data`-back-ups en herhaal de import nooit in een gedeeltelijk gevulde database
 :::

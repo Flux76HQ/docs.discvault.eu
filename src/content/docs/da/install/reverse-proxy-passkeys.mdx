@@ -5,14 +5,14 @@ pageId: 'install-reverse-proxy-passkeys'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU', 'Flux76HQ/App-Guidance']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## Mål og resultat
 
@@ -20,15 +20,17 @@ Gennemfør den sidespecifikke arbejdsgang for **Installation: Omvendt proxy og a
 
 ## Gælder for
 
-Denne side gælder kun for **Installation: Omvendt proxy og adgangsnøgler** (Docker · web). Kanal- og datagrænserne er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6080`; uden for localhost-undtagelsen kræver passkeys et stabilt fuldt kvalificeret domænenavn over betroet HTTPS; en ren IP-adresse eller almindelig HTTP understøttes ikke; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; OIDC · `/api/next/auth/oidc/callback` · [Konfiguration: Log ind med OpenID Connect (OIDC)](/da/configure/oidc/); `LEGACY_AUTH_ENABLED=true`. Sidespecifikke kontrolpunkter: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+Denne side gælder kun for **Installation: Omvendt proxy og adgangsnøgler** (Docker · web). Kanal- og datagrænserne er: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6180` `6080` Docker run; uden for localhost-undtagelsen kræver passkeys et stabilt fuldt kvalificeret domænenavn over betroet HTTPS; en ren IP-adresse eller almindelig HTTP understøttes ikke; OIDC · `/api/next/auth/oidc/callback` · [Konfiguration: Log ind med OpenID Connect (OIDC)](/da/configure/oidc/); `LEGACY_AUTH_ENABLED=true`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; OIDC · `/api/next/auth/oidc/callback` · [Konfiguration: Log ind med OpenID Connect (OIDC)](/da/configure/oidc/); `LEGACY_AUTH_ENABLED=true`. Sidespecifikke kontrolpunkter: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
-### DiscVault v26 – stabil
+### DiscVault – stabil
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- `RP_ID` `RP_ORIGINS` · `6080`
+- `RP_ID` `RP_ORIGINS` · `6180` `6080` Docker run
 - uden for localhost-undtagelsen kræver passkeys et stabilt fuldt kvalificeret domænenavn over betroet HTTPS; en ren IP-adresse eller almindelig HTTP understøttes ikke
+- OIDC · `/api/next/auth/oidc/callback` · [Konfiguration: Log ind med OpenID Connect (OIDC)](/da/configure/oidc/)
+- `LEGACY_AUTH_ENABLED=true`
 
-### DiscVault v26 – beta
+### DiscVault – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `RP_ID` `RP_ORIGINS` · `6180`
@@ -43,8 +45,8 @@ Denne side gælder kun for **Installation: Omvendt proxy og adgangsnøgler** (Do
 
 ### Legacy Authentication som fallback
 
-:::note[Tilgængelig i beta]
-Legacy Authentication med brugernavn, adgangskode og tofaktorgodkendelse (2FA) er tilgængelig i DiscVault 26 beta som fallback, når passkeys ikke kan bruges.
+:::note[Tilgængelig i stabil og beta]
+Legacy Authentication med brugernavn, adgangskode og tofaktorgodkendelse (2FA) er tilgængelig i DiscVault som fallback, når passkeys ikke kan bruges.
 
 Følg `/install/legacy-authentication/`, før funktionen aktiveres eller den første ejer oprettes.
 :::
@@ -56,13 +58,13 @@ Følg `/install/legacy-authentication/`, før funktionen aktiveres eller den fø
 3. **Konfigurér:** `RP_ID`
 4. **Konfigurér:** `RP_ORIGINS` · HTTPS
 5. **Konfigurér:** [Konfiguration: Log ind med OpenID Connect (OIDC)](/da/configure/oidc/) · `/api/next/auth/oidc/callback`
-6. **Konfigurér:** `6080` `6180`
+6. **Konfigurér:** Docker Compose `6180` Docker run `6080`
 7. **Test:** `GET /api/next/health`
 8. **Registrér:** vælg værtsnavnet før registrering af passkeys; en senere ændring kræver ny registrering, mens localhost kun er en lokal opsætningsundtagelse
 
 ### Kommandoer og indstillinger
 
-#### DiscVault v26 – stabil
+#### DiscVault – stabil
 
 ```text
 RP_ID=discvault.example.com
@@ -71,7 +73,7 @@ RP_ORIGINS=https://discvault.example.com
 curl --fail https://discvault.example.com/api/next/health
 ```
 
-#### DiscVault v26 – beta
+#### DiscVault – beta
 
 ```text
 RP_ID=discvault.example.com

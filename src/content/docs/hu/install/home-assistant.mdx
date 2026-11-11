@@ -1,0 +1,108 @@
+---
+title: 'Telepítés: Home Assistant'
+description: 'Feladatspecifikus útmutató: Telepítés: Home Assistant. 6180. /api/next/health. rp_id. password_login. secrets.json.'
+pageId: 'install-home-assistant'
+products: ['server']
+platforms: ['home-assistant']
+channels: ['stable', 'beta']
+minVersion: 'DiscVault'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/home-assistant-addons']
+lastVerified: '2026-11-11'
+---
+
+import PageMeta from '../../../../components/PageMeta.astro';
+
+<PageMeta channels="stable,beta" platform="Home Assistant" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/home-assistant-addons" verified="2026-11-11" />
+
+## Cél és eredmény
+
+Futtassa a DiscVaultot Home Assistant-alkalmazásként. Az alkalmazás, a worker, az MCP-végpont és a PostgreSQL 17 egy konténerben fut, és minden tárolt adat az alkalmazás adatmappájában van, amelyet a Home Assistant ment.
+
+Hajtsa végre az oldalhoz tartozó munkafolyamatot: **Telepítés: Home Assistant**. Ez az eljárás ezeket használja: `6180` · `/api/next/health` · `rp_id` · `password_login` · `secrets.json`.
+
+## Érvényesség
+
+A tároló a DiscVaultot a 6180-as, a DiscVault (beta) változatot a 6181-es porton kínálja, saját adatmappákkal, így amd64 és aarch64 rendszeren egymás mellett futnak.
+
+Ez az oldal kizárólag erre vonatkozik: **Telepítés: Home Assistant** (Home Assistant). A csatorna- és adathatárok: DiscVault · `6180`; PostgreSQL 17 · `/data`; DiscVault · `6181`; PostgreSQL 17 · `/data`. Oldalspecifikus ellenőrzési pontok: `6180` · `/api/next/health` · `rp_id` · `password_login` · `secrets.json`.
+
+### DiscVault – stabil
+
+- DiscVault · `6180`
+- PostgreSQL 17 · `/data`
+
+### DiscVault – béta
+
+- DiscVault · `6181`
+- PostgreSQL 17 · `/data`
+
+## Előfeltételek
+
+- `amd64` `aarch64`
+- a passkeyekhez HTTPS-cím és domainnév kell az alkalmazás portja előtt; enélkül jelszavas bejelentkezést használjon TOTP-vel
+- nincs oldalsáv-bejegyzés (Ingress): a DiscVault saját domainje gyökeréből, fordított proxyn keresztül fut
+
+## Eljárás
+
+1. **Nyissa meg:** Beállítások → Alkalmazások → Alkalmazás telepítése → ⋮ → Tárolók, majd adja hozzá: `https://github.com/helmerzNL/home-assistant-addons`
+2. **Telepítse:** válassza a DiscVault vagy a DiscVault (beta) alkalmazást és telepítse; a Home Assistant az eszközön építi fel, ami először néhány percig tart
+3. **Állítsa be:** a `rp_id` az a domain, amelyen a DiscVault megnyílik; a passkeyk ehhez kötődnek, így későbbi módosítása használhatatlanná teszi a meglévőket · `rp_origins` · `trusted_proxies`
+4. **Állítsa be:** a `password_login` felhasználónevet, legalább 15 karakteres jelszót és TOTP-t kínál, ha nincs HTTPS-domain
+5. **Állítsa be:** OpenID Connect: az `oidc_issuer`, `oidc_client_id` és `oidc_client_secret` mezőt együtt töltse ki, vagy hagyja mindhármat üresen · `/api/next/auth/oidc/callback`
+6. **Indítsa el:** a bevezetés passkeyjel vagy jelszóval és TOTP-vel létrehozza az első tulajdonost, és egyszer megmutatja a helyreállítási kódokat
+7. **Ellenőrizze:** `/api/next/health` · az MCP-végpont ugyanazon a porton, a `/mcp` alatt érhető el; adjon az asszisztensnek személyes API-kulcsot
+
+### Parancsok és beállítások
+
+#### Mindkét csatorna
+
+```yaml
+rp_id: discvault.example.com
+rp_origins: https://discvault.example.com
+rp_name: DiscVault
+password_login: false
+trusted_proxies: private
+block_crawlers: true
+```
+
+```bash
+curl --fail http://<home-assistant>:6180/api/next/health   # beta: 6181
+```
+
+## Várt eredmény
+
+Az alkalmazás elindultként jelenik meg, a watchdog eléri az állapotcímet, és a webes felület megnyílik az alkalmazás portján.
+
+Az eredmény csak ennél fogadható el: **Telepítés: Home Assistant** csak akkor, ha minden alábbi eredmény teljesül: a bevezetés passkeyjel vagy jelszóval és TOTP-vel létrehozza az első tulajdonost, és egyszer megmutatja a helyreállítási kódokat; az MCP-végpont ugyanazon a porton, a `/mcp` alatt érhető el; adjon az asszisztensnek személyes API-kulcsot; `/api/next/health` · HTTP `200` · `"status": "ok"`. Oldalspecifikus ellenőrzési pontok: `6180` · `/api/next/health` · `rp_id` · `password_login` · `secrets.json`.
+
+- a bevezetés passkeyjel vagy jelszóval és TOTP-vel létrehozza az első tulajdonost, és egyszer megmutatja a helyreállítási kódokat
+- az MCP-végpont ugyanazon a porton, a `/mcp` alatt érhető el; adjon az asszisztensnek személyes API-kulcsot
+- `/api/next/health` · HTTP `200` · `"status": "ok"`
+
+## Biztonság és visszaállítás
+
+:::caution
+Minden frissítés előtt hagyja, hogy a Home Assistant mentse az alkalmazást. Visszaállításhoz állítsa vissza ezt a mentést a Beállítások → Rendszer → Biztonsági mentések menüben; az adatbázist módosító kiadás nem biztos, hogy fut régebbi verzión.
+
+A biztonságos helyreállítás határa ennél: **Telepítés: Home Assistant** ezeket a műveleteket igényli indítás vagy folytatás előtt: a Home Assistant mentés közben rövid időre leállítja az alkalmazást, mert a futó adatbázis nem konzisztens másolat; az aláírási titok és az adatbázis jelszava az első indításkor jön létre a `secrets.json` fájlban; ezt a fájlt soha ne törölje; a béta úgy módosíthatja az adatbázist, hogy a stabil alkalmazás ne tudja olvasni; soha ne irányítsa a stabil mappáira; az alkalmazáson belüli mentés (Adminisztráció → Backup, ütemezve is) költözteti a könyvtárat Docker, Unraid és Home Assistant között; az új kiadás frissítésként jelenik meg, amint a képe megjelent; a frissítés újraépíti az alkalmazást, és induláskor futtatja a migrációkat. Oldalspecifikus ellenőrzési pontok: `6180` · `/api/next/health` · `rp_id` · `password_login` · `secrets.json`.
+
+- a Home Assistant mentés közben rövid időre leállítja az alkalmazást, mert a futó adatbázis nem konzisztens másolat
+- az aláírási titok és az adatbázis jelszava az első indításkor jön létre a `secrets.json` fájlban; ezt a fájlt soha ne törölje
+- a béta úgy módosíthatja az adatbázist, hogy a stabil alkalmazás ne tudja olvasni; soha ne irányítsa a stabil mappáira
+- az alkalmazáson belüli mentés (Adminisztráció → Backup, ütemezve is) költözteti a könyvtárat Docker, Unraid és Home Assistant között
+- az új kiadás frissítésként jelenik meg, amint a képe megjelent; a frissítés újraépíti az alkalmazást, és induláskor futtatja a migrációkat
+:::
+
+## Következő lépés
+
+[Telepítés: Fordított proxy és hozzáférési kulcsok](/hu/install/reverse-proxy-passkeys/)
+
+## Forrás és állapot
+
+- [`helmerzNL/DiscVault@441f96593219`](https://github.com/helmerzNL/DiscVault/commit/441f96593219c66d45aac99ce5ef9f81f011d449)
+- [`helmerzNL/home-assistant-addons@48d31c321db4`](https://github.com/helmerzNL/home-assistant-addons/commit/48d31c321db48d1c70405c6a7830065debc79460)
+- [Home Assistant app: `discvault/config.yaml`](https://github.com/helmerzNL/home-assistant-addons/blob/main/discvault/config.yaml)
+- [Home Assistant app documentation: `discvault/DOCS.md`](https://github.com/helmerzNL/home-assistant-addons/blob/main/discvault/DOCS.md)
+- [Add the repository to Home Assistant](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FhelmerzNL%2Fhome-assistant-addons)
+- Forrás és állapot: `2026-11-11`
+- DiscVault Docs: `0.2.0`

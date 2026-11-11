@@ -5,14 +5,14 @@ pageId: 'update-backup'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Cel i rezultat
 
@@ -22,13 +22,13 @@ Wykonaj procedurę właściwą dla strony: **Aktualizacja i migracja: Kopia zapa
 
 Ta strona dotyczy wyłącznie **Aktualizacja i migracja: Kopia zapasowa** (Docker · Unraid). Granice kanału i danych: DiscVault · `ghcr.io/helmerznl/discvault:latest`; zrzut PostgreSQL i archiwum plików z tego samego okna bez zapisów; PostgreSQL `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; zrzut PostgreSQL i archiwum plików z tego samego okna bez zapisów; PostgreSQL `/data`. Punkty kontrolne tej strony: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
 
-### DiscVault v26 – stabilny
+### DiscVault – stabilny
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - zrzut PostgreSQL i archiwum plików z tego samego okna bez zapisów
 - PostgreSQL `/data`
 
-### DiscVault v26 – beta
+### DiscVault – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - zrzut PostgreSQL i archiwum plików z tego samego okna bez zapisów
@@ -84,10 +84,11 @@ Zaakceptuj wynik dla **Aktualizacja i migracja: Kopia zapasowa** tylko gdy wszys
 ## Bezpieczeństwo i wycofanie
 
 :::caution
-Bezpieczna granica odzyskiwania dla **Aktualizacja i migracja: Kopia zapasowa** wymaga tych działań przed uruchomieniem lub kontynuacją: jeśli polecenie kopii nie powiedzie się, uruchom ponownie tylko niezmienione usługi i anuluj aktualizację; zrzut PostgreSQL i archiwum plików z tego samego okna bez zapisów. Punkty kontrolne tej strony: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
+Bezpieczna granica odzyskiwania dla **Aktualizacja i migracja: Kopia zapasowa** wymaga tych działań przed uruchomieniem lub kontynuacją: jeśli polecenie kopii nie powiedzie się, uruchom ponownie tylko niezmienione usługi i anuluj aktualizację; zrzut PostgreSQL i archiwum plików z tego samego okna bez zapisów; aplikacja może też wykonywać kopie według harmonogramu (Administracja → Backup → Harmonogram: odstęp, pomiń bez zmian, zachowaj N najnowszych); archiwa trafiają do `backups/` w `DISCVAULT_DATA_DIR`, więc kopiuj je także poza hosta. Punkty kontrolne tej strony: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
 
 - jeśli polecenie kopii nie powiedzie się, uruchom ponownie tylko niezmienione usługi i anuluj aktualizację
 - zrzut PostgreSQL i archiwum plików z tego samego okna bez zapisów
+- aplikacja może też wykonywać kopie według harmonogramu (Administracja → Backup → Harmonogram: odstęp, pomiń bez zmian, zachowaj N najnowszych); archiwa trafiają do `backups/` w `DISCVAULT_DATA_DIR`, więc kopiuj je także poza hosta
 :::
 
 ## Następny krok

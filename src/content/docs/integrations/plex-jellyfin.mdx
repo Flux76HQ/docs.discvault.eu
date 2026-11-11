@@ -5,14 +5,14 @@ pageId: 'integrations-plex-jellyfin'
 products: ['server']
 platforms: ['web', 'docker']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="web · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="web · Docker" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Goal and result
 
@@ -20,17 +20,17 @@ Connect a digital media source, validate credentials, and dry-run discovery befo
 
 ## Applies to
 
-The DiscVault v26 plugin workflow is available in stable and beta. Provider secrets are stored as secret settings and are not returned by the API.
+The DiscVault plugin workflow is available in stable and beta. Provider secrets are stored as secret settings and are not returned by the API.
 
-### DiscVault v26 stable
+### DiscVault stable
 
-- DiscVault v26 stable · `ghcr.io/helmerznl/discvault:latest`
-- DiscVault 26 digital-media-source plugins
+- DiscVault stable · `ghcr.io/helmerznl/discvault:latest`
+- DiscVault digital-media-source plugins
 
-### DiscVault v26 beta
+### DiscVault beta
 
-- DiscVault v26 beta · `ghcr.io/helmerznl/discvault:beta`
-- DiscVault 26 digital-media-source plugins
+- DiscVault beta · `ghcr.io/helmerznl/discvault:beta`
+- DiscVault digital-media-source plugins
 
 ## Prerequisites
 
@@ -44,6 +44,7 @@ The DiscVault v26 plugin workflow is available in stable and beta. Provider secr
 2. **Test:** Admin → Plugins → Health check
 3. **Run:** Admin → Plugins → Discover without saving · `dryRun=true`
 4. **Compare:** `/api/next/digital-items?limit=200` · provider library sample
+5. **Configure:** Admin → Scheduled tasks syncs the Jellyfin and Plex libraries every N hours, optionally followed by the watched-history sync; it is off until an admin turns it on
 
 ### Commands and settings
 

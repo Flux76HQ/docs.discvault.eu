@@ -5,14 +5,14 @@ pageId: 'update-rollback'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Cél és eredmény
 
@@ -22,13 +22,13 @@ Hajtsa végre az oldalhoz tartozó munkafolyamatot: **Frissítés és migrálás
 
 Ez az oldal kizárólag erre vonatkozik: **Frissítés és migrálás: Lemezkép visszaállítása** (Docker · Unraid). A csatorna- és adathatárok: DiscVault · `ghcr.io/helmerznl/discvault:latest`; az illeszkedő adatokat az előző image indítása előtt állítsa vissza; PostgreSQL `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; az illeszkedő adatokat az előző image indítása előtt állítsa vissza; PostgreSQL `/data`. Oldalspecifikus ellenőrzési pontok: `PREVIOUS_IMAGE` · `pg_restore --exit-on-error` · `discvault.failed-` · `DISCVAULT_IMAGE`.
 
-### DiscVault v26 – stabil
+### DiscVault – stabil
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - az illeszkedő adatokat az előző image indítása előtt állítsa vissza
 - PostgreSQL `/data`
 
-### DiscVault v26 – béta
+### DiscVault – béta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - az illeszkedő adatokat az előző image indítása előtt állítsa vissza
@@ -106,7 +106,7 @@ A biztonságos helyreállítás határa ennél: **Frissítés és migrálás: Le
 
 ## Következő lépés
 
-[Frissítés és migrálás: Átállás DiscVault 26-ra](/hu/update/migration/)
+[Frissítés és migrálás: Átállás DiscVault-ra](/hu/update/migration/)
 
 ## Forrás és állapot
 

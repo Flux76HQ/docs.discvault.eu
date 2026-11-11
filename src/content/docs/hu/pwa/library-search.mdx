@@ -5,14 +5,14 @@ pageId: 'pwa-library-search'
 products: ['pwa']
 platforms: ['web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
 lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
+<PageMeta channels="stable,beta" platform="web" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Cél és eredmény
 
@@ -22,14 +22,14 @@ Hajtsa végre az oldalhoz tartozó munkafolyamatot: **PWA: Könyvtár és keres�
 
 Ez az oldal kizárólag erre vonatkozik: **PWA: Könyvtár és keresés** (web). A csatorna- és adathatárok: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PWA · RBAC; a Collectors Mode alapértelmezésben ki van kapcsolva, és fejlett konténerfunkciókat tesz elérhetővé; a `merge_editions_as_title` külön, szintén alapértelmezésben kikapcsolt beállítás; a `merge_editions_as_title` bekapcsolásakor több fizikai változat egy könyvtárcsempén jelenik meg; a csempét megnyitva minden kiadás látható; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PWA · RBAC; a Collectors Mode alapértelmezésben ki van kapcsolva, és fejlett konténerfunkciókat tesz elérhetővé; a `merge_editions_as_title` külön, szintén alapértelmezésben kikapcsolt beállítás; a `merge_editions_as_title` bekapcsolásakor több fizikai változat egy könyvtárcsempén jelenik meg; a csempét megnyitva minden kiadás látható. Oldalspecifikus ellenőrzési pontok: PWA · `watchlist` · `history` · RBAC · `merge_editions_as_title` · `box_set` · `vault` · `collection`.
 
-### DiscVault v26 – stabil
+### DiscVault – stabil
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - PWA · RBAC
 - a Collectors Mode alapértelmezésben ki van kapcsolva, és fejlett konténerfunkciókat tesz elérhetővé; a `merge_editions_as_title` külön, szintén alapértelmezésben kikapcsolt beállítás
 - a `merge_editions_as_title` bekapcsolásakor több fizikai változat egy könyvtárcsempén jelenik meg; a csempét megnyitva minden kiadás látható
 
-### DiscVault v26 – béta
+### DiscVault – béta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - PWA · RBAC
@@ -54,6 +54,9 @@ Ez az oldal kizárólag erre vonatkozik: **PWA: Könyvtár és keresés** (web).
 9. **Hasonlítsa össze:** a vault felhasználó által létrehozott polc-, tárolódoboz- vagy helycsoport közvetlen filmtagokkal, kereskedelmi termék jelentése nélkül
 10. **Hasonlítsa össze:** a collection tematikus csoport, amelynek rendezett elemei filmek, box-setek, vaultok vagy más collection csoportok lehetnek, így beágyazható
 11. **Tesztelje:** a Collectors Mode kikapcsolása elrejti a konténermegjelenítést, de nem törli a konténereket vagy tagjaikat
+12. **Állítsa be:** a Speciális panel szűr külső pontszámra, minimális szavazatszámra, pontszám nélküli filmekre és több címkére (bármelyik vagy mind); az okos szűrők megőrzik a beállításokat
+13. **Ellenőrizze:** az egyéni mezők szűrhetők, rendezhetők és exportálhatók, megjelennek a részletek oldalon, és importoszlopból kitölthetők
+14. **Tesztelje:** a MovieVaultból érkező tévés kiadás sorozatként, évadokkal kerül be, ugyanannak a műsornak a következő kiadása ugyanahhoz csatlakozik, a sorozat képernyője pedig visszaküldheti az évadkapcsolatokat a MovieVaultnak
 
 
 

@@ -5,14 +5,14 @@ pageId: 'configure-index'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-09-20" />
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-09-20" />
 
 ## Cél és eredmény
 
@@ -20,17 +20,17 @@ Hajtsa végre az oldalhoz tartozó munkafolyamatot: **Konfigurálás: Áttekint�
 
 ## Érvényesség
 
-Ez az oldal kizárólag erre vonatkozik: **Konfigurálás: Áttekintés** (Docker · web). A csatorna- és adathatárok: DiscVault · `ghcr.io/helmerznl/discvault:latest`; RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; RBAC. Oldalspecifikus ellenőrzési pontok: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/oidc/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
+Ez az oldal kizárólag erre vonatkozik: **Konfigurálás: Áttekintés** (Docker · web). A csatorna- és adathatárok: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault RBAC; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault RBAC. Oldalspecifikus ellenőrzési pontok: `/configure/environment/` · `/configure/auth-rbac/` · `/configure/oidc/` · `/install/legacy-authentication/` · `/configure/plugins-metadata/`.
 
-### DiscVault v26 – stabil
+### DiscVault – stabil
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- RBAC
+- DiscVault RBAC
 
-### DiscVault v26 – béta
+### DiscVault – béta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- RBAC
+- DiscVault RBAC
 
 ## Előfeltételek
 
@@ -48,11 +48,11 @@ Ez az oldal kizárólag erre vonatkozik: **Konfigurálás: Áttekintés** (Docke
 
 ### Feladatútvonalak
 
-- [Konfigurálás: Környezeti változók](/hu/configure/environment/) — DiscVault 26 `.env.example`
-- [Konfigurálás: Hitelesítés és RBAC](/hu/configure/auth-rbac/) — DiscVault 26 RBAC
-- [Konfigurálás: Bejelentkezés OpenID Connecttel (OIDC)](/hu/configure/oidc/) — DiscVault 26.9 117 OIDC Pocket ID
-- [Telepítés: Legacy Authentication](/hu/install/legacy-authentication/) — DiscVault 26 TOTP
-- [Konfigurálás: Bővítmények és metaadatok](/hu/configure/plugins-metadata/) — DiscVault 26
+- [Konfigurálás: Környezeti változók](/hu/configure/environment/) — DiscVault `.env.example`
+- [Konfigurálás: Hitelesítés és RBAC](/hu/configure/auth-rbac/) — DiscVault OIDC RBAC
+- [Konfigurálás: Bejelentkezés OpenID Connecttel (OIDC)](/hu/configure/oidc/) — DiscVault OIDC Pocket ID
+- [Telepítés: Legacy Authentication](/hu/install/legacy-authentication/) — DiscVault TOTP
+- [Konfigurálás: Bővítmények és metaadatok](/hu/configure/plugins-metadata/) — DiscVault
 
 ## Várt eredmény
 

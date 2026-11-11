@@ -1,37 +1,37 @@
 ---
-title: 'Ενημέρωση και μετεγκατάσταση: Μετεγκατάσταση στο DiscVault 26'
-description: 'Οδηγίες ειδικά για την εργασία: Ενημέρωση και μετεγκατάσταση: Μετεγκατάσταση στο DiscVault 26. /migration/readiness. ready_for_confirmation. /data/discvault.db. SQLite.'
+title: 'Ενημέρωση και μετεγκατάσταση: Μετεγκατάσταση στο DiscVault'
+description: 'Οδηγίες ειδικά για την εργασία: Ενημέρωση και μετεγκατάσταση: Μετεγκατάσταση στο DiscVault. /migration/readiness. ready_for_confirmation. /data/discvault.db. SQLite.'
 pageId: 'update-migration'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · ιστός" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · ιστός" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Στόχος και αποτέλεσμα
 
-Ολοκληρώστε τη ροή εργασίας της σελίδας για **Ενημέρωση και μετεγκατάσταση: Μετεγκατάσταση στο DiscVault 26**. Η διαδικασία χρησιμοποιεί `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+Ολοκληρώστε τη ροή εργασίας της σελίδας για **Ενημέρωση και μετεγκατάσταση: Μετεγκατάσταση στο DiscVault**. Η διαδικασία χρησιμοποιεί `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
 
 ## Ισχύει για
 
-Αυτή η σελίδα ισχύει μόνο για **Ενημέρωση και μετεγκατάσταση: Μετεγκατάσταση στο DiscVault 26** (Docker · ιστός). Τα όρια καναλιού και δεδομένων είναι: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; πηγή υπαρχόντων δεδομένων μόνο για ανάγνωση· ποτέ η τρέχουσα βάση εκτέλεσης · SQLite → PostgreSQL; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26; πηγή υπαρχόντων δεδομένων μόνο για ανάγνωση· ποτέ η τρέχουσα βάση εκτέλεσης · SQLite → PostgreSQL. Σημεία ελέγχου της σελίδας: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+Αυτή η σελίδα ισχύει μόνο για **Ενημέρωση και μετεγκατάσταση: Μετεγκατάσταση στο DiscVault** (Docker · ιστός). Τα όρια καναλιού και δεδομένων είναι: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault; πηγή υπαρχόντων δεδομένων μόνο για ανάγνωση· ποτέ η τρέχουσα βάση εκτέλεσης · SQLite → PostgreSQL; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault; πηγή υπαρχόντων δεδομένων μόνο για ανάγνωση· ποτέ η τρέχουσα βάση εκτέλεσης · SQLite → PostgreSQL. Σημεία ελέγχου της σελίδας: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
 
-### DiscVault v26 – σταθερό
+### DiscVault – σταθερό
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- DiscVault 26
+- DiscVault
 - πηγή υπαρχόντων δεδομένων μόνο για ανάγνωση· ποτέ η τρέχουσα βάση εκτέλεσης · SQLite → PostgreSQL
 
-### DiscVault v26 – beta
+### DiscVault – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- DiscVault 26
+- DiscVault
 - πηγή υπαρχόντων δεδομένων μόνο για ανάγνωση· ποτέ η τρέχουσα βάση εκτέλεσης · SQLite → PostgreSQL
 
 ## Προϋποθέσεις
@@ -61,14 +61,14 @@ curl --fail http://localhost:6080/api/next/migration/status
 
 ## Αναμενόμενο αποτέλεσμα
 
-Αποδεχθείτε το αποτέλεσμα για **Ενημέρωση και μετεγκατάσταση: Μετεγκατάσταση στο DiscVault 26** μόνο όταν ισχύουν όλα τα παρακάτω αποτελέσματα: η ετοιμότητα επιβεβαιώνεται, η μετεγκατάσταση δεν έχει αποτυχημένες εγγραφές και οι μετρήσεις και το δείγμα ταιριάζουν. Σημεία ελέγχου της σελίδας: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+Αποδεχθείτε το αποτέλεσμα για **Ενημέρωση και μετεγκατάσταση: Μετεγκατάσταση στο DiscVault** μόνο όταν ισχύουν όλα τα παρακάτω αποτελέσματα: η ετοιμότητα επιβεβαιώνεται, η μετεγκατάσταση δεν έχει αποτυχημένες εγγραφές και οι μετρήσεις και το δείγμα ταιριάζουν. Σημεία ελέγχου της σελίδας: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
 
 - η ετοιμότητα επιβεβαιώνεται, η μετεγκατάσταση δεν έχει αποτυχημένες εγγραφές και οι μετρήσεις και το δείγμα ταιριάζουν
 
 ## Ασφάλεια και επαναφορά
 
 :::caution
-Το ασφαλές όριο ανάκτησης για **Ενημέρωση και μετεγκατάσταση: Μετεγκατάσταση στο DiscVault 26** απαιτεί αυτές τις ενέργειες πριν από κάθε εκκίνηση ή συνέχεια: σταματήστε τις εγγραφές του DiscVault, επαναφέρετε τα αντίστοιχα αντίγραφα PostgreSQL και `/data` και μην επαναλάβετε την εισαγωγή σε μερικώς συμπληρωμένη βάση. Σημεία ελέγχου της σελίδας: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+Το ασφαλές όριο ανάκτησης για **Ενημέρωση και μετεγκατάσταση: Μετεγκατάσταση στο DiscVault** απαιτεί αυτές τις ενέργειες πριν από κάθε εκκίνηση ή συνέχεια: σταματήστε τις εγγραφές του DiscVault, επαναφέρετε τα αντίστοιχα αντίγραφα PostgreSQL και `/data` και μην επαναλάβετε την εισαγωγή σε μερικώς συμπληρωμένη βάση. Σημεία ελέγχου της σελίδας: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
 
 - σταματήστε τις εγγραφές του DiscVault, επαναφέρετε τα αντίστοιχα αντίγραφα PostgreSQL και `/data` και μην επαναλάβετε την εισαγωγή σε μερικώς συμπληρωμένη βάση
 :::

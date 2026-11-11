@@ -5,14 +5,14 @@ pageId: 'update-update'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
 lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## Doel en resultaat
 
@@ -22,13 +22,13 @@ Voer de paginaspecifieke werkwijze uit voor **Bijwerken en migreren: Container b
 
 Deze pagina is uitsluitend van toepassing op **Bijwerken en migreren: Container bijwerken** (Docker · Unraid). De kanaal- en gegevensgrenzen zijn: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · releaseopmerkingen en vastgelegd onveranderlijk image-digest · bijpassende back-upset; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · releaseopmerkingen en vastgelegd onveranderlijk image-digest · bijpassende back-upset. Paginaspecifieke controlepunten: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
-### DiscVault v26 stabiel
+### DiscVault stabiel
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - `DISCVAULT_IMAGE`
 - PostgreSQL `/data` · releaseopmerkingen en vastgelegd onveranderlijk image-digest · bijpassende back-upset
 
-### DiscVault v26 bèta
+### DiscVault bèta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `DISCVAULT_IMAGE`
@@ -41,25 +41,25 @@ Deze pagina is uitsluitend van toepassing op **Bijwerken en migreren: Container 
 
 ## Procedure
 
-1. **Controleren:** nieuwe installaties gebruiken DiscVault v26 `:latest` of `:beta`; de bevroren `:legacy`-image is alleen voor een bestaande installatie van de vorige generatie die nog niet klaar is voor migratie
+1. **Controleren:** nieuwe installaties gebruiken DiscVault `:latest` of `:beta`; de bevroren `:legacy`-image is alleen voor een bestaande installatie van de vorige generatie die nog niet klaar is voor migratie
 2. **Back-up maken:** bijpassende back-upset
-3. **Kiezen:** Alleen de Legacy-route: wijzig na de back-up uitsluitend de imagetag van de bestaande oude implementatie in `:legacy`, haal deze op en maak hem opnieuw met ongewijzigde topologie, controleer de collectie en stop; schakel deze bestaande implementatie op deze pagina niet over naar de v26-topologie
-4. **Openen:** [Bijwerken en migreren: Migratie naar DiscVault 26](/nl/update/migration/) · DiscVault 26
-5. **Bewaren:** houd volumes, omgevingsvariabelen, poorten en het gegevenspad van de vorige generatie ongewijzigd; vervang in de v26 PostgreSQL Compose-topologie nooit een image door `:legacy`
-6. **Verifiëren:** `DiscVault v26` · `PREVIOUS_IMAGE=@sha256:…`
-7. **Kiezen:** `DiscVault v26` · `DISCVAULT_IMAGE` · `:latest` `:beta`
-8. **Uitvoeren:** `DiscVault v26` · `--force-recreate`
-9. **Vergelijken:** `DiscVault v26` · de bedoelde image-digest draait, health slaagt en eigenaarlogin, bibliotheekaantal en één mediavoorbeeld werken
+3. **Kiezen:** Alleen de Legacy-route: wijzig na de back-up uitsluitend de imagetag van de bestaande oude implementatie in `:legacy`, haal deze op en maak hem opnieuw met ongewijzigde topologie, controleer de collectie en stop; schakel deze bestaande implementatie op deze pagina niet over naar de DiscVault-topologie
+4. **Openen:** [Bijwerken en migreren: Migratie naar DiscVault](/nl/update/migration/) · DiscVault
+5. **Bewaren:** houd volumes, omgevingsvariabelen, poorten en het gegevenspad van de vorige generatie ongewijzigd; vervang in de DiscVault PostgreSQL Compose-topologie nooit een image door `:legacy`
+6. **Verifiëren:** `DiscVault` · `PREVIOUS_IMAGE=@sha256:…`
+7. **Kiezen:** `DiscVault` · `DISCVAULT_IMAGE` · `:latest` `:beta`
+8. **Uitvoeren:** `DiscVault` · `--force-recreate`
+9. **Vergelijken:** `DiscVault` · de bedoelde image-digest draait, health slaagt en eigenaarlogin, bibliotheekaantal en één mediavoorbeeld werken
 
 ### Opdrachten en instellingen
 
-#### DiscVault v26 stabiel
+#### DiscVault stabiel
 
 ```bash
 export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
 ```
 
-#### DiscVault v26 bèta
+#### DiscVault bèta
 
 ```bash
 export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
@@ -95,17 +95,18 @@ trap - EXIT
 
 ## Verwacht resultaat
 
-Accepteer het resultaat voor **Bijwerken en migreren: Container bijwerken** alleen wanneer alle onderstaande resultaten kloppen: de bedoelde image-digest draait, health slaagt en eigenaarlogin, bibliotheekaantal en één mediavoorbeeld werken; houd volumes, omgevingsvariabelen, poorten en het gegevenspad van de vorige generatie ongewijzigd; vervang in de v26 PostgreSQL Compose-topologie nooit een image door `:legacy`. Paginaspecifieke controlepunten: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
+Accepteer het resultaat voor **Bijwerken en migreren: Container bijwerken** alleen wanneer alle onderstaande resultaten kloppen: de bedoelde image-digest draait, health slaagt en eigenaarlogin, bibliotheekaantal en één mediavoorbeeld werken; na een update toont Beheer → Plug-ins de geïnstalleerde pluginversies; meegeleverde plug-ins worden alleen vervangen als de meegeleverde kopie nieuwer is (26.11 heeft MovieVault v2 1.12.0 en TMDb 1.11.0 nodig); houd volumes, omgevingsvariabelen, poorten en het gegevenspad van de vorige generatie ongewijzigd; vervang in de DiscVault PostgreSQL Compose-topologie nooit een image door `:legacy`. Paginaspecifieke controlepunten: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
 - de bedoelde image-digest draait, health slaagt en eigenaarlogin, bibliotheekaantal en één mediavoorbeeld werken
-- houd volumes, omgevingsvariabelen, poorten en het gegevenspad van de vorige generatie ongewijzigd; vervang in de v26 PostgreSQL Compose-topologie nooit een image door `:legacy`
+- na een update toont Beheer → Plug-ins de geïnstalleerde pluginversies; meegeleverde plug-ins worden alleen vervangen als de meegeleverde kopie nieuwer is (26.11 heeft MovieVault v2 1.12.0 en TMDb 1.11.0 nodig)
+- houd volumes, omgevingsvariabelen, poorten en het gegevenspad van de vorige generatie ongewijzigd; vervang in de DiscVault PostgreSQL Compose-topologie nooit een image door `:legacy`
 
 ## Veiligheid en terugdraaien
 
 :::caution
-De veilige herstelgrens voor **Bijwerken en migreren: Container bijwerken** vereist deze acties voordat iets start of doorgaat: de bevroren `:legacy`-image krijgt geen DiscVault v26-functies, migratieverbeteringen of toekomstige interface-updates; [Bijwerken en migreren: Image terugdraaien](/nl/update/rollback/) · bijpassende back-upset; releaseopmerkingen en vastgelegd onveranderlijk image-digest. Paginaspecifieke controlepunten: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
+De veilige herstelgrens voor **Bijwerken en migreren: Container bijwerken** vereist deze acties voordat iets start of doorgaat: de bevroren `:legacy`-image krijgt geen DiscVault-functies, migratieverbeteringen of toekomstige interface-updates; [Bijwerken en migreren: Image terugdraaien](/nl/update/rollback/) · bijpassende back-upset; releaseopmerkingen en vastgelegd onveranderlijk image-digest. Paginaspecifieke controlepunten: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
-- de bevroren `:legacy`-image krijgt geen DiscVault v26-functies, migratieverbeteringen of toekomstige interface-updates
+- de bevroren `:legacy`-image krijgt geen DiscVault-functies, migratieverbeteringen of toekomstige interface-updates
 - [Bijwerken en migreren: Image terugdraaien](/nl/update/rollback/) · bijpassende back-upset
 - releaseopmerkingen en vastgelegd onveranderlijk image-digest
 :::

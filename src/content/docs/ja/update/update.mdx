@@ -5,14 +5,14 @@ pageId: 'update-update'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
 lastVerified: '2026-07-15'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-15" />
 
 ## 目的と結果
 
@@ -22,13 +22,13 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 このページの対象は **更新と移行: コンテナの更新** (Docker · Unraid). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · リリースノートと記録済みの不変イメージダイジェスト · 一致するバックアップ一式; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `DISCVAULT_IMAGE`; PostgreSQL `/data` · リリースノートと記録済みの不変イメージダイジェスト · 一致するバックアップ一式. このページ固有の確認点: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
-### DiscVault v26 安定版
+### DiscVault 安定版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - `DISCVAULT_IMAGE`
 - PostgreSQL `/data` · リリースノートと記録済みの不変イメージダイジェスト · 一致するバックアップ一式
 
-### DiscVault v26 ベータ版
+### DiscVault ベータ版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `DISCVAULT_IMAGE`
@@ -41,25 +41,25 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## 手順
 
-1. **確認:** 新規インストールでは DiscVault v26 の `:latest` または `:beta` を使用します。固定された `:legacy` イメージは、まだ移行しない既存の旧世代インストール専用です
+1. **確認:** 新規インストールでは DiscVault の `:latest` または `:beta` を使用します。固定された `:legacy` イメージは、まだ移行しない既存の旧世代インストール専用です
 2. **バックアップ:** 一致するバックアップ一式
-3. **選択:** Legacy 分岐のみ: バックアップ後、既存の旧世代デプロイのイメージタグだけを `:legacy` に変更し、構成を変えずに pull と再作成を行ってコレクションを確認したら終了します。このページで、その既存デプロイを v26 トポロジーに切り替えないでください
-4. **開く:** [更新と移行: DiscVault 26 への移行](/ja/update/migration/) · DiscVault 26
-5. **保持:** 旧世代のボリューム、環境変数、ポート、データパスは変更しません。v26 PostgreSQL Compose 構成のイメージを `:legacy` に置き換えないでください
-6. **検証:** `DiscVault v26` · `PREVIOUS_IMAGE=@sha256:…`
-7. **選択:** `DiscVault v26` · `DISCVAULT_IMAGE` · `:latest` `:beta`
-8. **実行:** `DiscVault v26` · `--force-recreate`
-9. **比較:** `DiscVault v26` · 意図したイメージダイジェストが稼働し、ヘルス確認、所有者ログイン、ライブラリ件数、メディア 1 件がすべて成功します
+3. **選択:** Legacy 分岐のみ: バックアップ後、既存の旧世代デプロイのイメージタグだけを `:legacy` に変更し、構成を変えずに pull と再作成を行ってコレクションを確認したら終了します。このページで、その既存デプロイを DiscVault トポロジーに切り替えないでください
+4. **開く:** [更新と移行: DiscVault への移行](/ja/update/migration/) · DiscVault
+5. **保持:** 旧世代のボリューム、環境変数、ポート、データパスは変更しません。DiscVault PostgreSQL Compose 構成のイメージを `:legacy` に置き換えないでください
+6. **検証:** `DiscVault` · `PREVIOUS_IMAGE=@sha256:…`
+7. **選択:** `DiscVault` · `DISCVAULT_IMAGE` · `:latest` `:beta`
+8. **実行:** `DiscVault` · `--force-recreate`
+9. **比較:** `DiscVault` · 意図したイメージダイジェストが稼働し、ヘルス確認、所有者ログイン、ライブラリ件数、メディア 1 件がすべて成功します
 
 ### コマンドと設定
 
-#### DiscVault v26 安定版
+#### DiscVault 安定版
 
 ```bash
 export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
 ```
 
-#### DiscVault v26 ベータ版
+#### DiscVault ベータ版
 
 ```bash
 export DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
@@ -95,17 +95,18 @@ trap - EXIT
 
 ## 期待される結果
 
-次の結果を受け入れる条件: **更新と移行: コンテナの更新** 以下の結果をすべて確認した場合のみ: 意図したイメージダイジェストが稼働し、ヘルス確認、所有者ログイン、ライブラリ件数、メディア 1 件がすべて成功します; 旧世代のボリューム、環境変数、ポート、データパスは変更しません。v26 PostgreSQL Compose 構成のイメージを `:legacy` に置き換えないでください. このページ固有の確認点: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
+次の結果を受け入れる条件: **更新と移行: コンテナの更新** 以下の結果をすべて確認した場合のみ: 意図したイメージダイジェストが稼働し、ヘルス確認、所有者ログイン、ライブラリ件数、メディア 1 件がすべて成功します; 更新後は 管理 → プラグイン でインストール済みのバージョンを確認します。同梱プラグインは同梱版のほうが新しいときだけ置き換わります（26.11 には MovieVault v2 1.12.0 と TMDb 1.11.0 が必要）; 旧世代のボリューム、環境変数、ポート、データパスは変更しません。DiscVault PostgreSQL Compose 構成のイメージを `:legacy` に置き換えないでください. このページ固有の確認点: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
 - 意図したイメージダイジェストが稼働し、ヘルス確認、所有者ログイン、ライブラリ件数、メディア 1 件がすべて成功します
-- 旧世代のボリューム、環境変数、ポート、データパスは変更しません。v26 PostgreSQL Compose 構成のイメージを `:legacy` に置き換えないでください
+- 更新後は 管理 → プラグイン でインストール済みのバージョンを確認します。同梱プラグインは同梱版のほうが新しいときだけ置き換わります（26.11 には MovieVault v2 1.12.0 と TMDb 1.11.0 が必要）
+- 旧世代のボリューム、環境変数、ポート、データパスは変更しません。DiscVault PostgreSQL Compose 構成のイメージを `:legacy` に置き換えないでください
 
 ## 安全性とロールバック
 
 :::caution
-安全な復旧境界: **更新と移行: コンテナの更新** 起動または続行の前に、次の操作が必要です: 固定された `:legacy` イメージには DiscVault v26 の機能、移行改善、今後のインターフェイス更新は追加されません; [更新と移行: イメージのロールバック](/ja/update/rollback/) · 一致するバックアップ一式; リリースノートと記録済みの不変イメージダイジェスト. このページ固有の確認点: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
+安全な復旧境界: **更新と移行: コンテナの更新** 起動または続行の前に、次の操作が必要です: 固定された `:legacy` イメージには DiscVault の機能、移行改善、今後のインターフェイス更新は追加されません; [更新と移行: イメージのロールバック](/ja/update/rollback/) · 一致するバックアップ一式; リリースノートと記録済みの不変イメージダイジェスト. このページ固有の確認点: `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · `--force-recreate` · `/update/migration/`.
 
-- 固定された `:legacy` イメージには DiscVault v26 の機能、移行改善、今後のインターフェイス更新は追加されません
+- 固定された `:legacy` イメージには DiscVault の機能、移行改善、今後のインターフェイス更新は追加されません
 - [更新と移行: イメージのロールバック](/ja/update/rollback/) · 一致するバックアップ一式
 - リリースノートと記録済みの不変イメージダイジェスト
 :::

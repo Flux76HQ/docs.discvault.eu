@@ -5,14 +5,14 @@ pageId: 'install-reverse-proxy-passkeys'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU', 'Flux76HQ/App-Guidance']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## Doel en resultaat
 
@@ -20,15 +20,17 @@ Voer de paginaspecifieke werkwijze uit voor **Installeren: Reverse proxy en pass
 
 ## Van toepassing op
 
-Deze pagina is uitsluitend van toepassing op **Installeren: Reverse proxy en passkeys** (Docker · web). De kanaal- en gegevensgrenzen zijn: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6080`; buiten de localhost-uitzondering vereisen passkeys een stabiele volledig gekwalificeerde domeinnaam via vertrouwde HTTPS; een los IP-adres of gewone HTTP wordt niet ondersteund; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; OIDC · `/api/next/auth/oidc/callback` · [Configureren: Aanmelden met OpenID Connect (OIDC)](/nl/configure/oidc/); `LEGACY_AUTH_ENABLED=true`. Paginaspecifieke controlepunten: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+Deze pagina is uitsluitend van toepassing op **Installeren: Reverse proxy en passkeys** (Docker · web). De kanaal- en gegevensgrenzen zijn: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6180` `6080` Docker run; buiten de localhost-uitzondering vereisen passkeys een stabiele volledig gekwalificeerde domeinnaam via vertrouwde HTTPS; een los IP-adres of gewone HTTP wordt niet ondersteund; OIDC · `/api/next/auth/oidc/callback` · [Configureren: Aanmelden met OpenID Connect (OIDC)](/nl/configure/oidc/); `LEGACY_AUTH_ENABLED=true`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; OIDC · `/api/next/auth/oidc/callback` · [Configureren: Aanmelden met OpenID Connect (OIDC)](/nl/configure/oidc/); `LEGACY_AUTH_ENABLED=true`. Paginaspecifieke controlepunten: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
-### DiscVault v26 stabiel
+### DiscVault stabiel
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- `RP_ID` `RP_ORIGINS` · `6080`
+- `RP_ID` `RP_ORIGINS` · `6180` `6080` Docker run
 - buiten de localhost-uitzondering vereisen passkeys een stabiele volledig gekwalificeerde domeinnaam via vertrouwde HTTPS; een los IP-adres of gewone HTTP wordt niet ondersteund
+- OIDC · `/api/next/auth/oidc/callback` · [Configureren: Aanmelden met OpenID Connect (OIDC)](/nl/configure/oidc/)
+- `LEGACY_AUTH_ENABLED=true`
 
-### DiscVault v26 bèta
+### DiscVault bèta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `RP_ID` `RP_ORIGINS` · `6180`
@@ -43,8 +45,8 @@ Deze pagina is uitsluitend van toepassing op **Installeren: Reverse proxy en pas
 
 ### Terugval op Legacy Authentication
 
-:::note[Beschikbaar in bèta]
-Legacy Authentication met gebruikersnaam, wachtwoord en tweefactorauthenticatie (2FA) is in DiscVault 26 bèta beschikbaar als terugvaloptie wanneer passkeys niet bruikbaar zijn.
+:::note[Beschikbaar in stabiel en bèta]
+Legacy Authentication met gebruikersnaam, wachtwoord en tweefactorauthenticatie (2FA) is in DiscVault beschikbaar als terugvaloptie wanneer passkeys niet bruikbaar zijn.
 
 Volg `/install/legacy-authentication/` voordat je de mogelijkheid inschakelt of de eerste eigenaar maakt.
 :::
@@ -56,13 +58,13 @@ Volg `/install/legacy-authentication/` voordat je de mogelijkheid inschakelt of 
 3. **Configureren:** `RP_ID`
 4. **Configureren:** `RP_ORIGINS` · HTTPS
 5. **Configureren:** [Configureren: Aanmelden met OpenID Connect (OIDC)](/nl/configure/oidc/) · `/api/next/auth/oidc/callback`
-6. **Configureren:** `6080` `6180`
+6. **Configureren:** Docker Compose `6180` Docker run `6080`
 7. **Testen:** `GET /api/next/health`
 8. **Vastleggen:** kies de hostnaam voordat je passkeys registreert; later wijzigen vereist nieuwe registratie, terwijl localhost alleen een lokale installatie-uitzondering blijft
 
 ### Opdrachten en instellingen
 
-#### DiscVault v26 stabiel
+#### DiscVault stabiel
 
 ```text
 RP_ID=discvault.example.com
@@ -71,7 +73,7 @@ RP_ORIGINS=https://discvault.example.com
 curl --fail https://discvault.example.com/api/next/health
 ```
 
-#### DiscVault v26 bèta
+#### DiscVault bèta
 
 ```text
 RP_ID=discvault.example.com

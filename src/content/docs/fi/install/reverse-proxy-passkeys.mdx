@@ -5,14 +5,14 @@ pageId: 'install-reverse-proxy-passkeys'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU', 'Flux76HQ/App-Guidance']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · verkko" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
+<PageMeta channels="stable,beta" platform="Docker · verkko" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## Tavoite ja tulos
 
@@ -20,15 +20,17 @@ Suorita sivukohtainen työnkulku: **Asennus: Käänteinen välityspalvelin ja p�
 
 ## Koskee
 
-Tämä sivu koskee vain kohdetta **Asennus: Käänteinen välityspalvelin ja pääsyavaimet** (Docker · verkko). Kanava- ja tietorajat ovat: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6080`; localhost-poikkeuksen ulkopuolella passkey-avaimet vaativat vakaan täydellisen toimialuenimen luotetulla HTTPS-yhteydellä; pelkkää IP-osoitetta tai HTTP-yhteyttä ei tueta; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; OIDC · `/api/next/auth/oidc/callback` · [Määritys: OpenID Connect (OIDC) -kirjautuminen](/fi/configure/oidc/); `LEGACY_AUTH_ENABLED=true`. Sivukohtaiset tarkistuspisteet: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
+Tämä sivu koskee vain kohdetta **Asennus: Käänteinen välityspalvelin ja pääsyavaimet** (Docker · verkko). Kanava- ja tietorajat ovat: DiscVault · `ghcr.io/helmerznl/discvault:latest`; `RP_ID` `RP_ORIGINS` · `6180` `6080` Docker run; localhost-poikkeuksen ulkopuolella passkey-avaimet vaativat vakaan täydellisen toimialuenimen luotetulla HTTPS-yhteydellä; pelkkää IP-osoitetta tai HTTP-yhteyttä ei tueta; OIDC · `/api/next/auth/oidc/callback` · [Määritys: OpenID Connect (OIDC) -kirjautuminen](/fi/configure/oidc/); `LEGACY_AUTH_ENABLED=true`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `RP_ID` `RP_ORIGINS` · `6180`; OIDC · `/api/next/auth/oidc/callback` · [Määritys: OpenID Connect (OIDC) -kirjautuminen](/fi/configure/oidc/); `LEGACY_AUTH_ENABLED=true`. Sivukohtaiset tarkistuspisteet: FQDN · `RP_ORIGINS` · `RP_ID` · OIDC · `/api/next/auth/oidc/callback` · `LEGACY_AUTH_ENABLED` · `/install/legacy-authentication/` · `/api/next/health`.
 
-### DiscVault v26 – vakaa
+### DiscVault – vakaa
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- `RP_ID` `RP_ORIGINS` · `6080`
+- `RP_ID` `RP_ORIGINS` · `6180` `6080` Docker run
 - localhost-poikkeuksen ulkopuolella passkey-avaimet vaativat vakaan täydellisen toimialuenimen luotetulla HTTPS-yhteydellä; pelkkää IP-osoitetta tai HTTP-yhteyttä ei tueta
+- OIDC · `/api/next/auth/oidc/callback` · [Määritys: OpenID Connect (OIDC) -kirjautuminen](/fi/configure/oidc/)
+- `LEGACY_AUTH_ENABLED=true`
 
-### DiscVault v26 – beta
+### DiscVault – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `RP_ID` `RP_ORIGINS` · `6180`
@@ -43,8 +45,8 @@ Tämä sivu koskee vain kohdetta **Asennus: Käänteinen välityspalvelin ja pä
 
 ### Legacy Authentication -varamenetelmä
 
-:::note[Saatavilla betassa]
-Legacy Authentication käyttäjätunnuksella, salasanalla ja kaksivaiheisella tunnistautumisella (2FA) on saatavilla DiscVault 26 betassa, kun passkey-avaimia ei voi käyttää.
+:::note[Saatavilla vakaassa ja betassa]
+Legacy Authentication käyttäjätunnuksella, salasanalla ja kaksivaiheisella tunnistautumisella (2FA) on saatavilla DiscVaultssa, kun passkey-avaimia ei voi käyttää.
 
 Noudata ohjetta `/install/legacy-authentication/` ennen ominaisuuden käyttöönottoa tai ensimmäisen omistajan luontia.
 :::
@@ -56,13 +58,13 @@ Noudata ohjetta `/install/legacy-authentication/` ennen ominaisuuden käyttöön
 3. **Määritä:** `RP_ID`
 4. **Määritä:** `RP_ORIGINS` · HTTPS
 5. **Määritä:** [Määritys: OpenID Connect (OIDC) -kirjautuminen](/fi/configure/oidc/) · `/api/next/auth/oidc/callback`
-6. **Määritä:** `6080` `6180`
+6. **Määritä:** Docker Compose `6180` Docker run `6080`
 7. **Testaa:** `GET /api/next/health`
 8. **Kirjaa:** valitse isäntänimi ennen passkey-rekisteröintiä; myöhempi muutos vaatii rekisteröinnin uudelleen, ja localhost on vain paikallisen asennuksen poikkeus
 
 ### Komennot ja asetukset
 
-#### DiscVault v26 – vakaa
+#### DiscVault – vakaa
 
 ```text
 RP_ID=discvault.example.com
@@ -71,7 +73,7 @@ RP_ORIGINS=https://discvault.example.com
 curl --fail https://discvault.example.com/api/next/health
 ```
 
-#### DiscVault v26 – beta
+#### DiscVault – beta
 
 ```text
 RP_ID=discvault.example.com

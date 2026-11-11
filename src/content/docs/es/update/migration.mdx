@@ -1,37 +1,37 @@
 ---
-title: 'Actualización y migración: Migración a DiscVault 26'
-description: 'Instrucciones específicas para Actualización y migración: Migración a DiscVault 26. /migration/readiness. ready_for_confirmation. /data/discvault.db. SQLite.'
+title: 'Actualización y migración: Migración a DiscVault'
+description: 'Instrucciones específicas para Actualización y migración: Migración a DiscVault. /migration/readiness. ready_for_confirmation. /data/discvault.db. SQLite.'
 pageId: 'update-migration'
 products: ['server']
 platforms: ['docker', 'web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · web" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Objetivo y resultado
 
-Completa el flujo específico de la página para **Actualización y migración: Migración a DiscVault 26**. Este procedimiento utiliza `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+Completa el flujo específico de la página para **Actualización y migración: Migración a DiscVault**. Este procedimiento utiliza `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
 
 ## Aplicable a
 
-Esta página se aplica solo a **Actualización y migración: Migración a DiscVault 26** (Docker · web). Sus límites de canal y datos son: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; fuente de datos existentes de solo lectura; nunca la base de datos de ejecución actual · SQLite → PostgreSQL; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26; fuente de datos existentes de solo lectura; nunca la base de datos de ejecución actual · SQLite → PostgreSQL. Puntos de control de esta página: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+Esta página se aplica solo a **Actualización y migración: Migración a DiscVault** (Docker · web). Sus límites de canal y datos son: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault; fuente de datos existentes de solo lectura; nunca la base de datos de ejecución actual · SQLite → PostgreSQL; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault; fuente de datos existentes de solo lectura; nunca la base de datos de ejecución actual · SQLite → PostgreSQL. Puntos de control de esta página: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
 
-### DiscVault v26 estable
+### DiscVault estable
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- DiscVault 26
+- DiscVault
 - fuente de datos existentes de solo lectura; nunca la base de datos de ejecución actual · SQLite → PostgreSQL
 
-### DiscVault v26 beta
+### DiscVault beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- DiscVault 26
+- DiscVault
 - fuente de datos existentes de solo lectura; nunca la base de datos de ejecución actual · SQLite → PostgreSQL
 
 ## Requisitos previos
@@ -61,14 +61,14 @@ curl --fail http://localhost:6080/api/next/migration/status
 
 ## Resultado esperado
 
-Acepta el resultado de **Actualización y migración: Migración a DiscVault 26** solo cuando se cumplan todos estos resultados: se confirma la preparación, la migración no tiene registros fallidos y coinciden los recuentos y la muestra. Puntos de control de esta página: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+Acepta el resultado de **Actualización y migración: Migración a DiscVault** solo cuando se cumplan todos estos resultados: se confirma la preparación, la migración no tiene registros fallidos y coinciden los recuentos y la muestra. Puntos de control de esta página: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
 
 - se confirma la preparación, la migración no tiene registros fallidos y coinciden los recuentos y la muestra
 
 ## Seguridad y reversión
 
 :::caution
-El límite de recuperación segura de **Actualización y migración: Migración a DiscVault 26** exige estas acciones antes de iniciar o continuar: detén las escrituras de DiscVault, restaura copias coincidentes de PostgreSQL y `/data` y no repitas la importación en una base parcialmente poblada. Puntos de control de esta página: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
+El límite de recuperación segura de **Actualización y migración: Migración a DiscVault** exige estas acciones antes de iniciar o continuar: detén las escrituras de DiscVault, restaura copias coincidentes de PostgreSQL y `/data` y no repitas la importación en una base parcialmente poblada. Puntos de control de esta página: `/migration/readiness` · `ready_for_confirmation` · `/data/discvault.db` · SQLite.
 
 - detén las escrituras de DiscVault, restaura copias coincidentes de PostgreSQL y `/data` y no repitas la importación en una base parcialmente poblada
 :::

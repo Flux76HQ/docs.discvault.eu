@@ -5,14 +5,14 @@ pageId: 'update-backup'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Tavoite ja tulos
 
@@ -22,13 +22,13 @@ Suorita sivukohtainen työnkulku: **Päivitys ja siirto: Varmuuskopiointi**. Tä
 
 Tämä sivu koskee vain kohdetta **Päivitys ja siirto: Varmuuskopiointi** (Docker · Unraid). Kanava- ja tietorajat ovat: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL-vedos ja tiedostoarkisto samasta kirjoittajat pysäyttävästä ikkunasta; PostgreSQL `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL-vedos ja tiedostoarkisto samasta kirjoittajat pysäyttävästä ikkunasta; PostgreSQL `/data`. Sivukohtaiset tarkistuspisteet: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
 
-### DiscVault v26 – vakaa
+### DiscVault – vakaa
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - PostgreSQL-vedos ja tiedostoarkisto samasta kirjoittajat pysäyttävästä ikkunasta
 - PostgreSQL `/data`
 
-### DiscVault v26 – beta
+### DiscVault – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - PostgreSQL-vedos ja tiedostoarkisto samasta kirjoittajat pysäyttävästä ikkunasta
@@ -84,10 +84,11 @@ Hyväksy tulos kohteelle **Päivitys ja siirto: Varmuuskopiointi** vain kun kaik
 ## Turvallisuus ja palautus
 
 :::caution
-Turvallinen palautusraja kohteelle **Päivitys ja siirto: Varmuuskopiointi** edellyttää näitä toimia ennen käynnistystä tai jatkamista: jos varmuuskopiointikomento epäonnistuu, käynnistä vain muuttumattomat palvelut ja peru päivitys; PostgreSQL-vedos ja tiedostoarkisto samasta kirjoittajat pysäyttävästä ikkunasta. Sivukohtaiset tarkistuspisteet: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
+Turvallinen palautusraja kohteelle **Päivitys ja siirto: Varmuuskopiointi** edellyttää näitä toimia ennen käynnistystä tai jatkamista: jos varmuuskopiointikomento epäonnistuu, käynnistä vain muuttumattomat palvelut ja peru päivitys; PostgreSQL-vedos ja tiedostoarkisto samasta kirjoittajat pysäyttävästä ikkunasta; sovellus voi varmuuskopioida myös ajastetusti (Ylläpito → Backup → Ajastus: väli, ohita jos ei muutoksia, säilytä N uusinta); ajastetut arkistot ovat kansiossa `backups/` hakemistossa `DISCVAULT_DATA_DIR`, joten kopioi ne myös pois palvelimelta. Sivukohtaiset tarkistuspisteet: `pg_dump -Fc` · `DISCVAULT_DATA_DIR` · `PREVIOUS_IMAGE` · `next-api`.
 
 - jos varmuuskopiointikomento epäonnistuu, käynnistä vain muuttumattomat palvelut ja peru päivitys
 - PostgreSQL-vedos ja tiedostoarkisto samasta kirjoittajat pysäyttävästä ikkunasta
+- sovellus voi varmuuskopioida myös ajastetusti (Ylläpito → Backup → Ajastus: väli, ohita jos ei muutoksia, säilytä N uusinta); ajastetut arkistot ovat kansiossa `backups/` hakemistossa `DISCVAULT_DATA_DIR`, joten kopioi ne myös pois palvelimelta
 :::
 
 ## Seuraava vaihe

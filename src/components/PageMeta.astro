@@ -12,7 +12,7 @@ interface Props {
 const { channels, platform, version, source, verified } = Astro.props;
 const locale = currentLocale(Astro.url.pathname);
 const ui = labels[locale];
-const isV26 = version === 'DiscVault v26';
+const isV26 = version === 'DiscVault';
 const channelLabel = (status: 'stable' | 'beta' | 'roadmap') => {
   if (isV26 && status === 'stable') return ui.v26Stable;
   if (isV26 && status === 'beta') return ui.v26Beta;
@@ -38,7 +38,7 @@ const statuses = channels
     )
   }
   <span>{platform}</span>
-  <span>≥ {version}</span>
+  <span>{/\d/.test(version) ? `≥ ${version}` : version}</span>
   <span>{source}</span>
   <time datetime={verified}>{verified}</time>
 </aside>

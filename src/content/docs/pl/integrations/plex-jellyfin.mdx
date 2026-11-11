@@ -5,14 +5,14 @@ pageId: 'integrations-plex-jellyfin'
 products: ['server']
 platforms: ['web', 'docker']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="web · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="web · Docker" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Cel i rezultat
 
@@ -20,17 +20,17 @@ Wykonaj procedurę właściwą dla strony: **Integracje: Plex i Jellyfin**. Ta p
 
 ## Dotyczy
 
-Ta strona dotyczy wyłącznie **Integracje: Plex i Jellyfin** (web · Docker). Granice kanału i danych: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26. Punkty kontrolne tej strony: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+Ta strona dotyczy wyłącznie **Integracje: Plex i Jellyfin** (web · Docker). Granice kanału i danych: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault. Punkty kontrolne tej strony: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
 
-### DiscVault v26 – stabilny
+### DiscVault – stabilny
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- DiscVault 26
+- DiscVault
 
-### DiscVault v26 – beta
+### DiscVault – beta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- DiscVault 26
+- DiscVault
 
 ## Wymagania wstępne
 
@@ -44,6 +44,7 @@ Ta strona dotyczy wyłącznie **Integracje: Plex i Jellyfin** (web · Docker). G
 2. **Przetestuj:** Administracja → Wtyczki → Kontrola stanu
 3. **Uruchom:** Administracja → Wtyczki → Wykryj bez zapisywania · `dryRun=true`
 4. **Porównaj:** `/api/next/digital-items?limit=200`
+5. **Skonfiguruj:** Administracja → Zaplanowane zadania synchronizuje biblioteki Jellyfin i Plex co N godzin, opcjonalnie z historią oglądania; jest wyłączone, dopóki administrator go nie włączy
 
 ### Polecenia i ustawienia
 

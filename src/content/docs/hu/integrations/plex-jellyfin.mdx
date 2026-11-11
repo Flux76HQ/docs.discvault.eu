@@ -5,14 +5,14 @@ pageId: 'integrations-plex-jellyfin'
 products: ['server']
 platforms: ['web', 'docker']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="web · Docker" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="web · Docker" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Cél és eredmény
 
@@ -20,17 +20,17 @@ Hajtsa végre az oldalhoz tartozó munkafolyamatot: **Integrációk: Plex és Je
 
 ## Érvényesség
 
-Ez az oldal kizárólag erre vonatkozik: **Integrációk: Plex és Jellyfin** (web · Docker). A csatorna- és adathatárok: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault 26; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault 26. Oldalspecifikus ellenőrzési pontok: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
+Ez az oldal kizárólag erre vonatkozik: **Integrációk: Plex és Jellyfin** (web · Docker). A csatorna- és adathatárok: DiscVault · `ghcr.io/helmerznl/discvault:latest`; DiscVault; DiscVault · `ghcr.io/helmerznl/discvault:beta`; DiscVault. Oldalspecifikus ellenőrzési pontok: Plex · Jellyfin · `dryRun` · `/api/next/digital-items`.
 
-### DiscVault v26 – stabil
+### DiscVault – stabil
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- DiscVault 26
+- DiscVault
 
-### DiscVault v26 – béta
+### DiscVault – béta
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- DiscVault 26
+- DiscVault
 
 ## Előfeltételek
 
@@ -44,6 +44,7 @@ Ez az oldal kizárólag erre vonatkozik: **Integrációk: Plex és Jellyfin** (w
 2. **Tesztelje:** Adminisztráció → Bővítmények → Állapotellenőrzés
 3. **Futtassa:** Adminisztráció → Bővítmények → Felderítés mentés nélkül · `dryRun=true`
 4. **Hasonlítsa össze:** `/api/next/digital-items?limit=200`
+5. **Állítsa be:** Adminisztráció → Ütemezett feladatok N óránként szinkronizálja a Jellyfin és Plex könyvtárakat, igény szerint a megtekintési előzményekkel; ki van kapcsolva, amíg egy admin be nem kapcsolja
 
 ### Parancsok és beállítások
 

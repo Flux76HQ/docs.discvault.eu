@@ -8,6 +8,8 @@ const sourceRepository = z.enum([
   'Flux76HQ/DiscVault-AndroidApp',
   'helmerzNL/DiscVault.EU',
   'Flux76HQ/App-Guidance',
+  'helmerzNL/unraid-community-apps',
+  'helmerzNL/home-assistant-addons',
 ]);
 
 export const collections = {
@@ -17,7 +19,9 @@ export const collections = {
       extend: z.object({
         pageId: z.string().min(1),
         products: z.array(z.enum(['server', 'pwa', 'ios', 'android', 'docs'])),
-        platforms: z.array(z.enum(['docker', 'unraid', 'web', 'ios', 'android', 'all'])),
+        platforms: z.array(
+          z.enum(['docker', 'unraid', 'home-assistant', 'web', 'ios', 'android', 'all']),
+        ),
         channels: z.array(z.enum(['stable', 'beta', 'roadmap'])),
         minVersion: z.string(),
         sourceRepos: z.array(sourceRepository).min(1),

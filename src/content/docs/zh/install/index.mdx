@@ -5,14 +5,14 @@ pageId: 'install-index'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU']
 lastVerified: '2026-07-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU" verified="2026-07-20" />
 
 ## 目标和结果
 
@@ -22,13 +22,13 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 本页面仅适用于 **安装: 安装方式** (Docker · Unraid). 通道与数据边界为： DiscVault · `ghcr.io/helmerznl/discvault:latest`; `:beta`; PostgreSQL `17` `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; `:beta`; PostgreSQL `17` `/data`. 本页面专用检查点： `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
-### DiscVault v26 稳定版
+### DiscVault 稳定版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - `:beta`
 - PostgreSQL `17` `/data`
 
-### DiscVault v26 测试版
+### DiscVault 测试版
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - `:beta`
@@ -41,37 +41,39 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ## 操作步骤
 
-1. **选择:** [安装: Docker Compose](/zh/install/docker-compose/) · DiscVault 26
+1. **选择:** [安装: Docker Compose](/zh/install/docker-compose/) · DiscVault `main` `release/v26-beta`
 2. **选择:** [安装: Docker run](/zh/install/docker-run/)
-3. **选择:** [安装: Unraid](/zh/install/unraid/) · Unraid
-4. **选择:** 新安装使用 DiscVault v26 `:latest` 或 `:beta`；冻结的 `:legacy` 镜像仅供尚未准备迁移的现有旧版安装使用
-5. **保留:** 保持旧版安装的卷、环境变量、端口和数据路径不变；切勿在 v26 PostgreSQL Compose 拓扑中用 `:legacy` 替换镜像
-6. **打开:** [更新和迁移: 迁移到 DiscVault 26](/zh/update/migration/) · → DiscVault 26
-7. **记录:** `DISCVAULT_IMAGE` · 仅适用于现有或 legacy 部署：匹配的备份集
+3. **选择:** [安装: Unraid](/zh/install/unraid/) · Unraid DiscVault
+4. **选择:** [安装: Home Assistant](/zh/install/home-assistant/) · PostgreSQL 17
+5. **选择:** 新安装使用 DiscVault `:latest` 或 `:beta`；冻结的 `:legacy` 镜像仅供尚未准备迁移的现有旧版安装使用
+6. **保留:** 保持旧版安装的卷、环境变量、端口和数据路径不变；切勿在 DiscVault PostgreSQL Compose 拓扑中用 `:legacy` 替换镜像
+7. **打开:** [更新和迁移: 迁移到 DiscVault](/zh/update/migration/) · → DiscVault
+8. **记录:** `DISCVAULT_IMAGE` · 仅适用于现有或 legacy 部署：匹配的备份集
 
 ### 任务路径
 
-- [安装: Docker Compose](/zh/install/docker-compose/) — DiscVault 26 `release/v26-beta` `DISCVAULT_NEXT_IMAGE`
-- [安装: Docker run](/zh/install/docker-run/) — DiscVault 26 Docker run PostgreSQL `/data` `DATABASE_URL`
-- [安装: 持久数据和 PostgreSQL](/zh/install/storage-postgresql/) — DiscVault 26 PostgreSQL `/data`
-- [安装: Unraid](/zh/install/unraid/) — DiscVault 26 Unraid PostgreSQL `/data`
-- [更新和迁移: 迁移到 DiscVault 26](/zh/update/migration/) — → DiscVault 26
+- [安装: Docker Compose](/zh/install/docker-compose/) — DiscVault `app/deploy/next` `DISCVAULT_NEXT_IMAGE`
+- [安装: Docker run](/zh/install/docker-run/) — DiscVault Docker run PostgreSQL `/data` `DATABASE_URL`
+- [安装: 持久数据和 PostgreSQL](/zh/install/storage-postgresql/) — DiscVault PostgreSQL `/data`
+- [安装: Unraid](/zh/install/unraid/) — DiscVault Unraid `discvault-launcher`
+- [安装: Home Assistant](/zh/install/home-assistant/) — DiscVault PostgreSQL 17 `/data`
+- [更新和迁移: 迁移到 DiscVault](/zh/update/migration/) — → DiscVault
 
 ## 预期结果
 
-仅在以下条件下接受结果： **安装: 安装方式** 必须确认以下所有结果： 所选发布通道; PostgreSQL `/data`; 保持旧版安装的卷、环境变量、端口和数据路径不变；切勿在 v26 PostgreSQL Compose 拓扑中用 `:legacy` 替换镜像. 本页面专用检查点： `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
+仅在以下条件下接受结果： **安装: 安装方式** 必须确认以下所有结果： 所选发布通道; PostgreSQL `/data` · DiscVault; 保持旧版安装的卷、环境变量、端口和数据路径不变；切勿在 DiscVault PostgreSQL Compose 拓扑中用 `:legacy` 替换镜像. 本页面专用检查点： `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
 - 所选发布通道
-- PostgreSQL `/data`
-- 保持旧版安装的卷、环境变量、端口和数据路径不变；切勿在 v26 PostgreSQL Compose 拓扑中用 `:legacy` 替换镜像
+- PostgreSQL `/data` · DiscVault
+- 保持旧版安装的卷、环境变量、端口和数据路径不变；切勿在 DiscVault PostgreSQL Compose 拓扑中用 `:legacy` 替换镜像
 
 ## 安全与回滚
 
 :::caution
-安全恢复边界： **安装: 安装方式** 在启动或继续任何操作前必须执行： 仅限 Legacy 分支：备份后，只将现有旧版部署的镜像标签改为 `:legacy`，保持拓扑不变并拉取、重新创建，验证收藏后停止；不要在本页面将该现有部署切换到 v26 拓扑; 冻结的 `:legacy` 镜像不会获得 DiscVault v26 功能、迁移改进或未来界面更新; 仅适用于现有或 legacy 部署：匹配的备份集; 发行说明及已记录的不可变镜像摘要. 本页面专用检查点： `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
+安全恢复边界： **安装: 安装方式** 在启动或继续任何操作前必须执行： 仅限 Legacy 分支：备份后，只将现有旧版部署的镜像标签改为 `:legacy`，保持拓扑不变并拉取、重新创建，验证收藏后停止；不要在本页面将该现有部署切换到 DiscVault 拓扑; 冻结的 `:legacy` 镜像不会获得 DiscVault 功能、迁移改进或未来界面更新; 仅适用于现有或 legacy 部署：匹配的备份集; 发行说明及已记录的不可变镜像摘要. 本页面专用检查点： `:latest` · `:beta` · `:legacy` · `DISCVAULT_IMAGE` · PostgreSQL `/data` · `/update/migration/`.
 
-- 仅限 Legacy 分支：备份后，只将现有旧版部署的镜像标签改为 `:legacy`，保持拓扑不变并拉取、重新创建，验证收藏后停止；不要在本页面将该现有部署切换到 v26 拓扑
-- 冻结的 `:legacy` 镜像不会获得 DiscVault v26 功能、迁移改进或未来界面更新
+- 仅限 Legacy 分支：备份后，只将现有旧版部署的镜像标签改为 `:legacy`，保持拓扑不变并拉取、重新创建，验证收藏后停止；不要在本页面将该现有部署切换到 DiscVault 拓扑
+- 冻结的 `:legacy` 镜像不会获得 DiscVault 功能、迁移改进或未来界面更新
 - 仅适用于现有或 legacy 部署：匹配的备份集
 - 发行说明及已记录的不可变镜像摘要
 :::

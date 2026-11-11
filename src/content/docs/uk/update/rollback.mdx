@@ -5,14 +5,14 @@ pageId: 'update-rollback'
 products: ['server']
 platforms: ['docker', 'unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault']
 lastVerified: '2026-07-14'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Docker · Unraid" version="DiscVault" source="helmerzNL/DiscVault" verified="2026-07-14" />
 
 ## Мета й результат
 
@@ -22,13 +22,13 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 Ця сторінка стосується лише **Оновлення й міграція: Відкочування образу** (Docker · Unraid). Межі каналу й даних: DiscVault · `ghcr.io/helmerznl/discvault:latest`; відновіть відповідні дані до запуску попереднього образу; PostgreSQL `/data`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; відновіть відповідні дані до запуску попереднього образу; PostgreSQL `/data`. Контрольні точки цієї сторінки: `PREVIOUS_IMAGE` · `pg_restore --exit-on-error` · `discvault.failed-` · `DISCVAULT_IMAGE`.
 
-### DiscVault v26 – стабільний
+### DiscVault – стабільний
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - відновіть відповідні дані до запуску попереднього образу
 - PostgreSQL `/data`
 
-### DiscVault v26 – бета
+### DiscVault – бета
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - відновіть відповідні дані до запуску попереднього образу
@@ -106,7 +106,7 @@ trap - EXIT
 
 ## Наступний крок
 
-[Оновлення й міграція: Міграція до DiscVault 26](/uk/update/migration/)
+[Оновлення й міграція: Міграція до DiscVault](/uk/update/migration/)
 
 ## Джерело й стан
 

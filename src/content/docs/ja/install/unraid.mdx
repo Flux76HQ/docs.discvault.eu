@@ -1,97 +1,130 @@
 ---
 title: 'インストール: Unraid'
-description: 'タスク別の手順: インストール: Unraid. /mnt/user/appdata/discvault/postgres. /mnt/user/appdata/discvault/data. 6080:5000. DISCVAULT_IMAGE.'
+description: 'タスク別の手順: インストール: Unraid. ghcr.io/helmerznl/discvault-launcher:latest. /var/run/docker.sock. /api/next/health.'
 pageId: 'install-unraid'
 products: ['server']
 platforms: ['unraid']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
-sourceRepos: ['helmerzNL/DiscVault']
-lastVerified: '2026-07-14'
+minVersion: 'DiscVault'
+sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/unraid-community-apps']
+lastVerified: '2026-11-11'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="Unraid" version="DiscVault v26" source="helmerzNL/DiscVault" verified="2026-07-14" />
+<PageMeta channels="stable,beta" platform="Unraid" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/unraid-community-apps" verified="2026-11-11" />
 
 ## 目的と結果
 
-このページ専用の手順を実行します: **インストール: Unraid**. この手順で扱う項目: `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+Unraid の Community Applications ストアから DiscVault をインストールします。テンプレートは DiscVault ランチャーを導入し、PostgreSQL、API、ワーカー、MCP を作成・更新します。.
+
+このページ専用の手順を実行します: **インストール: Unraid**. この手順で扱う項目: `ghcr.io/helmerznl/discvault-launcher:latest` · `/var/run/docker.sock` · `/api/next/health`.
 
 ## 対象
 
-このページの対象は **インストール: Unraid** (Unraid). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault:latest`; PostgreSQL API MCP; `:latest` `:beta`; DiscVault · `ghcr.io/helmerznl/discvault:beta`; PostgreSQL API MCP; `:latest` `:beta`. このページ固有の確認点: `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+Helmer’s Repository は DiscVault と DiscVault (beta) の 2 つのテンプレートを提供し、それぞれ専用の appdata フォルダー、ポート、Compose プロジェクト、ネットワークを持つため並行して動作します.
 
-### DiscVault v26 安定版
+このページの対象は **インストール: Unraid** (Unraid). チャンネルとデータの境界: DiscVault · `ghcr.io/helmerznl/discvault-launcher:latest`; `6080` · `/mnt/user/appdata/discvault` · `discvault_stack`; DiscVault · `ghcr.io/helmerznl/discvault-launcher:beta`; `6081` · `/mnt/user/appdata/discvault-beta` · `discvault_beta_stack`. このページ固有の確認点: `ghcr.io/helmerznl/discvault-launcher:latest` · `/var/run/docker.sock` · `/api/next/health`.
 
-- DiscVault · `ghcr.io/helmerznl/discvault:latest`
-- PostgreSQL API MCP
-- `:latest` `:beta`
+### DiscVault 安定版
 
-### DiscVault v26 ベータ版
+- DiscVault · `ghcr.io/helmerznl/discvault-launcher:latest`
+- `6080` · `/mnt/user/appdata/discvault` · `discvault_stack`
 
-- DiscVault · `ghcr.io/helmerznl/discvault:beta`
-- PostgreSQL API MCP
-- `:latest` `:beta`
+### DiscVault ベータ版
+
+- DiscVault · `ghcr.io/helmerznl/discvault-launcher:beta`
+- `6081` · `/mnt/user/appdata/discvault-beta` · `discvault_beta_stack`
 
 ## 前提条件
 
 - Unraid `6.12+`
-- `/mnt/user/appdata/discvault/data`
-- OpenSSL
+- Community Applications プラグインがインストール済み
+- パスキーにはアプリのポートの前にドメイン名付きの HTTPS アドレスが必要です。ない場合は TOTP 付きのパスワードログインを使います
 
 ## 手順
 
-1. **インストール:** Unraid · [インストール: Docker Compose](/ja/install/docker-compose/)
-2. **設定:** `DISCVAULT_IMAGE` · `:latest` `:beta`
-3. **設定:** `DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data` · `DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres`
-4. **検証:** `postgres` · `next-api` · `next-worker` · `next-mcp` · `6080:5000`
+1. **開く:** Apps → DiscVault を検索 → インストール。ベータ版テンプレートは名前に (beta) が付きます
+2. **設定:** 既定の appdata フォルダーを使います。ランチャーのフォルダーには生成された Compose ファイルと `/config/stack.env` のシークレットが入ります · `TZ`
+3. **設定:** `RP_ID` · `RP_ORIGINS` · パスキーにはアプリのポートの前にドメイン名付きの HTTPS アドレスが必要です。ない場合は TOTP 付きのパスワードログインを使います · `LEGACY_AUTH_ENABLED=true`
+4. **開始:** 初回起動では、ランチャーがイメージを取得してデータベースを作成するため数分かかります · ランチャーは Docker ソケットをマウントするため、サーバーの Docker を操作できます。ランチャーのイメージを信頼できる場合のみインストールしてください
+5. **検証:** `/api/next/health` · オンボーディングでパスキー、またはパスワードと TOTP で最初のオーナーを作成し、復旧コードを一度だけ表示します
+6. **設定:** Docker タブ → 更新を確認。起動時にランチャーがスタックの残りも更新します · `DISCVAULT_CHANNEL=manual` · `DISCVAULT_IMAGE`
 
 ### コマンドと設定
 
-#### DiscVault v26 安定版
+#### DiscVault 安定版
 
 ```text
-DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:latest
-DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data
-DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres
-DISCVAULT_API_PORT=6080
-DISCVAULT_MCP_PORT=6090
+Repository                         ghcr.io/helmerznl/discvault-launcher:latest
+Web UI port                        6080
+App data (/data)                   /mnt/user/appdata/discvault
+DISCVAULT_DATA_DIR_HOST            /mnt/user/appdata/discvault
+DISCVAULT_POSTGRES_DATA_DIR_HOST   /mnt/user/appdata/discvault-postgres
+Launcher config (/config)          /mnt/user/appdata/discvault-launcher
+Docker socket                      /var/run/docker.sock
+DISCVAULT_CHANNEL                  latest
+TZ                                 Europe/Amsterdam
+RP_ID                              discvault.example.com
+RP_ORIGINS                         https://discvault.example.com
+LEGACY_AUTH_ENABLED                false
 ```
 
-#### DiscVault v26 ベータ版
+#### DiscVault ベータ版
 
 ```text
-DISCVAULT_IMAGE=ghcr.io/helmerznl/discvault:beta
-DISCVAULT_DATA_DIR=/mnt/user/appdata/discvault/data
-DISCVAULT_POSTGRES_DATA=/mnt/user/appdata/discvault/postgres
-DISCVAULT_API_PORT=6080
-DISCVAULT_MCP_PORT=6090
+Repository                         ghcr.io/helmerznl/discvault-launcher:beta
+Web UI port                        6081
+App data (/data)                   /mnt/user/appdata/discvault-beta
+DISCVAULT_DATA_DIR_HOST            /mnt/user/appdata/discvault-beta
+DISCVAULT_POSTGRES_DATA_DIR_HOST   /mnt/user/appdata/discvault-beta-postgres
+Launcher config (/config)          /mnt/user/appdata/discvault-beta-launcher
+Docker socket                      /var/run/docker.sock
+DISCVAULT_CHANNEL                  beta
+DISCVAULT_PROJECT_NAME             discvault_beta_stack
+DISCVAULT_NETWORK                  discvault-beta-stack
+```
+
+#### 両方のチャンネル
+
+```bash
+curl --fail http://<unraid-server>:6080/api/next/health
+# Roll back: Release channel = manual, DiscVault image = v26.10.17
 ```
 
 ## 期待される結果
 
-次の結果を受け入れる条件: **インストール: Unraid** 以下の結果をすべて確認した場合のみ: PostgreSQL; `/data`; HTTP `2xx`. このページ固有の確認点: `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+ランチャーがイメージを取得してスタックを作成し、Web 画面がテンプレートのポートで応答し、ヘルスアドレスが移行済みデータベースを報告します.
 
-- PostgreSQL
-- `/data`
-- HTTP `2xx`
+次の結果を受け入れる条件: **インストール: Unraid** 以下の結果をすべて確認した場合のみ: オンボーディングでパスキー、またはパスワードと TOTP で最初のオーナーを作成し、復旧コードを一度だけ表示します; `/api/next/health` · HTTP `200` · `"status": "ok"`. このページ固有の確認点: `ghcr.io/helmerznl/discvault-launcher:latest` · `/var/run/docker.sock` · `/api/next/health`.
+
+- オンボーディングでパスキー、またはパスワードと TOTP で最初のオーナーを作成し、復旧コードを一度だけ表示します
+- `/api/next/health` · HTTP `200` · `"status": "ok"`
 
 ## 安全性とロールバック
 
 :::caution
-安全な復旧境界: **インストール: Unraid** 起動または続行の前に、次の操作が必要です: 一致するバックアップ一式; `/mnt/user/appdata/discvault/data`. このページ固有の確認点: `/mnt/user/appdata/discvault/postgres` · `/mnt/user/appdata/discvault/data` · `6080:5000` · `DISCVAULT_IMAGE`.
+3 つの appdata フォルダーをコピーする前にアプリを停止します。戻すときはリリースチャネルを manual にして前のバージョンタグを指定し、更新前のバックアップを復元します。.
 
-- 一致するバックアップ一式
-- `/mnt/user/appdata/discvault/data`
+安全な復旧境界: **インストール: Unraid** 起動または続行の前に、次の操作が必要です: ベータは安定版が読めない形でデータベースを変更することがあります。安定版のフォルダーを指定しないでください; ランチャーは Docker ソケットをマウントするため、サーバーの Docker を操作できます。ランチャーのイメージを信頼できる場合のみインストールしてください; アプリ内バックアップ（管理 → Backup、スケジュール実行も可）でライブラリを Docker、Unraid、Home Assistant 間で移行できます; ランチャーはまだ OpenID Connect の変数を渡さないため、Unraid テンプレートはパスキーまたはパスワードでログインします. このページ固有の確認点: `ghcr.io/helmerznl/discvault-launcher:latest` · `/var/run/docker.sock` · `/api/next/health`.
+
+- ベータは安定版が読めない形でデータベースを変更することがあります。安定版のフォルダーを指定しないでください
+- ランチャーは Docker ソケットをマウントするため、サーバーの Docker を操作できます。ランチャーのイメージを信頼できる場合のみインストールしてください
+- アプリ内バックアップ（管理 → Backup、スケジュール実行も可）でライブラリを Docker、Unraid、Home Assistant 間で移行できます
+- ランチャーはまだ OpenID Connect の変数を渡さないため、Unraid テンプレートはパスキーまたはパスワードでログインします
 :::
 
 ## 次の手順
 
-[インストール: 初回起動とヘルスチェック](/ja/install/first-start-health/)
+[インストール: リバースプロキシとパスキー](/ja/install/reverse-proxy-passkeys/)
 
 ## 情報源と状態
 
-- [`helmerzNL/DiscVault@6d27c689ac21`](https://github.com/helmerzNL/DiscVault/commit/6d27c689ac2166651d2c7c74833c1ee225b37ec3)
-- 情報源と状態: `2026-07-14`
-- DiscVault Docs: `0.1.0`
+- [`helmerzNL/DiscVault@441f96593219`](https://github.com/helmerzNL/DiscVault/commit/441f96593219c66d45aac99ce5ef9f81f011d449)
+- [`helmerzNL/unraid-community-apps@988ac954d47b`](https://github.com/helmerzNL/unraid-community-apps/commit/988ac954d47b7c671cab91d5a0ad9b623366f89d)
+- [Unraid template: `templates/discvault.xml`](https://github.com/helmerzNL/unraid-community-apps/blob/main/templates/discvault.xml)
+- [Unraid template: `templates/discvault-beta.xml`](https://github.com/helmerzNL/unraid-community-apps/blob/main/templates/discvault-beta.xml)
+- [DiscVault launcher](https://github.com/helmerzNL/DiscVault-Launcher)
+- [Unraid support thread](https://forums.unraid.net/topic/198808-support-discvault-physical-disc-collection-manager/)
+- 情報源と状態: `2026-11-11`
+- DiscVault Docs: `0.2.0`

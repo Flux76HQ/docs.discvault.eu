@@ -5,14 +5,14 @@ pageId: 'configure-auth-rbac'
 products: ['server']
 platforms: ['web']
 channels: ['stable', 'beta']
-minVersion: 'DiscVault v26'
+minVersion: 'DiscVault'
 sourceRepos: ['helmerzNL/DiscVault', 'helmerzNL/DiscVault.EU', 'Flux76HQ/App-Guidance']
 lastVerified: '2026-09-20'
 ---
 
 import PageMeta from '../../../../components/PageMeta.astro';
 
-<PageMeta channels="stable,beta" platform="웹" version="DiscVault v26" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
+<PageMeta channels="stable,beta" platform="웹" version="DiscVault" source="helmerzNL/DiscVault · helmerzNL/DiscVault.EU · Flux76HQ/App-Guidance" verified="2026-09-20" />
 
 ## 목표 및 결과
 
@@ -22,13 +22,13 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 이 페이지의 적용 범위: **구성: 인증 및 RBAC** (웹). 채널 및 데이터 경계: DiscVault · `ghcr.io/helmerznl/discvault:latest`; WebAuthn; 패스키는 암호화 키 쌍으로, 개인 키는 기기나 신뢰할 수 있는 자격 증명 관리자에 남고 DiscVault는 공개 키만 저장함; DiscVault · `ghcr.io/helmerznl/discvault:beta`; WebAuthn OIDC; TOTP. 이 페이지의 전용 확인 지점: `/api/next/auth/status` · `/api/next/auth/rbac` · WebAuthn · `48 h` · iOS/iPadOS `16+` · Android `9+` · OIDC · Argon2id · TOTP.
 
-### DiscVault v26 안정판
+### DiscVault 안정판
 
 - DiscVault · `ghcr.io/helmerznl/discvault:latest`
 - WebAuthn
 - 패스키는 암호화 키 쌍으로, 개인 키는 기기나 신뢰할 수 있는 자격 증명 관리자에 남고 DiscVault는 공개 키만 저장함
 
-### DiscVault v26 베타
+### DiscVault 베타
 
 - DiscVault · `ghcr.io/helmerznl/discvault:beta`
 - WebAuthn OIDC
@@ -58,14 +58,14 @@ import PageMeta from '../../../../components/PageMeta.astro';
 
 ### 명령 및 설정
 
-#### DiscVault v26 안정판
+#### DiscVault 안정판
 
 ```bash
 curl --fail http://localhost:6080/api/next/auth/status
 curl --fail http://localhost:6080/api/next/auth/rbac
 ```
 
-#### DiscVault v26 베타
+#### DiscVault 베타
 
 ```bash
 curl --fail http://localhost:6180/api/next/auth/status
